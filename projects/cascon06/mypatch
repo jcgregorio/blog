@@ -1,0 +1,138 @@
+=== modified file 'notes'
+--- notes	
++++ notes	
+@@ -453,6 +453,91 @@
+ }}}
+ 
+ 
++WSGI
++
++{{{
++<span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
++
++<span class="Statement">def</span> <span class="Identifier">simple_app</span>(environ, start_response):
++    start_response(<span class="Normal">'</span><span class="Constant">200 OK</span><span class="Normal">'</span>, [(<span class="Normal">'</span><span class="Constant">Content-type</span><span class="Normal">'</span>,<span class="Normal">'</span><span class="Constant">text/html</span><span class="Normal">'</span>)])
++    <span class="Statement">return</span> [<span class="Normal">'</span><span class="Constant">&lt;h1&gt;Hello World&lt;/h1&gt;</span><span class="Normal">'</span>]
++
++
++httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
++httpd.set_app(simple_app)
++<span class="Statement">print</span> <span class="Normal">&quot;</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">&quot;</span> % httpd.socket.getsockname()
++httpd.serve_forever()
++}}}
++
++
++WSGI
++
++{{{
++<span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
++
++<b class="high"><span class="Statement">def</span> <span class="Identifier">simple_app</span>(environ, start_response):</b>
++    start_response(<span class="Normal">'</span><span class="Constant">200 OK</span><span class="Normal">'</span>, [(<span class="Normal">'</span><span class="Constant">Content-type</span><span class="Normal">'</span>,<span class="Normal">'</span><span class="Constant">text/html</span><span class="Normal">'</span>)])
++    <span class="Statement">return</span> [<span class="Normal">'</span><span class="Constant">&lt;h1&gt;Hello World&lt;/h1&gt;</span><span class="Normal">'</span>]
++
++
++httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
++httpd.set_app(simple_app)
++<span class="Statement">print</span> <span class="Normal">&quot;</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">&quot;</span> % httpd.socket.getsockname()
++httpd.serve_forever()
++}}}
++
++A WSGI application is a callable object that supports this signature.
++
++
++WSGI
++
++{{{
++<span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
++
++<span class="Statement">def</span> <span class="Identifier">simple_app</span>(environ, start_response):
++    <b class="high">start_response(<span class="Normal">'</span><span class="Constant">200 OK</span><span class="Normal">'</span>, [(<span class="Normal">'</span><span class="Constant">Content-type</span><span class="Normal">'</span>,<span class="Normal">'</span><span class="Constant">text/html</span><span class="Normal">'</span>)])</b>
++    <span class="Statement">return</span> [<span class="Normal">'</span><span class="Constant">&lt;h1&gt;Hello World&lt;/h1&gt;</span><span class="Normal">'</span>]
++
++
++httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
++httpd.set_app(simple_app)
++<span class="Statement">print</span> <span class="Normal">&quot;</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">&quot;</span> % httpd.socket.getsockname()
++httpd.serve_forever()
++}}}
++
++Start_response() sets the status code and any response headers.
++
++
++WSGI
++
++{{{
++<span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
++
++<span class="Statement">def</span> <span class="Identifier">simple_app</span>(environ, start_response):
++    start_response(<span class="Normal">'</span><span class="Constant">200 OK</span><span class="Normal">'</span>, [(<span class="Normal">'</span><span class="Constant">Content-type</span><span class="Normal">'</span>,<span class="Normal">'</span><span class="Constant">text/html</span><span class="Normal">'</span>)])
++    <b class="high"><span class="Statement">return</span> [<span class="Normal">'</span><span class="Constant">&lt;h1&gt;Hello World&lt;/h1&gt;</span><span class="Normal">'</span>]</b>
++
++
++httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
++httpd.set_app(simple_app)
++<span class="Statement">print</span> <span class="Normal">&quot;</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">&quot;</span> % httpd.socket.getsockname()
++httpd.serve_forever()
++}}}
++
++The return from the callable is an iterable.
++
++
++WSGI
++
++Most of that is true.
++----
++There are details.
++----
++Read PEP 333 for all the details.
++----
++For example: Middleware
++
++
+ Model
+ 
+ Model/View/Controller
+@@ -604,15 +689,11 @@
+ {{{
+ <span class="Statement">def</span> <span class="Identifier">run</span>():
+     <span class="PreProc">import</span> urls
+-    <span class="Statement">if</span> os.environ.get(<span class="Normal">"</span><span class="Constant">REQUEST_METHOD</span><span class="Normal">"</span>, <span class="Normal">""</span>):
+-        <span class="PreProc">from</span> wsgiref.handlers <span class="PreProc">import</span> BaseCGIHandler
+-        BaseCGIHandler(sys.stdin, sys.stdout, sys.stderr, os.environ).run(urls.urls)
+-    <span class="Statement">else</span>:
+-        <span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
+-        httpd = WSGIServer((<span class="Normal">' '</span>, 8080), WSGIRequestHandler)
+-        httpd.set_app(urls.urls)
+-        <span class="Statement">print</span> <span class="Normal">"</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">"</span> % httpd.socket.getsockname()
+-        httpd.serve_forever()
++    <span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
++    httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
++    httpd.set_app(urls.urls)
++    <span class="Statement">print</span> <span class="Normal">"</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">"</span> % httpd.socket.getsockname()
++    httpd.serve_forever()
+ 
+ <span class="Statement">if</span> __name__ == <span class="Normal">"</span><span class="Constant">__main__</span><span class="Normal">"</span>:
+    <span class="Statement">if</span> <span class="Normal">'</span><span class="Constant">create</span><span class="Normal">'</span> <span class="Statement">in</span> sys.argv:
+@@ -683,6 +764,20 @@
+ HTML
+ 
+ Kid template is XHTML.
++----
++{{{
++<span class="Identifier">&lt;?xml </span><span class="Type">version</span><span class="Identifier">=</span><span class="Constant">"1.0"</span><span class="Identifier"> encoding=</span><span class="Constant">"utf-8"</span><span class="Identifier">?&gt;</span>
++<span class="Identifier">&lt;</span><span class="Statement">html</span><span class="Identifier"> xmlns:py=</span><span class="Constant">"http://purl.org/kid/ns#&gt;"</span><span class="Identifier">&gt;</span>
++  <span class="Identifier">&lt;</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
++<span class="PreProc">    </span><span class="Identifier">&lt;</span><span class="Statement">title</span><span class="Identifier">&gt;</span><span class="Title">A Robaccia Blog</span><span class="Identifier">&lt;/</span><span class="Statement">title</span><span class="Identifier">&gt;</span><span class="PreProc"> </span>
++<span class="PreProc">  </span><span class="Identifier">&lt;/</span><span class="Statement">head</span><span class="Identifier">&gt;</span>
++  <span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier"> py:</span><span class="Type">for</span><span class="Identifier">=</span><span class="Constant">"row in rows.fetchall()"</span><span class="Identifier">&gt;</span>
++     <span class="Identifier">&lt;</span><span class="Statement">h2</span><span class="Identifier">&gt;</span><span class="Title">${row.title}</span><span class="Identifier">&lt;/</span><span class="Statement">h2</span><span class="Identifier">&gt;</span>
++     <span class="Identifier">&lt;</span><span class="Statement">div</span><span class="Identifier">&gt;</span>${row.content}<span class="Identifier">&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
++     <span class="Identifier">&lt;</span><span class="Statement">p</span><span class="Identifier">&gt;&lt;</span><span class="Statement">a</span><span class="Identifier"> </span><span class="Type">href</span><span class="Identifier">=</span><span class="Constant">"./${row.id}/"</span><span class="Identifier">&gt;</span><span class="Underlined">${row.updated}</span><span class="Identifier">&lt;/</span><span class="Statement">a</span><span class="Identifier">&gt;&lt;/</span><span class="Statement">p</span><span class="Identifier">&gt;</span>
++  <span class="Identifier">&lt;/</span><span class="Statement">div</span><span class="Identifier">&gt;</span>
++<span class="Identifier">&lt;/</span><span class="Statement">html</span><span class="Identifier">&gt;</span>
++}}}
+ 
+ 
+ Routing
+

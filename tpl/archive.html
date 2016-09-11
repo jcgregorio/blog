@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{.SiteTitle|html}} | Archives</title>
+    {{.Header}}
+    <style type="text/css" media="screen">
+      {{.InlineCSS}}
+    </style>
+    <style type="text/css">
+      td {
+          text-align: right;
+      }
+      td, th {
+          border: none;
+          padding: 0;
+      }
+      .titlecol {
+          text-align: left;
+          padding-left: 2em;
+      }
+    </style>
+  </head>
+  <body>
+    {{.Titlebar}}
+    <h2>Archives</h2>
+    <div class=item>
+    <table>
+    {{range .Entries}}
+        <tr> <td>{{.Created|datediff}}</td> <td class=titlecol><a href="{{.URL}}">{{.Title | html}}</a></td> </tr>
+    {{end}}
+    </table>
+    </div>
+    {{.Footer}}
+  </body>
+</html>

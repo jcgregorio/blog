@@ -1,0 +1,238 @@
+<html>
+  <head>
+    <title>RESTful JSON</title>
+    <meta name=created value="2006-10-09T23:45:00">
+  </head>
+  <body>
+  
+<p>
+  As I pointed out in <a href="http://bitworking.org/news/JSON_isnt_XML">
+  JSON isn't XML</a> REST doesn't just apply to XML formats and that it's possible to use
+  JSON RESTfully and not just in the <a href="http://json-rpc.org/">old patterns</a>. 
+  </p>
+
+  
+<p>
+  Theory is nice, but working code is nicer. 
+  So let's walk through building a RESTful service using JSON.
+  In this case we are going to be building a cookbook, 
+  modeled as a collection ala the Atom Publishing Protocol.
+  </p>
+<p>
+  A Collection is nothing more than an encapsulation of 
+  <a href="http://en.wikipedia.org/wiki/CRUD_(acronym)">CRUD</a>.
+  That's why the concept is so powerful
+  and you see lots of folks doing non-blog
+  stuff with the APP. In this case we want to have a collection
+  but not use Atom, instead we want to manipulate 
+  a list of member resources, whose members 
+  we can manipulate with GET/PUT/DELETE and 
+  have JSON representations.
+  </p>
+<pre>
+  Collection
+     href     -&gt;   Member Resource
+     href     -&gt;   Member Resource
+     href     -&gt;   Member Resource
+</pre>
+<p>
+  Let's build a <a href="http://bitworking.org/news/How_to_create_a_REST_Protocol">familiar looking table</a> for what our
+  collection looks like:
+</p>
+<table border="0" cellspacing="10" cellpadding="20">
+<tr> <th>Resource</th> <th>Method</th> <th>Representation</th> <th>Description</th> </tr>
+<tr><td>Collection</td> <td>GET</td> <td>JSON</td> <td>Get a list of members in the collection.</td></tr>
+<tr><td>Collection</td> <td>POST</td> <td>JSON</td> <td>Create a new member of the collection. </td></tr>
+<tr><td>Member</td> <td>GET</td> <td>JSON</td> <td>Get a member. </td></tr>
+<tr><td>Member</td> <td>PUT</td> <td>JSON</td> <td>Update a member.</td></tr>
+<tr><td>Member</td> <td>DELETE</td> <td>n/a</td> <td>Delete a member. </td></tr>
+</table>
+<p>
+  We can leave the actual form on the member representations
+  up to each implementation, but we should give a standard form
+  for the collection document. We could just use an array of 
+  URIs:
+</p>
+<pre><code>[
+  "http://example.org/coll/1",
+  "http://example.org/coll/2",
+  "http://example.org/coll/3",
+  ...
+  "http://example.org/coll/N",
+]
+</code></pre>
+<p>
+  But that causes two problems. The first is that the collection could be huge and you
+  might not even want to get all the URIs. We need the equivalent of 
+  the <a href="http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-11.html#rfc.section.10.1">
+    Atom Publishing Protocol's link relation of "next"</a> and some place to store it.
+  The second problem is extensibility, there's no place to store my own extensions in the collection document.
+  </p>
+<p>
+  So let's take our list and put it in an object, giving us space for 
+  our "next" link:
+  </p>
+<pre><code>{ 
+  "members":
+  [
+    "http://example.org/coll/1",
+    "http://example.org/coll/2",
+    "http://example.org/coll/3",
+    ...
+    "http://example.org/coll/N",
+  ],
+  "next": "http://example/coll/page/2"
+}
+</code></pre>
+<p>
+  The only other thing we need is some place for extensiblity
+  in the list of members, so let's turn each of those into objects
+  also:
+</p>
+<pre><code>{ 
+  "members":
+  [
+    { "href": "http://example.org/coll/1" },
+    { "href": "http://example.org/coll/2" },
+    { "href": "http://example.org/coll/3" },
+      ....
+    { "href": "http://example.org/coll/N" },
+  ],
+  "next": "http://example/coll?page=2"
+}
+</code></pre>
+<p>
+  We can also reduce some verbosity if we allow relative URIs in "href". For
+  example, if the URI of this collection document is <tt>http://example.org/coll/</tt>
+  then we get:
+</p>
+<pre><code>{ 
+    "members":
+    [
+      { "href": "1" },
+      { "href": "2" },
+      { "href": "3" },
+        ....
+      { "href": "N" },
+    ],
+    "next": "http://example/coll?page=2"
+  }
+</code></pre>
+<p>
+  That looks good. Now what would this look like on the wire?
+  Let's say we wanted expose an interface to our cookbook. 
+  The cookbook will be a collection and each member will be a recipe.
+  We'll take a very simplistic representation for our recipe
+  for now:
+</p>
+<pre><code>{
+  "title": "the name of the recipe",
+  "instruction": "the recipe instructions"
+}
+</code></pre>
+<p>Here is an example GET to the collection:</p>
+<pre><code>GET /coll/ HTTP/1.1
+Host: example.org
+User-Agent: NotGiven/1.0
+Authorization: Basic ZGFmZnk6c2VjZXJldA==
+Accept: application/json
+</code></pre>
+<p>
+And the response may be:
+</p>
+<pre><code>HTTP/1.1 200 Ok
+Date: Wed, 20 Sep 2006 17:17:11 GMT
+Content-Length: nnn
+Content-Type: application/json
+
+{  
+  "members": 
+  [
+    {"href": "chicken"}, 
+    {"href": "ribs"}, 
+    {"href": "burger"}, 
+    {"href": "pizza"}
+  ],
+  "next": null
+}
+</code></pre>
+<p>
+Now to retrieve the first member of the collection:
+</p>
+<pre><code>GET /coll/chicken HTTP/1.1
+Host: example.org
+User-Agent: NotGiven/1.0
+Authorization: Basic ZGFmZnk6c2VjZXJldA==
+Accept: application/json
+</code></pre>
+<p>
+And the response may be:
+</p>
+<pre><code>HTTP/1.1 200 Ok
+Date: Wed, 20 Sep 2006 17:18:11 GMT
+Content-Length: nnn
+Content-Type: application/json
+
+{
+    "title": "Southern Fried Chicken", 
+    "instruction": "First get a chicken..."
+}
+</code></pre>
+<p>
+To update our recipe we PUT an updated JSON representation back the same URI:
+</p>
+<pre><code>PUT /coll/chicken HTTP/1.1
+Host: example.org
+User-Agent: NotGiven/1.0
+Authorization: Basic ZGFmZnk6c2VjZXJldA==
+Content-length: nnn 
+Content-type: application/json
+
+{
+  "title": "Southern Fried Chicken", 
+  "instruction": "First gather the ingredients: 
+    a whole chicken, 
+    one quart of buttermilk..."
+}
+</code></pre>
+<p>
+And the response may be:
+</p>
+<pre><code>HTTP/1.1 200 Ok
+Date: Wed, 20 Sep 2006 17:18:12 GMT
+Content-Length: 0 
+</code></pre>
+<p>
+DELETE is used on the member to remove it from the
+collection, and we POST a JSON representation to the
+URI of the collection to create a new entry:
+</p>
+<pre><code>POST /coll HTTP/1.1
+Host: example.org
+User-Agent: anonymous/2.0
+Authorization: Basic ZGFmZnk6c2VjZXJldA==
+Content-Type: application/json
+Content-Length: nnn
+
+{
+  "title": "Trout on a stick",
+  "instruction": "First get a trout and a stick..."
+}
+</code></pre>
+<p>
+The server signals a successful creation with a status code of 201
+and the response includes a "Location" header indicating the 
+URI of the newly created member.
+</p>
+<pre><code>HTTP/1.1 201 Created
+Date: Fri, 7 Oct 2006 17:17:11 GMT
+Content-Length: nnn
+Content-Type: application/json
+Location: http://example.org/coll/trout
+</code></pre>
+<p>
+   That seems like a good start, next we'll build a <a href="http://bitworking.org/news/restful_json_server">server-side implementation</a>.
+</p>
+
+  
+  </body>

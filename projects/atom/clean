@@ -1,0 +1,18 @@
+#!/bin/bash
+rm Makefile
+rm draft-gregorio-09.html
+rm draft-gregorio-09.txt
+rm draft-ietf-atompub-protocol-00-from-gregorio-09.diff.html
+rm draft-ietf-atompub-protocol-00.html
+rm draft-ietf-atompub-protocol-00.txt
+rm draft-ietf-atompub-protocol.xml
+rm idnits-v1.32
+rm index.html
+rm notes.txt
+rm reference.RFC.2629.xml
+rm rfc2629.dtd
+rm rfc2629.rnc
+rm rfc2629.xslt.xml
+rm rfcdiff.sh
+rm strip-annotations.xslt.xml
+rm xml2rfc.tcl

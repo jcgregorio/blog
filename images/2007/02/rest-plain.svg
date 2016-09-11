@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   viewBox="0 0 750 550"
+   >
+  <g stroke-width="4" stroke="#000"  stroke-opacity="1">
+    <rect
+       width="140"
+       height="140"
+       x="280"
+       y="370"
+       fill="#407d3d"
+       />
+   <circle r="67" cx="657" cy="345"
+       fill="#5157c3"
+       />
+    <rect
+       width="120"
+       height="120"
+       x="161"
+       y="34"
+       fill="#dfab32"
+       />
+    <path
+       d="M 576,633 L 539,666 L 491,675 L 449,651 L 425,608 L 435,560 L 469,524 L 517,519 L 562,540 L 582,584 L 576,633 z "
+       transform="matrix(0.982117,0,0,0.885932,31,-428)"
+       fill="#bf1629"
+       />
+    <path
+       d="M 132,823 L 141,724 L 10,854 L 108,832 L -56,748 L -5,834 L 23,652 L -42,726 L 140,698 L 48,658 L 132,823 z "
+       transform="matrix(0.741281,0,0,0.751551,50,-222)"
+       fill="#a14d9c"
+       />
+    <path
+       d="M 268,419 L 155,363" />
+    <path
+       d="M 315,362 L 247,163" />
+    <path
+       d="M 381,361 L 482,170" />
+    <path
+       d="M 429,415 L 580,368" />
+    <g  stroke="none" fill="#000">
+    <text
+       x="480" y="135" style="font-size:144px;font-family:Purisa" > a </text>
+    <text
+       x="175" y="130" style="font-size:144px;font-family:'URW Chancery L',sans-serif;" > A </text>
+    <text
+       x="65" y="362" style="font-size:80px;font-family:'AR PL ShanHeiSun Uni','Monotype Corsiva',serif" > a </text>
+    <text
+        x="615" y="377" style="font-size:120px;font-family:TSCu_Comic,'Comic Sans MS',sans" > A </text>
+    <text
+        x="305" y="480" style="font-size:144px;fill:white;font-family:TlwgMono,fantasy" > A </text>
+    <text
+        x="180" y="440" style="font-size:30px;font-family:'Bitstream Vera Sans'" > "A" </text>
+    <text
+        x="480" y="440" style="font-size:30px;font-family:'Bitstream Vera Sans'" > "A" </text>
+    <text
+        x="200" y="250" style="font-size:30px;font-family:'Bitstream Vera Sans'" > "A" </text>
+    <text
+        x="435" y="300" style="font-size:30px;font-family:'Bitstream Vera Sans'" > "A" </text>
+   </g>
+  </g>
+</svg>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>RSS and Content Negotiation</title>
+    <meta name=created value="2003-03-01T14:32:46">
+  </head>
+  <body>
+  
+  <p><a href="http://www.pocketsoap.com/weblog/2003/03/01.html#a1047">Simon</a>
+has just checked in support for content negotiation
+for Aggie. Hopefully well see more tools support this.
+<a href="http://wellformedweb.org/news/2">RESTLog</a> has always supported
+content negotiaion. For example, if you do a GET on the url
+<code>http://wellformedweb.org/news</code> in a browser you will
+get the HTML version but an RSS aggregator that supports content negotiation
+will get the RSS feed from the same URL. Now there are few aggregators that
+currently support conneg so RESTLog allows you to add a query parameter to
+over-ride the content type. Thus the other way to get the RSS feed is by the
+url <code><a href="http://wellformedweb.org/news?rss">http://wellformedweb.org/news?rss</a></code></p>
+  <div class="commentContent" id="X1">
+    Is this a good idea? This might be confusing to people, and seems silly to have two URIs to the same document (one with o=rss in the query string and one without).
+
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X1" title="2003-03-13T18:19:54">2003-03-13</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I am supporting content-negotiation for the sake of learning and experimentation, though you can see from this entry:
+
+http://bitworking.org/news/45
+
+that I don't think it has much of a future. I, for example, will be removing it from the RESTLog API in the near future. 
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-03-16T12:31:58">2003-03-16</a>
+    </p>
+</div>
+  </body>

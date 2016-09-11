@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <title>Should you use Content Negotiation in your Web Services?</title>
+    <meta name=created value="2003-09-06T21:54:43">
+  </head>
+  <body>
+  <p>Should you use Content Negotiation when building your web service?
+The short answer is no. There are definite problems with <abbrev title="Content Negotiation">conneg</abbrev>
+and I can give some examples of problems I have run into and also point to problems
+other have run into.</p>
+
+  
+<p>First let's back up and explain Content Negotiation. Your browser is 
+   a generic display program and can take in various kinds of media, such
+   as HTML, JPEGs, CSS, Flash, etc. and display it for you. The first thing to
+   note is that each of those kinds of media have different mime types.
+   Each format has it's own registered mime type and when a client
+   does a GET on a URL it gets back not only the content but the response
+   also includes a <code>Content-Type:</code> header which lists
+   the mime-type of what is in the body.
+</p>
+<p>One of the interesting things about HTTP is that it allows
+   the same URI to have multiple representations. For example I 
+   could have a URL that had both <code>plain/text</code> and <code>text/html</code>
+   representations. Now that leads to two obvious questions.</p>
+<ol>
+<li>How does the server know which represenation to serve?</li>
+<li>How can the browser influence the servers choice to get something it can handle?</li>
+</ol>
+<p>Let's start by answering question two first. The browser uses the <code>Accept:</code>
+   header to list out the mime-types that it is willing to accept. There is also a weighting
+   scheme that allows the client to specify a preference for one media type 
+   over another. For example, here is the capture of some of the headers, including the <code>Accept:</code> header,
+   sent by Mozilla when it does a GET on a URI:</p>
+<pre class="example"><code>Accept: text/xml,application/xml,application/xhtml+xml,\
+    text/html;q=0.9,text/plain;q=0.8,video/x-mng,\
+    image/png,image/jpeg,image/gif;q=0.2,*/*;q=0.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate,compress;q=0.9
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+</code></pre>
+<p>The <code>Accept:</code> header list the mime-types that the browser can 
+   handle along with weights of the form <code>q=</code> where the argument
+   is a floating point number between 0 and 1. The weights indicate a preference
+   for that media type, with a higher number inidicating a higher preference. Note that
+   there are several bits of complexity I am going to ignore for now. The first is the last
+   type the Mozilla browser says in can accept, */*;q=0.1. This is a wild card
+   match, which will match any mime-type that the server could want to serve up. The second
+   is that there are multiple Accept headers, one for language, one for encoding, another
+   for charset. How these over-lap and influence the response sent won't be covered here.
+</p>
+<p>Now to answer the first question. The server looks at the available representations
+   is has and servers up the one with the highest preference to the client.
+   Based on the <code>Accept:</code>
+   header it sends an appropriate representation back and indicates the type it
+   chose using the <code>Content-Type:</code> header.</p>
+<p>This seems like a really cool and vastly under utilized feature of HTTP. It also 
+  seems particularly intriguing for web services. You could return
+  JPEGs from that mapping service for the older client platforms, but also 
+  serve up SVG for the newer clients so they can scale and rotate their maps. 
+  What could possibly go wrong?</p>
+<p>The first thing that could go wrong is a bug or mis-configuration on the client or the server. 
+   This has happened to me in the 
+   past. The W3C does conneg on some of their recommendations, returning either HTML or plain 
+   text based on the clients capabilities. This is fine, but one day their server was 
+   either confused or mis-configured because it would only serve the recommendation in <code>plain/text</code>.
+   I really needed the HTML form, but after trying multiple browsers from multipe locations I could only retrieve the text 
+   format. I ended up pulling the HTML version out of the Google cache.</p>
+<p>The second problem that I ran across highlights the real core problem with conneg. I was
+   trying to use the W3C XSLT service to do some transformations on my web pages. Now the server side 
+   software I use to run Well-Formed Web does conneg and can return either HTML or an RSS item 
+   fragment for each URI. At the time I was serving up XHTML 1.0, which is valid XML and 
+   thus good input into an XSLT service. So the way the XSLT service works is that you enter two URIs, one
+   for the source content and the other for the XSLT sheet to apply to the source content.
+   My transformation kept failing and it was because of the 
+   Accept headers that the XSLT service sent when it went to retrieve the source content. 
+   My server kept returning the RSS item fragment and not 
+   the XHTML. Now this would have been fine if I wanted to apply an XSLT sheet to my RSS item fragment, but in this 
+   case I wanted it to apply to the XHTML. Note that the problem could have been completely reversed, I could have 
+   been trying to apply the XSLT to the RSS item and not to the XHTML and my server could have returned
+   the XHTML all the time. The crux of the problem is that when I gave the URI to the XSLT transformation
+   service I have no way of specifying what mime-type to request. I get no chance to tweak the 
+   services <code>Accept:</code> header.
+</p>
+<p>Let's cover that again to clarify. If I hand you a URI only, and that URI supports conneg,
+   then I get no control over which representation you retrieve. In the cases where you are
+   passing a URI into a service that is later going to retrieve a represenation from that URI, you 
+   really have no idea which representation it's going to get. That could mean that you end up 
+   passing your RSS feed to the W3C HTML validator, or you end up passing XHTML instead of RSS into
+   an XSLT translator service, or you end up passing a 12MB PNG to a handheld instead of 
+   that 20KB SVG file. You end up with a problem that is hard to debug and 
+   one that wouldn't exist if each URI had only one mime-type.</p>
+<h3>Further Reading</h3>
+<p><a href="http://norman.walsh.name/2003/07/02/conneg">Norman Walsh has also run into problems</a> with Content Negotiation.</p>
+<p>The issue of using fragment identifiers with conneg has not only come up but was important enough to 
+   merit mention in the W3C document <a href="http://www.w3.org/TR/webarch/#frag-conneg">Architecture of the World Wide Web</a>.</p>
+
+  
+  </body>

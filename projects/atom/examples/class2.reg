@@ -1,0 +1,12 @@
+REGEDIT4
+
+[HKEY_CLASSES_ROOT\atom_file]
+@="Atom Syndication Program"
+
+[HKEY_CLASSES_ROOT\atom_file\shell]
+
+[HKEY_CLASSES_ROOT\atom_file\shell\open]
+
+[HKEY_CLASSES_ROOT\atom_file\shell\open\command]
+@="\"C:\\AtomHandler\\handle.exe\" %1"
+

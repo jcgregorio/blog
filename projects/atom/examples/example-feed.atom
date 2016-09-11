@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xml:lang='en-us'>
+    <title>ongoing</title>
+    <link rel="self" type='application/atom+xml'
+        title="Test Feed" href="http://bitworking.org/projects/atom/examples/example-feed.atom"/>
+    <icon>/favicon.ico</icon>
+    <updated>2005-08-16T08:37:23-08:00</updated>
+    <author><name>Joe Gregorio</name></author>
+    <id>http://bitworking.org/projects/atom/examples/example-feed.atom</id>
+</feed>

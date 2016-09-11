@@ -1,0 +1,4 @@
+#!/bin/bash
+DIR=./news/$(date +%Y/%m)
+mkdir --parents $DIR
+vim $DIR/$1.html

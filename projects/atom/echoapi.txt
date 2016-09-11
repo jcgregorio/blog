@@ -1,0 +1,1008 @@
+
+
+Network Working Group                                        J. Gregorio
+Internet-Draft                                           BitWorking, Inc
+Expires: January 1, 2004                                    July 3, 2003
+
+
+                                EchoAPI
+                               sample.txt
+
+Status of this Memo
+
+   This document is an Internet-Draft and is in full conformance with
+   all provisions of Section 10 of RFC2026.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups. Note that other
+   groups may also distribute working documents as Internet-Drafts.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time. It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   The list of current Internet-Drafts can be accessed at http://
+   www.ietf.org/ietf/1id-abstracts.txt.
+
+   The list of Internet-Draft Shadow Directories can be accessed at
+   http://www.ietf.org/shadow.html.
+
+   This Internet-Draft will expire on January 1, 2004.
+
+Copyright Notice
+
+   Copyright (C) The Internet Society (2003). All Rights Reserved.
+
+Abstract
+
+   This memo presents a technique for using XML (Extensible Markup
+   Language) and HTTP (HyperText Transport Protocol) to edit content.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 1]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+Table of Contents
+
+   1.     Introduction . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.     Terminology  . . . . . . . . . . . . . . . . . . . . . . .   4
+   3.     Scope  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
+   4.     The EchoAPI Model  . . . . . . . . . . . . . . . . . . . .   6
+   4.1    Creating a new Entry . . . . . . . . . . . . . . . . . . .   7
+   4.2    Editing an entry . . . . . . . . . . . . . . . . . . . . .   8
+   4.3    Deleting an entry  . . . . . . . . . . . . . . . . . . . .   9
+   4.4    Editing User Prefs . . . . . . . . . . . . . . . . . . . .  10
+   4.5    Adding Comments  . . . . . . . . . . . . . . . . . . . . .  10
+   4.5.1  Comment Auto-Discovery . . . . . . . . . . . . . . . . . .  11
+   4.6    Discovery  . . . . . . . . . . . . . . . . . . . . . . . .  12
+   5.     Functional Specification . . . . . . . . . . . . . . . . .  13
+   5.1    Formats  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2    Actions  . . . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.1  Create Entry . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.2  Edit Entry . . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.3  Delete Entry . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.4  Get List of Entries  . . . . . . . . . . . . . . . . . . .  13
+   5.2.5  Get User Info  . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.6  Set User Info  . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.7  Get Categories . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.8  Set Categories . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.9  Result Codes . . . . . . . . . . . . . . . . . . . . . . .  13
+   5.2.10 Content  . . . . . . . . . . . . . . . . . . . . . . . . .  14
+   6.     Security Considerations  . . . . . . . . . . . . . . . . .  15
+          References . . . . . . . . . . . . . . . . . . . . . . . .  16
+          Author's Address . . . . . . . . . . . . . . . . . . . . .  16
+          Intellectual Property and Copyright Statements . . . . . .  17
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 2]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+1. Introduction
+
+   EchoAPI is an application level protocol for publishing, and editing
+   web resources. EchoAPI unifies many disparate publishing mechanisms
+   into a single, simple, extensible protocol. The protocol at its core
+   is the HTTP transport of an XML payload.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 3]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+2. Terminology
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",the and "OPTIONAL" in
+   this document are to be interpreted as described in RFC2119.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 4]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+3. Scope
+
+   This document covers the editing of content of a periodically
+   updating website using the HTTP and XML. Many of the XML payloads are
+   in Echo format, which will not be documented here.
+
+   This specification will mirror some of the functionality of the
+   Blogger 2.0 API [1], which includes support for the Server
+   Introspection API [2].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 5]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+4. The EchoAPI Model
+
+   When editing the content of the website http://example.org/angus, the
+   first thing to do is find out the servers capabilites. This mirrors
+   the Server Introspection API [3] used by the Blogger 2.0 API. Using
+   HTTP GET on the URL http://example.org/angus/introspection returns
+   the following XML file:
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <introspection>
+     <edit-entry>http://example.org/angus/</edit-entry>
+     <user-prefs>http://example.org/angus/prefs</user-prefs>
+   </introspection>
+
+   This site furnishes only a minimal set of functionality. A more full
+   featured site might return:
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <introspection>
+     <edit-entry>http://example.org/angus/</edit-entry>
+     <user-prefs>http://example.org/angus/prefs</user-prefs>
+     <edit-template>http://example.org/angus/templates</edit-template>
+     <categories>http://example.org/angus/categories</categories>
+   </introspection>
+
+   The actual form and location of the URL used to retrieve the
+   introspection information does not matter, it could have just as
+   easily been:
+
+    http://example.org/angus?action=introspection
+
+   or
+
+    http://dev.example.org/api?userid=angus&amp;action=introspection
+
+   The discussion of how to make the introspection URL easy to find will
+   be covered later.
+
+   This file tells us that the EchoAPI implementation on the site http:/
+   /example.org/angus/ supports both the 'edit-entry' and the
+   'user-prefs' interfaces, and it also specifies the URL to use for
+   each of these interfaces. Again note that there are no constraints on
+   the URLs that can be specified. The 'edit-entry' URL could just have
+   easily been:
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 6]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+    http://dev.example.net/api?userid=angus&amp;action=edit
+
+
+4.1 Creating a new Entry
+
+   To create a new Entry on the server, the client connects to port 80
+   on http://example.org and sends:
+
+   POST /angus HTTP/1.1
+   Content-Type: application/not-echo+xml
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <entry>
+       <title>My First Entry</title>
+       <subtitle>In which a newbie learns to blog...</subtitle>
+       <summary>A very boring entry...</summary>
+
+       <author>
+         <name>Bob B. Bobbington</name>
+         <homepage>http://bob.name/</homepage>
+         <weblog>http://bob.blog/</weblog>
+       </author>
+
+       <issued>2003-02-05T12:29:29</issued>
+
+       <content type="application/xhtml+xml" xml:lang="en-us">
+         <p xmlns="...">Hello, <em>weblog</em> world! 2 &lt; 4!</p>
+       </content>
+   </entry>
+
+   This would create a new weblog Entry with the title "My First Entry".
+
+   Assuming everything goes well and the Entry is created, the response
+   might look like:
+
+   HTTP/1.1 201 Created
+   Content-Type: application/not-echo+xml
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <entry>
+       <title>My First Entry</title>
+       <subtitle>In which a newbie learns to blog...</subtitle>
+       <summary>A very boring entry...</summary>
+
+       <author>
+         <name>Bob B. Bobbington</name>
+         <homepage>http://bob.name/</homepage>
+         <weblog>http://bob.blog/</weblog>
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 7]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+       </author>
+
+       <issued>2003-02-05T12:29:29</issued>
+       <created>2003-02-05T14:10:58Z</created>
+       <modified>2003-02-05T14:10:58Z</modified>
+
+       <link>http://example.org/angus/2003/02/05#My_First_Entry</link>
+       <id>urn:example.org:angus:1</id>
+
+       <content type="application/xhtml+xml" xml:lang="en-us">
+         <p xmlns="...">Hello, <em>weblog</em> world! 2 &lt; 4!</p>
+       </content>
+   </entry>
+
+   This would create a new weblog Entry with the title "My First Entry".
+
+   @@ Editors Note: Beware the Echo syntax is still in flux and the
+   above example is not normative. @@
+
+4.2 Editing an entry
+
+   To begin the editing process, the URI of the Echo Entry item fragment
+   representating the Entry must be found. The "archiveURI" is the place
+   to begin that discovery process, by doing a GET on that URI. The
+   content returned from that request will be an XML document in the
+   EchoAPI Archive Format.
+
+   For example, if "archiveURI" were "http://example.com/archive", the
+   headers and body of the HTTP request to "example.org" would look
+   like:
+
+   GET /archive HTTP/1.1
+   Accept: text/xml
+
+   This would return a list of some of the Entrys on the weblog.
+
+   The response from such a request would look like:
+
+   HTTP/1.1 200 OK
+   Content-Type: text/xml
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <archives xmlns="http://www.purl.org/EchoAPI/archives/1.0">
+    <group title="Last Ten Entries">
+       <res href="http://sample.org/news/100">Most Recent Post</res>
+       <res href="http://sample.org/news/99">Yesterdays</res>
+       .
+       .
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 8]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+       .
+       <res href="http://sample.org/news/91">Post From The Past</res>
+    </group>
+    <more href="http://sample.org/archive/all">All Items</more>
+    <group title="By Category">
+       <more href="http://sample.org/archive/technology">Tech</more>
+       <more href="http://sample.org/archive/books">Book Reviews</more>
+       <more href="http://sample.org/archive/personal">Personal</more>
+    </group>
+   </archives>
+   This would return a list of some of the Entrys on the weblog.
+
+   Now the Entry that the user is looking for may not be in the list and
+   they may need to go further into the archive. For example, if they
+   knew they wanted to edit a Tech Entry that didn't appear in the "Last
+   10 Entries", then they would retrieve the Archive document that
+   resides at "http://sample.org/archive/technology", which could
+   contain some or all of the Entries in the Tech category. Note that
+   the document at "http://sample.org/archive/technology" could also
+   contain additional "more" elements.
+
+   @@ Following is the justification for choosing this method over the
+   alternatives. @@ The use of multiple GET's and traversing a web of
+   links allows the server to present the Entries in multiple ways to
+   the user. One alternative to this would be to present a single long
+   list of Entries, maybe with attributes attached. That might be
+   useful, but the document could get quite long and cumbersome to
+   transfer. It also puts the effort onto the EchoAPI client to sort,
+   categorize and display the contents of the archive. In addition,
+   adding new attributes would require an update to the client software
+   to take advantage of the new information.
+
+   Another approach would be to allow a query syntax that allowed
+   searching for Entries based on Date or keyword. The downfall of this
+   approach is the same, in that the addition of new seach parameters
+   requiring updating the client software.
+
+   Once a resource has been chosen the client can do a GET on that
+   resource to get an Echo formatted representation of that Entry.
+   Editing of the content or other elements takes place, then the client
+   PUT's the modified Entry back to the same URI to update the Entry.
+
+4.3 Deleting an entry
+
+   Once a resource has been chosen the client can do a DELETE on that
+   resource to delete the Entry.
+
+
+
+
+
+Gregorio                Expires January 1, 2004                 [Page 9]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+4.4 Editing User Prefs
+
+   The User Prefs section is very rough. You have been warned.
+
+   To begin editing the user preferences issues a GET on the
+   "userPrefsURI", the response will contain content in the
+   EchoUserPrefs format.
+
+   The response from such a request would look like:
+
+   HTTP/1.1 200 OK
+   Content-Type: text/xml
+
+   <?xml version="1.0" encoding='iso-8859-1'?>
+   <userprefs xmlns="http://www.purl.org/EchoAPI/UserPrefs/">
+      <name></name>
+      <id></id>
+      <email></email>
+   </userprefs>
+   This would return a list of user configuration parameters and their
+   values.
+
+   The values can then be updated, and doing a PUT of the EchoUserPrefs
+   back to the "userPrefsURI" will update the user preferences.
+
+4.5 Adding Comments
+
+   Ok, there are a lot of interfaces now circulating TrackBack,
+   Ping-Back, Post-It. All of these are a way of commenting on an item.
+   The only thing missing from the mix is a way to do "comments"
+   themselves. This section of the specification is intended to be a
+   roll-up of all the above specifications and to cover comments as
+   well.
+
+   Creating a comment is similar to creating an Entry, you POST an Entry
+   to a URI. Such a URI will be referred to as "commentURI" for the sake
+   of exposition, but realize that for each weblog Entry their is a
+   unique "commentURI". For now we will defer discussing how to obtain
+   the corrent URI to POST to.
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 10]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+   For example, if  "http://example.com/news/entry100/" is the URI that
+   accepts comments for "entry100", then the headers and body of the
+   HTTP request to "example.org" would look like:
+
+   POST /news/entry100/ HTTP/1.1
+   Content-Type: text/xml
+
+     <entry>
+       <title>My Comment</title>
+       <author>
+         <name>Fred B. Bobbington</name>
+         <homepage>http://fred.name/</homepage>
+         <weblog>http://fred.blog/</weblog>
+       </author>
+       <issued>2003-02-05T12:29:29</issued>
+       <content type="application/xhtml+xml" xml:lang="en-us">
+         <p xmlns="...">Welcome to the neighborhood!</p>
+       </content>
+     </entry>
+
+   This would create a new comment/trackback for "entry100".
+
+4.5.1 Comment Auto-Discovery
+
+   Two mechanims are available for discovering the "commentURI". The
+   first is a way to put that information in HTML, the second is a way
+   to embed that information in an Echo feed.
+
+4.5.1.1 HTML Auto-Discovery
+
+   The <link> element has been successful in finding RSS feeds and is
+   appropriate to use here for discovering the "commentURI" in HTML
+   pages. In this case the form is:
+
+   <link rel="service.comment" type="text/xml"
+         href="url goes here" title="EchoComment">
+
+   Where href should be set to the URL that accepts POSTs for comments.
+   Applications looking for a "commentURI" need to parse out the headers
+   of the web page and look for a link tag that has a relation rel of
+   "comment" and a mime-type of "text/xml".
+
+4.5.1.2 Echo Feed Auto-Discovery
+
+   There is an item level element named 'comment' in Echo that is used
+   to provide the location of the "commentURI" endpoint to aggregator
+   software. This is providing the same information as the link tag does
+   in HTML. Here is an example:
+
+
+
+Gregorio                Expires January 1, 2004                [Page 11]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+4.6 Discovery
+
+   @@ What about WSDL? @@
+
+   RSD is used as the format to hold both the "createURI",
+   "userPrefsURI" and the "archiveURI". When editing a web site, the RSD
+   file needs to be found before editing can begin. Part of the RSD
+   specification is for Auto-Discovery, the addition of an HTML 'link'
+   tag to a web page that contains the URI of the RSD file. Please see
+   the @@external link?@@ RSD Specification for more details.
+
+   Here is an example RSD file for a weblog hosted at http://
+   example.org: would look like:
+
+
+   <?xml version="1.0" ?>
+   <rsd version="0.7" xmlns="http://archipelago.phrasewise.com/rsd" >
+     <service>
+       <engineName>EchoAPI</engineName>
+       <engineLink>http://purl.org/Echo</engineLink>
+
+       <homePageLink>http://purl.org/Echo</homePageLink>
+       <apis>
+         <api name="EchoAPI" preferred="true"
+              location="http://example.org/news" blogID="" >
+           <settings>
+             <setting name="archives">http://example.org/arch</setting>
+             <setting name="userprefs">http://example.org/pref</setting>
+           </settings>
+         </api >
+       </apis>
+     </service>
+   </rsd>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 12]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+5. Functional Specification
+
+5.1 Formats
+
+   @@ TBD @@ More formal specification of all the XML formats used in
+   this protocol.
+
+5.2 Actions
+
+   @@ TBD @@ A more formal specification of all the actions.
+
+5.2.1 Create Entry
+
+   None.
+
+5.2.2 Edit Entry
+
+   None.
+
+5.2.3 Delete Entry
+
+   None.
+
+5.2.4 Get List of Entries
+
+   None.
+
+5.2.5 Get User Info
+
+   None.
+
+5.2.6 Set User Info
+
+   None.
+
+5.2.7 Get Categories
+
+   None.
+
+5.2.8 Set Categories
+
+   None.
+
+5.2.9 Result Codes
+
+   @@TBD@@  Mostly 200 for normal responses, seems that 30X codes for
+   redirects are useful but might make implementations a little harder
+   to implement. @@Ref CommentAPI problems returning a 303 vs 200@@
+
+
+
+Gregorio                Expires January 1, 2004                [Page 13]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+5.2.10 Content
+
+   @@TBD@@ How does an Echo document change when used in these different
+   contexts? Which parts that are required when found in a feed become
+   optional when used in creating an Entry?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 14]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+6. Security Considerations
+
+   @@TBD@@ Talk here about using HTTP basic and digest authentication.
+
+   @@TBD@@ Talk here about denial of service attacks using large XML
+   files, or the billion laughs DTD attack.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 15]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [1]  <http://www.blogger.com/developers/api/documentation20.html>
+
+   [2]  <http://scripts.incutio.com/xmlrpc/introspection.html>
+
+   [3]  <http://scripts.incutio.com/xmlrpc/introspection.html>
+
+
+Author's Address
+
+   Joe Gregorio
+   BitWorking, Inc
+   1002 Heathwood Dairy Rd.
+   Apex, NC  27502
+   US
+
+   Phone: +1 919 272 3764
+   EMail: joe@bitworking.com
+   URI:   http://bitworking.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 16]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+Intellectual Property Statement
+
+   The IETF takes no position regarding the validity or scope of any
+   intellectual property or other rights that might be claimed to
+   pertain to the implementation or use of the technology described in
+   this document or the extent to which any license under such rights
+   might or might not be available; neither does it represent that it
+   has made any effort to identify any such rights. Information on the
+   IETF's procedures with respect to rights in standards-track and
+   standards-related documentation can be found in BCP-11. Copies of
+   claims of rights made available for publication and any assurances of
+   licenses to be made available, or the result of an attempt made to
+   obtain a general license or permission for the use of such
+   proprietary rights by implementors or users of this specification can
+   be obtained from the IETF Secretariat.
+
+   The IETF invites any interested party to bring to its attention any
+   copyrights, patents or patent applications, or other proprietary
+   rights which may cover technology that may be required to practice
+   this standard. Please address the information to the IETF Executive
+   Director.
+
+
+Full Copyright Statement
+
+   Copyright (C) The Internet Society (2003). All Rights Reserved.
+
+   This document and translations of it may be copied and furnished to
+   others, and derivative works that comment on or otherwise explain it
+   or assist in its implementation may be prepared, copied, published
+   and distributed, in whole or in part, without restriction of any
+   kind, provided that the above copyright notice and this paragraph are
+   included on all such copies and derivative works. However, this
+   document itself may not be modified in any way, such as by removing
+   the copyright notice or references to the Internet Society or other
+   Internet organizations, except as needed for the purpose of
+   developing Internet standards in which case the procedures for
+   copyrights defined in the Internet Standards process must be
+   followed, or as required to translate it into languages other than
+   English.
+
+   The limited permissions granted above are perpetual and will not be
+   revoked by the Internet Society or its successors or assignees.
+
+   This document and the information contained herein is provided on an
+   "AS IS" basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING
+   TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+   BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+
+
+
+Gregorio                Expires January 1, 2004                [Page 17]
+
+Internet-Draft                  EchoAPI                        July 2003
+
+
+   HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Acknowledgement
+
+   Funding for the RFC Editor function is currently provided by the
+   Internet Society.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Gregorio                Expires January 1, 2004                [Page 18]
+

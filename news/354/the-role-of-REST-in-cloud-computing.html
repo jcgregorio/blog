@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <title>The role of REST in Cloud Computing</title>
+    <meta name=created value="2008-08-02T03:01:01.897457">
+  </head>
+  <body>
+  
+  <p>Tim has <a href="http://radar.oreilly.com/2008/07/open-source-and-cloud-computing.html">a nice article that begins to frame the discussion 
+around Cloud Computing</a>. I am not going to address the whole article, but only 
+one aspect of it. Here are two quotations from
+that article that I want to focus on:</p>
+<blockquote><p>
+So here's my first piece of advice: if you care about open source for the cloud, build on services that are designed to be federated rather than centralized. 
+</p></blockquote>
+<blockquote><p>
+A key test of whether an API is open is whether it is used to enable services that are not hosted by the API provider,
+</p></blockquote>
+<p>Here is an example AtomPub Service Document
+  that combines two collections from two imaginary 
+  services into a single service. For the sake of the 
+  argument let's presume <code>some-blog-service.org</code>
+  only hosts blog posts but not media. And let's further
+  presume that <code>pictures-r-us.org</code> is a site
+  only interested in hosting your pictures and not your 
+  blog text. I could handwrite the following
+  AtomPub Service Document and host it somewhere and 
+  I should now be able to point a generic AtomPub blogging
+  client at said Service Document and have access to 
+  a service that handles both blog text and images with
+  no apriori coordination needed between the two services.
+</p>
+<pre><code>
+   &lt;?xml version="1.0" encoding='utf-8'?&gt;
+   &lt;service xmlns="http://www.w3.org/2007/app"
+            xmlns:atom="http://www.w3.org/2005/Atom"&gt;
+     &lt;workspace&gt;
+       &lt;atom:title&gt;My Blog&lt;/atom:title&gt;
+       &lt;collection
+           <b>href="http://some-blog-service.org/joe" &gt;</b>
+         &lt;atom:title&gt;My Blog Entries&lt;/atom:title&gt;
+       &lt;/collection&gt;
+       &lt;collection
+           <b>href="http://pictures-r-us.example.com/atompub/joe" &gt;</b>
+         &lt;atom:title&gt;Pictures&lt;/atom:title&gt;
+         &lt;accept&gt;image/png&lt;/accept&gt;
+         &lt;accept&gt;image/jpeg&lt;/accept&gt;
+         &lt;accept&gt;image/gif&lt;/accept&gt;
+       &lt;/collection&gt;
+     &lt;/workspace&gt;
+   &lt;/service&gt;
+</code></pre>
+<p>I am in no way saying that AtomPub is the solution. What I am pointing 
+out is that if you want federation then you need to design your
+protocols and APIs RESTfully. In this example it is 
+hypertext, link following, in the AtomPub spec that allows these
+two separate services to be linked together. 
+ </p>
+  
+  </body>

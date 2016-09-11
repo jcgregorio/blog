@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>DI-624 - Wireless Access Point</title>
+    <meta name=created value="2006-02-15T12:50:20">
+  </head>
+  <body>
+  
+  <p>It is not completely obvious how to turn disable the <em>router</em> functionality 
+  on the D-Link DI-624 so that it only operates as a wireless access point. Here is
+  the recipe, which I initially 
+  found <a href="http://www.dslreports.com/forum/remark,14435099?hilite=di-624">on dslreports</a>.
+</p>
+<pre>
+Connect to a LAN port (not the WAN port).
+
+Change the 'LAN IP address' to an unused IP address on your LAN.
+
+On Home | DHCP: 
+   Disable the DHCP server.
+
+On Home | WAN:
+   Set the WAN port to Static IP and then 
+   configure the Static IP address to bogus values:
+   IP address = 99.99.99.99
+   Netmask    = 255.255.255.0
+   Gateway    = 99.99.99.100
+   DNS        = 99.99.99.100
+
+Reboot the DI-624.
+</pre>
+  
+  </body>

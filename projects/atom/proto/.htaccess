@@ -1,0 +1,7 @@
+AuthUserFile /home/jcgregorio/friends
+AuthName "Friends Only File Area"
+AuthType Basic
+require valid-user
+<FilesMatch "\.xml$" >
+ForceType text/html
+</FilesMatch>

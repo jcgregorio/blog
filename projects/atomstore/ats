@@ -1,0 +1,166 @@
+#!/usr/bin/python2.4
+import os, sys
+import atomstore
+import libxml2
+
+create_usage = """                The value of 'dname' is either a domain name or 
+                email address that the creator owns on this date.
+                The database will be created with a URI template for the atom:id
+   
+                   tag:dname,date:dir:{key}
+   
+                Where {key} is the database id for each atom entry stored.
+"""
+
+
+usage = """usage: ats <subcommand> [options] [args]
+AtomStore command-line client, version 1.0.0
+  ats collection <dir>     Start working with a particular atom collection
+  ats list                 Print out a list of all the id's of the entrys in the store
+  ats del <id>             Delete the entry with the given id from the store.
+  ats create <dir> <dom>   Create a new atom store in the directory 'dir'
+  ats get <id>             Get the entry with <id>.
+  ats put <filename>       Update the collection with the entry in <filename>.
+  ats post <filename>      Adds the entry in <filename> to the collection.
+  ats dump                 Exports the whole store 
+  ats search <value>       Search for all entries that contain 'value'
+  ats info                 Get info about the collection we are bound to.
+"""
+
+dir = ""
+try:
+    f = open("./.ats/collection", "r")
+    dir = f.readline()
+    f.close()
+except:
+    pass
+
+try:
+    if dir:
+        store = atomstore.Store(dir)
+except:
+    dir = ""
+    
+class AtomStoreExp(Exception):
+    def __init__(self, args=None):
+        self.args = args
+
+def perror(s):
+    raise AtomStoreExp, s
+
+def help(args):
+    print usage
+
+def create(args):
+    if len(args) < 3:
+       perror("Missing the two required command arguments 'dirname', 'dname' and 'edituri'.") 
+    # need to fix the requirement of knowing the edit URI up front.
+    atomstore.create(args[0], args[1], args[2])
+
+def dump(args):
+    index = store.index()
+    for i in index:
+        print store.get(i['id']), "\f", 
+
+def search_(args):
+    if len(args) < 1:
+        perror("Missing the keyword.")
+
+    index = store.search(args[0])
+    for i in index:
+        print store.get(i['id']), "\f", 
+
+def del_(args):
+    if len(args) < 1:
+        perror("Missing the entry id.")
+
+    store.delete(args[0])
+    print "ok"
+
+def list_(args):
+    print "\n".join([i['id'] for i in store.index()])
+ 
+
+def get(args):
+    if len(args) < 1:
+        perror("Missing the required argument <id> , which is the id of the Entry to export, and the directory of the store.")
+    print store.get(args[0])
+   
+def put(args):
+    if len(args) < 1:
+        perror("Missing the required arguments <filename> , which is the id of the Entry to export, and the directory of the store.")
+
+    f = file(args[1], "r")
+    text = f.read()
+    doc = libxml2.parseDoc(text)
+    ctxt = doc.xpathNewContext()
+    ctxt.xpathRegisterNs('atom', 'http://www.w3.org/2005/Atom')
+    try:
+        iduri = ctxt.xpathEval("//atom:id")[0].get_content()
+    except:
+        perror("No atom:id found.")
+    id = iduri.split(":")[-1]
+    store.put(id, text)
+
+
+def post(args):
+    if len(args) < 1:
+        perror("Missing the required arguments <filename> , which is the id of the Entry to export, and the directory of the store.")
+
+    f = file(args[0], "r")
+    text = f.read()
+    store.post(text)
+
+def rebuild_index(args):
+    store.rebuild_index()
+
+def info(args):
+    index = store.index()
+    print "Collection: %s" % dir
+    print "Number of entries: %d" % len(index)
+
+def collection(args):
+    if len(args) < 1:
+        perror("Missing the <name> of the collection.")
+    try:
+        os.mkdir(".ats")
+    except os.error:
+        pass
+
+    print args[0]
+    f = open("./.ats/collection", "w")
+    f.write(args[0])
+    f.close()
+
+commands = {
+    'collection': collection,
+    'create': create,
+    'help': help,
+    'dump': dump,
+    'get': get,
+    'put': put,
+    'post': post,
+    'search': search_,
+    'list': list_,
+    'del': del_,
+    'rebuild-index': rebuild_index,
+    'info': info,
+}
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+
+    if len(args) and ( args[0] in commands.keys()) :
+        try:
+            if not (args[0] in ['create', 'collection']) and not dir:
+                perror("Not bound to a collection. Use 'collection' first.")
+            commands[args[0]](args[1:])
+        except Exception, val:
+            sys.stderr.write(str(val))
+            sys.stderr.write("\n")
+            sys.exit(1)
+
+    else:
+        commands['help'](args)
+    
+

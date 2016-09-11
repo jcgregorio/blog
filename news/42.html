@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>More on Regex-able XML</title>
+    <meta name=created value="2003-02-26T14:39:21">
+  </head>
+  <body>
+  
+  <p>I have received good feedback on my Regex-able XML. Good in this 
+case doesn't mean people agree with me, just that the responses
+have been very intelligent and helpful. (On a side note, I will get comments 
+working here before the week is out.) </p>
+<p>To clarify, I do know that conforming parsers will wipe away the 
+distictions in the two example documents I posted. My point in 
+presenting them was to point out the complexity in XML and
+that the formats complexity <strong>requires</strong> using 
+such a parser.</p>
+<p>Also it has been pointed out that this example:</p>
+<pre class="example"><code>&lt;root:item xmlns:bc="http://purl.org/dc/elements/1.1/" xmlns:root="" &gt;
+  &lt;root:title&gt;MetaData&lt;/root:title&gt;
+
+  &lt;bc:date&gt;2003-01-12T00:18:05-05:00&lt;/bc:date&gt;
+  &lt;root:link&gt;http://bitworking.org/news/8&lt;/root:link&gt;
+
+  &lt;description&gt;Upon waking, the dinosaur...&lt;/description&gt;
+&lt;/root:item&gt;</code></pre>
+<p>isn't valid XML. Turns out the Python parser minidom 
+  parses it just fine but the .NET parser to it's credit
+  does rightly pick up on the invalid namespace declaration.
+  That is to say my rule #2 in my previous post is already a part of the XML Namespace specification. Mea Culpa.
+</p>
+<p>Mutiple readers fairly asked for more concrete examples 
+of what I am trying to accomplish that XML is making so difficult. I
+will some illustrative examples soon.</p>
+<p>It was also also pointed out to me that XSLT 2.0 includes support for 
+regexs. That is cool and may be a step in the right direction. Maybe
+when 2.0 implementations are readily available I'll stop my whining.</p>
+
+  <div class="commentContent" id="X1">
+    I assume someone must have pointed you at this already, but I can't see a comment on this or the previous article (where I came in today from Tim Bray's blog). 'REX' gets mentioned on a regular basis in xml-dev.
+
+However as I'm sure other folk have pointed out, a second layer is required to deal with namespaces, entities, etc. I guess what you want is regexps that work intelligently in XML. Yeah, would be nice, wouldn't it :)
+    <p class="commentByLine">Posted by
+       <a href="http://www.cs.sfu.ca/~cameron/REX.html">Baz</a> on <a href="#X1" title="2003-03-18T12:32:32">2003-03-18</a>
+    </p>
+</div>
+  </body>

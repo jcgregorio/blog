@@ -1,0 +1,144 @@
+#!/home/jcgregorio/bin/python2.5
+import cgitb; cgitb.enable()
+import smtplib
+import gdata.spreadsheet.service
+import gdata.service
+import atom.service
+import gdata.spreadsheet
+import atom
+import getopt
+import sys
+import string
+from cgi import parse_qs
+import os
+import logging
+
+logging.basicConfig(level=logging.INFO, filemode="a", format='%(asctime)s %(levelname)s %(message)s' ,filename="/home/jcgregorio/web/bitworking.org/projects/apexlearningcenter/log")
+
+mail_fail = False
+sheet_fail = False
+
+logging.info("Start")
+
+size = int(os.environ.get('CONTENT_LENGTH', "-1"))
+body = parse_qs(sys.stdin.read(size)) 
+row = dict([(key, " ".join(value)) for key, value in body.iteritems()])
+
+
+try:
+    fromaddr = "joe@bitworking.org"
+    toaddrs  = "lynne@apexlearningcenter.com"
+    subject = "Registration"
+    msg = ("From: %s\r\nTo: %s\r\nSubject: %s\r\n\r\n"
+           % (subject, fromaddr, toaddrs))
+
+    msg += "New registration information:\r\n"
+    msg += "\r\n".join(["%s: %s" % (key, value) for key, value in row.iteritems()])
+
+    server = smtplib.SMTP('localhost')
+    server.login(*(file("/home/jcgregorio/local.secret", "r").read().split()))
+    server.sendmail(fromaddr, toaddrs, msg)
+    server.quit()
+except:
+    mail_fail = True 
+
+try:
+    curr_key = "o09348461495030281047.1779799071219367976" 
+    curr_wksht_id = "od6"
+
+    gd_client = gdata.spreadsheet.service.SpreadsheetsService()
+    email, password = file("/home/jcgregorio/apexlearningcenter.pw", "r").read().split()
+    gd_client.email = email
+    gd_client.password = password
+    gd_client.source = "Joe Gregorio - apps for your domain pages to spreadsheet gateway"
+    gd_client.ProgrammaticLogin()
+
+#    row = {
+#    "name": "Christopher Gregorio",
+#    "address": "1002 Heathwood Dairy Rd",
+#    "dob": "4/18/94",
+#    "phone": "272-3764",
+#    "altphone": "387-9107",
+#    "parentname": "Lynne Gregorio",
+#    "parentemail": "lynne@apexlearningcenter.com",
+#    "childemail": "xdragonx@gmail.com",
+#    "school": "Apex Middle",
+#    "track": "n/a",
+#    "courses": "100, 102, 103",
+#    }
+
+    entry = gd_client.InsertRow(row, curr_key, curr_wksht_id)
+    if isinstance(entry, gdata.spreadsheet.SpreadsheetsCell):
+        sheet_fail = True 
+except:
+    sheet_fail = True 
+
+
+# Load up the price list
+
+lookup_curr_key = "o09348461495030281047.2744393525451891033" 
+lookup_curr_wksht_id = "od6"
+list_feed = gd_client.GetListFeed(lookup_curr_key, lookup_curr_wksht_id)
+
+lookup = dict(
+        [(entry.custom['code'].text, entry.custom['cost'].text) for i, entry in enumerate(list_feed.entry)]
+        )
+
+# Calculate the price
+
+course_list = row['courses'].split()
+bad_classes = [] 
+amount = 0
+for course in course_list:
+    if course not in lookup:
+        bad_classes.append(course)
+    else:
+        amount += int(lookup[course][1:])
+
+if not mail_fail and not sheet_fail:
+    print "Content-type: text/html"
+    print "Status: 200 Ok"
+    print
+    print "<h1>Registration complete</h1>"
+    print "<p>The total bill for your classes is <b>$%d</b></p>" % amount
+    if bad_classes:
+        print """<h2>Warning</h2><p> Some of the class codes you entered do not appear to be valid. You should
+        back up and re-check your course codes.</p>"""
+        print "The bad course codes are: %s" % " ".join(bad_classes)
+    print "<p>You can either pay using the button below, or you can bring cash or a check to the school</p>"
+    print """<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="lynne@apexlearningcenter.com">
+    <input type="hidden" name="item_name" value="Apex Learning Center">
+    <input type="hidden" name="item_number" value="web">
+    <input type="hidden" name="amount" value="%d">
+    <input type="hidden" name="no_shipping" value="0">
+    <input type="hidden" name="no_note" value="1">
+    <input type="hidden" name="currency_code" value="USD">
+    <input type="hidden" name="lc" value="US">
+    <input type="hidden" name="bn" value="PP-BuyNowBF">
+    <input type="image" src="https://www.paypal.com/en_US/i/btn/x-click-butcc.gif" border="0" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>""" % amount
+    print "<p>Click here to <a href='http://www.apexlearningcenter.com/registrationcomplete'>return to the Apex Learning Center</a>.</p>"
+    logging.info("Success - " + repr(locals()))
+else:
+    print "Content-type: text/html"
+    print "Status: 500 Internal Error"
+    print
+    print "<h1>Registration Failed</h1>"
+    print "<p>We're sorry but an error occured while processing your information. You can either try again or fill out the paper form at the school.</p>"
+    print "<p><a href='http://www.apexlearningcenter.com/registration'>Registration</a>.</p>"
+    logging.error("Error - " + repr(locals()))
+
+
+
+logging.info("Finished")
+
+# TODO 
+# logging
+# error reporting
+# input validation?
+# redirection
+# privacy policy
+

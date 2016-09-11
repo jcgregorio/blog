@@ -1,0 +1,617 @@
+<html>
+  <head>
+    <title>REST and WS-*</title>
+    <meta name=created value="2007-02-16T22:51:19.495076">
+  </head>
+  <body>
+  <blockquote><p>
+                   In a large system you may be faced with either a multitude of 
+     clients or a menagerie of them; in either case you have to stop serializing 
+                                         objects and start exchanging documents.
+                                                               </p></blockquote>
+<p><b>Update:</b> Added a more detailed section on <a href="http://bitworking.org/news/125/REST-and-WS#self-descriptive">self-descriptive messages</a>.
+</p><p><b>Update 2:</b> Moved large chunks of the document
+  around based on feedback. I moved the 'self-describing' section
+  earlier in the document and tried to improve the
+  transitions between the sections. I also added 
+  a TOC.
+  </p>
+<h3 id="toc"><a href="http://bitworking.org/news/125/REST-and-WS#toc">Table of Contents</a></h3>
+<ol>
+<li> <a href="http://bitworking.org/news/125/REST-and-WS#intro">Introduction</a>
+</li><li><a href="http://bitworking.org/news/125/REST-and-WS#types-and-documents">Types and Documents</a>
+</li><li><a href="http://bitworking.org/news/125/REST-and-WS#self-descriptive">Self-Descriptive</a>
+</li><li><a href="http://bitworking.org/news/125/REST-and-WS#rest-recipe">REST Recipe</a>
+</li><li><a href="http://bitworking.org/news/125/REST-and-WS#wsdl2">WSDL 2.0</a>
+</li></ol>
+<h3 id="intro"><a href="http://bitworking.org/news/125/REST-and-WS#intro">Introduction</a></h3>
+  <p> 
+    Before comparing REST and WS-* and outlining where each of them are best 
+    used, I need to first define some terms. There is substantial technical and 
+    marketing literature available that I believe WS-* is self-apparent.
+    </p>
+<p>
+    Defining REST will take some more work since there is substantial hype and 
+    many things on the web called REST are not RESTful at all. The problem is 
+    that REST is not a specific piece of technology but an Architectural Style 
+    that was <a href="http://www.ics.uci.edu/~fielding/pubs/webarch_icse2000.pdf">abstracted from HTTP during the transition from HTTP 1.0 to HTTP 
+        1.1</a>. At the time there were major performance issues being grappled with and 
+    HTTP 1.1 was designed with this model as a helper to address those 
+    performance and scaling concerns. The upshot is that HTTP does not have 
+    everything that REST indicates should be present, and there is the 
+    additional problem that while HTTP is the first, and best, implementation of 
+    REST, the two are not the same and yet are often confused. While REST is 
+    best thought of as a guide and not a law, you have to remember that so is, 
+    "Don't run with scissors". 
+    </p>
+<p>
+    For the remainder of this paper when I refer to REST I'll be talking about HTTP used as RESTfully as possible.
+    </p>
+<h3 id="types-and-documents"><a href="http://bitworking.org/news/125/REST-and-WS#types-and-documents">Types and Documents</a></h3>
+<p>
+    REST and WS-* are two different tools whose strengths shine at different scales. 
+    The easiest way to think about this is an example from nature: at the scale of 
+    the atom the forces responsible for most of the action are different from the 
+    forces at the scale of a cell. Quantum effects and the strong nuclear force 
+    determine the structure and operation of an atom, while the operation of a cell 
+    is dominated by molecular reactions and Van der Waals' forces.
+    </p>
+<p>
+    Another example closer to home; when programming and making calls into other 
+    functions and libraries, you pass along classes and types in the function call 
+    parameters. You expect those classes and types to be perfectly understood on the 
+    other side of that function call. Those are the rules at that scale; that type 
+    information can be counted on to survive and be useful over the function call 
+    boundary. As your scale grows, as you move outside the single executable, the 
+    same machine, or the same platform, that assumption begins to weaken, to the 
+    point that when you get to Internet scale services that assumption is actually 
+    harmful.
+    </p>
+<p>
+    When working at the smaller scale the assumption that types can move across a 
+    boundary is powerful and allows many optimizations. Working in a homogeneous 
+    environment such as Java, WS-* has real advantages; you can very quickly create 
+    interfaces in your target programming language and expose those interfaces via 
+    WSDL and have them consumed just as easily on the calling side using the same 
+    WSDL. This is illustrated in Figure 1, where the focus is moving objects between 
+    homogeneous systems.
+    </p>
+<p style="text-align: center;">
+<img src="http://bitworking.org/images/2007/02/ws.png" />
+</p><p class="caption">
+<b>Figure 1</b><br />
+          Moving object “A” from system to system.
+       </p>
+<p>
+    As you move to larger systems, either many more clients connecting, or a 
+    non-homogeneous pool of clients, this paradigm starts to break down. If there 
+    are many clients then the demands for caching semantics will be begin to 
+    dominate. In that case you need to abandon HTTP as just a simple transport and 
+    start using the application level semantics of HTTP to start leveraging the 
+    caching architecture already built into the Internet. 
+    </p>
+<p>
+    In the case of a non-homogeneous pool of clients you run into the fact that all 
+    those other languages aren't just 
+   <a href="http://bitworking.org/news/Python_isnt_Java_without_the_compile">Java-without-the-compile</a>, 
+   they are very different systems with radically differing views on typing, classes and 
+    type-safety. As you move into such a world you cannot get your object “A” from 
+    system to system. Instead you have to switch your focus to the bits on the wire, 
+    and leave it up to each client system how to best interpret that data. That's 
+    illustrated in Figure 2, where the format “A” is defined and each client 
+    interprets that document in an optimal manner for that environment.
+    </p>
+<p style="text-align: center;">
+<img src="http://bitworking.org/images/2007/02/rest.png" />
+</p><p class="caption">
+<b>Figure 2</b><br />
+            Defining the format “A” which is interpreted according to local custom in each environment.
+        </p>
+<p>
+    While defining formats and leveraging HTTP as your application protocol takes 
+    more time, and thus incurs a cost, you get benefits from paying that cost:
+    </p>
+<p>
+<ul>
+<li>Scalability</li>
+<li>Performance</li>
+<li>Platform neutrality</li>
+<li>Leveraging Internet scale infrastructure</li>
+</ul>
+</p>
+<p>So far we've seen how switching from serializing
+   objects to exchanging documents helps with platform
+   neutrality, but where do the benefits of 
+   scalability and performance come from? For
+   that we'll have to delve into the 
+   "self-descriptive" nature of RESTful messages.
+   </p>
+<h3 id="self-descriptive"><a href="http://bitworking.org/news/125/REST-and-WS#self-descriptive">Self-Descriptive</a></h3>
+<p>   
+At this point you may have the idea that RESTful 
+has to do entirely with formats and serializations, which isn't
+true.
+</p>
+<p>
+To explain, a bit more needs to be said about self-descriptive messages.
+</p>
+<p>
+This is a rather fundamental principle and is the reason that RESTful
+systems can scale much easier. This has to do with the amount of
+information that each message carries and that is available to intermediaries 
+<b>without peeking into the body</b>. That's a critical distinction
+since parsing and processing headers is something every intermediary
+has to do, while no intermediary is required to be able to parse
+any of the bodies that pass through it.
+</p>
+<p>Here is a simple HTTP request. Note all the information
+  present in the headers:
+</p>
+<pre><code>
+<span style="color: red;">GET</span> /text/12 HTTP/1.1 
+User-Agent: SomeBloggingClient 
+Host: example.org 
+<span style="color: orange;">Accept: text/html</span>
+<span style="color: blue;">If-None-Match: "234902340932423432"</span>
+</code></pre>
+<p>This message is self-descriptive, it uses a standard method with 
+known semantics (<span style="color: red;">GET, which is safe and idempotent</span>), 
+a well-known media-type (<span style="color: orange;">text/html</span>), and it also
+declares how cached representations of this resource
+are to be handled (<span style="color: blue;">Revalidate with the origin server using the supplied entity tag.</span>).
+</p>
+<dl>
+<dt><a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_3_1">Self-descriptive</a></dt>
+<dd> REST enables intermediate processing by constraining 
+    messages to be self-descriptive: interaction is stateless between requests, 
+    standard methods and media types are used to indicate semantics and exchange information, and responses explicitly indicate cacheability.
+    </dd>
+</dl>
+<p>
+An intermediary can process these messages in a helpful way because
+the safety, idempotency, cacheability, and well-known media-types
+are all apparent from the message headers (and request-line and status line).
+The self-descriptive nature of the requests and responses are critical, for example, to accelerator intermediaries
+that keep a nearby cache, compress content, or down-sample images to make
+them smaller and thus faster to transfer. The intermediaries that down-sample images are possible 
+because of a constrained set of media-types,
+i.e. there are only so many image formats widely used.
+</p>
+<p>You may ask at this point if SOAP requests, which also pass over
+HTTP, are self-descriptive? You are correct in that
+a SOAP request and response are both self-descriptive, but if we go back and look at <i>old</i> POST-only SOAP we
+see that it is actually the least self-descriptive message 
+you could construct, 
+(Yes, later versions of SOAP allow GET, and I've already pointed out
+where WS-* has it's advantages, this is just a more detailed
+explaination of <i>why</i> RESTful messages scale, and hopefully
+by the end of this explaination you will see how just adding 
+GET doesn't move the bar very far.)
+</p>
+<p>Here is a sample SOAP request:</p>
+<pre><code>
+<span style="color: red;">POST</span> /examples HTTP/1.1
+User-Agent: Radio UserLand/7.0 (WinNT)
+Host: localhost:81
+<span style="color: orange;">Content-Type: text/xml; charset=utf-8</span>
+Content-length: 474
+SOAPAction: "/examples"
+&lt;?xml version="1.0"?&gt;
+&lt;SOAP-ENV:Envelope SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:xsd="http://www.w3.org/1999/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/1999/XMLSchema-instance"&gt;
+   &lt;SOAP-ENV:Body&gt;
+      &lt;m:getStateName xmlns:m="http://www.soapware.org/"&gt;
+         &lt;statenum xsi:type="xsd:int"&gt;41&lt;/statenum&gt;
+         &lt;/m:getStateName&gt;
+      &lt;/SOAP-ENV:Body&gt;
+    &lt;/SOAP-ENV:Envelope&gt;
+</code></pre>
+<p>
+   In a SOAP request everything is a <span style="color: red;">POST</span>, which in this case has
+   the very generic meaning of "process this", so intermediaries lose the ability 
+   to distinguish safe and idempotent requests. In addition, using POST everywhere 
+   means that all cachability is lost.  A very vanilla media-type of 
+   <span style="color: orange;">"text/xml"</span> is also used,
+   again reducing the chances of intermediaries being able to
+   do any helpful processing. And finally many kinds of requests will all 
+   go through the same SOAP server URI, which is another limiting factor on intermediaries, 
+   such as reverse proxies, which can be used to distribute load.
+</p>
+<p>So while SOAP requests and responses are self-descriptive, they 
+   carry a miniscule amount of information that intermediaries 
+   might be able to work with, and if intermediaries can't help
+   then scalability will be limited.
+</p>
+<p>So if you aren't going to use classes and types and RPC to define
+       your interface, how are you supposed to create a RESTful interface?
+       </p>
+<h3 id="rest-recipe"><a href="http://bitworking.org/news/125/REST-and-WS#rest-recipe">REST Recipe</a></h3>
+<p> The best way to describe how to build a RESTful interface
+     is to give a recipe for how to build such a system, 
+     a heuristic for how to model your system RESTfully.
+    [For a more indepth article see <a href="http://bitworking.org/news/How_to_create_a_REST_Protocol">How to create a REST protocol</a>.]
+    </p>
+<ol>
+<li>Find all the nouns
+        </li><li>Define the formats
+        </li><li>Pick the operations
+        </li><li>Highlight exceptional status codes
+    </li></ol>
+<p>
+    As a simple example let's build a RESTful interface for managing a list of 
+    employees. Each employess has a name, title, and contact information and we want 
+    to be able to add, remove, and update employee information as well as get a list 
+    of all the employees.
+    </p>
+<h4>Find all the nouns</h4>
+<p>
+    Everything in a RESTful system is a noun, a Resource, and every noun is identified by a URI.
+    In our employee system there are two nouns, two types of resources, the employee, and the list of all employees. Let's define the URIs for each of those resources:
+    </p>
+<table>
+<tr> <th>Resource</th> <th>URI</th> </tr>
+<tr> <td>Employee List</td> <td>/employees/</td> </tr>
+<tr> <td>Employee</td> <td>/employees/{employee-id}</td> </tr>
+</table>
+<p>
+    Where {employee-id} will be substituted with the employees identification number.
+    </p>
+<h4> Define the formats</h4>
+<p>
+    Now we need to define the formats, or the representations, for each of these 
+    resources. We'll use JSON for the format. Here is an example representation 
+    of an employee:
+    </p>
+<pre><code>
+  {
+      "name": "Joe Gregorio",
+      "title": "Software Engineer",
+      "contact": {
+		"address1": "123 AnyStreet",
+		"city": "Sometown",
+		"state": "NC”
+	}
+  }
+</code></pre>
+<p class="caption">
+<b>Figure 3</b><b></b><br />
+    Employee JSON Representation
+    </p>
+<p>
+    Here is an example of the employee list:
+    </p>
+<pre><code>
+  [
+    {
+      "name": "Joe Gregorio",
+	"href": "jcg111002222”
+    },
+    {
+      "name": "John Q. Public",
+	"href": "jqp333445555”
+    },
+    ...
+  ]
+</code></pre>
+<p class="caption">
+<b>Figure 4</b><br />
+    Employee List JSON Representation
+    </p>
+<p>
+    Updating our table:
+    </p>
+<table>
+<tr> <th>Resource</th> <th>URI</th> <th>Representation</th> </tr>
+<tr> <td>Employee List</td> <td>/employees/</td> <td>JSON (emp list</td> </tr>
+<tr> <td>Employee</td> <td>/employees/{employee-id}</td> <td>JSON 
+                (employee)</td></tr>
+</table>
+<p>
+    Note that in the employee list each entry contains the URI of the individual 
+    employee, as a relative URI, at the "href" key. This is an aspect of REST that we have skimmed over lightly, the use 
+    of hyper-text as the engine of application state. While you could just stick the 
+    employee id in there and then count on the client to be able to construct the 
+    URI of the employee resource from that information, its easier on the client, 
+    opens more avenues for optimization, and reduces coupling if the URI is passed 
+    along directly. Note that I could have just as easily supplied an absolute URI.
+    </p>
+<h4>Pick the operations</h4>
+<p>
+    Now that we have our resources and representations we define the operations that 
+    we want to perform on those resources. To retrieve a representation of a 
+    resource we use GET, to update we use PUT, and to remove it we use DELETE. POST 
+    can be used to either have some generic processing done, or it can be used to 
+    create new resources. To create a new employee we will POST an employee JSON 
+    document to the employee list.
+    </p>
+<table>
+<tr> <th>Resource</th> <th>URI</th> <th>Method</th> <th>Representation</th> <th>Description</th></tr>
+<tr> <td rowspan="2">Employee List</td> <td rowspan="2">/employees/</td> <td>GET</td> <td>JSON (emp list)</td> <td>Retrieve the list of employees</td> </tr>
+<tr> <td>POST</td> <td>JSON (employee)</td> <td>Create a new employee</td> </tr>
+<tr> <td rowspan="3">Employee</td> <td rowspan="3">/employees/{employee-id}</td> <td>GET</td> <td>JSON (employee)</td> <td>Retrieve an employee</td></tr>
+<tr> <td>PUT</td> <td>JSON (employee)</td> <td>Update an employee</td></tr>
+<tr> <td>DELETE</td> <td>-</td> <td>Remove an employee</td></tr>
+</table>
+<h4>Highlight important status codes</h4>
+<p>
+    Now our service is almost completely described. As a convenience for client 
+    developers we can highlight certain status codes that are important. For 
+    example, when an employee is successfully created the server will return an HTTP 
+    status code of 201 and the response will include a Location: header with the URI 
+    of the newly created employee resource.
+    </p>
+<h3> RESTful aspects not covered</h3>
+<p>
+    There are aspects of REST that have not been covered yet, and they
+    include:
+    </p>
+<dl>
+<dt>Code on demand</dt>
+<dd>
+        One is the idea of code on demand. It is perfectly RESTful for a web browser to 
+        get fed JavaScript and to have that JavaScript then execute in the browser and 
+        perform other RESTful calls.
+        </dd>
+<dt>Constrained set of operations</dt>
+<dd> REST calls for a restricted set of methods and in the exercise above we only use 
+        GET, PUT, POST and DELETE. While much can be done with them, we aren't 
+        restricted to using only those four. HEAD is another useful method that should 
+        be supported anywhere GET is supported. In addition there is room for other 
+        methods, such as PATCH, as long as the semantics for how those methods are 
+        applied to a resource are uniform.  
+        </dd>
+<dt>ETags</dt>
+<dd>
+    There are useful semantics available in HTTP. For example, HTTP supports ETags.  
+    An ETag, or entity-tag, is used to compare two representations from the same 
+    resource. The easiest way to think of them as a hash of all the bytes in a 
+    representation, an opaque string that changes every time a representation 
+    changes even by one bit. Entity-tags are used in GET requests as cache 
+    validators. That is, if I do an initial GET on a resource I may get an ETag 
+    returned with that response. On subsequent requests to the same resource I can 
+    send that entity-tag in an If-None-Match: header. If that resource has not 
+    changed then its entity-tag is still the same and the server will return a 304 
+    response with no entity-body, which can be a huge traffic savings. If the 
+    resource has changed then the entity-tag will not match and the new, modified 
+    representation will be returned in the response.
+</dd>
+<dd>
+    But the use of entity tags extends beyond just GET. If I later want to update 
+    that resource, and have built my system RESTfully then I will PUT my updated 
+    representation back to the same URI. In that case I can put the entity-tag in an 
+    If-Match: header. Only if the entity-tags match will the PUT succeed. This 
+    prevents the lost-update problem, where another client comes along and modifies 
+    the resource between your GET and PUT.
+</dd>
+</dl>
+<h3 id="wsdl2"><a href="http://bitworking.org/news/125/REST-and-WS#wsdl2">WSDL 2.0</a></h3>
+<p>
+    It's useful and informative to ask if RESTful services can be described in WSDL 
+    2.0. I'll only cover the ability of WSDL 2.0 to describe such a service and 
+    leave the unearthing of WSDL 2.0 compliant implementations as an exercise for 
+    the reader.
+    </p>
+<p>
+    At first brush the HTTP Binding Extension for WSDL 2.0 looks like it might be a 
+    good REST description language when you see reference to the methods GET, PUT, 
+    POST and DELETE; and references to HTTP header construction. Digging in further 
+    reveals the constraints have been only slightly loosened and WSDL 2.0 is still 
+    about serializing objects, not exchanging documents.
+    </p>
+<p><a href="http://www.w3.org/TR/2006/CR-wsdl20-adjuncts-20060327/#_http_binding_default_rule_psf">From Section 6.3.2 of WSDL 2.0 Part 2: Adjuncts:</a></p>
+<blockquote>
+<p>
+        If the Interface Message Reference component or the Interface Fault component is 
+        declared using a non-XML type system (as considered in the Types section of 
+        [WSDL 2.0 Core Language]) then additional binding rules MUST be defined to 
+        indicate how to map those components into the HTTP envelope.
+        </p>
+</blockquote>
+<p>
+    The upshot is that you can't do JSON without writing a separate specification 
+    for binding rules on how to serialize “text/json”. The same holds true for any 
+    binary format, such as GIF and JPEG. There are other explicit and implicit 
+    limitations in the HTTP Binding for WSDL 2.0, such as the requirement for XML 
+    Schema, even in the case where data is serialized as  
+    “application/x-www-form-urlencoded”. 
+</p>
+<p>
+    Another telling example is the limiting of 
+    HTTP authentication methods to Basic and Digest. HTTP includes in RFC 2617 not 
+    only the definition of Basic and Digest authentication, it also defines an 
+    extensible mechanism by which a client and server negotiate authentication 
+    methods. This is an extensible system wherein the server returns a list of 
+    acceptable authentication mechanisms and the client chooses from that list of 
+    challenges. Limiting the number of authentication mechanisms to just those two 
+    cripples such an extension mechanism. In general most of these problems stem 
+    from the same root cause: RESTful HTTP messages are self-descriptive. It is that 
+    self-descriptive aspect of HTTP messages that allows generic processors such as 
+    proxies and caches to be built, so any language that tries to describe HTTP 
+    messages must either include the whole HTTP specification or introduce 
+    constraints that don't exists in HTTP.
+    </p>
+<p>
+    One last area to highlight is the lack of support for simple links.
+    While WSDL can be congratulated for adding URLs as first class citizens, it doesn't understand links 
+    as such first class citizens.  That is, there is no mechanism in WSDL 2.0 to 
+    identify new resources that are identified by links in other documents. 
+    This isn't a minor quibble, following links from document to document is a fundamental aspect of the web. 
+    The simple &lt;a&gt; tag, which can appear in any tag soup HTML page, is the core of the PageRank algorithm, 
+    the basis for the market cap of Google, and completely outside the reach of WSDL 2.0.
+</p>
+<p>
+    One immediate result of not understanding links is that you can't write a WSDL document 
+    for the Atom Publishing Protocol. There are other RESTful systems
+    that can't be described and they're listed below to 
+    give an idea of the limitations of WSDL 2.0.
+    </p>
+<dl>
+<dt>Atom Publishing Protocol</dt>
+<dd>
+        The Atom Publishing Protocol can't be described in WSDL 2.0 for two reasons, the 
+        first being that Atom Documents can't be fully described with XML Schema. The 
+        second is that WSDL 2.0 has no concept of links, and navigating collections 
+        using URLs in Atom Feeds is a fundamental technique in the Atom Publishing 
+        Protocol.
+        </dd>
+<dt>AJAX with JSON</dt>
+<dd>
+        Response bodies in WSDL 2.0 can't be anything but XML without defining a new 
+        binding, and the only two other types of request bodies that are supported are 
+        “application/x-www-form-urlencoded” and “multipart/form-data”.  That means you 
+        can't send JSON to a service, not can your service return JSON, both of which 
+        are staples of contemporary rich Internet applications.
+        </dd>
+<dt>GData</dt>
+<dd>
+        Google has a restricted subset of the Atom Publishing Protocol that they have 
+        defined as the interface into services such as Blogger, Spreadsheets, and 
+        Calendar. GData can't be described in WSDL 2.0 because, in addition to the 
+        general problems we already listed for APP implementations, it has the 
+        additional problem that Google has defined their own HTTP level authentication, 
+        which conforms to the extension model defined in RFC 2617, but is neither Basic 
+        nor Digest.
+        </dd>
+</dl>
+<p>
+    None of this is to detract from WSDL 2.0 when it is applied in the right problem domain,
+    this is just pointing out that it is currently incomplete for describing RESTful 
+    services.
+    </p>
+  <div class="commentContent" id="X1">
+    <p>Excellent.
+</p>
+<p>My only quibble is with the use of fully qualified URI's in Figure 4.  That's actually a URL, not just a URI.  The employee id would have worked fine in the href value, as a URI as well.  I think it's mistake to not have it work that way.   For one thing, the server has to be self-aware of it's own address, and willing to inject it into it's output.  So the result of a request to an http: version and https: version wouldn't be the same.  Bummer.  The 'relative' versions would of course be the same. 
+</p>
+<p>w/r/t ETag for PUT, etc: "This prevents the lost-update problem".  Another flavor of this problem is the lost-response problem.  Try updating a resource; socket dies after sending the request, before the reading the response - did the update really take place?  Who knows!  If you're using ETags this way, then ... If it didn't take place, blindly retrying the transaction will succeed.  If it did take place, blindly retrying the transaction will fail because of the non-matching ETag.  Being able to do this blindly is fantastic.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://muellerware.org">Patrick Mueller</a> on <a href="#X1" title="2007-02-17T01:35:02.186493">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Hi Joe:</p>
+<p>Excellent discussion of REST; one of the best! However, I do wish you had elaborated more on "the use of hyper-text as the engine of application state" and included some examples. There is a dearth of information available on that REST constraint, and when I've asked about it in the past all the RESTafarians act as if that one sentence should be all that's needed to completely comprehend it! :)  I'd like to see actual implementations and not just be told "look out on the web" as the web is not fully RESTful; most websites were designed for human-to-machine interaction, not machine-to-machine interaction.</p>
+<p>Second, I'd like to ask about your use of JSON and reference your comment when you said "Each time we send or receive a JSON representation in our example, the Content-Type header is also sent with a value of 'text/json'. In this way each message is self-descriptive, there is a method sent, and that is applied to a resource whose URI is also sent in the request, and the type of the request or response entity is also included in the headers."  Although this is technically correct, is it not a bit misleading?  As I have been learning REST I have been drawn to the value of interchanging known content types as defined in the content registry. This not to conflict with your point above about type safety but instead to appreciate the value of shared knowledge in a base type. With JSON, yes your example is JSON, but JSON can represent any arbitrary object heirarchy. So it seems to me saying it is 'text/json' is about as useful as saying it is 'text/plain'; i.e. it only tells me what it is not, not what it is. I still have to hope that it is something I know how to deal with. And since JSON does not provide any built-in introspection, that can be especially laborous and fraught with peril. Or at least that's how it currently appears to me and I'm commenting here not to critique but in hopes you can further educate me.</p>
+<p>BTW, it seems to me that JSON, as well as ATOM really needs a subtype, i.e. given your example: 'text/json/employee' and 'text/json/employee-list'. Of maybe another HTTP header: 'Content-Subtype' where you could use 'employee' and 'employee-list.' And it would seem to me that ideally these should be in a registry somewhere to avoid duplicates, but maybe one where people could get a prefix (based on a domain they own?) that would allow people to create their own w/o having to go thru a rigorous process, i.e. 'Content-Subtype:bitworking.org/employee' and 'Content-Subtype:bitworking.org/employee-list.' Then if the community wanted to define a subtype of 'employee' it could easily go through a rigorous process just like other standards.  Anyway, I'd love to get your thoughts on this.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://blog.welldesigneurls.org">Mike Schinkel</a> on <a href="#X2" title="2007-02-17T11:26:29.185151">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Opps, typo in my blog URL. This one fixes it.
+    <p class="commentByLine">Posted by
+       <a href="http://blog.welldesignedurls.org">Mike Schinkel</a> on <a href="#X3" title="2007-02-17T11:31:24.043704">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Patrick,<br />
+<p>Thanks, I've updated the document to use relative URIs
+instead of absolute URIs.</p>
+<p>As to the use of URI vs URL, I tend to follow the advice in
+Section 1.1.3 of <a href="http://www.ietf.org/rfc/rfc3986.txt">RFC 3986</a> and stick to URIs for everything.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X4" title="2007-02-17T12:58:19.363767">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Mike,<br />
+<p>The example I gave for employees is a simple example of hypertext as the engine of application state, a client would first retrieve the list of employees and then from there navigate to each individual employee by following the links. We could add another such mechanism if the employee list became too long, i.e. you do paging as in the Atom Publishing Protocol. The employee list would only return the first N employees but would also contain a link to the next N employees. As the client application followed those links, either to the individual employee, or to the next page of N employees, a part of its state would change. 
+</p>
+<p>Now I said 'a <i>part</i> of its state' since that may not completely represent the client state. Think of an AJAX application that is not only manipulating employees via this interface but also manipulating a time sheet interface at the same time, a mash-up as it were.
+</p>
+<p>As to JSON, sure, a well-known format such as Atom has a much higher value than the generic format (XML) that it is defined upon, and you'll notice that Atom has its own media-type. OTOH, you have to weigh that against the practice of trying to create the "perfect" format that represents, say, an employee. That has shades of the hype in days of yore for both XML and SQL, where some mysterious body would define the perfect 'schema' for our data and then all of it would inter-operate seamlessly. [Yes, this was a marketing promise of SQL, as funny as it seems today.] So my general suggestion would be to use a generic type initially and then register a more specific media-type once you have some experience with it. I'll also note that registering a specific media-type does not in any way indicate a "rigorous process", nor is it any guarantee of quality. The main function of registration is to avoid conflicts.
+</p>
+<p>As for Atom sub-types, you need to look at the latest version of the
+<a href="http://bitworking.org/projects/atom/">APP</a> where they are defined using a parameter on the media-type.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X5" title="2007-02-17T13:51:53.758378">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Great post.  Clarified a lot for me about REST and WS.. thanks.
+
+<br />
+<br />
+<a href="http://www.goldb.org/goldblog/2007/02/18/ClarifyingArchitecturalStylesForTheWeb.aspx">some commentary and thoughts</a>
+<br /><br />
+    <p class="commentByLine">Posted by
+       <a href="http://www.goldb.org">Corey Goldberg</a> on <a href="#X6" title="2007-02-17T22:53:11.808619">2007-02-17</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    What if you're doing ReST-lite, or whatever they call it, where you have GET and POST but not PUT and DELETE? Do you just pass one of those verbs as an attribute to the "document"?
+    <p class="commentByLine">Posted by
+       <a href="http://webseitz.fluxent.com/wiki">Bill Seitz</a> on <a href="#X7" title="2007-02-20T17:37:42.222119">2007-02-20</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Bill,<br />
+<p>Were you thinking <a href="http://bitworking.org/news/Hi_REST__Lo_REST_and_Everything_in_between_REST">Rorschach-REST</a>?
+ <code>:)</code>
+</p>
+<p>Sorry, but I don't plan on doing a detailed 
+  analysis of various people's "interpretations" of REST.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X8" title="2007-02-20T20:20:41.506854">2007-02-20</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    The logic for defending WS-* is unconvincing: If it only works in a homogeneous environment, there are much better alternatives (e.g. RMI in case of Java). WS-* offers advantages with regards to the programming model in environments where interop issues have been addressed very, very carefully. For example, it's possible to get .NET and Java to interoperate pretty well, and have a programming model that both .NET and Java developers will find familiar.
+
+(For the record: I'm not at all arguing that these benefits are worth using the WS-* mess.)
+    <p class="commentByLine">Posted by
+       <a href="http://www.innoq.com/blog/st">Stefan Tilkov</a> on <a href="#X9" title="2007-02-21T07:05:26.860407">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>Joe, in what sense does REST/HTTP have a notion of links that WSDL doesn't? It's the media type that defines what a link is - in XHTML {http://w3.org/1999/xhtml}a is one, in Atom on the other hand {http://www.w3.org/2005/Atom}link is. Xlink interestingly is purported to be dead and in your JSON example, how would I know what a link was? It's written in the respective media type spec, something a client needs to understand. The secret is to keep the number of media types small or mix-in a certain xml namespace.</p>
+<p>But - I'm not at all familiar with WSDL - couldn't [the schema defined for] a message contain another wsdl fragment marked as safe? Wouldn't that constitute a link?</p>
+<p>Thanks<br />
+Matthias</p>
+    <p class="commentByLine">Posted by
+       <a href="http://mernst.org/blog/rss.xml">Matthias</a> on <a href="#X10" title="2007-02-21T10:14:33.061783">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>Matthias: <i>("couldn't [the schema defined for] a message contain another wsdl fragment marked as safe? Wouldn't that constitute a link?")</i></p>
+<p>Will common WS-* implementations actually provide the message recipient with any way to follow that "link" (i.e., parse the WSDL fragment and immediately use the interface it specifies)? I suspect not, especially in implementations where WSDL is parsed at compile time.</p>
+<p>A link is no good if I can't expect the typical recipients to follow it easily. In the REST architecture, URIs are the common currency everyone understands; that's why they work as links regardless of document format.</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:mbrubeck@cs.hmc.edu">Matt Brubeck</a> on <a href="#X11" title="2007-02-21T10:51:46.263618">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    It would be nice to make your entries here printable, by modifying the margins so they aren't quite so wide in print-specific css.
+    <p class="commentByLine">Posted by
+       <a href="http://muellerware.org">Patrick Mueller</a> on <a href="#X12" title="2007-02-21T12:48:32.766252">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    Patrick,<br />
+<p>Done.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X13" title="2007-02-21T13:34:57.187173">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    <p>re: Patrick's comment</p>
+<p>It would be even nicer if your margins expanded with the text size, so that when I increase the text size in my browser the column doesn't just fit 5 or 10 words per line.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://edward.oconnor.cx/">Edward O'Connor</a> on <a href="#X14" title="2007-02-21T14:36:06.720637">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    I'm not sure why the operation to create an employee is:
+
+/employees/  POST 	JSON (employee) 	Create a new employee
+
+instead of a PUT to the /employees/{new ID}
+
+This way the agent knows the new URI directly?
+    <p class="commentByLine">Posted by
+       <a href="http://metacognition.info">Chimezie</a> on <a href="#X16" title="2007-02-22T22:46:38.885217">2007-02-22</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Chimezie,<br />
+<p>It's usually better to leave the allocation of 
+new URIs up to the server and not the client, which avoids
+problems like collisions. In the example given the client
+will immediately find out the new URI because it
+is returned in the Location: header of the response.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X17" title="2007-02-22T23:06:34.010174">2007-02-22</a>
+    </p>
+</div>
+  </body>

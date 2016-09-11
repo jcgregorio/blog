@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+    <title>Secure Syndication Test Feed</title>
+    <link rel="self" href="http://bitworking.org/projects/securesyndication/index.atom"/>
+    <updated>2006-02-28T18:30:02Z</updated>
+    <author> 
+        <name>Joe Gregorio</name>
+    </author>
+    <id>urn:uuid:602321c80-d399-11d9-b93C-0003939e0af6</id>
+
+    <entry>
+        <title>An entry with encrypted content.</title>
+        <link href="http://bitworking.org/projects/securesyndication/"/>
+        <id>urn:uuid:1225c695-1123-4ebb-aaaa-80da344efa6a</id>
+        <updated>2006-02-28T18:30:02Z</updated>
+        <content type="xhtml">
+            <div xmlns="http://www.w3.org/1999/xhtml">
+                <div class="encrypted blowfish">
+                    <p>The following data is encrypted. Please install
+                        the <a href="http://bitworking.org/projects/securesyndication/">SecureSyndication</a> Greasemonkey script to 
+                        view the encrypted content.</p>
+                    <div class="encdata">WORK:C7FDDC3B50FF0BE0E6F47CBD54AC149FA6E42F1DD9C8AEA48F4D400B6970C14082858FF94901795DBE1C7D380ED6AA16A1B2F8039C6782D604F1CA906A6F1C7CFEB52DED873A557228333D3A6E8B3712BD115C4AC0643B86</div>
+                </div>
+                <div>The unencrypted content in this div should remain unchanged.</div>
+            </div>
+        </content>
+    </entry>
+</feed>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

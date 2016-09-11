@@ -1,0 +1,21 @@
+{
+  "name": "bitworking.org",
+  "version": "0.1.0",
+  "authors": [
+    "Joe Gregorio <joe@bitworking.org>"
+  ],
+  "description": "Just the JS on bitworking.org",
+  "license": "MIT",
+  "homepage": "http://bitworking.org",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "google-code-prettify": "~1.0.1"
+  }
+}

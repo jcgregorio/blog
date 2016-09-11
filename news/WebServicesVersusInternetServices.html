@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <title>Web Services vs. Internet Services</title>
+    <meta name=created value="2003-05-28T00:53:46">
+  </head>
+  <body>
+  <p>I think a new name is in order, "Internet Services" to distinguish
+them from "Web Services".</p>
+  <p>First let's discuss Web Services. The first person who comes
+   to mind for this definition is <a href="http://udell.roninhouse.com/">Jon Udell</a>, who has been covering 
+   the idea of hooking up various services on the web for a long time,
+   most recently covering how to <a href="http://weblog.infoworld.com/udell/2003/05/27.html#a704">transform an RSS feed into HTML fit for
+   a Nokia</a> which was done by <a href="http://clarity.awakeheart.net/archives/000233.html#000233">Robert Ivanc</a>, and how his bank
+   could have used Web Services to fix his online account. </p>
+<blockquote><p>But since 1994 or so, things have been different. Integrating two Web-based systems, if only 
+  by brute force, is not only necessary but possible. If I can log in to both systems and drive them 
+  interactively, I can write a script to join them programmatically. Every Web application can be tortured 
+  into behaving like a Web service, 
+  even when its creator never intended it to. [<a href="http://www.infoworld.com/article/03/05/23/21OPstrategic_1.html">Jon Udell</a>]
+  </p></blockquote>
+<p>To me that sums up Web Services, as a way to streamline such natural information flows. </p>
+<p>Now, in contrast, I have been lurking on the <a href="http://lists.w3.org/Archives/Public/www-ws/">W3C Web Services</a> and the <a href="http://lists.w3.org/Archives/Public/www-ws-arch/">W3C Web Services Architecture Working Group</a> mailing lists.
+   As a side note, I think <a href="http://www.markbaker.ca/blog/">Mark Baker</a>, no matter what you think of his arguments, definitely 
+   deserves a medal for persistence, as he tries to promote the REST architecture
+   to the Web Services Architecture Working Group. Anyway, medals aside, I have been following the arguments
+   and think that the term Web Services, and the actual goals of the majority of the people
+   in the Working Group have little, or nothing, to do with the ideas Jon Udell is talking about.
+   The group seems pretty centered on using SOAP via HTTP to connect big business databases
+   together. As far as I can tell, this group would be much better off if they dropped HTTP
+   and just started creating a <a href="http://www.beepcore.org/">BEEP</a> profile that incorporated SOAP, 
+   which they could call "Internet Services" to differentiate themselves from "Web Services".</p>
+<p>Now, back to Web Services, brings us to <a href="http://radio.weblogs.com/0001011">Robert Scoble</a>, latest borg victim, is trying to 
+   answer the question "Is IE Dead" while not <a href="http://radio.weblogs.com/0001011/2003/05/26.html#a3113">trying to break an NDA</a> ends up asking what
+   people would like to see in a new version of IE. (See the comments to <a href="http://radio.weblogs.com/0001011/2003/05/27.html#a3118">this post</a>.)
+   Which got me to thinking, what is the least amount of innovation that would be necessary 
+   to get Jon Udell's concept of Web Services up and running. That is, what's the minimum amount 
+   of tweaking to the browser that could be made so that services could be designed to be 
+   used from a browser, or programmatically. Here's the short list of changes: </p>
+<ol>
+<li>Add the ability for HTML forms to submit their data as "text/xml" in addition
+      to <a href="http://www.w3.org/TR/html40/interact/forms.html#h-17.3">"application/x-www-form-urlencoded"</a>.
+      This would be a half-way step between current HTML forms and <a href="http://www.w3.org/MarkUp/Forms/">XForms</a>, which is only supposed to make
+      an appearance in <a href="http://www.w3.org/TR/xhtml2/">XHTML 2.0</a>.</li>
+<li>Also, have the optional ability for form values to be populated via XML. Now it looks like what I am asking for is XForms here, but
+      I've looked at XForms and it is way too complex and too radical a departure from 
+      current HTML forms that it won't be adopted anytime soon. There was no effort to leverage current
+      developer skills, nor any effort to minimize breakage when migrating from HTML forms to XForms. </li>
+</ol>
+<p>That is the minimal list, if I were to go for the whole enchilada, I would also want:</p>
+<ol>
+<li>A native form element for editing HTML. A <a href="http://www.haloscan.com/comments.php?user=scoble&amp;comment=3118#1947">long time request</a> of <a href="http://scripting.com">Dave Winer</a>.</li>
+<li>The ability for HTML forms to use the "PUT" and "DELETE" methods in addition to the current "POST" and "GET" methods.</li>
+</ol>
+<p>That's it, those are all the changes that would be needed 
+   to support Jon Udell's concept of Web Services. These changes would make it dramatically
+   easier to create Web Services that could be used either by a browser or programmatically.
+   No SOAP, no WS-Security, no InfoPath, no XForms. Unfortunately, this has a zero percent chance
+   of being implemented. In a way I wish we we're back in the days of the browser wars, at 
+   least back then there's a chance at least one of the competitors would implement these 
+   ideas just on the hope it would give them an edge. Now Microsoft dominates the browser scene
+   and is unlikely to try anything innovative, and the W3C has moved well beyond this level
+   of tinkering and is dealing with bigger and better things like RDF, XForms and XHTML 2.0.</p>
+
+  <div class="commentContent" id="X1">
+    
+    <p class="commentByLine">Posted by
+       <a href="http://www.pipetree.com/qmacro">DJ</a> on <a href="#X1" title="2003-05-28T02:58:02">2003-05-28</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    (Sorry, finger/keyboard trouble on previous attempt).
+
+Some of your thoughts on 'web' vs 'internet' reflect <a href="http://www.pipetree.com/qmacro/2002/05/20#webservices">very similar thoughts</a> I had too. Interestingly, it was on the cusp of me discovering REST which brought renewed focus (for me) on HTTP.
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.pipetree.com/qmacro">DJ</a> on <a href="#X2" title="2003-05-28T03:02:38">2003-05-28</a>
+    </p>
+</div>
+  </body>

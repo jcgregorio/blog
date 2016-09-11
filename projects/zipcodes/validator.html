@@ -1,0 +1,43 @@
+<html>
+<head>
+    <!--
+    License: MIT
+    Copyright 2007, Joe Gregorio 
+    -->
+     <script type="text/javascript">
+         function keypressed() {
+             var zip = document.getElementById("zipcode").value;
+             document.getElementById("zipcodevalid").src = 'zipcode.cgi/' + zip;
+         }
+
+         function setup() {
+            document.getElementById("zipcode").onkeyup = keypressed;
+         }
+
+         window.onload = setup; 
+     </script>
+
+
+    <title>Joe Gregorio | BitWorking | Projects | Zipcodes</title>
+</head>
+<body class='main' id="top" name="top" >
+    <div class="body">
+        <div class='content'>
+            <p>Enter a zip code below. A green checkmark will<br/>
+            appear when a valid zipcode is entered.</p>
+
+            <form method="post" action="">
+                    Zipcode: <input size="5" id="zipcode" value=""/> <img src="zipcode.cgi" id="zipcodevalid"/>
+            </form>
+
+        </div>
+    </div>
+</body>
+
+
+
+
+
+
+
+

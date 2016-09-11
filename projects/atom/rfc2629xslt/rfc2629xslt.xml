@@ -1,0 +1,2256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+
+<?rfc header="Documentation"?>
+<?rfc private="RFC2629 through XSLT"?>
+<?rfc toc="yes"?>
+<!-- <?rfc topblock="no"?>  -->
+<?rfc strict="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc-ext allow-markup-in-artwork="yes" ?>
+<?rfc-ext include-references-in-index="yes" ?>
+
+<rfc xmlns:x="http://purl.org/net/xml2rfc/ext">
+	<front>
+    	<title abbrev="RFC2629 through XSLT">Transforming RFC2629-formatted XML through XSLT</title>
+
+			<author initials="J. F." surname="Reschke" fullname="Julian F. Reschke">
+				<organization abbrev="greenbytes">greenbytes GmbH</organization>
+        <address>
+        	<postal>
+          	<street>Hafenweg 16</street>
+            <city>Muenster</city><region>NW</region><code>48155</code>
+           	<country>Germany</country>
+         	</postal>
+    		  <phone>+49 251 2807760</phone>	
+				  <email>julian.reschke@greenbytes.de</email>	
+				  <uri>http://greenbytes.de/tech/webdav/</uri>	
+				</address>
+			</author>
+     
+    <date month="May" year="2007"/>
+    <keyword>RFC2629</keyword>
+    <keyword>xml2rfc</keyword>
+    <keyword>XSLT</keyword>
+    <keyword>hCard</keyword>
+    <keyword>XSL-FO</keyword>
+    <keyword>PDF</keyword>
+    <keyword>Dublin Core</keyword>
+	</front>
+
+	<middle>
+
+<section title="Introduction">
+<t>
+  This document describes a set of XSLT transformations that can be used to 
+  transform RFC2629-compliant XML (see <xref target="RFC2629"/>) to various
+  output formats, such as HTML and PDF. The main topics are  
+  <list style="symbols">
+    <t>compliance to the xml2rfc XML element set (<xref target="supported.elements"/>),</t>
+    <t>support for xml2rfc processing instructions (<xref target="processing.instructions"/>),</t>
+    <t>the names of anchor elements generated in HTML and PDF output (<xref target="anchors"/>),</t>
+    <t>various XSLT engines that can be used (<xref target="xslt.engines"/>),</t>
+    <t>outputting HTML (<xref target="output.html"/>) and XHTML (<xref target="output.xhtml"/>),</t>
+    <t>outputting CHM (Compiled Microsoft Help, <xref target="output.chm"/>),</t>
+    <t>outputting PDF through XSL-FO (<xref target="output.pdf"/>) and</t>
+    <t>various utilities (<xref target="utilities"/>).</t>
+  </list>
+</t>
+</section>
+
+<section title="Supported RFC2629 elements" anchor="supported.elements">
+<t>
+  <spanx style="verb">rfc2629.xslt</spanx> supports both all RFC2629 grammar elements and the extensions
+  implemented in xml2rfc 1.21.
+</t>
+<section title="Extension elements">
+<t>
+  In addition, <spanx style="verb">rfc2629.xslt</spanx> supports a set of extension elements, using elements
+  and attributes in the namespace "http://greenbytes.de/2002/rfcedit". They
+  are used for
+  <list style="symbols">
+    <t>simple issue tracking and change tracking and</t>
+    <t>adding additional metadata to the generated documents (such as HTML LINK
+    elements to related documents, see <xref target="html.link"/>).</t>
+  </list>
+</t>
+<t>
+  Note that these extensions are experimental. Please email the author in case
+  you're interested in using these extensions.
+</t>
+</section>
+</section>
+
+<section title="Processing Instructions" anchor="processing.instructions">
+<t>
+  All PIs can be set as XSLT parameter as well, overriding any value that
+  is found in the source file to be transformed.
+</t>
+<figure>
+<preamble>Using processing instructions:</preamble>
+<artwork type="example">
+&lt;?rfc toc="yes"?>
+&lt;?rfc-ext support-rfc2731="no"?>
+</artwork>
+</figure>
+<figure>
+<preamble>Using XSLT parameters (Saxon):</preamble>
+<artwork type="example">
+java -cp saxon.jar com.icl.saxon.StyleSheet source.xml rfc2629.xslt \
+  xml2rfc-toc=yes xml2rfc-ext-support-rfc2731=no > result.html 
+</artwork>
+</figure>
+<figure>
+<preamble>Using XSLT parameters (xsltproc):</preamble>
+<artwork type="example">
+xsltproc --param xml2rfc-toc '"yes"' \
+   --param xml2rfc-ext-support-rfc2731 '"no"' \
+   rfc2629.xslt source.xml > result.html 
+</artwork>
+<postamble>(note the required quoting of string parameters)<iref item="xsltproc" subitem="passing parameters"/></postamble>
+</figure>
+
+<section title="Supported xml2rfc-compatible PIs">
+<texttable>
+  <ttcol>PI target</ttcol>
+  <ttcol>PI pseudo-attribute</ttcol>
+  <ttcol>XSLT parameter name</ttcol>
+  <ttcol>default</ttcol>
+  <ttcol>comment</ttcol>
+
+  <c>rfc</c>
+  <c>background<iref item="background PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="background"/></c>
+  <c>xml2rfc-background<iref item="xml2rfc-background parameter"/> <iref item="Parameters" subitem="xml2rfc-background"/></c>
+  <c>(not set)</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>compact<iref item="compact PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="compact"/></c>
+  <c>xml2rfc-compact<iref item="xml2rfc-editing parameter"/> <iref item="Parameters" subitem="xml2rfc-compact"/></c>
+  <c>"no"</c>
+  <c>only applies to HTML output method when printing</c>
+
+  <c>rfc</c>
+  <c>comments<iref item="comments PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="comments"/></c>
+  <c>xml2rfc-comments<iref item="xml2rfc-comments parameter"/> <iref item="Parameters" subitem="xml2rfc-comments"/></c>
+  <c>(not set)</c>
+  <c/>
+
+  <c>rfc</c>
+  <c>editing<iref item="editing PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="editing"/></c>
+  <c>xml2rfc-editing<iref item="xml2rfc-editing parameter"/> <iref item="Parameters" subitem="xml2rfc-editing"/></c>
+  <c>"no"</c>
+  <c><spanx>Note:</spanx> default will change to "yes" sometime in the future, thus avoid to rely on the default.</c>
+  
+  <c>rfc</c>
+  <c>footer<iref item="footer PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="footer"/></c>
+  <c>xml2rfc-footer<iref item="xml2rfc-footer parameter"/> <iref item="Parameters" subitem="xml2rfc-footer"/></c>
+  <c>(not set)</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>header<iref item="header PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="header"/></c>
+  <c>xml2rfc-header<iref item="xml2rfc-header parameter"/> <iref item="Parameters" subitem="xml2rfc-header"/></c>
+  <c>(not set)</c>
+  <c/>
+
+  <c>rfc</c>
+  <c>inline<iref item="inline PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="inline"/></c>
+  <c>xml2rfc-inline<iref item="xml2rfc-inline parameter"/> <iref item="Parameters" subitem="xml2rfc-inline"/></c>
+  <c>(not set)</c>
+  <c/>
+
+  <c>rfc</c>
+  <c>iprnotified<iref item="iprnotified PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="iprnotified"/></c>
+  <c>xml2rfc-iprnotified<iref item="xml2rfc-iprnotified parameter"/> <iref item="Parameters" subitem="xml2rfc-iprnotified"/></c>
+  <c>"no"</c>
+  <c/>
+
+  <c>rfc</c>
+  <c>linkmailto<iref item="linkmailto PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="linkmailto"/></c>
+  <c>xml2rfc-linkmailto<iref item="xml2rfc-linkmailto parameter"/> <iref item="Parameters" subitem="xml2rfc-linkmailto"/></c>
+  <c>"yes"</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>private<iref item="private PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="private"/></c>
+  <c>xml2rfc-private<iref item="xml2rfc-private parameter"/> <iref item="Parameters" subitem="xml2rfc-private"/></c>
+  <c>(not set)</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>sortrefs<iref item="sortrefs PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="sortrefs"/></c>
+  <c>xml2rfc-sortrefs<iref item="xml2rfc-sortrefs parameter"/> <iref item="Parameters" subitem="xml2rfc-sortrefs"/></c>
+  <c>"no"</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>symrefs<iref item="symrefs PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="symrefs"/></c>
+  <c>xml2rfc-symrefs<iref item="xml2rfc-symrefs parameter"/> <iref item="Parameters" subitem="xml2rfc-symrefs"/></c>
+  <c>"no"</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>toc<iref item="toc PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="toc"/></c>
+  <c>xml2rfc-toc<iref item="xml2rfc-toc parameter"/> <iref item="Parameters" subitem="xml2rfc-toc"/></c>
+  <c>"no"</c>
+  <c/>
+  
+  <c>rfc</c>
+  <c>tocdepth<iref item="tocdepth PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="tocdepth"/></c>
+  <c>xml2rfc-tocdepth<iref item="xml2rfc-tocdepth parameter"/> <iref item="Parameters" subitem="xml2rfc-tocdepth"/></c>
+  <c>99</c>
+  <c/>
+
+  <c>rfc</c>
+  <c>topblock<iref item="topblock PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="topblock"/></c>
+  <c>xml2rfc-topblock<iref item="xml2rfc-topblock parameter"/> <iref item="Parameters" subitem="xml2rfc-topblock"/></c>
+  <c>"yes"</c>
+  <c/>
+
+</texttable>
+</section>
+
+<section title="Unsupported xml2rfc-compatible PIs">
+<texttable>
+  <ttcol>PI target</ttcol>
+  <ttcol>PI pseudo-attribute</ttcol>
+  <ttcol>comment</ttcol>
+
+  <c>rfc</c>
+  <c>include<iref item="include PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="include"/></c>
+  <c>incompatible with XML/XSLT processing model</c>
+
+  <c>rfc</c>
+  <c>needLines<iref item="needLines PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="needLines"/></c>
+  <c/>
+
+  <c>rfc</c>
+  <c>slides<iref item="slides PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="slides"/></c>
+  <c/>
+
+  <c>rfc</c>
+  <c>strict<iref item="strict PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="strict"/></c>
+  <c/>
+
+  <c>rfc</c>
+  <c>subcompact<iref item="subcompact PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="subcompact"/></c>
+  <c/>
+
+  <c>rfc</c>
+  <c>tocindent<iref item="tocindent PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="tocindent"/></c>
+  <c>(defaults to "yes")</c>
+
+ <c>rfc</c>
+  <c>tocompact<iref item="tocompact PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="tocompact"/></c>
+  <c/>
+
+</texttable>
+</section>
+
+<section title="Extension PIs">
+<texttable>
+  <ttcol>PI target</ttcol>
+  <ttcol>PI pseudo-attribute</ttcol>
+  <ttcol>XSLT parameter name</ttcol>
+  <ttcol>default</ttcol>
+  <ttcol>description</ttcol>
+
+  <c>rfc-ext</c>
+  <c>allow-markup-in-artwork<iref item="allow-markup-in-artwork PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="allow-markup-in-artwork"/></c>
+  <c>xml2rfc-allow-markup-in-artwork<iref item="xml2rfc-ext-allow-markup-in-artwork parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-allow-markup-in-artwork"/></c>
+  <c>"no"</c>
+  <c>Enables support for specific elements inside abstract elements (using this extension
+  makes the document incompatible to the RFC2629bis DTD; see description of
+  conversion XSLT in <xref target="clean-for-dtd"/>).</c>
+
+  <c>rfc-ext</c>
+  <c>authors-section<iref item="authors-section PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="authors-section"/></c>
+  <c>xml2rfc-ext-authors-section<iref item="xml2rfc-ext-authors-section parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-authors-section"/></c>
+  <c></c>
+  <c>When "end", place the authors section at the end (just before the
+  copyright statements). This seems to be the preferred order in the
+  newest RFCs.</c>
+
+  <c>rfc-ext</c>
+  <c>include-references-in-index<iref item="include-references-in-index PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="include-references-in-index"/></c>
+  <c>xml2rfc-ext-include-references-in-index<iref item="xml2rfc-ext-include-references-in-index parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-include-references-in-index"/></c>
+  <c></c>
+  <c>When set to "yes", index entries are generated for all references.</c>
+
+  <c>rfc-ext</c>
+  <c>justification<iref item="justification PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="ijustification"/></c>
+  <c>xml2rfc-ext-justification<iref item="xml2rfc-ext-justification parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-justification"/></c>
+  <c>"never"</c>
+  <c>"never": never emit justified text, "always": always emit justified text, "print": only emit justified text for print media.</c>
+
+  <c>rfc-ext</c>
+  <c>parse-xml-in-artwork<iref item="parse-xml-in-artwork PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="parse-xml-in-artwork"/></c>
+  <c>xml2rfc-parse-xml-in-artwork<iref item="xml2rfc-ext-parse-xml-in-artwork parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-parse-xml-in-artwork"/></c>
+  <c>"no"</c>
+  <c>May be used to enable parsing of XML content in figures (MSXML only).</c>
+
+  <c>rfc-ext</c>
+  <c>support-rfc2731<iref item="support-rfc2731 PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="support-rfc2731"/></c>
+  <c>xml2rfc-ext-support-rfc2731<iref item="xml2rfc-ext-support-rfc2731 parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-support-rfc2731"/></c>
+  <c>"yes"</c>
+  <c>Decides whether the HTML transformation should generate META tags according <xref target="rfc2731.properties"/>.</c>
+
+  <c>rfc-ext</c>
+  <c>sec-no-trailing-dots<iref item="sec-no-trailing-dots PI pseudo-attribute"/><iref item="Processing Instruction pseudo attributes" subitem="sec-no-trailing-dots"/></c>
+  <c>xml2rfc-ext-sec-no-trailing-dots<iref item="xml2rfc-ext-sec-no-trailing-dots parameter"/> <iref item="Parameters" subitem="xml2rfc-ext-sec-no-trailing-dots"/></c>
+  <c></c>
+  <c>When set to "yes", add trailing dots to section numbers. This seems to be the preferred format in the
+  newest RFCs.</c>
+
+</texttable>
+</section>
+
+</section>
+
+<section title="Anchors" anchor="anchors">
+<t>
+  The transformation automatically generates anchors that are supposed to
+  be stable and predictable and that can be used to identify specific
+  parts of the document. Anchors are generated both in HTML and XSL-FO
+  content (but the latter will only be used for PDF output when the XSL-FO
+  engine supports producing PDF anchors).
+</t>
+<texttable>
+<preamble>The following anchors get auto-generated:</preamble>
+<ttcol>Anchor name</ttcol><ttcol>Description</ttcol>
+
+  <c>rfc.abstract <iref item="rfc.abstract anchor"/><iref item="Anchors" subitem="rfc.abstract"/></c><c>Abstract</c>
+  <c>rfc.authors <iref item="rfc.authors anchor"/><iref item="Anchors" subitem="rfc.authors"/></c><c>Authors section</c>
+  <c>rfc.copyright <iref item="rfc.copyright anchor"/><iref item="Anchors" subitem="rfc.copyright"/></c><c>Copyright section</c>
+  <c>rfc.copyrightnotice <iref item="rfc.copyrightnotice anchor"/><iref item="Anchors" subitem="rfc.copyrightnotice"/></c><c>Copyright notice</c>
+  <c>rfc.figure.<spanx>n</spanx> <iref item="rfc.figure.n anchor"/><iref item="Anchors" subitem="rfc.figure.n"/></c><c>Figures (titled)</c>
+  <c>rfc.figure.u.<spanx>n</spanx> <iref item="rfc.figure.u.n anchor"/><iref item="Anchors" subitem="rfc.figure.u.n"/></c><c>Figures (untitled)</c>
+  <c>rfc.index <iref item="rfc.index anchor"/><iref item="Anchors" subitem="rfc.index"/></c><c>Index</c>
+  <c>rfc.ipr <iref item="rfc.ipr anchor"/><iref item="Anchors" subitem="rfc.ipr"/></c><c>Intellectual Property</c>
+  <c>rfc.iref.<spanx>n</spanx> <iref item="rfc.iref.n anchor"/><iref item="Anchors" subitem="rfc.iref.n"/></c><c>Internal references</c>
+  <c>rfc.note.<spanx>n</spanx> <iref item="rfc.note.n anchor"/><iref item="Anchors" subitem="rfc.note.n"/></c><c>Notes (from front section)</c>
+  <c>rfc.references <iref item="rfc.references anchor"/><iref item="Anchors" subitem="rfc.references"/></c><c>References</c>
+  <c>rfc.references.<spanx>n</spanx> <iref item="rfc.references.n anchor"/><iref item="Anchors" subitem="rfc.references"/></c><c>Additional references</c>
+  <c>rfc.section.<spanx>n</spanx> <iref item="rfc.section.n anchor"/><iref item="Anchors" subitem="rfc.section.n"/></c><c>Section <spanx>n</spanx></c>
+  <c>rfc.section.<spanx>n</spanx>.p.<spanx>m</spanx> <iref item="rfc.section.n.p.m anchor"/><iref item="Anchors" subitem="rfc.section.n.p.m"/></c><c>Section <spanx>n</spanx>, paragraph <spanx>m</spanx></c>
+  <c>rfc.status <iref item="rfc.status anchor"/><iref item="Anchors" subitem="rfc.status"/></c><c>Status of memo</c>
+  <c>rfc.table.<spanx>n</spanx> <iref item="rfc.figure.n anchor"/><iref item="Anchors" subitem="rfc.figure.n"/></c><c>Tables (titled)</c>
+  <c>rfc.table.u.<spanx>n</spanx> <iref item="rfc.figure.u.n anchor"/><iref item="Anchors" subitem="rfc.figure.u.n"/></c><c>Tables (untitled)</c>
+  <c>rfc.toc <iref item="rfc.toc anchor"/><iref item="Anchors" subitem="rfc.toc"/></c><c>Table of contents</c>
+  <c>rfc.xref.<spanx>name</spanx>.<spanx>n</spanx> <iref item="rfc.xref.name.n anchor"/><iref item="Anchors" subitem="rfc.xref.name.n"/></c><c>References to reference <spanx>n</spanx> to <spanx>name</spanx></c>
+
+</texttable>
+</section>
+
+<section title="Supported XSLT engines" anchor="xslt.engines">
+<t>
+  The transformation requires a non-standard extension function (see <eref target="http://www.exslt.org/exsl/functions/node-set/exsl.node-set.html">
+  exsl:node-set</eref>)
+  which is however widely available. XSLT processors that do not support this
+  extension (or a functional equivalent) currently are not supported.
+</t>
+<section title="Standalone Engines">
+<t>
+  The following XSLT engines are believed to work well:
+  <list style="symbols">
+    <t><iref item="MSXML3"/><iref item="MSXML4"/>MSXML3 and MSXML4 (<eref target="http://msdn.microsoft.com/xml"/>; these processors
+    do not support exsl:node-set(), but have a similar proprietary extension)</t>
+    <t><iref item="Saxon"/>Saxon (<eref target="http://saxon.sourceforge.net/"/>)</t>
+    <t><iref item="Xalan"/>Xalan (<eref target="http://xml.apache.org/xalan-j/"/>)</t>
+    <t><iref item="xsltproc"/>xsltproc (libxslt) (<eref target="http://xmlsoft.org/XSLT/"/>, make sure that you
+    have a current version)</t>
+  </list>
+</t>
+</section>
+
+<section title="In-Browser Engines">
+<t>
+  The following browsers seem to work fine:
+  <list style="symbols">
+    <t><iref item="Internet Explorer 5.5"/>Internet Explorer 5.5 (Windows version, if MSXML3 is installed)</t>
+    <t><iref item="Internet Explorer 6"/>Internet Explorer 6</t>
+    <t><iref item="Internet Explorer 7"/>Internet Explorer 7</t>
+    <t anchor="firefox3"><iref item="Mozilla"/><iref item="Firefox" subitem="3.*"/>Firefox 3.* (currently only nightly builds available)</t>
+  </list>
+</t>
+<t>
+  The following browsers are known not to work properly:
+  <list style="symbols">
+    <t anchor="firefox12"><iref item="Mozilla"/><iref item="Firefox" subitem="1.*/2.*"/>Firefox 1.*/2.* (missing extension function - see change request at Mozilla BugZilla
+    <eref target="http://bugzilla.mozilla.org/show_bug.cgi?id=193678">193678</eref>)</t>
+    <t anchor="opera"><iref item="Opera"/>Opera 9.21: execution fails, potentially
+    to a somewhat complex XPath expression (reported to Opera as bug 245725).</t>
+    <t anchor="safari"><iref item="Safari"/>Safari supports client-side XSLT as of MacOS X 10.4,
+    but misses required extension functions. A problem 
+    with stylesheets producing non-ASCII output (such as NBSP characters)
+    has been fixed as of OSX 10.4.4. Both
+    problems have been reported through Apple's bug tracking system, see
+    <eref target="http://drakken.dbc.mtview.ca.us/pipermail/xml2rfc/2005-May/002073.html"/> and
+    <eref target="http://bugs.webkit.org/show_bug.cgi?id=4079"/>.
+    </t>
+  </list>
+</t>
+</section>
+
+</section>
+
+<section title="Transforming to HTML" anchor="output.html">
+<t>
+  Transformation to HTML can be done inside the browser if it supports
+  XSLT. To enable this, add the following processing instruction to
+  the start of the source file:
+</t>
+<iref item="xml-stylesheet PI"/>
+<figure><artwork type="example">
+  &lt;?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+</artwork></figure>
+<t>
+  (and ensure that <spanx style="verb">rfc2629.xslt</spanx> is present).
+</t>
+
+<section title="HTML compliance">
+<t>
+  The transformation result is supposed to conform to the HTML 4.01 strict
+  DTD <xref target="HTML"/>. This can be checked using the W3C's online
+  validator at <eref target="http://validator.w3.org" /><iref item="HTML compliance"/>.
+</t>
+</section>
+
+<section title="Standard HTML LINK elements" anchor="html.link">
+<t>
+  LINK elements exist since HTML 2.0. They can be used to embed content-independant
+  links inside the document. Unfortunately, only few user agents 
+  support this element. Firefox users may want to check the
+  <eref target="https://addons.mozilla.org/firefox/2933/">Link Widgets</eref>
+  extension.
+</t>
+<texttable>
+<preamble>The following LINK elements are produced:</preamble>
+
+  <ttcol>LINK type</ttcol>
+  <ttcol>description</ttcol>
+  
+  <c>alternate<iref item="alternate HTML LINK element"/><iref item="HTML LINK elements" subitem="alternate"/></c><c>for RFCs, a link to the authorative ASCII version on the IETF web site</c>
+  <c>appendic<iref item="appendix HTML LINK element"/><iref item="HTML LINK elements" subitem="appendix"/></c><c>pointer to all top-level appendics</c>
+  <c>author<iref item="author HTML LINK element"/><iref item="HTML LINK elements" subitem="author"/></c><c>pointer to "authors" section</c>
+  <c>chapter<iref item="chapter HTML LINK element"/><iref item="HTML LINK elements" subitem="chapter"/></c><c>pointer to all top-level sections</c>
+  <c>contents<iref item="contents HTML LINK element"/><iref item="HTML LINK elements" subitem="contents"/></c><c>pointer to table of contents</c>
+  <c>copyright<iref item="copyright HTML LINK element"/><iref item="HTML LINK elements" subitem="copyright"/></c><c>pointer to copyright statement</c>
+  <c>index<iref item="index HTML LINK element"/><iref item="HTML LINK elements" subitem="index"/></c><c>pointer to index</c>
+
+</texttable>
+<figure>
+<preamble>
+The figure below shows how Mozilla Firefox 1.0 displays the Site Navigation Bar
+for rfc2396.xml.
+</preamble>
+<artwork src="rfc2629xslt-fig1.png" height="235" width="509" type="image/png">
+(LINK elements displayed in Mozilla Firefox for RFC2396.xml)
+</artwork>
+</figure>
+
+</section>
+
+
+<section title="Standard HTML metadata">
+<texttable>
+<preamble>The following standard HTML META elements are produced:</preamble>
+
+  <ttcol>META name</ttcol>
+  <ttcol>description</ttcol>
+  
+  <c>generator<iref item="generator HTML META element"/><iref item="HTML META elements" subitem="generator"/></c><c>from XSLT engine version and stylesheet version</c>
+  <c>keywords<iref item="keywords HTML META element"/><iref item="HTML META elements" subitem="keywords"/></c><c>from keyword elements in front section</c>
+
+</texttable>
+</section>
+
+
+<section title="Dublin Core (RFC2731) metadata" anchor="rfc2731.properties">
+<t>
+  Unless turned off using the "rfc-ext support-rfc2731" processing
+  instruction, the transformation will generate metadata according to
+  <xref target="RFC2731"/>.
+</t>
+<texttable>
+<preamble>The following DCMI properties are produced:</preamble>
+
+  <ttcol>META name</ttcol>
+  <ttcol>description</ttcol>
+  
+  <c>DC.Creator<iref item="Creator DCMI property"/><iref item="DCMI properties" subitem="Creator"/></c><c>from author information in front section</c>
+  <c>DC.Date.Issued<iref item="Date.Issued DCMI property"/><iref item="DCMI properties" subitem="Date.Issued"/></c><c>from date information in front section</c>
+  <c>DC.Description.Abstract<iref item="Description.Abstract DCMI property"/><iref item="DCMI properties" subitem="Description.Abstract"/></c><c>from abstract</c>
+  <c>DC.Identifier<iref item="Identifier DCMI property"/><iref item="DCMI properties" subitem="Identifier"/></c><c>document URN <xref target="RFC2648" /> from "docName" attribute</c>
+  <c>DC.Relation.Replaces<iref item="Relation.Replaces DCMI property"/><iref item="DCMI properties" subitem="Relation.Replaces"/></c><c>from "obsoletes" attribute</c>
+
+</texttable>
+</section>
+
+<section title="Experimental hCard support" anchor="hcard">
+<t>
+  The generated author information is formatted in <eref target="http://microformats.org/wiki/hcard">hCard</eref>
+  format.
+</t>
+</section>
+
+
+</section>
+
+<section title="Transforming to XHTML" anchor="output.xhtml">
+<t>
+  Transforming to XHTML requires slightly different XSLT output options and
+  is implemented by the derived transformation script <spanx style="verb">rfc2629toXHTML.xslt</spanx>.
+</t>
+<t><list><t>
+  <x:h>Note:</x:h> Microsoft Internet Explorer does <spanx>not</spanx> support XHTML.
+  Therefore it usually makes more sense to generate plain old HTML.
+</t></list></t>
+</section>
+
+<section title="Transforming to CHM (Microsoft Compiled Help)" anchor="output.chm">
+<t>
+  <iref item="CHM format"/>
+  <iref item="Microsoft Help"/>
+  To generate a CHM file using Microsoft's HTML Help Compiler (hhc), three
+  files are required in addition to the HTML file.
+  <list style="numbers">
+    <t>hhc - table of contents file (HTML)</t>
+    <t>hhk - index file (HTML)</t>
+    <t>hhp - project file (plain text)</t>
+  </list> 
+</t>
+<t>
+  The three files are generated with three specific transformations, each
+  requiring the additional XSLT parameter "basename" to specify the filename
+  prefix.
+</t>
+<figure>
+<preamble>Example:</preamble>
+<artwork type="example">
+saxon rfc2616.xml rfc2629toHhp.xslt basename=rfc2616  > rfc2616.hhp
+saxon rfc2616.xml rfc2629toHhc.xslt basename=rfc2616  > rfc2616.hhc
+saxon rfc2616.xml rfc2629toHhk.xslt basename=rfc2616  > rfc2616.hhk
+hhc rfc2616.hhp
+</artwork>
+</figure>
+</section>
+
+<section title="Transforming to PDF via XSL-FO" anchor="output.pdf">
+
+<section title="Via XSL-FO" anchor="output.pdf.fop">
+<t>
+  Transformation to XSL-FO <xref target="XSL-FO"/> format is available through
+  <spanx style="verb">rfc2629toFO.xslt</spanx> (which includes <spanx style="verb">rfc2629.xslt</spanx>, so keep both in the
+  same folder).
+</t>
+<t>
+  Compared to HTML user agents, XSL-FO engines unfortunately either come
+  as open source (for instance, <iref item="Apache FOP"/>Apache FOP) or
+  feature-complete (for instance, <iref item="AntennaHouse XSL Formatter"/>
+  AntennaHouse XSL Formatter), but not both at the same time.
+</t>
+<t>
+  As Apache FOP needs special workarounds (page breaking, table layout), and
+  some popular extensions aren't standardized yet, the translation produces
+  a generic output (hopefully) conforming to <xref target="XSL-FO"/>.
+  Specific backends (<spanx style="verb">xsl11toFop.xslt</spanx>,
+  <spanx style="verb">xsl11toXep.xslt</spanx>, <spanx style="verb">xsl11toAn.xslt</spanx>)
+  then provide post-processing for the individual processors.
+</t>
+<t>
+  <list>
+    <t>
+      <x:h>Note:</x:h>
+      the output is currently targeted at Apache FOP 0.20.5
+      (<eref target="http://xmlgraphics.apache.org/fop/0.20.5/"/>), not the 
+      newer versions.
+    </t>
+  </list>
+</t>
+
+<section title="Extension feature matrix">
+<texttable>
+  <ttcol/>
+  <ttcol align="center" width="20%">PDF anchors</ttcol>
+  <ttcol align="center" width="20%">PDF bookmarks</ttcol>
+  <ttcol align="center" width="20%">PDF document information</ttcol>
+  <ttcol align="center" width="20%">Index cleanup</ttcol>
+  
+  <c><eref target="http://www.w3.org/TR/2003/WD-xsl11-20031217/">XSL 1.1 WD</eref></c>
+  <c>no, but can be auto-generated from "id" attributes</c>  
+  <c><eref target="http://www.w3.org/TR/2003/WD-xsl11-20031217/#d0e12873">yes</eref></c>
+  <c>no, but uses XEP output extensions</c>
+  <c><eref target="http://www.w3.org/TR/2003/WD-xsl11-20031217/#d0e12534">yes</eref></c>
+
+  <c><eref target="http://www.antennahouse.com/">Antenna House XSL formatter</eref></c>
+  <c>no</c>
+  <c><eref target="http://www.antennahouse.com/XSL20/axf-extension.htm">yes</eref> (from XSL 1.1 bookmarks)</c>
+  <c><eref target="http://www.antennahouse.com/XSL20/axf-extension.htm">yes</eref> (from XEP document info)</c>
+  <c><eref target="http://www.antennahouse.com/XSL20/axf-extension.htm">yes</eref> (just page duplicate elimination, from XSL 1.1 page index)</c>
+
+  <c><eref target="http://xml.apache.org/fop/">Apache FOP</eref></c>
+  <c><eref target="http://xml.apache.org/fop/extensions.html#named-destinations">yes</eref></c>
+  <c><eref target="http://xml.apache.org/fop/extensions.html#bookmarks">yes</eref> (from XSL 1.1 bookmarks)</c>
+  <c>no</c>
+  <c>no</c>
+
+  <c><eref target="http://xep.xattic.com/">RenderX XEP</eref></c>
+  <c>no</c>
+  <c><eref target="http://xep.xattic.com/xep/spec.html">yes</eref> (from XSL 1.1 bookmarks)</c>
+  <c><eref target="http://xep.xattic.com/xep/spec.html">yes</eref></c>
+  <c><eref target="http://xep.xattic.com/xep/spec.html">yes</eref> (from XSL 1.1 page index)</c>
+
+</texttable>
+</section>
+
+<section title="Example: producing output for Apache FOP">
+<figure>
+<preamble>Example:</preamble>
+<artwork type="example">
+saxon rfc2616.xml rfc2629toFo.xslt > tmp.fo
+saxon tmp.fo xsl11toFop.xslt > rfc2629.fo
+</artwork>
+</figure>
+</section>
+</section>
+
+<section title="Via X(HTML)" anchor="output.pdf.html">
+<t>
+  PDF output can also be produced directly from (X)HTML. One simple approach
+  is to rely on the browser's printing function, and to use a printer driver
+  that produces PDF. Depending on the brower's CSS capabilities, the output
+  will behave properly with respect to table breaks etc.
+</t>
+<t>
+  An alternative is PrinceXML (see <eref target="http://www.princexml.com/"/>),
+  which can produce PDF directly from (X)HTML input, based on the CSS printing
+  information.
+</t>
+<figure>
+  <preamble>
+    For instance, PDF output with text justification turned on can be
+    produced with:
+  </preamble>
+  <artwork type="example">
+saxon input.xml rfc2629toXHTML.xslt xml2rfc-ext-justification=print \
+  > output.xhtml
+prince output.xhtml output.pdf</artwork>
+</figure>
+</section>
+
+</section>
+
+<section title="Generic Extensions" anchor="extensions">
+<t>
+  This section documents extensions implemented in 
+  <spanx style="verb">rfc2629.xslt</spanx>, using the extension
+  namespace "http://purl.org/net/xml2rfc/ext".
+</t>
+
+<section title="&lt;anchor-alias> element" anchor="ext.element.anchor-alias">
+  <iref item="Extension Elements" subitem="anchor-alias" primary="true"/>
+  <iref item="anchor-alias Extension Element" primary="true"/>
+  <x:anchor-alias value="anchor-alias"/>
+  <t>
+    Using its "value" attribute, this element allows the definition of an
+    internal link target alias for the enclosing element. This alias can
+    then be used with the &lt;<x:ref>ref</x:ref>> element for intra-document
+    references.
+  </t>
+  <t>
+    Note that the anchor alias is not subject to the naming constraints that
+    apply to anchor elements (which are <eref target="http://www.w3.org/TR/REC-xml/#NT-Name">XML
+    names</eref>).
+  </t>
+</section>
+
+<section title="&lt;bcp14> element" anchor="ext.element.bcp14">
+  <iref item="Extension Elements" subitem="bcp14" primary="true"/>
+  <iref item="bcp14 Extension Element" primary="true"/>
+  <x:anchor-alias value="bcp14"/>
+  <t>
+    This element marks the content as being one of the normative keywords
+    defined in <xref target="RFC2119"/>.
+  </t>
+  <figure>
+    <preamble>
+      The DOCTYPE definition below allows using these keywords using XML
+      entity expansion: such as in "...server &amp;MUST; accept...".
+    </preamble>
+    <artwork type="example">
+&lt;!DOCTYPE rfc [
+ &lt;!ENTITY MAY "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >MAY&lt;/bcp14>">
+ &lt;!ENTITY MUST "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >MUST&lt;/bcp14>">
+ &lt;!ENTITY MUST-NOT "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >MUST NOT&lt;/bcp14>">
+ &lt;!ENTITY OPTIONAL "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >OPTIONAL&lt;/bcp14>">
+ &lt;!ENTITY RECOMMENDED "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >RECOMMENDED&lt;/bcp14>">
+ &lt;!ENTITY REQUIRED "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >REQUIRED&lt;/bcp14>">
+ &lt;!ENTITY SHALL "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >SHALL&lt;/bcp14>">
+ &lt;!ENTITY SHALL-NOT "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >SHALL NOT&lt;/bcp14>">
+ &lt;!ENTITY SHOULD "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >SHOULD&lt;/bcp14>">
+ &lt;!ENTITY SHOULD-NOT "&lt;bcp14 xmlns='http://purl.org/net/xml2rfc/ext'
+   >SHOULD NOT&lt;/bcp14>">]></artwork>
+  </figure>
+</section>
+
+<section title="&lt;bb> element" anchor="ext.element.bb">
+  <iref item="Extension Elements" subitem="bb" primary="true"/>
+  <iref item="bb Extension Element" primary="true"/>
+  <x:anchor-alias value="bb"/>
+  <t>
+    Marking up a string as &lt;bb> indicates that it represents the bottom 
+    line of a box drawing, replacing the "+" and "-" characters accordingly.
+  </t>
+</section>
+
+<section title="&lt;bc> element" anchor="ext.element.bc">
+  <iref item="Extension Elements" subitem="bc" primary="true"/>
+  <iref item="bc Extension Element" primary="true"/>
+  <x:anchor-alias value="bc"/>
+  <t>
+    Marking up a string as &lt;bc> indicates that it represents a center
+    line of a box drawing, replacing the "|" character accordingly.
+  </t>
+</section>
+
+<section title="&lt;blockquote> element" anchor="ext.element.blockquote">
+  <iref item="Extension Elements" subitem="blockquote" primary="true"/>
+  <iref item="blockquote Extension Element" primary="true"/>
+  <x:anchor-alias value="blockquote"/>
+  <t>
+    This element is like the "<eref target="http://www.w3.org/TR/html401/struct/text.html#edef-BLOCKQUOTE">blockquote</eref>" element in <xref target="HTML"/> 
+    (note this is a block-level element!). It should contain one or more
+    &lt;t> child elements.
+  </t>
+</section>
+
+<section title="&lt;bt> element" anchor="ext.element.bt">
+  <iref item="Extension Elements" subitem="bt" primary="true"/>
+  <iref item="bt Extension Element" primary="true"/>
+  <x:anchor-alias value="bt"/>
+  <t>
+    Marking up a string as &lt;bt> indicates that it represents the top 
+    line of a box drawing, replacing the "+" and "-" characters accordingly.
+  </t>
+</section>
+
+<section title="&lt;dfn> element" anchor="ext.element.dfn">
+  <iref item="Extension Elements" subitem="dfn" primary="true"/>
+  <iref item="dfn Extension Element" primary="true"/>
+  <x:anchor-alias value="dfn"/>
+  <t>
+    This element is like the "<eref target="http://www.w3.org/TR/html401/struct/text.html#edef-DFN">dfn</eref>" element in <xref target="HTML"/>.
+  </t>
+</section>
+
+<section title="&lt;h> element" anchor="ext.element.h">
+  <iref item="Extension Elements" subitem="h" primary="true"/>
+  <iref item="h Extension Element" primary="true"/>
+  <x:anchor-alias value="h"/>
+  <t>
+    This element is like the "<eref target="http://www.w3.org/TR/2006/WD-xhtml2-20060726/mod-structural.html#edef_structural_h">h</eref>" element in <xref target="XHTML2"/>.
+  </t>
+</section>
+
+<section title="&lt;link> element" anchor="ext.element.link">
+  <iref item="Extension Elements" subitem="link" primary="true"/>
+  <iref item="link Extension Element" primary="true"/>
+  <x:anchor-alias value="link"/>
+  <t>
+    This element can be added as a top-level child element below
+    &lt;rfc> to indicate additional link information. It's currently
+    used only when generating HTML output, in which case an HTML
+    <eref target="http://www.w3.org/TR/html4/struct/links.html#edef-LINK">&lt;link></eref> element with identical attributes gets generated.
+  </t>
+  <figure>
+    <preamble>Example: generating HTML link element</preamble>
+    <artwork type="example">
+        &lt;x:link xmlns="http://purl.org/net/xml2rfc/ext"
+            rel="Bookmark"
+            title="IETF WEBDAV Working Group"
+            href="http://ftp.ics.uci.edu/pub/ietf/webdav/"/></artwork>
+  </figure>
+</section>
+
+<section title="&lt;lt> element" anchor="ext.element.lt">
+  <iref item="Extension Elements" subitem="lt" primary="true"/>
+  <iref item="lt Extension Element" primary="true"/>
+  <x:anchor-alias value="lt"/>
+  <t>
+    Used for grouping multiple &lt;t&gt; elements into a single list item.
+  </t>
+</section>
+
+<section title="&lt;ref> element" anchor="ext.element.ref">
+  <iref item="Extension Elements" subitem="ref" primary="true"/>
+  <iref item="ref Extension Element" primary="true"/>
+  <x:anchor-alias value="ref"/>
+  <t>
+    This element is a simplified variant of the &lt;xref> element, in that
+    no "target" attribute needs to be specified, instead the text contents
+    acts as identifier.  That in itself wouldn't be terribly useful,
+    but together with the &lt;<x:ref>anchor-alias</x:ref>>, it allows
+    referring to other parts of the document with minimal additional markup.
+  </t>
+  <t>
+    For instance, given an alias definition such as
+  </t>
+  <figure>
+    <artwork type="example">
+      &lt;section title="Test" anchor="test">
+        &lt;x:anchor-alias value="alias1"/>
+        &lt;x:anchor-alias value="alias 2"/>
+        ...
+      &lt;/section></artwork>
+  </figure>
+  <t>
+    the following simple references
+  </t>
+  <figure>
+    <artwork type="example">
+      &lt;x:ref>test&lt;/x:ref>
+      &lt;x:ref>alias1&lt;/x:ref>
+      &lt;x:ref>alias 2&lt;/x:ref></artwork>
+  </figure>
+  <t>
+    semantically equivalent to...:
+  </t>
+  <figure>
+    <artwork type="example">
+      &lt;xref target="test">test&lt;/xref>
+      &lt;xref target="test">alias1&lt;/xref>
+      &lt;xref target="test">alias 2&lt;/xref></artwork>
+  </figure>
+</section>
+
+<section title="&lt;q> element" anchor="ext.element.q">
+  <iref item="Extension Elements" subitem="q" primary="true"/>
+  <iref item="q Extension Element" primary="true"/>
+  <x:anchor-alias value="q"/>
+  <t>
+    This element is like the "<eref target="http://www.w3.org/TR/html401/struct/text.html#edef-Q">q</eref>" element in <xref target="HTML"/>.
+  </t>
+</section>
+
+<section title="Extensions to Xml2rfc &lt;iref&gt; element" anchor="ext-rfc2629.iref">
+<t>
+  The extension attribute below is allowed on the standard &lt;iref&gt; element:
+  <list style="symbols">
+    <t>x:for-anchor specifies that the &lt;iref&gt; will also be automatically
+    inserted whenever the specified anchor is cross-referenced -- this may
+    save entering lots of &lt;iref&gt; instances. As a special case, a value of
+    "" (empty string) refers to the anchor attribute of the closest ancestor.</t>
+  </list>
+</t>
+</section>
+
+<section title="Extensions to Xml2rfc &lt;list&gt; element" anchor="ext-rfc2629.list">
+<t>
+  The &lt;list&gt; element can take &lt;x:<x:ref>lt</x:ref>&gt; child elements instead of
+  &lt;t&gt;, allowing to insert multiple paragraphs into a single list item.
+</t>
+</section>
+
+<section title="Extensions to Xml2rfc &lt;xref&gt; element" anchor="ext-rfc2629.xref">
+<t>
+  Three extension attributes are allowed on the standard &lt;xref&gt; element:
+  <list style="numbers">
+    <t>x:sec can be specified to point to a specific section of the referenced document,</t>
+    <t>x:rel may specify a relative reference to use when linking into the referenced document (if linking by section number is not available),</t>
+    <t>x:fmt defines the text format to be used.</t>
+  </list>
+</t>
+<t>
+  The following formats are defined for the x:fmt attribute:
+  <list style="hanging">
+    <t hangText=", (Comma)">
+      [<spanx>reference</spanx>], Section <spanx>sec</spanx>
+    </t>
+    <t hangText="()">
+      [<spanx>reference</spanx>] (Section <spanx>sec</spanx>)
+    </t>
+    <t hangText="anchor">
+      Like the default format, but without brackets.
+    </t>
+    <t hangText="of">
+      Section <spanx>sec</spanx> of [<spanx>reference</spanx>]
+    </t>
+    <t hangText="number">
+      <spanx>sec</spanx>
+    </t>
+    <t hangText="none">
+      No output (can be used to have xrefs to references without
+      having them rendered as such)
+    </t>
+    <t hangText="sec">
+      Section <spanx>sec</spanx>
+    </t>
+  </list>
+</t>
+<t>
+  These extensions are currently only support of &lt;xref&gt; elements without
+  child nodes.
+</t>
+<t>
+  If the processor knows how to reference the target section, it will generate
+  a link directly to the target section, such as in <xref target="RFC2119" x:fmt="," x:sec="5"/>.
+</t>
+</section>
+
+</section>
+
+<section title="Utilities" anchor="utilities">
+
+<section title="Checking References" anchor="checking-references">
+<t>
+  <spanx style="verb">check-references.xslt</spanx> can be used to check
+  all references to RFC- and ID-series IETF publications and to W3C publications (note
+  this script requires local copies of
+  <eref target="ftp://ftp.isi.edu/in-notes/rfc-index.xml"/> and
+  <eref target="http://www.w3.org/2002/01/tr-automation/tr.rdf"/> and
+  will use the XML status information provided at <eref target="http://tools.ietf.org/"/>).
+</t>
+<t>
+  If the document is supposed to be published on the IETF standards track,
+  the desired level can be specified using the parameter <spanx style='verb'>intended-level</spanx>
+  as 'PROPOSED', 'DRAFT' or 'STANDARD'.
+</t>
+<figure>
+<preamble>
+For instance, as of 2006-08-06, the script produces for <eref target="http://greenbytes.de/tech/webdav/rfc2518.xml"/>:
+</preamble>
+<artwork type="example">
+> saxon rfc2518.xml check-references.xslt
+
+Normative References:
+ISO-11578: not checked
+ISO-639: not checked
+ISO-8601: not checked
+REC-xml-19980210: [FirstEdition] obsoleted by REC-xml-20001006
+REC-xml-names-19990114: [REC] obsoleted by PER-xml-names-20060614
+RFC1766: [PROPOSED STANDARD] obsoleted by RFC3066 RFC3282
+RFC2068: [PROPOSED STANDARD] obsoleted by RFC2616
+RFC2069: [PROPOSED STANDARD] obsoleted by RFC2617
+RFC2119: [BEST CURRENT PRACTICE] (-> BCP0014) ok
+RFC2141: [PROPOSED STANDARD] ok
+RFC2277: [BEST CURRENT PRACTICE] (-> BCP0018) ok
+RFC2396: [DRAFT STANDARD] obsoleted by RFC3986
+RFC2279: [DRAFT STANDARD] obsoleted by RFC3629
+
+Informational References:
+REC-PICS-labels-961031: [REC] ok
+RFC1807: [INFORMATIONAL] ok
+RFC2026: [BEST CURRENT PRACTICE] (-> BCP0009) ok
+RFC2291: [INFORMATIONAL] ok
+RFC2376: [INFORMATIONAL] obsoleted by RFC3023
+RFC2413: [INFORMATIONAL] ok
+USMARC: not checked
+WF: not checked
+</artwork></figure>
+<t>
+  Recognized formats in the &lt;seriesInfo> element are:
+  <list style="symbols">
+    <t>for RFCs, the name attribute must be "RFC", and the value attribute must
+    be the number of the RFC,</t>
+    <t>for Internet Drafs, the name attribute must be "ID" or "Internet-Draft", and the value attribute must
+    be the file name of the draft (including the two-digit running number, but excluding a file extension),</t>
+    <t>for W3C documents, the name attribute must be "W3C", must start with "W3C&#160;", or
+    must start with "World Wide Web Consortium&#160;", and the value attribute
+    must be the "shorthand" name of the specification, such as "REC-xml-19980210".</t>
+  </list>
+</t>
+
+</section>
+
+<section title="Generating Graphs from References">
+<t>
+  <spanx style="verb">gen-reference-graph.xslt</spanx> generates a graph
+  of RFC dependencies, using the same base data as in <spanx style="verb">check-references.xslt</spanx>
+  (see <xref target="checking-references"/>). Its output is a "dot" file,
+  to be processed by GraphViz (see <eref target="http://www.graphviz.org/"/>).
+</t>
+<figure>
+<preamble>
+The picture below shows the RFC depencies in RFC2629.
+</preamble>
+<artwork src="rfc2629xslt-fig2.png" type="image/png">
+(PNG output obtained from GraphViz)
+</artwork>
+</figure>
+</section>
+
+<section title="Producing reference entries for books">
+<t>
+  <spanx style="verb">amazon-asin.xslt</spanx> uses the Amazon web services
+  to generate a &lt;reference> element for a given ASIN (ISBN).
+</t>
+<figure>
+<preamble>For instance:</preamble>
+<artwork type="example">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;references>
+ &lt;reference target="urn:isbn:0134516591">
+   &lt;front>
+     &lt;title>Simple Book, The: An Introduction to Internet Management,
+               Revised Second Edition&lt;/title>
+     &lt;author surname="Rose"
+                fullname="Marshall T. Rose" initials="M. T. ">
+       &lt;organization/>
+     &lt;/author>
+     &lt;author surname="Marshall"
+                fullname="Rose T. Marshall" initials="R. T.">
+       &lt;organization/>
+     &lt;/author>
+     &lt;date year="1996" month="March"/>
+   &lt;/front>
+   &lt;seriesInfo name="Prentice Hall" value=""/>
+ &lt;/reference>
+&lt;/references>
+</artwork></figure>
+<t>
+  Note that the resulting XML usually requires checking, in this case Amazon's
+  database is playing tricks with Marshall's name...
+</t>
+</section>
+
+<section title="Down-converting to RFC2629bis DTD" anchor="clean-for-dtd">
+<t>
+  <spanx style="verb">clean-for-DTD.xslt</spanx> can be used to down-convert
+  some extensions to a format that is supported by the base xml2rfc
+  distribution.  Note that these extensions are experimental (feedback
+  appreciated).
+</t>
+<t>
+  The following mappings are done:
+  <list style="symbols">
+    <t>
+      &lt;iref> elements inside &lt;artwork> elements are moved in front
+      of the enclosing &lt;figure> element.
+    </t>
+    <t>
+      &lt;xref> elements inside &lt;artwork> are expanded just like in
+      regular text (that is, the markup is stripped, but the element
+      is replaced by the applicable replacement text).
+    </t>
+    <t>
+      &lt;x:<x:ref>anchor-alias</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>bcp14</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>bb</x:ref>>, &lt;x:<x:ref>bc</x:ref>> and &lt;x:<x:ref>bt</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>blockquote</x:ref>> elements get converted to
+      indented text (through a &lt;list> element).
+    </t>
+    <t>
+      &lt;x:<x:ref>dfn</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>h</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>link</x:ref>> elements get stripped. 
+    </t>
+    <t>
+      &lt;x:<x:ref>q</x:ref>> elements get stripped, with apostrophes
+      added around the text. 
+    </t>
+    <t>
+      &lt;x:<x:ref>ref</x:ref>> elements get replaced by &lt;xref>
+      elements, targetting either the anchor or another anchor with
+      matching &lt;x:<x:ref>anchor-alias</x:ref>> child element.
+    </t>
+  </list>
+</t>
+</section>
+
+<section title="Extracting artwork" anchor="extract-artwork">
+<t>
+  With <spanx style="verb">extract-artwork.xslt</spanx>, artwork elements
+  named through the "name" attribute can be extracted. This can be used
+  to automatically check it's syntax (for instance, when ABNFs appear
+  within a figure element).
+</t>
+<figure><preamble>For instance:</preamble>
+<artwork type="example">saxon rfc3986.xml extract-artwork.xslt name=uri.abnf
+</artwork>
+</figure>
+<t>
+  In addition, artwork of a specific type can be extracted, such as with:
+</t>
+<figure>
+<artwork type="example">saxon rfc3986.xml extract-artwork.xslt type=abnf
+</artwork>
+</figure>
+</section>
+</section>
+
+  
+
+</middle>
+
+<back>
+<references title="Informative References">
+
+<reference anchor="RFC2119">
+  <front>
+    <title abbrev="RFC Key Words">Key words for use in RFCs to Indicate Requirement Levels</title>
+    <author initials="S." surname="Bradner" fullname="Scott Bradner">
+    <organization>Harvard University</organization>
+    <address>
+      <email>sob@harvard.edu</email>
+    </address></author>
+    <date month="March" year="1997"/>
+  </front>
+  <seriesInfo name="BCP" value="14"/>
+  <seriesInfo name="RFC" value="2119"/>
+</reference>
+
+<reference anchor='RFC2629'>
+  <front>
+    <title>Writing I-Ds and RFCs using XML</title>
+    <author initials='M.T.' surname='Rose' fullname='Marshall T. Rose'>
+      <organization>Invisible Worlds, Inc.</organization>
+      <address>
+        <postal>
+          <street>660 York Street</street>
+          <city>San Francisco</city>
+          <region>CA</region>
+          <code>94110</code>
+          <country>US</country>
+        </postal>
+        <phone>+1 415 695 3975</phone>
+        <email>mrose@not.invisible.net</email>
+        <uri>http://invisible.net/</uri>
+      </address>
+    </author>
+    <date month='June' year='1999' />
+  </front>
+  <seriesInfo name='RFC' value='2629' />
+</reference>
+
+<reference anchor='RFC2648'>
+  <front>
+    <title>A URN Namespace for IETF Documents</title>
+    <author initials='R.' surname='Moats' fullname='Ryan Moats'>
+      <organization>AT&amp;T</organization>
+      <address>
+      <postal>
+        <street>15621 Drexel Circle</street>
+        <city>Omaha</city>
+        <region>NE</region>
+        <code>68135-2358</code>
+        <country>US</country>
+      </postal>
+      <email>jayhawk@att.com</email></address>
+    </author>
+    <date month='August' year='1999' />
+  </front>
+  <seriesInfo name='RFC' value='2648' />
+</reference>
+
+<reference anchor='RFC2731'>
+  <front>
+    <title>Encoding Dublin Core Metadata in HTML</title>
+    <author initials='J.A.' surname='Kunze' fullname='John A. Kunze'>
+      <organization>University of California, San Francisco,  Center for Knowledge Management</organization>
+      <address>
+        <postal>
+          <street>530 Parnassus Ave</street>
+          <street>Box 0840</street>
+          <city>San Francisco</city>
+          <region>CA</region>
+          <code>94143-0840</code>
+          <country>US</country>
+        </postal>
+        <facsimile>+1 415 476 4653</facsimile>
+        <email>jak@ckm.ucsf.edu</email>
+      </address>
+    </author>
+    <date month='December' year='1999' />
+  </front>
+  <seriesInfo name='RFC' value='2731' />
+</reference>
+
+<reference anchor="HTML" target="http://www.w3.org/TR/html401/">
+  <front>
+    <title>HTML 4.01 Specification</title>
+    <author initials="D." surname="Raggett" fullname="David Raggett">
+      <organization>W3C</organization>
+      <address>
+        <email>dsr@w3.org</email>
+      </address>
+    </author>
+    <author initials="A." surname="Hors" fullname="Arnaud Le Hors">
+      <organization>W3C</organization>
+    </author>
+    <author initials="I." surname="Jacobs" fullname="Ian Jacobs">
+      <organization>W3C</organization>
+    </author>
+    <date month="December" day="24" year="1999" />
+  </front>
+  <seriesInfo name="W3C" value="REC-html401-19991224" />
+</reference>
+
+<reference anchor="XHTML2" target="http://www.w3.org/TR/xhtml2">
+  <front>
+    <title>XHTML&#8482; 2.0</title>
+    <author initials="J." surname="Axelsson" fullname="Jonny Axelsson">
+      <organization>Opera Software</organization>
+    </author>
+    <author initials="M." surname="Birbeck" fullname="Mark Birbeck">
+      <organization>x-port.net</organization>
+    </author>
+    <author initials="M." surname="Dubinko" fullname="Micah Dubinko">
+      <organization></organization>
+    </author>
+    <author initials="B." surname="Epperson" fullname="Beth Epperson">
+      <organization>Websense</organization>
+    </author>
+    <author initials="M." surname="Ishikawa" fullname="Masayasu Ishikawa">
+      <organization>W3C</organization>
+    </author>
+    <author initials="S." surname="McCarron" fullname="Shane McCarron">
+      <organization>Applied Testing and Technology</organization>
+    </author>
+    <author initials="A." surname="Navarro" fullname="Ann Navarro">
+      <organization>WebGeek, Inc.</organization>
+    </author>
+    <author initials="S." surname="Pemberton" fullname="Steven Pemberton">
+      <organization>CWI</organization>
+    </author>
+    <date month="July" day="26" year="2006" />
+  </front>
+  <seriesInfo name="W3C" value="WD-xhtml2-20060726" />
+</reference>
+
+<reference anchor="XSL-FO" target="http://www.w3.org/TR/2006/REC-xsl11-20061205/">
+  <front>
+    <title>Extensible Stylesheet Language (XSL) Version 1.1</title>
+    <author initials="A." surname="Berglund" fullname="Anders Berglund">
+      <organization>IBM</organization>
+      <address>
+        <email>alrb@us.ibm.com</email>
+      </address>
+    </author>
+    <date month="Dec" day="5" year="2006" />
+  </front>
+  <seriesInfo name="W3C" value="REC-xsl11-20061205" />
+</reference>
+
+<reference anchor="RNC" target="http://www.oasis-open.org/committees/relax-ng/compact-20021121.html">
+  <front>
+    <title>RELAX NG Compact Syntax</title>
+    <author initials="J." surname="Clark" fullname="James Clark">
+      <organization/>
+      <address>
+        <email>jjc@jclark.com</email>
+      </address>
+    </author>
+    <date month="Nov" day="21" year="2002" />
+  </front>
+  <seriesInfo name="OASIS" value=""/>
+</reference>
+
+</references>
+
+  <section title="RELAX NG Compact Schema" anchor="grammar">
+  <iref item="Grammar" primary="true"/>
+  <iref item="Schema" primary="true"/>
+  <iref item="RELAX NG Compact Schema" primary="true"/>
+  <t>
+    The RNC schema (<xref target="RNC"/>) below can be used to validate
+    input documents (for instance, with <eref target="http://www.thaiopensource.com/relaxng/jing.html">Jing</eref>).
+  </t>
+  <t>
+    <spanx>Note that this is work in progress, and doesn't yet cover all
+    extensions completely.</spanx>
+  </t>
+  <figure>
+    <artwork type="rnc" name="rfc2629-ext.rnc" x:extraction-note="# Automatically extracted from rfc2629xslt.xml. DO NOT EDIT!&#10;">
+<spanx># WORK IN PROGRESS! PLEASE REPORT PROBLEMS TO THE AUTHOR.</spanx>
+
+<spanx># Define our extension namespace</spanx>
+namespace x = "http://purl.org/net/xml2rfc/ext"
+
+<spanx># Include rfc2629bis RNC grammar</spanx>
+include "rfc2629.rnc" {
+  
+  <spanx># Redefine &lt;artwork> to allow markup</spanx>
+  artwork =
+    element artwork {
+      attlist.artwork,
+      (TEXT
+        <spanx style="strong">| eref</spanx> 
+        <spanx style="strong">| iref</spanx> 
+        <spanx style="strong">| spanx</spanx> 
+        <spanx style="strong">| xref</spanx>
+        <spanx style="strong">| <x:ref>x_bb</x:ref></spanx>
+        <spanx style="strong">| <x:ref>x_bc</x:ref></spanx>
+        <spanx style="strong">| <x:ref>x_bt</x:ref></spanx>
+        <spanx style="strong">| <x:ref>x_ref</x:ref></spanx>)* 
+    }
+
+  <spanx># Redefine &lt;c> to allow our extension elements</spanx>
+  c =
+    element c {
+      attlist.c,
+      (TEXT
+        | xref
+        | eref 
+        | iref 
+        | cref 
+        | spanx 
+        <spanx style="strong">| <x:ref>x_ref</x:ref></spanx>)*
+    }
+
+  <spanx># Redefine &lt;list> element to allow &lt;x:<x:ref>lt</x:ref>> child elements</spanx>
+  \list =
+    element list {
+      attlist.list,
+      (t+ <spanx style="strong">| <x:ref>x_lt</x:ref>+</spanx>)
+    }    
+    
+  <spanx># Redefine &lt;postamble> to allow our extension elements</spanx>
+  postamble =
+    element postamble {
+      attlist.postamble,
+      (TEXT
+        | xref
+        | eref
+        | iref
+        | cref
+        | spanx
+        <spanx style="strong">| <x:ref>x_bcp14</x:ref></spanx>)*
+    }
+
+  <spanx># Redefine &lt;rfc> to allow our extension elements</spanx>
+  rfc =
+    element rfc {
+      attlist.rfc,
+      <spanx style="strong"><x:ref>x_link</x:ref>*,</spanx>
+      front,
+      middle,
+      back?
+    }
+
+  <spanx># Redefine &lt;section> to allow our extension elements</spanx>
+  section =
+    element section {
+      attlist.section,
+      (t
+       | figure
+       | texttable
+       | iref
+       | section
+       <spanx style="strong">| <x:ref>x_anchor-alias</x:ref></spanx>
+       <spanx style="strong">| <x:ref>x_blockquote</x:ref></spanx>)*
+    }
+
+  <spanx># Redefine &lt;spanx> to allow some markup</spanx>
+  spanx =
+    element spanx {
+      attlist.spanx,
+      (TEXT
+        <spanx style="strong">| iref</spanx>
+        <spanx style="strong">| xref</spanx>
+        <spanx style="strong">| <x:ref>x_ref</x:ref></spanx>)*
+    }
+
+  <spanx># Redefine &lt;t> to allow our extension elements</spanx>
+  t =
+    element t {
+      attlist.t,
+      (TEXT
+       | \list
+       | figure
+       | xref
+       | eref
+       | iref
+       | cref
+       | spanx
+       | vspace
+       <spanx style="strong">| <x:ref>x_bcp14</x:ref></spanx>
+       <spanx style="strong">| <x:ref>x_dfn</x:ref></spanx>
+       <spanx style="strong">| <x:ref>x_h</x:ref></spanx>
+       <spanx style="strong">| <x:ref>x_q</x:ref></spanx>
+       <spanx style="strong">| <x:ref>x_ref</x:ref></spanx>)*
+    }
+}
+
+<spanx># Extend attribute set for &lt;iref> (see <xref target="ext-rfc2629.iref"/>)</spanx>
+attlist.iref &amp;=
+  attribute x:for-anchor { ATEXT }?
+
+<spanx># Allow anchor attribute on &lt;spanx></spanx>
+attlist.spanx &amp;=
+  attribute anchor { xsd:ID }?
+
+<spanx># Extend attribute set for &lt;xref> (see <xref target="ext-rfc2629.xref"/>)</spanx>
+attlist.xref &amp;=
+  attribute x:fmt  { "()" | "," | "anchor" | "of" | "number" | "sec" |
+                     "none" }?,
+  attribute x:rel  { ATEXT }?,
+  attribute x:sec  { ATEXT }?
+
+<spanx anchor="x_anchor-alias"><iref item="anchor-alias Extension Element"/><iref item="Extension Elements" subitem="anchor-alias"
+/># Aliasing of anchors (see <xref target="ext.element.anchor-alias"/>)</spanx>
+<x:ref>x_anchor-alias</x:ref> =
+  element x:anchor-alias {
+    attribute value { TEXT },
+    empty
+  }
+
+<spanx anchor="x_bb"><iref item="bb Extension Element"/><iref item="Extension Elements" subitem="bb"
+/># Bottom line of box drawing (see <xref target="ext.element.bb"/>)</spanx>
+<x:ref>x_bb</x:ref> =
+  element x:bb {
+    (TEXT
+      | iref
+      | xref
+      | <x:ref>x_bb</x:ref>
+      | <x:ref>x_bc</x:ref>
+      | <x:ref>x_bt</x:ref>
+      | <x:ref>x_ref</x:ref>)* 
+  }
+
+<spanx anchor="x_bc"><iref item="bc Extension Element"/><iref item="Extension Elements" subitem="bc"
+/># Center line of box drawing (see <xref target="ext.element.bc"/>)</spanx>
+<x:ref>x_bc</x:ref> =
+  element x:bc {
+    (TEXT
+      | iref
+      | xref
+      | <x:ref>x_bb</x:ref>
+      | <x:ref>x_bc</x:ref>
+      | <x:ref>x_bt</x:ref>
+      | <x:ref>x_ref</x:ref>)* 
+  }
+
+<spanx anchor="x_bcp14"><iref item="bcp14 Extension Element"/><iref item="Extension Elements" subitem="bcp14"
+/># BCP14/RFC2119 keywords (see <xref target="ext.element.bcp14"/>)</spanx>
+<x:ref>x_bcp14</x:ref> =
+  element x:bcp14 {
+    "MAY"
+    | "MUST"
+    | "MUST NOT"
+    | "NOT RECOMMENDED"
+    | "OPTIONAL"
+    | "RECOMMENDED"
+    | "REQUIRED"
+    | "SHALL"
+    | "SHALL NOT"
+    | "SHOULD"
+    | "SHOULD NOT"
+  }
+  
+<spanx anchor="x_blockquote"><iref item="blockquote Extension Element"/><iref item="Extension Elements" subitem="blockquote"
+/># Blockquote (see <xref target="ext.element.blockquote"/>)</spanx>
+<x:ref>x_blockquote</x:ref> =
+  element x:blockquote {
+    attribute cite { URI }?,
+    t+
+  }
+
+<spanx anchor="x_bt"><iref item="bt Extension Element"/><iref item="Extension Elements" subitem="bt"
+/># Top line of box drawing (see <xref target="ext.element.bt"/>)</spanx>
+<x:ref>x_bt</x:ref> =
+  element x:bt {
+    (TEXT
+      | iref
+      | xref
+      | <x:ref>x_bb</x:ref>
+      | <x:ref>x_bc</x:ref>
+      | <x:ref>x_bt</x:ref>
+      | <x:ref>x_ref</x:ref>)* 
+  }
+
+<spanx anchor="x_dfn"><iref item="dfn Extension Element"/><iref item="Extension Elements" subitem="dfn"
+/># Definition (see <xref target="ext.element.dfn"/>)</spanx>
+<x:ref>x_dfn</x:ref> =
+  element x:dfn {
+    TEXT
+  }
+  
+<spanx anchor="x_h"><iref item="h Extension Element"/><iref item="Extension Elements" subitem="h"
+/># Heading (see <xref target="ext.element.h"/>)</spanx>
+<x:ref>x_h</x:ref> =
+  element x:h {
+    TEXT
+  }
+
+<spanx anchor="x_link"><iref item="link Extension Element"/><iref item="Extension Elements" subitem="link"
+/># Link (see <xref target="ext.element.link"/>)</spanx>
+<x:ref>x_link</x:ref> =
+  element x:link {
+    attribute href { URI },
+    attribute title { TEXT }?,
+    attribute rel { TEXT },
+    empty
+  }
+  
+<spanx anchor="x_lt"><iref item="lt Extension Element"/><iref item="Extension Elements" subitem="lt"
+/># Extended list item (see <xref target="ext.element.lt"/>)</spanx>
+<x:ref>x_lt</x:ref> =
+  element x:lt {
+    attribute anchor { xsd:ID }?,
+    attribute hangText { TEXT }?,
+    t+
+  }
+
+<spanx anchor="x_q"><iref item="q Extension Element"/><iref item="Extension Elements" subitem="q"
+/># Inline quote (see <xref target="ext.element.q"/>)</spanx>
+<x:ref>x_q</x:ref> =
+  element x:q {
+    TEXT
+  }
+
+<spanx anchor="x_ref"><iref item="ref Extension Element"/><iref item="Extension Elements" subitem="ref"
+/># Anchor reference (see <xref target="ext.element.ref"/>)</spanx>  
+<x:ref>x_ref</x:ref> =
+  element x:ref {
+    TEXT
+  }
+</artwork></figure>
+
+  </section>
+
+
+  <section title="License" anchor="license">
+  <t>
+Copyright (c) 2006-2007, Julian Reschke (julian.reschke@greenbytes.de)
+  </t>
+  <t>
+All rights reserved.
+  </t>
+  <t>
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  <list style="symbols">
+    <t>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</t>
+    <t>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</t>
+    <t>Neither the name of Julian Reschke nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</t>
+  </list>
+  </t>
+  <t>
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  </t>
+  </section>
+
+  <section title="Change Logs">
+    
+  
+    <section title="Package">
+      <t><list style="hanging">
+<t hangText="2006-01-01">
+    Switch to BSD License.
+</t>
+<t hangText="2007-01-12">
+    Update to xml2rfc v1.33pre2.
+</t>
+<t hangText="2007-03-31">
+    Update to xml2rfc v1.33pre3.
+</t>
+<t hangText="2007-05-01">
+    Add XSLT test cases.
+</t>
+      </list></t>
+    </section>
+    
+    <section title="amazon-asin.xslt">
+    <t><list style="hanging">
+<t hangText="2003-11-16">
+     Initial release.
+</t>
+<t hangText="2005-04-02">
+     Fix two DTD issues.
+</t>
+    </list></t>
+    </section>
+
+    <section title="check-references.xslt">
+    <t><list style="hanging">
+<t hangText="2003-11-16">
+     Initial release.
+</t>
+<t hangText="2003-11-16">
+     Initial release.
+</t>
+<t hangText="2004-05-11">
+     Add document status; print references type.
+</t>
+<t hangText="2005-01-01">
+     Add experimental check for ID status.
+</t>
+<t hangText="2005-04-01">
+     Add fixes from Bill Fenner.
+</t>
+<t hangText="2005-12-03">
+    Add checks against local copy of <eref target="http://www.w3.org/2002/01/tr-automation/tr.rdf"/>.  
+</t>
+<t hangText="2006-07-22">
+    Add checks for standards levels. 
+</t>
+<t hangText="2006-08-06">
+    "check-ietf-references.xslt" replaced by "check-references.xslt". 
+</t>
+<t hangText="2007-01-04">
+    Use information online at <eref target="http://tools.ietf.org/"/> to
+    retrieve Internet-Draft status information.
+</t>
+    </list></t>
+    </section>
+    
+    <section title="gen-reference-graph.xslt">
+    <t><list style="hanging">
+<t hangText="2006-09-03">
+  New.
+</t>
+    </list></t>
+    </section>
+
+    <section title="rfc2629.xslt">
+      <t><list style="hanging">
+<t hangText="2001-03-28">
+    Code rearranged, generate numbered section anchors for paragraphs (t)
+    as well. Fixes in index handling.
+</t>
+<t hangText="2001-04-12">
+    Moved HTML output into XHTML namespace.
+</t>
+<t hangText="2001-10-02">
+    Fixed default location for RFCs and numbering of section references.
+    Support ?rfc editing processing instruction.
+</t>
+<t hangText="2001-10-07">
+    Made telephone number links active.
+</t>
+<t hangText="2001-10-08">
+    Support for vspace element.
+</t>
+<t hangText="2001-10-09">
+    Experimental support for rfc-issue PI.
+</t>
+<t hangText="2001-11-11">
+    Support rfc private PI. Removed bogus code reporting the WG in the header.
+</t>
+<t hangText="2001-11-11">
+    Support rfc private PI. Removed bogus code reporting the WG in the header.
+</t>
+<t hangText="2001-12-17">
+    Support title attribute on references element
+</t>
+<t hangText="2002-01-05">
+    Support for list/@style="@format"
+</t>
+<t hangText="2002-01-09">
+    Display "closed" RFC issues as deleted
+</t>
+<t hangText="2002-01-14">
+    Experimentally and optionally parse XML encountered in artwork elements
+    (requires MSXSL).
+</t>
+<t hangText="2002-01-27">
+    Some cleanup. Moved RFC issues from PIs into namespaced elements.
+</t>
+<t hangText="2002-01-29">
+    Added support for sortrefs PI. Added support for figure names.
+</t>
+<t hangText="2002-02-07">
+    Highlight parts of artwork which are too wide (72 characters).
+</t>
+<t hangText="2002-02-12">
+    Code rearrangement for static texts. Fixes for section numbering.
+    TOC generation rewritten.
+</t>
+<t hangText="2002-02-15">
+    Support for irefs in sections; support iref @primary=true
+</t>
+<t hangText="2002-03-03">
+    Moved anchor prefix into a constant. Added sanity checks on user anchor
+    names.
+</t>
+<t hangText="2002-03-23">
+    Bugfix in detection of matching org names when creating the header. Fixed
+    sorting in subitems.
+</t>
+<t hangText="2002-04-02">
+    Fix TOC link HTML generation when no TOC is generated (created broken
+    HTML table code).
+</t>
+<t hangText="2002-04-03">
+    Made rendering of references more tolerant re: missing parts.
+</t>
+<t hangText="2002-04-08">
+    Fixed reference numbering when references are split into separate sections.
+</t>
+<t hangText="2002-04-16">
+    Fix default namespace (shouldn't be set for HTML output method).
+</t>
+<t hangText="2002-04-19">
+    Lowercase internal CSS selectors for Mozilla compliance. Do not put TOC
+    into ul element.
+</t>
+<t hangText="2002-04-21">
+    Make numbered list inside numbered lists use alphanumeric numbering.
+</t>
+<t hangText="2002-05-05">
+    Updated issue/editing support.
+</t>
+<t hangText="2002-05-15">
+    Bugfix for section numbering after introduction of ed:replace
+</t>
+<t hangText="2002-06-21">
+    When producing private documents, do not include document status, copyright etc.
+</t>
+<t hangText="2002-07-08">
+    Fix xrefs to Appendices.
+</t>
+<t hangText="2002-07-19">
+    Make artwork lightyellow for easier reading. (fielding)
+</t>
+<t hangText="2002-10-09">
+    Translate references title to anchor name to avoid non-uri characters. (fielding)
+</t>
+<t hangText="2002-10-13">
+    Support for tocdepth PI.
+</t>
+<t hangText="2002-11-03">
+    Added temporariry workaround for Mozilla/Transformiix result tree fragment problem.
+    (search for 'http://bugzilla.mozilla.org/show_bug.cgi?id=143668')
+</t>
+<t hangText="2002-12-25">
+    xref code: attempt to uppercase "section" and "appendix" when at the start
+    of a sentence.
+</t>
+<t hangText="2003-02-02">
+    fixed code for vspace blankLines="0", enhanced display for list with "format" style,
+    got rid of HTML blockquote elements, added support for "hangIndent"
+</t>
+<t hangText="2003-04-10">
+    experimental support for appendix and spanx elements
+</t>
+<t hangText="2003-04-19">
+    fixed counting of list numbers in "format %" styles (one counter
+    per unique format string). Added more spanx styles.
+</t>
+<t hangText="2003-05-02">
+    experimental texttable support
+</t>
+<t hangText="2003-05-02">
+    Make mailto links optional (default = none) (jre: default and PI name changed) (fielding)
+</t>
+<t hangText="2003-05-04">
+    experimental support for HTML link elements; fix default for table header
+    alignment default
+</t>
+<t hangText="2003-05-06">
+    support for "background" PI.
+</t>
+<t hangText="2003-05-11">
+    change %c format to lowercase alphabetic. add support for keyword
+    elements (generate META tag). fix various HTML conformance problems.
+    added experimental support for role attribute. do not number paragraphs
+    in unnumbered sections. update boilerplate texts. support for
+    "iprnotified" PI. bugfix list numbering. strip whitespace when
+    building tel: URIs.
+</t>
+<t hangText="2003-05-12">
+    more conformance fixes (layout moved into CSS, move lists and figures
+    out of para content, do not use tables for list formatting)
+</t>
+<t hangText="2003-05-13">
+    add DC.Creator meta tag, refactoring
+</t>
+<t hangText="2003-05-16">
+    put nbsps between "section" and section number (xref).
+</t>
+<t hangText="2003-05-18">
+    author summary: add missing comma.
+</t>
+<t hangText="2003-06-06">
+    fix index generation bug (transposed characters in key generation). Enhance
+    sentence start detection (xref starting a section was using lowercase
+    "section").
+</t>
+<t hangText="2003-06-22">
+    exp. support for xref/@format. Add missing support for eref w/o content.
+    exp. support for annotations in reference elements. Code cleanup
+    reference table formatting.
+</t>
+<t hangText="2003-07-09">
+    Another fix for DC.Creator meta tag creation based on RFC2731
+</t>
+<t hangText="2003-07-24">
+    Fix namespace name for DC.Creator.
+</t>
+<t hangText="2003-08-06">
+    Cleanup node-set support (only use exslt (saxon, xalan, libxslt) extension
+    functions; remove Transformix workarounds that stopped to work in Moz 1.4)
+</t>
+<t hangText="2003-08-09">
+    Generate HTML lang tag.
+</t>
+<t hangText="2003-08-10">
+    Map spanx/verb to HTML "samp" element. Fix author name display in
+    references (reverse surname/initials for last author), add "Ed.".
+    Fix internal bookmark generation.
+</t>
+<t hangText="2003-08-17">
+    Add DCMI dates, identifiers and abstract. Add PI to suppress DCMI
+    generation.  Do not add TOC entry to Copyright Statement when there is
+    none. Align RFC2629 PI names and parameter names. Change style for
+    inline URIs generated by eref. Add header and footer support.
+    Enhance CSS paging properties. Support topblock PI. Added hooks for
+    proper XHTML generation through separate XSLT. Enhance warning and
+    error messages. Add support for artwork image display. Table formatting
+    fixes (borders, thead continuation).
+</t>
+<t hangText="2003-08-18">
+    Add workaround for MSXML4 node-set and Mozilla node-set issues (fallback
+    just displays are warning).
+</t>
+<t hangText="2003-10-06">
+    Add workaround for broken pre/ins handling in Mozilla
+    (see <eref target="http://bugzilla.mozilla.org/show_bug.cgi?id=204401"/>). Make use
+    of cite attribute on ed:replace. CSS cleanup.
+</t>
+<t hangText="2003-10-08">
+    Fix minor issue detecting the same org for the header (caused by IE's
+    non-standard whitespace handling). Fix default handling for /rfc/@category.
+</t>
+<t hangText="2003-11-09">
+    Inherit ed:entered-by from ancestor elements. Change CSS color for inserted
+    text to green. Generate issues-list anchor. Do not complain about missing
+    targets when the xref element is below ed:del. Remove code that attempted
+    to distinguish section/Section when producing links - always use
+    uppercase. Fix date rendering for issue resolutions.
+</t>
+<t hangText="2003-11-29">
+    Fix color values for table backgrounds for issue rendering. Change
+    rendering of issue links to use inline-styles. Add colored issue markers to
+    issues. 
+</t>
+<t hangText="2003-12-13">
+    Fix inheritance of ed:entered-by attribute. Display note elements inside
+    change tracking as well.
+</t>
+<t hangText="2004-01-18">
+    When PI compact = 'yes', make most CSS print page breaks conditional.
+</t>
+<t hangText="2004-02-20">
+    Support for RFC3667 IPR changes (xml2rfc 1.22); see
+    <eref target="http://lists.xml.resource.org/pipermail/xml2rfc/2004-February/001088.html"/>.
+</t>
+<t hangText="2004-03-11">
+    Add "(if approved)" to "updates" and "obsoletes" unless the document has
+    an RFC number.
+</t>
+<t hangText="2004-04-01">
+    Fix RFC3667 output, see <eref target="http://lists.xml.resource.org/pipermail/xml2rfc/2004-April/001208.html"/>.
+</t>
+<t hangText="2004-04-04">
+    Add support for section/top attribute. Move references into plain
+    section container.
+</t>
+<t hangText="2004-04-06">
+    Do not emit identical para anchors for deleted content.
+</t>
+<t hangText="2004-04-14">
+    Fix references TOC generation when there are no references.
+</t>
+<t hangText="2004-04-24">
+    Fix RFC3667 output, see <eref target="http://xml.resource.org/pipermail/xml2rfc/2004-April/001246.html"/>.
+</t>
+<t hangText="2004-05-09">
+    Add custom support for generating compound index documents. Add anchors
+    for each Index letter. Add experimental cref support. Fix conditional page
+    breaks before References section.
+</t>
+<t hangText="2004-05-16">
+    Refactor external index generation.
+</t>
+<t hangText="2004-05-20">
+    Rewrite anchor generation for comments.
+</t>
+<t hangText="2004-05-22">
+    Enhance issues rendering (add links to changes).
+</t>
+<t hangText="2004-05-30">
+    Allow single quote as delimiter in processing instructions as well. Move
+    block-level issue pointers to floats. Disable issue pointers for print
+    media. Add "purple numbers". Add hrefs to section headings. Add non-printing
+    index key letter list to start of index.
+</t>
+<t hangText="2004-06-01">
+    Use &amp;#xb6; instead of # for PNs.
+</t>
+<t hangText="2004-07-18">
+    Add support for list style=letters (thanks Roy F.). Make PNs optional;
+    add new PI.
+</t>
+<t hangText="2004-09-05">
+    Fix index links into unnumbered sections.  Bring IPR boilerplate in-line
+    with xml2rfc 1.25.  Add experimental CSS3 paged media support.  Various
+    HTML fixes.
+</t>
+<t hangText="2004-09-21">
+    Enhance checking of artwork width.
+</t>
+<t hangText="2004-09-26">
+    Add check for unused references. Uppercase letters in list style letters
+    when nested into another list.
+</t>
+<t hangText="2004-10-10">
+    Fix internal change track pointers.
+</t>
+<t hangText="2004-11-01">
+    Allow change tracking on references (as a whole).  Rewrite artwork handling
+    so that it allows change tracking inside artwork.  Also allow a subset of
+    text markup inside artwork, such as xrefs (note this requires post-processing
+    the source to make it compliant to RFC2629bis).
+</t>
+<t hangText="2004-11-03">
+    Enhanced placement of iref anchors.
+</t>
+<t hangText="2004-11-06">
+    Index: display irefs that appeared (with primary=true) inside artwork elements
+    in a monospaced font.
+</t>
+<t hangText="2004-11-14">
+    Add special code so that changes in section titles can be change-tracked.
+</t>
+<t hangText="2005-01-14">
+    Bugfixes for HtmlToXhtml converter.
+</t>
+<t hangText="2005-01-22">
+    Enhance generation of HTML h* elements (for Mozilla Outliner).
+</t>
+<t hangText="2005-01-31">
+    Put vertical space around top-level TOC entries in TOC.  Switch to
+    pt-based CSS. Re-arrange top section. Make hr elements reflect new-page
+    settings in TXT output (compact-PI).  Fix page number in footer (CSS
+    print) and add some more experimental support for paged media (tested
+    with Prince 4.1 alpha).  Rewrite TOC and Index generation to generate HTML
+    lists.  Cleanup id generation for paragraphs.  Reduce whitespace in output.
+    Fix vspace implementation. Use right/left dqoutes and copyright sign
+    where appropriate.
+</t>
+<t hangText="2005-02-04">
+    Add &lt;link> element to references section.  Fix newly introduced bug
+    in references processing.
+</t>
+<t hangText="2005-02-05">
+    Integrate various fixes/enhancements by Roy Fielding: spelling of
+    "Authors' Addresses", comma setting in references, position of "Authors"
+    section, optionally place authors addresses at end (PI), trailing dots
+    in section numbers, switch to verdana default font in CSS.  Add
+    experimental support for centered artwork.
+</t>
+<t hangText="2005-02-09">
+    Fixes in spacing and links of references section titles.  Enhance sorting
+    in references when change tracking is in place.  Re-add figure centering
+    support.  Add missing 2nd part of "Author's Adresses" fix. 
+</t>
+<t hangText="2005-02-25">
+    Align section number format with xml2rfc1.29.
+</t>
+<t hangText="2005-03-28">
+    Get rid of table elements in Author's section.  Add experimental hCard
+    (<eref target="http://developers.technorati.com/wiki/hCard"/>) support.
+</t>
+<t hangText="2005-04-03">
+    Add RFC3978-style IPR statement support. (fenner@research.att.com)
+</t>
+<t hangText="2005-04-11">
+    Cleanup author display. hCard related fixes.
+</t>
+<t hangText="2005-05-07">
+    Minor fixes to allow change tracking in doc title.  Add experimental 
+    support for table border styles. CSS cleanup.
+</t>
+<t hangText="2005-06-18">
+    Implement missing support for references to texttables.
+</t>
+<t hangText="2005-09-25">
+    Use (-moz-)column-count when printing the index.
+</t>
+<t hangText="2005-10-04">
+    Report missing element templates with xsl:message.
+</t>
+<t hangText="2005-10-15">
+    Process t/@anchor.
+</t>
+<t hangText="2005-10-23">
+    More workarounds for Mozilla's broken del/ins handling (this time for
+    figures).
+</t>
+<t hangText="2005-10-27">
+    lowercase hCard class names
+</t>
+<t hangText="2005-11-22">
+    Enhance diagnostics for XML-in-artwork extension
+</t>
+<t hangText="2005-11-26">
+    Fix formatting of section numbers for sections inserted into &lt;back>.
+</t>
+<t hangText="2005-12-12">
+    Fix some validity problems when change tracking occured inside lists.
+</t>
+<t hangText="2005-12-18">
+    Add change tracking inside the index.
+</t>
+<t hangText="2006-02-04">
+    Add prev/next links to highlighted changes (change tracking extension).
+</t>
+<t hangText="2006-02-10">
+    Catch errors instantiating MSXML component.
+</t>
+<t hangText="2006-02-11">
+    References: add "work in progress" for Internet Drafts.
+</t>
+<t hangText="2006-02-27">
+    Fix front matter (lowercase Internet-Draft, say "Intended status" for
+    non-RFC documents). Start work on experimental extension for  
+    simplified internal links.
+</t>
+<t hangText="2006-03-19">
+    Tweaks to IESG Copyright stuff; support submissionType attribute.
+    Fix duplicate reference anchors in HTML output.  Reduce HTML Tidy warnings.
+    Fix reference to normative ASCII version (now requires trailing ".txt").
+    Tweaks to hCard generation.  Started to move non-issue-tracking
+    extensions into namespace "http://purl.org/net/xml2rfc/ext".
+</t>
+<t hangText="2006-03-27">
+    Moved "simple reference" extension into namespace "http://purl.org/net/xml2rfc/ext"
+    and add documentation.  HTML conformance enhancements.
+</t>
+<t hangText="2006-04-02">
+    Cleanup special code for automated XHTML XSLT generation.
+</t>
+<t hangText="2006-04-21">
+    Generate &lt;CITE> elements where appropiate.
+    Introduce x:blockquote, x:dfn, x:h and x:q elements.
+</t>
+<t hangText="2006-05-06">
+    Introduce x:bcp14 element.
+</t>
+<t hangText="2006-05-14">
+  Fix content model for x:blockquote.
+</t>
+<t hangText="2006-06-18">
+  Add box drawing support (x:bt, x:bc, x:bb).
+</t>
+<t hangText="2006-06-20">
+  HTML validity fixes (legal chars in anchors in index).
+</t>
+<t hangText="2006-06-24">
+  Reduce leading empty lines in artwork. Move &lt;dt> style info into CSS. 
+</t>
+<t hangText="2006-07-14">
+  Fix rendering of multiple street address entries (missing line break).
+</t>
+<t hangText="2006-07-24">
+  Add extension for deep linking into RFCs, do not generate empty list
+  items in TOC output, avoid empty &lt;dt> elements for list items 
+  without hangText attribute.
+</t>
+<t hangText="2006-08-01">
+  Allow @anchor on more elements; start work on Relax NG grammar for
+  extensions. Reduce generated style elements (use CSS classes instead).
+  Consistently use "id" instead of "name". Change default target for RFC
+  links to "http://tools.ietf.org/html/rfcNNNN".
+</t>
+<t hangText="2006-08-06">
+  Include appendices defined in &lt;appendix> elements in TOC (please
+  consider them deprecated anyhow!). Generate links to 
+  "http://tools.ietf.org/html/draft-*" for Internet Drafts.
+  Replace x:frag by x:rel, allowing any kind of relative reference instead
+  of just fragments.
+</t>
+<t hangText="2006-08-30">
+  Reduce textual differences between HTML output and what xml2rfc produces
+  in TXT output mode (section refs/reference targets). Add small workaround
+  for Opera 9.0.1's problem with node-set().
+</t>
+<t hangText="2006-10-29">
+  Fix problem generating internal links to change markup within references
+  section. Enhancements when generating numbered references for deleted
+  references.
+  Allow inclusion of references into the index (through include-references-in-index
+  extension).
+  Fix a bug that caused the newer version of the IETF boilerplate to be
+  produced rather than the pre-RFC3667 one.
+  Update to RFC4287 boilerplate.
+</t>
+<t hangText="2006-11-11">
+  Add extension attribute x:for-anchor to &lt;iref&gt; handling.
+</t>
+<t hangText="2006-11-26">
+  Experimental (and limited) support for &lt;x:lt&gt;.
+</t>
+<t hangText="2006-12-04">
+  Fix bugs in processing documents that have both the ipr and the number attribute
+  set on the rfc root element. Add support for x:fmt='none' on xrefs.
+  Add different pre style based on artwork type attributes (experimental).
+</t>
+<t hangText="2006-12-13">
+  Add x:fmt='anchor' for xref elements.
+</t>
+<t hangText="2007-01-07">
+  Fix root template for compatibility for the exslt:node-set implementation
+  in Firefox3.
+</t>
+<t hangText="2007-01-29">
+  Avoid empty table entry in front matter when organization is not specified
+  for an author.
+</t>
+<t hangText="2007-02-10">
+  Allow change tracking in table rows.
+</t>
+<t hangText="2007-03-09">
+  Add hcard profile URI (<eref target="http://www.w3.org/2006/03/hcard"/>) to head element.
+  Add warning for misplaced &lt;t> elements (after section).
+</t>
+<t hangText="2007-03-21">
+  Fix internal linking from reference entries in index for some xref types.
+  Minor CSS tweaks contributed by MTR. Allow turning on text justification through
+  a PI. Improve iref anchor generation to generate less instable anchors.
+</t>
+<t hangText="2007-03-28">
+  Fixes for numbering of ed:inserted references sections.
+</t>
+<t hangText="2007-05-04">
+  Do not generate anchors for edits in deleted sections. Enhance HTML
+  conformance.
+</t>
+<t hangText="2007-05-17">
+  Enhance diagnostics when using Saxon (needs Saxon's "-l" command line
+  parameter to keep line number information). Add warning when symref PI
+  is missing (default will change in the future).
+</t>
+      </list></t>
+    </section>
+    <section title="rfc2629toFO.xslt">
+      <t><list style="hanging">
+<t hangText="2003-11-16">
+    Initial release.
+</t>
+<t hangText="2003-11-29">
+    Enhance handling of unknown list styles.
+</t>
+<t hangText="2004-04-04">
+    Update reference section handling.
+</t>
+<t hangText="2004-04-17">
+    Use XSL-WD-1.1-style fo:bookmark and index handling and add postprocessors for
+    existing implementations. Unify PDF info generation by using XEP (postprocessors)
+    will convert.
+</t>
+<t hangText="2004-04-20">
+    Add experimental cref support.
+</t>
+<t hangText="2004-06-14">
+    Set correct index-item defaults.
+</t>
+<t hangText="2004-07-18">
+    Add list style=letters.
+</t>
+<t hangText="2004-09-03">
+    Make URLs in text break where they are allowed to break by inserting
+    zero-width spaces.
+</t>
+<t hangText="2004-09-26">
+    Fix letter-style inside nested lists.
+</t>
+<t hangText="2004-10-31">
+    Update handling of artwork.
+</t>
+<t hangText="2004-11-13">
+    Fix handling of references inside ed:* markup.  Fix whitespace handling
+    in artwork.
+</t>
+<t hangText="2004-11-27">
+    Irefs in artwork generate monospaced entries in index.
+</t>
+<t hangText="2005-01-31">
+    Fix TOC generation that was broken after changes in main XSLT.
+</t>
+<t hangText="2005-02-05">
+    Bring in sync with cosmetic changes in rfc2629.xslt.
+</t>
+<t hangText="2005-05-07">
+    Minor fix for change tracking in document title.  Support for table
+    styles.
+</t>
+<t hangText="2005-06-18">
+    Fix references to tables.
+</t>
+<t hangText="2005-10-15">
+    Process t/@anchor.
+</t>
+<t hangText="2006-02-11">
+    References: add "work in progress" for Internet Drafts.
+</t>
+<t hangText="2006-06-02">
+    Use XSL 1.1 WD Feb 2006.
+</t>
+<t hangText="2007-03-21">
+    Support optionla text justification.
+</t>
+     </list></t>
+    </section>
+
+    <section title="xsl11toAn.xslt">
+    <t><list style="hanging">
+<t hangText="2004-05-17">
+     Initial release.
+</t>
+<t hangText="2006-06-02">
+    Use XSL 1.1 WD Feb 2006.
+</t>
+    </list></t>
+    </section>
+
+    <section title="xsl11toFop.xslt">
+    <t><list style="hanging">
+<t hangText="2004-05-17">
+     Initial release.
+</t>
+<t hangText="2006-06-02">
+    Use XSL 1.1 WD Feb 2006.
+</t>
+    </list></t>
+    </section>
+
+    <section title="xsl11toXep.xslt">
+    <t><list style="hanging">
+<t hangText="2004-05-17">
+     Initial release.
+</t>
+<t hangText="2004-09-04">
+     Fix xep:index-item attributes.
+</t>
+<t hangText="2006-06-02">
+    Use XSL 1.1 WD Feb 2006.
+</t>
+    </list></t>
+    </section>
+  </section>
+
+</back>
+</rfc>

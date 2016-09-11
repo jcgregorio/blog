@@ -1,0 +1,30 @@
+<html>
+<head>
+   <link href="present.css" type="text/css" rel="stylesheet" />
+   <title>Lessons from Dynamic Languages | manage.py</title>
+</head>
+<body>
+  <div class='content'>
+  <div class='nav'>
+  <a accesskey="h" class="up" href="1.html">home</a>
+  
+  
+<a accesskey="j" class="prev" href="103.html">&laquo;</a>
+<a accesskey="k" class="next" href="105.html">&raquo;</a>
+<h1>manage.py</h1>
+</div><div class="page"><p><pre>
+<span class="Statement">def</span> <span class="Identifier">run</span>():
+    <span class="PreProc">import</span> urls
+    <span class="PreProc">from</span> wsgiref.simple_server <span class="PreProc">import</span> WSGIServer, WSGIRequestHandler
+    httpd = WSGIServer((<span class="Normal">""</span>, 8080), WSGIRequestHandler)
+    httpd.set_app(urls.urls)
+    <span class="Statement">print</span> <span class="Normal">"</span><span class="Constant">Serving HTTP on %s port %s ...</span><span class="Normal">"</span> % httpd.socket.getsockname()
+    httpd.serve_forever()
+
+<span class="Statement">if</span> __name__ == <span class="Normal">"</span><span class="Constant">__main__</span><span class="Normal">"</span>:
+   <span class="Statement">if</span> <span class="Normal">'</span><span class="Constant">create</span><span class="Normal">'</span> <span class="Statement">in</span> sys.argv:
+        create()
+   <span class="Statement">if</span> <span class="Normal">'</span><span class="Constant">run</span><span class="Normal">'</span> <span class="Statement">in</span> sys.argv:
+        run()
+</pre>
+<p><p></div></div></body></html>

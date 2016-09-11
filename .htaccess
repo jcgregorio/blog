@@ -1,0 +1,45 @@
+AddType application/atom+xml .atom
+AddType application/vnd.oasis.opendocument.presentation .odp
+AddType image/x-icon .ico
+AddType image/svg+xml .svg
+AddType application/xrds+xml .xrds
+
+FileETag All 
+
+RedirectMatch permanent ^/$ /news/
+
+ErrorDocument 404 /404.html
+
+RedirectMatch permanent ^/$ /news/
+RedirectMatch permanent ^/news$ /news/
+RedirectMatch permanent ^/index.html$ /news/
+RedirectMatch permanent ^/index.rss$ /news/feed/
+RedirectMatch permanent ^/index.atom$ /news/feed/
+RedirectMatch permanent ^//index.atom$ /news/feed/
+RedirectMatch permanent ^/projects/robaccia http://code.google.com/p/robaccia/
+RedirectMatch permanent ^/projects/mimeparse http://code.google.com/p/mimeparse/
+RedirectMatch permanent ^/projects/httplib2/$ http://code.google.com/p/httplib2/
+RedirectMatch permanent ^/projects/sparklines/(.*) http://sparklines.bitworking.info/$1
+RedirectMatch permanent ^/projects/me/ http://www.google.com/profiles/joe.gregorio#about
+RedirectMatch permanent ^/projects/URI-Templates/ http://code.google.com/p/uri-templates
+
+<IfModule mod_dir.c>
+  DirectoryIndex index.html index.atom index.cgi
+</IfModule>
+Options +MultiViews
+DefaultType text/html
+
+RewriteEngine on
+RewriteBase /
+
+RewriteCond %{HTTP_ACCEPT} application/xrds\+xml
+RewriteCond %{HTTP_ACCEPT} !application/xrds\+xml\s*;\s*q\s*=\s*0(\.0{1,3})?\s*(,|$)
+RewriteRule ^$ http://bitworking.org/index.xrds [R,L]
+
+<FilesMatch "\.(ico|pdf|jpg|jpeg|png|gif)$">
+Header set Cache-Control "max-age=290304000, public"
+</FilesMatch>
+
+<FilesMatch "\.(js|html)$">
+Header set Cache-Control "max-age=3600, must-revalidate"
+</FilesMatch>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+         <script type="text/ecmascript">
+         <![CDATA[
+	    var scaleFactor = 1.1;
+		var angle = 137.51;
+		var numberOfLeaves = 0;
+		var leaves = new Array(0);
+
+	    function setPosition(n) {
+		    obj = leaves[n];
+			if (n==0) {
+				obj.setAttribute("transform", "translate(350 220) rotate(-90) ");
+			} else {
+				obj.setAttribute("transform", "translate(150 150) rotate(" + n*angle + ") scale(" + Math.pow(scaleFactor, n) + " " + Math.pow(scaleFactor, n) + ") ");
+			}
+
+		}
+
+		function setAllPositions() {
+		    for (var i=0; i<numberOfLeaves; i++) {
+				setPosition(i);
+			}
+            svgDocument.getElementById('numLeafs').firstChild.nodeValue = " " + numberOfLeaves;
+            svgDocument.getElementById('scaleFactor').firstChild.nodeValue = " " + scaleFactor;
+		}
+
+		function cleanUp() {
+			for (var i=0; i<numberOfLeaves; i++) {
+				svgDocument.getElementById('world').removeChild(leaves[i]);
+			}
+		}
+
+        function sel(numLeaves, leafName, scale) {
+			cleanUp();
+			numberOfLeaves = numLeaves
+            createLeaves(leafName);
+            scaleFactor = scale;
+			setAllPositions();
+        }
+
+		function createLeaves(name) {
+			for (var i=0; i<numberOfLeaves; i++) {
+				var leaf = svgDocument.createElement('use');
+				leaf.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", "#" + name);
+				svgDocument.getElementById('world').appendChild(leaf);
+				leaves[i] = leaf;
+			}
+		}
+        ]]>
+
+		</script>
+    </head>
+
+    <body onload="sel1()" >
+        <p>A recent article in Discover magazine got the old
+        math blood running. 'Cracking the Da Vinci Code' is a rather short
+        article that covers the real story of phi (&#x03c6;), aka the Golden 
+        Mean, or the Divine Proportion. Phi is a irrational number with
+        a slew of interesting properties. For one it has an intimate
+        relationship with the Fibonacci numbers:
+        </p>
+
+        <p>http://www.wolframscience.com/nksonline/page-408
+        Wolfram has put his entire book "A New Kind of Science" online, which
+        is very cool. One of the most useful and compelling examples in
+        his book covers this very idea of stem growth and the relationship
+        to &#x03c6;.</p>
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+	<text x="21px" y="25px" onclick="sel1()"
+		transform="matrix(1 0 0 1 4.99525 10.0108)"
+        style="fill:rgb(0,0,0);font-size:14;font-family:arial, sans">PineCone</text>
+	<text x="127px" y="50px" transform="matrix(1 0 0 1 7.28189 -14.9892)"
+    style="fill:rgb(0,0,0);font-size:14;font-family:arial, sans">Shrub</text>
+	<text x="225px" y="76px" transform="matrix(1 0 0 1 -0.652859 -41.0746)"
+		 style="fill:rgb(0,0,0);font-size:14;font-family:arial, sans">Flower</text>
+	<text x="306px" y="71px" transform="matrix(1 0 0 1 -2.39709 -37.4589)"
+		 style="fill:rgb(0,0,0);font-size:14;font-family:arial, sans">EggPlant</text>
+	<defs transform="matrix(1 0 0 1 0 0)">
+		<filter id="Beveled-Marble" filterUnits="objectBoundingBox" x="-10%" y="-10%"
+			width="150%" height="150%">
+			<feTurbulence baseFrequency="0.15" numOctaves="1" result="I0A"/>
+			<feDisplacementMap in="I0A" in2="I0A" scale="25" xChannelSelector="R"
+				yChannelSelector="G" result="I0"/>
+			<feColorMatrix in="I0" type="matrix"
+				values="0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 255" result="I1"/>
+			<feComposite in="SourceGraphic" in2="I1" operator="arithmetic" k1="1"
+				result="I2"/>
+			<feGaussianBlur in="I2" stdDeviation="1" result="I3"/>
+			<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="I4"/>
+			<feSpecularLighting in="I4" surfaceScale="5" specularConstant="0.5"
+				specularExponent="20" result="I5"
+				 style="lighting-color:rgb(255,255,255)">
+				<fePointLight x="-5000" y="-10000" z="20000"/>
+			</feSpecularLighting>
+			<feComposite in="I3" in2="I5" operator="arithmetic" k2="1" k3="1" result="I6"/>
+			<feComposite in="I6" in2="SourceGraphic" operator="in" result="I7"/>
+		</filter>
+		<g id="leaf">
+			<rect x="0" y="0" width="33" height="1" rx="3.3" ry="0.55"
+				 style="fill:rgb(64,64,0);stroke:rgb(0,0,0);stroke-width:1"/>
+			<ellipse cx="43" cy="0" rx="17" ry="15"
+				 style="fill:rgb(64,64,0);stroke:rgb(0,0,0);stroke-width:1"/>
+		</g>
+		<g id="leaf2">
+			<rect x="0" y="0" width="33" height="1" rx="3.3" ry="0.55"
+				 style="fill:rgb(64,64,0);stroke:rgb(0,0,0);stroke-width:1"/>
+			<ellipse cx="53" cy="0" rx="34" ry="10"
+				 style="fill:rgb(38,150,51);stroke:rgb(0,0,0);stroke-width:1"/>
+		</g>
+		<g id="leaf3">
+			<rect x="0" y="0" width="33" height="1" rx="3.3" ry="0.55"
+				 style="fill:rgb(242,244,40);stroke:none;stroke-width:1"/>
+			<ellipse cx="53" cy="0" rx="34" ry="10"
+				 style="fill:rgb(196,50,160);stroke:rgb(0,0,0);stroke-width:1"/>
+		</g>
+		<g id="leaf4">
+			<path
+				d="M110.448 253.731 C140.263 253.731 116.892 256.436 146.268 252.239 C191.442 245.786
+					219.098 194.301 280.597 197.014 C310.13 198.318 320.838 208.822 336.943 230.459
+					C353.047 252.097 367.972 255.384 337.314 280.597 C322.946 292.412 346.497
+					305.855 274.627 319.403 C211.558 311.998 187.771 266.47 146.268 264.179
+					C103.773 261.834 153.211 262.687 108.955 262.687"
+				transform="translate(-76.1194 -259.701) translate(40.2985 116.418) translate(-77.6119 -117.91) translate(108.955 197.014) scale(0.538262 0.710773) translate(-108.955 -197.014) translate(2.74016 29.0514) translate(108.955 197.014) scale(0.788327 0.83045) translate(-108.955 -197.014) translate(6.95184 4.99754)"
+				
+				 style="fill:rgb(24,158,46);stroke:rgb(0,0,0);stroke-width:1"/>
+		</g>
+	</defs>
+    <g id="world">
+	<rect id="selection1" onclick="sel(80, 'leaf', 0.98)" x="50" y="25" width="32" height="32"
+		rx="1.9" ry="1.6"
+		 style="fill-opacity:0.3;filter:url(#Beveled-Marble);fill:rgb(120,120,120);stroke:rgb(0,0,0);
+		stroke-width:1" transform="matrix(2.6875 0 0 1 -120.375 -11)"/>
+	<rect id="selection2" onclick="sel(20, 'leaf2', 0.95)" x="100" y="25" width="32" height="32"
+		rx="1.9" ry="1.6"
+		 style="fill-opacity:0.3;filter:url(#Beveled-Marble);fill:rgb(188,188,188);stroke:rgb(0,0,0);stroke-width:1"
+		transform="matrix(2.25 0 0 1 -108 -11)"/>
+	<rect id="selection3" onclick="sel(120, 'leaf3', 0.995)" x="150" y="25" width="32" height="32"
+		rx="1.9" ry="1.6"
+		 style="fill-opacity:0.3;filter:url(#Beveled-Marble);fill:rgb(188,188,188);stroke:rgb(0,0,0);stroke-width:1"
+		transform="matrix(2.25 0 0 1 -127.5 -11)"/>
+	<rect id="selection4" onclick="sel(10, 'leaf4', 0.92)" x="200" y="25" width="32" height="32"
+		rx="1.9" ry="1.6"
+		 style="fill-opacity:0.3;filter:url(#Beveled-Marble);fill:rgb(188,188,188);stroke:rgb(0,0,0);stroke-width:1"
+		transform="matrix(2.21875 0 0 1 -146.75 -11)"/>
+	<text x="280px" y="190px" style="font-weight:bold;fill:rgb(0,0,0);font-size:18">Leaf:</text>
+	<text x="214px" y="240px" style="font-weight:bold;fill:rgb(0,0,0);font-size:18">Scale Factor:</text>
+	<text x="163px" y="270px" style="font-weight:bold;fill:rgb(0,0,0);font-size:18">Number Of Leaves:</text>
+	<text id="scaleFactor" x="335px" y="240px"
+		 style="fill:rgb(0,0,0);font-size:18">1.0</text>
+	<text id="numLeafs" x="335px" y="270px"
+        style="fill:rgb(0,0,0);font-size:18">20</text>
+</g>
+</svg>
+
+    </body>
+</html>

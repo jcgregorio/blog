@@ -1,0 +1,995 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+   <!ENTITY rfc2119 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+   <!ENTITY rfc2246 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2246.xml'>
+   <!ENTITY rfc2396 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2396.xml'>
+   <!ENTITY rfc2616 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2616.xml'>
+   <!ENTITY rfc2617 PUBLIC '' 'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2617.xml'>
+]>
+<!-- 
+
+$LastChangedDate: 2005-03-22 14:21:19 -0500 (Tue, 22 Mar 2005) $
+$LastChangedRevision: 80 $
+
+--> 
+
+<!-- <?xml-stylesheet type='text/xsl' href='rfc2629.xslt.xml' ?>   -->
+
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc iprnotified="yes" ?>
+<?rfc strict="yes" ?>
+<?rfc compact="yes" ?>
+<?rfc comments="yes" ?>
+<?rfc inline="yes" ?>
+<!-- 
+1. Update the docName
+2. Update the date
+3. Update the Revision History.
+-->
+<!-- To Do
+x 1. change <delete> to DELETE
+    x 2. Update RSD to 1.0 "location" att name to "apiLink" or drop 
+    x 3. Put all documents in a namespace
+    x 4. Do aarons search interface.
+    5. Add in all the right headers for at least the first two examples, Host, Content-Length, etc.
+    x 6. Change POST to PUT for updating Entries?
+    xxx 7. change to x.atom+xml--> <!-- changed to atom+xml -RS -->
+    <!--8. Add in 'categories' to Introspection.
+    9. HTTP status code is used to indicate method call success or failure, I would
+    like to see more error information structured in XML and packed into HTTP Response
+    body, that will allow implementation to provide detailed and probably tracable error
+    messages and allows client side software make informed error handling decision;
+    x 10. Change copyright.
+    x 11. Remove RSD
+    x 12. Add Kens copy (went with the wiki markup)
+
+    13. Add atom-recent
+    14. Clarify that atom-start-range starts from the most recent post
+    15. Add performance/http compliance section that says:
+    1. use ETags/Last-Modified on GETs
+    2. use gzip
+    3. note that dispatching on VERB and mime-type are web server functions
+    4. 
+    16. Add a glossary, then use the terms consistently.
+    17. Change PUT response 205 to 200.
+    -->
+	<rfc category="std" ipr="full3667" docName="draft-ietf-atompub-protocol-03.txt">
+		<front>
+			<title>The Atom Publishing Protocol</title>
+			<author initials='J.C.' surname="Gregorio" fullname='Joe Gregorio' role="editor">
+				<organization>BitWorking, Inc</organization>
+				<address>
+					<postal>
+						<street>1002 Heathwood Dairy Rd.</street>
+						<city>Apex</city> <region>NC</region> <code>27502</code>
+						<country>US</country>
+					</postal>
+					<phone>+1 919 272 3764</phone>
+					<email>joe@bitworking.com</email>
+					<uri>http://bitworking.com/</uri>
+				</address>
+			</author>
+			<author initials="R.F." surname="Sayre" fullname="Robert Sayre" role="editor">
+				<organization>Boswijck Memex Consulting</organization>
+				<address>
+					<postal>
+						<street>148 N 9th St. 4R</street>
+						<city>Brooklyn</city> <region>NY</region> <code>11211</code>
+						<country>US</country>
+					</postal>
+					<email>rfsayre@boswijck.com</email>
+					<uri>http://boswijck.com</uri>
+				</address>
+			</author>
+			<date day="18" month="March" year="2005"/>
+			<abstract><t>This memo presents a protocol for 
+					using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol)
+					to edit content. </t>
+
+				<t>The Atom Publishing Protocol is an application-level protocol for publishing and editing Web resources
+					belonging to periodically updated websites. The protocol at its core is the HTTP transport 
+					of Atom-formatted representations. The Atom format is documented in
+					the Atom Syndication Format (draft-ietf-atompub-format-06.txt).
+				</t>
+
+			</abstract>
+			<note title="Editorial Note">
+				<t>To provide feedback on this Internet-Draft, 
+					join the <eref target="http://www.imc.org/atom-syntax/index.html"> 
+						atom-syntax mailing list (http://www.imc.org/atom-syntax/index.html)</eref>.
+				</t>
+			</note>
+		</front>
+
+		<middle>
+
+			<section title="Introduction">
+				<t>The Atom Publishing Protocol is an application-level protocol for publishing
+					and editing Web resources using HTTP <xref target="RFC2616"/> and XML.
+				</t>  
+				<section title="Notational Conventions">
+					<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+						"SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", 
+						and "OPTIONAL" in this document are to be interpreted as    
+						described in <xref target="RFC2119"/>.
+					</t> 
+				</section>
+				<section title="Terminology">
+					<t>
+						<list style="hanging">
+							<t hangText="Atom Entry:">
+								An Atom Entry is a fragment of a full Atom feed. In this case, the fragment is
+								a single 'entry' element and all its child elements. Each Atom Entry 
+								describes a single Web resource, providing 
+								metadata and optionally a textual representation 
+								of that resource.
+							</t>
+                        </list>
+                    </t>
+                </section>
+			</section>
+			<section title="The Atom Publishing Protocol Model">
+				<t>The Atom Publishing Protocol is an application-level protocol for publishing 
+					and editing Web resources. The primary way of interaction in the Atom Publishing Protocol
+					is by managing collection of resources. All collections support the same basic methods
+					of interaction. In addition, the resources belonging to collections also
+					share the same interaction patterns. Using the common HTTP verbs provides a pattern 
+					for working with all such Web resources:
+					<list style="symbols">
+						<t>GET is used to retrieve a representation of a resource or perform a read-only query.</t>
+						<t>PUT is used to update a known resource.</t>
+						<t>POST is used to create a new dynamically-named resource.</t>
+						<t>DELETE is used to remove a resource.</t>
+					</list>
+				</t>
+
+                <section title="Atom Collections" anchor="collections_model">
+					<t>
+						An Atom collection is a set of items all of the same type ("members" of the 
+						collection), where the "type" may be, for example: Atom entry, category, 
+						template, "simple resource", or any other classification of web resource.
+					</t>
+					<t>
+						Each collection has a URI which is given in the introspection file. 
+						A GET on the collection URI MUST produce a collection document as 
+						defined in "3.X.1 Collection Document." That document describes PART OF 
+						the state of the collection.
+					</t>
+					<t>
+						All the members of a collection have an "updated" property, and the collection 
+						is considered to be ordered by this property. A single collection document may not 
+						contain all of the members of a collection. If a collection document is the 
+						response of a non-partial GET request, and does not contain all of the members 
+						of a collection, then it will contain the URI of the next collection document 
+						which will contain more of the collection members. By traversing this list of 
+						collection documents a client can obtain all of the members of a collection. 
+						The 'next' attribute will not be present in the response to a partial GET request.
+					</t>
+					<section title="Usage" anchor="collections_model_usage">
+						<t>
+							Below two usages are outlined for Atom Collections. They are here to 
+							highlight common idioms for interacting with a Collection Resource and not
+							a normative interaction pattern.
+						</t>
+						<t>
+							The Atom Collection can be used by clients in two ways. In the first case 
+							the client has attached to a site for the first time and is doing an initial 
+							syncronization, that is, retrieving a list of all the members of the collections 
+							and possibly retrieving all the members of the collection also. The client can 
+							perform a non-partial GET on the collection resource and it will receive a 
+							collection document that either contains all the member of the collection, 
+							or the collection document root element 'collection' will contain a 'next' 
+							attribute pointing to the next collection document. By repeatedly following 
+							the 'next' attribute from document to document the client can find all the 
+							members of the collection.
+						</t>
+						<t>
+							In the second case the client has already done an initial sync, and now needs 
+							to re-sync, because the client was just restarted, or some time has passed 
+							since a re-sync, etc. The client does a partial GET on the collection document, 
+							supplying a Range header that begins from the last time the client sync'd to the 
+							current time. The collection document returned will contain only those members 
+							of the collection that have changed since the last time the client syncronized.
+						</t>
+					</section>
+					<section title="Client and Server Interaction" anchor="client_server_model">
+						<t><cref>...</cref></t>
+					</section>
+				</section>
+				<t>This document does not specify the form of the URIs that are used. The URI space
+					of each server is controlled, as defined by HTTP, by the server alone. What
+					this document does specify are the formats of the files that are exchanged
+					and the actions that can be performed on the URIs embedded in those files.
+				</t>
+			</section>
+
+			<section title="Functional Specification">
+				<section title="Collections" anchor="collections_func">
+					<section title="Collection Document" anchor="collection_doc">
+						<t>
+							A collection document is rooted by a &lt;collection&gt; element. A collection 
+							element may have any number of &lt;member&gt; elements as children; each such 
+							element identifies a member of the collection. In some situations, a collection 
+							document may not contain every member of the collection itself.
+						</t>
+						<t>
+							Whether complete or partial, the members in a collection document MUST 
+							constitute a consecutive sequence of the collection's members, 
+							ordered by their "updated" properties. That is, a collection document 
+							MUST contain a contiguous subset of the members of the collection ordered 
+							by their 'updated' property.
+						</t>
+					</section>
+					<section title="Elements in a Collection Document" anchor="collection_elements">
+						<t>
+							A collection document MAY contain zero or more 'member' elements.
+						</t>
+
+						<t>
+							Each 'member' element MUST include an 'href' attribute identifying 
+							a URL of the member resource. The 'href' URI of a member resource is an 
+							"EditURI" under the terms of section 2, and MUST respond to the same 
+							HTTP methods as such an EditURI.
+						</t>
+
+						<t>
+							Each 'member' element MAY include an "hrefreadonly" attribute. 
+							This optional attribute identifies a URI which, on a GET request, 
+							responds equivalently to how the "href" URI would respond to the 
+							same request. Clients SHOULD NOT apply to this URI any HTTP methods 
+							that would be expected to modify the state of the resource (e.g. PUT, POST or DELETE). 
+							A PUT or POST request to this URI MAY NOT affect the underlying resource. 
+							If the "hrefreadonly" attribute is not given, its value defaults to the "href" value. 
+							If the "hrefreadonly" attribute is present, and its value is an empty string, 
+							then there is no URI that can be treated in the way such a value would be treated.
+						</t>
+
+						<t>
+							Clients SHOULD use the "href" value to manipulate the resource within the context 
+							of the APP itself. Clients SHOULD prefer the "hrefreadonly" value in any other context. 
+							For example, if the resource is an image, a client may replace the image data 
+							using a PUT on the "href" value, and may even display a preview of the image by 
+							fetching the "href" URI. But when creating a public, read-only reference to the 
+							same image resource, the client should use the "hrefreadonly" value. If 
+							the "hrefreadonly" value is an empty string, the client SHOULD NOT make public 
+							reference to the "href" value.
+						</t>
+
+						<t>
+							Each 'member' element MUST include a 'title' attribute, whose value is a human-readable 
+							name or description for the item. The values of 'title' attributes are not required 
+							to be unique across all members of a collection.
+						</t>
+
+						<t>
+							Each 'member' element MUST include an 'updated' attribute, whose value is the 'updated' 
+							property of the collection member whose format MUST conform to the date-time BNF rule 
+							in [RFC3339]. 
+						</t>
+					</section>
+					<section title="Collection Requests" anchor="collection_requests">
+						<section title="Range: Header" anchor="collection_range_header">
+							<t>
+								HTTP/1.1 allows a client to request that only part (a range of) the collection 
+								to be included within the response. HTTP/1.1 uses range units in the Range 
+								header field. A collection can be broken down into subranges according to the 
+								members 'updated' property. If a Range: header is present in the request, 
+								its value explictly identifies the a time interval interval in which all the 
+								members 'updated' property must fall to be included in the response. 
+							</t>
+							
+							<figure>
+								<artwork>
+Range = "Range" ":" ranges-specifier
+								</artwork>
+							</figure>
+							
+							<t>
+								The value of the Range: header should be a pair of ISO 8601 dates, 
+								separated by a slash character; either date may be optionally omitted, 
+								in which case the range is understood as stretching to infinity on that end.
+							</t>
+							
+							<figure>
+								<artwork>
+ranges-specifier = updated-ranges-specifier
+updated-ranges-specifier = updated-unit "=" updated-range
+updated-unit = "updated"
+updated-range = [iso-date] "/" [iso-date]
+								</artwork>
+							</figure>
+
+							<t>
+								The response to a collection request MUST be a collection document, 
+								all of whose 'member' elements fall within the requested range. 
+								If no members fall in the requested range, the server MUST respond 
+								with a collection document containing no 'member' elements.
+							</t>
+						</section>
+						<section title="Accept-Ranges: Header" anchor="collection_accept_ranges">
+							<t>
+								The response to a non-partial GET request MUST include an Accept-Ranges 
+								header that indicates that the server accepts 'updated' range requests.
+							</t>
+
+							<figure>
+								<artwork>
+Accept-Ranges     = "Accept-Ranges" ":" acceptable-ranges
+acceptable-ranges = updated-unit ( 1#range-unit )
+								</artwork>
+							</figure>
+						</section>
+					</section>
+				</section>
+				<section title="Introspection" anchor="introspection">
+					<t>
+						There are many different kinds of resources that can be managed
+						through the APP, for example, entries, templates, users, etc.
+						The Service Document is a single document that lists
+						all the facets of the APP that a site supports and also 
+						contains the URIs of all those resources.
+					</t>
+					<section title="Service Document" anchor="service_document">
+						<t>
+							The Service Document lists the 
+							resources that each site makes available. The Service Resource returns an 
+							Service Document in response to a GET request. Here is an example of an Service Document.
+						</t>
+
+						<figure>
+							<artwork>
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;service version="0.3" xmlns="http://purl.org/atom/ns#"&gt;
+  &lt;workspace title="Main Site" &gt; 
+    &lt;collection rel="entries" name="Entries" 
+      href="http://example.org/reilly/feed" /&gt;
+    &lt;collection rel="categories" name="Categories" 
+      href="http://example.org/reilly/cat" /&gt;
+    &lt;collection rel="templates" name="Templates" 
+      href="http://example.org/reilly/tmpl" /&gt;
+    &lt;collection rel="users" name="Users" 
+      href="http://example.org/reilly/users" /&gt;
+    &lt;collection rel="resource" name="Pictures" 
+      href="http://example.org/reilly/pic" /&gt;
+  &lt;/workspace&gt;
+  &lt;workspace title="b-links"&gt;
+    &lt;collection rel="entries" name="Entries" 
+      href="http://example.org/reilly/feed" /&gt;
+    &lt;collection rel="http://example.net/booklist" name="Books" 
+      href="http://example.org/reilly/books" /&gt;
+  &lt;/workspace&gt;
+&lt;/service&gt;  
+							</artwork>
+						</figure>
+						<t>
+							<list style="symbols">
+								<t>entries</t>
+								<t>resource</t>
+								<t>categories</t>
+								<t>templates</t>
+								<t>users</t>
+							</list>
+
+							The default for the rel attribute is 'resource'.
+							Extensibility for 'rel' values is handled in the same manner as PaceFieldingLinks.
+							Each 'collection' element in 'workspace' represents a single facet of the APP. 
+							While a site must fully support each facet they list in their Service Document, 
+							a site does not need to support all the facets in this RFC. Additionally, 
+							new facets may be added either through vendor extension or follow-on RFCs. 
+						</t>
+						<section title="Service Documet Elements" anchor="service_document_elements">
+							<t>
+								The "service" element is the document element of a Service Document, acting as 
+								a container for service data associated with possibly multiple workspaces. 
+								Its only child elements MUST be one or more 'workspace' elements.
+								The 'service' element MUST have a single attribute 'version' whose content 
+								indicates the version of the Atom specification that the document conforms to. 
+								The content of this attribute is unstructured text.  
+								The version identifier for this specification is "1.0".
+							</t>
+							<t>
+								The 'workspace' element element contains information elements about 
+								the collections of resources available for editing. The only 
+								children of 'workspace' MUST be one or more "collection" elements.
+								The 'workspace' element MUST have a single attribute 'title' whose 
+								content MUST NOT be empty and which is a human-readable name for the workspace.
+							</t>
+							<t>
+								The 'collection' element describes various typed groups of resources 
+								available for editing or adding to. 
+							</t>
+						</section>
+					</section>
+				</section>
+				<section title="Entry Collection" anchor="Edit">
+					<t>
+						Entries are managed through collections and as such entry collection
+						and entries that are members of a collection must support all the operations
+						enumerated above.
+					</t>
+
+                    <t>An Edit Resource is used to edit a single entry. Each entry that is editable
+                        MUST have a unique URI. This URI supports both GET and PUT and they are
+                        used in tandem for an editing cycle. The client GETs the representation
+                        which is formatted as an Atom entry. The client may then update the 
+                        entry and then PUT it back to the same URI. The PUT will cause all
+                        the related resources to be updated, for example, the HTML representation.
+                    </t>
+                    <t>Note that the value of the content element in the Atom entry does not
+                        have to exactly match the content element for the same entry
+                        when it is represented in an Atom feed. For example, a server may allow
+                        the client to post entries whose content is formatted as WikiML, yet 
+                        the server may clean up such markup and transform it into well-formed XHTML
+                        before placing it in the publicly available Atom feed. Another scenario
+                        is summaries--the EditURI is for editing the full content of an entry, but the
+                        server may only present excerpts when it produces an Atom feed.
+					</t>
+					<t>A client will send a DELETE to the EditURI to delete an entry.</t>
+					<section title="Locating" anchor="Edit.Locating">
+						<t>For editing a site Entry, the link tag is used. 
+							Note that a link tag is used in both HTML and in the Atom 
+							format. A link tag of the following format points to the 
+							EditURI for a site. In HTML, the link tags for editing are always found
+							in the head element, while in Atom they may appear as children 
+							of the entry elements.
+						</t>
+
+						<figure>
+							<artwork>
+&lt;link rel="service.edit"
+type="application/atom+xml"
+href="URI for Editing goes here"
+title="Readable desc of the entry." /&gt;
+							</artwork>
+						</figure>
+
+						<t>Note: The critical characteristic of this link tag is the 
+							@rel of 'service.edit' and the @type of 'application/atom+xml'.
+						</t>
+					</section>
+				</section>
+
+
+				<section title="Simple Resource Collection" anchor="simple_resource_collection">
+					<t>
+						Simple Resources are managed through collections and as such simple reource collections
+						and simple resources that are members of the collection must support all the operations
+						enumerated above. Simple Resources can be images, templates, and any other
+						non-entry resources.
+					</t>
+
+					<section title="Locating">
+						<t>For creating a new non-entry resource, the link tag is used.
+							Note that a link tag is used in both HTML and in the Atom format. A link tag of the
+							following format points to the ResourcePostURI for a site. In HTML the link tags are
+							always found in the head element, while in Atom they may appear as children of the Feed
+							and entry elements.
+						</t>
+						<t>&lt;link rel="resource.post" href="URI for Resource Posting goes here" title="The name of the site."></t>
+					</section>
+					<section title="Request">
+						<t>The request contains a resource, sent through a standard HTTP POST, e.g.:</t>
+						<figure>
+							<artwork>
+POST /_do/exampleblog/post_resource HTTP/1.1
+Host: www.example.com
+Content-Type: image/jpeg
+Content-Length: nnn
+
+...raw bytes of image go here...
+							</artwork>
+						</figure>
+					</section>
+				</section>
+				<section title="Atom Request and Response Body Constraints" anchor="constraints">
+					<t>The Atom format is used as the representation 
+						of all the resources in this specification. As it is used in 
+						differing contexts, there are different constraints
+						of which elements may be present, and how their values should 
+						be interpreted. 
+					</t>
+					<section title="id" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">
+									MUST NOT be present.
+								</t>
+								<t hangText="FeedURI">
+									MUST be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MUST be present.
+										</t>
+										<t hangText="PUT">
+											MUST be present.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="link" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">
+									MAY be present. Servers MAY use the 
+									information to determine the URI of the created resource. 
+									Relative URLs are to be interpreted relative to xml:base.
+								</t>
+								<t hangText="FeedURI">
+									MUST be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MUST be present.
+										</t>
+										<t hangText="PUT">
+											MUST be present.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="title" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">
+									MUST be present.
+									The element may be empty, to explicitly indicate "no title". 
+									Servers SHOULD NOT try to generate a title if one is not 
+									provided. The type attribute MAY be present, and if not it
+									defaults to "text/plain". If present, it MUST represent a MIME 
+									type that the server supports.
+									The mode attribute MAY be present. If not present, it defaults 
+									to "xml". If present, it MUST be "xml", "base64", or "escaped".
+								</t>
+								<t hangText="FeedURI">
+									MUST be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MUST be present.
+										</t>
+										<t hangText="PUT">
+											MUST be present. The element may be empty, 
+											to explicitly indicate "no title". 
+											Servers SHOULD NOT try to generate a title if one is not 
+											provided.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="summary" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MAY be present. If not present, the server is welcome to 
+									produce its own summary. If present but empty, the 
+									server SHOULD NOT generate a summary of its own.
+									The type attribute MAY be present. If not, it defaults 
+									to "text/plain". If present, it must represent a MIME type that the server supports.
+									The mode attribute MAY be present and defaults to "xml". 
+									If present, it must be "xml","base64", or "escaped".
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. The element may be empty, 
+											to explicitly indicate "no summary". 
+											Servers SHOULD NOT try to generate a title if one is not 
+											provided.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="content" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MAY be present but may be empty, to explicitly indicate "no content".
+									The type attribute MAY be present, but defaults to "text/plain" if not present.
+									It must represent a MIME type that the server supports. 
+									The MODE attribute may be present and defaults to "xml" if not present.
+									It must be "xml","base64", or "escaped".
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. The element may be empty, 
+											to explicitly indicate "no content". 
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="issued" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MUST be present, but may be empty, in which case it signifies
+									"now" in the time zone of the server.
+								</t> 
+								<t hangText="FeedURI">
+									MUST be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MUST be present.
+										</t>
+										<t hangText="PUT">
+											MUST be present. Server policy determines
+											if an updated time is accepted.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="modified" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MUST NOT be present.
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. The element may be empty, 
+											to explicitly indicate that 'now' on the 
+											server time is to be used. 
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="created" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MAY be present.
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. The server may or may not
+											accept an updated value. If the server does 
+											not allow updating the issued time then any
+											PUT request with a different issued value
+											MUST be rejected.
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="author" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MAY be present. If not present, the server determines
+									the author. If present, and conflicting with valid values
+									as determined by the server, then the server may change
+									the value of author.
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. 
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="contributor" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MAY be present. 
+								</t>
+								<t hangText="FeedURI">
+									MAY be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MAY be present.
+										</t>
+										<t hangText="PUT">
+											MAY be present. 
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+
+					<section title="generator" >
+						<t>
+							<list style="hanging">
+								<t hangText="PostURI">MUST be present and 
+									contain a URI. The 
+									value of the element indicates the 
+									code base used to create this request.
+									MUST also have an attribute 'version' with a version number.
+								</t>
+								<t hangText="FeedURI">
+									MUST NOT be present.
+								</t>
+								<t hangText="EditURI">
+									<list style="hanging">
+										<t hangText="GET">
+											MUST NOT be present.
+										</t>
+										<t hangText="PUT">
+											MUST NOT be present. 
+										</t>
+									</list>
+								</t>
+							</list>
+						</t>
+					</section>
+				</section>
+
+				<section title="Securing the Atom Protocol">
+					<t>All instances of publishing Atom entries SHOULD be protected by authentication 
+						to prevent posting or editing by unknown sources. Atom servers and clients MUST 
+						support one of the following authentication mechanisms, and SHOULD support 
+						both.
+					</t>
+					<t>
+						<list style="symbols">
+							<t>HTTP Digest Authentication <xref target="RFC2617" /></t>
+							<t>[@@TBD@@ CGI Authentication ref]</t>
+						</list>
+					</t>
+					<t>
+						Atom servers and clients MAY support encryption of the Atom session using TLS <xref target="RFC2246" />.
+					</t>
+					<t>
+						There are cases where an authentication mechanism may not be 
+						required, such as a publicly editable Wiki, or when using 
+						the PostURI to post comments to a site that does not
+						require authentication to create comments.
+					</t>
+					<section title="[@@TBD@@ CGI Authentication]">
+						<t>This authentication method is included as part of the protocol to allow 
+							Atom servers and clients that cannot use HTTP Digest Authentication but 
+							where the user can both insert its own HTTP headers and create a CGI program 
+							to authenticate entries to the server. This scenario is common in environments 
+							where the user cannot control what services the server employs, but the user 
+							can write their own HTTP services.
+						</t>
+					</section>
+				</section>
+			</section><!-- End Functional Spec -->
+			<section title="Security Considerations">
+				<t>Because Atom is a publishing protocol, it is important that only 
+					authorized users can create and edit entries.</t>
+				<t>
+					The security of Atom is based on HTTP Digest Authentication and/or [@@TBD@@ CGI Authentication]. 
+					Any weaknesses in either of these authentication schemes will obviously affect the security of the Atom 
+					Publishing Protocol.
+				</t>
+				<t>Both HTTP Digest Authentication and [@@TBD@@ CGI Authentication] are 
+					susceptible to dictionary-based attacks on the shared secret. If the shared 
+					secret is a password (instead of a random string with sufficient entropy), 
+					an attacker can determine the secret by exhaustively comparing the authenticating 
+					string with hashed results of the public string and dictionary entries.
+				</t>
+				<t>See RFC 2617 for more detailed description of the security 
+					properties of HTTP Digest Authentication.</t>
+				<t>@@TBD@@ Talk here about using HTTP basic and digest authentication.</t>
+				<t>@@TBD@@ Talk here about denial of service attacks using large XML files, 
+					or the billion laughs DTD attack.
+				</t>
+			</section>
+			<section title="IANA Considerations">
+				<t>This document has no actions for IANA.</t>
+			</section>
+
+			<section title="Appendix A - SOAP Enabling">
+				<t>All servers SHOULD support the following alternate 
+					interface mechanisms to enable a wider variety of clients
+					to interact with Atom Publishing Protocol servers. The following requirements
+					are in addition to the ones listed in the Functional Specification Section.
+					If a server supports SOAP Enabling then it MUST support
+					all of the following.
+				</t>
+				<section title="Servers">
+					<t>
+						<list style="numbers">
+							<t>
+								All servers MUST support the limited use of the SOAPAction 
+								HTTP Header as described below in the Client section.
+							</t>
+							<t>
+								All servers MUST be able to process well formed XML. Servers need
+								not be able to handle processing instructions or DTDs.
+							</t>
+							<t>
+								Servers MUST accept content in a SOAP Envelope, and if they 
+								receive a request that is wrapped in a SOAP Envelope then they
+								MUST wrap their responses in SOAP envelopes or produce a SOAP 
+								Fault. 
+							</t>
+						</list>
+					</t>
+				</section>
+				<section title="Clients">
+					<t>
+						<list style="numbers">
+							<t>
+								Clients SHOULD use the appropriate HTTP Method when possible. 
+								When not possible, they should use POST and include a SOAPAction 
+								HTTP header which is constrained as follows:
+							</t>
+
+							<t>
+								SOAPAction: "http://schemas.xmlsoap.org/wsdl/http/[METHOD]"
+
+							</t>
+							<t>
+
+								Where [METHOD] is replaced by the desired HTTP Method.
+							</t>
+							<t>
+								Clients MAY wrap their XML payload in a SOAP Envelope. 
+								If so, they must also wrap it in an element which exactly 
+								matches the HTTP Method. 
+							</t>
+						</list>
+					</t>
+				</section>
+			</section>
+			<section title="Appendix B - Examples">
+				<section title="Example for a weblog">
+					<t>Fill this in with an example for how all the above is
+						used for a weblog. 
+						Start with main HTML page, link tag of type service.feed 
+						to the 'introspection' file.
+						1. Creating a new entry
+						2. Finding an old entry
+						3. editing an old entry
+						4. commenting on a entry (via HTML and Atom)
+					</t>
+				</section>
+				<section title="Example for a wiki">
+					<t>Fill this in like above but for a wiki.</t>
+				</section>
+			</section>
+
+           <section title="Revision History">
+			   <t>draft-ietf-atompub-protocol-03 - 
+				   Incorporates PaceSliceAndDice3 and PaceIntrospection.
+			   </t>
+
+
+			   <t>draft-ietf-atompub-protocol-02 - 
+				   Incorporates Pace409Response, PacePostLocationMust,
+				   and PaceSimpleResourcePosting.
+			   </t>
+
+			   <t>draft-ietf-atompub-protocol-01 - 
+				   Added in sections on Responses for the EditURI.
+				   Allow 2xx for response to EditURI PUTs.
+				   Elided all mentions of WSSE. Started adding in some
+				   normative references. Added the section "Securing the 
+				   Atom Protocol". Clarified that it is possible that the PostURI and FeedURI
+				   could be the same URI. Cleaned up descriptions for Response codes
+				   400 and 500.
+			   </t>
+			   <t>Rev draft-ietf-atompub-protocol-00 - 5Jul2004 - 
+				   Renamed the file and re-titled the document to conform
+				   to IETF submission guidelines. Changed MIME type to match the one
+				   selected for the Atom format. Numerous typographical fixes.
+				   We used to have two 'Introduction' sections. One of them was
+				   moved into the Abstract the other absorbed the Scope section.
+				   IPR and copyright notifications were added. 
+			   </t>
+               <t>Rev 09 - 10Dec2003 - Added the section on SOAP enabled clients
+                   and servers.</t>
+               
+               <t>Rev 08 - 01Dec2003 - Refactored the specification, merging the Introspection
+                  file into the feed format. Also dropped the distinction between the 
+                  type of URI used to create new entries and the kind used to create comments.
+                  Dropped user preferences.</t>
+
+                <t>Rev 07 - 06Aug2003 - Removed the use of the RSD file for auto-discovery. Changed copyright
+                    until a final standards body is chosen. Changed query parameters for the search facet
+                    to all begin with atom- to avoid name collisions. Updated all the Entries to follow
+                    the 0.2 version. Changed the format of the search results and template file
+                    to a pure element based syntax.
+                </t>
+
+                <t>Rev 06 - 24Jul2003 - Moved to PUT for updating Entries.
+                    Changed all the mime-types to application/x.atom+xml. Added template 
+                    editing. Changed 'edit-entry' to 'create-entry' in the Introspection file
+                    to more accurately reflect it's purpose.
+                </t>
+
+                <t>Rev 05 - 17Jul2003 - Renamed everything Echo into Atom. Added
+                    version numbers in the Revision history.
+                    Changed all the mime-types to application/atom+xml.
+                </t>
+
+                <t>Rev 04 - 15Jul2003 - Updated the RSD version used from 0.7 to 1.0. Change the method of deleting
+                    an Entry from POSTing &lt;delete/&gt; to using the HTTP DELETE verb. Also changed the 
+                    query interface to GET instead of POST. Moved Introspection Discovery to be up under
+                    Introspection. Introduced the term 'facet' for the services listed in the Introspection file.
+                </t>
+
+                <t>Rev 03 - 10Jul2003 - Added a link to the Wiki near the front of the 
+                    document. Added a section on finding an Entry. Retrieving an Entry
+                    now broken out into it's own section. Changed the HTTP status code for
+                    a successful editing of an Entry to 205.
+                </t>
+
+                <t>Rev 02 - 7Jul2003 - Entries are no longer returned from POSTs, instead they are retrieved via GET.
+                    Cleaned up figure titles, as they are rendered poorly in HTML. All content-types 
+                    have been changed to application/atom+xml.
+                </t>
+
+                <t>Rev 01 - 5Jul2003 - Renamed from EchoAPI.html to follow the more commonly used format: 
+                    draft-gregorio-NN.html. Renamed all
+                    references to URL to URI. Broke out introspection into it's own section. Added the Revision History section.
+                    Added more to the warning that the example URIs are not normative.
+                </t>
+            </section>
+        </middle>
+		<back>
+			<references title='Normative References'>&rfc2119; &rfc2246; &rfc2396; &rfc2616; &rfc2617; </references>
+		</back>
+    </rfc>
+
+
+
+
+
+

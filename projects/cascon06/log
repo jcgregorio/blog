@@ -1,0 +1,78 @@
+
+
+Traceback (most recent call last):
+  File "present.py", line 5, in ?
+    print PageFormatter(block, "My Title").print_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 5, in ?
+    print PageFormatter(block, "My Title").print_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(block, "My Title").print_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    PageFormatter(block, "My Title").print_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    PageFormatter(b, "My Title").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "My Title").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 6, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 8, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 8, in ?
+    print PageFormatter(b, "MyTitle").get_html()
+NameError: name 'PageFormatter' is not defined
+Traceback (most recent call last):
+  File "present.py", line 8, in ?
+    print piki.PageFormatter(b, "MyTitle").get_html()
+  File "present.py", line 8, in ?
+    print piki.PageFormatter(b, "MyTitle").get_html()
+  File "/usr/lib/python2.4/bdb.py", line 48, in trace_dispatch
+    return self.dispatch_line(frame)
+  File "/usr/lib/python2.4/bdb.py", line 66, in dispatch_line
+    self.user_line(frame)
+  File "/usr/lib/python2.4/pdb.py", line 135, in user_line
+    self.interaction(frame, None)
+  File "/usr/lib/python2.4/pdb.py", line 158, in interaction
+    self.cmdloop()
+  File "/usr/lib/python2.4/cmd.py", line 130, in cmdloop
+    line = raw_input(self.prompt)
+KeyboardInterrupt

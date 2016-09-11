@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Titles Matter for PyBlosxom</title>
+    <meta name=created value="2004-06-29T22:53:30">
+  </head>
+  <body>
+  <p>PyBlosxom has a flexible callback mechanism that allows
+   pretty fine grained mamipulation of your entries as 
+   they are being rendered unto HTML or RSS or whatever you 
+   want your output to be. That's real useful since the templating
+   engine, while fast, does not allow any calculated 
+   values. This is no <a href="http://www.cheetahtemplate.org/">Cheetah</a>. Luckily 
+   defining callbacks to calculate specific values is simple.</p>
+  
+<p>One of the finer points of publishing on the web is 
+   that <a href="http://weblog.infoworld.com/udell/2002/03/03.html">titles matter</a>.
+   Putting the name of my site, the date, and the title of the 
+   article all in the html title of a page is what I currently
+   do in Bulu and something I want to duplicate as I migrate
+   to PyBlosxom.</p>
+<p>This is just a matter of creating a plugin that hooks
+   the cb_prepare callback. This callback is activated right before
+   rendering takes place. The implementation is simple, it checks
+   if the page about to be rendered has only a single entry.
+   If it does then is sets the value of data['single_entry_title'].
+   Through the magic of the templating system the value of 
+   that will be avaiable through $single_entry_title in a 
+   template. In the case that there is more than one entry than
+   $single_entry_title will evaluate to an empty string.</p>
+<p>The <a href="http://bitworking.org/projects/pyblosxom/single_title.py.txt">source code</a> is placed under the Python license.</p>
+
+  
+  </body>

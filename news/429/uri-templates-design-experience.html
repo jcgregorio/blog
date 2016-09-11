@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>URI Templates design experience</title>
+    <meta name=created value="2009-05-18T15:34:08.017102">
+  </head>
+  <body>
+  
+  <p>
+It's been a while since the <a href="http://bitworking.org/projects/URI-Templates/">URI Template</a> draft has been updated, and in the interim
+there has been some implementation experience:
+</p>
+<ul>
+<li><a href="http://blog.springsource.com/2009/03/08/rest-in-spring-3-mvc/">http://blog.springsource.com/2009/03/08/rest-in-spring-3-mvc/</a>
+</li><li><a href="http://code.google.com/p/uri-templates/wiki/Implementations">http://code.google.com/p/uri-templates/wiki/Implementations</a>
+</li></ul>
+<p>
+In the intervening months two things have happened:
+</p>
+<ol>
+<li>In all the URI Template examples I've seen, only the simplest case {foo} has even been shown.
+  </li><li> I've been repeatedly asked about "going the other way", i.e. parsing URIs based on templates.
+</li></ol>
+<p>
+This leads to two questions:
+</p>
+<ol>
+<li>Are there any real-world uses of the more complex URI Templates, or is {foo} enough?
+  </li><li><b>If</b> the syntax is simplified to {foo} there is an opportunity to support the parsing
+   case, ala <a href="http://bitworking.org/projects/1812/wsgidispatcher.html">WSGIDispatcher</a>
+    Is that of interest to anyone?
+</li></ol>
+<p>Feedback on the <a href="http://lists.w3.org/Archives/Public/uri/"> W3C URI mailing </a> is appreciated.
+</p>
+  <div class="commentContent" id="X1">
+    I've had cases where a path needed to be extracted from a URI via a template. For example, http://example.org/namespace/this/is/a/path/to/something, where "/this/is/a/path/to/something" maps to the path of an item on disk. In this example, I was using RESTlet to parse a URI and to retrieve the path into a variable defined in the template. This is probably another common use case.
+    <p class="commentByLine">Posted by
+       <a href="mailto:bordoley@gmail.com">Dave Bordoley</a> on <a href="#X1" title="2009-05-18T16:56:58.250079">2009-05-18</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>I'm definitely a fan of going the other way, but then again, I'm responsible for this implementation( http://www.metanotion.net/software/urlmapper/ ), which is primarily for routing/dispatching in my web framework. I realize I'm a nobody doing their own Java framework built on top of servlets(and I haven't even released the whole framework on the web yet, or even finished it :) ), but I think its handy and declarative, and even find the limitations liberating. </p>
+<p>A quick look showed all my template files just use the {foo} syntax and it does simplify parsing, but I also find that I'm relying on the default handling of the query string parameters by Jetty rather than writing those parameters into the template. Personally, I wouldn't mind a more complex spec, I just want to vote for a spec that supports both cases(parsing and generation of uri's).</p>
+    <p class="commentByLine">Posted by
+       <a href="http://www.metanotion.net/">Matt Estes</a> on <a href="#X2" title="2009-05-18T23:06:30.184956">2009-05-18</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Microsoft also did an implementation of URI templates in .NET http://msdn.microsoft.com/en-us/library/bb675245.aspx
+
+Arnon
+    <p class="commentByLine">Posted by
+       <a href="http://www.rgoarchitects.com">Arnon Rotem-Gal-Oz</a> on <a href="#X3" title="2009-05-19T09:12:02.365050">2009-05-19</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I've only ever got around to implementing {foo} from the first draft.
+
+My plan was, and I guess still is, and perhaps always will be, to implement the rest when I need it..
+    <p class="commentByLine">Posted by
+       <a href="http://paul.annesley.cc/">Paul Annesley</a> on <a href="#X4" title="2009-05-20T06:57:14.807383">2009-05-20</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Part of the issue may be that some of the more sophisticated examples are tricky to understand and (maybe?) malformed. On the URI Templates home page, clicking on either of the following examples causes the explain.cgi script to claim they are not valid URI templates:
+
+<ul>
+<li>http://www.google.com/notebook/feeds/{userID}{-prefix|/notebooks/|notebookID}{-opt|/-/|categories}{-listjoin|/|categories}?{-join|&amp;|updated-min,updated-max,alt,start-index,max-results,entryID,orderby}</li>
+<li>http://bitworking.org/news/{-listjoin|/|entrypath}</li>
+</ul>
+    <p class="commentByLine">Posted by
+       <a href="mailto:dontspamme@yahoo.com">Ramon</a> on <a href="#X5" title="2009-05-21T11:32:13.534562">2009-05-21</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>We all know that <a href="http://www.w3.org/Provider/Style/URI" title="A cool URI is one which does not change">Cool URIs don't change</a>, specifically that the resources of a URI shouldn't change after it's published.  So in my view, the notion of using URI templates to parse a URI is flawed.  If I change the template, which governs a million resources, I don't want it to retroactively change the URIs of a million resources out there.  That would just invite to massive link rot.</p>
+<p>I believe that URI templates should be used to generate URIs at the time a resource is created, and that the URI is kept in some URI storage facility for the duration of the resource's life.  Kind of like a file name occupies a slot in the file system for the lifetime of that file.</p>
+<p>I feel this is the only way an owner of a domain can really own the URI space of their domain.</p>
+<p>There are of course interesting edge cases like URIs that don't exist yet (e.g. the delicious tag 0rojfkneknide probably doesn't exist yet, so couldn't be in any URI lookup space) but since URIs (certain schemes at least) are hierarchical then the parent URI (e.g. delicious.com/tag/) should be "owned" by a resource which can be said to claim any URIs "beneath" this URI.</p>
+<p>Dunno if any of this made any sense, but:</p>
+<ul>
+<li>I <em>don't</em> want a two-way spec, since there's too many ways to get it wrong.</li>
+<li>I'd also try to simplify the spec and simply require all substitutes to be pre-escaped wrt URI escaping, since you then can fall back to "all URIs are ASCII".</li>
+<li>Rename "join" to "querystring" since that's really what it is, and its only real use case.</li>
+<li>Perhaps even drop it, since <code>?foo={foo}&amp;bar={bar}</code> would work just as well as <code>?{-join|foo,bar}</code></li>
+</ul>
+    <p class="commentByLine">Posted by
+       <a href="http://mogsie.com/me/">Erik Mogensen</a> on <a href="#X6" title="2009-05-21T16:59:47.970689">2009-05-21</a>
+    </p>
+</div>
+  </body>

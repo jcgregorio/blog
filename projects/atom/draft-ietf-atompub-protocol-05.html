@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"><title>The Atom Publishing Protocol</title><style type="text/css" title="Xml2Rfc (sans serif)">
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+a:active {
+  text-decoration: underline;
+}
+address {
+  margin-top: 1em;
+  margin-left: 2em;
+  font-style: normal;
+}
+body {
+  
+  color: #000000;
+  font-family: verdana, helvetica, arial, sans-serif;
+  font-size: 10pt;
+}
+dl {
+  margin-left: 2em;
+}
+h1 {
+  color: #333333;
+  font-size: 14pt;
+  line-height: 21pt;
+  page-break-after: avoid;
+}
+h1.np {
+  page-break-before: always;
+}
+h1 a {
+  color: #333333;
+}
+h2 {
+  color: #000000;
+  font-size: 12pt;
+  line-height: 15pt;
+  page-break-after: avoid;
+}
+h2 a {
+  color: #000000;
+}
+h3 {
+  color: #000000;
+  font-size: 10pt;
+  page-break-after: avoid;
+}
+h3 a {
+  color: #000000;
+}
+h4 {
+  color: #000000;
+  font-size: 10pt;
+  page-break-after: avoid;
+}
+h4 a {
+  color: #000000;
+}
+h5 {
+  color: #000000;
+  font-size: 10pt;
+  page-break-after: avoid;
+}
+h5 a {
+  color: #000000;
+}
+img {
+  margin-left: 3em;
+}
+li {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+ol {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+p {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+pre {
+  margin-left: 3em;
+  background-color: lightyellow;
+}
+table {
+  margin-left: 2em;
+}
+table.header {
+  width: 95%;
+  font-size: 10pt;
+  color: white;
+}
+td.top {
+  vertical-align: top;
+}
+td.topnowrap {
+  vertical-align: top;
+  white-space: nowrap; 
+}
+td.right {
+  text-align: right;
+}
+td.header-l {
+  background-color: gray;
+  width: 50%;
+}
+td.header-r {
+  background-color: gray;
+  width: 50%;
+  text-align: right;
+}
+thead {
+  display:table-header-group;
+}
+ul.toc {
+  list-style: none;
+  margin-left: 1.5em;
+  margin-right: 0em;
+  padding-left: 0em;
+}
+li.tocline0 {
+  line-height: 150%;
+  font-weight: bold;
+  font-size: 10pt;
+  margin-left: 0em;
+  margin-right: 0em;
+}
+li.tocline1 {
+  line-height: normal;
+  font-weight: normal;
+  font-size: 9pt;
+  margin-left: 0em;
+  margin-right: 0em;
+}
+li.tocline2 {
+  font-size: 0pt;
+}
+ul.ind {
+  list-style: none;
+  margin-left: 1.5em;
+  margin-right: 0em;
+  padding-left: 0em;
+}
+li.indline0 {
+  font-weight: bold;
+  line-height: 200%;
+  margin-left: 0em;
+  margin-right: 0em;
+}
+li.indline1 {
+  font-weight: normal;
+  line-height: 150%;
+  margin-left: 0em;
+  margin-right: 0em;
+}
+.comment {
+  background-color: yellow;
+}
+.editingmark {
+  background-color: khaki;
+}
+.error {
+  font-size: 14pt;
+  background-color: red;
+}
+.toowide {
+  color: red;
+  font-weight: bold;
+}
+.title {
+  color: #990000;
+  font-size: 18pt;
+  line-height: 18pt;
+  font-weight: bold;
+  text-align: center;
+}
+.figure {
+  font-weight: bold;
+  text-align: center;
+  font-size: 9pt;
+}
+.filename {
+  color: #333333;
+  font-weight: bold;
+  font-size: 12pt;
+  line-height: 21pt;
+  text-align: center;
+}
+.warning {
+  font-size: 14pt;
+  background-color: yellow;
+}
+del {
+  color: red;
+  text-decoration: line-through;
+}
+.del {
+  color: red;
+  text-decoration: line-through;
+}
+.fn {
+  font-weight: bold;
+}
+ins {
+  color: green;
+  text-decoration: underline;
+}
+.ins {
+  color: green;
+  text-decoration: underline;
+}
+.pn {
+  position: absolute;
+  color: white;
+}
+.pn:hover {
+  color: #C8A8FF;
+}
+.vcardline {
+  display: block;
+}
+
+table.openissue {
+  background-color: khaki;
+  border-width: thin;
+  border-style: solid;
+  border-color: black;
+}
+
+table.closedissue {
+  background-color: white;
+  border-width: thin;
+  border-style: solid;
+  border-color: gray;
+  color: gray; 
+}
+
+.closed-issue {
+  border: solid;
+  border-width: thin;
+  background-color: lime;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.open-issue {
+  border: solid;
+  border-width: thin;
+  background-color: red;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.editor-issue {
+  border: solid;
+  border-width: thin;
+  background-color: yellow;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+@media print {
+  .noprint {
+    display: none;
+  }
+  
+  table.header {
+    width: 90%;
+  }
+
+  td.header-l {
+    width: 50%;
+    color: black;
+    background-color: white;
+    vertical-align: top;
+    font-size: 10pt;
+  }
+
+  td.header-r {
+    width: 33%;
+    color: black;
+    background-color: white;
+    vertical-align: top;
+    text-align: right;
+    font-size: 10pt;
+  }
+
+  ul.toc a::after {
+    content: leader('.') target-counter(attr(href), page);
+  }
+  
+  a.iref {
+    content: target-counter(attr(href), page);
+  }
+}
+
+@page {
+  @top-left {
+       content: "INTERNET DRAFT"; 
+  } 
+  @top-right {
+       content: "October 2005"; 
+  } 
+  @top-center {
+       content: "The Atom Publishing Protocol"; 
+  } 
+  @bottom-left {
+       content: "Gregorio & de hOra"; 
+  } 
+  @bottom-center {
+       content: "Standards Track"; 
+  } 
+  @bottom-right {
+       content: "[Page " counter(page) "]"; 
+  } 
+}
+
+@page:first { 
+    @top-left {
+      content: normal;
+    }
+    @top-right {
+      content: normal;
+    }
+    @top-center {
+      content: normal;
+    }
+}
+</style><link rel="Contents" href="#rfc.toc"><link rel="Author" href="#rfc.authors"><link rel="Copyright" href="#rfc.copyright"><link rel="Chapter" title="1 Introduction" href="#rfc.section.1"><link rel="Chapter" title="2 XML Namespace and Language" href="#rfc.section.2"><link rel="Chapter" title="3 Notational Conventions" href="#rfc.section.3"><link rel="Chapter" title="4 Terminology" href="#rfc.section.4"><link rel="Chapter" title="5 The Atom Publishing Protocol Model" href="#rfc.section.5"><link rel="Chapter" title="6 Atom Publishing Protocol Documents" href="#rfc.section.6"><link rel="Chapter" title="7 Introspection Resource" href="#rfc.section.7"><link rel="Chapter" title="8 Collection Resources" href="#rfc.section.8"><link rel="Chapter" title="9 Entry Collections" href="#rfc.section.9"><link rel="Chapter" title="10 Generic Collections" href="#rfc.section.10"><link rel="Chapter" title="11 List Resources" href="#rfc.section.11"><link rel="Chapter" title="12 Atom Entry Extensions" href="#rfc.section.12"><link rel="Chapter" title="13 Securing the Atom Protocol" href="#rfc.section.13"><link rel="Chapter" title="14 Security Considerations" href="#rfc.section.14"><link rel="Chapter" title="15 IANA Considerations" href="#rfc.section.15"><link rel="Chapter" href="#rfc.section.16" title="16 References"><link rel="Appendix" title="A Contributors" href="#rfc.section.A"><link rel="Appendix" title="B Revision History" href="#rfc.section.B"><meta name="generator" content="http://greenbytes.de/tech/webdav/rfc2629.xslt, Revision 1.220, 2005/04/11 11:37:53, XSLT vendor: libxslt http://xmlsoft.org/XSLT/"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.Creator" content="Gregorio, J.C."><meta name="DC.Creator" content="de hOra, B."><meta name="DC.Identifier" content="urn:ietf:id:draft-ietf-atompub-protocol-05.txt"><meta name="DC.Date.Issued" scheme="ISO8601" content="2005-10"><meta name="DC.Description.Abstract" content="This memo presents a protocol for using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol) to edit content. The Atom Publishing Protocol (APP) is an application-level protocol for publishing and editing Web resources. The protocol at its core is the HTTP transport of Atom-formatted representations. The Atom format is documented in the Atom Syndication Format (draft-ietf-atompub-format-11.txt)."></head><body><table summary="header information" class="header" border="0" cellpadding="1" cellspacing="1"><tr><td class="header-l">Network Working Group </td><td class="header-r">J.C. Gregorio, Editor </td></tr><tr><td class="header-l">INTERNET DRAFT </td><td class="header-r">BitWorking, Inc </td></tr><tr><td class="header-l">
+        &lt;draft-ietf-atompub-protocol-05.txt&gt;
+       </td><td class="header-r">B. de hOra, Editor </td></tr><tr><td class="header-l">Category: Standards Track </td><td class="header-r">Propylon Ltd. </td></tr><tr><td class="header-l">Expires: April 2006 </td><td class="header-r">October 2005 </td></tr></table><p class="title"><br>The Atom Publishing Protocol<br><span class="filename">draft-ietf-atompub-protocol-05.txt</span></p><h1><a name="rfc.status" href="#rfc.status">Status of this Memo</a></h1><p>By submitting this Internet-Draft, each author represents that any applicable patent or other IPR claims of which he or she is aware have been or will be disclosed, and any of which he or she becomes aware will be disclosed, in accordance with Section 6 of BCP 79.</p><p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF), its areas, and its working groups. Note that other groups may also distribute working documents as Internet-Drafts.</p><p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time. It is inappropriate to use Internet-Drafts as reference material or to cite them other than as &#8220;work in progress&#8221;.</p><p>The list of current Internet-Drafts can be accessed at &lt;<a href="http://www.ietf.org/ietf/1id-abstracts.txt">http://www.ietf.org/ietf/1id-abstracts.txt</a>&gt;.</p><p>The list of Internet-Draft Shadow Directories can be accessed at &lt;<a href="http://www.ietf.org/shadow.html">http://www.ietf.org/shadow.html</a>&gt;.</p><p>This Internet-Draft will expire in April 2006.</p><h1><a name="rfc.copyrightnotice" href="#rfc.copyrightnotice">Copyright Notice</a></h1><p>Copyright © The Internet Society (2005). All Rights Reserved.</p><h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1> <p>This memo presents a protocol for using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol) to edit content.</p>  <p>The Atom Publishing Protocol (APP) is an application-level protocol for publishing and editing Web resources. The protocol at its core is the HTTP transport of Atom-formatted representations. The Atom format is documented in the Atom Syndication Format (draft-ietf-atompub-format-11.txt).</p> <h1 id="rfc.note.1"><a href="#rfc.note.1"></a>Editorial Note</h1> <p>To provide feedback on this Internet-Draft, join the <a href="http://www.imc.org/atom-protocol/index.html">atom-protocol mailing list (http://www.imc.org/atom-protocol/index.html)</a>.</p> <hr class="noprint"><h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1><ul class="toc"><li class="tocline0">1.   <a href="#rfc.section.1">Introduction</a></li><li class="tocline0">2.   <a href="#xmlns">XML Namespace and Language</a></li><li class="tocline0">3.   <a href="#rfc.section.3">Notational Conventions</a></li><li class="tocline0">4.   <a href="#terminology">Terminology</a></li><li class="tocline0">5.   <a href="#rfc.section.5">The Atom Publishing Protocol Model</a><ul class="toc"><li class="tocline1">5.1   <a href="#collections_intro">Collections</a></li><li class="tocline1">5.2   <a href="#chmod066">Editable Resources</a><ul class="toc"><li class="tocline1">5.2.1   <a href="#rfc.section.5.2.1">Read</a></li><li class="tocline1">5.2.2   <a href="#rfc.section.5.2.2">Update</a></li><li class="tocline1">5.2.3   <a href="#rfc.section.5.2.3">Delete</a></li></ul></li><li class="tocline1">5.3   <a href="#orientation">Capabilities Discovery</a></li><li class="tocline1">5.4   <a href="#listing">Listing</a></li><li class="tocline1">5.5   <a href="#rfc.section.5.5">Success and Failure</a></li></ul></li><li class="tocline0">6.   <a href="#appdocs">Atom Publishing Protocol Documents</a><ul class="toc"><li class="tocline1">6.1   <a href="#baselang">Use of xml:base xml:lang</a></li><li class="tocline1">6.2   <a href="#collection_doc">Collection Documents</a><ul class="toc"><li class="tocline1">6.2.1   <a href="#collection_elements">Element Definitions</a><ul class="toc"><li class="tocline2"><li class="tocline2"><li class="tocline2"></ul></li></ul></li><li class="tocline1">6.3   <a href="#at-your-service">Introspection Documents</a><ul class="toc"><li class="tocline1">6.3.1   <a href="#service_document_elements">Element Definitions</a><ul class="toc"><li class="tocline2"><li class="tocline2"><ul class="toc"><li class="tocline2"></ul></li><li class="tocline2"><ul class="toc"><li class="tocline2"><li class="tocline2"><li class="tocline2"></ul></li></ul></li></ul></li></ul></li><li class="tocline0">7.   <a href="#rfc.section.7">Introspection Resource</a><ul class="toc"><li class="tocline1">7.1   <a href="#introspection_discovery">Discovery</a></li></ul></li><li class="tocline0">8.   <a href="#collection_resource">Collection Resources</a><ul class="toc"><li class="tocline1">8.1   <a href="#rfc.section.8.1">GET</a></li><li class="tocline1">8.2   <a href="#rfc.section.8.2">POST</a></li><li class="tocline1">8.3   <a href="#collection_name_header">Title: Header</a></li></ul></li><li class="tocline0">9.   <a href="#author_entry">Entry Collections</a><ul class="toc"><li class="tocline1">9.1   <a href="#rfc.section.9.1">Editing Entry Resources</a></li><li class="tocline1">9.2   <a href="#constraints">Role of Atom Entry Elements During Editing</a></li></ul></li><li class="tocline0">10.   <a href="#author_generic">Generic Collections</a><ul class="toc"><li class="tocline1">10.1   <a href="#rfc.section.10.1">Editing Generic Resources</a></li><li class="tocline1">10.2   <a href="#rfc.section.10.2">Title: Header</a></li></ul></li><li class="tocline0">11.   <a href="#topten">List Resources</a><ul class="toc"><li class="tocline1">11.1   <a href="#templates">URI Templates</a></li><li class="tocline1">11.2   <a href="#rfc.section.11.2">URI Template Parameters</a><ul class="toc"><li class="tocline1">11.2.1   <a href="#rfc.section.11.2.1">{index} URI template variable</a></li><li class="tocline1">11.2.2   <a href="#rfc.section.11.2.2">{daterange} URI template variable </a></li><li class="tocline1">11.2.3   <a href="#rfc.section.11.2.3">Other URI Template parameters</a></li></ul></li></ul></li><li class="tocline0">12.   <a href="#club">Atom Entry Extensions</a></li><li class="tocline0">13.   <a href="#rfc.section.13">Securing the Atom Protocol</a><ul class="toc"><li class="tocline2"></ul></li><li class="tocline0">14.   <a href="#rfc.section.14">Security Considerations</a></li><li class="tocline0">15.   <a href="#iana">IANA Considerations</a></li><li class="tocline0">16.   <a href="#rfc.references">References</a><ul class="toc"><li class="tocline1">16.1   <a href="#rfc.references.1">Normative References</a></li><li class="tocline1">16.2   <a href="#rfc.references.2">Informative References</a></li></ul></li><li class="tocline0"><a href="#rfc.authors">Authors' Addresses</a></li><li class="tocline0">A.   <a href="#rfc.section.A">Contributors</a></li><li class="tocline0">B.   <a href="#rfc.section.B">Revision History</a></li><li class="tocline0"><a href="#rfc.ipr">Intellectual Property and Copyright Statements</a></li></ul><hr class="noprint"><h1 id="rfc.section.1" class="np"><a href="#rfc.section.1">1.</a> Introduction</h1><p id="rfc.section.1.p.1">The Atom Publishing Protocol is an application-level protocol for publishing and editing Web resources using HTTP <a href="#RFC2616" title="Hypertext Transfer Protocol -- HTTP/1.1">[RFC2616]</a> and XML 1.0 <a href="#W3C.REC-xml-20040204" title="Extensible Markup Language (XML) 1.0 (Third Edition)">[W3C.REC-xml-20040204]</a>.</p><hr class="noprint"><h1 id="rfc.section.2" class="np"><a href="#rfc.section.2">2.</a> <a name="xmlns" href="#xmlns">XML Namespace and Language</a></h1><p id="rfc.section.2.p.1">The XML Namespaces URI <a href="#W3C.REC-xml-names-19990114" title="Namespaces in XML">[W3C.REC-xml-names-19990114]</a> for the XML data format described in this specification is: http://purl.org/atom/app#</p><p id="rfc.section.2.p.2">XML elements defined by this specification MAY have an xml:lang attribute, whose content indicates the natural language for the element (and its descendents). The language context is only significant for elements and attributes declared to be "Language-Sensitive" by this specification. Requirements regarding the content and interpretation of xml:lang are specified in <a href="#W3C.REC-xml-20040204" title="Extensible Markup Language (XML) 1.0 (Third Edition)">[W3C.REC-xml-20040204]</a>, Section 2.12.</p><hr class="noprint"><h1 id="rfc.section.3" class="np"><a href="#rfc.section.3">3.</a> Notational Conventions</h1><p id="rfc.section.3.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119" title="Key words for use in RFCs to Indicate Requirement Levels">[RFC2119]</a>.</p><p id="rfc.section.3.p.2">Some sections of this specification are illustrated with fragments of a non-normative RELAX NG Compact schema <a href="#RNC" title="RELAX NG Compact Syntax">[RNC]</a>. However, the text of this specification provides the definition of conformance.</p><p id="rfc.section.3.p.3">This specification uses the namespace prefix "app:" for the Namespace URI identified in <a href="#xmlns" title="XML Namespace and Language">Section 2</a> above. It uses the namespace prefix "atom:" for the Namespace URI identified in <a href="#AtomFormat" title="The Atom Syndication Format">[AtomFormat]</a>. Note that choices of namespace prefix are arbitrary and not semantically significant.</p><hr class="noprint"><h1 id="rfc.section.4" class="np"><a href="#rfc.section.4">4.</a> <a name="terminology" href="#terminology">Terminology</a></h1><p id="rfc.section.4.p.1">For convenience, this protocol may be referred to as "Atom Protocol" or "APP". This specification uses both internally.</p><p id="rfc.section.4.p.2">URI/IRI - A Uniform Resource Identifier and Internationalized Resource Identifier, respectively. These terms (and the distinction between them) are defined in <a href="#RFC3986" title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</a> and <a href="#RFC3987" title="Internationalized Resource Identifiers (IRIs)">[RFC3987]</a>.</p><p id="rfc.section.4.p.3">Resource - A network data object or service that can be identified by a URI, as defined in <a href="#RFC2616" title="Hypertext Transfer Protocol -- HTTP/1.1">[RFC2616]</a>.</p><p id="rfc.section.4.p.4">Representation - An entity included with a request or response as defined in <a href="#RFC2616" title="Hypertext Transfer Protocol -- HTTP/1.1">[RFC2616]</a>.</p><hr class="noprint"><h1 id="rfc.section.5" class="np"><a href="#rfc.section.5">5.</a> The Atom Publishing Protocol Model</h1><p id="rfc.section.5.p.1">The Atom Publishing Protocol is a subset of HTTP that is used to edit resources on the web. The APP operates on collections of Web resources. Collections are HTTP resources, as are the members of the collection. Both Collections and collection member resources support the same basic interactions. The patterns of interaction are based on the common HTTP verbs.</p><p id="rfc.section.5.p.2"> </p><ul><li>GET is used to retrieve a representation of a resource or perform a read-only query.</li><li>POST is used to create a new, dynamically-named resource, or to provide a block of data to a data-handling process.</li><li>PUT is used to update a known resource.</li><li>DELETE is used to remove a resource.</li></ul><h2 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1</a> <a name="collections_intro" href="#collections_intro">Collections</a></h2><p id="rfc.section.5.1.p.1">The APP groups resources into "Collections", which are analogous to folders or directories found in a file system. In the figure we have member resources in a collection.</p><div id="rfc.figure.u.1"></div> <pre>
+       +-------------------------+
+       | Collection              |
+       |                         |
+       |  +----------------+     |
+       |  | Member_A       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_B       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_C       |     |      
+       |  +----------------+     |
+       |                         |
+       |  ...                    |
+       |                         |
+       |  +----------------+     |
+       |  | Member_Oldest  |     |      
+       |  +----------------+     |
+       |                         |
+       +-------------------------+
+</pre> <p id="rfc.section.5.1.p.3">To add a new member to a collection an appropriate representation is POSTed to the URI of the collection resource. Here we show it being added to the beginnng of the list. The ordering of the members of collections is in terms of the time at which each resource was last updated, which includes the act of creating the resource. The ordering of collection members is covered in more detail in <a href="#collection_resource" title="Collection Resources">Section 8</a> and <a href="#topten" title="List Resources">Section 11</a>.</p><div id="rfc.figure.u.2"></div> <pre>
+       +-------------------------+
+       | Collection              |
+       |                         |
+ POST  |  +----------------+     |
+---------&gt;| Member_New     |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_A       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_B       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_C       |     |      
+       |  +----------------+     |
+       |                         |
+       |  ...                    |
+       |                         |
+       |  +----------------+     |
+       |  | Member_Oldest  |     |      
+       |  +----------------+     |
+       |                         |
+       +-------------------------+
+   </pre> <p id="rfc.section.5.1.p.5">You'll note that up until now we haven't said what kinds of representations we are expecting at each of the resources. There are two kinds of collections, Entry and Generic. In Entry Collections all the members MUST have representations as Atom Entries. For further restrictions on Entry Collection see <a href="#author_entry" title="Entry Collections">Section 9</a> The other type of collection is a Generic Collection. Generic Collections make no restriction on the representations of their member resources.</p><h2 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2</a> <a name="chmod066" href="#chmod066">Editable Resources</a></h2><p id="rfc.section.5.2.p.1">All the members of a collection are Editable Resources. An Editable resource is a resource whose available HTTP methods can be used to retrieve, update and delete it.</p><h3 id="rfc.section.5.2.1"><a href="#rfc.section.5.2.1">5.2.1</a> Read</h3><p id="rfc.section.5.2.1.p.1">To retrieve a representation of the resource, you send a GET to the URI of the Editable Resource. Remember that for members of Entry Collections, the served representation will be an Atom Entry.</p><div id="rfc.figure.u.3"></div> <pre>
+Client                                   Server 
+  |                                           |
+  |  1.) GET to Editable Resource URI         |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 OK                               |    
+  |&lt;------------------------------------------|
+  |                                           |
+</pre> <p id="rfc.section.5.2.1.p.3"> </p><ol><li>The client sends a GET request to the member's URI.</li><li>The server responds with the representation of the resource.</li></ol><h3 id="rfc.section.5.2.2"><a href="#rfc.section.5.2.2">5.2.2</a> Update</h3><p id="rfc.section.5.2.2.p.1">To update an Editable Resource the client will PUT an updated representation to the URI of the resource.</p><div id="rfc.figure.u.4"></div> <pre>
+Client                                     Server
+  |                                           |
+  |  1.) PUT to Editable Resource URI         |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 OK                               |    
+  |&lt;------------------------------------------|
+</pre> <p id="rfc.section.5.2.2.p.3"> </p><ol><li>The client PUTs an updated representation to the member's URI.</li><li>The server MAY respond with an updated representation of the member's new state.</li></ol><h3 id="rfc.section.5.2.3"><a href="#rfc.section.5.2.3">5.2.3</a> Delete</h3><p id="rfc.section.5.2.3.p.1">An Editable Resource is deleted by sending it DELETE. Note that this also removes it from all the collections that it belonged to.</p><div id="rfc.figure.u.5"></div> <pre>
+Client                                     Server 
+  |                                           |
+  |  1.) DELETE to Editable Resource URI      |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 Ok                               |    
+  |&lt;------------------------------------------|     
+  |                                           |
+</pre> <p id="rfc.section.5.2.3.p.3"> </p><ol><li>The client sends a DELETE request to the member's URI.</li><li>The server responds with successful status code.</li></ol><h2 id="rfc.section.5.3"><a href="#rfc.section.5.3">5.3</a> <a name="orientation" href="#orientation">Capabilities Discovery</a></h2><p id="rfc.section.5.3.p.1">Each collection resource responds to GET and can return a Collection Document as it's representation. The Collection Document enumerates the capabilities of each collection and the format is described in <a href="#collection_doc" title="Collection Documents">Section 6.2</a>.</p><div id="rfc.figure.u.6"></div> <pre>
+Client                         Server 
+  |                                |     
+  |  1.) GET to Collection         |     
+  |-------------------------------&gt;|     
+  |                                |     
+  |  2.) Collection Document       |     
+  |&lt;-------------------------------|     
+  |                                |
+          </pre> <p id="rfc.section.5.3.p.3"> </p><ol><li>The client sends a GET request to the Collection Resource.</li><li>The server responds with a Collection Document containing a description of the capabilities of the collection. The content of this document can vary based on aspects of the client request, including, but not limited to, authentication credentials.</li></ol><h2 id="rfc.section.5.4"><a href="#rfc.section.5.4">5.4</a> <a name="listing" href="#listing">Listing</a></h2><p id="rfc.section.5.4.p.1">Clients can request a listing of the Collection's membership. Listing the Editable Resources that are members of a collection is done using one of the List Resources in the Introspection Document, utilizing the 'app:uri-template' element. The List Resource returns Atom Feed Documents with one Atom Entry for each member resource that match the selection criteria. This is true whether the collection is an Entry Collection or a Generic Collection. If an Entry Collection is being interrogated, the entries returned by a list resource SHOULD NOT to be considered complete representations of the member resources. See <a href="#topten" title="List Resources">Section 11</a> and <a href="#club" title="Atom Entry Extensions">Section 12</a> for more details on the extensions and constraints found on the entries returned from List Resources.</p><div id="rfc.figure.u.7"></div> <pre>
+Client                          Server 
+  |                                |     
+  |  1.) GET to List Resource      |     
+  |-------------------------------&gt;|     
+  |                                |     
+  |  2.) 200 OK, Atom Feed Doc     |    
+  |&lt;-------------------------------|     
+  |                                |
+          </pre> <p id="rfc.section.5.4.p.3"> </p><ol><li>The client sends a GET request to the Collection's URI.</li><li>The server responds with an Atom Feed Document containing a full or partial listing of the Collection's membership.</li></ol><h2 id="rfc.section.5.5"><a href="#rfc.section.5.5">5.5</a> Success and Failure</h2><p id="rfc.section.5.5.p.1">HTTP defines different classes of response, which are used by the Atom Protocol. HTTP status codes of the form 2xx signal that a request was successful. HTTP status codes of the form 4xx or 5xx signal that an error has occurred, and the request has failed. Consult the HTTP specification <a href="#RFC2616" title="Hypertext Transfer Protocol -- HTTP/1.1">[RFC2616]</a> for more detailed definitions of each status code.</p><hr class="noprint"><h1 id="rfc.section.6" class="np"><a href="#rfc.section.6">6.</a> <a name="appdocs" href="#appdocs">Atom Publishing Protocol Documents</a></h1><p id="rfc.section.6.p.1">This specification describes two kinds of Atom Publishing Protocol Documents: Atom Collections Documents and Atom Introspection Documents.</p><p id="rfc.section.6.p.2">An Atom Collection Document is a representation of an Atom collection, including metadata about the collection, and some or all of the members associated with it. Its root is the app:collection element.</p><p id="rfc.section.6.p.3">An Atom Introspection Document represents one or more workspaces, which describe server-defined groupings of collections. Its root is the app:service element.</p><div id="rfc.figure.u.8"></div> <pre>
+namespace app = "..." start = appCollection | appIntrospection
+</pre> <p id="rfc.section.6.p.5">Both kinds of Atom Publishing Protocol Documents are specified in terms of the XML Information Set, serialised as XML 1.0 (<a href="#W3C.REC-xml-20040204" title="Extensible Markup Language (XML) 1.0 (Third Edition)">[W3C.REC-xml-20040204]</a>). Atom Publishing Protocol Documents MUST be well-formed XML. This specification does not define a DTD for Atom Protocol, and hence does not require them to be valid (in the sense used by XML).</p><p id="rfc.section.6.p.6">Atom Collection Documents are identified with the "application/atomcoll+xml" media type.</p><p id="rfc.section.6.p.7">Atom Introspection Documents are identified with the "application/atomserv+xml" media type.</p><p id="rfc.section.6.p.8">Atom allows the use of IRIs <a href="#RFC3987" title="Internationalized Resource Identifiers (IRIs)">[RFC3987]</a>, as well as URIs <a href="#RFC3986" title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</a>. Every URI is an IRI, so any URI can be used where an IRI is needed. While IRIs must, for many protocols, be mapped to URIs prior to dereferencing, they MUST NOT be so mapped for comparison when used in atom:id. Section 3.1 of <a href="#RFC3987" title="Internationalized Resource Identifiers (IRIs)">[RFC3987]</a> describes how to map an IRI to a URI when necessary.</p><h2 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1</a> <a name="baselang" href="#baselang">Use of xml:base xml:lang</a></h2><p id="rfc.section.6.1.p.1">Any element defined by this specification MAY have an xml:base attribute [W3C.REC-xmlbase-20010627]. When xml:base is used in an Atom Publishing Protocol Document, it serves the function described in section 5.1.1 of <a href="#RFC3986" title="Uniform Resource Identifier (URI): Generic Syntax">[RFC3986]</a>, establishing the base URI (or IRI) for resolving any relative references found within the effective scope of the xml:base attribute.</p><p id="rfc.section.6.1.p.2">Any element defined by this specification MAY have an xml:lang attribute, whose content indicates the natural language for the element and its descendents. The language context is only significant for elements and attributes declared to be "Language-Sensitive" by this specification. Requirements regarding the content and interpretation of xml:lang are specified in XML 1.0 (<a href="#W3C.REC-xml-20040204" title="Extensible Markup Language (XML) 1.0 (Third Edition)">[W3C.REC-xml-20040204]</a>), Section 2.12. </p><div id="rfc.figure.u.9"></div> <pre> 
+ appCommonAttributes =
+      attribute xml:base { atomUri }?,
+      attribute xml:lang { atomLanguageTag }?,
+     undefinedAttribute*
+</pre> <h2 id="rfc.section.6.2"><a href="#rfc.section.6.2">6.2</a> <a name="collection_doc" href="#collection_doc">Collection Documents</a></h2><p id="rfc.section.6.2.p.1">The Collection Document describes the capabilities of a Collection, the types of Entries that it will support, the URI Templates it supports.</p><p id="rfc.section.6.2.p.2">The Collection Document has the media-type 'application/atomcoll+xml' (see <a href="#iana" title="IANA Considerations">Section 15</a>).</p><p id="rfc.section.6.2.p.3">Here's an example document:</p><div id="rfc.figure.u.10"></div> <pre>
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;app:collection xmlns:app="http://purl.org/atom/app#"&gt;
+  &lt;app:member-type&gt;entry&lt;/pub:member-type&gt;
+  &lt;app:uri-template&gt;http://example.org/{index}&lt;/pub:uri-template&gt;
+  &lt;app:uri-template&gt;http://example.org/{daterange}&lt;/pub:uri-template&gt;
+&lt;/app:collection&gt;</pre> <p id="rfc.section.6.2.p.5">This example says the Collection contains Atom Entry documents, and that there are two means of selecting entries using what are called 'URI Templates'; one based on the collection's order, and another based on dates. See <a href="#templates" title="URI Templates">Section 11.1</a> for more about URI Templates.</p><h3 id="rfc.section.6.2.1"><a href="#rfc.section.6.2.1">6.2.1</a> <a name="collection_elements" href="#collection_elements">Element Definitions</a></h3><h4 id="rfc.section.6.2.1.1"><a href="#rfc.section.6.2.1.1">6.2.1.1</a> The 'app:collection' Element</h4><p id="rfc.section.6.2.1.1.p.1">The app:collection is the document element of a Collection Document.</p><p id="rfc.section.6.2.1.1.p.2"> </p><div id="rfc.figure.u.11"></div> <pre>
+appCollection =
+   element app:collection {
+      appCommonAttributes,
+      ( appMemberType+
+        appSearchTemplate
+        &amp; anyElement* )
+   }</pre> <p id="rfc.section.6.2.1.1.p.3">This specification defines two child elements for app:collection: </p><ul><li>app:member-type: any number of elements listing the types of Entries that the Collection may contain.</li><li>app:uri-template: any number of URI Templates for a List Resource (See <a href="#topten" title="List Resources">Section 11</a>).</li></ul><h4 id="rfc.section.6.2.1.2"><a href="#rfc.section.6.2.1.2">6.2.1.2</a> The 'app:member-type' Element</h4><p id="rfc.section.6.2.1.2.p.1">The app:member-type element contains information elements about the types of Entries that the Collection may contain.</p><p id="rfc.section.6.2.1.2.p.2"> </p><div id="rfc.figure.u.12"></div> <pre>
+appMember =
+   element app:member-type {
+         appCommonAttributes,
+         appTypeValue
+   }</pre> <p id="rfc.section.6.2.1.2.p.3">The element content of an app:member-type MUST be a string that is non-empty, and matches either the "isegment-nz-nc" or the "IRI" production in <a href="#RFC3987" title="Internationalized Resource Identifiers (IRIs)">[RFC3987]</a>. Note that use of a relative reference other than a simple name is not allowed. If a name is given, implementations MUST consider the link relation type to be equivalent to the same name registered within the IANA Registry of Member Types (<a href="#iana" title="IANA Considerations">Section 15</a>), and thus the IRI that would be obtained by appending the value of the rel attribute to the string "http://www.iana.org/assignments/entrytype/".</p><p id="rfc.section.6.2.1.2.p.4">The content of an app:member-type specifies constraints on the Entries that may appear in the Collection. The app:collection element MAY have multiple app:member-type elements. An Entry POSTed to a Collection MUST meet the constraints of at least one of the app:member-type constraints. It MAY meet more than one, but the minimum requirement is at least one.</p><p id="rfc.section.6.2.1.2.p.5">This specification defines two initial values for app:member-type IANA registry: </p><ul><li>"entry" - The Collection is an Entry Collection as defined in <a href="#author_entry" title="Entry Collections">Section 9</a>.</li><li>"generic" - The Collection is a Generic Collection as defined in <a href="#author_generic" title="Generic Collections">Section 10</a>.</li></ul><h4 id="rfc.section.6.2.1.3"><a href="#rfc.section.6.2.1.3">6.2.1.3</a> The 'app:uri-template' Element</h4><p id="rfc.section.6.2.1.3.p.1">The element content of an app:uri-template is a URI Template for a List Resource (See <a href="#topten" title="List Resources">Section 11</a>). Every List resource, whose URI is determined by filling in the parameters in a URI Template, MUST return an Atom feed document as its representation. This Atom feed document MUST NOT contain entries which do not match the selection criteria.</p><h2 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3</a> <a name="at-your-service" href="#at-your-service">Introspection Documents</a></h2><p id="rfc.section.6.3.p.1">In order for authoring to commence, a client must first discover the capabilities and locations of collections offered.</p><p id="rfc.section.6.3.p.2">The Introspection Document describes "workspaces", which are server-defined groupings of collections. There is no requirement that servers support multiple workspaces, and a collection may appear in more than one workspace.</p><p id="rfc.section.6.3.p.3">The Introspection Document has the media-type 'application/atomserv+xml', see <a href="#iana" title="IANA Considerations">Section 15</a></p><p id="rfc.section.6.3.p.4">Here's an example document:</p><div id="rfc.figure.u.13"></div> <pre>
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;app:service xmlns:app="http://purl.org/atom/app#"&gt;
+  &lt;app:workspace title="Main Site" &gt; 
+      &lt;app:collection contents="entries" 
+          title="My Blog Entries" 
+          href="http://example.org/reilly/feed" /&gt;
+      &lt;app:collection contents="generic" 
+          title="Documents" 
+          href="http://example.org/reilly/pic" /&gt;
+  &lt;/app:workspace&gt;
+  &lt;app:workspace title="Side Bar Blog"&gt;
+      &lt;app:collection contents="entries" title="Entries" 
+          href="http://example.org/reilly/feed" /&gt;
+      &lt;app:collection contents="http://example.net/booklist" 
+          title="Books" 
+          href="http://example.org/reilly/books" /&gt;
+  &lt;/app:workspace&gt;
+&lt;/app:service&gt;</pre> <p id="rfc.section.6.3.p.6">This example says there are two workspaces, each consisting of two collections. The first workspace is called 'Mail', and has two collections, called 'My Blog Entries' and 'Documents' whose locations are 'http://example.org/reilly/feed' and 'http://example.org/reilly/pic'. 'My Blog Entries' contains Atom Entries and 'Documents' contains Generic Entries. The second workspace is called 'Side Bar Blog' and also has two collections, called 'Entries' and 'Books' whose locations are 'http://example.org/reilly/feed' and 'http://example.org/reilly/booklist'. 'Entries' contains Atom Entries and 'Books' contains Generic Entries (since its contents attribute is not present you MUST assume it is a Generic Collection).</p><h3 id="rfc.section.6.3.1"><a href="#rfc.section.6.3.1">6.3.1</a> <a name="service_document_elements" href="#service_document_elements">Element Definitions</a></h3><h4 id="rfc.section.6.3.1.1"><a href="#rfc.section.6.3.1.1">6.3.1.1</a> The 'app:service' Element</h4><p id="rfc.section.6.3.1.1.p.1">The "app:service" element is the document element of a Introspection Document, acting as a container for service data associated with one or more workspaces. An app:service elements MAY contain any number of app:workspace elements.</p><p id="rfc.section.6.3.1.1.p.2"> </p><div id="rfc.figure.u.14"></div> <pre>
+appService =
+   element app:service {
+      appCommonAttributes,
+      ( appWorkspace* 
+        &amp; anyElement* )
+   }</pre> <h4 id="rfc.section.6.3.1.2"><a href="#rfc.section.6.3.1.2">6.3.1.2</a> The 'app:workspace' Element</h4><p id="rfc.section.6.3.1.2.p.1">The 'workspace' element contains information elements about the collections of resources available for editing. The app:workspace elements MAY contain any number of app:collection elements.</p><p id="rfc.section.6.3.1.2.p.2"> </p><div id="rfc.figure.u.15"></div> <pre>
+appWorkspace =
+   element app:workspace {
+      appCommonAttributes,
+      attribute title { text },
+      ( appCollection* 
+        &amp; anyElement* )
+   }</pre> <h5 id="rfc.section.6.3.1.2.1"><a href="#rfc.section.6.3.1.2.1">6.3.1.2.1</a> The 'title' Attribute</h5><p id="rfc.section.6.3.1.2.1.p.1">The app:workspace element MUST contain a 'title' attribute, which conveys a human-readable name for the workspace. This attribute is Language-Sensitive.</p><h4 id="rfc.section.6.3.1.3"><a href="#rfc.section.6.3.1.3">6.3.1.3</a> The 'app:collection' Element</h4><p id="rfc.section.6.3.1.3.p.1">The 'app:collection' element describes collections and their member resources.</p><p id="rfc.section.6.3.1.3.p.2"> </p><div id="rfc.figure.u.16"></div> <pre>
+appCollection =
+   element app:collection {
+      appCommonAttributes,
+      attribute title { text },
+      attribute href { text },
+      attribute contents { text },
+      anyElement*
+   }</pre> <h5 id="rfc.section.6.3.1.3.1"><a href="#rfc.section.6.3.1.3.1">6.3.1.3.1</a> The 'title' Attribute</h5><p id="rfc.section.6.3.1.3.1.p.1">The app:collection element MUST contain a 'title' attribute, whose value conveys a human-readable name for the workspace. This attribute is Language-Sensitive.</p><h5 id="rfc.section.6.3.1.3.2"><a href="#rfc.section.6.3.1.3.2">6.3.1.3.2</a> The 'href' Attribute</h5><p id="rfc.section.6.3.1.3.2.p.1">The app:collection element MUST contain an 'href' attribute, whose value conveys the IRI of the collection.</p><h5 id="rfc.section.6.3.1.3.3"><a href="#rfc.section.6.3.1.3.3">6.3.1.3.3</a> <a name="attContents" href="#attContents">The 'contents' Attribute</a></h5><p id="rfc.section.6.3.1.3.3.p.1">The app:collection element MAY contain a 'contents' attribute. The 'contents' attribute conveys the nature of a collection's member resources. This specification defines two initial values for the 'contents' attribute:</p><p id="rfc.section.6.3.1.3.3.p.2"> </p><ul><li>'entry': A value of 'entry' for the contents attribute indicates that the Collection is an <a href="#author_entry">Entry Collection</a>.</li><li>'generic': A value of 'generic' for the contents attribute indicates that the Collection is a <a href="#author_generic">Generic Collection</a>.</li></ul><p id="rfc.section.6.3.1.3.3.p.3">If the attribute is not present, its value MUST be considered to be 'generic'.</p><hr class="noprint"><h1 id="rfc.section.7" class="np"><a href="#rfc.section.7">7.</a> Introspection Resource</h1><p id="rfc.section.7.p.1">To retrieve an Introspection Document, the client sends a GET request to its URI.</p><div id="rfc.figure.u.17"></div> <pre>
+GET /service-desc HTTP/1.1
+Host: example.org
+User-Agent: Cosimo/1.0
+Accept: application/atomserv+xml
+                     </pre> <p id="rfc.section.7.p.3">The server responds to a GET request by returning an Introspection Document in the message body.</p><div id="rfc.figure.u.18"></div> <pre>
+HTTP/1.1 200 OK
+Date: Mon, 21 Mar 2005 19:20:19 GMT
+Server: CountBasic/2.0
+Last-Modified: Mon, 21 Mar 2005 19:17:26 GMT
+ETag: "4c083-268-423f1dc6"
+Content-Length: nnnn 
+Content-Type: application/atomserv+xml
+
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;app:service xmlns:app="http://purl.org/atom/app#"&gt;
+    ...
+&lt;/app:service&gt;
+                 </pre> <h2 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1</a> <a name="introspection_discovery" href="#introspection_discovery">Discovery</a></h2><p id="rfc.section.7.1.p.1"><span class="comment">[rfc.comment.1: Add in desc of an HTML link element that
+                     points to the Introspection Resource, or add it to the autodisco draft]</span></p><hr class="noprint"><h1 id="rfc.section.8" class="np"><a href="#rfc.section.8">8.</a> <a name="collection_resource" href="#collection_resource">Collection Resources</a></h1><p id="rfc.section.8.p.1">An Atom Collection is a set of related resources. All members of a collection have an "app:updated" property, and the Collection is considered to be ordered by this property.</p><p id="rfc.section.8.p.2">This specification defines two HTTP methods for use with collection resources: GET and POST.</p><h2 id="rfc.section.8.1"><a href="#rfc.section.8.1">8.1</a> GET</h2><p id="rfc.section.8.1.p.1">A GET to a Collection Resource returns a Collection Document, outlining the Collection. Collection Documents are described in <a href="#collection_doc" title="Collection Documents">Section 6.2</a>.</p><h2 id="rfc.section.8.2"><a href="#rfc.section.8.2">8.2</a> POST</h2><p id="rfc.section.8.2.p.1">In addition to GET, a Collection Resource also accepts POST requests. The client POSTs a representation of the desired resource to the Collection Resource. Note that some collections may impose constraints on the media-types that are created in a Collection and MAY generate a response with a status code of 415 ("Unsupported Media Type").</p><p id="rfc.section.8.2.p.2">In the case of a successful creation, the status code MUST be 201 ("Created").</p><p id="rfc.section.8.2.p.3">Every successful POST MUST return a Location: header with the URI of the newly created resource.</p><p id="rfc.section.8.2.p.4">Here's an example. Below, the client requests to create a resource in a Collection: </p><div id="rfc.figure.u.19"></div> <pre>
+POST /edit HTTP/1.1
+Host: example.org
+User-Agent: Cosimo/1.0
+Accept: application/atom+xml
+Content-Type: application/atom+xml
+Content-Length: 601
+   
+&lt;atom:entry xmlns:atom="http://www.w3.org/2005/Atom"&gt;
+  &lt;atom:title&gt;Mars Attacks!&lt;/atom:title&gt;
+  &lt;atom:summary type="html"&gt;
+    Why cant we all just... get along?
+  &lt;/atom:summary&gt;
+  &lt;atom:author&gt;
+    &lt;atom:name&gt;The President&lt;/atom:name&gt;
+    &lt;atom:uri&gt;http://www.example.org/blog&lt;/atom:uri&gt;
+  &lt;/atom:author&gt;
+  &lt;atom:content type="html" xml:lang="en" 
+      xml:base="http://www.example.org/blog/"&gt;
+    &lt;p&gt;
+    Why can't we...work out our differences? 
+    Why can't we...work things out? 
+    Little people...why can't we all just...get along?
+    &lt;/p&gt;
+  &lt;/atom:content&gt;
+&lt;/atom:entry&gt;
+   </pre> <p> The resource is created by sending an Atom Entry as the entity body.</p><p id="rfc.section.8.2.p.5">Assuming the server created the resource successfully, it sends back a 201 Created response with a Location: header that contains the IRI of the newly created member as an Editable Resource. </p><div id="rfc.figure.u.20"></div> <pre>
+HTTP/1.1 201 Created
+Date: Fri, 7 Oct 2005 17:17:11 GMT
+Content-Length: 663  
+Content-Type: application/atom+xml; charset="utf-8"
+Location: http://example.org/edit/first-post.atom
+   
+   </pre> <h2 id="rfc.section.8.3"><a href="#rfc.section.8.3">8.3</a> <a name="collection_name_header" href="#collection_name_header">Title: Header</a></h2><p id="rfc.section.8.3.p.1">The POST to a Collection Resource MAY contain a Title: header that indicates the clients suggested name for the resource. The server MAY ignore the Title: header or modify the requested name to suit local conventions.</p><div id="rfc.figure.u.21"></div> <pre>
+     Title     = "Title" ":" [text]
+       </pre> <hr class="noprint"><h1 id="rfc.section.9" class="np"><a href="#rfc.section.9">9.</a> <a name="author_entry" href="#author_entry">Entry Collections</a></h1><p id="rfc.section.9.p.1">Entry Collections are Collections that restrict their membership to Atom entries.</p><h2 id="rfc.section.9.1"><a href="#rfc.section.9.1">9.1</a> Editing Entry Resources</h2><p id="rfc.section.9.1.p.1">Atom entries are edited by sending HTTP requests to an individual entry's URI. Servers can determine the processing necessary to interpret a request by examining the request's HTTP method and 'Content-Type' header.</p><p>Processing Client Requests</p><table summary="Processing Client Requests" border="1" cellpadding="3" cellspacing="0"><thead><tr><th valign="top" style="text-align: right;"></th><th valign="top" style="text-align: center;">GET</th><th valign="top" style="text-align: center;">PUT</th><th valign="top" style="text-align: center;">DELETE</th><th valign="top" style="text-align: center;">POST</th></tr></thead><tbody><tr><td class="top" style="text-align: right;">No Body </td><td class="top" style="text-align: center;">Read </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">Delete </td><td class="top" style="text-align: center;">x </td></tr><tr><td class="top" style="text-align: right;">Atom Body </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">Update </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">x </td></tr></tbody></table><h2 id="rfc.section.9.2"><a href="#rfc.section.9.2">9.2</a> <a name="constraints" href="#constraints">Role of Atom Entry Elements During Editing</a></h2><p id="rfc.section.9.2.p.1">The elements of an Atom Entry Document are either a 'Writable Element' or a 'Round Trip Element'.</p><p id="rfc.section.9.2.p.2">Writable Element - An element of an Atom Entry whose value is editable by the client and not enforced by the server.</p><p id="rfc.section.9.2.p.3">Round Trip Element - An element of an Atom Entry whose value is enforced by the server and not editable by the client.</p><p id="rfc.section.9.2.p.4">That categorization will determine the elements' disposition during editing.</p><table summary="" border="1" cellpadding="3" cellspacing="0"><thead><tr><th valign="top" style="text-align: center;">Atom Entry Element</th><th valign="top" style="text-align: center;">Property</th></tr></thead><tbody><tr><td class="top" style="text-align: center;">atom:author </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:category </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:content </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:contributor </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:id </td><td class="top" style="text-align: center;">Round Trip </td></tr><tr><td class="top" style="text-align: center;">atom:link </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:published </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:source </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:summary </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:title </td><td class="top" style="text-align: center;">Writable </td></tr><tr><td class="top" style="text-align: center;">atom:updated </td><td class="top" style="text-align: center;">Round Trip </td></tr></tbody></table><hr class="noprint"><h1 id="rfc.section.10" class="np"><a href="#rfc.section.10">10.</a> <a name="author_generic" href="#author_generic">Generic Collections</a></h1><p id="rfc.section.10.p.1">Generic Collections are Collections that do not have uniform restrictions on the representations of the member resources.</p><h2 id="rfc.section.10.1"><a href="#rfc.section.10.1">10.1</a> Editing Generic Resources</h2><p id="rfc.section.10.1.p.1">Member resources are edited by sending HTTP requests to an individual resource's URI. Servers can determine the processing necessary to interpret a request by examining the request's HTTP method and 'Content-Type' header.</p><p>Processing Client Requests</p><table summary="Processing Client Requests" border="1" cellpadding="3" cellspacing="0"><thead><tr><th valign="top" style="text-align: right;"></th><th valign="top" style="text-align: center;">GET</th><th valign="top" style="text-align: center;">PUT</th><th valign="top" style="text-align: center;">DELETE</th><th valign="top" style="text-align: center;">POST</th></tr></thead><tbody><tr><td class="top" style="text-align: right;">No Body </td><td class="top" style="text-align: center;">Read </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">Delete </td><td class="top" style="text-align: center;">x </td></tr><tr><td class="top" style="text-align: right;">Any Body </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">Update </td><td class="top" style="text-align: center;">x </td><td class="top" style="text-align: center;">x </td></tr></tbody></table><p id="rfc.section.10.1.p.2">When a List resource returns an Atom Feed enumerating the contents of a Generic Collection, all the Entries MUST have an atom:content element with a 'src' attribute.</p><h2 id="rfc.section.10.2"><a href="#rfc.section.10.2">10.2</a> Title: Header</h2><p id="rfc.section.10.2.p.1">The POST to a Generic Collection Resource MAY contain a Title: header that indicates the clients suggested title for the resource. The server MAY ignore the Title: header or modify the requested title to suit local conventions.</p><div id="rfc.figure.u.22"></div> <pre>
+Title     = "Title" ":" [text]
+</pre> <hr class="noprint"><h1 id="rfc.section.11" class="np"><a href="#rfc.section.11">11.</a> <a name="topten" href="#topten">List Resources</a></h1><p id="rfc.section.11.p.1">List resources are resources which are identified by URI templates indicating selection criteria. They can be used where clients require fine control over the range or size of a server's response. A list resource MUST return an Atom feed document as its representation. The entries in the returned document MUST be ordered by their 'atom:updated' property, with the most recently updated entries coming first in the document order. Clients MUST NOT assume that the entry returned in the feed is a full representation of a member resource. If the entry is an Editable Resource then the client should perform a GET on the member resource before editing.</p><p id="rfc.section.11.p.2">note: in this section some URIs carry across onto the next line; this is indicated by a '\'</p><h2 id="rfc.section.11.1"><a href="#rfc.section.11.1">11.1</a> <a name="templates" href="#templates">URI Templates</a></h2><p id="rfc.section.11.1.p.1">URI Templates are a mechanism for declaring criteria against a list resource. By itself a URI Template is not a valid URI. Instead there are multiple parameters embedded in the URI and distinguished by closing braces which can be populated and used as selection criteria. The value of each app:uri-template element in a Collection document is a URI Template.</p><p id="rfc.section.11.1.p.2">Each URI template has one or more parameters that MUST be substituted with values to construct a valid URI. The substitution MUST ensure that the resulting value is also properly percent-encoded utf-8.</p><p id="rfc.section.11.1.p.3">Here are some examples of template URIs and corresponding populated values: </p><div id="rfc.figure.u.23"></div> <pre>
+http://example.org/blog/edit/{index}
+http://example.org/blog/edit/3-9
+          
+http://example.org/blog/edit/{index}/foo
+http://example.org/blog/edit/0-100/foo
+           
+http://example.org/blog/edit/{daterange}
+http://example.org/blog/edit/daterange=\
+    2003-12-13T18:30:02Z-2003-12-13T18:30:02Z
+           
+http://example.org/blog/edit?dr={daterange}/bar/
+http://example.org/blog/edit?dr=\
+    2003-12-13T18:30:02Z,2003-12-13T18:30:02Z/bar/           
+</pre> <p> Note that the parameters MAY appear at any place in the URI template.</p><h2 id="rfc.section.11.2"><a href="#rfc.section.11.2">11.2</a> URI Template Parameters</h2><p id="rfc.section.11.2.p.1">This specification defines two parameters for use in URI Templates: </p><ul><li>index: allows selection into a collection's resources based as though ordered by their 'atom:updated' property.</li><li>daterange: allows selection into a collection's resources based on their 'atom:updated' property</li></ul><p> In both cases, the response to the selection request MUST be an Atom Feed where all the entries fall within the requested criteria. The request range is considered a closed set - if an entry matches one end of the range exactly it MUST be included in the response. If no members fall in the requested range, the server MUST respond with an Atom Feed containing no entries.</p><p id="rfc.section.11.2.p.2">A Collection Document MUST contain at least two app:uri-template elements - one for the {index} parameter template and the other for the {daterange} parameter template. The two parameters are not mutually exclusive and MAY appear together in a single Template URI.</p><h3 id="rfc.section.11.2.1"><a href="#rfc.section.11.2.1">11.2.1</a> {index} URI template variable</h3><p id="rfc.section.11.2.1.p.1">The value of the {index} criterion MUST be a pair of non-negative integer indices separated by a dash character. One or other index MAY omitted, in which case the range is understood as stretching to zero, or infinity. </p><div id="rfc.figure.u.24"></div> <pre>
+ index-specifier = [index] "-" [index]
+ </pre> <p id="rfc.section.11.2.1.p.2">For example, suppose the client is supplied this {index} URI template: </p><div id="rfc.figure.u.25"></div> <pre>
+ http://example.org/blog/edit/{index}
+ </pre> <p> If the client wants the first 15 entries in the Collection it would substitute the brace-delimited parameter {index}, with the value 1-15, giving: </p><div id="rfc.figure.u.26"></div> <pre>
+ http://example.org/blog/edit/1-15
+ </pre> <h3 id="rfc.section.11.2.2"><a href="#rfc.section.11.2.2">11.2.2</a> {daterange} URI template variable </h3><p id="rfc.section.11.2.2.p.1">A URI Template with the variable 'daterange' allows querying for Atom Entries in a Collection according to their 'atom:updated' property.</p><p id="rfc.section.11.2.2.p.2">The value of the {daterange} criterion should be a pair of ISO formatted dates separated by a dash character; either index may be optionally omitted, in which case the range is understood as stretching to infinity on that end. </p><div id="rfc.figure.u.27"></div> <pre>
+ daterange-specifier = [iso-date] "," [iso-date]
+ </pre> <p id="rfc.section.11.2.2.p.3">The [iso-date] terminal MUST conform to the "date-time" production in <a href="#RFC3339" title="Date and Time on the Internet: Timestamps">[RFC3339]</a>. In addition, an uppercase "T" character MUST be used to separate date and time, and an uppercase "Z" character MUST be present in the absence of a numeric time zone offset.</p><p id="rfc.section.11.2.2.p.4">For example, suppose the client is supplied this {daterange} URI Template: </p><div id="rfc.figure.u.28"></div> <pre>
+ http://example.org/blog/edit/{daterange}
+ </pre> <p> If the client wants the entries in the collection between January and February 2006 it would substitute the brace-delimited parameter {daterange} with the desired selection value, giving this URI: </p><div id="rfc.figure.u.29"></div> <pre>
+ http://example.org/blog/edit/2006-01-01T00:00:00Z,\
+     2006-02-01T00:00:00Z
+ </pre> <h3 id="rfc.section.11.2.3"><a href="#rfc.section.11.2.3">11.2.3</a> Other URI Template parameters</h3><p id="rfc.section.11.2.3.p.1">Other specifications MAY define new parameters for use in URI templates and declared in the app:uri-template element.</p><hr class="noprint"><h1 id="rfc.section.12" class="np"><a href="#rfc.section.12">12.</a> <a name="club" href="#club">Atom Entry Extensions</a></h1><p id="rfc.section.12.p.1">This specification adds three new values to the Registry of Link Relations.</p><p id="rfc.section.12.p.2">The value of 'collection' signifies that the IRI in the value of the href is the Collection that this Entry belongs to. Any entry MAY contain a link with a relation of 'collection'.</p><p id="rfc.section.12.p.3">The value of 'edit' signifies that the IRI in the value of the href attribute identifies the resource that is used to edit the entry. That is, it is the URI of the Entry as an Editable Resource.</p><p id="rfc.section.12.p.4">The value of 'srcedit' signifies that the IRI in the value of the href attribute identifies the resource that is used to edit the resource pointed to by the 'src' attribute of the atom:content element. That is, it is the IRI of the atom:content@src as an Editable Resource. If a link element with a relation of "srcedit" is not given, then it's value defaults to the "src" attribute of the content element. List Resources for Generic Collections MUST return entries that have 'srcedit' links or MUST have a atom:content@src value.</p><p id="rfc.section.12.p.5">If the "srcedit" link is present, and it's value is an empty string, then there is no URI that can be treated in the way such a value would be treated.</p><p id="rfc.section.12.p.6">Clients SHOULD use the "srcedit" value to manipulate the resource within the context of the APP itself. Clients SHOULD prefer the "atom:content@src" value in any other context. For example, if the resource is an image, a client may replace the image data using a PUT on the "srcedit" value, and may even display a preview of the image by fetching the "srcedit" URI. But when creating a public, read-only reference to the same image resource, the client should use the "atom:content@src" value.</p><hr class="noprint"><h1 id="rfc.section.13" class="np"><a href="#rfc.section.13">13.</a> Securing the Atom Protocol</h1><p id="rfc.section.13.p.1">All instances of publishing Atom entries SHOULD be protected by authentication to prevent posting or editing by unknown sources. Atom servers and clients MUST support one of the following authentication mechanisms, and SHOULD support both.</p><p id="rfc.section.13.p.2"> </p><ul><li>HTTP Digest Authentication <a href="#RFC2617" title="HTTP Authentication: Basic and Digest Access Authentication">[RFC2617]</a></li><li>[@@TBD@@ CGI Authentication ref]</li></ul><p id="rfc.section.13.p.3">Atom servers and clients MAY support encryption of the Atom session using TLS <a href="#RFC2246" title="The TLS Protocol Version 1.0">[RFC2246]</a>.</p><p id="rfc.section.13.p.4">There are cases where an authentication mechanism may not be required, such as a publicly editable Wiki, or when using the PostURI to post comments to a site that does not require authentication to create comments.</p><h2 id="rfc.section.13.1"><a href="#rfc.section.13.1">13.1</a> [@@TBD@@ CGI Authentication]</h2><p id="rfc.section.13.1.p.1">This authentication method is included as part of the protocol to allow Atom servers and clients that cannot use HTTP Digest Authentication but where the user can both insert its own HTTP headers and create a CGI program to authenticate entries to the server. This scenario is common in environments where the user cannot control what services the server employs, but the user can write their own HTTP services.</p><hr class="noprint"><h1 id="rfc.section.14" class="np"><a href="#rfc.section.14">14.</a> Security Considerations</h1><p id="rfc.section.14.p.1">Because Atom is a publishing protocol, it is important that only authorized users can create and edit entries.</p><p id="rfc.section.14.p.2">The security of Atom is based on HTTP Digest Authentication and/or [@@TBD@@ CGI Authentication]. Any weaknesses in either of these authentication schemes will affect the security of the Atom Publishing Protocol.</p><p id="rfc.section.14.p.3">Both HTTP Digest Authentication and [@@TBD@@ CGI Authentication] are susceptible to dictionary-based attacks on the shared secret. If the shared secret is a password (instead of a random string with sufficient entropy), an attacker can determine the secret by exhaustively comparing the authenticating string with hashed results of the public string and dictionary entries.</p><p id="rfc.section.14.p.4">See RFC 2617 for more detailed description of the security properties of HTTP Digest Authentication.</p><p id="rfc.section.14.p.5">@@TBD@@ Talk here about using HTTP basic and digest authentication.</p><p id="rfc.section.14.p.6">@@TBD@@ Talk here about denial of service attacks using large XML files, or the billion laughs DTD attack.</p><hr class="noprint"><h1 id="rfc.section.15" class="np"><a href="#rfc.section.15">15.</a> <a name="iana" href="#iana">IANA Considerations</a></h1><p id="rfc.section.15.p.1">A Atom Collection Document, when serialized as XML 1.0, can be identified with the following media type:</p><p id="rfc.section.15.p.2"> </p><dl><dt style="margin-top: .5em">MIME media type name:</dt><dd>application</dd><dt style="margin-top: .5em">MIME subtype name:</dt><dd>atomcoll+xml</dd><dt style="margin-top: .5em">Mandatory parameters:</dt><dd>None.</dd><dt style="margin-top: .5em">Optional parameters:</dt><dd> <dl><dt style="margin-top: .5em">"charset":</dt><dd>This parameter has identical semantics to the charset parameter of the "application/xml" media type as specified in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>.</dd></dl> </dd><dt style="margin-top: .5em">Encoding considerations:</dt><dd>Identical to those of "application/xml" as described in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 3.2.</dd><dt style="margin-top: .5em">Security considerations:</dt><dd>As defined in this specification. <span class="comment">[rfc.comment.2: update upon publication]</span></dd><dt style="margin-top: .5em"></dt><dd>In addition, as this media type uses the "+xml" convention, it shares the same security considerations as described in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 10.</dd><dt style="margin-top: .5em">Interoperability considerations:</dt><dd>There are no known interoperability issues.</dd><dt style="margin-top: .5em">Published specification:</dt><dd>This specification. <span class="comment">[rfc.comment.3: update upon publication]</span></dd><dt style="margin-top: .5em">Applications that use this media type:</dt><dd>No known applications currently use this media type.</dd></dl><p id="rfc.section.15.p.3">Additional information:</p><p id="rfc.section.15.p.4"> </p><dl><dt style="margin-top: .5em">Magic number(s):</dt><dd>As specified for "application/xml" in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 3.2.</dd><dt style="margin-top: .5em">File extension:</dt><dd>.atomcoll</dd><dt style="margin-top: .5em">Fragment identifiers:</dt><dd>As specified for "application/xml" in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 5.</dd><dt style="margin-top: .5em">Base URI:</dt><dd>As specified in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 6.</dd><dt style="margin-top: .5em">Macintosh File Type code:</dt><dd>TEXT</dd><dt style="margin-top: .5em">Person and email address to contact for further information:</dt><dd>Joe Gregorio &lt;joe@bitworking.org&gt;</dd><dt style="margin-top: .5em">Intended usage:</dt><dd>COMMON</dd><dt style="margin-top: .5em">Author/Change controller:</dt><dd>IESG</dd></dl><p id="rfc.section.15.p.5">An Atom Introspection Document, when serialized as XML 1.0, can be identified with the following media type:</p><p id="rfc.section.15.p.6"> </p><dl><dt style="margin-top: .5em">MIME media type name:</dt><dd>application</dd><dt style="margin-top: .5em">MIME subtype name:</dt><dd>atomserv+xml</dd><dt style="margin-top: .5em">Mandatory parameters:</dt><dd>None.</dd><dt style="margin-top: .5em">Optional parameters:</dt><dd> <dl><dt style="margin-top: .5em">"charset":</dt><dd>This parameter has identical semantics to the charset parameter of the "application/xml" media type as specified in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>.</dd></dl> </dd><dt style="margin-top: .5em">Encoding considerations:</dt><dd>Identical to those of "application/xml" as described in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 3.2.</dd><dt style="margin-top: .5em">Security considerations:</dt><dd>As defined in this specification. <span class="comment">[rfc.comment.4: update upon publication]</span></dd><dt style="margin-top: .5em"></dt><dd>In addition, as this media type uses the "+xml" convention, it shares the same security considerations as described in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 10.</dd><dt style="margin-top: .5em">Interoperability considerations:</dt><dd>There are no known interoperability issues.</dd><dt style="margin-top: .5em">Published specification:</dt><dd>This specification. <span class="comment">[rfc.comment.5: update upon publication]</span></dd><dt style="margin-top: .5em">Applications that use this media type:</dt><dd>No known applications currently use this media type.</dd></dl><p id="rfc.section.15.p.7">Additional information:</p><p id="rfc.section.15.p.8"> </p><dl><dt style="margin-top: .5em">Magic number(s):</dt><dd>As specified for "application/xml" in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 3.2.</dd><dt style="margin-top: .5em">File extension:</dt><dd>.atomsrv</dd><dt style="margin-top: .5em">Fragment identifiers:</dt><dd>As specified for "application/xml" in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 5.</dd><dt style="margin-top: .5em">Base URI:</dt><dd>As specified in <a href="#RFC3023" title="XML Media Types">[RFC3023]</a>, section 6.</dd><dt style="margin-top: .5em">Macintosh File Type code:</dt><dd>TEXT</dd><dt style="margin-top: .5em">Person and email address to contact for further information:</dt><dd>Joe Gregorio &lt;joe@bitworking.org&gt;</dd><dt style="margin-top: .5em">Intended usage:</dt><dd>COMMON</dd><dt style="margin-top: .5em">Author/Change controller:</dt><dd>This specification's author(s). <span class="comment">[rfc.comment.6: update upon publication]</span></dd></dl><hr class="noprint"><h1 id="rfc.references" class="np"><a name="rfc.section.16" href="#rfc.section.16">16.</a> <a href="#rfc.references">References</a></h1><h2 class="np" id="rfc.references.1"><a name="rfc.references.1"></a><a href="#rfc.section.16.1">16.1</a> Normative References</h2><table summary="Normative References" border="0" cellpadding="2">                      <tr><td class="topnowrap"><b><a name="AtomFormat">[AtomFormat]</a></b></td><td class="top">Nottingham, M. and R. Sayre, &#8220;The Atom Syndication Format&#8221;,  1.0, July 2005.</td></tr><tr><td class="topnowrap"><b><a name="RFC2119">[RFC2119]</a></b></td><td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, &#8220;<a href="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</a>&#8221;, BCP 14, RFC 2119, March 1997.</td></tr><tr><td class="topnowrap"><b><a name="RFC2246">[RFC2246]</a></b></td><td class="top"><a href="mailto:tdierks@certicom.com" title="Certicom">Dierks, T.</a> and <a href="mailto:callen@certicom.com" title="Certicom">C. Allen</a>, &#8220;<a href="http://www.ietf.org/rfc/rfc2246.txt">The TLS Protocol Version 1.0</a>&#8221;, RFC 2246, January 1999.</td></tr><tr><td class="topnowrap"><b><a name="RFC2616">[RFC2616]</a></b></td><td class="top"><a href="mailto:fielding@ics.uci.edu" title="Department of Information and Computer Science">Fielding, R.</a>, <a href="mailto:jg@w3.org" title="World Wide Web Consortium">Gettys, J.</a>, <a href="mailto:mogul@wrl.dec.com" title="Compaq Computer Corporation">Mogul, J.</a>, <a href="mailto:frystyk@w3.org" title="World Wide Web Consortium">Frystyk, H.</a>, <a href="mailto:masinter@parc.xerox.com" title="Xerox Corporation">Masinter, L.</a>, <a href="mailto:paulle@microsoft.com" title="Microsoft Corporation">Leach, P.</a>, and <a href="mailto:timbl@w3.org" title="World Wide Web Consortium">T. Berners-Lee</a>, &#8220;<a href="http://www.ietf.org/rfc/rfc2616.txt">Hypertext Transfer Protocol -- HTTP/1.1</a>&#8221;, RFC 2616, June 1999.</td></tr><tr><td class="topnowrap"><b><a name="RFC2617">[RFC2617]</a></b></td><td class="top"><a href="mailto:john@math.nwu.edu" title="Northwestern University, Department of Mathematics">Franks, J.</a>, <a href="mailto:pbaker@verisign.com" title="Verisign Inc.">Hallam-Baker, P.M.</a>, <a href="mailto:jeff@AbiSource.com" title="AbiSource, Inc.">Hostetler, J.L.</a>, <a href="mailto:lawrence@agranat.com" title="Agranat Systems, Inc.">Lawrence, S.D.</a>, <a href="mailto:paulle@microsoft.com" title="Microsoft Corporation">Leach, P.J.</a>, Luotonen, A., and <a href="mailto:stewart@OpenMarket.com" title="Open Market, Inc.">L. Stewart</a>, &#8220;<a href="http://www.ietf.org/rfc/rfc2617.txt">HTTP Authentication: Basic and Digest Access Authentication</a>&#8221;, RFC 2617, June 1999.</td></tr><tr><td class="topnowrap"><b><a name="RFC3023">[RFC3023]</a></b></td><td class="top">Murata, M., St. Laurent, S., and D. Kohn, &#8220;<a href="http://www.ietf.org/rfc/rfc3023.txt">XML Media Types</a>&#8221;, RFC 3023, January 2001.</td></tr><tr><td class="topnowrap"><b><a name="RFC3339">[RFC3339]</a></b></td><td class="top">Klyne, G. and C. Newman, &#8220;<a href="http://www.ietf.org/rfc/rfc3339.txt">Date and Time on the Internet: Timestamps</a>&#8221;, RFC 3339, July 2002.</td></tr><tr><td class="topnowrap"><b><a name="RFC3986">[RFC3986]</a></b></td><td class="top">Berners-Lee, T., Fielding, R., and L. Masinter, &#8220;<a href="http://www.ietf.org/rfc/rfc3986.txt">Uniform Resource Identifier (URI): Generic Syntax</a>&#8221;, STD 66, RFC 3986, January 2005.</td></tr><tr><td class="topnowrap"><b><a name="RFC3987">[RFC3987]</a></b></td><td class="top">Duerst, M. and M. Suignard, &#8220;<a href="http://www.ietf.org/rfc/rfc3987.txt">Internationalized Resource Identifiers (IRIs)</a>&#8221;, RFC 3987, January 2005.</td></tr><tr><td class="topnowrap"><b><a name="W3C.REC-xml-20040204">[W3C.REC-xml-20040204]</a></b></td><td class="top">Yergeau, F, Paoli, J, Sperberg-McQueen, C, Bray, T, and E Maler, &#8220;Extensible Markup Language (XML) 1.0 (Third Edition)&#8221;, W3C REC REC-xml-20040204, February 2004.</td></tr><tr><td class="topnowrap"><b><a name="W3C.REC-xml-names-19990114">[W3C.REC-xml-names-19990114]</a></b></td><td class="top">Hollander, D, Bray, T, and A Layman, &#8220;Namespaces in XML&#8221;, W3C REC REC-xml-names-19990114, January 1999.</td></tr></table><h2 id="rfc.references.2"><a name="rfc.references.2"></a><a href="#rfc.section.16.2">16.2</a> Informative References</h2><table summary="Informative References" border="0" cellpadding="2">    <tr><td class="topnowrap"><b><a name="RNC">[RNC]</a></b></td><td class="top">Clark, J., &#8220;RELAX NG Compact Syntax&#8221;, December 2001.</td></tr><tr><td class="topnowrap"><b><a name="W3C.REC-webarch-20041215">[W3C.REC-webarch-20041215]</a></b></td><td class="top">Walsh, N and I Jacobs, &#8220;Architecture of the World Wide Web, Volume One&#8221;, W3C REC REC-webarch-20041215, December 2004.</td></tr></table><hr class="noprint"><h1 id="rfc.authors" class="np">Authors' Addresses</h1><address class="vcard"><span class="vcardline"><span class="fn">Joe Gregorio</span>
+          (editor)
+        <span class="n" style="display: none"><span class="Family-Name">Gregorio</span><span class="Given-Name">Joe</span></span></span><span class="org vcardline">BitWorking, Inc</span><span class="adr vcardline"><span class="street Street-Address vcardline">1002 Heathwood Dairy Rd.</span><span class="vcardline"><span class="Locality">Apex</span>, <span class="Region">NC</span> <span class="Postal-Code">27502</span></span><span class="Country vcardline">US</span></span><span class="vcardline">Phone: <a href="tel:+19192723764"><span class="tel"><span class="voice">+1 919 272 3764</span></span></a></span><span class="vcardline">EMail: <a href="mailto:joe@bitworking.com"><span class="email">joe@bitworking.com</span></a></span><span class="vcardline">URI: <a href="http://bitworking.com/" class="url">http://bitworking.com/</a></span></address><address class="vcard"><span class="vcardline"><span class="fn">Bill de hOra</span>
+          (editor)
+        <span class="n" style="display: none"><span class="Family-Name">de hOra</span><span class="Given-Name">Bill</span></span></span><span class="org vcardline">Propylon Ltd.</span><span class="adr vcardline"><span class="street Street-Address vcardline">45 Blackbourne Square, Rathfarnham Gate</span><span class="vcardline"><span class="Locality">Dublin</span>, <span class="Region">Dublin</span> <span class="Postal-Code">D14</span></span><span class="Country vcardline">IE</span></span><span class="vcardline">Phone: <a href="tel:+353-1-4927444"><span class="tel"><span class="voice">+353-1-4927444</span></span></a></span><span class="vcardline">EMail: <a href="mailto:bill.dehora@propylon.com"><span class="email">bill.dehora@propylon.com</span></a></span><span class="vcardline">URI: <a href="http://www.propylon.com/" class="url">http://www.propylon.com/</a></span></address><hr class="noprint"><h1 id="rfc.section.A" class="np"><a href="#rfc.section.A">A.</a> Contributors</h1><p id="rfc.section.A.p.1">The content and concepts within are a product of the Atom community and the Atompub Working Group. Robert Sayre was an editor for drafts 00-04.</p><hr class="noprint"><h1 id="rfc.section.B" class="np"><a href="#rfc.section.B">B.</a> Revision History</h1><p id="rfc.section.B.p.1">draft-ietf-atompub-protocol-05 - Added: Contributors section. Added: de hOra to editors. Fixed: typos. Added diagrams and description to model section. Incorporates PaceAppDocuments, PaceAppDocuments2, PaceSimplifyCollections2 (large-sized chunks of it anyhow: the notions of Entry and Generic resources, the section 4 language on the Protocol Model, 4.1 through 4.5.2, the notion of a Collection document, as in Section 5 through 5.3, Section 7 "Collection resources", Selection resources (modified from pace which talked about search); results in major mods to Collection Documents, Section 9.2 "Title: Header" and brokeout para to section 9.1 Editing Generic Resources). Added XML namespace and language section. Some cleanup of front matter. Added Language Sensitivity to some attributes. Removed resource descriptions from terminology. Some juggling of sections. See: http://www.imc.org/atom-protocol/mail-archive/msg01812.html.</p><p id="rfc.section.B.p.2">draft-ietf-atompub-protocol-04 - Add ladder diagrams, reorganize, add SOAP interactions</p><p id="rfc.section.B.p.3">draft-ietf-atompub-protocol-03 - Incorporates PaceSliceAndDice3 and PaceIntrospection.</p><p id="rfc.section.B.p.4">draft-ietf-atompub-protocol-02 - Incorporates Pace409Response, PacePostLocationMust, and PaceSimpleResourcePosting.</p><p id="rfc.section.B.p.5">draft-ietf-atompub-protocol-01 - Added in sections on Responses for the EditURI. Allow 2xx for response to EditURI PUTs. Elided all mentions of WSSE. Started adding in some normative references. Added the section "Securing the Atom Protocol". Clarified that it is possible that the PostURI and FeedURI could be the same URI. Cleaned up descriptions for Response codes 400 and 500.</p><p id="rfc.section.B.p.6">Rev draft-ietf-atompub-protocol-00 - 5Jul2004 - Renamed the file and re-titled the document to conform to IETF submission guidelines. Changed MIME type to match the one selected for the Atom format. Numerous typographical fixes. We used to have two 'Introduction' sections. One of them was moved into the Abstract the other absorbed the Scope section. IPR and copyright notifications were added.</p><p id="rfc.section.B.p.7">Rev 09 - 10Dec2003 - Added the section on SOAP enabled clients and servers.</p><p id="rfc.section.B.p.8">Rev 08 - 01Dec2003 - Refactored the specification, merging the Introspection file into the feed format. Also dropped the distinction between the type of URI used to create new entries and the kind used to create comments. Dropped user preferences.</p><p id="rfc.section.B.p.9">Rev 07 - 06Aug2003 - Removed the use of the RSD file for auto-discovery. Changed copyright until a final standards body is chosen. Changed query parameters for the search facet to all begin with atom- to avoid name collisions. Updated all the Entries to follow the 0.2 version. Changed the format of the search results and template file to a pure element based syntax.</p><p id="rfc.section.B.p.10">Rev 06 - 24Jul2003 - Moved to PUT for updating Entries. Changed all the mime-types to application/x.atom+xml. Added template editing. Changed 'edit-entry' to 'create-entry' in the Introspection file to more accurately reflect it's purpose.</p><p id="rfc.section.B.p.11">Rev 05 - 17Jul2003 - Renamed everything Echo into Atom. Added version numbers in the Revision history. Changed all the mime-types to application/atom+xml.</p><p id="rfc.section.B.p.12">Rev 04 - 15Jul2003 - Updated the RSD version used from 0.7 to 1.0. Change the method of deleting an Entry from POSTing &lt;delete/&gt; to using the HTTP DELETE verb. Also changed the query interface to GET instead of POST. Moved Introspection Discovery to be up under Introspection. Introduced the term 'facet' for the services listed in the Introspection file.</p><p id="rfc.section.B.p.13">Rev 03 - 10Jul2003 - Added a link to the Wiki near the front of the document. Added a section on finding an Entry. Retrieving an Entry now broken out into it's own section. Changed the HTTP status code for a successful editing of an Entry to 205.</p><p id="rfc.section.B.p.14">Rev 02 - 7Jul2003 - Entries are no longer returned from POSTs, instead they are retrieved via GET. Cleaned up figure titles, as they are rendered poorly in HTML. All content-types have been changed to application/atom+xml.</p><p id="rfc.section.B.p.15">Rev 01 - 5Jul2003 - Renamed from EchoAPI.html to follow the more commonly used format: draft-gregorio-NN.html. Renamed all references to URL to URI. Broke out introspection into it's own section. Added the Revision History section. Added more to the warning that the example URIs are not normative.</p><hr class="noprint"><h1 class="np"><a name="rfc.ipr" href="#rfc.ipr">Intellectual Property Statement</a></h1><p>The IETF takes no position regarding the validity or scope of any Intellectual Property Rights or other rights that might be claimed to pertain to the implementation or use of the technology described in this document or the extent to which any license under such rights might or might not be available; nor does it represent that it has made any independent effort to identify any such rights. Information on the procedures with respect to rights in RFC documents can be found in BCP 78 and BCP 79.</p><p>Copies of IPR disclosures made to the IETF Secretariat and any assurances of licenses to be made available, or the result of an attempt made to obtain a general license or permission for the use of such proprietary rights by implementers or users of this specification can be obtained from the IETF on-line IPR repository at &lt;<a href="http://www.ietf.org/ipr">http://www.ietf.org/ipr</a>&gt;.</p><p>The IETF invites any interested party to bring to its attention any copyrights, patents or patent applications, or other proprietary rights that may cover technology that may be required to implement this standard. Please address the information to the IETF at <a href="mailto:ietf-ipr@ietf.org">ietf-ipr@ietf.org</a>.</p><h1><a name="rfc.disclaimer" href="#rfc.disclaimer">Disclaimer of Validity</a></h1><p>This document and the information contained herein are provided on an &#8220;AS IS&#8221; basis and THE CONTRIBUTOR, THE ORGANIZATION HE/SHE REPRESENTS OR IS SPONSORED BY (IF ANY), THE INTERNET SOCIETY AND THE INTERNET ENGINEERING TASK FORCE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p><h1><a name="rfc.copyright" href="#rfc.copyright">Copyright Statement</a></h1><p>Copyright © The Internet Society (2005). This document is subject to the rights, licenses and restrictions contained in BCP 78, and except as set forth therein, the authors retain all their rights.</p><h1>Acknowledgement</h1><p>Funding for the RFC Editor function is currently provided by the Internet Society.</p></body></html>

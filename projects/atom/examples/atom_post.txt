@@ -1,0 +1,33 @@
+#!d:\python22\python
+
+import cgitb; cgitb.enable()
+import os, urlparse, sys
+import myLowLevelBloggingAPI
+import xmltramp
+
+method = os.environ['REQUEST_METHOD']
+
+if method == 'POST':
+   content = sys.stdin.read()
+   d = xmltramp.parse(content)
+   if d._name == 'delete':
+      myLowLevelBloggingAPI.delete(d('id'))
+   else:
+      try:
+         id = d.entry.id
+      except:
+         pass
+      if id == None:
+         id =  myLowLevelBloggingAPI.create(sys.stdin.read())
+         print "Status: 201 Created"
+         print "Location: " + urlparse.urlunparse(('http', os.environ['SERVER_NAME'], os.environ['REQUEST_URI'], '', 'id=%d', '')) + "\n" % (id, )
+      else:
+         myLowLevelBloggingAPI.update(id, content)
+         print "Status: 205 Reset Content\n"
+elif method == 'GET':
+   id = os.environ.get('PATH_INFO', '')
+   print "Status: 200 Ok\n"
+   print myLowLevelBloggingAPI.get(id)
+
+
+	

@@ -1,0 +1,1658 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+   <!ENTITY rfc2119 SYSTEM 'bibxml/reference.RFC.2119.xml'>
+   <!ENTITY rfc2246 SYSTEM 'bibxml/reference.RFC.2246.xml'>
+   <!ENTITY rfc2396 SYSTEM 'bibxml/reference.RFC.2396.xml'>
+   <!ENTITY rfc2616 SYSTEM 'bibxml/reference.RFC.2616.xml'>
+   <!ENTITY rfc2617 SYSTEM 'bibxml/reference.RFC.2617.xml'>
+   <!ENTITY rfc3023 SYSTEM 'bibxml/reference.RFC.3023.xml'>
+   <!ENTITY rfc3339 SYSTEM 'bibxml/reference.RFC.3339.xml'>
+   <!ENTITY rfc3986 SYSTEM 'bibxml/reference.RFC.3986.xml'>
+   <!ENTITY rfc3987 SYSTEM 'bibxml/reference.RFC.3987.xml'>
+   <!ENTITY WEBARCH SYSTEM 'bibxml/reference.W3C.REC-webarch-20041215.xml'>
+   <!ENTITY XML SYSTEM 'bibxml/reference.W3C.REC-xml-20040204.xml'>
+   <!ENTITY XMLNS SYSTEM 'bibxml/reference.W3C.REC-xml-names-19990114.xml'>
+]>
+<!-- 
+
+$LastChangedDate: 2005-10-11 05:39:46 -0400 (Tue, 11 Oct 2005) $
+$LastChangedRevision: 129 $
+
+--> 
+
+<!--<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>-->
+
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc iprnotified="yes" ?>
+<?rfc strict="yes" ?>
+<?rfc compact="no" ?>
+<?rfc comments="yes" ?>
+<?rfc inline="yes" ?>
+<?rfc tocdepth="3" ?>
+<!-- 
+1. Update the docName
+2. Update the date
+3. Update the Revision History.
+-->
+<!-- To Do
+x 1. change <delete> to DELETE
+    x 2. Update RSD to 1.0 "location" att name to "apiLink" or drop 
+    x 3. Put all documents in a namespace
+    x 4. Do aarons search interface.
+    5. Add in all the right headers for at least the first two examples, Host, Content-Length, etc.
+    x 6. Change POST to PUT for updating Entries?
+    xxx 7. change to x.atom+xml--> <!-- changed to atom+xml -RS -->
+    <!--8. Add in 'categories' to Introspection.
+    9. HTTP status code is used to indicate method call success or failure, I would
+    like to see more error information structured in XML and packed into HTTP Response
+    body, that will allow implementation to provide detailed and probably traceable error
+    messages and allows client side software make informed error handling decision;
+    x 10. Change copyright.
+    x 11. Remove RSD
+    x 12. Add Kens copy (went with the wiki markup)
+
+    13. Add atom-recent
+    14. Clarify that atom-start-range starts from the most recent post
+    15. Add performance/http compliance section that says:
+    1. use ETags/Last-Modified on GETs
+    2. use gzip
+    3. note that dispatching on VERB and mime-type are web server functions
+    4. 
+    16. Add a glossary, then use the terms consistently.
+    17. Change PUT response 205 to 200.
+    -->
+    
+<!--
+Bill todo:05
+
+
+soften model text if time
+
+-->
+    <rfc category="std" ipr="full3978" docName="draft-ietf-atompub-protocol-05.txt">
+      <front>
+    <title>The Atom Publishing Protocol</title>
+    <author initials='J.C.' surname="Gregorio" fullname='Joe Gregorio' role="editor">
+      <organization>BitWorking, Inc</organization>
+      <address>
+        <postal>
+          <street>1002 Heathwood Dairy Rd.</street>
+          <city>Apex</city> <region>NC</region> <code>27502</code>
+          <country>US</country>
+        </postal>
+        <phone>+1 919 272 3764</phone>
+        <email>joe@bitworking.com</email>
+        <uri>http://bitworking.com/</uri>
+      </address>
+    </author>
+    <author initials='B.' surname="de hOra" fullname='Bill de hOra' role="editor">
+      <organization>Propylon Ltd.</organization>
+      <address>
+        <postal>
+          <street>45 Blackbourne Square, Rathfarnham Gate</street>
+          <city>Dublin</city> <region>Dublin</region> <code>D14</code>
+          <country>IE</country>
+        </postal>
+        <phone>+353-1-4927444</phone>
+        <email>bill.dehora@propylon.com</email>
+        <uri>http://www.propylon.com/</uri>
+      </address>
+    </author>    
+
+    <date day="11" month="October" year="2005"/>
+    <abstract>
+      
+      <t>This memo presents a protocol for using XML (Extensible
+      Markup Language) and HTTP (HyperText Transport Protocol) to
+      edit content. </t>
+
+      <t>The Atom Publishing Protocol (APP) is an application-level
+      protocol for publishing and editing Web resources. The protocol at its core
+      is the HTTP transport of Atom-formatted representations. The
+      Atom format is documented in the Atom Syndication Format
+      (draft-ietf-atompub-format-11.txt).
+      </t>
+
+    </abstract>
+    
+    <note title="Editorial Note">
+      <t>To provide feedback on this Internet-Draft, join the <eref
+      target="http://www.imc.org/atom-protocol/index.html">atom-protocol mailing
+      list (http://www.imc.org/atom-protocol/index.html)</eref>.
+      </t>
+    </note>
+      </front>
+
+      <middle>
+    
+    <section title="Introduction">
+      
+      <t>The Atom Publishing Protocol is an application-level
+      protocol for publishing and editing Web resources using HTTP
+      <xref target="RFC2616"/> and XML 1.0 <xref
+      target="W3C.REC-xml-20040204"/>.
+      </t>              
+    </section>
+
+
+   <section title="XML Namespace and Language" anchor="xmlns">
+      
+     <t>The XML Namespaces URI <xref target="W3C.REC-xml-names-19990114"/> for the XML data format described in this
+     specification is: http://purl.org/atom/app#</t>
+
+     
+      <t>XML elements defined by this specification MAY have an xml:lang
+      attribute, whose content indicates the natural language for the element
+      (and its descendents).  The language context is only significant for
+      elements and attributes declared to be "Language-Sensitive" by this
+      specification. Requirements regarding the content and interpretation of
+      xml:lang are specified in <xref
+      target="W3C.REC-xml-20040204"/>, Section
+      2.12. </t>
+   
+
+    </section>
+
+
+
+    <section title="Notational Conventions">
+      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+      "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+      and "OPTIONAL" in this document are to be interpreted as
+      described in <xref target="RFC2119"/>.
+      </t> 
+<t>
+Some sections of this specification are illustrated with fragments of a
+non-normative RELAX NG Compact schema <xref target="RNC"/>. However, the text
+of this specification provides the definition of conformance.
+</t>
+
+  
+<t>This specification uses the namespace prefix "app:" for the Namespace URI
+identified in <xref target="xmlns"/> above. It uses the namespace prefix "atom:"
+for the Namespace URI identified in <xref target="AtomFormat"/>. Note that
+choices of namespace prefix are arbitrary and not semantically significant.</t>
+
+
+    </section>
+
+    <section title="Terminology" anchor="terminology">
+
+<t>For convenience, this protocol may be referred to as "Atom Protocol" or
+"APP". This specification uses both internally.</t>
+
+      <t>URI/IRI - A Uniform Resource Identifier and Internationalized
+        Resource Identifier, respectively.  These terms (and the distinction
+        between them) are defined in <xref target="RFC3986"/> and <xref
+        target="RFC3987"/>.
+      </t>
+
+      <t>Resource -  A network data object or service that can be identified by a URI,
+          as defined in <xref target="RFC2616"/>.
+      </t>
+
+      <t>Representation -  An entity included with a request or response 
+          as defined in <xref target="RFC2616"/>.
+      </t>
+      
+    </section>
+
+
+
+
+    <section title="The Atom Publishing Protocol Model">
+      
+        <t>The Atom Publishing Protocol is a subset of HTTP that
+            is used to edit resources on the web. The APP
+            operates on collections of
+            Web resources. Collections are HTTP resources, as are the 
+            members of the collection. Both Collections and
+            collection member resources support the same basic
+            interactions.
+            The patterns of interaction are based on the common HTTP
+            verbs.
+      </t>
+      <t>
+      <list style="symbols">
+        <t>GET is used to retrieve a representation of a resource or perform a read-only query.</t>
+        <t>POST is used to create a new, dynamically-named resource, or to provide a block of data to a data-handling process.</t>
+        <t>PUT is used to update a known resource.</t>
+        <t>DELETE is used to remove a resource.</t>
+      </list>
+      
+      </t>
+<!--
+Joe: "I have this philosophy, or goal, about the spec. If you read
+any of the old classic RFCs, particularly by Postel, they were formal where
+they needed to be, but at the beginning they really read as if you
+were sitting across the table from him and he was explaining to you
+how the protocol was to be implemented, engineer to engineer,
+occasionally drawing on the back of an envelope if need be."
+
+make this happen for APP.
+-->
+      
+<section title="Collections" anchor="collections_intro">
+    <t>
+        The APP groups resources into "Collections", which are analogous to
+        folders or directories found in a file system. In the figure
+        we have member resources in a collection. 
+    </t>
+
+<figure>
+<artwork>
+       +-------------------------+
+       | Collection              |
+       |                         |
+       |  +----------------+     |
+       |  | Member_A       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_B       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_C       |     |      
+       |  +----------------+     |
+       |                         |
+       |  ...                    |
+       |                         |
+       |  +----------------+     |
+       |  | Member_Oldest  |     |      
+       |  +----------------+     |
+       |                         |
+       +-------------------------+
+</artwork>
+</figure>
+
+<t>To add a new member to a collection an appropriate representation
+    is POSTed to the URI of the collection resource. Here we show it being
+    added to the beginnng of the list. The ordering of the members of collections is
+    in terms of the time at which each resource was last updated, which
+    includes the act of creating the resource. The ordering of collection
+    members is covered in more detail in <xref target="collection_resource"/> and <xref target="topten"/>.
+</t>
+
+<figure>
+<artwork>
+       +-------------------------+
+       | Collection              |
+       |                         |
+ POST  |  +----------------+     |
+--------->| Member_New     |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_A       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_B       |     |      
+       |  +----------------+     |
+       |                         |
+       |  +----------------+     |
+       |  | Member_C       |     |      
+       |  +----------------+     |
+       |                         |
+       |  ...                    |
+       |                         |
+       |  +----------------+     |
+       |  | Member_Oldest  |     |      
+       |  +----------------+     |
+       |                         |
+       +-------------------------+
+   </artwork>
+</figure>
+
+<t>You'll note that up until now we haven't said what kinds of representations
+    we are expecting at each of the resources. There are two kinds of collections,
+    Entry and Generic. In Entry Collections all the members MUST have representations
+    as Atom Entries. For further restrictions on Entry Collection see <xref target="author_entry"/>  
+    The other type of collection is a Generic Collection. Generic Collections
+    make no restriction on the representations of their member resources.
+</t>
+
+
+</section>
+
+
+
+
+      <section title="Editable Resources" anchor="chmod066">
+
+          <t>All the members of a collection are Editable Resources.
+              
+              An Editable resource is a resource whose available HTTP methods can be used to 
+              retrieve, update and delete it.  
+          </t>
+
+        <section title="Read">
+
+            <t>To retrieve a representation of the resource, you send a 
+                GET to the URI of the Editable Resource. Remember that
+                for members of Entry Collections, the served representation will
+                be an Atom Entry. </t>
+<figure>
+<artwork>
+Client                                   Server 
+  |                                           |
+  |  1.) GET to Editable Resource URI         |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 OK                               |    
+  |&lt;------------------------------------------|
+  |                                           |
+</artwork>
+</figure>
+
+<t>
+<list style="numbers">
+  <t>The client sends a GET request to the member's URI.</t>
+  <t>The server responds with the representation of the resource.</t>
+</list>   
+</t>
+</section>
+ 
+<section title="Update">
+
+    <t>To update an Editable Resource the client will PUT an updated
+        representation to the URI of the resource.</t>
+
+<figure>
+<artwork>
+Client                                     Server
+  |                                           |
+  |  1.) PUT to Editable Resource URI         |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 OK                               |    
+  |&lt;------------------------------------------|
+</artwork>
+</figure>
+
+<t>
+<list style="numbers">
+   <t>The client PUTs an updated representation to the member's URI.</t>
+   <t>The server MAY respond with an updated representation of the member's new state.</t>
+</list>
+</t>   
+</section>
+
+<section title="Delete">
+    <t>An Editable Resource is deleted by sending it DELETE. Note that 
+        this also removes it from all the collections that it belonged to.
+    </t>
+<figure>
+<artwork>
+Client                                     Server 
+  |                                           |
+  |  1.) DELETE to Editable Resource URI      |     
+  |------------------------------------------&gt;|     
+  |                                           |     
+  |  2.) 200 Ok                               |    
+  |&lt;------------------------------------------|     
+  |                                           |
+</artwork>
+</figure>
+
+<t>
+<list style="numbers">
+  <t>The client sends a DELETE request to the member's URI.</t>
+  <t>The server responds with successful status code.</t>
+</list>   
+</t>
+</section>   
+</section> 
+
+
+      <section title="Capabilities Discovery" anchor="orientation">
+        <t>
+            Each collection resource responds to GET and can return
+            a Collection Document as it's representation. The Collection
+            Document enumerates the capabilities of each collection and the
+            format is described in <xref target="collection_doc"/>.
+        </t>
+        <figure>
+          <artwork>
+Client                         Server 
+  |                                |     
+  |  1.) GET to Collection         |     
+  |-------------------------------&gt;|     
+  |                                |     
+  |  2.) Collection Document       |     
+  |&lt;-------------------------------|     
+  |                                |
+          </artwork>
+        </figure>
+        <t>
+          <list style="numbers">
+        <t>
+          The client sends a GET request to the Collection Resource.
+        </t>
+        <t>
+           The server responds with a Collection Document containing a
+           description of the capabilities of the collection. The content of
+           this document can vary based on aspects of the client request,
+           including, but not limited to, authentication credentials.
+        </t>
+          </list>
+        </t>
+      </section>
+      
+      <section title="Listing" anchor="listing">
+
+
+<t>
+    Clients can request a listing of the Collection's membership. 
+    Listing the Editable Resources that are members of a
+    collection is done using one of the List Resources in the Introspection
+    Document, utilizing the 'app:uri-template' element. 
+    The List Resource
+    returns Atom Feed Documents with one Atom Entry for each member
+    resource that match the selection criteria. This is true whether
+    the collection is an Entry Collection or a Generic Collection.
+    If an Entry Collection is being interrogated, 
+    the entries returned by a list resource 
+    SHOULD NOT to be considered complete representations of the 
+    member resources. See <xref target="topten"/> and <xref target="club"/> for more details
+    on the extensions and constraints found on the entries
+    returned from List Resources.
+</t>
+        <figure>
+          <artwork>
+Client                          Server 
+  |                                |     
+  |  1.) GET to List Resource      |     
+  |-------------------------------&gt;|     
+  |                                |     
+  |  2.) 200 OK, Atom Feed Doc     |    
+  |&lt;-------------------------------|     
+  |                                |
+          </artwork>
+        </figure>
+
+        <t>
+          <list style="numbers">
+        <t>
+          The client sends a GET request to the Collection's URI.
+        </t>
+        <t>
+          The server responds with an Atom Feed Document containing
+          a full or partial listing of the Collection's membership.
+        </t>
+          </list>
+        </t>
+
+      </section>
+
+       
+
+
+    <section title="Success and Failure">
+
+        <t>
+          HTTP defines different classes of response, which are used by the Atom
+          Protocol. HTTP status codes of the form 2xx signal that a request was
+          successful. HTTP status codes of the form 4xx or 5xx signal that an
+          error has occurred, and the request has failed. Consult the HTTP
+          specification <xref target="RFC2616"/> for more detailed definitions of each status code.
+        </t>
+
+      </section>
+
+
+ </section>
+
+
+<section title="Atom Publishing Protocol Documents" anchor="appdocs">
+
+  <t>This specification describes two kinds of Atom Publishing Protocol Documents:
+  Atom Collections Documents and Atom Introspection Documents.</t>
+
+  <t>An Atom Collection Document is a representation of an Atom collection,
+  including metadata about the collection, and some or all of the members
+  associated with it. Its root is the app:collection element.</t>
+  
+  <t>An Atom Introspection Document represents one or more workspaces, which
+  describe server-defined groupings of collections. Its root is the app:service
+  element.</t>
+  
+  <figure>
+<artwork>
+namespace app = "..." start = appCollection | appIntrospection
+</artwork>
+  </figure>
+
+  <t>Both kinds of Atom Publishing Protocol Documents are specified in terms of
+  the XML Information Set, serialised as XML 1.0 (<xref
+  target="W3C.REC-xml-20040204"/>). Atom Publishing Protocol Documents MUST be
+  well-formed XML. This specification does not define a DTD for Atom Protocol,
+  and hence does not require them to be valid (in the sense used by XML).</t>
+  
+  <t>Atom Collection Documents are identified with the "application/atomcoll+xml"
+  media type.</t>
+  
+  <t>Atom Introspection Documents are identified with the
+  "application/atomserv+xml" media type.</t>
+  
+  <t>Atom allows the use of IRIs <xref target="RFC3987"/>, as well as URIs <xref
+  target="RFC3986"/>. Every URI is an IRI, so any URI can be used where an IRI is
+  needed. While IRIs must, for many protocols, be mapped to URIs prior to
+  dereferencing, they MUST NOT be so mapped for comparison when used in
+  atom:id. Section 3.1 of <xref target="RFC3987"/> describes how to map an IRI to
+  a URI when necessary.</t>
+
+<section title="Use of xml:base xml:lang" anchor="baselang">
+  
+  <t>Any element defined by this specification MAY have an xml:base attribute
+  [W3C.REC-xmlbase-20010627]. When xml:base is used in an Atom Publishing Protocol
+  Document, it serves the function described in section 5.1.1 of <xref
+  target="RFC3986"/>, establishing the base URI (or IRI) for resolving any
+  relative references found within the effective scope of the xml:base
+  attribute. </t>
+  
+  <t>Any element defined by this specification MAY have an xml:lang attribute,
+  whose content indicates the natural language for the element and its
+  descendents. The language context is only significant for elements and
+  attributes declared to be "Language-Sensitive" by this
+  specification. Requirements regarding the content and interpretation of xml:lang
+  are specified in XML 1.0 (<xref target="W3C.REC-xml-20040204"/>), Section
+  2.12. 
+
+<figure>
+<artwork> 
+ appCommonAttributes =
+      attribute xml:base { atomUri }?,
+      attribute xml:lang { atomLanguageTag }?,
+     undefinedAttribute*
+</artwork>
+</figure>     
+
+</t>
+
+</section>
+
+
+   <section title="Collection Documents" anchor="collection_doc">
+     
+     <t>The Collection Document describes the capabilities of a Collection, the
+     types of Entries that it will support, the URI Templates it supports.</t>
+ 
+<t>The Collection Document has the media-type 'application/atomcoll+xml' (see
+<xref target="iana"/>).</t>
+     
+<t>Here's an example document:</t>
+
+     <figure>
+       <artwork name="collectionDoc" />
+     </figure>
+     
+<t>This example says the Collection contains Atom Entry documents, and that
+there are two means of selecting entries using what are called 'URI Templates';
+one based on the collection's order, and another based on dates. See <xref
+target="templates"/> for more about URI Templates. </t>
+
+     <section title="Element Definitions" anchor="collection_elements">
+       <section title="The 'app:collection' Element">
+         <t>
+           The app:collection is the document element of a Collection Document.
+         </t>
+         <t>
+           <figure>
+             <artwork name="app:coll"/>
+           </figure>
+         </t>
+         <t>
+           This specification defines two child elements for app:collection:
+           <list style="symbols">
+             <t>
+               app:member-type: any number of elements listing the types of
+               Entries that the Collection may contain.
+             </t>
+             <t>
+                 app:uri-template: any number of URI Templates for a List
+               Resource (See <xref target="topten"/>).
+             </t>
+           </list>
+         </t>
+       </section>
+       
+       <section title="The 'app:member-type' Element">
+         <t>
+           The app:member-type element contains information elements
+         about the types of Entries that the Collection may contain.
+         </t>
+         <t>
+           <figure>
+             <artwork name="app:member" />
+           </figure>
+         </t>
+         <t>
+           The element content of an app:member-type MUST be a string that is non-empty,
+           and matches either the "isegment-nz-nc" or the "IRI" production in
+           <xref target="RFC3987"/>. Note that use of a relative reference other
+           than a simple name is not allowed. If a name is given,
+           implementations MUST consider the link relation type to be equivalent
+           to the same name registered within the IANA Registry of Member Types 
+         (<xref target="iana"/>), and thus the IRI that would be obtained by
+           appending the value of the rel attribute to the string
+           "http://www.iana.org/assignments/entrytype/".
+         </t>
+         <t>
+           The content of an app:member-type specifies constraints on the
+           Entries that may appear in the Collection. The app:collection element
+           MAY have multiple app:member-type elements. An Entry POSTed to a
+           Collection MUST meet the constraints of at least one of the
+           app:member-type constraints.  It MAY meet more than one, but the
+           minimum requirement is at least one.
+         </t>
+         <t>
+           This specification defines two initial values for app:member-type IANA registry:
+           <list style="symbols">
+             <t>
+               "entry" - The Collection is an Entry Collection as defined in
+               <xref target="author_entry"/>.
+             </t>
+             <t>
+               "generic" - The Collection is a Generic Collection as defined in
+               <xref target="author_generic"/>.
+             </t>
+           </list>
+         </t>
+       </section>
+       
+       <section title="The 'app:uri-template' Element">
+         <t>
+           The element content of an app:uri-template is a URI Template for a
+           List Resource (See <xref target="topten"/>). Every List
+           resource, whose URI is determined by filling in the parameters in a
+           URI Template, MUST return an Atom feed document as its
+           representation.  This Atom feed document MUST NOT contain entries
+           which do not match the selection criteria.
+         </t>
+       </section>
+
+     </section>
+
+   </section>
+
+
+
+       <section title="Introspection Documents" anchor="at-your-service">
+
+           <t>
+	     In order for authoring to commence, a client must first
+	     discover the capabilities and locations of collections
+	     offered.
+           </t>
+
+	     <t>
+	       The Introspection Document describes "workspaces", which are
+	       server-defined groupings of collections. There is no requirement
+	       that servers support multiple workspaces, and a collection may
+	       appear in more than one workspace.
+          <!-- <cref>I really would prefer that the extensibility of the Introspection document be done via namespaced elements. -Joe</cref>-->
+	     </t>
+
+	     <t>The Introspection Document has the media-type
+	     'application/atomserv+xml', see <xref target="iana"/></t>
+
+<t>Here's an example document:</t>
+
+               <figure>
+         <artwork name="introspectionDoc" />
+                  </figure>
+<t>This example says there are two workspaces, each consisting of two
+collections. The first workspace is called 'Mail', and has two collections,
+called 'My Blog Entries' and 'Documents' whose locations are
+'http://example.org/reilly/feed' and 'http://example.org/reilly/pic'. 'My Blog
+Entries' contains Atom Entries and 'Documents' contains Generic Entries. The
+second workspace is called 'Side Bar Blog' and also has two collections, called
+'Entries' and 'Books' whose locations are 'http://example.org/reilly/feed' and
+'http://example.org/reilly/booklist'. 'Entries' contains Atom Entries and
+'Books' contains Generic Entries (since its contents attribute is not present
+you MUST assume it is a Generic Collection). </t>
+
+                  <section title="Element Definitions" anchor="service_document_elements">
+
+                      <section title="The 'app:service' Element">
+
+                          <t>The "app:service" element is the document element
+                          of a Introspection Document, acting as a container for
+                          service data associated with one or more
+                          workspaces. An app:service elements MAY contain any
+                          number of app:workspace elements.</t>
+
+                          <t>
+                              <figure>
+                                 <artwork name="app:service" />
+                               </figure>
+                          </t>
+
+                      </section>
+
+                      <section title="The 'app:workspace' Element">
+
+                          <t>
+                              The 'workspace' element contains information
+                              elements about the collections of resources
+                              available for editing. The app:workspace elements
+                              MAY contain any number of app:collection elements.
+                          </t>
+
+                          <t>
+                              <figure>
+                                  <artwork name="app:workspace" />
+                              </figure>
+                          </t>
+
+                          <section title="The 'title' Attribute">
+                          <t>The app:workspace element MUST contain a 'title'
+                          attribute, which conveys a human-readable name for the
+                          workspace. This attribute is Language-Sensitive.</t>
+                          </section>
+
+                      </section>
+
+                      <section title="The 'app:collection' Element">
+
+                          <t>
+                              The 'app:collection' element describes 
+                              collections and their member resources.
+                          </t>
+
+                          <t>
+                              <figure>
+                                  <artwork name="app:collection" />
+                             </figure>
+                         </t>
+
+                         <section title="The 'title' Attribute">
+                           <t> The app:collection element MUST contain a 'title'
+                           attribute, whose value conveys a human-readable name
+                           for the workspace. This attribute is
+                           Language-Sensitive.
+                           </t>
+                         </section>
+                         <section title="The 'href' Attribute">
+                           <t>The app:collection element MUST contain an 'href'
+                           attribute, whose value conveys the IRI of the
+                           collection.
+                           </t>
+                         </section>
+                 
+                         <section title="The 'contents' Attribute" anchor="attContents">
+                         
+                           <t>The app:collection element MAY contain a
+                           'contents' attribute. The 'contents' attribute
+                           conveys the nature of a collection's member
+                           resources. This specification defines two initial
+                           values for the 'contents' attribute:</t>
+
+                           <t> 
+                             <list style="symbols">
+                               <t>'entry': A value of 'entry' for the contents
+                               attribute indicates that the Collection is an
+                               <xref target="author_entry"> Entry
+                               Collection</xref>.</t>
+                               <t>'generic': A value of 'generic' for the
+                               contents attribute indicates that the Collection
+                               is a <xref target="author_generic"> Generic
+                               Collection</xref>.</t>
+                             </list>
+                           </t>
+                           <t> If the attribute is not present, its value MUST
+                           be considered to be 'generic'.
+                           </t>
+                           
+                         </section>
+
+                     </section>
+
+                 </section>
+
+             </section>
+
+
+         </section>
+
+             <section title="Introspection Resource">
+
+                 <t>To retrieve an Introspection Document, the client
+                     sends a GET request to its URI.</t>
+
+                 <figure>
+                     <artwork>
+GET /service-desc HTTP/1.1
+Host: example.org
+User-Agent: Cosimo/1.0
+Accept: application/atomserv+xml
+                     </artwork>
+                 </figure>
+
+                 <t>The server responds to a GET request by returning an Introspection  
+                     Document in the message body.</t>
+
+                 <figure>
+                     <artwork><![CDATA[
+HTTP/1.1 200 OK
+Date: Mon, 21 Mar 2005 19:20:19 GMT
+Server: CountBasic/2.0
+Last-Modified: Mon, 21 Mar 2005 19:17:26 GMT
+ETag: "4c083-268-423f1dc6"
+Content-Length: nnnn 
+Content-Type: application/atomserv+xml
+
+<?xml version="1.0" encoding='utf-8'?>
+<app:service xmlns:app="http://purl.org/atom/app#">
+    ...
+</app:service>
+                 ]]></artwork>
+                 </figure>
+
+                 <section title="Discovery" anchor="introspection_discovery">
+                     <t><cref>Add in desc of an HTML link element that
+                     points to the Introspection Resource, or add it to the autodisco draft</cref></t>
+                 </section> 
+             </section>
+
+
+   
+   <section title="Collection Resources"  anchor="collection_resource">
+     <t>An Atom Collection is a set of related resources. All members of a
+     collection have an "app:updated" property, and the Collection is considered
+     to be ordered by this property. </t>
+     <t>This specification defines two HTTP methods for use with collection
+     resources: GET and POST.</t>
+
+     <section title="GET">
+       <t>A GET to a Collection Resource returns a Collection Document,
+       outlining the Collection. Collection Documents are described in <xref
+       target="collection_doc"/>.</t>
+     </section>
+      
+     <section title="POST">
+       <t>In addition to GET, a Collection Resource also accepts POST
+       requests. The client POSTs a representation of the desired resource to
+       the Collection Resource. Note that some collections may impose
+       constraints on the media-types that are created in a Collection and MAY
+       generate a response with a status code of 415 ("Unsupported Media
+       Type").</t>
+       <t>In the case of a successful creation, the status code MUST be 201 ("Created").</t>
+       
+   <t>Every successful POST MUST return a Location: header with the URI of the newly created resource. </t>
+
+       <t>Here's an example. Below, the client requests to create a resource in a Collection:
+   <figure>
+   <artwork><![CDATA[
+POST /edit HTTP/1.1
+Host: example.org
+User-Agent: Cosimo/1.0
+Accept: application/atom+xml
+Content-Type: application/atom+xml
+Content-Length: 601
+   
+<atom:entry xmlns:atom="http://www.w3.org/2005/Atom">
+  <atom:title>Mars Attacks!</atom:title>
+  <atom:summary type="html">
+    Why cant we all just... get along?
+  </atom:summary>
+  <atom:author>
+    <atom:name>The President</atom:name>
+    <atom:uri>http://www.example.org/blog</atom:uri>
+  </atom:author>
+  <atom:content type="html" xml:lang="en" 
+      xml:base="http://www.example.org/blog/">
+    <p>
+    Why can't we...work out our differences? 
+    Why can't we...work things out? 
+    Little people...why can't we all just...get along?
+    </p>
+  </atom:content>
+</atom:entry>
+   ]]></artwork>
+   </figure>
+   The resource is created by sending an Atom Entry as the entity body. </t>
+   
+   <t>Assuming the server created the resource successfully, it sends back a 201
+       Created response with a Location: header that contains the IRI of the
+       newly created member as an Editable Resource.
+   
+   <figure>
+   <artwork><![CDATA[
+HTTP/1.1 201 Created
+Date: Fri, 7 Oct 2005 17:17:11 GMT
+Content-Length: 663  
+Content-Type: application/atom+xml; charset="utf-8"
+Location: http://example.org/edit/first-post.atom
+   
+   ]]></artwork>
+   </figure>
+   </t>
+  
+   
+   </section>
+   
+   
+             <section title="Title: Header" anchor="collection_name_header">
+      
+          <t>
+            The POST to a Collection Resource MAY contain a Title:
+            header that indicates the clients suggested name for
+            the resource. The server MAY ignore the Title: header or
+            modify the requested name to suit local conventions.
+          </t>
+   
+                 <figure>
+       <artwork>
+     Title     = "Title" ":" [text]
+       </artwork>
+          </figure>
+          </section>
+   
+   </section>
+   
+
+    <section title="Entry Collections" anchor="author_entry">
+
+        <t>
+	  Entry Collections are Collections that restrict their
+	  membership to Atom entries. 	</t>
+	
+	<section title="Editing Entry Resources">
+	  
+	  <t>Atom entries are edited by sending HTTP requests to an individual
+	  entry's URI. Servers can determine the processing necessary to interpret 
+	  a request by examining the request's HTTP method and 'Content-Type'
+	  header.</t>
+
+
+	  <texttable>
+
+	    <preamble>Processing Client Requests</preamble>
+	    <ttcol align="right"></ttcol>
+	    <ttcol align="center">GET</ttcol>
+	    <ttcol align="center">PUT</ttcol>
+	    <ttcol align="center">DELETE</ttcol>
+	    <ttcol align="center">POST</ttcol>
+	    
+	    <c>No Body</c>
+	    <c>Read</c>
+	    <c>x</c>
+	    <c>Delete</c>
+	    <c>x</c>
+
+	    <c>Atom Body</c>
+	    <c>x</c>
+	    <c>Update</c>
+	    <c>x</c>
+	    <c>x</c>
+
+	  </texttable>
+
+	</section>
+
+ 	<section title="Role of Atom Entry Elements During Editing" anchor="constraints">
+        
+          <t>The elements of an Atom Entry Document are either a
+          'Writable Element' or a 'Round Trip Element'.</t>
+
+	  <t>Writable Element - An element of an Atom Entry 
+	  whose value is editable by the client and 
+	  not enforced by the server.
+	  </t>
+
+	  <t> 
+	    Round Trip Element - An element of an Atom Entry 
+            whose value is enforced by the server and not editable
+            by the client.
+	  </t>
+
+	  <t>That
+          categorization will determine the elements' disposition
+          during editing.</t>
+            
+
+	      <texttable anchor='table_example'>
+		<ttcol align='center'>Atom Entry Element</ttcol>
+		<ttcol align='center'>Property</ttcol>
+		<c>atom:author</c>
+		<c>Writable</c>
+		<c>atom:category</c>
+		<c>Writable</c>
+		<c>atom:content</c>
+		<c>Writable</c>
+		<c>atom:contributor</c>
+		<c>Writable</c>
+		<c>atom:id</c>
+		<c>Round Trip</c>
+		<c>atom:link</c>
+		<c>Writable</c>
+		<c>atom:published</c>
+		<c>Writable</c>
+		<c>atom:source</c>
+		<c>Writable</c>
+		<c>atom:summary</c>
+		<c>Writable</c>
+		<c>atom:title</c>
+		<c>Writable</c>
+		<c>atom:updated</c>
+		<c>Round Trip</c>
+	      </texttable>
+	 
+
+      </section>
+    </section>
+
+
+<section title="Generic Collections" anchor="author_generic">
+
+<t>Generic Collections are Collections that do not have uniform restrictions on the representations of the member resources.
+</t>
+
+<section title="Editing Generic Resources" >
+
+<t>Member resources are edited by sending HTTP requests to an individual resource's URI. 
+Servers can determine the processing necessary to interpret a request by examining 
+the request's HTTP method and 'Content-Type' header.</t>
+
+    <texttable>
+ 
+      <preamble>Processing Client Requests</preamble>
+      <ttcol align="right"></ttcol>
+      <ttcol align="center">GET</ttcol>
+      <ttcol align="center">PUT</ttcol>
+      <ttcol align="center">DELETE</ttcol>
+      <ttcol align="center">POST</ttcol>
+      
+      <c>No Body</c>
+      <c>Read</c>
+      <c>x</c>
+      <c>Delete</c>
+      <c>x</c>
+ 
+      <c>Any Body</c>
+      <c>x</c>
+      <c>Update</c>
+      <c>x</c>
+      <c>x</c>
+ 
+    </texttable>
+
+<t>When a List resource returns an Atom Feed enumerating the contents of a
+Generic Collection, all the Entries MUST have an atom:content element with a 'src'
+attribute.</t>
+</section>
+
+<section title="Title: Header">
+
+<t>The POST to a Generic Collection Resource MAY contain a Title: header
+that indicates the clients suggested title for the resource.  The server MAY
+ignore the Title: header or modify the requested title to suit local
+conventions. </t>
+<figure>
+<artwork>
+Title     = "Title" ":" [text]
+</artwork>
+</figure>  
+</section>  
+</section>  
+
+
+    
+
+   <section title="List Resources" anchor="topten">
+     <t>
+       List resources are resources which are identified by URI templates
+       indicating selection criteria. They can be used where clients require fine
+       control over the range or size of a server's response. A list resource MUST
+       return an Atom feed document as its representation.  The entries in the returned
+       document MUST be ordered by their 'atom:updated' property, with the most
+       recently updated entries coming first in the document order.
+       Clients
+       MUST NOT assume that the entry returned in the feed is a full representation
+       of a member resource. If the entry is an Editable Resource then the client should 
+       perform a GET on the member resource before editing.
+   </t>
+     
+     <t>note: in this section some URIs carry across onto the next line; this is indicated by a '\'</t>
+     
+     <section title="URI Templates" anchor="templates">
+       <t>
+         URI Templates are a mechanism for declaring criteria against a
+         list resource.  By itself a URI Template is not a valid
+         URI. Instead there are multiple parameters embedded in the URI and
+         distinguished by closing braces which can be populated and used as
+         selection criteria. The value of each app:uri-template element in a
+         Collection document is a URI Template.</t>
+      
+       
+       <t>Each URI template has one or more parameters that MUST be substituted
+       with values to construct a valid URI. The substitution MUST ensure that
+       the resulting value is also properly percent-encoded utf-8. </t>
+
+       <t>Here are some examples of template URIs and
+       corresponding populated values:
+       
+<figure>
+<artwork>
+http://example.org/blog/edit/{index}
+http://example.org/blog/edit/3-9
+          
+http://example.org/blog/edit/{index}/foo
+http://example.org/blog/edit/0-100/foo
+           
+http://example.org/blog/edit/{daterange}
+http://example.org/blog/edit/daterange=\
+    2003-12-13T18:30:02Z-2003-12-13T18:30:02Z
+           
+http://example.org/blog/edit?dr={daterange}/bar/
+http://example.org/blog/edit?dr=\
+    2003-12-13T18:30:02Z,2003-12-13T18:30:02Z/bar/           
+</artwork>
+</figure>
+       
+       Note that the parameters MAY appear at any place in the URI template.</t>
+     </section>
+
+
+     <section title="URI Template Parameters">
+       <t>
+         This specification defines two parameters for use in URI Templates:
+         <list style="symbols">
+           <t>index: allows selection into a collection's resources based as though ordered by their 'atom:updated' property.</t>
+           <t>daterange: allows selection into a collection's resources based on their
+           'atom:updated' property</t>
+         </list>
+         In both cases, the response to the selection request MUST be an Atom Feed where
+         all the entries fall within the requested criteria. The request range is
+         considered a closed set - if an entry matches one end of the range exactly it
+         MUST be included in the response.  If no members fall in the requested range,
+         the server MUST respond with an Atom Feed containing no entries. 
+       </t>
+
+        <t> A Collection Document MUST contain at least two app:uri-template
+        elements - one for the {index} parameter template and the other for the
+        {daterange} parameter template. The two parameters are not mutually
+        exclusive and MAY appear together in a single Template URI.
+        
+        </t>
+       
+       <section title="{index} URI template variable">
+         <t>The value of the {index} criterion MUST be a pair of non-negative integer
+         indices separated by a dash character.  One or other index MAY omitted, in which
+         case the range is understood as stretching to zero, or infinity.
+         
+         <figure>
+ <artwork>
+ index-specifier = [index] "-" [index]
+ </artwork>
+         </figure>
+         </t>
+         <t>
+           For example, suppose the client is supplied this {index} URI template:
+           <figure>
+ <artwork>
+ http://example.org/blog/edit/{index}
+ </artwork>
+           </figure>
+           If the client wants the first 15 entries in the Collection it would substitute
+           the brace-delimited parameter {index}, with the value 1-15, giving:
+           <figure>
+ <artwork>
+ http://example.org/blog/edit/1-15
+ </artwork>
+           </figure>
+         </t>
+       </section>
+       
+       <section title="{daterange} URI template variable ">
+
+<t>A URI Template with the variable 'daterange' allows querying for Atom Entries
+in a Collection according to their 'atom:updated' property.</t>
+         <t>The value of the {daterange} criterion should be a pair of ISO formatted
+         dates separated by a dash character; either index may be optionally omitted,
+         in which case the range is understood as stretching to infinity on that end.
+         <figure>
+ <artwork>
+ daterange-specifier = [iso-date] "," [iso-date]
+ </artwork>
+         </figure>
+         </t>
+         
+         <t>The [iso-date] terminal MUST conform to the "date-time" production in <xref
+         target="RFC3339"/>. In addition, an uppercase "T" character MUST be used to
+         separate date and time, and an uppercase "Z" character MUST be present in the
+         absence of a numeric time zone offset.</t>
+         
+         <t>For example, suppose the client is supplied this {daterange} URI Template:
+         <figure>
+ <artwork>
+ http://example.org/blog/edit/{daterange}
+ </artwork>
+         </figure>
+         If the client wants the entries in the collection between January and
+         February 2006 it would substitute the brace-delimited parameter
+         {daterange} with the desired selection value, giving this URI:
+         <figure>
+ <artwork>
+ http://example.org/blog/edit/2006-01-01T00:00:00Z,\
+     2006-02-01T00:00:00Z
+ </artwork>
+         </figure>
+         </t>     
+       </section>
+       
+
+
+       <section title="Other URI Template parameters">
+         <t> Other specifications MAY define new parameters for use in URI
+         templates and declared in the app:uri-template element.</t>
+ 
+
+       </section>
+
+  
+     </section>
+
+
+   </section>
+
+
+
+
+<section title="Atom Entry Extensions" anchor="club">
+
+     <t>This specification adds three new values to the Registry of 
+     Link Relations. </t>
+
+     <t>The value of 'collection' signifies that the IRI in the value
+         of the href is the Collection that this Entry belongs to. Any
+     entry MAY contain a link with a relation of 'collection'. </t>
+
+     <t>The value of 'edit' signifies that the IRI in the value of the href attribute 
+     identifies the resource that is used to edit the entry. That is, 
+     it is the URI of the Entry as an Editable Resource.</t>
+
+ <t>The value of 'srcedit' signifies that the IRI in the value of the href attribute identifies
+     the resource that is used to edit the resource pointed to by 
+     the 'src' attribute of the atom:content element. That is, it is the 
+     IRI of the atom:content@src as an Editable Resource.     
+     If a link element with a relation of "srcedit" is not given, 
+     then it's value defaults to the "src" attribute of the content element.
+     List Resources
+     for Generic Collections MUST return entries that have 'srcedit' 
+     links or MUST have a atom:content@src value.
+ </t>
+
+     <t>If the "srcedit" link is present, and it's value is an empty string, 
+     then there is no URI that can be treated in the way such a value would be treated.</t>
+
+     <t>Clients SHOULD use the "srcedit" value to manipulate the resource within the context 
+     of the APP itself. Clients SHOULD prefer the "atom:content@src" value in any other context. 
+     For example, if the resource is an image, a client may replace the image data using 
+     a PUT on the "srcedit" value, and may even display a preview of the image by fetching 
+     the "srcedit" URI. But when creating a public, read-only reference to the same image 
+     resource, the client should use the "atom:content@src" value. </t>
+</section>  
+
+
+
+      <section title="Securing the Atom Protocol">
+
+        <t>All instances of publishing Atom entries SHOULD be protected by authentication 
+        to prevent posting or editing by unknown sources. Atom servers and clients MUST 
+        support one of the following authentication mechanisms, and SHOULD support 
+        both.
+        </t>
+        <t>
+          <list style="symbols">
+        <t>HTTP Digest Authentication <xref target="RFC2617" /></t>
+        <t>[@@TBD@@ CGI Authentication ref]</t>
+          </list>
+        </t>
+        <t>
+          Atom servers and clients MAY support encryption of the Atom session using TLS <xref target="RFC2246" />.
+        </t>
+        <t>
+          There are cases where an authentication mechanism may
+          not be required, such as a publicly editable Wiki, or
+          when using the PostURI to post comments to a site that
+          does not require authentication to create comments.
+        </t>
+        
+         <section title="[@@TBD@@ CGI Authentication]" toc="exclude">
+          <t>
+        This authentication method is included as part of the
+        protocol to allow Atom servers and clients that cannot
+        use HTTP Digest Authentication but where the user can
+        both insert its own HTTP headers and create a CGI
+        program to authenticate entries to the server. This
+        scenario is common in environments where the user
+        cannot control what services the server employs, but
+        the user can write their own HTTP services.
+          </t>
+        </section>
+      </section>
+
+      <section title="Security Considerations">
+        <t>Because Atom is a publishing protocol, it is important that only 
+        authorized users can create and edit entries.</t>
+        <t>
+          The security of Atom is based on HTTP Digest
+          Authentication and/or [@@TBD@@ CGI Authentication].  Any
+          weaknesses in either of these authentication schemes
+          will affect the security of the Atom
+          Publishing Protocol.
+        </t>
+        <t>Both HTTP Digest Authentication and [@@TBD@@ CGI
+        Authentication] are susceptible to dictionary-based
+        attacks on the shared secret. If the shared secret is a
+        password (instead of a random string with sufficient
+        entropy), an attacker can determine the secret by
+        exhaustively comparing the authenticating string with
+        hashed results of the public string and dictionary
+        entries.
+        </t>
+        <t>See RFC 2617 for more detailed description of the security 
+        properties of HTTP Digest Authentication.</t>
+        <t>@@TBD@@ Talk here about using HTTP basic and digest authentication.</t>
+        <t>@@TBD@@ Talk here about denial of service attacks using large XML files, 
+        or the billion laughs DTD attack.
+        </t>
+      </section>
+      <section title="IANA Considerations" anchor="iana">
+	<t>A Atom Collection Document, when serialized as XML 1.0, can be identified with
+	the following media type:</t>
+	      
+
+	<t>
+	  <list style="hanging">
+	    <t hangText="MIME media type name:"> application</t>
+	    <t hangText="MIME subtype name:"> atomcoll+xml</t>
+	    <t hangText="Mandatory parameters:"> None.</t>
+	    <t hangText="Optional parameters:">
+	      <list style="hanging">
+		<t hangText='"charset":'> This parameter has identical
+		    semantics to the charset parameter of the
+		    "application/xml" media type as specified in <xref
+		    target="RFC3023"/>.</t>
+	      </list>
+	    </t>
+	
+	    <t hangText="Encoding considerations:"> Identical to those
+	    of "application/xml" as described in <xref
+	    target="RFC3023"/>, section 3.2.</t>
+
+	    <t hangText="Security considerations:"> As defined in this
+	    specification. <cref>update upon publication</cref></t>
+
+	    <t>In addition, as this media type uses the "+xml"
+	    convention, it shares the same security considerations as
+	    described in <xref target="RFC3023"/>, section 10.</t>
+
+	    <t hangText="Interoperability considerations:"> There are
+	    no known interoperability issues.</t>
+	    
+	    <t hangText="Published specification:"> This
+	    specification. <cref>update upon publication</cref></t>
+		
+	    <t hangText="Applications that use this media type:"> No
+	    known applications currently use this media type.</t>
+	  </list>
+	</t>
+
+	    <t>Additional information:</t> 
+
+	    <t>
+	      <list style="hanging"> 
+		
+		<t hangText="Magic number(s):"> As specified for
+		"application/xml" in <xref target="RFC3023"/>, section
+		3.2.</t>
+
+		<t hangText="File extension:"> .atomcoll</t> 
+
+		<t hangText="Fragment identifiers:"> As specified for
+		"application/xml" in <xref target="RFC3023"/>, section 5.</t>
+
+		<t hangText="Base URI:"> As specified in <xref
+		target="RFC3023"/>, section 6.</t> 
+
+		<t hangText="Macintosh File Type code:"> TEXT</t>
+
+		<t hangText="Person and email address to contact for further information:"> Joe Gregorio &lt;joe@bitworking.org&gt;</t>
+
+		<t hangText="Intended usage:">
+		COMMON</t> <t hangText="Author/Change controller:"> IESG</t> 
+	      </list>
+	    </t>
+	    
+	    <t>An Atom Introspection Document, when serialized as XML 1.0, can be identified with
+	    the following media type:</t>	
+
+	    <t>
+	      <list style="hanging"> 
+		<t hangText="MIME media type name:"> application</t>
+		<t hangText="MIME subtype name:"> atomserv+xml</t>
+		<t hangText="Mandatory parameters:"> None.</t> 
+		<t hangText="Optional parameters:"> 
+		  <list style="hanging"> 
+		    <t hangText='"charset":'> This parameter has identical
+		    semantics to the charset parameter of the
+		    "application/xml" media type as specified in <xref
+		    target="RFC3023"/>.</t>
+		  </list> 
+		</t>
+	      
+		<t hangText="Encoding considerations:"> Identical to those of
+		"application/xml" as described in <xref target="RFC3023"/>,
+		section 3.2.</t>
+
+		<t hangText="Security considerations:"> As defined in this
+		specification. <cref>update upon publication</cref></t>
+
+		<t>In addition, as this media type uses the "+xml" convention,
+		it shares the same security considerations as described in
+		<xref target="RFC3023"/>, section 10.</t>
+
+		<t hangText="Interoperability considerations:"> There are no
+		known interoperability issues.</t>
+
+		<t hangText="Published specification:"> This
+		specification. <cref>update upon publication</cref></t>
+		
+		<t hangText="Applications that use this media type:"> No known
+		applications currently use this media type.</t>
+
+	      </list>
+	    </t>
+
+	    <t>Additional information:</t> 
+
+	    <t>
+	      <list style="hanging"> 
+		
+		<t hangText="Magic number(s):"> As specified for
+		"application/xml" in <xref target="RFC3023"/>, section
+		3.2.</t>
+
+		<t hangText="File extension:"> .atomsrv</t> 
+
+		<t hangText="Fragment identifiers:"> As specified for
+		"application/xml" in <xref target="RFC3023"/>, section 5.</t>
+
+		<t hangText="Base URI:"> As specified in <xref
+		target="RFC3023"/>, section 6.</t> 
+
+		<t hangText="Macintosh File Type code:"> TEXT</t>
+
+		<t hangText="Person and email address to contact for further information:"> Joe Gregorio &lt;joe@bitworking.org&gt;</t>
+
+		<t hangText="Intended usage:">
+		COMMON</t> <t hangText="Author/Change controller:"> This
+		specification's author(s). <cref>update upon publication</cref></t>
+	    </list>
+	    </t>	      
+
+      </section>
+      
+
+    </middle>
+    <back> 
+
+
+      <references title='Normative References'>
+        <reference anchor="AtomFormat"> 
+               <front> 
+             <title>The Atom Syndication Format</title> 
+             <author initials="M." surname="Nottingham" fullname="Mark Nottingham">
+               <organization/>
+             </author>
+             <author initials="R." surname="Sayre" fullname="Robert Sayre">
+             <organization/>
+             </author>
+             <date month="July" year="2005" /> 
+               </front> 
+               <seriesInfo name="" value="1.0" /> 
+            </reference>
+
+      &rfc2119; &rfc2246; <!--&rfc2396;--> &rfc2616; &rfc2617; &rfc3023; &rfc3339; &rfc3986; &rfc3987; &XML; &XMLNS;</references>
+
+      <references title="Informative References">
+	
+	&WEBARCH;
+     <reference anchor="RNC"> 
+               <front> 
+             <title>RELAX NG Compact Syntax</title> 
+             <author initials="J." surname="Clark" fullname="James Clark">
+               <organization/>
+             </author>
+             <date month="December" year="2001" /> 
+               </front> 
+
+            </reference>
+	
+      </references>
+<section title="Contributors">
+  <t>
+  The content and concepts within are a product of the Atom community and the Atompub Working Group. 
+  Robert Sayre was an editor for drafts 00-04.
+  </t>
+  <t>
+  <!-- <cref source="dehora">chairs to compile a contribution list for 1.0</cref> -->
+  <!--
+  The Atompub Working Group has many active contributors who proposed ideas and wording 
+  for this document, including:
+  -->
+  </t>
+</section>
+      <section title="Revision History">
+        <t>draft-ietf-atompub-protocol-05 - Added: Contributors section.  Added:
+        de hOra to editors.  Fixed: typos.  Added diagrams and description to
+        model section. Incorporates PaceAppDocuments, PaceAppDocuments2,
+        PaceSimplifyCollections2 (large-sized chunks of it anyhow: the notions
+        of Entry and Generic resources, the section 4 language on the Protocol
+        Model, 4.1 through 4.5.2, the notion of a Collection document, as in
+        Section 5 through 5.3, Section 7 "Collection resources", Selection
+        resources (modified from pace which talked about search); results in
+        major mods to Collection Documents, Section 9.2 "Title: Header" and
+        brokeout para to section 9.1 Editing Generic Resources). Added XML
+        namespace and language section. Some cleanup of front matter.  Added
+        Language Sensitivity to some attributes. Removed resource descriptions
+        from terminology. Some juggling of sections. See:
+        http://www.imc.org/atom-protocol/mail-archive/msg01812.html.
+        </t>
+
+        <t>draft-ietf-atompub-protocol-04 - 
+        Add ladder diagrams, reorganize, add SOAP interactions 
+        </t>
+        
+	<t>draft-ietf-atompub-protocol-03 - 
+	Incorporates PaceSliceAndDice3 and PaceIntrospection.
+        </t>
+
+
+               <t>draft-ietf-atompub-protocol-02 - 
+                   Incorporates Pace409Response, PacePostLocationMust,
+                   and PaceSimpleResourcePosting.
+               </t>
+
+               <t>draft-ietf-atompub-protocol-01 - 
+                   Added in sections on Responses for the EditURI.
+                   Allow 2xx for response to EditURI PUTs.
+                   Elided all mentions of WSSE. Started adding in some
+                   normative references. Added the section "Securing the 
+                   Atom Protocol". Clarified that it is possible that the PostURI and FeedURI
+                   could be the same URI. Cleaned up descriptions for Response codes
+                   400 and 500.
+               </t>
+               <t>Rev draft-ietf-atompub-protocol-00 - 5Jul2004 - 
+                   Renamed the file and re-titled the document to conform
+                   to IETF submission guidelines. Changed MIME type to match the one
+                   selected for the Atom format. Numerous typographical fixes.
+                   We used to have two 'Introduction' sections. One of them was
+                   moved into the Abstract the other absorbed the Scope section.
+                   IPR and copyright notifications were added. 
+               </t>
+               <t>Rev 09 - 10Dec2003 - Added the section on SOAP enabled clients
+                   and servers.</t>
+               
+               <t>Rev 08 - 01Dec2003 - Refactored the specification, merging the Introspection
+                  file into the feed format. Also dropped the distinction between the 
+                  type of URI used to create new entries and the kind used to create comments.
+                  Dropped user preferences.</t>
+
+                <t>Rev 07 - 06Aug2003 - Removed the use of the RSD file for auto-discovery. Changed copyright
+                    until a final standards body is chosen. Changed query parameters for the search facet
+                    to all begin with atom- to avoid name collisions. Updated all the Entries to follow
+                    the 0.2 version. Changed the format of the search results and template file
+                    to a pure element based syntax.
+                </t>
+
+                <t>Rev 06 - 24Jul2003 - Moved to PUT for updating Entries.
+                    Changed all the mime-types to application/x.atom+xml. Added template 
+                    editing. Changed 'edit-entry' to 'create-entry' in the Introspection file
+                    to more accurately reflect it's purpose.
+                </t>
+
+                <t>Rev 05 - 17Jul2003 - Renamed everything Echo into Atom. Added
+                    version numbers in the Revision history.
+                    Changed all the mime-types to application/atom+xml.
+                </t>
+
+                <t>Rev 04 - 15Jul2003 - Updated the RSD version used from 0.7 to 1.0. Change the method of deleting
+                    an Entry from POSTing &lt;delete/&gt; to using the HTTP DELETE verb. Also changed the 
+                    query interface to GET instead of POST. Moved Introspection Discovery to be up under
+                    Introspection. Introduced the term 'facet' for the services listed in the Introspection file.
+                </t>
+
+                <t>Rev 03 - 10Jul2003 - Added a link to the Wiki near the front of the 
+                    document. Added a section on finding an Entry. Retrieving an Entry
+                    now broken out into it's own section. Changed the HTTP status code for
+                    a successful editing of an Entry to 205.
+                </t>
+
+                <t>Rev 02 - 7Jul2003 - Entries are no longer returned from POSTs, instead they are retrieved via GET.
+                    Cleaned up figure titles, as they are rendered poorly in HTML. All content-types 
+                    have been changed to application/atom+xml.
+                </t>
+
+                <t>Rev 01 - 5Jul2003 - Renamed from EchoAPI.html to follow the more commonly used format: 
+                    draft-gregorio-NN.html. Renamed all
+                    references to URL to URI. Broke out introspection into it's own section. Added the Revision History section.
+                    Added more to the warning that the example URIs are not normative.
+                </t>
+            </section>
+
+    </back>
+      </rfc>
+
+
+
+
+
+

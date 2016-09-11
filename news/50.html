@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Wavering on PUT</title>
+    <meta name=created value="2003-03-10T17:37:56">
+  </head>
+  <body>
+  
+  <p>I am now wavering in my support
+for the HTTP verb PUT. I used to think
+that it had wide applicability but now I am
+beginning to question that. 
+<a href="http://radio.weblogs.com/0108971/2003/03/09.html#a127">Clemens Vasters</a> 
+talks a little about the applicability of using PUT to create a new 
+resource. From the experimenting with <a href="http://wellformedweb.org/news/5">RESTLog</a> 
+I know that creating 
+a resource is better done by a POST and then returning the URL of the 
+created resource in the Location: header. You avoid, or can more easily
+control concurrency problems when the URL creation is specified by the server.
+( Now that I think of it, what's wrong
+with a belt and suspenders strategy and also delivering that new
+URL in a SOAP envelope...)</p>
+<p>Any way, Clemens goes on to point out problems with updating a resource with PUT.
+Now <a href="http://www.intertwingly.net/blog/1250.html">Sam Ruby thinks this is just a SMOP</a>.
+It actually may be, if you use ETags to guard against concurrent updates. Even if 
+this were a solvable problem, there is a deeper problem
+from the <cite title="* shudder *">semantics</cite> of PUT. You see, PUT is supposed to be
+an exact copy of what you get if you do a GET, modulo someone else
+updating things between your calls. Now I originally thought
+this was a good way to do updates to stories in <a href="http://wellformedweb.org/news/5">RESTLog</a>, but
+as my work progresses I realize it may not be the best way to go. For example, what if I 
+want to add a field to the 'item' to track the last time it was updated? The best 
+place to track and update that information would be on the server. So now I end up taking
+in an updated 'item' via PUT but now RESTLog would have to modify it to update the 
+'lastUpdated' element. I won't be returning the same exact XML as was just PUT
+to the server. This kind of updating of the content is exactly the difference 
+between PUT and POST. After my run-in with <a href="http://bitworking.org/news/46">XForms and DELETE</a> 
+I am beginning to think the only two verbs I can count on are GET and POST. Just two verbs. Hopefully
+I won't lose any more. You can't go to zero verbs, <a href="http://www.intertwingly.net/blog/1254.html">can you</a>?</p>
+
+  <div class="commentContent" id="X1">
+    Just testing comments.
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X1" title="2003-03-10T23:16:26">2003-03-10</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    PUT is the only method that provides an expectation to the client of the (changed) state of the targetted resource after invocation.  If that's what you want, use it.  If not, use POST.  That's a slight oversimplification, but not by much.
+
+Ask on rest-discuss if you want to dig further.  FWIW, I don't think Clemens' examples were very indicative of common use, because he seemed to assume that the client owned part of the server's namespace (i.e. chose the URI).  There are cases where that's useful, but like I said, it's probably not indicative of your situation.
+    <p class="commentByLine">Posted by
+       <a href="http://www.markbaker.ca/">Mark Baker</a> on <a href="#X2" title="2003-03-10T23:46:19">2003-03-10</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Mark,
+    Thanks for the comment, as it confirms 
+that I was using PUT correctly. What I was trying to point out was that over time my interface is evolving and I am slipping from one where PUT would be appropriate to one where POST is more appropriate. I am wondering if this was just a fluke or will this become a pattern and I am better off avoiding PUT.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2003-03-11T00:42:33">2003-03-11</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Joe,
+
+FWIW, I think using PUT for resource create is generally a bad idea. Most of the time, it makes sense to have the client POST to some sort of collection resource. This can be thought of as 'appending to the document' eg, POST /news' appends to the document containing the list of news stories and results in the creation of the URL /news/0232.
+
+This is, I believe, how POST was largely intended.
+
+This is different from PUT which was meant to be merely for updates.
+
+- Bo
+    <p class="commentByLine">Posted by
+       <a href="http://codaland.blogspot.com">Bo</a> on <a href="#X4" title="2003-03-11T09:10:03">2003-03-11</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    I've been trying to implement ETags for concurrent updates via REST to index profiles for my company's search engine (I'll be posting something to my blog soon).
+
+Unfortunately I'm either missing something or you can't handle If-Match headers from CGIs.
+
+Duncan
+
+    <p class="commentByLine">Posted by
+       <a href="http://duncan.focuseek.com">Duncan Wilcox</a> on <a href="#X5" title="2003-03-11T09:55:22">2003-03-11</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Duncan,
+    I remember running into the same thing with security headers. I wanted to see if I could get the Basic Authentication information and do the authentication myself. Either it was impossible or was controlled by a setting I couldn't get to from .htaccess.
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2003-03-11T14:12:14">2003-03-11</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    I'd still like to see some actual proof that PUT demands octet-by-octet storage of the enclosed entity.  RFC2616 certainly doesn't say this anywhere.  It seems to be folkloric.
+
+Tamino's HTTP interface for example does not provide this behavior.  PUTing  will return  on GET.  So it preserves the infoset, not each byte.  I get the sense that entity preservation is context-specific; if you're storing source code it should preserve each btye, but if you're storing date serialized as XML, only the infoset need be preserved.
+
+Even if you want to augment the PUT entity with your own data there's no reason why you can't filter it out when a GET is performed.   This is an implemenation not a protocol issue.
+    <p class="commentByLine">Posted by
+       <a href="http://www.xefer.com">Jeffrey Winter</a> on <a href="#X7" title="2003-03-12T12:11:47">2003-03-12</a>
+    </p>
+</div>
+  </body>

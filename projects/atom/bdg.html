@@ -1,0 +1,257 @@
+<html>
+<head>
+  <style type="text/css" media="screen">@import "/css/base.css";</style>
+</head>
+<body>
+    <div class="content">
+<p>The URIs in the <a href="http://bitworking.org/rfc/draft-gregorio-07.html">draft AtomAPI RFC</a> 
+are not normative, they are examples.
+
+The draft RFC isn't about specifying the form of the URLs that
+are to be used. Yes, there are <a href="http://www.w3.org/Provider/Style/URI.html">guidelines you should follow
+    when creating URIs</a>, but those
+are just general guidelines. That is an important document and if you're creating
+server side software you should know it already. </p>
+
+
+<p>In the end, it's the server that controls the URI space for that domain. Now, for convenience
+ that space may be mapped to a file system hierarchy, but
+ again, there's no requirement for that to be true.  So what does the RFC specify? It lays out
+ the <em>formats</em> of the files that can be returned, and the <em>actions</em> that can be performed
+ on the URIs. Note that URIs are embedded in some of those formats. That embedding, that 
+ intertwingling of format and URI, is the crux of hypertext, and we are using
+ HTTP as our protocol, the Hypertext Transfer Protocol. 
+ Here then is an abbreviated description of the AtomAPI as it stands today, with
+ all the example URIs contracted into short names. Outlined first are the different
+ <strong>types</strong> of URIs the AtomAPI deals with. Different types of URIs
+ are distinguished by the methods that are allowed to act on them, their actions,
+ and the content-types that they accept.</p>
+
+ <h3 id="TypesOfURIs">Types of URIs</h3>
+ 
+ <table summary="AtomAPI URIs and associated Formats and Verbs" cellpadding="3" cellspacing="0" border="1">
+     <tbody>
+         <tr> <th>URI Type</th> <th>HTTP Method</th> <th>Content Type</th> <th>Return values</th> </tr>
+
+         <tr> <td><a href="#post">Post</a></td> <td>POST</td> <td><a href="#AtomEntry">AtomEntry</a></td> <td>Returns an <a href="#edit">Edit</a> URI in the Location: header.</td> </tr>
+         
+         <tr> <td><a href="#edit">Edit</a></td> <td>GET, PUT, DELETE</td> <td><a href="#AtomEntry">AtomEntry</a></td> <td></td> </tr>
+         
+         <tr> <td><a href="#feed">Feed</a></td> <td>GET</td> <td><a href="#AtomFeed">AtomFeed</a></td> <td></td> </tr>
+
+     </tbody>
+ </table>
+
+ <p>Several things are important to note here. First is that both weblog entries and comments
+    on those entries are both created using a <code>Post</code> URI. Now they are
+    probably going to be different URIs, but they are the same <strong>type</strong> of
+    URI, i.e. a URI that accepts a POST with a body of a filled in Atom Entry and as a consequence
+    creates a new resource based on that Entry. How to discover the types of URIs and what
+    they are used for is discussed later.
+ </p>
+
+ <p>All of the discovery uses a <code>link</code> tag. The <a href="http://www.w3.org/TR/html401/struct/links.html#h-12.3">
+     link tag from HTML</a> will be used in (X)HTML, and the same tag will be used
+     in the Atom format, with the restriction the value of the <code>rel</code> attribute
+     is case sensitive. 
+ </p>
+
+ <dl>
+     <dt><a href="#post" id="post">Post</a></dt>
+    <dd>
+       <dl>
+           <dt>Purpose</dt>
+           <dd>The Post URI is used to create entries. These can be either
+           full entries as in a weblog post, or they can be comments. 
+           The client POSTs a filled in Atom Entry to this URI.</dd>
+  
+           <dt>Finding</dt>
+           <dd><p>For creating a new site Entry, the link tag is used. Note that
+           a link tag is used in both HTML and in the Atom format. A link tag 
+           of the following format points to the <code>Post</code> URI for a site.
+           In HTML the link tags are always found in the <code>head</code> element, while
+           in Atom they may appear as children of the <code>Feed</code> and <code>entry</code> elements.
+           In the case of <code>Post</code>, the link tag is found in HTML 
+           and as a child of the <code>Feed</code> element only. </p>
+
+           <pre class="example"><code>&lt;link rel="service.post" 
+   type="application/x.atom+xml" 
+   href="URI for Posting goes here" 
+   title="The name of the site."&gt;</code></pre>
+
+           <p><strong>Note:</strong> Multiple link tags may appear together   
+           and can be distinguished by having different 'rel', 'type' and 'title'    
+           attributes.</p>
+           </dd>
+       </dl>
+    </dd>
+
+    <dt><a href="#edit" id="edit">Edit</a></dt>
+    <dd>
+       <dl>
+           <dt>Purpose</dt>
+           <dd>The <code>Edit</code> URI is used to edit an existing Entry.
+               To edit the Entry the client does a GET on the URI to retrieve the
+               Atom Entry, it then modifies the Entry and then PUTs the Entry back to the 
+               same URI. Use the DELETE method on the URI to remove the Entry.
+               Note that an Entry could be either a full Entry on a site, or a comment.
+           </dd>
+  
+           <dt>Finding</dt>
+           <dd>
+           <p>A link tag in either HTML or Atom of the following form will point to 
+             the URI for editing an Entry.</p>
+             <pre class="example"><code>&lt;link rel="service.edit" 
+   type="application/x.atom+xml" 
+   href="URI that handles editing " 
+   title="Desc/title of Entry."&gt;</code></pre>
+           </dd>
+       </dl>
+    </dd>
+
+    <dt><a href="#feed" id="feed">Feed</a></dt>
+    <dd>
+       <dl>
+           <dt>Purpose</dt>
+           <dd><p>The <code>Feed</code> URI is used to retrieve an <a href="#AtomFeed">Atom feed</a>. 
+              Note that the feed may contain just Entries for syndication, or may contain
+              additional link tags so that it may be used for browsing/navigating around
+              to other Atom feeds.</p></dd>
+           <dt>Finding</dt>
+           <dd>
+
+           <p>A typical feed for syndication would be indicated by a link tag
+              of the form:</p>
+           <pre class="example"><code>&lt;link href='URI of feed goes here' 
+   type='application/x.atom+xml'
+   rel='feed' 
+   title='A nice descriptive title'/></code></pre>
+
+           <p>If a feed contains extra link tags for navigation, such a feed
+              might be supplied specifically for a weblog publishing
+              client to use, then it is of
+              the form:</p>
+
+            <pre class="example"><code>&lt;link href='URI of feed goes here' 
+   type='application/x.atom+xml' 
+   rel='feed.browse' 
+   title='A nice descriptive title'/></code></pre>
+
+           <p>Or</p>
+           
+           <pre class="example"><code>&lt;link href='URI of feed goes here' 
+   type='application/x.atom+xml' 
+   rel='prev' 
+   title='A nice descriptive title'/></code></pre>
+ 
+           </dd>
+       </dl>
+    </dd>
+
+ 
+    <h3 id="AtomEntry"><a href="#AtomEntry">AtomEntry</a></h3>
+
+ <pre class="example"><code>&lt;entry xmlns="http://example.com/newformat#" &gt;  
+  &lt;title&gt;My First Entry&lt;/title&gt; 
+  &lt;summary&gt;A very boring entry...&lt;/summary&gt; 
+                                                                     
+  &lt;author&gt; 
+    &lt;name&gt;Bob B. Bobbington&lt;/name&gt; 
+    &lt;url&gt;http://bob.name/&lt;/url&gt; 
+  &lt;/author&gt; 
+
+  &lt;issued&gt;2003-02-05T12:29:29&lt;/issued&gt; 
+  &lt;created&gt;2003-02-05T14:10:58Z&lt;/created&gt; 
+  &lt;modified&gt;2003-02-05T14:10:58Z&lt;/modified&gt; 
+
+  &lt;link rel="alternate" type="text/html" 
+    href="http://example.org/reilly/2003/02/05#My_First_Entry"/&gt;
+
+  &lt;id&gt;urn:example.org:reilly:1&lt;/id&gt;
+
+  &lt;content type="application/xhtml+xml" xml:lang="en-us"&gt; 
+    &lt;p xmlns="..."&gt;Hello, &lt;em&gt;weblog&lt;/em&gt; world! 2 &lt; 4!&lt;/p&gt; 
+  &lt;/content&gt;  
+
+&lt;/entry&gt; </code></pre>
+
+ <h3 id="AtomFeed"><a href="#AtomFeed">AtomFeed</a></h3>
+
+ <pre class="example"><code>&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;feed version="0.2" xmlns="http://purl.org/atom/ns#"&gt;
+  &lt;link rel="next" type='application/x.atom+xml'
+     title="Next 20 Entries" href="http://.."/&gt;
+  &lt;link rel="previous" type='application/x.atom+xml'  
+     title="Previous 20 Entries" href="http://.."/&gt;
+  &lt;link type='application/x.atom+xml'  
+     title="Last 20 Comments" href="http://.."/&gt;
+  &lt;link type='application/x.atom+xml" rel='service.post'
+     title="Create a new post on intertwingly.net" href=".."/>
+
+  &lt;entry&gt;
+    &lt;id&gt;1630&lt;/id&gt;
+    &lt;link rel="alternate" type="text/html" href="1630.html" /&gt;
+
+    &lt;link type='application/x.atom+xml 'rel="service.post" 
+       href="/blog/1630.atom-new-comment" title="Add a comment."/&gt;
+ 
+    &lt;link type='application/x.atom+xml 'rel="comments" 
+       title="Comments on Entry 1630" href="/blog/1630.atom" /&gt;
+
+    &lt;link type='application/x.atom+xml" rel="service.edit" 
+       href="/blog/1630.atomapi" /&gt;
+
+    &lt;title&gt;One year ago today...&lt;/title&gt;
+
+    &lt;content type="application/xhtml+xml" mode="xml"&gt;
+      &lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;Microsoft
+      &lt;a href="http://www.intertwingly.net/blog/945.html"&gt;
+      inhaled a blogger&lt;/a&gt;.&amp;#160; Now it looks like
+      he is attempting to
+      &lt;a href="http://www.razorsoft.net/weblog/2003/10/28.html"&gt;
+      resurface&lt;/a&gt;...
+      &lt;/div&gt;
+    &lt;/content&gt;
+
+    &lt;issued&gt;2003-10-29T20:52:57-05:00&lt;/issued&gt;  
+    &lt;modified&gt;2003-10-29T20:52:57-05:00&lt;/modified&gt;
+  &lt;/entry&gt;
+
+  &lt;entry&gt;
+    &lt;id&gt;1628&lt;/id&gt;
+    &lt;link rel="alternate" type="text/html" href="1628.html" /&gt;
+
+    &lt;link type='application/x.atom+xml 'rel="service.post" 
+       href="/blog/1628.atom-new-comment" title="Add a comment"/&gt;
+ 
+    &lt;link type='application/x.atom+xml' rel="comments" 
+       title="Comments on Entry 1628" href="/blog/1628.atom" /&gt;
+
+    &lt;link type='application/x.atom+xml" rel="service.edit" 
+       href="/blog/1628.atomapi" /&gt;
+
+    &lt;title&gt;Is &amp;lt;content&amp;gt; required on a POST?&lt;/title&gt;
+    
+    &lt;content type="application/xhtml+xml" mode="xml"&gt;
+      &lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
+        I've kicked off what I intend to be a series of
+        discussions leading up to the creation of a
+        validation test suite for Atom implementors
+        with the following question on the
+        &lt;a href="http://www.imc.org/atom-syntax/index.html"&gt;
+        atom-syntax mailing list&lt;/a&gt;:
+        &lt;a href="http://www.imc.org/atom-syntax/mail-archive/msg00908.html"&gt;
+      
+        Is content required on a POST&lt;/a&gt;?
+      &lt;/div&gt;
+    &lt;/content&gt;
+
+    &lt;issued&gt;2003-10-29T05:24:12-05:00&lt;/issued&gt;
+    &lt;modified&gt;2003-10-29T05:24:12-05:00&lt;/modified&gt;
+
+  &lt;/entry&gt;
+&lt;/feed&gt;
+</code></pre>
+</div>
+</body>
+
