@@ -31,3 +31,8 @@ serve:
 
 setup:
 	go get github.com/jcgregorio/piccolo
+
+server:
+	go get github.com/jcgregorio/userve/go/userve
+	./build_release
+

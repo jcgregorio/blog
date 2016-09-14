@@ -1,0 +1,15 @@
+[Unit]
+Description=userve
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/userve \
+    --source=/home/joe_gregorio/bitworking/dst
+
+Restart=always
+User=root
+Group=root
+LimitNOFILE=10000
+
+[Install]
+WantedBy=multi-user.target
