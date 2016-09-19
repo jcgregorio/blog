@@ -30,9 +30,10 @@ serve:
 	cd ./dst ; http-server
 
 setup:
-	go get github.com/jcgregorio/piccolo
+	go get -u github.com/jcgregorio/piccolo
+	go get -u github.com/jcgregorio/piccolo
 
 server:
-	go get github.com/jcgregorio/userve/go/userve
+	go get -u github.com/jcgregorio/userve/go/userve
 	./build_release
 
