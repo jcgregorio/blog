@@ -5,10 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta value="2016-09-27T10:14:45-04:00" name="created"/></head>
 <body>
+  <style type="text/css" media="screen">
+    #plot {
+      border-bottom: solid lightgray 1px;
+      border-left: solid lightgray 1px;
+      margin: 1em 0;
+    }
+  </style>
   <canvas width=640 height=480 id="canvas"></canvas>
-  <div id=entropy></div>
-  <canvas width=500 height=100 id="plot"></canvas>
+  <div>Entropy: <span id=entropy></span></div>
+  <canvas width=200 height=100 id="plot"></canvas>
    <script type="text/javascript" charset="utf-8">
+     (function () {
+       var samples = [];
+
+       var canvas = document.getElementById("plot");
+       var width = canvas.width;
+       var ctx = canvas.getContext("2d");
+
+       function plot() {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         ctx.strokeStyle = "darkblue";
+         ctx.lineWidth = 1;
+         ctx.beginPath();
+         if (samples.length == 0) {
+           return;
+         }
+         ctx.moveTo(0, canvas.height - samples[0]*100);
+
+         samples.forEach(function(value, x) {
+           ctx.lineTo(x+1, canvas.height - value*100);
+         });
+         ctx.stroke();
+       }
+
+       document.addEventListener("entropy", function(e) {
+         samples.push(e.detail);
+         if (samples.length > canvas.width) {
+           samples = samples.slice(samples.length - canvas.width);
+         }
+         plot();
+       });
+
+     })();
+
      (function () {
        var MAX_X  = 5;
        var MAX_Y  = 4;
@@ -200,38 +240,10 @@
            drawAtom(initial[i]);
          }
          calculateEntropy();
-       }, 1000);
+       }, 100);
 
      })();
 
-     (function () {
-       var samples = [];
-
-       var canvas = document.getElementById("plot");
-       var width = canvas.width;
-       var ctx = canvas.getContext("2d");
-
-       function plot() {
-         ctx.clearRect(0, 0, canvas.width, canvas.height);
-         ctx.strokeStyle = "darkblue";
-         ctx.lineWidth = 1;
-         if (samples.length == 0) {
-           return;
-         }
-         ctx.moveTo(0, canvas.height - samples[0]*100);
-
-         samples.forEach(function(value, x) {
-           ctx.lineTo(x, canvas.height - value*100);
-         });
-         ctx.stroke();
-       }
-
-       document.addEventListener("entropy", function(e) {
-         samples.push(e.detail);
-         plot();
-       });
-
-     })();
    </script>
 </body>
 </html>
