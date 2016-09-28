@@ -7,6 +7,7 @@
 <body>
   <canvas width=640 height=480 id="canvas"></canvas>
   <div id=entropy></div>
+  <canvas width=500 height=100 id="plot"></canvas>
    <script type="text/javascript" charset="utf-8">
      (function () {
        var MAX_X  = 5;
@@ -30,7 +31,7 @@
        //    d: 0,
        //   }
        //
-       // Where d encodes the direction via DIR:
+       // Where d encodes the direction via DIR.
 
        // DIR is the encoding of the four possible directions
        // an atom may face. The 't' value is the index of the
@@ -42,7 +43,7 @@
          3: { x: -1, y:  0, t: 2},
        };
 
-       // Given each position in the universe an unique id, unique
+       // Give each position in the universe a unique id, unique
        // up to transposition.
        function atomId(atom) {
          return "" + Math.floor(2 * (atom.x + DIR[atom.d].x/2))+ "," + Math.floor(2 * (atom.y + DIR[atom.d].y/2));
@@ -181,7 +182,9 @@
            }
          });
          u = initial.length - Object.keys(inLCD).length;
-         ele.textContent = (14 + 4*u - 2*b - t)/42;
+         var ent = ((14 + 4*u - 2*b - t)/42);
+         ele.textContent = ent.toPrecision(2);
+         document.dispatchEvent(new CustomEvent("entropy", {detail: ent}));
        }
 
        drawGrid();
@@ -198,6 +201,35 @@
          }
          calculateEntropy();
        }, 1000);
+
+     })();
+
+     (function () {
+       var samples = [];
+
+       var canvas = document.getElementById("plot");
+       var width = canvas.width;
+       var ctx = canvas.getContext("2d");
+
+       function plot() {
+         ctx.clearRect(0, 0, canvas.width, canvas.height);
+         ctx.strokeStyle = "darkblue";
+         ctx.lineWidth = 1;
+         if (samples.length == 0) {
+           return;
+         }
+         ctx.moveTo(0, canvas.height - samples[0]*100);
+
+         samples.forEach(function(value, x) {
+           ctx.lineTo(x, canvas.height - value*100);
+         });
+         ctx.stroke();
+       }
+
+       document.addEventListener("entropy", function(e) {
+         samples.push(e.detail);
+         plot();
+       });
 
      })();
    </script>
