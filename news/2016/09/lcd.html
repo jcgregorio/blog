@@ -1,0 +1,157 @@
+<!DOCTYPE html><html><head>
+    <title>The LCD Toy Universe</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta value="2016-09-27T10:14:45-04:00" name="created"/></head>
+<body>
+  <canvas width=640 height=480 id="canvas"></canvas>
+  <div id=entropy></div>
+   <script type="text/javascript" charset="utf-8">
+     (function () {
+       var MAX_X = 6;
+       var MAX_Y = 5;
+       var WIDTH = 640;
+       var HEIGHT = 480;
+       var MARGIN = 5;
+       var DX = WIDTH/MAX_X - 2*MARGIN;
+       var DY = HEIGHT/MAX_Y - 2*MARGIN;
+       var ele = document.getElementById("entropy");
+
+       var DIR = {
+         0: { x:  0, y:  1, t: 1},
+         1: { x:  0, y: -1, t: 0},
+         2: { x:  1, y:  0, t: 3},
+         3: { x: -1, y:  0, t: 2},
+       };
+
+       function atomId(pt) {
+         return "" + Math.floor(2 * (pt.x + DIR[pt.d].x/2))+ "," + Math.floor(2 * (pt.y + DIR[pt.d].y/2));
+       }
+
+       var initial = [
+         {x: 2, y: 1, d: 2},
+         {x: 2, y: 3, d: 2},
+
+         {x: 2, y: 2, d: 2},
+         {x: 2, y: 2, d: 0},
+         {x: 2, y: 2, d: 1},
+
+         {x: 3, y: 2, d: 0},
+         {x: 3, y: 2, d: 1},
+       ];
+
+       var LCD = [];
+       initial.forEach(function(pt) {
+         LCD.push(atomId(pt));
+       });
+
+       var ctx = document.getElementById("canvas").getContext("2d");
+       ctx.strokeStyle = "red";
+       ctx.lineWidth = 2;
+
+       function transpose(atom) {
+         var x = atom.x + DIR[atom.d].x;
+         var y = atom.y + DIR[atom.d].y;
+         return {
+           x: x,
+           y: y,
+           d: DIR[atom.d].t,
+         }
+       }
+
+       function head(atom) {
+         return {
+           x: atom.x,
+           y: atom.y,
+         }
+       }
+
+       function tail(atom) {
+         return {
+           x: atom.x + DIR[atom.d].x,
+           y: atom.y + DIR[atom.d].y,
+         }
+       }
+
+       function isValid(atom) {
+         var x = atom.x + DIR[atom.d].x;
+         var y = atom.y + DIR[atom.d].y;
+         return (x >= 0) && (x <= MAX_X) && (y >= 0) && (y <= MAX_Y);
+       }
+
+       function drawAtom(atom) {
+         ctx.beginPath();
+         ctx.moveTo(MARGIN + atom.x*DX, MARGIN + atom.y*DY);
+         ctx.lineTo(MARGIN + (atom.x + DIR[atom.d].x)*DX, MARGIN + (atom.y + DIR[atom.d].y)*DY);
+         ctx.stroke();
+       }
+
+       function randMove(pt) {
+         var newAtom = {
+           x: pt.x,
+           y: pt.y,
+           d: pt.d,
+         };
+         if (Math.random() > 0.5) {
+           newAtom = transpose(newAtom);
+         }
+         // Try a direction at random until you get a valid pt.
+         newAtom.d = Math.floor(Math.random() * 4);
+         while (!isValid(newAtom)) {
+           newAtom.d = Math.floor(Math.random() * 4);
+         }
+         newAtom = tail(newAtom);
+         // Try to point the tail in a random direction until you get a valid pt.
+         newAtom.d = Math.floor(Math.random() * 4);
+         while (!isValid(newAtom)) {
+           newAtom.d = Math.floor(Math.random() * 4);
+         }
+
+         return newAtom;
+       }
+
+       function endInCentralGalaxy(pt) {
+         return pt.x >= 2 && pt.x <= 3 && pt.y >= 1 && pt.y <= 3;
+       }
+
+       function touchesCentralGalaxy(pt) {
+         return endInCentralGalaxy(head(pt)) || endInCentralGalaxy(tail(pt));
+       }
+
+       function calculateEntropy() {
+         var inLCD = {};
+         var u = 0;
+         var b = 0;
+         var t = 0;
+         initial.forEach(function(pt) {
+           var id = atomId(pt);
+           if (LCD.indexOf(id) != -1) {
+             inLCD[id] = 1;
+             b += 1;
+           } else if (touchesCentralGalaxy(pt)) {
+             t += 1;
+           }
+         });
+         u = initial.length - Object.keys(inLCD).length;
+         ele.textContent = (14 + 4*u - 2*b - t)/42;
+       }
+
+       initial.forEach(function(pt){
+         drawAtom(pt);
+       });
+       calculateEntropy();
+
+       window.setInterval(function() {
+         ctx.clearRect(0, 0, WIDTH, HEIGHT);
+         for (var i = 0; i < initial.length; i++) {
+           initial[i] = randMove(initial[i]);
+           drawAtom(initial[i]);
+         }
+         calculateEntropy();
+       }, 1000);
+
+     })();
+   </script>
+</body>
+</html>
