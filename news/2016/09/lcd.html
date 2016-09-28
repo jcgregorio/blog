@@ -17,7 +17,6 @@
       display: block;
     }
 
-
 		button {
 			min-width: 5.14em;
 			background-color: #fff;
@@ -39,9 +38,17 @@
 			background-color: #ddd;
 			transition: background-color 0.1s cubic-bezier(0.4, 0, 0.2, 1) ;
 		}
+
+    input,
+    label {
+      margin: 0.5em;
+    }
   </style>
   <div>
     <button id=restart>Restart</button>
+    <div>
+      <input type="checkbox" name="esf" id="esf"><label for="esf">ESF</label>
+    </div>
   </div>
   <canvas width=640 height=480 id="canvas"></canvas>
   <div>Entropy: <span id=entropy></span></div>
@@ -96,6 +103,8 @@
        var DX     = WIDTH/MAX_X - 2*MARGIN;
        var DY     = HEIGHT/MAX_Y - 2*MARGIN;
 
+       var ESF_PERCENT = 0.1;
+
        // Each atom the LCD universe is a segment between two adjacent
        // points, so the representation of an atom will be the x,y coordinates
        // of one end (the head), and then a value that encodes the directions from that
@@ -143,6 +152,7 @@
        ];
 
        var atoms = JSON.parse(JSON.stringify(initial));
+       var esf = false;  // Electrostatic force.
 
        // LCD records the ids of all the positions in the Central Galaxy.
        var LCD = [];
@@ -322,14 +332,25 @@
        window.setInterval(function() {
          drawGrid();
          for (var i = 0; i < atoms.length; i++) {
-           atoms[i] = randMove(atoms[i]);
+           if (esf) {
+             var otherAtoms = atoms.slice();
+             otherAtoms.splice(i, 1);
+             if (atomInEntity(atoms[i], otherAtoms)) {
+               if (Math.random() < ESF_PERCENT) {
+                 atoms[i] = randMove(atoms[i]);
+               }
+             } else {
+               atoms[i] = randMove(atoms[i]);
+             }
+           } else {
+             atoms[i] = randMove(atoms[i]);
+           }
            drawAtom(atoms[i]);
          }
          calculateEntropy();
        }, 100);
 
-
-       document.getElementById("restart").addEventListener("click", function() {
+       function restart() {
          atoms = JSON.parse(JSON.stringify(initial));
          document.dispatchEvent(new CustomEvent("clear-entropy"));
          drawGrid();
@@ -337,6 +358,15 @@
            drawAtom(atom);
          });
          calculateEntropy();
+       }
+
+       document.getElementById("restart").addEventListener("click", function() {
+         restart();
+       });
+
+       document.getElementById("esf").addEventListener("click", function(e) {
+         esf = e.target.checked;
+         restart();
        });
 
      })();
