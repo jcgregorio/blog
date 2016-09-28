@@ -9,10 +9,11 @@
   <div id=entropy></div>
    <script type="text/javascript" charset="utf-8">
      (function () {
-       var MAX_X  = 6;
-       var MAX_Y  = 5;
-       var WIDTH  = 640;  // px
-       var HEIGHT = 480; // px
+       var MAX_X  = 5;
+       var MAX_Y  = 4;
+       var CELL_SIZE = 40;
+       var WIDTH  = MAX_X * CELL_SIZE; // px
+       var HEIGHT = MAX_Y * CELL_SIZE; // px
        var MARGIN = 5;   // px
        var DX     = WIDTH/MAX_X - 2*MARGIN;
        var DY     = HEIGHT/MAX_Y - 2*MARGIN;
@@ -67,9 +68,10 @@
          LCD.push(atomId(atom));
        });
 
-       var ctx = document.getElementById("canvas").getContext("2d");
-       ctx.strokeStyle = "red";
-       ctx.lineWidth = 2;
+       var canvas = document.getElementById("canvas");
+       canvas.width  = WIDTH;
+       canvas.height = HEIGHT;
+       var ctx = canvas.getContext("2d");
 
        // An atom is the same if you switch the head and the tail.
        // This function switches the head and tail. Used in randMove.
@@ -100,7 +102,27 @@
          return (t.x >= 0) && (t.x <= MAX_X) && (t.y >= 0) && (t.y <= MAX_Y);
        }
 
+       function drawGrid() {
+         ctx.clearRect(0, 0, WIDTH, HEIGHT);
+         ctx.strokeStyle = "lightgray";
+         ctx.lineWidth = 1;
+         for (var x = 0; x <= MAX_X ; x++) {
+           ctx.beginPath();
+           ctx.moveTo(MARGIN + x*DX, MARGIN);
+           ctx.lineTo(MARGIN + x*DX, MARGIN + MAX_Y * DY);
+           ctx.stroke();
+         }
+         for (var y = 0; y <= MAX_Y; y++) {
+           ctx.beginPath();
+           ctx.moveTo(MARGIN            , MARGIN + y*DY);
+           ctx.lineTo(MARGIN +MAX_X * DX, MARGIN + y*DY);
+           ctx.stroke();
+         }
+       }
+
        function drawAtom(atom) {
+         ctx.strokeStyle = "red";
+         ctx.lineWidth = 3;
          ctx.beginPath();
          var h = head(atom);
          var t = tail(atom);
@@ -162,13 +184,14 @@
          ele.textContent = (14 + 4*u - 2*b - t)/42;
        }
 
+       drawGrid();
        initial.forEach(function(atom){
          drawAtom(atom);
        });
        calculateEntropy();
 
        window.setInterval(function() {
-         ctx.clearRect(0, 0, WIDTH, HEIGHT);
+         drawGrid();
          for (var i = 0; i < initial.length; i++) {
            initial[i] = randMove(initial[i]);
            drawAtom(initial[i]);
