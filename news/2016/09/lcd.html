@@ -16,7 +16,33 @@
     canvas {
       display: block;
     }
+
+
+		button {
+			min-width: 5.14em;
+			background-color: #fff;
+			color: #1f78b4;
+			text-align: center;
+			text-transform: uppercase;
+			outline: none;
+			border-radius: 3px;
+			padding: 0.6em 1.2em;
+			border: solid lightgray 1px;
+			margin: 0.6em;
+		}
+
+		button:hover {
+			background: #eee;
+		}
+
+		button:focus {
+			background-color: #ddd;
+			transition: background-color 0.1s cubic-bezier(0.4, 0, 0.2, 1) ;
+		}
   </style>
+  <div>
+    <button id=restart>Restart</button>
+  </div>
   <canvas width=640 height=480 id="canvas"></canvas>
   <div>Entropy: <span id=entropy></span></div>
   <canvas width=200 height=100 id="plot"></canvas>
@@ -52,6 +78,11 @@
            if (samples.length > canvas.width) {
              samples = samples.slice(samples.length - canvas.width);
            }
+           plot();
+         });
+
+         document.addEventListener("clear-entropy", function(e) {
+           samples = [];
            plot();
          });
        }
@@ -110,6 +141,8 @@
          {x: 3, y: 2, d: 0},
          {x: 3, y: 2, d: 1},
        ];
+
+       var atoms = JSON.parse(JSON.stringify(initial));
 
        // LCD records the ids of all the positions in the Central Galaxy.
        var LCD = [];
@@ -238,7 +271,7 @@
          var u = 0;
          var b = 0;
          var t = 0;
-         initial.forEach(function(atom) {
+         atoms.forEach(function(atom) {
            var id = atomId(atom);
            // An atom is in the Central Galaxy if its ID matches
            // an ID in LCD.
@@ -249,22 +282,22 @@
              t += 1;
            }
          });
-         u = initial.length - Object.keys(inLCD).length;
+         u = atoms.length - Object.keys(inLCD).length;
          var ent = ((14 + 4*u - 2*b - t)/42);
 
          // Now calulate the number of distinct entities.
          var entities = [];
-         var atoms = initial.slice();
-         while (atoms.length > 0) {
-           var entity = [atoms.pop()];
+         var atomsCopy = atoms.slice();
+         while (atomsCopy.length > 0) {
+           var entity = [atomsCopy.pop()];
            var added = true;
            while (added) {
              added = false;
-             for (var i = 0; i < atoms.length; i++) {
-               if (atomInEntity(atoms[i], entity)) {
+             for (var i = 0; i < atomsCopy.length; i++) {
+               if (atomInEntity(atomsCopy[i], entity)) {
                  added = true;
-                 entity.push(atoms[i]);
-                 atoms.splice(i, 1);
+                 entity.push(atomsCopy[i]);
+                 atomsCopy.splice(i, 1);
                  break;
                }
              }
@@ -281,19 +314,30 @@
        }
 
        drawGrid();
-       initial.forEach(function(atom){
+       atoms.forEach(function(atom){
          drawAtom(atom);
        });
        calculateEntropy();
 
        window.setInterval(function() {
          drawGrid();
-         for (var i = 0; i < initial.length; i++) {
-           initial[i] = randMove(initial[i]);
-           drawAtom(initial[i]);
+         for (var i = 0; i < atoms.length; i++) {
+           atoms[i] = randMove(atoms[i]);
+           drawAtom(atoms[i]);
          }
          calculateEntropy();
        }, 100);
+
+
+       document.getElementById("restart").addEventListener("click", function() {
+         atoms = JSON.parse(JSON.stringify(initial));
+         document.dispatchEvent(new CustomEvent("clear-entropy"));
+         drawGrid();
+         atoms.forEach(function(atom){
+           drawAtom(atom);
+         });
+         calculateEntropy();
+       });
 
      })();
 
