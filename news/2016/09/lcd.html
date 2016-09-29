@@ -38,6 +38,7 @@
 			transition: background-color 0.1s cubic-bezier(0.4, 0, 0.2, 1) ;
 		}
 
+    select,
     input,
     label {
       margin: 0.6em 0 0.6em 0.6em;
@@ -59,14 +60,21 @@
     <div>
       <input type="text" name="percent" id="percent" size=3 value="10" disabled><label for="percent">%</label>
     </div>
+    <div>
+      <select name="initial" id="initial">
+        <option value="low">Low Entropy</option>
+        <option value="high">High Entropy</option>
+      </select>
+      <label for=initial>Initial Conditions</label>
+    </div>
   </div>
   <canvas width=640 height=480 id="canvas"></canvas>
 
   <div>Entropy: <span id=entropy></span> Mean: <span id=entropy_mean></span></div>
-  <canvas class=plot width=200 height=100 id="entropy_plot"></canvas>
+  <canvas class=plot width=200 height=105 id="entropy_plot"></canvas>
 
   <div>Entities: <span id=entity_count></span> Mean: <span id=entity_count_mean></span></div>
-  <canvas class=plot width=200 height=100 id="entity_count_plot"></canvas>
+  <canvas class=plot width=200 height=105 id="entity_count_plot"></canvas>
 
   <script type="text/javascript" charset="utf-8">
     (function () {
@@ -87,10 +95,10 @@
           if (samples.length == 0) {
             return;
           }
-          ctx.moveTo(0, canvas.height - samples[0]*canvas.height/max);
+          ctx.moveTo(0, canvas.height - (samples[0]/max)*canvas.height);
 
           samples.forEach(function(value, x) {
-            ctx.lineTo(x+1, canvas.height - value*canvas.height/max);
+            ctx.lineTo(x+1, canvas.height - (value/max)*canvas.height);
           });
           ctx.stroke();
         }
@@ -166,7 +174,8 @@
 
       // The initial positions of the atoms, forming the Central Galaxy, i.e
       // the 7-segment display.
-      var initial = [
+
+      var low_entropy = [
         {x: 2, y: 1, d: 2},
         {x: 2, y: 3, d: 2},
 
@@ -178,11 +187,25 @@
         {x: 3, y: 2, d: 1},
       ];
 
+      var high_entropy = [
+        {x: 0, y: 0, d: 2},
+        {x: 2, y: 0, d: 2},
+        {x: 4, y: 0, d: 2},
+
+        {x: 0, y: 4, d: 2},
+        {x: 2, y: 4, d: 2},
+        {x: 4, y: 4, d: 2},
+
+        {x: 0, y: 2, d: 2},
+      ];
+
+      var initial = low_entropy;
+
       var atoms = JSON.parse(JSON.stringify(initial));
 
       // LCD records the ids of all the positions in the Central Galaxy.
       var LCD = [];
-      initial.forEach(function(atom) {
+      low_entropy.forEach(function(atom) {
         LCD.push(atomId(atom));
       });
 
@@ -395,6 +418,11 @@
       document.getElementById("percent").addEventListener("input", function(e) {
         esf_percent = (+e.target.value)/100;
         console.log(esf_percent);
+        start();
+      });
+
+      document.getElementById("initial").addEventListener("change", function(e) {
+        initial = e.target.selectedIndex == 0 ? low_entropy : high_entropy;
         start();
       });
 
