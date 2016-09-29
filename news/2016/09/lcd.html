@@ -6,8 +6,7 @@
 <meta value="2016-09-27T10:14:45-04:00" name="created"/></head>
 <body>
   <style type="text/css" media="screen">
-    #plot,
-    #entities {
+    .plot {
       border-bottom: solid lightgray 1px;
       border-left: solid lightgray 1px;
       margin: 1em 0;
@@ -51,322 +50,328 @@
     </div>
   </div>
   <canvas width=640 height=480 id="canvas"></canvas>
-  <div>Entropy: <span id=entropy></span></div>
-  <canvas width=200 height=100 id="plot"></canvas>
-  <div>Entities: <span id=entityCount></span></div>
-  <canvas width=200 height=100 id="entities"></canvas>
-   <script type="text/javascript" charset="utf-8">
-     (function () {
-       function initPlot(canvasId, detailName, max) {
-         var samples = [];
 
-         var canvas = document.getElementById(canvasId);
-         var width = canvas.width;
-         var ctx = canvas.getContext("2d");
+  <div>Entropy: <span id=entropy></span> Mean: <span id=entropy_mean></span></div>
+  <canvas class=plot width=200 height=100 id="entropy_plot"></canvas>
 
-         function plot() {
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           ctx.strokeStyle = "darkblue";
-           ctx.lineWidth = 1;
-           ctx.beginPath();
-           if (samples.length == 0) {
-             return;
-           }
-           ctx.moveTo(0, canvas.height - samples[0]*canvas.height/max);
+  <div>Entities: <span id=entity_count></span> Mean: <span id=entity_count_mean></span></div>
+  <canvas class=plot width=200 height=100 id="entity_count_plot"></canvas>
 
-           samples.forEach(function(value, x) {
-             ctx.lineTo(x+1, canvas.height - value*canvas.height/max);
-           });
-           ctx.stroke();
-         }
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      function initPlot(canvasId, detailName, max) {
+        var samples = [];
 
-         document.addEventListener("entropy", function(e) {
-           samples.push(e.detail[detailName]);
-           if (samples.length > canvas.width) {
-             samples = samples.slice(samples.length - canvas.width);
-           }
-           plot();
-         });
+        var displayValue = document.getElementById(canvasId);
+        var displayMean = document.getElementById(canvasId + "_mean");
 
-         document.addEventListener("clear-entropy", function(e) {
-           samples = [];
-           plot();
-         });
-       }
+        var canvas = document.getElementById(canvasId+"_plot");
+        var ctx = canvas.getContext("2d");
 
-       var MAX_X  = 5;
-       var MAX_Y  = 4;
-       var CELL_SIZE = 40;
-       var WIDTH  = MAX_X * CELL_SIZE; // px
-       var HEIGHT = MAX_Y * CELL_SIZE; // px
-       var MARGIN = 5;   // px
-       var DX     = WIDTH/MAX_X - 2*MARGIN;
-       var DY     = HEIGHT/MAX_Y - 2*MARGIN;
+        function plot() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.strokeStyle = "darkblue";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          if (samples.length == 0) {
+            return;
+          }
+          ctx.moveTo(0, canvas.height - samples[0]*canvas.height/max);
 
-       var ESF_PERCENT = 0.1;
+          samples.forEach(function(value, x) {
+            ctx.lineTo(x+1, canvas.height - value*canvas.height/max);
+          });
+          ctx.stroke();
+        }
 
-       // Each atom the LCD universe is a segment between two adjacent
-       // points, so the representation of an atom will be the x,y coordinates
-       // of one end (the head), and then a value that encodes the directions from that
-       // end to the other end (the tail). I.e.
-       //
-       //   var atom = {
-       //    x: 1,
-       //    y: 2,
-       //    d: 0,
-       //   }
-       //
-       // Where d encodes the direction via DIR.
+        document.addEventListener("entropy", function(e) {
+          var value = e.detail[detailName];
+          displayValue.textContent = value.toPrecision(2);
+          samples.push(value);
+          if (samples.length > canvas.width) {
+            samples = samples.slice(samples.length - canvas.width);
+          }
+          var total = samples.reduce(function(prev, cur) { return prev + cur; });
+          displayMean.textContent = (total/samples.length).toPrecision(2);
+          plot();
+        });
 
-       // DIR is the encoding of the four possible directions
-       // an atom may face. The 't' value is the index of the
-       // opposite direction, used in 'transpose'.
-       var DIR = {
-         0: { x:  0, y:  1, t: 1},
-         1: { x:  0, y: -1, t: 0},
-         2: { x:  1, y:  0, t: 3},
-         3: { x: -1, y:  0, t: 2},
-       };
+        document.addEventListener("clear-entropy", function(e) {
+          samples = [];
+          plot();
+        });
+      }
 
-       initPlot("plot", "entropy", 1);
-       initPlot("entities", "entities", 7);
+      var MAX_X  = 5;
+      var MAX_Y  = 4;
+      var CELL_SIZE = 40;
+      var WIDTH  = MAX_X * CELL_SIZE; // px
+      var HEIGHT = MAX_Y * CELL_SIZE; // px
+      var MARGIN = 5;   // px
+      var DX     = WIDTH/MAX_X - 2*MARGIN;
+      var DY     = HEIGHT/MAX_Y - 2*MARGIN;
 
-       // Give each position in the universe a unique id, unique
-       // up to transposition.
-       function atomId(atom) {
-         return "" + Math.floor(2 * (atom.x + DIR[atom.d].x/2))+ "," + Math.floor(2 * (atom.y + DIR[atom.d].y/2));
-       }
+      var ESF_PERCENT = 0.1;
 
-       // The initial positions of the atoms, forming the Central Galaxy, i.e
-       // the 7-segment display.
-       var initial = [
-         {x: 2, y: 1, d: 2},
-         {x: 2, y: 3, d: 2},
+      // Each atom the LCD universe is a segment between two adjacent
+      // points, so the representation of an atom will be the x,y coordinates
+      // of one end (the head), and then a value that encodes the directions from that
+      // end to the other end (the tail). I.e.
+      //
+      //   var atom = {
+      //    x: 1,
+      //    y: 2,
+      //    d: 0,
+      //   }
+      //
+      // Where d encodes the direction via DIR.
 
-         {x: 2, y: 2, d: 2},
-         {x: 2, y: 2, d: 0},
-         {x: 2, y: 2, d: 1},
+      // DIR is the encoding of the four possible directions
+      // an atom may face. The 't' value is the index of the
+      // opposite direction, used in 'transpose'.
+      var DIR = {
+        0: { x:  0, y:  1, t: 1},
+        1: { x:  0, y: -1, t: 0},
+        2: { x:  1, y:  0, t: 3},
+        3: { x: -1, y:  0, t: 2},
+      };
 
-         {x: 3, y: 2, d: 0},
-         {x: 3, y: 2, d: 1},
-       ];
+      initPlot("entropy", "entropy", 1);
+      initPlot("entity_count", "entities", 7);
 
-       var atoms = JSON.parse(JSON.stringify(initial));
-       var esf = false;  // Electrostatic force.
+      // Give each position in the universe a unique id, unique
+      // up to transposition.
+      function atomId(atom) {
+        return "" + Math.floor(2 * (atom.x + DIR[atom.d].x/2))+ "," + Math.floor(2 * (atom.y + DIR[atom.d].y/2));
+      }
 
-       // LCD records the ids of all the positions in the Central Galaxy.
-       var LCD = [];
-       initial.forEach(function(atom) {
-         LCD.push(atomId(atom));
-       });
+      // The initial positions of the atoms, forming the Central Galaxy, i.e
+      // the 7-segment display.
+      var initial = [
+        {x: 2, y: 1, d: 2},
+        {x: 2, y: 3, d: 2},
 
-       var canvas = document.getElementById("canvas");
-       canvas.width  = WIDTH;
-       canvas.height = HEIGHT;
-       var ctx = canvas.getContext("2d");
+        {x: 2, y: 2, d: 2},
+        {x: 2, y: 2, d: 0},
+        {x: 2, y: 2, d: 1},
 
-       // An atom is the same if you switch the head and the tail.
-       // This function switches the head and tail. Used in randMove.
-       function transpose(atom) {
-         return {
-           x: atom.x + DIR[atom.d].x,
-           y: atom.y + DIR[atom.d].y,
-           d: DIR[atom.d].t,
-         }
-       }
+        {x: 3, y: 2, d: 0},
+        {x: 3, y: 2, d: 1},
+      ];
 
-       function head(atom) {
-         return {
-           x: atom.x,
-           y: atom.y,
-         }
-       }
+      var atoms = JSON.parse(JSON.stringify(initial));
+      var esf = false;  // Electrostatic force.
 
-       function tail(atom) {
-         return {
-           x: atom.x + DIR[atom.d].x,
-           y: atom.y + DIR[atom.d].y,
-         }
-       }
+      // LCD records the ids of all the positions in the Central Galaxy.
+      var LCD = [];
+      initial.forEach(function(atom) {
+        LCD.push(atomId(atom));
+      });
 
-       function isValid(atom) {
-         var t = tail(atom);
-         return (t.x >= 0) && (t.x <= MAX_X) && (t.y >= 0) && (t.y <= MAX_Y);
-       }
+      var canvas = document.getElementById("canvas");
+      canvas.width  = WIDTH;
+      canvas.height = HEIGHT;
+      var ctx = canvas.getContext("2d");
 
-       function drawGrid() {
-         ctx.clearRect(0, 0, WIDTH, HEIGHT);
-         ctx.strokeStyle = "lightgray";
-         ctx.lineWidth = 1;
-         for (var x = 0; x <= MAX_X ; x++) {
-           ctx.beginPath();
-           ctx.moveTo(MARGIN + x*DX, MARGIN);
-           ctx.lineTo(MARGIN + x*DX, MARGIN + MAX_Y * DY);
-           ctx.stroke();
-         }
-         for (var y = 0; y <= MAX_Y; y++) {
-           ctx.beginPath();
-           ctx.moveTo(MARGIN            , MARGIN + y*DY);
-           ctx.lineTo(MARGIN +MAX_X * DX, MARGIN + y*DY);
-           ctx.stroke();
-         }
-       }
+      // An atom is the same if you switch the head and the tail.
+      // This function switches the head and tail. Used in randMove.
+      function transpose(atom) {
+        return {
+          x: atom.x + DIR[atom.d].x,
+          y: atom.y + DIR[atom.d].y,
+          d: DIR[atom.d].t,
+        }
+      }
 
-       function drawAtom(atom) {
-         ctx.strokeStyle = "red";
-         ctx.lineWidth = 3;
-         ctx.beginPath();
-         var h = head(atom);
-         var t = tail(atom);
-         ctx.moveTo(MARGIN + h.x*DX, MARGIN + h.y*DY);
-         ctx.lineTo(MARGIN + t.x*DX, MARGIN + t.y*DY);
-         ctx.stroke();
-       }
+      function head(atom) {
+        return {
+          x: atom.x,
+          y: atom.y,
+        }
+      }
 
-       // Move the atom to a new random position according to the rules.
-       function randMove(atom) {
-         // Randomly swap head and tail, so movement isn't biased.
-         if (Math.random() > 0.5) {
-           atom = transpose(atom);
-         }
-         // Choose a direction at random until you get a valid atom, i.e.
-         // one where the tail still sits in the universe.
-         atom.d = Math.floor(Math.random() * 4);
-         while (!isValid(atom)) {
-           atom.d = Math.floor(Math.random() * 4);
-         }
-         // Now swap head and tail.
-         atom = transpose(atom);
-         // Choose a direction at random until you get a valid atom, i.e.
-         // one where the tail still sits in the universe.
-         atom.d = Math.floor(Math.random() * 4);
-         while (!isValid(atom)) {
-           atom.d = Math.floor(Math.random() * 4);
-         }
+      function tail(atom) {
+        return {
+          x: atom.x + DIR[atom.d].x,
+          y: atom.y + DIR[atom.d].y,
+        }
+      }
 
-         return atom;
-       }
+      function isValid(atom) {
+        var t = tail(atom);
+        return (t.x >= 0) && (t.x <= MAX_X) && (t.y >= 0) && (t.y <= MAX_Y);
+      }
 
-       // Does the point sit in the Central Galaxy.
-       function endInCentralGalaxy(pt) {
-         return pt.x >= 2 && pt.x <= 3 && pt.y >= 1 && pt.y <= 3;
-       }
+      function drawGrid() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.strokeStyle = "lightgray";
+        ctx.lineWidth = 1;
+        for (var x = 0; x <= MAX_X ; x++) {
+          ctx.beginPath();
+          ctx.moveTo(MARGIN + x*DX, MARGIN);
+          ctx.lineTo(MARGIN + x*DX, MARGIN + MAX_Y * DY);
+          ctx.stroke();
+        }
+        for (var y = 0; y <= MAX_Y; y++) {
+          ctx.beginPath();
+          ctx.moveTo(MARGIN            , MARGIN + y*DY);
+          ctx.lineTo(MARGIN +MAX_X * DX, MARGIN + y*DY);
+          ctx.stroke();
+        }
+      }
 
-       function touchesCentralGalaxy(atom) {
-         return endInCentralGalaxy(head(atom)) || endInCentralGalaxy(tail(atom));
-       }
+      function drawAtom(atom) {
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        var h = head(atom);
+        var t = tail(atom);
+        ctx.moveTo(MARGIN + h.x*DX, MARGIN + h.y*DY);
+        ctx.lineTo(MARGIN + t.x*DX, MARGIN + t.y*DY);
+        ctx.stroke();
+      }
 
-       function ptEqual(a, b) {
-         return a.x == b.x && a.y == b.y;
-       }
+      // Move the atom to a new random position according to the rules.
+      function randMove(atom) {
+        // Randomly swap head and tail, so movement isn't biased.
+        if (Math.random() > 0.5) {
+          atom = transpose(atom);
+        }
+        // Choose a direction at random until you get a valid atom, i.e.
+        // one where the tail still sits in the universe.
+        atom.d = Math.floor(Math.random() * 4);
+        while (!isValid(atom)) {
+          atom.d = Math.floor(Math.random() * 4);
+        }
+        // Now swap head and tail.
+        atom = transpose(atom);
+        // Choose a direction at random until you get a valid atom, i.e.
+        // one where the tail still sits in the universe.
+        atom.d = Math.floor(Math.random() * 4);
+        while (!isValid(atom)) {
+          atom.d = Math.floor(Math.random() * 4);
+        }
 
-       function atomsTouch(a, b) {
-         return ptEqual(head(a), head(b)) ||
-                ptEqual(head(a), tail(b)) ||
-                ptEqual(tail(a), head(b)) ||
-                ptEqual(tail(a), tail(b));
-       }
+        return atom;
+      }
 
-       function atomInEntity(atom, entity) {
-         for (var i = 0; i < entity.length; i++) {
-           if (atomsTouch(atom, entity[i])) {
-             return true;
-           }
-         }
-         return false;
-       }
+      // Does the point sit in the Central Galaxy.
+      function endInCentralGalaxy(pt) {
+        return pt.x >= 2 && pt.x <= 3 && pt.y >= 1 && pt.y <= 3;
+      }
 
-       function start() {
-         atoms = JSON.parse(JSON.stringify(initial));
-         document.dispatchEvent(new CustomEvent("clear-entropy"));
-         drawGrid();
-         atoms.forEach(function(atom){
-           drawAtom(atom);
-         });
-         calculateEntropy();
-       }
+      function touchesCentralGalaxy(atom) {
+        return endInCentralGalaxy(head(atom)) || endInCentralGalaxy(tail(atom));
+      }
 
-       function calculateEntropy() {
-         var inLCD = {};
-         var u = 0;
-         var b = 0;
-         var t = 0;
-         atoms.forEach(function(atom) {
-           var id = atomId(atom);
-           // An atom is in the Central Galaxy if its ID matches
-           // an ID in LCD.
-           if (LCD.indexOf(id) != -1) {
-             inLCD[id] = 1;
-             b += 1;
-           } else if (touchesCentralGalaxy(atom)) {
-             t += 1;
-           }
-         });
-         u = atoms.length - Object.keys(inLCD).length;
-         var ent = ((14 + 4*u - 2*b - t)/42);
+      function ptEqual(a, b) {
+        return a.x == b.x && a.y == b.y;
+      }
 
-         // Now calculate the number of distinct entities.
-         var entities = [];
-         var atomsCopy = atoms.slice();
-         while (atomsCopy.length > 0) {
-           var entity = [atomsCopy.pop()];
-           var added = true;
-           while (added) {
-             added = false;
-             for (var i = 0; i < atomsCopy.length; i++) {
-               if (atomInEntity(atomsCopy[i], entity)) {
-                 added = true;
-                 entity.push(atomsCopy[i]);
-                 atomsCopy.splice(i, 1);
-                 break;
-               }
-             }
-           }
-           entities.push(entity);
-         }
+      function atomsTouch(a, b) {
+        return ptEqual(head(a), head(b)) ||
+          ptEqual(head(a), tail(b)) ||
+          ptEqual(tail(a), head(b)) ||
+          ptEqual(tail(a), tail(b));
+      }
 
-         document.getElementById("entropy").textContent = ent.toPrecision(2);
-         document.getElementById("entityCount").textContent = entities.length;
-         document.dispatchEvent(new CustomEvent("entropy", {detail: {
-           entropy: ent,
-           entities: entities.length,
-         }}));
-       }
+      function atomInEntity(atom, entity) {
+        for (var i = 0; i < entity.length; i++) {
+          if (atomsTouch(atom, entity[i])) {
+            return true;
+          }
+        }
+        return false;
+      }
 
-       start();
+      function start() {
+        atoms = JSON.parse(JSON.stringify(initial));
+        document.dispatchEvent(new CustomEvent("clear-entropy"));
+        drawGrid();
+        atoms.forEach(function(atom){
+          drawAtom(atom);
+        });
+        calculateEntropy();
+      }
 
-       window.setInterval(function() {
-         drawGrid();
-         for (var i = 0; i < atoms.length; i++) {
-           if (esf) {
-             var otherAtoms = atoms.slice();
-             otherAtoms.splice(i, 1);
-             if (atomInEntity(atoms[i], otherAtoms)) {
-               if (Math.random() < ESF_PERCENT) {
-                 atoms[i] = randMove(atoms[i]);
-               }
-             } else {
-               atoms[i] = randMove(atoms[i]);
-             }
-           } else {
-             atoms[i] = randMove(atoms[i]);
-           }
-           drawAtom(atoms[i]);
-         }
-         calculateEntropy();
-       }, 100);
+      function calculateEntropy() {
+        var inLCD = {};
+        var u = 0;
+        var b = 0;
+        var t = 0;
+        atoms.forEach(function(atom) {
+          var id = atomId(atom);
+          // An atom is in the Central Galaxy if its ID matches
+          // an ID in LCD.
+          if (LCD.indexOf(id) != -1) {
+            inLCD[id] = 1;
+            b += 1;
+          } else if (touchesCentralGalaxy(atom)) {
+            t += 1;
+          }
+        });
+        u = atoms.length - Object.keys(inLCD).length;
+        var ent = ((14 + 4*u - 2*b - t)/42);
 
-       document.getElementById("restart").addEventListener("click", function() {
-         start();
-       });
+        // Now calculate the number of distinct entities.
+        var entities = [];
+        var atomsCopy = atoms.slice();
+        while (atomsCopy.length > 0) {
+          var entity = [atomsCopy.pop()];
+          var added = true;
+          while (added) {
+            added = false;
+            for (var i = 0; i < atomsCopy.length; i++) {
+              if (atomInEntity(atomsCopy[i], entity)) {
+                added = true;
+                entity.push(atomsCopy[i]);
+                atomsCopy.splice(i, 1);
+                break;
+              }
+            }
+          }
+          entities.push(entity);
+        }
 
-       document.getElementById("esf").addEventListener("click", function(e) {
-         esf = e.target.checked;
-         start();
-       });
+        document.dispatchEvent(new CustomEvent("entropy", {detail: {
+          entropy: ent,
+          entities: entities.length,
+        }}));
+      }
 
-     })();
+      start();
 
-   </script>
+      window.setInterval(function() {
+        drawGrid();
+        for (var i = 0; i < atoms.length; i++) {
+          if (esf) {
+            var otherAtoms = atoms.slice();
+            otherAtoms.splice(i, 1);
+            if (atomInEntity(atoms[i], otherAtoms)) {
+              if (Math.random() < ESF_PERCENT) {
+                atoms[i] = randMove(atoms[i]);
+              }
+            } else {
+              atoms[i] = randMove(atoms[i]);
+            }
+          } else {
+            atoms[i] = randMove(atoms[i]);
+          }
+          drawAtom(atoms[i]);
+        }
+        calculateEntropy();
+      }, 100);
+
+      document.getElementById("restart").addEventListener("click", function() {
+        start();
+      });
+
+      document.getElementById("esf").addEventListener("click", function(e) {
+        esf = e.target.checked;
+        start();
+      });
+
+    })();
+  </script>
 </body>
 </html>
