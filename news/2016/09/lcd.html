@@ -276,6 +276,16 @@
          return false;
        }
 
+       function start() {
+         atoms = JSON.parse(JSON.stringify(initial));
+         document.dispatchEvent(new CustomEvent("clear-entropy"));
+         drawGrid();
+         atoms.forEach(function(atom){
+           drawAtom(atom);
+         });
+         calculateEntropy();
+       }
+
        function calculateEntropy() {
          var inLCD = {};
          var u = 0;
@@ -295,7 +305,7 @@
          u = atoms.length - Object.keys(inLCD).length;
          var ent = ((14 + 4*u - 2*b - t)/42);
 
-         // Now calulate the number of distinct entities.
+         // Now calculate the number of distinct entities.
          var entities = [];
          var atomsCopy = atoms.slice();
          while (atomsCopy.length > 0) {
@@ -323,11 +333,7 @@
          }}));
        }
 
-       drawGrid();
-       atoms.forEach(function(atom){
-         drawAtom(atom);
-       });
-       calculateEntropy();
+       start();
 
        window.setInterval(function() {
          drawGrid();
@@ -350,23 +356,13 @@
          calculateEntropy();
        }, 100);
 
-       function restart() {
-         atoms = JSON.parse(JSON.stringify(initial));
-         document.dispatchEvent(new CustomEvent("clear-entropy"));
-         drawGrid();
-         atoms.forEach(function(atom){
-           drawAtom(atom);
-         });
-         calculateEntropy();
-       }
-
        document.getElementById("restart").addEventListener("click", function() {
-         restart();
+         start();
        });
 
        document.getElementById("esf").addEventListener("click", function(e) {
          esf = e.target.checked;
-         restart();
+         start();
        });
 
      })();
