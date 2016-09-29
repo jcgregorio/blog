@@ -40,7 +40,11 @@
 
     input,
     label {
-      margin: 0.5em;
+      margin-left: 0.5em;
+    }
+
+    span {
+      margin-right: 0.5em;
     }
   </style>
   <div>
@@ -111,7 +115,15 @@
       var DX     = WIDTH/MAX_X - 2*MARGIN;
       var DY     = HEIGHT/MAX_Y - 2*MARGIN;
 
+      // ESF_PERCENT is the chance that an atom moves
+      // if it is in contact with another atom. Note
+      // that the chance an atom moves if not in contact
+      // with another atom is 100%.
       var ESF_PERCENT = 0.1;
+
+      var esf = false;  // True if the electrostatic force is taken
+                        // into consideration when moving an atom.
+                        // Controlled by a checkbox.
 
       // Each atom the LCD universe is a segment between two adjacent
       // points, so the representation of an atom will be the x,y coordinates
@@ -160,7 +172,6 @@
       ];
 
       var atoms = JSON.parse(JSON.stringify(initial));
-      var esf = false;  // Electrostatic force.
 
       // LCD records the ids of all the positions in the Central Galaxy.
       var LCD = [];
@@ -255,7 +266,7 @@
         return atom;
       }
 
-      // Does the point sit in the Central Galaxy.
+      // Does the point sit in the Central Galaxy?
       function endInCentralGalaxy(pt) {
         return pt.x >= 2 && pt.x <= 3 && pt.y >= 1 && pt.y <= 3;
       }
@@ -270,14 +281,14 @@
 
       function atomsTouch(a, b) {
         return ptEqual(head(a), head(b)) ||
-          ptEqual(head(a), tail(b)) ||
-          ptEqual(tail(a), head(b)) ||
-          ptEqual(tail(a), tail(b));
+               ptEqual(head(a), tail(b)) ||
+               ptEqual(tail(a), head(b)) ||
+               ptEqual(tail(a), tail(b));
       }
 
-      function atomInEntity(atom, entity) {
-        for (var i = 0; i < entity.length; i++) {
-          if (atomsTouch(atom, entity[i])) {
+      function atomTouchesSet(atom, set) {
+        for (var i = 0; i < set.length; i++) {
+          if (atomsTouch(atom, set[i])) {
             return true;
           }
         }
@@ -322,7 +333,7 @@
           while (added) {
             added = false;
             for (var i = 0; i < atomsCopy.length; i++) {
-              if (atomInEntity(atomsCopy[i], entity)) {
+              if (atomTouchesSet(atomsCopy[i], entity)) {
                 added = true;
                 entity.push(atomsCopy[i]);
                 atomsCopy.splice(i, 1);
@@ -347,7 +358,7 @@
           if (esf) {
             var otherAtoms = atoms.slice();
             otherAtoms.splice(i, 1);
-            if (atomInEntity(atoms[i], otherAtoms)) {
+            if (atomTouchesSet(atoms[i], otherAtoms)) {
               if (Math.random() < ESF_PERCENT) {
                 atoms[i] = randMove(atoms[i]);
               }
