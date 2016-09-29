@@ -40,7 +40,9 @@
 
     input,
     label {
-      margin-left: 0.5em;
+      margin: 0.6em 0 0.6em 0.6em;
+      padding: 0.2em;
+      background: whitesmoke;
     }
 
     span {
@@ -48,9 +50,14 @@
     }
   </style>
   <div>
-    <button id=restart>Restart</button>
+    <div>
+      <button id=restart>Restart</button>
+    </div>
     <div>
       <input type="checkbox" name="esf" id="esf"><label for="esf">ESF</label>
+    </div>
+    <div>
+      <input type="text" name="percent" id="percent" size=3 value="10" disabled><label for="percent">%</label>
     </div>
   </div>
   <canvas width=640 height=480 id="canvas"></canvas>
@@ -115,11 +122,11 @@
       var DX     = WIDTH/MAX_X - 2*MARGIN;
       var DY     = HEIGHT/MAX_Y - 2*MARGIN;
 
-      // ESF_PERCENT is the chance that an atom moves
+      // esf_percent is the chance that an atom moves
       // if it is in contact with another atom. Note
       // that the chance an atom moves if not in contact
       // with another atom is 100%.
-      var ESF_PERCENT = 0.1;
+      var esf_percent = 0.1;
 
       var esf = false;  // True if the electrostatic force is taken
                         // into consideration when moving an atom.
@@ -344,10 +351,12 @@
           entities.push(entity);
         }
 
-        document.dispatchEvent(new CustomEvent("entropy", {detail: {
-          entropy: ent,
-          entities: entities.length,
-        }}));
+        document.dispatchEvent(new CustomEvent("entropy", {
+          detail: {
+            entropy: ent,
+            entities: entities.length,
+          }
+        }));
       }
 
       start();
@@ -359,7 +368,7 @@
             var otherAtoms = atoms.slice();
             otherAtoms.splice(i, 1);
             if (atomTouchesSet(atoms[i], otherAtoms)) {
-              if (Math.random() < ESF_PERCENT) {
+              if (Math.random() < esf_percent) {
                 atoms[i] = randMove(atoms[i]);
               }
             } else {
@@ -379,6 +388,13 @@
 
       document.getElementById("esf").addEventListener("click", function(e) {
         esf = e.target.checked;
+        document.getElementById("percent").disabled = !esf;
+        start();
+      });
+
+      document.getElementById("percent").addEventListener("input", function(e) {
+        esf_percent = (+e.target.value)/100;
+        console.log(esf_percent);
         start();
       });
 
