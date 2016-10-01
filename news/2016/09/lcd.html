@@ -58,6 +58,9 @@
       <input type="checkbox" name="esf" id="esf"><label for="esf">ESF</label>
     </div>
     <div>
+      <input type="checkbox" name="pauli" id="pauli"><label for="pauli">Pauli</label>
+    </div>
+    <div>
       <input type="text" name="percent" id="percent" size=3 value="10" disabled><label for="percent">%</label>
     </div>
     <div>
@@ -139,6 +142,8 @@
       var esf = false;  // True if the electrostatic force is taken
                         // into consideration when moving an atom.
                         // Controlled by a checkbox.
+      var pauli = false; // True if the Pauli exclusion principle applies
+                         // and atoms can't occupy the same location.
 
       // Each atom the LCD universe is a segment between two adjacent
       // points, so the representation of an atom will be the x,y coordinates
@@ -203,11 +208,16 @@
 
       var atoms = JSON.parse(JSON.stringify(initial));
 
+      function idsOf(arr) {
+        var ids = [];
+        arr.forEach(function(atom) {
+          ids.push(atomId(atom));
+        });
+        return ids;
+      }
+
       // LCD records the ids of all the positions in the Central Galaxy.
-      var LCD = [];
-      low_entropy.forEach(function(atom) {
-        LCD.push(atomId(atom));
-      });
+      var LCD = idsOf(low_entropy);
 
       var canvas = document.getElementById("canvas");
       canvas.width  = WIDTH;
@@ -386,10 +396,11 @@
 
       window.setInterval(function() {
         drawGrid();
+        var ids = idsOf(atoms);
         for (var i = 0; i < atoms.length; i++) {
+          var otherAtoms = atoms.slice();
+          otherAtoms.splice(i, 1);
           if (esf) {
-            var otherAtoms = atoms.slice();
-            otherAtoms.splice(i, 1);
             if (atomTouchesSet(atoms[i], otherAtoms)) {
               if (Math.random() < esf_percent) {
                 atoms[i] = randMove(atoms[i]);
@@ -399,6 +410,13 @@
             }
           } else {
             atoms[i] = randMove(atoms[i]);
+          }
+          if (pauli) {
+            otherIds = ids.slice();
+            otherIds.splice(i, 1);
+            while (otherIds.indexOf(atomId(atoms[i])) != -1) {
+              atoms[i] = randMove(atoms[i]);
+            }
           }
           drawAtom(atoms[i]);
         }
@@ -412,6 +430,11 @@
       document.getElementById("esf").addEventListener("click", function(e) {
         esf = e.target.checked;
         document.getElementById("percent").disabled = !esf;
+        start();
+      });
+
+      document.getElementById("pauli").addEventListener("click", function(e) {
+        pauli = e.target.checked;
         start();
       });
 
