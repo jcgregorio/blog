@@ -74,10 +74,10 @@
   <canvas width=640 height=480 id="canvas"></canvas>
 
   <div>Entropy: <span id=entropy></span> Mean: <span id=entropy_mean></span></div>
-  <canvas class=plot width=200 height=105 id="entropy_plot"></canvas>
+  <canvas class=plot width=300 height=105 id="entropy_plot"></canvas>
 
   <div>Entities: <span id=entity_count></span> Mean: <span id=entity_count_mean></span></div>
-  <canvas class=plot width=200 height=105 id="entity_count_plot"></canvas>
+  <canvas class=plot width=300 height=105 id="entity_count_plot"></canvas>
 
   <script type="text/javascript" charset="utf-8">
     (function () {
@@ -451,5 +451,46 @@
 
     })();
   </script>
+  <p>
+    <a href="">Quanta Magazine</a> published an interesting article in their
+    <a href="https://www.quantamagazine.org/tag/Insights-Puzzle/">Insights
+      Puzzle</a> column called <a
+      href="https://www.quantamagazine.org/20160913-the-physics-of-time-puzzle/">Seeing
+      Time Through a Liquid Crystal Display</a>. Above is my version of the
+    simulation, which operates on a basic level like the simulation
+    presented in the article, but then adds in a few twists. At this point
+    you should to read the arctile to understand the basic simulation.
+  </p>
+  <p>
+    I added a second measure, which is just the number of connected objects in
+    the simultion. This will be a value from 1 to 7, where 1 is achieved when
+    all the atoms are touching, and 7 is achieved when no atom touches another
+    atom. You can start the simulation in either of these configurations by
+    choosing either "Low Entropy" or "High Entropy" for the initial
+    conditions. I added this because the initial definition of entropy given
+    in the article was a little unsatisfactory, as it fixed the low entropy
+    state to the middle of the universe, which means the figure 8 could
+    reappear perfectly formed two steps to the right and that would still be
+    measured as maximum entropy.
+  </p>
+  <p>
+    The second deviation from the article's proposed simulation is the
+    addition of 'forces' that influence the interation of the atoms in the
+    universe. These are ways of injecting stratified stability into the
+    system. The first force is 'ESF', a force that acts like the
+    electrostatic force, that is, when two atoms are touching the
+    probability that they wlll move is reduced. The actual probability that
+    an atom moves when in contact with at least one other atom is controlled
+    via the "%" input, which defaults to 10%.
+  </p>
+  <p>
+    The second 'force' added in the simulation is similar to the Pauli
+    Exclusion Principle, which stops atoms from occupying the same location.
+  </p>
+  <p>
+    Both of the forces can be turned on and off via checkboxes. When
+    conditions are changed, such as changing the ESF percent, the simulation
+    is restarted and the graphs are cleared.
+  </p>
 </body>
 </html>
