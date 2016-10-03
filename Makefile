@@ -27,7 +27,7 @@ watch:
 	./bin/waitforit.sh
 
 serve:
-	cd ./dst ; http-server
+	cd ./dst ; http-server -a 127.0.0.1
 
 setup:
 	go get -u github.com/jcgregorio/piccolo
