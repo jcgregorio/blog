@@ -31,9 +31,9 @@ serve:
 
 setup:
 	go get -u github.com/jcgregorio/piccolo
-	go get -u github.com/jcgregorio/piccolo
 
 server:
 	go get -u github.com/jcgregorio/userve/go/userve
+	go install -v hawx.me/code/riviera
 	./build_release
 
