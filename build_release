@@ -10,12 +10,12 @@ copy_release_files()
 INSTALL="sudo install -D --verbose --backup=none --group=root --owner=root"
 INSTALL_DIR="sudo install -d --verbose --backup=none --group=root --owner=root"
 ${INSTALL} --mode=755 -T ${GOPATH}/bin/userve  ${ROOT}/usr/local/bin/userve
-${INSTALL} --mode=755 -T ${GOPATH}/bin/riviera ${ROOT}/usr/local/bin/riviera
+#${INSTALL} --mode=755 -T ${GOPATH}/bin/riviera ${ROOT}/usr/local/bin/riviera
 ${INSTALL} --mode=644 -T ${APPNAME}.service    ${ROOT}/etc/systemd/system/${APPNAME}.service
-${INSTALL} --mode=644 -T riviera.service       ${ROOT}/etc/systemd/system/riviera.service
+#${INSTALL} --mode=644 -T riviera.service       ${ROOT}/etc/systemd/system/riviera.service
 
-${INSTALL} --mode=644 -T feeds.xml             ${ROOT}/etc/riviera/feeds.xml
-${INSTALL_DIR} --mode=755                      ${ROOT}/var/riviera
+#${INSTALL} --mode=644 -T feeds.xml             ${ROOT}/etc/riviera/feeds.xml
+#${INSTALL_DIR} --mode=755                      ${ROOT}/var/riviera
 }
 
 source release.sh

@@ -4,7 +4,7 @@ Wants=network-online.target
 
 [Service]
 ExecStart=/usr/local/bin/userve \
-    --source=/home/joe_gregorio/bitworking/dst
+    --source=/home/jcgregorio/blog/dst
 
 Restart=always
 User=root
