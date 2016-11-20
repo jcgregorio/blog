@@ -19,6 +19,7 @@ pub:
 deps:
 	npm update
 	./node_modules/.bin/bower update
+	sudo apt install texlive-latex-recommended imagemagick
 
 clean:
 	find ./dst -name "*.html" | xargs rm
@@ -27,7 +28,7 @@ watch:
 	./bin/waitforit.sh
 
 serve:
-	cd ./dst ; http-server -a 127.0.0.1
+	cd ./dst ; http-server 
 
 setup:
 	go get -u github.com/jcgregorio/piccolo
