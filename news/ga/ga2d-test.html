@@ -5,12 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta value="2016-11-24T16:46:36+00:00" name="created"/></head>
 <body>
-  <script src="ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var e1 = ga2d.vec(1, 0);
     var e2 = ga2d.vec(0, 1);
+    var e12 = ga2d.mul(e1, e2)
     console.log(ga2d.mul(e1, e1));
     console.log(ga2d.mul(e1, e2));
+    console.log(ga2d.mul(e12, e12));
+
+    var a = ga2d.vec(2, 3);
+    var b = ga2d.inv(a);
+    console.log(ga2d.mul(a, b));
   </script>
+  <svg width="256" height="256" viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg" version="1.1">
+
+    <defs>
+      <marker id="Triangle" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="black" stroke="black"/>
+      </marker>
+    </defs>
+
+    <g>
+      <line x1=0 y1=0 x2=2 y2=3 stroke="black" stroke-width="0.1" marker-end="url(#Triangle)"/>
+      <text x=1 y=1.5 font-size="1" font-family="monospace">a</text>
+
+      <line x1=0 y1=0 x2=3 y2="-2" stroke="black" stroke-width="0.1" marker-end="url(#Triangle)"/>
+      <text x=1.5 y="-1" font-size="1" font-family="monospace">b</text>
+
+      <line x1=-5 y1=0 x2=5 y2=0 stroke="gray" stroke-width="0.05" />
+      <line x1=0 y1=-5 x2=0 y2=5 stroke="gray" stroke-width="0.05" />
+    </g>
+  </svg>
 </body>
 </html>
