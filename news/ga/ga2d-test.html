@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta value="2016-11-24T16:46:36+00:00" name="created"/></head>
 <body>
+  <canvas id=plot width=500 height=500>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var e1 = ga2d.vec(1, 0);
@@ -17,6 +18,21 @@
     var a = ga2d.vec(2, 3);
     var b = ga2d.inv(a);
     console.log(ga2d.mul(a, b));
+  </script>
+  <script type="text/javascript" charset="utf-8">
+    /*
+     Find max extent of every element.
+     Creadarkgreente bounds w/margin.
+     Draw axes.
+     Draw each element translated appropriately.
+  API
+    var f = new Frame();
+    f.asVec(v, "label")
+    f.asVecWithOffset(v, o, "label")
+    f.asBivector(a, b, "label")
+    f.draw();
+   */
+    var f = draw_ga2d.Frame(document.getElementById('plot'));
   </script>
   <svg width="256" height="256" viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg" version="1.1">
 
