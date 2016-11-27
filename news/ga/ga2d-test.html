@@ -3,23 +3,31 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta value="2016-11-24T16:46:36+00:00" name="created"/></head>
+    <meta value="2016-11-24T16:46:36+00:00" name="created"/>
+  </head>
 <body>
+    <style type="text/css" media="screen">
+      canvas {
+        border: solid gray 1px;
+      }
+
+    </style>
   <canvas id=plot width=500 height=500>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript" charset="utf-8">
     var e1 = ga2d.vec(1, 0);
     var e2 = ga2d.vec(0, 1);
     var e12 = ga2d.mul(e1, e2)
+/*
     console.log(ga2d.mul(e1, e1));
     console.log(ga2d.mul(e1, e2));
     console.log(ga2d.mul(e12, e12));
+*/
 
     var a = ga2d.vec(2, 3);
-    var b = ga2d.inv(a);
-    console.log(ga2d.mul(a, b));
-  </script>
-  <script type="text/javascript" charset="utf-8">
+    var b = ga2d.mul(a, e12);
+    console.log(ga2d.mul(e1, ga2d.e(Math.PI/100)));
     /*
      Find max extent of every element.
      Creadarkgreente bounds w/margin.
@@ -32,7 +40,10 @@
     f.asBivector(a, b, "label")
     f.draw();
    */
-    var f = draw_ga2d.Frame(document.getElementById('plot'));
+    var f = new draw_ga2d.Frame(document.getElementById('plot'));
+    f.vec(a);
+    f.vec(b);
+    f.draw();
   </script>
   <svg width="256" height="256" viewBox="-5 -5 10 10" xmlns="http://www.w3.org/2000/svg" version="1.1">
 
