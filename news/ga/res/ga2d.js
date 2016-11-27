@@ -43,12 +43,30 @@ this.ga2d = this.ga2d || function() {
       x[1]/norm,
       x[2]/norm,
       0
-    ]
+    ];
   };
+
+  ga2d.norm = function(x) {
+    if (x[0] !== 0 || x[3] !== 0) {
+      throw "Can only invert vectors.";
+    }
+    var norm = Math.sqrt(x[1]*x[1] + x[2]*x[2]);
+    return [
+      0,
+      x[1]/norm,
+      x[2]/norm,
+      0
+    ];
+  }
+
 
   // vec turns a vector <x, y> into an element of the 2-D GA space.
   ga2d.vec = function(x, y) {
     return [0, x, y, 0];
+  }
+
+  ga2d.e = function(theta) {
+    return [Math.cos(theta), 0, 0, Math.sin(theta)];
   }
 
   return ga2d;
