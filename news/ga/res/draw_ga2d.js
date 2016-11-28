@@ -22,6 +22,19 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this.ops.push({
         op: "vec",
         value: v,
+        offset: [0, 0, 0, 0],
+        label: label,
+      });
+    }
+
+    vecFrom(v, offset, label) {
+      this._updateExtents(v);
+      this._updateExtents(g.add(v, offset));
+      // Add to list of ops.
+      this.ops.push({
+        op: "vec",
+        value: v,
+        offset: offset,
         label: label,
       });
     }
@@ -63,29 +76,30 @@ this.draw_ga2d = this.ga2d_draw || function() {
       var xform = function(v) {
         return [(v[1]+origin)*ratio, (-v[2]+origin)*ratio];
       }
-      var zero = xform([0, 0, 0, 0]);
       this.ops.forEach(function(op) {
         if (op.op === "vec") {
           this.ctx.beginPath();
-          this._moveto(zero);
-          this._lineto(xform(op.value));
+          this._moveto(xform(op.offset));
+          var source_tip = g.add(op.value, op.offset);
+          var tip = xform(source_tip);
+          this._lineto(tip);
 
           // Draw arrow heads.
           var rev = g.mul([0.2, 0, 0, 0], g.mul(g.norm(op.value), rotPi));
           var left = g.mul(rev, g.e(Math.PI/10));
-          this._moveto(xform(op.value));
-          this._lineto(xform(g.add(op.value, left)));
+          this._moveto(tip);
+          this._lineto(xform(g.add(source_tip, left)));
 
           var right= g.mul(rev, g.e(-Math.PI/10));
-          this._moveto(xform(op.value));
-          this._lineto(xform(g.add(op.value, right)));
+          this._moveto(tip);
+          this._lineto(xform(g.add(source_tip, right)));
 
           this.ctx.stroke();
 
           // Draw label.
           var m = g.mul(mid, op.value);
           var ortho = g.mul([0.3, 0, 0, 0], g.mul(g.norm(op.value), g.e(Math.PI/2)));
-          var textLoc = g.add(m, ortho);
+          var textLoc = g.add(op.offset, g.add(m, ortho));
           this._text(xform(textLoc), op.label)
         }
       }.bind(this));

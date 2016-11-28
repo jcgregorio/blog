@@ -65,6 +65,10 @@ this.ga2d = this.ga2d || function() {
     return [0, x, y, 0];
   }
 
+  ga2d.scalar = function(c) {
+    return [c, 0, 0, 0];
+  }
+
   ga2d.e = function(theta) {
     return [Math.cos(theta), 0, 0, Math.sin(theta)];
   }

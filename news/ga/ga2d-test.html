@@ -31,7 +31,7 @@
     console.log(ga2d.mul(e1, ga2d.e(Math.PI/100)));
     /*
      Find max extent of every element.
-     Creadarkgreente bounds w/margin.
+     bounds w/margin.
      Draw axes.
      Draw each element translated appropriately.
   API
@@ -44,7 +44,10 @@
     var f = new draw_ga2d.Frame(document.getElementById('plot'));
     f.vec(a, "a");
     f.vec(b, "b");
-    f.vec(c, "c");
+    f.vecFrom(c, a, "c");
+    var negA = ga2d.mul(ga2d.scalar(-1), a);
+    f.vec(negA, "-a");
+    f.vecFrom(negA, ga2d.add(a, c), "a");
     f.draw();
   </script>
 </body>
