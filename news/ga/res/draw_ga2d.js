@@ -39,6 +39,12 @@ this.draw_ga2d = this.ga2d_draw || function() {
       });
     }
 
+    axes() {
+      this.ops.push({
+        op: "axes",
+      });
+    }
+
     _updateExtents(v) {
       if (v[1] > this.extent.max) {
         this.extent.max = v[1];
@@ -79,6 +85,7 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this.ops.forEach(function(op) {
         if (op.op === "vec") {
           this.ctx.beginPath();
+          this.ctx.strokeStyle = "#000";
           this._moveto(xform(op.offset));
           var source_tip = g.add(op.value, op.offset);
           var tip = xform(source_tip);
@@ -101,6 +108,14 @@ this.draw_ga2d = this.ga2d_draw || function() {
           var ortho = g.mul([0.3, 0, 0, 0], g.mul(g.norm(op.value), g.e(Math.PI/2)));
           var textLoc = g.add(op.offset, g.add(m, ortho));
           this._text(xform(textLoc), op.label)
+        } else if (op.op == "axes") {
+          this.ctx.beginPath();
+          this.ctx.strokeStyle = "#ddd";
+          this.ctx.moveTo(0, css_extent/2);
+          this.ctx.lineTo(css_extent, css_extent/2);
+          this.ctx.moveTo(css_extent/2, 0);
+          this.ctx.lineTo(css_extent/2, css_extent);
+          this.ctx.stroke();
         }
       }.bind(this));
     }

@@ -6,12 +6,6 @@
     <meta value="2016-11-24T16:46:36+00:00" name="created"/>
   </head>
 <body>
-    <style type="text/css" media="screen">
-      canvas {
-        border: solid gray 1px;
-      }
-
-    </style>
   <canvas id=plot width=500 height=500>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
@@ -42,6 +36,7 @@
     f.draw();
    */
     var f = new draw_ga2d.Frame(document.getElementById('plot'));
+    f.axes();
     f.vec(a, "a");
     f.vec(b, "b");
     f.vecFrom(c, a, "c");
