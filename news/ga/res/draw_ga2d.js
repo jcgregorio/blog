@@ -8,7 +8,7 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
 
-      this.ctx.font = "24px serif";
+      this.ctx.font = "18px serif";
       this.ops = [];
       this.extent = {
         max: 0,
