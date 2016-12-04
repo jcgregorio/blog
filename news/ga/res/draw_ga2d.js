@@ -8,7 +8,7 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
 
-      this.ctx.font = "18px serif";
+      this.ctx.font = "bold 18px serif";
       this.ops = [];
       this.extent = {
         max: 0,
@@ -105,7 +105,7 @@ this.draw_ga2d = this.ga2d_draw || function() {
 
           // Draw label.
           var m = g.mul(mid, op.value);
-          var ortho = g.mul([0.3, 0, 0, 0], g.mul(g.norm(op.value), g.e(Math.PI/2)));
+          var ortho = g.mul([0.3, 0, 0, 0], g.mul(g.norm(op.value), g.e(-Math.PI/2)));
           var textLoc = g.add(op.offset, g.add(m, ortho));
           this._text(xform(textLoc), op.label)
         } else if (op.op == "axes") {
