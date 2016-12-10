@@ -60,7 +60,7 @@
     is where Geometric Algebra comes in to play.
   </p>
   <dl>
-    <dd><latex-pic> \bm{a} = -4 \bm{e_{1}} + \bm{2 e_{2}} </latex-pic></dd>
+    <dd><latex-pic> \bm{a} = -4 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
     <dd><latex-pic> \bm{b} = 2 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
     <dd><latex-pic> \bm{c} = \bm{a} + \bm{b} =  -2 \bm{e_1} + 4 \bm{e_2}</latex-pic></dd>
   </dl>
@@ -90,9 +90,52 @@
   </dl>
   <p>The first part is just the dot product from Linear Algebra</p>
   <p>
-    The second part is called the wedge product, or outer product, and needs
+    The second part is called the wedge product, or exterior product, and needs
     some explaining.
   </p>
+
+  <canvas id=wedge width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(1, 0);
+      var b = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var a_neg = ga2d.mul(ga2d.scalar(-1), a);
+      var b_neg = ga2d.mul(ga2d.scalar(-1), b);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge'));
+      f.vec(a, "a");
+      f.vecFrom(b, a, "b");
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ]);
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    The exterior product represents the oriented area defined by two vectors.
+
+    In simple linear algebraic terms the parallelogram defined by two vectors:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{a} = a_1 \bm{e_{1}} + a_2 \bm{e_{2}} </latex-pic></dd>
+    <dd><latex-pic> \bm{b} = b_1 \bm{e_{1}} + b_2 \bm{e_{2}} </latex-pic></dd>
+  </dl>
+  <p>Then the area of parallelogram defined by those two vectors is the
+    absolute value of the determinant of:</p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \lvert  det( \[ \begin{bmatrix}
+          a_1 & a_2 \\
+          b_1 & b_2
+          \end{bmatrix} \] ) \rvert
+      </latex-pic>
+    </dd>
+  </dl>
 
   <dl>
     <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
