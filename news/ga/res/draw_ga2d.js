@@ -11,8 +11,10 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this.ctx.font = "bold 18px serif";
       this.ops = [];
       this.extent = {
-        max: 0,
-        min: 0,
+        xmax: 0,
+        xmin: 0,
+        ymax: 0,
+        ymin: 0,
       };
     }
 
@@ -58,17 +60,17 @@ this.draw_ga2d = this.ga2d_draw || function() {
     }
 
     _updateExtents(v) {
-      if (v[1] > this.extent.max) {
-        this.extent.max = v[1];
+      if (v[1] > this.extent.xmax) {
+        this.extent.xmax = v[1];
       }
-      if (-v[1] > this.extent.max) {
-        this.extent.max= -v[1];
+      if (v[1] < this.extent.xmin) {
+        this.extent.xmin = v[1];
       }
-      if (v[2] > this.extent.max) {
-        this.extent.max = v[2];
+      if (v[2] > this.extent.ymax) {
+        this.extent.ymax = v[2];
       }
-      if (-v[2] > this.extent.max) {
-        this.extent.max = -v[2];
+      if (v[2] < this.extent.ymin) {
+        this.extent.ymin = v[2];
       }
     }
 
@@ -85,14 +87,18 @@ this.draw_ga2d = this.ga2d_draw || function() {
     }
 
     draw() {
-      var css_extent = this.canvas.height;
-      var source_extent = 1.2 * (2*this.extent.max);
-      var origin = source_extent/2;
-      var ratio = (css_extent/source_extent);
+      var y_css_extent = this.canvas.height;
+      var x_css_extent = this.canvas.width;
+      var x_source_extent = 1.2 * (this.extent.xmax - this.extent.xmin);
+      var y_source_extent = 1.2 * (this.extent.ymax - this.extent.ymin);
+      var x_origin = -this.extent.xmin +  0.1 * x_source_extent;
+      var y_origin = this.extent.ymax + 0.1 * y_source_extent;
+      var x_ratio = (x_css_extent/x_source_extent);
+      var y_ratio = (y_css_extent/y_source_extent);
       var rotPi = [-1, 0, 0, 0];
       var mid = [0.5, 0, 0, 0];
       var xform = function(v) {
-        return [(v[1]+origin)*ratio, (-v[2]+origin)*ratio];
+        return [(v[1]+x_origin)*x_ratio, (-v[2]+y_origin)*y_ratio];
       }
       this.ops.forEach(function(op) {
         if (op.op === "vec") {
@@ -123,10 +129,10 @@ this.draw_ga2d = this.ga2d_draw || function() {
         } else if (op.op == "axes") {
           this.ctx.beginPath();
           this.ctx.strokeStyle = "#ddd";
-          this.ctx.moveTo(0, css_extent/2);
-          this.ctx.lineTo(css_extent, css_extent/2);
-          this.ctx.moveTo(css_extent/2, 0);
-          this.ctx.lineTo(css_extent/2, css_extent);
+          this.ctx.moveTo(0, y_origin*y_ratio);
+          this.ctx.lineTo(x_css_extent, y_origin*y_ratio);
+          this.ctx.moveTo(x_origin*x_ratio, 0);
+          this.ctx.lineTo(x_origin*x_ratio, y_css_extent);
           this.ctx.stroke();
         } else if (op.op == "region") {
           this.ctx.beginPath();
@@ -137,7 +143,6 @@ this.draw_ga2d = this.ga2d_draw || function() {
           }
           this._moveto(xform(op.value[0]));
           op.value.forEach(function(v) {
-            console.log(v.slice(1,3));
             this._lineto(xform(v));
           }.bind(this));
           this.ctx.fill();
