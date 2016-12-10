@@ -89,11 +89,11 @@ this.draw_ga2d = this.ga2d_draw || function() {
     draw() {
       var y_css_extent = this.canvas.height;
       var x_css_extent = this.canvas.width;
-      var x_source_extent = 1.2 * (this.extent.xmax - this.extent.xmin);
-      var y_source_extent = 1.2 * (this.extent.ymax - this.extent.ymin);
+      var x_source_extent = 1.3 * (this.extent.xmax - this.extent.xmin);
+      var y_source_extent = 1.3 * (this.extent.ymax - this.extent.ymin);
       var source_extent = Math.max(x_source_extent, y_source_extent);
-      var x_origin = -this.extent.xmin + 0.1 * source_extent;
-      var y_origin =  this.extent.ymax + 0.1 * source_extent;
+      var x_origin = -this.extent.xmin + 0.15 * source_extent;
+      var y_origin =  this.extent.ymax + 0.15 * source_extent;
       var x_ratio = (x_css_extent/source_extent);
       var y_ratio = (y_css_extent/source_extent);
       var rotPi = [-1, 0, 0, 0];
@@ -124,9 +124,12 @@ this.draw_ga2d = this.ga2d_draw || function() {
 
           // Draw label.
           var m = g.mul(mid, op.value);
-          var ortho = g.mul([0.3, 0, 0, 0], g.mul(g.norm(op.value), g.e(-Math.PI/2)));
-          var textLoc = g.add(op.offset, g.add(m, ortho));
-          this._text(xform(textLoc), op.label)
+          var ortho = g.mul([0.05, 0, 0, 0], g.mul(g.norm(op.value), g.e(-Math.PI/2)));
+          var textLoc = g.add(op.offset, op.value);
+          var nativeTextLoc = xform(textLoc);
+          nativeTextLoc[0] += 9;
+          nativeTextLoc[1] -= 9;
+          this._text(nativeTextLoc, op.label)
         } else if (op.op == "axes") {
           this.ctx.beginPath();
           this.ctx.strokeStyle = "#ddd";
