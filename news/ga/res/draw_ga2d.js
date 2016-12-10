@@ -39,6 +39,18 @@ this.draw_ga2d = this.ga2d_draw || function() {
       });
     }
 
+    region(ar, label, color) {
+      ar.forEach(function(v) {
+        this._updateExtents(v);
+      }.bind(this));
+      this.ops.push({
+        op: "region",
+        value: ar,
+        label: label,
+        color: color,
+      });
+    }
+
     axes() {
       this.ops.push({
         op: "axes",
@@ -116,6 +128,19 @@ this.draw_ga2d = this.ga2d_draw || function() {
           this.ctx.moveTo(css_extent/2, 0);
           this.ctx.lineTo(css_extent/2, css_extent);
           this.ctx.stroke();
+        } else if (op.op == "region") {
+          this.ctx.beginPath();
+          if (op.color) {
+            this.ctx.fillStyle = op.color;
+          } else {
+            this.ctx.fillStyle = "rgba(90, 0, 255, 0.5)";
+          }
+          this._moveto(xform(op.value[0]));
+          op.value.forEach(function(v) {
+            console.log(v.slice(1,3));
+            this._lineto(xform(v));
+          }.bind(this));
+          this.ctx.fill();
         }
       }.bind(this));
     }

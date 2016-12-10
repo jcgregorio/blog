@@ -25,6 +25,14 @@
     var negA = ga2d.mul(ga2d.scalar(-1), a);
     f.vec(negA, "-a");
     f.vecFrom(negA, ga2d.add(a, c), "a");
+    var region = [
+      [0,0,0,0],
+      a,
+      ga2d.add(a,c),
+      ga2d.add(ga2d.mul(ga2d.scalar(-1), a), ga2d.add(a,c)),
+    ];
+    f.region(region, "", "rgba(0,120,0,0.3)");
+
     f.draw();
   </script>
 
