@@ -12,41 +12,46 @@
   </style>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
-  <p>Geometric Algebra is fascinating, and I believe solves a large number of
+  <p>
+    Geometric Algebra is fascinating, and I believe solves a large number of
     problems that arise from a more traditional approach to vectors, but
     I&#39;ve been very disappointed with the quality of books and
     explainations I&#39;ve found, most of them zooming off into abstract
     realms too quickly, or spending an inordinate amount of time building up a
     generalized theory before finally getting to something useful.
   </p>
-  <p>This page, which I'll update as I go, will just explain GA
-    for two dimensions, i.e.:
+  <p>
+    Below is an explaination of Geometric Algebra that will start with
+    a simple two dimensional vector space, i.e.:
+  </p>
+  <dl>
+    <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
+  </dl>
+  <p>
+    I'll presume a famialarity with <a
+      href="https://en.wikipedia.org/wiki/Linear_algebra">Linear Algebra</a>,
+    and then we'll introduce the geometric product on
+    that and we'll have the Geometric Alegebra
+    over two dimensions:
   </p>
   <dl>
     <dd><latex-pic> \mathbb{G}^{2} </latex-pic></dd>
   </dl>
   <p>
-    I'll presume a famialarity with <a
-      href="https://en.wikipedia.org/wiki/Linear_algebra">Linear Algebra</a>,
-    in this case we'll start by restricting ourselves to standard 2-D vectors,
-    i.e.
   </p>
-  <dl>
-    <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
-  </dl>
 
-  <p>Our 2-D vector space has a basis:</p>
+  <p>Our 2-D vector space has an orthonormal basis:</p>
   <dl>
     <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} </latex-pic></dd>
   </dl>
-  <p>Or even more concretely, they can be:</p>
+  <p>For example::</p>
   <dl>
     <dd><latex-pic> \bm{e_{1}} := (1,0) </latex-pic></dd>
     <dd><latex-pic> \bm{e_{2}} := (0,1) </latex-pic></dd>
   </dl>
 
 
-  <canvas id=basis width=200 height=200></canvas>
+  <canvas id=basis width=150 height=150></canvas>
   <script type="text/javascript" charset="utf-8">
     (function () {
       var e1 = ga2d.vec(1, 0);
@@ -55,19 +60,26 @@
       f.axes();
       f.vec(e1, "e1");
       f.vec(e2, "e2");
+      f.expandTo([0, 2, 0, 0]);
       f.draw();
     })();
   </script>
 
   <p>We know how to do vector addition and  scalar multiplication of vectors,
     and that any vector can be represented as a linear combination of
-    basis elements. What we can't do is vector multiplication, which
-    is where Geometric Algebra comes in to play.
+    basis elements.
   </p>
+
   <dl>
-    <dd><latex-pic> \bm{a} = -4 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
-    <dd><latex-pic> \bm{b} = 2 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
-    <dd><latex-pic> \bm{a} + \bm{b} =  -2 \bm{e_1} + 4 \bm{e_2}</latex-pic></dd>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \bm{a} &= -4 \bm{e_{1}} + 2 \bm{e_{2}} \\
+          \bm{b} &= 2 \bm{e_{1}} + 2 \bm{e_{2}} \\
+          \bm{a} + \bm{b} &=  -2 \bm{e_1} + 4 \bm{e_2}
+        \end{align*}
+      </latex-pic>
+    </dd>
   </dl>
 
   <canvas id=add width=300 height=300></canvas>
@@ -85,19 +97,62 @@
     })();
   </script>
 
-  <p>Linear Algebra doesn't define how to multiply two vectors, but Geometric
-  Algebra does. We'll first start with the definition and then dig into what
-  it means. The geometric product of the two vectors 'a' and 'b' is defined
-  as: </p>
+  <p>
+    Linear Algebra doesn't define how to multiply two vectors, but Geometric
+    Algebra does. We'll first start with the definition and then dig into what
+    it means. The geometric product of the two vectors 'a' and 'b' is defined
+    as:
+  </p>
 
   <dl>
     <dd><latex-pic>\bm{a} \bm{b} := \bm{a} \cdot \bm{b} +\bm{a} \wedge \bm{b}</latex-pic></dd>
   </dl>
-  <p>The first part is just the dot product from Linear Algebra</p>
   <p>
-    The second part is called the wedge product, or exterior product, and needs
-    some explaining.
+    The first half of the equation is just the, inner product, or dot product
+    from Linear Algebra, which can be found using either of the following
+    definitions:
   </p>
+
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos \theta </latex-pic></dd>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></dd>
+  </dl>
+  <p>
+    Where &theta; is that angle between the two vectors. 
+  </p>
+  <p>
+    Things to remember about the inner product are that it is 0 for orthogonal
+    vectors:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0</latex-pic></dd>
+  </dl>
+  <p>
+    And that a vector dot with itself gives the square of the norm of the
+    vector, since <latex-pic>\cos 0 = 1</latex-pic>:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{a} = {||\bm{a}||}^2</latex-pic></dd>
+  </dl>
+
+  <p>
+    The inner product has the following properties, where &alpha; and &beta;
+    are scalar values.
+  </p>
+
+  <table>
+    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = \bm{b} \cdot \bm{a}</latex-pic></td> <td>Commutative</td> </tr>
+    <tr><td><latex-pic>\bm{a} \dcot (\bm{b} + \bm{c}) = \bm{a} \cdot \bm{b} + \bm{a} \cdot \bm{c}</latex-pic></td> <td>Distributive</td> </tr>
+    <tr><td><latex-pic>(\alpha \bm{a})(\beta \bm{b}) = \alpha \beta (\bm{a} \cdot \bm{b})</latex-pic></td> <td>Scalar Multiplication</td> </tr>
+  </table>
+
+  <p>
+    The second part is called the wedge product, or exterior product, and
+    given two vectors it is written as:
+  </p>
+  <dl>
+    <dd><latex-pic>\bm{a} \wedge \bm{b}</latex-pic></dd>
+  </dl>
 
   <canvas id=wedge width=300 height=300></canvas>
   <script type="text/javascript" charset="utf-8">
