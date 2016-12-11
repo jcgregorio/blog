@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta value="2016-11-20T15:44:01+00:00" name="created"/></head>
 <body>
+  <style type="text/css" media="screen">
+    img {
+      vertical-align: baseline;
+    } 
+  </style>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
   <p>Geometric Algebra is fascinating, and I believe solves a large number of
@@ -62,7 +67,7 @@
   <dl>
     <dd><latex-pic> \bm{a} = -4 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
     <dd><latex-pic> \bm{b} = 2 \bm{e_{1}} + 2 \bm{e_{2}} </latex-pic></dd>
-    <dd><latex-pic> \bm{c} = \bm{a} + \bm{b} =  -2 \bm{e_1} + 4 \bm{e_2}</latex-pic></dd>
+    <dd><latex-pic> \bm{a} + \bm{b} =  -2 \bm{e_1} + 4 \bm{e_2}</latex-pic></dd>
   </dl>
 
   <canvas id=add width=300 height=300></canvas>
@@ -120,8 +125,9 @@
     vectors, or more precisely is represents an oriented area in the plane
     defined by those vectors, also known as a bivector. There are two
     important aspects of this, the first is that the exact shape doesn't
-    matter, for example, the bivector represented below are equal
-    because they have the same orientation and the same area.
+    matter. For example, the bivectors represented below are equal
+    because they have the same orientation (counter-clockwise) and the same
+    area (3).
   </p>
 
   <dl>
@@ -166,6 +172,48 @@
   <dl>
     <dd><latex-pic>\bm{a} \wedge \bm{b} = - \bm{b} \wedge \bm{a}</latex-pic></dd>
   </dl>
+  <p>
+    Using two of the vectors above, note that the order that they are used in
+    the exterior product will make the bivectors either clockwise or counter-clockwise.
+  </p>
+
+  <canvas id=wedge_reverse width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(1, 0);
+      var b = ga2d.vec(0, 3);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse'));
+      f.vec(a, "(1, 0)");
+      f.vecFrom(b, a, "(0, 3)");
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <canvas id=wedge_reverse_2 width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var c = ga2d.vec(0, 3);
+      var d = ga2d.vec(1, 0);
+      var cd = ga2d.add(c, d);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse_2'));
+      f.vec(c, "(0, 3)");
+      f.vecFrom(d, c, "(1, 0)");
+      f.region([
+        [0,0,0,0],
+        c,
+        cd,
+        d,
+      ], "", "rgba(255, 0, 100, 0.2)");
+      f.draw();
+    })();
+  </script>
 
   <p>
     The exterior product represents the oriented area defined by two vectors.
@@ -188,6 +236,10 @@
       </latex-pic>
     </dd>
   </dl>
+  <p>
+    In <latex-pic>\mathbb{R}^{2}</latex-pic> every bivector can be reduced to
+    a scalar multiple of <latex-pic> \bm{e_1 e_2} </latex-pic>
+  </p>
 
   <dl>
     <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
