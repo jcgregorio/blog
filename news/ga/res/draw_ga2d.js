@@ -41,6 +41,10 @@ this.draw_ga2d = this.ga2d_draw || function() {
       });
     }
 
+    expandTo(v) {
+      this._updateExtents(v);
+    }
+
     region(ar, label, color) {
       ar.forEach(function(v) {
         this._updateExtents(v);
@@ -89,11 +93,11 @@ this.draw_ga2d = this.ga2d_draw || function() {
     draw() {
       var y_css_extent = this.canvas.height;
       var x_css_extent = this.canvas.width;
-      var x_source_extent = 1.3 * (this.extent.xmax - this.extent.xmin);
-      var y_source_extent = 1.3 * (this.extent.ymax - this.extent.ymin);
+      var x_source_extent = 1.5 * (this.extent.xmax - this.extent.xmin);
+      var y_source_extent = 1.5 * (this.extent.ymax - this.extent.ymin);
       var source_extent = Math.max(x_source_extent, y_source_extent);
-      var x_origin = -this.extent.xmin + 0.15 * source_extent;
-      var y_origin =  this.extent.ymax + 0.15 * source_extent;
+      var x_origin = -this.extent.xmin + 0.25 * source_extent;
+      var y_origin =  this.extent.ymax + 0.25 * source_extent;
       var x_ratio = (x_css_extent/source_extent);
       var y_ratio = (y_css_extent/source_extent);
       var rotPi = [-1, 0, 0, 0];
