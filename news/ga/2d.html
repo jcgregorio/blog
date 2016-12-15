@@ -8,7 +8,11 @@
   <style type="text/css" media="screen">
     img {
       vertical-align: baseline;
-    } 
+    }
+
+    th {
+      background: #fff;
+    }
   </style>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
@@ -272,28 +276,117 @@
 
   <p>
     The exterior product represents the oriented area defined by two vectors.
-
-    In simple linear algebraic terms the parallelogram defined by two vectors:
   </p>
-  <dl>
-    <dd><latex-pic> \bm{a} = a_1 \bm{e_{1}} + a_2 \bm{e_{2}} </latex-pic></dd>
-    <dd><latex-pic> \bm{b} = b_1 \bm{e_{1}} + b_2 \bm{e_{2}} </latex-pic></dd>
-  </dl>
-  <p>Then the area of parallelogram defined by those two vectors is the
-    absolute value of the determinant of:</p>
+  <p>
+    At this point I'll do a bit of hand-waving and simply state that the
+    following is a basis of <latex-pic>\mathbb{G}^{2} </latex-pic>
+  </p>
   <dl>
     <dd>
       <latex-pic>
-        \lvert  det( \[ \begin{bmatrix}
-          a_1 & a_2 \\
-          b_1 & b_2
-          \end{bmatrix} \] ) \rvert
+        1, \bm{e_1}, \bm{e_2}, \bm{e_{1} e_{2}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    We can work out a multiplication table for the basis elements, with
+    the observation that if two elements are orthogonal then their dot product
+    is zero, so that implies that the geometric product reduces to the
+    exterior product between orthogonal vectors, which is anti-symmetric.
+    So that implies for each of our basis vectors:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{e_1} \bm{e_2} = \bm{e_1} \wedge \bm{e_2}
       </latex-pic>
     </dd>
   </dl>
   <p>
-    In <latex-pic>\mathbb{R}^{2}</latex-pic> every bivector can be reduced to
-    a scalar multiple of <latex-pic> \bm{e_1 e_2} </latex-pic>
+    And that implies, by the anti-symmetry of the exterior product:
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{e_1} \bm{e_2} = - \bm{e_2} \bm{e_1}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    And the geometric product of any basic element with itself, because
+    they are parallel means the exterior product is zero, so:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{e_1} \bm{e_1} = \bm{e_1} \cdot \bm{e_1} = ||e_1||^2 = 1
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Note that we'll end up writing a lot of equations with basic vectors
+    multiplied together, so it's useful to have a shorthand, i.e.
+    <latex-pic>\bm{e_{12}}</latex-pic> will be used as a short-hand for
+    <latex-pic>\bm{e_1 e_2}</latex-pic>.
+  </p>
+
+  <p>
+    Given that we can now complete a multiplication table for the geometric
+    product of all the basis elements:
+  </p>
+
+  <latex-pic>
+    \begin{table}[]
+    \centering
+    \begin{tabular}{l|llll}
+           & 1       & e_1     & e_2    & e_{12} \\ \hline
+    1      & 1       & e_1     & e_2    & e_{12} \\
+    e_1    & e_1     & 1       & e_{12} & e_2    \\
+    e_2    & e_2     & -e_{12} & 1      & -e_1   \\
+    e_{12} & e_{12}  & -e_2    & e_1    & -1
+    \end{tabular}
+    \end{table}
+  </latex-pic>
+
+  <p>
+    One thing to observe from this table is that:
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{e_{12} e_{12}} = \bm{e_1} \bm{e_2} \bm{e_1} \bm{e_2} = -\bm{e_1} \bm{e_1} \bm{e_2} \bm{e_2} = -1
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    So <latex-pic> \bm{e_{12}} </latex-pic> is an element of our algebra that,
+    if squared, equals -1, i.e. it acts just like <latex-pic>i</latex-pic>
+    for the complex numbers, but without the need to take the square root of
+    a negative number, or invoke anything imaginary. In fact, the subset of
+    <latex-pic>\{ 1, \bm{e_{12}} \}</latex-pic> is closed under the geometric
+    product and is isomorphic to <latex-pic>\mathbb{C}</latex-pic>.
+  </p>
+  <p>
+    Now that we know what elements of <latex-pic> \mathbb{G}^{2} </latex-pic>
+    look like and how to manipulate them, it's now time to put them to work.
+    We can start by observing that:
+  </p>
+
+  <dl>
+    <dd><latex-pic> \bm{e_1} \bm{e_{12}} = \bm{e_2} </latex-pic></dd>
+  </dl>
+
+  <p>
+    The left hand side of that product is a vector, and the right hand side is
+    a bivector. The interesting this to note is that <latex-pic> \bm{e_2}
+    </latex-pic> is rotated 90 degrees from <latex-pic> \bm{e_1} </latex-pic>,
+    almost as if <latex-pic> \bm{e_{12}} </latex-pic> operates on vectors
+    under mutliplication by rotating them, and that's exactly what's going on.
   </p>
 
   <dl>
@@ -306,7 +399,6 @@
     <dd><latex-pic>a \cdot b := \frac{1}{2}(ab + ba)</latex-pic></dd>
     <dd><latex-pic>a \wedge b := \frac{1}{2}(ab - ba)</latex-pic></dd>
     <dd><latex-pic>a \wedge b = - b \wedge a</latex-pic></dd>
-    <dd><latex-pic>(ab)c  = a(bc)</latex-pic></dd>
   </dl>
 
   <table>
