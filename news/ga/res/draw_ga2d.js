@@ -45,6 +45,11 @@ this.draw_ga2d = this.ga2d_draw || function() {
       this._updateExtents(v);
     }
 
+    clear() {
+      this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      this.ops = [];
+    }
+
     region(ar, label, color) {
       ar.forEach(function(v) {
         this._updateExtents(v);
@@ -128,7 +133,6 @@ this.draw_ga2d = this.ga2d_draw || function() {
 
           // Draw label.
           var m = g.mul(mid, op.value);
-          var ortho = g.mul([0.05, 0, 0, 0], g.mul(g.norm(op.value), g.e(-Math.PI/2)));
           var textLoc = g.add(op.offset, op.value);
           var nativeTextLoc = xform(textLoc);
           nativeTextLoc[0] += 9;

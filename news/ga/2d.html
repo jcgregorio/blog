@@ -367,9 +367,22 @@
     So <latex-pic> \bm{e_{12}} </latex-pic> is an element of our algebra that,
     if squared, equals -1, i.e. it acts just like <latex-pic>i</latex-pic>
     for the complex numbers, but without the need to take the square root of
-    a negative number, or invoke anything imaginary. In fact, the subset of
-    <latex-pic>\{ 1, \bm{e_{12}} \}</latex-pic> is closed under the geometric
-    product and is isomorphic to <latex-pic>\mathbb{C}</latex-pic>.
+    a negative number, or invoke anything imaginary. You can reason out
+    geometrically what's going on here, that <latex-pic> \bm{e_{12}} </latex-pic>
+    rotates a vector by 90 degrees, and if you do two 90 degree
+    rotations you will get a rotation of 180 degrees, and rotating a vector by
+    180 degrees is the same as multiplying that vector by -1.
+    In fact, the subset of <latex-pic>\{ 1, \bm{e_{12}} \}</latex-pic> is
+    closed under the geometric product and is isomorphic to
+    <latex-pic>\mathbb{C}</latex-pic>.
+    This is cool because it gives us something that operates like
+    the complex numbers, but with a geometric underpinning.
+
+  </p>
+  <p>
+    The element <latex-pic> \bm{e_{12}} </latex-pic> is called the
+    unit-pseudoscalar, and will be abbreviated as <latex-pic> \bm{I}
+    </latex-pic>.
   </p>
   <p>
     Now that we know what elements of <latex-pic> \mathbb{G}^{2} </latex-pic>
@@ -388,6 +401,56 @@
     almost as if <latex-pic> \bm{e_{12}} </latex-pic> operates on vectors
     under mutliplication by rotating them, and that's exactly what's going on.
   </p>
+  <p>
+    Let's define something that looks like an exponential function:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{ e^{\theta I}} := \cos(\theta) + \sin(\theta)\bm{I}</latex-pic></dd>
+  </dl>
+  <p>
+    This is a Rotor, and when a vector is multiplied on the right by our
+    exponential the vector will be rotated &theta; degrees, in the direction
+    from <latex-pic> \bm{e_{1}} </latex-pic> to <latex-pic> \bm{e_{2}} </latex-pic>.
+  </p>
+  <p>
+    This is just a restatement of <a href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a> in <latex-pic>
+      \mathbb{G}^{2} </latex-pic>.
+  </p>
+
+
+  <button id=rotor_toggle>Start/Stop</button>
+  <canvas id=rotor width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('rotor_toggle');
+      var running = false;
+      var omega = 1;
+      var start = Date.now();
+      var e1 = ga2d.vec(1, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var dest = ga2d.mul(e1, rotor);
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(dest, "v");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+    })();
+  </script>
 
   <dl>
     <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
