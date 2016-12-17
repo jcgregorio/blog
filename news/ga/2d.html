@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-    <title>Geometric Algebra - 2D</title>
+    <title>An Introduction to Geometric Algebra over R^2</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,30 +19,70 @@
   <p>
     Geometric Algebra is fascinating, and I believe solves a large number of
     problems that arise from a more traditional approach to vectors, but
-    I&#39;ve been very disappointed with the quality of books and
-    explainations I&#39;ve found, most of them zooming off into abstract
-    realms too quickly, or spending an inordinate amount of time building up a
-    generalized theory before finally getting to something useful.
+    I&#39;ve been very disappointed with the quality of books and explanations
+    I&#39;ve found, most of them zooming off into abstract realms too quickly,
+    or spending an inordinate amount of time building up a generalized theory
+    before finally getting to something useful.
   </p>
   <p>
-    Below is an explaination of Geometric Algebra that will start with
-    a simple two dimensional vector space, i.e.:
+    Below is an explanation of Geometric Algebra that will start with a simple
+    two dimensional vector space, i.e. ℝ<sup>2</sup>.  This will be a concise
+    introduction to 𝔾<sup>2</sup>, the Geometric Algebra over ℝ<sup>2</sup>,
+    and then quickly pivot to applications in 𝔾<sup>2</sup>. This introduction
+    will not cover the history of GA, Clifford Algebras, or Hermann Grassman.
+    The history is fascinating, but other people have convered it much better
+    than I ever could.
   </p>
-  <dl>
-    <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
-  </dl>
   <p>
     I'll presume a famialarity with <a
       href="https://en.wikipedia.org/wiki/Linear_algebra">Linear Algebra</a>,
     and then we'll introduce the geometric product on
     that and we'll have the Geometric Alegebra
-    over two dimensions:
+    over two dimensions: 𝔾<sup>2</sup>.
   </p>
-  <dl>
-    <dd><latex-pic> \mathbb{G}^{2} </latex-pic></dd>
-  </dl>
   <p>
   </p>
+  <h3>Linear Algebra</h3>
+  <p>
+    Very short review of what everyone should know from linear algebra.
+  </p>
+
+  <p>
+    One important thing to notice about Linear Algebra is how often you
+    have to step outside the vector space, that is, in ℝ<sup>2</sup>
+    operations frequently have to take place outside ℝ<sup>2</sup> or
+    they give you results outside of ℝ<sup>2</sup>. For example, the dot
+    product of two vector returns a scalar, which is not a member of
+    ℝ<sup>2</sup>.
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos(\theta) </latex-pic></dd>
+  </dl>
+  <p>
+    Similarly, to rotate vectors you have to create matrices, which don't
+    exist in ℝ<sup>2</sup>, and apply them to vectors through matrix
+    multiplication.
+  </p>
+  <p>
+    One final example is the cross-product, which takes two vectors and
+    operates on them to produce a vector that is orthogonal to the original
+    two vectors, but if you are in ℝ<sup>2</sup> it doesn't exist, you have to
+    then view that cross-product vector as existing in ℝ<sup>3</sup>, with our
+    original ℝ<sup>2</sup> is embedded in.
+  </p>
+  <p>
+    Traditional Linear Algebra isn't closed under many of these operations and
+    frequently uses operations that don't take place in the vector space
+    itself. This stands in stark contrast to 𝔾<sup>2</sup>, where these
+    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs
+    we use in Linear Algebra, such as rotations, exist as elements of
+    𝔾<sup>2</sup>, and applying those operations is just a matter of taking
+    the geometric product of those objects. Not only is 𝔾<sup>2</sup> closed
+    under many of these operations, but the operations exist as elements in
+    𝔾<sup>2</sup>.
+  </p>
+
+  <h3>Geometric Algebra</h3>
 
   <p>Our 2-D vector space has an orthonormal basis:</p>
   <dl>
