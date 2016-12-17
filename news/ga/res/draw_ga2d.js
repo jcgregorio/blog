@@ -110,6 +110,14 @@ this.draw_ga2d = this.ga2d_draw || function() {
       var xform = function(v) {
         return [(v[1]+x_origin)*x_ratio, (-v[2]+y_origin)*y_ratio];
       }
+      var scaleToNative = function(v) {
+        return [0, v[1]*x_ratio, v[2]*y_ratio, 0];
+      };
+      var scaleToFrame = function(v) {
+        return [0, v[1]/x_ratio, v[2]/y_ratio, 0];
+      };
+
+      Math.sqrt(x_ratio*x_ratio + y_ratio*y_ratio);
       this.ops.forEach(function(op) {
         if (op.op === "vec") {
           this.ctx.beginPath();
@@ -132,11 +140,11 @@ this.draw_ga2d = this.ga2d_draw || function() {
           this.ctx.stroke();
 
           // Draw label.
-          var m = g.mul(mid, op.value);
-          var textLoc = g.add(op.offset, op.value);
+          var nativeVector = scaleToNative(op.value);
+          var nativeOffset = g.mul(g.scalar(12), g.norm(nativeVector));
+          var textOffset = scaleToFrame(nativeOffset);
+          var textLoc = g.add(op.offset, g.add(op.value, textOffset));
           var nativeTextLoc = xform(textLoc);
-          nativeTextLoc[0] += 9;
-          nativeTextLoc[1] -= 9;
           this._text(nativeTextLoc, op.label)
         } else if (op.op == "axes") {
           this.ctx.beginPath();

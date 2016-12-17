@@ -441,7 +441,6 @@
         }
       };
 
-
       button.addEventListener('click', function() {
         running = !running;
         if (running) {
@@ -449,6 +448,7 @@
           window.requestAnimationFrame(step);
         }
       });
+      step();
     })();
   </script>
 
