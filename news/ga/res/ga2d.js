@@ -33,6 +33,16 @@ this.ga2d = this.ga2d || function() {
     ]
   };
 
+  ga2d.sub = function(x, y) {
+    return [
+      x[0] - y[0],
+      x[1] - y[1],
+      x[2] - y[2],
+      x[3] - y[3]
+    ]
+  };
+
+
   ga2d.inv = function(x) {
     if (x[0] !== 0 || x[3] !== 0) {
       throw "Can only invert vectors.";
