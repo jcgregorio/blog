@@ -46,44 +46,6 @@
   <p>
     Very short review of what everyone should know from linear algebra.
   </p>
-
-  <p>
-    One important thing to notice about Linear Algebra is how often you
-    have to step outside the vector space, that is, in ℝ<sup>2</sup>
-    operations frequently have to take place outside ℝ<sup>2</sup> or
-    they give you results outside of ℝ<sup>2</sup>. For example, the dot
-    product of two vector returns a scalar, which is not a member of
-    ℝ<sup>2</sup>.
-  </p>
-  <dl>
-    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos(\theta) </latex-pic></dd>
-  </dl>
-  <p>
-    Similarly, to rotate vectors you have to create matrices, which don't
-    exist in ℝ<sup>2</sup>, and apply them to vectors through matrix
-    multiplication.
-  </p>
-  <p>
-    One final example is the cross-product, which takes two vectors and
-    operates on them to produce a vector that is orthogonal to the original
-    two vectors, but if you are in ℝ<sup>2</sup> it doesn't exist, you have to
-    then view that cross-product vector as existing in ℝ<sup>3</sup>, with our
-    original ℝ<sup>2</sup> is embedded in.
-  </p>
-  <p>
-    Traditional Linear Algebra isn't closed under many of these operations and
-    frequently uses operations that don't take place in the vector space
-    itself. This stands in stark contrast to 𝔾<sup>2</sup>, where these
-    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs
-    we use in Linear Algebra, such as rotations, exist as elements of
-    𝔾<sup>2</sup>, and applying those operations is just a matter of taking
-    the geometric product of those objects. Not only is 𝔾<sup>2</sup> closed
-    under many of these operations, but the operations exist as elements in
-    𝔾<sup>2</sup>.
-  </p>
-
-  <h3>Geometric Algebra</h3>
-
   <p>Our 2-D vector space has an orthonormal basis:</p>
   <dl>
     <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} </latex-pic></dd>
@@ -93,7 +55,6 @@
     <dd><latex-pic> \bm{e_{1}} := (1,0) </latex-pic></dd>
     <dd><latex-pic> \bm{e_{2}} := (0,1) </latex-pic></dd>
   </dl>
-
 
   <canvas id=basis width=150 height=150></canvas>
   <script type="text/javascript" charset="utf-8">
@@ -142,57 +103,54 @@
   </script>
 
   <p>
-    Linear Algebra doesn't define how to multiply two vectors, but Geometric
-    Algebra does. We'll first start with the definition and then dig into what
-    it means. The geometric product of the two vectors 'a' and 'b' is defined
-    as:
-  </p>
-
-  <dl>
-    <dd><latex-pic>\bm{a} \bm{b} := \bm{a} \cdot \bm{b} +\bm{a} \wedge \bm{b}</latex-pic></dd>
-  </dl>
-  <p>
-    The first half of the equation is just the, inner product, or dot product
-    from Linear Algebra, which can be found using either of the following
-    definitions:
-  </p>
-
-  <dl>
-    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos \theta </latex-pic></dd>
-    <dd><latex-pic> \bm{a} \cdot \bm{b} := \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></dd>
-  </dl>
-  <p>
-    Where &theta; is that angle between the two vectors. 
-  </p>
-  <p>
-    Things to remember about the inner product are that it is 0 for orthogonal
-    vectors:
+    One important thing to notice about Linear Algebra is how often you
+    have to step outside the vector space, that is, in ℝ<sup>2</sup>
+    operations frequently have to take place outside ℝ<sup>2</sup> or
+    they give you results outside of ℝ<sup>2</sup>. For example, the dot
+    product of two vector returns a scalar, which is not a member of
+    ℝ<sup>2</sup>.
   </p>
   <dl>
-    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0</latex-pic></dd>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos(\theta) </latex-pic></dd>
   </dl>
   <p>
-    And that a vector dot with itself gives the square of the norm of the
-    vector, since <latex-pic>\cos 0 = 1</latex-pic>:
+    Similarly, to rotate vectors you have to create matrices, which don't
+    exist in ℝ<sup>2</sup>, and apply them to vectors through matrix
+    multiplication.
   </p>
-  <dl>
-    <dd><latex-pic> \bm{a} \cdot \bm{a} = {||\bm{a}||}^2</latex-pic></dd>
-  </dl>
+  <p>
+    One final example is the cross-product, which takes two vectors and
+    operates on them to produce a vector that is orthogonal to the original
+    two vectors, but if you are in ℝ<sup>2</sup> it doesn't exist, you have to
+    then view that cross-product vector as existing in ℝ<sup>3</sup>, with our
+    original ℝ<sup>2</sup> is embedded in.
+  </p>
+  <p>
+    Traditional Linear Algebra isn't closed under many of these operations and
+    frequently uses operations that don't take place in the vector space
+    itself. This stands in stark contrast to 𝔾<sup>2</sup>, where these
+    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs
+    we use in Linear Algebra, such as rotations, exist as elements of
+    𝔾<sup>2</sup>, and applying those operations is just a matter of taking
+    the geometric product of those objects. Not only is 𝔾<sup>2</sup> closed
+    under many of these operations, but the operations exist as elements in
+    𝔾<sup>2</sup>.
+  </p>
+
+  <h3>Geometric Algebra</h3>
+
 
   <p>
-    The inner product has the following properties, where &alpha; and &beta;
-    are scalar values.
+    The Geometric Algebra of 𝔾<sup>2</sup> builds upon ℝ<sup>2</sup>,
+    extending it by adding multiplication, i.e. a geometric product.
+    Before we get to the geometric product we need to first quickly learn
+    about the exterior product.
   </p>
 
-  <table>
-    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = \bm{b} \cdot \bm{a}</latex-pic></td> <td>Commutative</td> </tr>
-    <tr><td><latex-pic>\bm{a} \dcot (\bm{b} + \bm{c}) = \bm{a} \cdot \bm{b} + \bm{a} \cdot \bm{c}</latex-pic></td> <td>Distributive</td> </tr>
-    <tr><td><latex-pic>(\alpha \bm{a})(\beta \bm{b}) = \alpha \beta (\bm{a} \cdot \bm{b})</latex-pic></td> <td>Scalar Multiplication</td> </tr>
-  </table>
+  <h4>Exterior Product</h4>
 
   <p>
-    The second part is called the wedge product, or exterior product, and
-    given two vectors it is written as:
+    The  exterior product operates on two vectors and is written as:
   </p>
   <dl>
     <dd><latex-pic>\bm{a} \wedge \bm{b}</latex-pic></dd>
@@ -313,6 +271,110 @@
       f.draw();
     })();
   </script>
+
+  <p>
+    The proerties of the wedge product are:
+  </p>
+
+  <table>
+    <tr><td><latex-pic>(\bm{a} \wedge \bm{b}) \wedge \bm{c} = \bm{a} \wedge (\bm{b} \wedge \bm{c})</latex-pic></td> <td>Associative</td> <td>(1)</td></tr>
+    <tr><td><latex-pic>\bm{a} \wedge (\bm{b} + \bm{c}) = \bm{a} \wedge \bm{b} + \bm{a} \wedge \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(2)</td></tr>
+    <tr><td><latex-pic>(\bm{a} + \bm{b}) \wedge \bm{c} = \bm{a} \wedge \bm{c} + \bm{b} \wedge \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(3)</td></tr>
+    <tr><td><latex-pic>\bm{a} \wedge \bm{b} = -\bm{b} \wedge \bm{a}</latex-pic></td> <td>Anti-symmetric</td> <td>(4)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \parallel \bm{b} \Rightarrow \bm{a} \wedge \bm{b} = 0</latex-pic></td> <td>Zero for Parallel Vectors.</td> <td>(5)</td> </tr>
+  </table>
+
+  <p>
+    In what is going to become a recurring theme, let's look at what
+    this means in terms of basis vectors. Since any vector can be written
+    as a linear combination of basis vectors we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \bm{a} &= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{b} &= b_1 \bm{e_{1}} + b_2 \bm{e_{2}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we take their exterior product we get:
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \wedge \bm {b} &= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}}) \wedge (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &= a_1 b_1 \bm{e_{1}} \wedge \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}} \wedge \bm{e_{2}} \\
+                              &=  a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}} \\
+                              &=  a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                               - a_2 b_1 \bm{e_{1}} \wedge \bm{e_{2}} \\
+                              &= ( a_1 b_2  - a_2 b_1 )\bm{e_{1}} \wedge \bm{e_{2}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    So the exterior product of any two vectors can expressed as just a scalar
+    mulitple of <b>e<sub>1</sub>^e<sub>2</sub></b>
+  </p>
+
+  <p>
+    Linear Algebra doesn't define how to multiply two vectors, but Geometric
+    Algebra does. We'll first start with the definition and then dig into what
+    it means. The geometric product of the two vectors 'a' and 'b' is defined
+    as:
+  </p>
+
+  <dl>
+    <dd><latex-pic>\bm{a} \bm{b} := \bm{a} \cdot \bm{b} +\bm{a} \wedge \bm{b}</latex-pic></dd>
+  </dl>
+  <p>
+    The first half of the equation is just the, inner product, or dot product
+    from Linear Algebra, which can be found using either of the following
+    definitions:
+  </p>
+
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos \theta </latex-pic></dd>
+    <dd><latex-pic> \bm{a} \cdot \bm{b} := \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></dd>
+  </dl>
+  <p>
+    Where &theta; is that angle between the two vectors. 
+  </p>
+  <p>
+    Things to remember about the inner product are that it is 0 for orthogonal
+    vectors:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0</latex-pic></dd>
+  </dl>
+  <p>
+    And that a vector dot with itself gives the square of the norm of the
+    vector, since <latex-pic>\cos 0 = 1</latex-pic>:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{a} = {||\bm{a}||}^2</latex-pic></dd>
+  </dl>
+
+  <p>
+    The inner product has the following properties, where &alpha; and &beta;
+    are scalar values.
+  </p>
+
+  <table>
+    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = \bm{b} \cdot \bm{a}</latex-pic></td> <td>Commutative</td> </tr>
+    <tr><td><latex-pic>\bm{a} \dcot (\bm{b} + \bm{c}) = \bm{a} \cdot \bm{b} + \bm{a} \cdot \bm{c}</latex-pic></td> <td>Distributive</td> </tr>
+    <tr><td><latex-pic>(\alpha \bm{a})(\beta \bm{b}) = \alpha \beta (\bm{a} \cdot \bm{b})</latex-pic></td> <td>Scalar Multiplication</td> </tr>
+  </table>
 
   <p>
     The exterior product represents the oriented area defined by two vectors.
