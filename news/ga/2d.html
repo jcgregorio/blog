@@ -46,14 +46,26 @@
   <p>
     Very short review of what everyone should know from linear algebra.
   </p>
-  <p>Our 2-D vector space has an orthonormal basis:</p>
-  <dl>
-    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} </latex-pic></dd>
-  </dl>
-  <p>For example::</p>
+
+  <table>
+    <tr><td><latex-pic>(\bm{a} + \bm{b}) + \bm{c} = \bm{a} + (\bm{b} + \bm{c})</latex-pic></td> <td>Associative</td> <td>(1)</td></tr>
+    <tr><td><latex-pic>\bm{a} + \bm{b}  = \bm{b} + \bm{a} </latex-pic></td> <td>Commutative</td> <td>(2)</td></tr>
+    <tr><td><latex-pic>\bm{0} + \bm{b}  = \bm{b} </latex-pic></td> <td>Identity</td> <td>(3)</td></tr>
+    <tr><td><latex-pic>\bm{-a} + \bm{a} = \bm{0}</latex-pic></td> <td>Inverse</td> <td>(4)</td></tr>
+    <tr><td><latex-pic>c(\bm{a} + \bm{b}) = c\bm{a} + c\bm{b} </latex-pic></td> <td>Scalar Distributive</td> <td>(5)</td></tr>
+    <tr><td><latex-pic>1 \bm{b}  = \bm{b} </latex-pic></td> <td>Multiplicative Identity</td> <td>(6)</td></tr>
+    <tr><td><latex-pic> \bm{a} \cdot \bm{b} = ||\bm{a}|| ||\bm{b}|| \cos \theta</latex-pic></td> <td>Dot/Inner Product</td> <td>(7)</td></tr>
+    <tr><td><latex-pic> \bm{a} \cdot \bm{b} = \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></td> <td>Dot/Inner Product (Alternate)</td> <td>(8)</td></tr>
+  </table>
+
+  <p>In particular, for  ℝ<sup>2</sup> we have an orthonormal basis:</p>
   <dl>
     <dd><latex-pic> \bm{e_{1}} := (1,0) </latex-pic></dd>
     <dd><latex-pic> \bm{e_{2}} := (0,1) </latex-pic></dd>
+  </dl>
+  <p>where:</p>
+  <dl>
+    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} </latex-pic></dd>
   </dl>
 
   <canvas id=basis width=150 height=150></canvas>
@@ -70,7 +82,8 @@
     })();
   </script>
 
-  <p>We know how to do vector addition and  scalar multiplication of vectors,
+  <p>
+    We know how to do vector addition and  scalar multiplication of vectors,
     and that any vector can be represented as a linear combination of
     basis elements.
   </p>
@@ -79,9 +92,9 @@
     <dd>
       <latex-pic>
         \begin{align*}
-          \bm{a} &= -4 \bm{e_{1}} + 2 \bm{e_{2}} \\
-          \bm{b} &= 2 \bm{e_{1}} + 2 \bm{e_{2}} \\
-          \bm{a} + \bm{b} &=  -2 \bm{e_1} + 4 \bm{e_2}
+          \bm{a} &= -1 \bm{e_{1}} + 2 \bm{e_{2}} \\
+          \bm{b} &= 2 \bm{e_{1}} + 3 \bm{e_{2}} \\
+          \bm{a} + \bm{b} &=  -1 \bm{e_1} + 5 \bm{e_2}
         \end{align*}
       </latex-pic>
     </dd>
@@ -90,8 +103,8 @@
   <canvas id=add width=300 height=300></canvas>
   <script type="text/javascript" charset="utf-8">
     (function () {
-      var a = ga2d.vec(-4, 2);
-      var b = ga2d.vec(2, 2);
+      var a = ga2d.vec(-1, 2);
+      var b = ga2d.vec(2, 3);
       var c = ga2d.add(a, b);
       var f = new draw_ga2d.Frame(document.getElementById('add'));
       f.axes();
@@ -103,12 +116,26 @@
   </script>
 
   <p>
-    One important thing to notice about Linear Algebra is how often you
-    have to step outside the vector space, that is, in ℝ<sup>2</sup>
-    operations frequently have to take place outside ℝ<sup>2</sup> or
-    they give you results outside of ℝ<sup>2</sup>. For example, the dot
-    product of two vector returns a scalar, which is not a member of
-    ℝ<sup>2</sup>.
+    Things to remember about the dot product, or inner product, is that it is 0 for orthogonal
+    vectors:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0</latex-pic></dd>
+  </dl>
+  <p>
+    And that a vector dot with itself gives the square of the norm of the
+    vector, since <latex-pic>\cos 0 = 1</latex-pic>:
+  </p>
+  <dl>
+    <dd><latex-pic> \bm{a} \cdot \bm{a} = {||\bm{a}||}^2</latex-pic></dd>
+  </dl>
+
+  <p>
+    One important thing to notice about Linear Algebra is how often you have
+    to step outside of ℝ<sup>2</sup> to get work done.  That is, operations
+    frequently have to take place outside ℝ<sup>2</sup> or those operations
+    give you results outside of ℝ<sup>2</sup>. For example, the dot product of
+    two vector returns a scalar, which is not a member of ℝ<sup>2</sup>.
   </p>
   <dl>
     <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos(\theta) </latex-pic></dd>
@@ -122,23 +149,20 @@
     One final example is the cross-product, which takes two vectors and
     operates on them to produce a vector that is orthogonal to the original
     two vectors, but if you are in ℝ<sup>2</sup> it doesn't exist, you have to
-    then view that cross-product vector as existing in ℝ<sup>3</sup>, with our
-    original ℝ<sup>2</sup> is embedded in.
+    then view that cross-product vector as existing in ℝ<sup>3</sup>, which
+    the original ℝ<sup>2</sup> is embedded in.
   </p>
   <p>
-    Traditional Linear Algebra isn't closed under many of these operations and
-    frequently uses operations that don't take place in the vector space
-    itself. This stands in stark contrast to 𝔾<sup>2</sup>, where these
-    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs
-    we use in Linear Algebra, such as rotations, exist as elements of
-    𝔾<sup>2</sup>, and applying those operations is just a matter of taking
-    the geometric product of those objects. Not only is 𝔾<sup>2</sup> closed
-    under many of these operations, but the operations exist as elements in
+    All of this stands in stark contrast to 𝔾<sup>2</sup>, where these
+    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs we
+    use in Linear Algebra, such as rotations, exist as elements of
+    𝔾<sup>2</sup>, and applying those operations is just a matter of taking the
+    geometric product of those objects. Not only is 𝔾<sup>2</sup> closed under
+    many of these operations, but the operations exist as elements in
     𝔾<sup>2</sup>.
   </p>
 
   <h3>Geometric Algebra</h3>
-
 
   <p>
     The Geometric Algebra of 𝔾<sup>2</sup> builds upon ℝ<sup>2</sup>,
@@ -273,15 +297,16 @@
   </script>
 
   <p>
-    The proerties of the wedge product are:
+    The properties of the exterior product are:
   </p>
 
   <table>
     <tr><td><latex-pic>(\bm{a} \wedge \bm{b}) \wedge \bm{c} = \bm{a} \wedge (\bm{b} \wedge \bm{c})</latex-pic></td> <td>Associative</td> <td>(1)</td></tr>
-    <tr><td><latex-pic>\bm{a} \wedge (\bm{b} + \bm{c}) = \bm{a} \wedge \bm{b} + \bm{a} \wedge \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(2)</td></tr>
-    <tr><td><latex-pic>(\bm{a} + \bm{b}) \wedge \bm{c} = \bm{a} \wedge \bm{c} + \bm{b} \wedge \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(3)</td></tr>
-    <tr><td><latex-pic>\bm{a} \wedge \bm{b} = -\bm{b} \wedge \bm{a}</latex-pic></td> <td>Anti-symmetric</td> <td>(4)</td> </tr>
-    <tr><td><latex-pic>\bm{a} \parallel \bm{b} \Rightarrow \bm{a} \wedge \bm{b} = 0</latex-pic></td> <td>Zero for Parallel Vectors.</td> <td>(5)</td> </tr>
+    <tr><td><latex-pic>c(\bm{a} \wedge \bm{b}) = c\bm{a} \wedge \bm{b} = \bm{a} \wedge c\bm{b}</latex-pic></td> <td>Scalar Associativity</td> <td>(2)</td></tr>
+    <tr><td><latex-pic>\bm{a} \wedge (\bm{b} + \bm{c}) = \bm{a} \wedge \bm{b} + \bm{a} \wedge \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(3)</td></tr>
+    <tr><td><latex-pic>(\bm{a} + \bm{b}) \wedge \bm{c} = \bm{a} \wedge \bm{c} + \bm{b} \wedge \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(4)</td></tr>
+    <tr><td><latex-pic>\bm{a} \wedge \bm{b} = -\bm{b} \wedge \bm{a}</latex-pic></td> <td>Anti-symmetric</td> <td>(5)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \parallel \bm{b} \Rightarrow \bm{a} \wedge \bm{b} = 0</latex-pic></td> <td>Zero for Parallel Vectors.</td> <td>(6)</td> </tr>
   </table>
 
   <p>
@@ -312,12 +337,12 @@
                               &= a_1 b_1 \bm{e_{1}} \wedge \bm{e_{1}}
                                + a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
                                + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}}
-                               + a_2 b_2 \bm{e_{2}} \wedge \bm{e_{2}} \\
+                               + a_2 b_2 \bm{e_{2}} \wedge \bm{e_{2}}               & \text{via 1} \\
+                              &=  0 + a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}} + 0            & \text{via 6} \\
                               &=  a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
-                               + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}} \\
-                              &=  a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
-                               - a_2 b_1 \bm{e_{1}} \wedge \bm{e_{2}} \\
-                              &= ( a_1 b_2  - a_2 b_1 )\bm{e_{1}} \wedge \bm{e_{2}}
+                              - a_2 b_1 \bm{e_{1}} \wedge \bm{e_{2}}                & \text{via 5} \\
+                              &= ( a_1 b_2  - a_2 b_1 )\bm{e_{1}} \wedge \bm{e_{2}} & \text{via 2}
         \end{align*}
       </latex-pic>
     </dd>
@@ -327,58 +352,30 @@
     mulitple of <b>e<sub>1</sub>^e<sub>2</sub></b>
   </p>
 
+  <h4>Geometric Product</h4>
+
   <p>
-    Linear Algebra doesn't define how to multiply two vectors, but Geometric
-    Algebra does. We'll first start with the definition and then dig into what
-    it means. The geometric product of the two vectors 'a' and 'b' is defined
-    as:
+    Now that we know about the exterior product, we can define the geometric
+    product, which is just the sum of the two:
   </p>
 
   <dl>
     <dd><latex-pic>\bm{a} \bm{b} := \bm{a} \cdot \bm{b} +\bm{a} \wedge \bm{b}</latex-pic></dd>
   </dl>
-  <p>
-    The first half of the equation is just the, inner product, or dot product
-    from Linear Algebra, which can be found using either of the following
-    definitions:
-  </p>
-
-  <dl>
-    <dd><latex-pic> \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos \theta </latex-pic></dd>
-    <dd><latex-pic> \bm{a} \cdot \bm{b} := \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></dd>
-  </dl>
-  <p>
-    Where &theta; is that angle between the two vectors. 
-  </p>
-  <p>
-    Things to remember about the inner product are that it is 0 for orthogonal
-    vectors:
-  </p>
-  <dl>
-    <dd><latex-pic> \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0</latex-pic></dd>
-  </dl>
-  <p>
-    And that a vector dot with itself gives the square of the norm of the
-    vector, since <latex-pic>\cos 0 = 1</latex-pic>:
-  </p>
-  <dl>
-    <dd><latex-pic> \bm{a} \cdot \bm{a} = {||\bm{a}||}^2</latex-pic></dd>
-  </dl>
 
   <p>
-    The inner product has the following properties, where &alpha; and &beta;
-    are scalar values.
+    The geometric product has the following properties:
   </p>
 
   <table>
-    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = \bm{b} \cdot \bm{a}</latex-pic></td> <td>Commutative</td> </tr>
-    <tr><td><latex-pic>\bm{a} \dcot (\bm{b} + \bm{c}) = \bm{a} \cdot \bm{b} + \bm{a} \cdot \bm{c}</latex-pic></td> <td>Distributive</td> </tr>
-    <tr><td><latex-pic>(\alpha \bm{a})(\beta \bm{b}) = \alpha \beta (\bm{a} \cdot \bm{b})</latex-pic></td> <td>Scalar Multiplication</td> </tr>
+    <tr><td><latex-pic>(\bm{a} \bm{b}) \bm{c} = \bm{a} (\bm{b} \bm{c})</latex-pic></td> <td>Associative</td> <td>(1)</td></tr>
+    <tr><td><latex-pic>c(\bm{a} \bm{b}) = c\bm{a} \bm{b} = \bm{a} c \bm{b}</latex-pic></td> <td>Scalar Associativity</td> <td>(2)</td></tr>
+    <tr><td><latex-pic>\bm{a} (\bm{b} + \bm{c}) = \bm{a} \bm{b} + \bm{a} \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(3)</td></tr>
+    <tr><td><latex-pic>(\bm{a} + \bm{b}) \bm{c} = \bm{a} \bm{c} + \bm{b} \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(4)</td></tr>
+    <tr><td><latex-pic>\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||a|| </latex-pic></td> <td>Norm</td> <td>(6)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \bm{b} \neq \bm{b} \bm{a} </latex-pic></td> <td>Non-Commutative, except in some cases.</td> <td>(6)</td> </tr>
   </table>
 
-  <p>
-    The exterior product represents the oriented area defined by two vectors.
-  </p>
   <p>
     At this point I'll do a bit of hand-waving and simply state that the
     following is a basis of <latex-pic>\mathbb{G}^{2} </latex-pic>
@@ -418,7 +415,7 @@
   </dl>
 
   <p>
-    And the geometric product of any basic element with itself, because
+    And the geometric product of any basis element with itself, because
     they are parallel means the exterior product is zero, so:
   </p>
 
@@ -431,7 +428,7 @@
   </dl>
 
   <p>
-    Note that we'll end up writing a lot of equations with basic vectors
+    Note that we'll end up writing a lot of equations with basis vectors
     multiplied together, so it's useful to have a shorthand, i.e.
     <latex-pic>\bm{e_{12}}</latex-pic> will be used as a short-hand for
     <latex-pic>\bm{e_1 e_2}</latex-pic>.
