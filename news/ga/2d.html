@@ -13,6 +13,17 @@
     th {
       background: #fff;
     }
+
+    body {counter-reset: h3}
+    h3 {counter-reset: h4}
+    h4 {counter-reset: h5}
+    h5 {counter-reset: h6}
+
+    h3:before {counter-increment: h3; content: counter(h3) ". "}
+    h4:before {counter-increment: h4; content: counter(h3) "." counter(h4) ". "}
+    h5:before {counter-increment: h5; content: counter(h3) "." counter(h4) "." counter(h5) ". "}
+    h6:before {counter-increment: h6; content: counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
+
   </style>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
@@ -356,7 +367,7 @@
 
   <p>
     Now that we know about the exterior product, we can define the geometric
-    product, which is just the sum of the two:
+    product, which is just the sum of the inner product and the exterior product:
   </p>
 
   <dl>
@@ -364,7 +375,8 @@
   </dl>
 
   <p>
-    The geometric product has the following properties:
+    Using just the above definition you can show that the geometric product
+    has the following properties:
   </p>
 
   <table>
@@ -372,13 +384,17 @@
     <tr><td><latex-pic>c(\bm{a} \bm{b}) = c\bm{a} \bm{b} = \bm{a} c \bm{b}</latex-pic></td> <td>Scalar Associativity</td> <td>(2)</td></tr>
     <tr><td><latex-pic>\bm{a} (\bm{b} + \bm{c}) = \bm{a} \bm{b} + \bm{a} \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(3)</td></tr>
     <tr><td><latex-pic>(\bm{a} + \bm{b}) \bm{c} = \bm{a} \bm{c} + \bm{b} \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(4)</td></tr>
-    <tr><td><latex-pic>\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||a|| </latex-pic></td> <td>Norm</td> <td>(6)</td> </tr>
-    <tr><td><latex-pic>\bm{a} \bm{b} \neq \bm{b} \bm{a} </latex-pic></td> <td>Non-Commutative, except in some cases.</td> <td>(6)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||\bm{a}|| </latex-pic></td> <td>Norm</td> <td>(6)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \bm{b} \neq \bm{b} \bm{a} </latex-pic></td> <td>Non-Commutative, except in some cases.</td> <td>(7)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \neq 0 \Rightarrow \bm{a} (\frac{1}{||\bm{a}||^2} \bm{a}) = 1</latex-pic></td> <td>Vector Inverses</td> <td>(8)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \perp \bm{b} \Rightarrow \bm{a} \bm{b} = \bm{a} \wedge \bm{b}</latex-pic></td> <td>Orthogonal vector multiplication.</td> <td>(9)</td> </tr>
   </table>
 
   <p>
-    At this point I'll do a bit of hand-waving and simply state that the
-    following is a basis of <latex-pic>\mathbb{G}^{2} </latex-pic>
+    With the geometric product as defined above, and vector addition, our
+    Geometric Algebra 𝔾<sup>2</sup> forms a <a
+      href="https://en.wikipedia.org/wiki/Associative_algebra">unital
+      associative algebra</a> with an orthonormal basis:
   </p>
   <dl>
     <dd>
@@ -422,7 +438,7 @@
   <dl>
     <dd>
       <latex-pic>
-        \bm{e_1} \bm{e_1} = \bm{e_1} \cdot \bm{e_1} = ||e_1||^2 = 1
+        \bm{e_1} \bm{e_1} = \bm{e_1} \cdot \bm{e_1} = ||\bm{e_1}||^2 = 1
       </latex-pic>
     </dd>
   </dl>
@@ -430,12 +446,12 @@
   <p>
     Note that we'll end up writing a lot of equations with basis vectors
     multiplied together, so it's useful to have a shorthand, i.e.
-    <latex-pic>\bm{e_{12}}</latex-pic> will be used as a short-hand for
-    <latex-pic>\bm{e_1 e_2}</latex-pic>.
+    <b>e<sub>12</sub></b> will be used as a short-hand for
+    <b>e<sub>1</sub> e<sub>2</sub></b>.
   </p>
 
   <p>
-    Given that we can now complete a multiplication table for the geometric
+    We can now complete a multiplication table for the geometric
     product of all the basis elements:
   </p>
 
@@ -453,7 +469,40 @@
   </latex-pic>
 
   <p>
-    One thing to observe from this table is that:
+    Now that we know what elements of  𝔾<sup>2</sup>
+    look like and how to manipulate them, it's now time to put them to work.
+
+  </p>
+  <h3>Applying Geometric Algebra</h3>
+
+  <h4>Multiplying Vectors</h4>
+  multiply a vector by that, show we get out a new vector.
+  reduce to just e_12
+  <h4>Complex Numbers</h4>
+  show this maps to the complex numbers
+  <h4>Rotors</h4>
+  generalize to e^{\theta I}
+  show applications of e^{\theta I}
+  <h4>Applications of Rotors</h4>
+  <h5>Double Angle Formula</h5>
+  <h5>Spirograph</h5>
+  <h5>Uniform Circular Motion</h5>
+  <dl>
+    <dd><latex-pic> \bm{e_1} \bm{e_{12}} = \bm{e_2} </latex-pic></dd>
+  </dl>
+
+  <p>
+    The left hand side of that product is a vector, and the right hand side is
+    a bivector. The interesting this to note is that <latex-pic> \bm{e_2}
+    </latex-pic> is rotated 90 degrees from <latex-pic> \bm{e_1} </latex-pic>,
+    almost as if <latex-pic> \bm{e_{12}} </latex-pic> operates on vectors
+    under mutliplication by rotating them, and that's exactly what's going on.
+  </p>
+
+
+  <p>
+    The fact that I works as a 90 degree rotator gives us another interesting
+    conclusion:
   </p>
   <dl>
     <dd>
@@ -476,30 +525,13 @@
     <latex-pic>\mathbb{C}</latex-pic>.
     This is cool because it gives us something that operates like
     the complex numbers, but with a geometric underpinning.
-
   </p>
   <p>
     The element <latex-pic> \bm{e_{12}} </latex-pic> is called the
     unit-pseudoscalar, and will be abbreviated as <latex-pic> \bm{I}
     </latex-pic>.
   </p>
-  <p>
-    Now that we know what elements of <latex-pic> \mathbb{G}^{2} </latex-pic>
-    look like and how to manipulate them, it's now time to put them to work.
-    We can start by observing that:
-  </p>
 
-  <dl>
-    <dd><latex-pic> \bm{e_1} \bm{e_{12}} = \bm{e_2} </latex-pic></dd>
-  </dl>
-
-  <p>
-    The left hand side of that product is a vector, and the right hand side is
-    a bivector. The interesting this to note is that <latex-pic> \bm{e_2}
-    </latex-pic> is rotated 90 degrees from <latex-pic> \bm{e_1} </latex-pic>,
-    almost as if <latex-pic> \bm{e_{12}} </latex-pic> operates on vectors
-    under mutliplication by rotating them, and that's exactly what's going on.
-  </p>
   <p>
     Let's define something that looks like an exponential function:
   </p>
@@ -551,24 +583,5 @@
     })();
   </script>
 
-  <dl>
-    <dd><latex-pic> \mathbb{R}^{2} </latex-pic></dd>
-    <dd><latex-pic> \mathbb{G}^{2} </latex-pic></dd>
-  </dl>
-  <dl>
-    <dd><latex-pic>e_{23} := e_2 \wedge e_3</latex-pic></dd>
-    <dd><latex-pic>a b := a \cdot b + a \wedge b</latex-pic></dd>
-    <dd><latex-pic>a \cdot b := \frac{1}{2}(ab + ba)</latex-pic></dd>
-    <dd><latex-pic>a \wedge b := \frac{1}{2}(ab - ba)</latex-pic></dd>
-    <dd><latex-pic>a \wedge b = - b \wedge a</latex-pic></dd>
-  </dl>
-
-  <table>
-    <tr><td><latex-pic>(ab)c = a(bc)</latex-pic></td> <td>Associative</td> <td>(1)</td></tr>
-    <tr><td><latex-pic>a(b + c) = ab + ac</latex-pic></td> <td>Left Associative</td> <td>(2)</td></tr>
-    <tr><td><latex-pic>(a + b)c = ac + bc</latex-pic></td> <td>Right Associative</td> <td>(3)</td></tr>
-    <tr><td><latex-pic>aa = a^{2} = || a ||^{2}</latex-pic></td> <td>Contraction</td> <td>(4)</td> </tr>
-    <tr><td><latex-pic>a \parallel a \Rightarrow a \wegde a = 0</latex-pic></td> <td></td> <td></td> </tr>
-  </table>
 </body>
 </html>
