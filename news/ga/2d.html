@@ -469,20 +469,168 @@
   </latex-pic>
 
   <p>
-    Now that we know what elements of  𝔾<sup>2</sup>
-    look like and how to manipulate them, it's now time to put them to work.
-
+    Now that we know what elements of  𝔾<sup>2</sup> look like and how to
+    manipulate them, it's now time to put them to work.
   </p>
   <h3>Applying Geometric Algebra</h3>
 
   <h4>Multiplying Vectors</h4>
-  multiply a vector by that, show we get out a new vector.
-  reduce to just e_12
+  <p>
+    Let's  start by multiplying two vectors:
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \bm{a} &= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{b} &= b_1 \bm{e_{1}} + b_2 \bm{e_{2}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Under the geometric product we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {b} &= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &= a_1 b_1 \bm{e_{1}}  \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
+                              &=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
+                              &=  a_1 b_1 + a_2 b_b + a_1 b_2 \bm{e_{12}}
+                              - a_2 b_1 \bm{e_{12}} \\
+                              &= (a_1 b_1 + a_2 b_b) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    We can see that from the product of two vectors we get a scalar and a bivector.
+  </p>
+  <p>
+    What if we take a scalar and a bivector and multiply it by a vector?
+    Note that below we are using a capital letter for a bivector.
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \bm{a} &= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{B} &= B_1 + B_2 \bm{e_{12}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {B} &= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (B_1  + B_2 \bm{e_{12}}) \\
+                          &= a_1 B_1 \bm{e_{1}}
+                           + a_1 B_2 \bm{e_{1}}  \bm{e_{12}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_2 B_2 \bm{e_{2}}  \bm{e_{12}} \\
+                           &= a_1 B_1 \bm{e_{1}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_1 B_2 \bm{e_{1}}  \bm{e_{12}}
+                           + a_2 B_2 \bm{e_{2}}  \bm{e_{12}} \\
+                           &= a_1 B_1 \bm{e_{1}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_1 B_2 \bm{e_{2}}
+                           - a_2 B_2 \bm{e_{1}} \\
+                           &= ( a_1 B_1  - a_2 B_2 )\bm{e_{1}}
+                           + ( a_2 B_1 + a_1 B_2 ) \bm{e_{2}}  \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    That product gives us back a vector, so B is an element of 𝔾<sup>2</sup>
+    that operates on vectors through the geometric product to give us other
+    new vectors.
+  </p>
+  <h4>Rotors</h4>
+  <p>
+    A special case of <b>B</b> is a particular bivector called a Rotor.  This
+    Rotor is an element of 𝔾<sup>2</sup> that is just a restatement of <a
+      href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a>
+    in 𝔾<sup>2</sup>.
+  </p>
+  <p>
+    First, for reasons that will become clearer later, we will begin to
+    abbreviate <b>e<sub>12</sub></b> as <b>I</b>.
+  </p>
+  <dl>
+    <dd><latex-pic> e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}</latex-pic></dd>
+  </dl>
+  <p>
+    If you multiply any vector by this Rotor on the right it will rotate
+    that vector &theta; degrees in the direction from <b>e<sub>1</sub></b> to
+    <b>e<sub>2</sub></b>. If you multiply that same vector on the left by
+    this Rotor it will be rotated &theta; degrees in the opposite direction.
+  </p>
+
+  <p>
+    For example, here is a dynamic illustration of the Rotor in action,
+    In this case, we are multiplying <b>e<sub>1</sub></b> by
+    e<sup>&omega;t<b>I</b></sup>, where t is time, and &omega; is
+    the rate, in radians per second, that the vector undergoes rotation.
+    In this example we set &omega; = 1, so the vector should complete
+    a full circle every 2&pi; seconds.
+  </p>
+  <dl>
+    <dd><latex-pic>v = \bm{e_1} e^{\omega t \bm{I}}</latex-pic></dd>
+  </dl>
+
+  <button id=rotor_toggle>Start/Stop</button>
+  <canvas id=rotor width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('rotor_toggle');
+      var running = false;
+      var omega = 1;
+      var start = Date.now();
+      var e1 = ga2d.vec(1, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var dest = ga2d.mul(e1, rotor);
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.axes();
+        f.vec(dest, " ");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+  <p>
+    Using geometric algebra makes it easy to read off this formula
+    and determine what is going to happen.
+  </p>
+
   <h4>Complex Numbers</h4>
   show this maps to the complex numbers
-  <h4>Rotors</h4>
-  generalize to e^{\theta I}
-  show applications of e^{\theta I}
   <h4>Applications of Rotors</h4>
   <h5>Double Angle Formula</h5>
   <h5>Spirograph</h5>
@@ -493,10 +641,10 @@
 
   <p>
     The left hand side of that product is a vector, and the right hand side is
-    a bivector. The interesting this to note is that <latex-pic> \bm{e_2}
-    </latex-pic> is rotated 90 degrees from <latex-pic> \bm{e_1} </latex-pic>,
-    almost as if <latex-pic> \bm{e_{12}} </latex-pic> operates on vectors
-    under mutliplication by rotating them, and that's exactly what's going on.
+    a bivector. The interesting this to note is that <b>e<sub>2</sub></b> is
+    rotated 90 degrees from <b>e<sub>1</sub></b>, almost as if
+    <b>e<sub>12</sub></b> operates on vectors under mutliplication by rotating
+    them, and that's exactly what's going on.
   </p>
 
 
@@ -512,11 +660,11 @@
     </dd>
   </dl>
   <p>
-    So <latex-pic> \bm{e_{12}} </latex-pic> is an element of our algebra that,
-    if squared, equals -1, i.e. it acts just like <latex-pic>i</latex-pic>
+    So <b>e<sub>12</sub></b> is an element of our algebra that,
+    if squared, equals -1, i.e. it acts just like <em>i</em>
     for the complex numbers, but without the need to take the square root of
     a negative number, or invoke anything imaginary. You can reason out
-    geometrically what's going on here, that <latex-pic> \bm{e_{12}} </latex-pic>
+    geometrically what's going on here, that <b>e<sub>12</sub></b>
     rotates a vector by 90 degrees, and if you do two 90 degree
     rotations you will get a rotation of 180 degrees, and rotating a vector by
     180 degrees is the same as multiplying that vector by -1.
@@ -527,9 +675,8 @@
     the complex numbers, but with a geometric underpinning.
   </p>
   <p>
-    The element <latex-pic> \bm{e_{12}} </latex-pic> is called the
-    unit-pseudoscalar, and will be abbreviated as <latex-pic> \bm{I}
-    </latex-pic>.
+    The element <b>e<sub>12</sub></b>is called the
+    unit-pseudoscalar, and will be abbreviated as <em>I</em>.
   </p>
 
   <p>
@@ -548,40 +695,6 @@
       \mathbb{G}^{2} </latex-pic>.
   </p>
 
-
-  <button id=rotor_toggle>Start/Stop</button>
-  <canvas id=rotor width=300 height=300></canvas>
-  <script type="text/javascript" charset="utf-8">
-    (function () {
-      var button = document.getElementById('rotor_toggle');
-      var running = false;
-      var omega = 1;
-      var start = Date.now();
-      var e1 = ga2d.vec(1, 0);
-      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var dest = ga2d.mul(e1, rotor);
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vec(dest, "v");
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  </script>
 
 </body>
 </html>
