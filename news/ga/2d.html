@@ -681,7 +681,7 @@
 
   <p>
     And we can take that one step further and rotate the whole thing around
-    the origin, where we set &omega;<sub>1</sub> = 3 and &omega;<sub>2</sub> =
+    the origin, where we set &omega;<sub>1</sub> = 2.9 and &omega;<sub>2</sub> =
     1.
   </p>
   <dl>
@@ -694,7 +694,7 @@
     (function () {
       var button = document.getElementById('sum_rotor2_toggle');
       var running = false;
-      var omega1 = 3;
+      var omega1 = 2.9;
       var omega2 = 1;
       var start = Date.now();
       var p = ga2d.vec(1, 1);
@@ -718,6 +718,57 @@
       button.addEventListener('click', function() {
         running = !running;
         if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    That might be easier to follow if instead of drawing the vector
+    we instead draw the trail of where the vector has been.
+  </p>
+
+
+  <button id=trail_rotor2_toggle>Start/Stop</button>
+  <canvas id=trail_rotor2 width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('trail_rotor2_toggle');
+      var running = false;
+      var omega1 = 2.9;
+      var omega2 = 1;
+      var start = Date.now();
+      var p = ga2d.vec(1, 1);
+      var e1 = ga2d.vec(0.5, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('trail_rotor2'));
+      var lastPoint = [];
+      var step = function() {
+        var rotor1 = ga2d.e(omega1 * (Date.now() - start)/1000);
+        var rotor2 = ga2d.e(omega2 * (Date.now() - start)/1000);
+        var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
+        if (lastPoint === []) {
+          lastPoint = dest;
+          return
+        }
+        f.reset();
+        f.segment(lastPoint, dest);
+        f.draw();
+        lastPoint = dest;
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          lastPoint = [];
+          f.clear();
+          f.expandTo([0, 2, 2, 0]);
+          f.expandTo([0, -2, -2, 0]);
           start = Date.now();
           window.requestAnimationFrame(step);
         }

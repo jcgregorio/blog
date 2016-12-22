@@ -41,12 +41,28 @@ this.draw_ga2d = this.ga2d_draw || function() {
       });
     }
 
+    segment(v1, v2) {
+      this._updateExtents(v1);
+      this._updateExtents(v2);
+      this._updateExtents(g.sub(v1, v2));
+      // Add to list of ops.
+      this.ops.push({
+        op: "segment",
+        v1: v1,
+        v2: v2,
+      });
+    }
+
     expandTo(v) {
       this._updateExtents(v);
     }
 
     clear() {
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      this.ops = [];
+    }
+
+    reset() {
       this.ops = [];
     }
 
@@ -153,6 +169,11 @@ this.draw_ga2d = this.ga2d_draw || function() {
           this.ctx.lineTo(x_css_extent, y_origin*y_ratio);
           this.ctx.moveTo(x_origin*x_ratio, 0);
           this.ctx.lineTo(x_origin*x_ratio, y_css_extent);
+          this.ctx.stroke();
+        } else if (op.op == "segment") {
+          this.ctx.beginPath();
+          this._moveto(xform(op.v1));
+          this._lineto(xform(op.v2));
           this.ctx.stroke();
         } else if (op.op == "region") {
           this.ctx.beginPath();
