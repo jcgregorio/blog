@@ -40,9 +40,8 @@
     two dimensional vector space, i.e. ℝ<sup>2</sup>.  This will be a concise
     introduction to 𝔾<sup>2</sup>, the Geometric Algebra over ℝ<sup>2</sup>,
     and then quickly pivot to applications in 𝔾<sup>2</sup>. This introduction
-    will not cover the history of GA, Clifford Algebras, or Hermann Grassman.
-    The history is fascinating, but other people have convered it much better
-    than I ever could.
+    will not cover the fascinating history of GA, <a href="</a://en.wikipedia.org/wiki/Clifford_algebra">Clifford Algebras</a>, or
+    <a href="https://en.wikipedia.org/wiki/Hermann_Grassmann">Hermann Grassman</a>.
   </p>
   <p>
     I'll presume a famialarity with <a
@@ -53,9 +52,18 @@
   </p>
   <p>
   </p>
-  <h3>Linear Algebra</h3>
+  <h3 id=linear_algebra>Linear Algebra</h3>
+
+  <blockquote>
+    Linear algebra is the branch of mathematics concerning vector spaces and
+    linear mappings between such spaces. It includes the study of lines,
+    planes, and subspaces, but is also concerned with properties common to all
+    vector spaces. -<a
+      href="https://en.wikipedia.org/wiki/Linear_algebra">Wikipedia</a>
+  </blockquote>
   <p>
-    Very short review of what everyone should know from linear algebra.
+    You should be familiar with the following axioms and definitions from
+    Linear Algebra:
   </p>
 
   <table>
@@ -65,8 +73,8 @@
     <tr><td><latex-pic>\bm{-a} + \bm{a} = \bm{0}</latex-pic></td> <td>Inverse</td> <td>(4)</td></tr>
     <tr><td><latex-pic>c(\bm{a} + \bm{b}) = c\bm{a} + c\bm{b} </latex-pic></td> <td>Scalar Distributive</td> <td>(5)</td></tr>
     <tr><td><latex-pic>1 \bm{b}  = \bm{b} </latex-pic></td> <td>Multiplicative Identity</td> <td>(6)</td></tr>
-    <tr><td><latex-pic> \bm{a} \cdot \bm{b} = ||\bm{a}|| ||\bm{b}|| \cos \theta</latex-pic></td> <td>Dot/Inner Product</td> <td>(7)</td></tr>
-    <tr><td><latex-pic> \bm{a} \cdot \bm{b} = \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></td> <td>Dot/Inner Product (Alternate)</td> <td>(8)</td></tr>
+    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = ||\bm{a}|| ||\bm{b}|| \cos \theta</latex-pic></td> <td>Dot/Inner Product</td> <td>(7)</td></tr>
+    <tr><td><latex-pic>\bm{a} \cdot \bm{b} = \sum_{i}\bm{a_i}\bm{b_i} </latex-pic></td> <td>Dot/Inner Product (Alternate)</td> <td>(8)</td></tr>
   </table>
 
   <p>In particular, for  ℝ<sup>2</sup> we have an orthonormal basis:</p>
@@ -94,7 +102,7 @@
   </script>
 
   <p>
-    We know how to do vector addition and  scalar multiplication of vectors,
+    We know how to do vector addition and scalar multiplication of vectors,
     and that any vector can be represented as a linear combination of
     basis elements.
   </p>
@@ -165,7 +173,7 @@
   </p>
   <p>
     All of this stands in stark contrast to 𝔾<sup>2</sup>, where these
-    operations take place in ℝ<sup>2</sup>, in fact, many of the constructs we
+    operations take place in 𝔾<sup>2</sup>, in fact, many of the constructs we
     use in Linear Algebra, such as rotations, exist as elements of
     𝔾<sup>2</sup>, and applying those operations is just a matter of taking the
     geometric product of those objects. Not only is 𝔾<sup>2</sup> closed under
@@ -173,7 +181,7 @@
     𝔾<sup>2</sup>.
   </p>
 
-  <h3>Geometric Algebra</h3>
+  <h3 id=geometric_algebra>Geometric Algebra</h3>
 
   <p>
     The Geometric Algebra of 𝔾<sup>2</sup> builds upon ℝ<sup>2</sup>,
@@ -182,10 +190,10 @@
     about the exterior product.
   </p>
 
-  <h4>Exterior Product</h4>
+  <h4 id=exterior_product>Exterior Product</h4>
 
   <p>
-    The  exterior product operates on two vectors and is written as:
+    The exterior product operates on two vectors and is written as:
   </p>
   <dl>
     <dd><latex-pic>\bm{a} \wedge \bm{b}</latex-pic></dd>
@@ -363,7 +371,7 @@
     mulitple of <b>e<sub>1</sub>^e<sub>2</sub></b>
   </p>
 
-  <h4>Geometric Product</h4>
+  <h4 id=geometric_product>Geometric Product</h4>
 
   <p>
     Now that we know about the exterior product, we can define the geometric
@@ -384,10 +392,10 @@
     <tr><td><latex-pic>c(\bm{a} \bm{b}) = c\bm{a} \bm{b} = \bm{a} c \bm{b}</latex-pic></td> <td>Scalar Associativity</td> <td>(2)</td></tr>
     <tr><td><latex-pic>\bm{a} (\bm{b} + \bm{c}) = \bm{a} \bm{b} + \bm{a} \bm{c}</latex-pic></td> <td>Left Distributive</td> <td>(3)</td></tr>
     <tr><td><latex-pic>(\bm{a} + \bm{b}) \bm{c} = \bm{a} \bm{c} + \bm{b} \bm{c}</latex-pic></td> <td>Right Distributive</td> <td>(4)</td></tr>
-    <tr><td><latex-pic>\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||\bm{a}|| </latex-pic></td> <td>Norm</td> <td>(6)</td> </tr>
-    <tr><td><latex-pic>\bm{a} \bm{b} \neq \bm{b} \bm{a} </latex-pic></td> <td>Non-Commutative, except in some cases.</td> <td>(7)</td> </tr>
-    <tr><td><latex-pic>\bm{a} \neq 0 \Rightarrow \bm{a} (\frac{1}{||\bm{a}||^2} \bm{a}) = 1</latex-pic></td> <td>Vector Inverses</td> <td>(8)</td> </tr>
-    <tr><td><latex-pic>\bm{a} \perp \bm{b} \Rightarrow \bm{a} \bm{b} = \bm{a} \wedge \bm{b}</latex-pic></td> <td>Orthogonal vector multiplication.</td> <td>(9)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||\bm{a}|| </latex-pic></td> <td>Norm</td> <td>(5)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \bm{b} \neq \bm{b} \bm{a} </latex-pic></td> <td>Non-Commutative, except in some cases.</td> <td>(6)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \neq 0 \Rightarrow \bm{a} (\frac{1}{||\bm{a}||^2} \bm{a}) = 1</latex-pic></td> <td>Vector Inverses</td> <td>(7)</td> </tr>
+    <tr><td><latex-pic>\bm{a} \perp \bm{b} \Rightarrow \bm{a} \bm{b} = \bm{a} \wedge \bm{b}</latex-pic></td> <td>Orthogonal vector multiplication.</td> <td>(8)</td> </tr>
   </table>
 
   <p>
@@ -472,9 +480,9 @@
     Now that we know what elements of  𝔾<sup>2</sup> look like and how to
     manipulate them, it's now time to put them to work.
   </p>
-  <h3>Applying Geometric Algebra</h3>
+  <h3 id=applications>Applying Geometric Algebra</h3>
 
-  <h4>Multiplying Vectors</h4>
+  <h4 id=multiplying_vectors>Multiplying Vectors</h4>
   <p>
     Let's  start by multiplying two vectors:
   </p>
@@ -516,7 +524,7 @@
   </p>
   <p>
     What if we take a scalar and a bivector and multiply it by a vector?
-    Note that below we are using a capital letter for a bivector.
+    Note that below we are using a capital letter for our scalar plus bivector.
   </p>
   <dl>
     <dd>
@@ -553,20 +561,21 @@
     </dd>
   </dl>
   <p>
-    That product gives us back a vector, so B is an element of 𝔾<sup>2</sup>
-    that operates on vectors through the geometric product to give us other
-    new vectors.
+    That product gives us back a vector, so <b>B</b> is an element of 𝔾<sup>2</sup>
+    that operates on vectors through the geometric product to give us another
+    vector.
   </p>
-  <h4>Rotors</h4>
+  <h4 id=rotors>Rotors</h4>
   <p>
-    A special case of <b>B</b> is a particular bivector called a Rotor.  This
+    A special case of <b>B</b> is called a Rotor.This
     Rotor is an element of 𝔾<sup>2</sup> that is just a restatement of <a
       href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a>
     in 𝔾<sup>2</sup>.
   </p>
   <p>
     First, for reasons that will become clearer later, we will begin to
-    abbreviate <b>e<sub>12</sub></b> as <b>I</b>.
+    abbreviate <b>e<sub>12</sub></b> as <b>I</b>. Our Rotor is then defined
+    as:
   </p>
   <dl>
     <dd><latex-pic> e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}</latex-pic></dd>
@@ -625,6 +634,10 @@
     })();
   </script>
   <p>
+    Caveat: Rotors only work like this in ℝ<sup>2</sup>, in ℝ<sup>3</sup> and
+    above the formulation changes, so be aware of that.
+  </p>
+  <p>
     Using geometric algebra makes it easy to read off this formula
     and determine what is going to happen, i.e. the <b>e<sub>1</sub></b>
     vector is going to be operated on via geometric product and the result
@@ -680,7 +693,7 @@
   </script>
 
   <p>
-    And we can take that one step further and rotate the whole thing around
+    We can take that one step further and rotate the whole thing around
     the origin, where we set &omega;<sub>1</sub> = 2.9 and &omega;<sub>2</sub> =
     1.
   </p>
@@ -728,7 +741,7 @@
 
   <p>
     That might be easier to follow if instead of drawing the vector
-    we instead draw the trail of where the vector has been.
+    we draw the trail of points where the vector has been.
   </p>
 
 
@@ -777,14 +790,14 @@
     })();
   </script>
 
-  <h4>Double Angle Formula</h4>
+  <h4 id=double_angle>Double Angle Formula</h4>
 
   <p>
     Some of the power of Geometric Algebra comes from being able to go back
     and forth between looking at a problem geometrically and looking at it
     algrebraically. For example, it is easy to reason that rotating a vector
     &theta; degrees twice is the same as rotating that same vector 2 &theta;
-    degrees. We can write that out as a algrebraic expression:
+    degrees. We can write that out as an algrebraic expression:
   </p>
 
   <dl>
@@ -832,12 +845,14 @@
     </dd>
   </dl>
   <p>
-    You could start with the same geometric reasoning about any two angle &alpha; and &beta; and use
-    the same derivation to get the general
-    <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities">Angle sum identities</a>.
+    You could start with the same geometric reasoning about any two angles,
+    &alpha; and &beta;, and use the same derivation to get the general <a
+      href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities">Angle
+      sum identities</a>.  The power here is the ability to move back and
+    forth between algebraic and geometric reasoning quickly and easily.
   </p>
 
-  <h4>Complex Numbers</h4>
+  <h4 id=complex>Complex Numbers</h4>
   <p>
     From our definition of our Rotator, if we set &omega; to 90 degrees then
     since <em>sin</em> becomes 0 we are left with only <b>I</b>, which is a
@@ -861,17 +876,19 @@
     a vector by to rotate it 180 degrees. But what we also have is a quantity
     in 𝔾<sup>2</sup> that when squared is equal to -1. This should remind you
     of <em>i</em> in the complex numbers ℂ, but without the need to take the
-    square root of a negative number, or invoke anything imaginary.  and in
+    square root of a negative number, or invoke anything imaginary. In
     fact the subset of all linear combinations of <b>{1, I}</b> is closed
     under the geometric product and is isomorphic to ℂ.
   </p>
-
+  <h3 id=further_reading>Further Reading</h3>
   <p>
-    TODO
-     - Caveats about rotors.
-     - #refs for headings.
-     - Links to further reading.
+    There are other introductions to GA around the web, some of the ones I've
+    found helpful are:
   </p>
+  <ul>
+    <li><a href="http://www.jaapsuter.com/geometric-algebra/">Geometric Algebra Primer</a></li>
+    <li><a href="http://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=7943&context=etd_theses">Geometric Algebra: An Introduction with Applications in Euclidean and Conformal Geometry</a></li>
+  </ul>
 
 </body>
 </html>
