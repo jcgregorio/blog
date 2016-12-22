@@ -777,10 +777,69 @@
     })();
   </script>
 
+  <h4>Double Angle Formula</h4>
+
+  <p>
+    Some of the power of Geometric Algebra comes from being able to go back
+    and forth between looking at a problem geometrically and looking at it
+    algrebraically. For example, it is easy to reason that rotating a vector
+    &theta; degrees twice is the same as rotating that same vector 2 &theta;
+    degrees. We can write that out as a algrebraic expression:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        e^{2 \theta \bm{I}} = e^{\theta \bm{I}} e^{\theta \bm{I}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we expand both sides of the equations above using the definition of
+    <em>e</em> we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \cos 2 \theta + \sin 2 \theta \bm{I} &= (\cos \theta + \sin \theta \bm{I}) (\cos \theta + \sin \theta \bm{I}) \\
+           &= \cos^2 \theta + 2 \cos \theta \sin \theta \bm{I} + \sin^2 \theta \bm{I}^2 \\
+           &= \cos^2 \theta + 2 \cos \theta \sin \theta \bm{I} - \sin^2 \theta \\
+           &= \cos^2 \theta - \sin^2 \theta  + 2 \cos \theta \sin \theta \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Comparing the coefficients on the left hand side of the equation to that on
+    the right hand side we find we have derived the
+    <a href="http://mathworld.wolfram.com/Double-AngleFormulas.html">Double Angle Formulas</a>:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \cos 2 \theta = \cos^2 \theta  - \sin^2 \theta
+      </latex-pic>
+    </dd>
+    <dd>
+      <latex-pic>
+        \sin 2 \theta = 2 \cos \theta \sin \theta
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    You could start with the same geometric reasoning about any two angle &alpha; and &beta; and use
+    the same derivation to get the general
+    <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities">Angle sum identities</a>.
+  </p>
+
   <h4>Complex Numbers</h4>
   show this maps to the complex numbers
   <h4>Applications of Rotors</h4>
-  <h5>Double Angle Formula</h5>
   <h5>Spirograph</h5>
   <h5>Uniform Circular Motion</h5>
   <dl>
