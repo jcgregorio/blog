@@ -838,70 +838,40 @@
   </p>
 
   <h4>Complex Numbers</h4>
-  show this maps to the complex numbers
-  <h4>Applications of Rotors</h4>
-  <h5>Spirograph</h5>
-  <h5>Uniform Circular Motion</h5>
+  <p>
+    From our definition of our Rotator, if we set &omega; to 90 degrees then
+    since <em>sin</em> becomes 0 we are left with only <b>I</b>, which is a
+    90 degree Rotator. But if we apply a 90 degree Rotator twice we should get
+    a 180 degree Rotator:
+  </p>
   <dl>
-    <dd><latex-pic> \bm{e_1} \bm{e_{12}} = \bm{e_2} </latex-pic></dd>
+    <dd><latex-pic>
+        \begin{align*}
+        \bm{I} \bm{I} &= \bm{e_{12}} \bm{e_{12}} \\
+                      &= \bm{e_1} \bm{e_2} \bm{e_1} \bm{e_2} \\
+                      &= - \bm{e_1} \bm{e_1} \bm{e_2} \bm{e_2} \\
+                      &= - 1 \bm{e_2} \bm{e_2} \\
+                      &= - 1 \\
+        \end{align*}
+    </latex-pic></dd>
   </dl>
 
   <p>
-    The left hand side of that product is a vector, and the right hand side is
-    a bivector. The interesting this to note is that <b>e<sub>2</sub></b> is
-    rotated 90 degrees from <b>e<sub>1</sub></b>, almost as if
-    <b>e<sub>12</sub></b> operates on vectors under mutliplication by rotating
-    them, and that's exactly what's going on.
-  </p>
-
-
-  <p>
-    The fact that I works as a 90 degree rotator gives us another interesting
-    conclusion:
-  </p>
-  <dl>
-    <dd>
-      <latex-pic>
-        \bm{e_{12} e_{12}} = \bm{e_1} \bm{e_2} \bm{e_1} \bm{e_2} = -\bm{e_1} \bm{e_1} \bm{e_2} \bm{e_2} = -1
-      </latex-pic>
-    </dd>
-  </dl>
-  <p>
-    So <b>e<sub>12</sub></b> is an element of our algebra that,
-    if squared, equals -1, i.e. it acts just like <em>i</em>
-    for the complex numbers, but without the need to take the square root of
-    a negative number, or invoke anything imaginary. You can reason out
-    geometrically what's going on here, that <b>e<sub>12</sub></b>
-    rotates a vector by 90 degrees, and if you do two 90 degree
-    rotations you will get a rotation of 180 degrees, and rotating a vector by
-    180 degrees is the same as multiplying that vector by -1.
-    In fact, the subset of <latex-pic>\{ 1, \bm{e_{12}} \}</latex-pic> is
-    closed under the geometric product and is isomorphic to
-    <latex-pic>\mathbb{C}</latex-pic>.
-    This is cool because it gives us something that operates like
-    the complex numbers, but with a geometric underpinning.
-  </p>
-  <p>
-    The element <b>e<sub>12</sub></b>is called the
-    unit-pseudoscalar, and will be abbreviated as <em>I</em>.
+    And -1 is exactly what we would expect, since that's what you multiply
+    a vector by to rotate it 180 degrees. But what we also have is a quantity
+    in 𝔾<sup>2</sup> that when squared is equal to -1. This should remind you
+    of <em>i</em> in the complex numbers ℂ, but without the need to take the
+    square root of a negative number, or invoke anything imaginary.  and in
+    fact the subset of all linear combinations of <b>{1, I}</b> is closed
+    under the geometric product and is isomorphic to ℂ.
   </p>
 
   <p>
-    Let's define something that looks like an exponential function:
+    TODO
+     - Caveats about rotors.
+     - #refs for headings.
+     - Links to further reading.
   </p>
-  <dl>
-    <dd><latex-pic> \bm{ e^{\theta I}} := \cos(\theta) + \sin(\theta)\bm{I}</latex-pic></dd>
-  </dl>
-  <p>
-    This is a Rotor, and when a vector is multiplied on the right by our
-    exponential the vector will be rotated &theta; degrees, in the direction
-    from <latex-pic> \bm{e_{1}} </latex-pic> to <latex-pic> \bm{e_{2}} </latex-pic>.
-  </p>
-  <p>
-    This is just a restatement of <a href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a> in <latex-pic>
-      \mathbb{G}^{2} </latex-pic>.
-  </p>
-
 
 </body>
 </html>
