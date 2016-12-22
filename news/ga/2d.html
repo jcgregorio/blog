@@ -587,7 +587,7 @@
     a full circle every 2&pi; seconds.
   </p>
   <dl>
-    <dd><latex-pic>\bm{v} = \bm{e_1} e^{\omega t \bm{I}}</latex-pic></dd>
+    <dd><latex-pic>\bm{v} = \bm{e_1} e^{t \bm{I}}</latex-pic></dd>
   </dl>
 
   <button id=rotor_toggle>Start/Stop</button>
@@ -636,11 +636,11 @@
     Since our Rotator is a member of 𝔾<sup>2</sup> it can be combined with
     other operations. For example, we could start with a vector <em>p</em> at
     an initial position and then perturb it by adding it to another vector
-    that is multiplied by our Rotor.
+    that is multiplied by our Rotor. In this case we set &omega; = 2.
   </p>
 
   <dl>
-    <dd><latex-pic>\bm{v} = \bm{p} + 0.5 \bm{e_1} e^{2 \omega t \bm{I}}</latex-pic></dd>
+    <dd><latex-pic>\bm{v} = \bm{p} + 0.5 \bm{e_1} e^{2 t \bm{I}}</latex-pic></dd>
   </dl>
 
   <button id=sum_rotor_toggle>Start/Stop</button>
@@ -681,10 +681,11 @@
 
   <p>
     And we can take that one step further and rotate the whole thing around
-    the origin:
+    the origin, where we set &omega;<sub>1</sub> = 3 and &omega;<sub>2</sub> =
+    1.
   </p>
   <dl>
-    <dd><latex-pic>\bm{v} = (\bm{p} + 0.5 \bm{e_1} e^{2 \omega t \bm{I}})e^{\omega t \bm{I}}</latex-pic></dd>
+    <dd><latex-pic>\bm{v} = (\bm{p} + 0.5 \bm{e_1} e^{\omega_1 t \bm{I}})e^{\omega_2 t \bm{I}}</latex-pic></dd>
   </dl>
 
   <button id=sum_rotor2_toggle>Start/Stop</button>
@@ -693,7 +694,7 @@
     (function () {
       var button = document.getElementById('sum_rotor2_toggle');
       var running = false;
-      var omega1 = 2;
+      var omega1 = 3;
       var omega2 = 1;
       var start = Date.now();
       var p = ga2d.vec(1, 1);
@@ -704,8 +705,8 @@
         var rotor2 = ga2d.e(omega2 * (Date.now() - start)/1000);
         var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
         f.clear();
-        f.expandTo([0, 1.5, 1.5, 0]);
-        f.expandTo([0, -1.5, -1.5, 0]);
+        f.expandTo([0, 2, 2, 0]);
+        f.expandTo([0, -2, -2, 0]);
         f.axes();
         f.vec(dest, "v");
         f.draw();
