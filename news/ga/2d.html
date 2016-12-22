@@ -587,7 +587,7 @@
     a full circle every 2&pi; seconds.
   </p>
   <dl>
-    <dd><latex-pic>v = \bm{e_1} e^{\omega t \bm{I}}</latex-pic></dd>
+    <dd><latex-pic>\bm{v} = \bm{e_1} e^{\omega t \bm{I}}</latex-pic></dd>
   </dl>
 
   <button id=rotor_toggle>Start/Stop</button>
@@ -607,7 +607,7 @@
         f.expandTo([0, 1, 1, 0]);
         f.expandTo([0, -1, -1, 0]);
         f.axes();
-        f.vec(dest, " ");
+        f.vec(dest, "v");
         f.draw();
         if (running) {
           window.requestAnimationFrame(step);
@@ -626,8 +626,59 @@
   </script>
   <p>
     Using geometric algebra makes it easy to read off this formula
-    and determine what is going to happen.
+    and determine what is going to happen, i.e. the <b>e<sub>1</sub></b>
+    vector is going to be operated on via geometric product and the result
+    will be another vector that is rotated <em>&omega; t</em> radians in
+    a counter-clockwise direction.
   </p>
+
+  <p>
+    Since our Rotator is a member of 𝔾<sup>2</sup> it can be combined with
+    other operations. For example, we could start with a vector <em>p</em> at
+    an initial position and then perturb it by adding it to another vector
+    that is multiplied by our Rotor.
+  </p>
+
+  <dl>
+    <dd><latex-pic>\bm{v} = \bm{p} + 0.5 \bm{e_1} e^{2 \omega t \bm{I}}</latex-pic></dd>
+  </dl>
+
+  <button id=sum_rotor_toggle>Start/Stop</button>
+  <canvas id=sum_rotor width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('sum_rotor_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var p = ga2d.vec(1, 1);
+      var e1 = ga2d.vec(0.5, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('sum_rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var dest = ga2d.add(p, ga2d.mul(e1, rotor));
+        f.clear();
+        f.expandTo([0, 1.5, 1.5, 0]);
+        f.axes();
+        f.vec(dest, "v");
+        f.vec(p, "p");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
 
   <h4>Complex Numbers</h4>
   show this maps to the complex numbers
