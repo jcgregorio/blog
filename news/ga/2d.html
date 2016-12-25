@@ -895,7 +895,43 @@
   </dl>
 
   <p>
-    We can start by looking at ratios of vectors, i.e. if we have two
+    First, let's look at the relationship between any two non-zero vectors.
+  </p>
+
+  <canvas id=two width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(-1, 2);
+      var b = ga2d.vec(2, 3);
+      var f = new draw_ga2d.Frame(document.getElementById('two'));
+      f.axes();
+      f.vec(a, "a");
+      f.vec(b, "b");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    We can reason out geometrically that given <b>a</b> we can get <b>b</b>
+    from it by first scaling <b>a</b> to have a norm of 1, then rotating it to
+    have the same direction as <b>b</b>, and then finally scaling that unit
+    vector to have the same length as <b>b</b>. Now write that out
+    algrebraically, where &theta; is the angle between the two vectors.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{b} &= ||b|| e^{\theta \bm{I}} \frac{1}{||a||} \bm{a} \\
+               &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{a}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Now let's looking at ratios of vectors, i.e. if we have two
     vectors <b>a</b> and <b>b</b>, and given a third vector <b>c</b>, we'd
     like to calculate the vector <b>d</b> so that they have the same ratio,
     i.e.
@@ -982,7 +1018,7 @@
   </script>
 
   <p>
-    But we can observe that for any non-zero vectors, that a vector <b>b</b>
+    But recall our observation that for any non-zero vectors, that a vector <b>b</b>
     can be gotten from <b>a</b> by just a rotation and a scaling factor.
     I.e:
   </p>
@@ -990,7 +1026,7 @@
   <dl>
     <dd>
       <latex-pic>
-        \bm{b} = k e^{\theta \bm{I}}\bm{a}
+        \bm{b} &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{a}
       </latex-pic>
     </dd>
   </dl>
@@ -1003,8 +1039,8 @@
       <latex-pic>
         \begin{align*}
         \bm{d} &= \bm{b}\bm{a^{-1}}\bm{c} \\
-        \bm{d} &= k e^{\theta \bm{I}}\bm{a} \bm{a^{-1}} \bm{c} \\
-        \bm{d} &= k e^{\theta \bm{I}} \bm{c} \\
+               &= \frac{||b||}{||a||} e^{\theta \bm{I}}\bm{a} \bm{a^{-1}} \bm{c} \\
+               &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{c} \\
         \end{align*}
       </latex-pic>
     </dd>
