@@ -912,10 +912,10 @@
   </script>
 
   <p>
-    We can reason out geometrically that given <b>a</b> we can get <b>b</b>
-    from it by first scaling <b>a</b> to have a norm of 1, then rotating it to
-    have the same direction as <b>b</b>, and then finally scaling that unit
-    vector to have the same length as <b>b</b>. Now write that out
+    We can reason out geometrically that given <b>b</b> we can get <b>a</b>
+    from it by first scaling <b>b</b> to have a norm of 1, then rotating it to
+    have the same direction as <b>a</b>, and then finally scaling that unit
+    vector to have the same length as <b>a</b>. Now write that out
     algrebraically, where &theta; is the angle between the two vectors.
   </p>
 
@@ -923,36 +923,183 @@
     <dd>
       <latex-pic>
         \begin{align*}
-        \bm{b} &= ||b|| e^{\theta \bm{I}} \frac{1}{||a||} \bm{a} \\
-               &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{a}
+        \bm{a} &= ||\bm{a}|| e^{\theta \bm{I}} \frac{1}{||\bm{b}||} \bm{b} \\
+               &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b}
         \end{align*}
       </latex-pic>
     </dd>
   </dl>
 
   <p>
-    Now let's looking at ratios of vectors, i.e. if we have two
-    vectors <b>a</b> and <b>b</b>, and given a third vector <b>c</b>, we'd
-    like to calculate the vector <b>d</b> so that they have the same ratio,
-    i.e.
+    If we look at any product of two non-zero vectors, <b>ab</b>, we know we
+    get an operator that, under the geometric product, takes vectors and
+    returns new vectos. If we substitute our derivation of how to get <b>a</b>
+    from <b>b</b>, then we get:
   </p>
 
   <dl>
     <dd>
       <latex-pic>
-        \bm{d}\bm{c^{-1}} = \bm{b}\bm{a^{-1}}
+        \begin{align*}
+        \bm{ab} &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b} \bm{b} \\
+                &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} ||\bm{b}||^2  \\
+                &= ||\bm{a}|| ||\bm{b}|| e^{\theta \bm{I}}
+        \end{align*}
       </latex-pic>
     </dd>
   </dl>
 
   <p>
-    Remember that the geometric product isn't commutative, so
-    we have to choose a side to multiply by our inverse vector.
+    So every such operator <b>ab</b> is actually just a rotation and a
+    dilation. We can see this in action if we have the operator <b>ab</b> and
+    apply it to vector <b>c</b> to get vector <b>d</b>. The animation will
+    perturb vector <b>b</b> to show how that affects vector <b>d</b>.
   </p>
+
   <p>
-    But this is just a simple algebraic equation, which we can
-    solve by multiplying both sides by <b>c</b> on the right.
   </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{d} = \bm{ab}\bm{c}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <button id=ab_toggle>Start/Stop</button>
+  <canvas id=ab width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('ab_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('ab'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, a);
+        var d = ga2d.mul(op, c)
+        f.clear();
+        f.axes();
+        f.vec(a, "a");
+        f.vec(bp, "b");
+        f.vec(c, "c");
+        f.vec(d, "d");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Our generalized form for the geometric product of two vectors is:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+          \bm{B} &= B_1 + B_2 \bm{e_{12}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    We can use what we've learned so far to break that apart into
+    its scalar and Rotor components:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{B} = k e^{\theta \bm{I}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Start by applying <b>B</b> to a unit basis element, which we know
+    has a norm of 1, which gives us a new vector <b>v</b>.
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{v} &= \bm{B}\bm{e_1} \\
+               &= k e^{\theta \bm{I}} \bm{e_1}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    We can see from the last equation that <b>v</b> has a norm of k,
+    and now that we know k, we can divide <b>B</b> by k to get our Rotor.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        k &= ||\bm{B}\bm{e_1}|| \\
+        e^{\theta \bm{I}} &= \frac{1}{k} \bm{B}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+
+  <h4>Ratios</h4>
+  <p>
+    While applying the operator <b>ab</b> above did show some of the behavior,
+    it may be useful to start over, this time building our operator from a
+    ratio, i.e. if we have two vectors <b>a</b> and <b>b</b>, and given a
+    third vector <b>c</b>, we'd like to calculate the vector <b>d</b> so that
+    they have the same ratio, i.e.
+   </p>
+
+   <dl>
+     <dd>
+       <latex-pic>
+         \bm{d} / \bm{c} = \bm{b} / \bm{a}}
+       </latex-pic>
+     </dd>
+   </dl>
+
+   <p>
+     The geometric product isn't commutative, so we have to choose a side
+     to do the division on, so we will write this as:
+   </p>
+
+
+   <dl>
+     <dd>
+       <latex-pic>
+         \bm{d}\bm{c^{-1}} = \bm{b}\bm{a^{-1}}
+       </latex-pic>
+     </dd>
+   </dl>
+
+   <p>
+     But that's just a simple algrebraic equation we can solve
+     by multiplying both sides by <b>c</b>.
+   </p>
 
   <dl>
     <dd>
@@ -960,19 +1107,18 @@
         \begin{align*}
         \bm{d}\bm{c^{-1}}       &= \bm{b}\bm{a^{-1}}       \\
         \bm{d}\bm{c^{-1}}\bm{c} &= \bm{b}\bm{a^{-1}}\bm{c} \\
-                         \bm{d} &= \bm{b}\bm{a^{-1}}\bm{c} \\
+        \bm{d} &= \bm{b}\bm{a^{-1}}\bm{c}
         \end{align*}
       </latex-pic>
     </dd>
   </dl>
 
   <p>
-    We can pick apart that equation and observe that <b>b</b><b>a<sup>-1</sup></b>
-    is a product of two vectors, and as we learned before, under the
-    geometric product becomes an operator that takes a vector and returns
-    a vector. In this case is takes our vector <b>c</b> and returns <b>d</b>.
-    We can see this in operation in the animation below, where the vector
-    <b>b</b> is perturbed to show how that affects <b>d</b>.
+    The operator <b>ba<sup>-1</sup></b> should preserve the angle between
+    <b>a</b> and <b>b</b>, and also dilate <b>d</b> proportionally to the
+    norms of <b>a</b> and <b>b</b>. The following animation shows
+    that relationship, also perturbing <b>b</b> to show the affect on
+    <b>d</b>.
   </p>
 
 
@@ -1017,40 +1163,6 @@
     })();
   </script>
 
-  <p>
-    But recall our observation that for any non-zero vectors, that a vector <b>b</b>
-    can be gotten from <b>a</b> by just a rotation and a scaling factor.
-    I.e:
-  </p>
-
-  <dl>
-    <dd>
-      <latex-pic>
-        \bm{b} &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{a}
-      </latex-pic>
-    </dd>
-  </dl>
-  <p>
-    But if we plug that into our equation above we get:
-  </p>
-
-  <dl>
-    <dd>
-      <latex-pic>
-        \begin{align*}
-        \bm{d} &= \bm{b}\bm{a^{-1}}\bm{c} \\
-               &= \frac{||b||}{||a||} e^{\theta \bm{I}}\bm{a} \bm{a^{-1}} \bm{c} \\
-               &= \frac{||b||}{||a||} e^{\theta \bm{I}} \bm{c} \\
-        \end{align*}
-      </latex-pic>
-    </dd>
-  </dl>
-  <p>
-    So every product of two vectors can be expressed as just a rotation
-    and a scaling. I.e. the product always produces an operator
-    that preserves the angle between the two initial vectors and
-    also preserves the ratio of their norms.
-  </p>
 
   <h3 id=further_reading>Further Reading</h3>
   <p>
