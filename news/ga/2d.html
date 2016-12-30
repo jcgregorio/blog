@@ -1163,7 +1163,7 @@
     })();
   </script>
 
-  <h4>Conjugates</h4>
+  <h4>Conjugates and Inverses</h4>
 
   <p>
     Let's see what the difference between <b>ab</b> and <b>ba</b> is.
@@ -1267,7 +1267,7 @@
       <latex-pic>
         \begin{align*}
         \bm{B} \bm{B}^{\dagger} &= \bm{abba}  \\
-              &= \bm{a} ||\bm{b}|| \bm{a}     \\
+              &= \bm{a} ||\bm{b}||^2 \bm{a}     \\
               &= ||\bm{b}||^2 \bm{aa}         \\
               &= ||\bm{b}||^2 ||\bm{a}||^2    \\
               &= ||\bm{a}||^2 ||\bm{b}||^2
@@ -1301,6 +1301,29 @@
         \bm{B}^{-1} = \frac{\bm{B}^{\dagger}}{\bm{B}\bm{B^{\dagger}}
     </dd>
   </dl>
+
+  <p>
+    Normally geometric products aren't commutative, but in this case
+    we can see that we get the same result when we reverse the order
+    of B and B dagger:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B}^{\dagger}\bm{B} &= \bm{baab}  \\
+              &= \bm{b} ||\bm{a}||^2 \bm{b}     \\
+              &= ||\bm{a}||^2 \bm{bb}         \\
+              &= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    So our inverse will work whether applied on the left or on the right.
+  </p>
 
   <p>
     Let's see how that inverse operates by applying it to
