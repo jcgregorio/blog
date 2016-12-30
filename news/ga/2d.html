@@ -512,9 +512,9 @@
                                + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
                               &=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
-                              &=  a_1 b_1 + a_2 b_b + a_1 b_2 \bm{e_{12}}
+                              &=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
                               - a_2 b_1 \bm{e_{12}} \\
-                              &= (a_1 b_1 + a_2 b_b) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
+                              &= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
         \end{align*}
       </latex-pic>
     </dd>
@@ -567,7 +567,7 @@
   </p>
   <h4 id=rotors>Rotors</h4>
   <p>
-    A special case of <b>B</b> is called a Rotor.This
+    A special case of <b>B</b> is called a Rotor. This
     Rotor is an element of 𝔾<sup>2</sup> that is just a restatement of <a
       href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a>
     in 𝔾<sup>2</sup>.
@@ -1163,6 +1163,144 @@
     })();
   </script>
 
+  <h4>Conjugates</h4>
+
+  <p>
+    Let's see what the difference between <b>ab</b> and <b>ba</b> is.
+    First let's multiply out in terms of basis vectors:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {b} &= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &= a_1 b_1 \bm{e_{1}}  \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
+                              &=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
+                              &=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
+                              - a_2 b_1 \bm{e_{12}} \\
+                              &= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we swap <b>a</b> and <b>b</b> we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{b} \bm {a} &= (b_1 a_1 + b_2 a_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) + (a_2 b_1 - a_1 b_2) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) - (a_1 b_2 - a_2 b_1) \bm{I} \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>In that last step we just factor out a -1 from the coefficient of
+    <b>I</b>. If we substitute:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        B_1  &= a_1 b_1 + a_2 b_2 \\
+        B_2  &= a_1 b_2 - a_2 b_1
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Then we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {b} &= B_1 + B_2 \bm{I} \\
+        \bm{b} \bm {a} &= B_1 - B_2 \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    So if we reverse the order of the geometric product of our vectors
+    we end up with the equivalent of the <a href="https://en.wikipedia.org/wiki/Complex_conjugate">complex conjugate</a>.
+  </p>
+
+  <p>
+    We will note the reverse of the product of two vectors with the dagger.
+    While this maps to the conjugate in 𝔾<sup>2</sup>, reversing a product
+    of multiple vectors will be more important and powerful in 𝔾<sup>3</sup>.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B}            &= \bm{a} \bm{b}  &= B_1 + B_2 I \\
+        \bm{B}^{\dagger}  &= \bm{b} \bm{a}  &= B_1 - B_2 I
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we multiply them together we find:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B} \bm{B}^{\dagger} &= \bm{abba}  \\
+              &= \bm{a} ||\bm{b}|| \bm{a}     \\
+              &= ||\bm{b}||^2 \bm{aa}         \\
+              &= ||\bm{b}||^2 ||\bm{a}||^2    \\
+              &= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Their product just ends up being a scalar, so if divide by that
+    scalar value we should get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B} \frac{\bm{B}^{\dagger}}{||\bm{a}||^2 ||\bm{b}||^2} &= \frac{||\bm{a}||^2 ||\bm{b}||^2}{  ||\bm{a}||^2 ||\bm{b}||^2} \\
+              &= 1
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    Which means we've found the multiplicative inverse of <b>B</b>.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{B}^{-1} = \frac{\bm{B}^{\dagger}}{\bm{B}\bm{B^{\dagger}}
+    </dd>
+  </dl>
 
   <h3 id=further_reading>Further Reading</h3>
   <p>
