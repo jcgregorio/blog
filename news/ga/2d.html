@@ -1302,6 +1302,58 @@
     </dd>
   </dl>
 
+  <p>
+    Let's see how that inverse operates by applying it to
+    our previous ratio example. This time we'll not only apply
+    the <b>ba<sup>-1</sup></b> operator, but also apply it's inverse
+    to <b>c</b> to see how it compares.
+  </p>
+
+  <button id=inv_ratio_toggle>Start/Stop</button>
+  <canvas id=inv_ratio width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('inv_ratio_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('inv_ratio'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, ga2d.inv(a));
+        var d = ga2d.mul(op, c)
+        var norm = ga2d.mul(op, ga2d.conj(op))[0];
+        var opinv = ga2d.mul(ga2d.scalar(1.0/norm), ga2d.conj(op));
+        var dinv = ga2d.mul(opinv, c)
+        f.clear();
+        f.axes();
+        f.vec(a, "a");
+        f.vec(bp, "b");
+        f.vec(c, "c");
+        f.vec(d, "d");
+        f.vec(dinv, "d'");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
   <h3 id=further_reading>Further Reading</h3>
   <p>
     There are other introductions to GA around the web, some of the ones I've
