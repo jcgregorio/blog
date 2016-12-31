@@ -255,6 +255,37 @@ table {
     display: none;
 }
 
+.floatnav {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+  border: 2px solid;
+  padding: 0.6em;
+  font-size: 12px;
+}
+
+button {
+  min-width: 5.14em;
+  background-color: #fff;
+  color: #1f78b4;
+  text-align: center;
+  text-transform: uppercase;
+  outline: none;
+  border-radius: 3px;
+  padding: 0.6em 1.2em;
+  border: solid lightgray 1px;
+  margin: 0.6em;
+}
+
+button:hover {
+  background: #eee;
+}
+
+button:focus {
+  background-color: #ddd;
+  transition: background-color 0.1s cubic-bezier(0.4, 0, 0.2, 1) ;
+}
+
 @media screen and (max-width: 700px)  {
   h1 a {
     display: none;
@@ -269,6 +300,11 @@ table {
   .footer {
     justify-content: space-between;
     display: flex;
+  }
+
+
+  .floatnav {
+    display: none;
   }
 
   .search input {
