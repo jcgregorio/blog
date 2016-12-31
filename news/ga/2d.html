@@ -27,6 +27,22 @@
   </style>
   <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
   <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <div class=floatnav>
+    <ul>
+      <li><a href="#linear_algebra">Linear Algebra</a></li>
+      <li><a href="#geometric_algebra">Geometric Algebra</a></li>
+      <li><a href="#applications">Applications</a></li>
+      <ul>
+        <li><a href="#multiplying_vectors">Multiplying Vectors</a></li>
+        <li><a href="#rotors">Rotors</a></li>
+        <li><a href="#double_angle">Double Angle Formula</a></li>
+        <li><a href="#complex">Complex Numbers</a></li>
+        <li><a href="#B">Characterizing B</a></li>
+        <li><a href="#ratios">Ratios</a></li>
+        <li><a href="#conjugates">Conjugates</a></li>
+      </ul>
+    </ul>
+  </div>
   <p>
     Geometric Algebra is fascinating, and I believe solves a large number of
     problems that arise from a more traditional approach to vectors, but
@@ -512,9 +528,9 @@
                                + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
                               &=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
-                              &=  a_1 b_1 + a_2 b_b + a_1 b_2 \bm{e_{12}}
+                              &=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
                               - a_2 b_1 \bm{e_{12}} \\
-                              &= (a_1 b_1 + a_2 b_b) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
+                              &= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
         \end{align*}
       </latex-pic>
     </dd>
@@ -567,7 +583,7 @@
   </p>
   <h4 id=rotors>Rotors</h4>
   <p>
-    A special case of <b>B</b> is called a Rotor.This
+    A special case of <b>B</b> is called a Rotor. This
     Rotor is an element of 𝔾<sup>2</sup> that is just a restatement of <a
       href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a>
     in 𝔾<sup>2</sup>.
@@ -797,7 +813,7 @@
     and forth between looking at a problem geometrically and looking at it
     algrebraically. For example, it is easy to reason that rotating a vector
     &theta; degrees twice is the same as rotating that same vector 2 &theta;
-    degrees. We can write that out as an algrebraic expression:
+    degrees. We can write that out as an algebraic expression:
   </p>
 
   <dl>
@@ -855,7 +871,7 @@
   <h4 id=complex>Complex Numbers</h4>
   <p>
     From our definition of our Rotator, if we set &omega; to 90 degrees then
-    since <em>sin</em> becomes 0 we are left with only <b>I</b>, which is a
+    since <em>cos</em> becomes 0 we are left with only <b>I</b>, which is a
     90 degree Rotator. But if we apply a 90 degree Rotator twice we should get
     a 180 degree Rotator:
   </p>
@@ -880,6 +896,532 @@
     fact the subset of all linear combinations of <b>{1, I}</b> is closed
     under the geometric product and is isomorphic to ℂ.
   </p>
+
+  <h4 id=B>Characterizing B</h4>
+
+  <p>Now that we have learned about Rotors, let's apply that knowledge
+    to characterize elements of the form:
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+          \bm{B} &= B_1 + B_2 \bm{e_{12}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    First, let's look at the relationship between any two non-zero vectors.
+  </p>
+
+  <canvas id=two width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(-1, 2);
+      var b = ga2d.vec(2, 3);
+      var f = new draw_ga2d.Frame(document.getElementById('two'));
+      f.axes();
+      f.vec(a, "a");
+      f.vec(b, "b");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    We can reason out geometrically that given <b>b</b> we can get <b>a</b>
+    from it by first scaling <b>b</b> to have a norm of 1, then rotating it to
+    have the same direction as <b>a</b>, and then finally scaling that unit
+    vector to have the same length as <b>a</b>. Now write that out
+    algrebraically, where &theta; is the angle between the two vectors.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} &= ||\bm{a}|| e^{\theta \bm{I}} \frac{1}{||\bm{b}||} \bm{b} \\
+               &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we look at any product of two non-zero vectors, <b>ab</b>, we know we
+    get an operator that, under the geometric product, takes vectors and
+    returns new vectors. If we substitute our derivation of how to get <b>a</b>
+    from <b>b</b>, then we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{ab} &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b} \bm{b} \\
+                &= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} ||\bm{b}||^2  \\
+                &= ||\bm{a}|| ||\bm{b}|| e^{\theta \bm{I}}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    So every such operator <b>ab</b> is actually just a rotation and a
+    dilation. We can see this in action if we have the operator <b>ab</b> and
+    apply it to vector <b>c</b> to get vector <b>d</b>. The animation will
+    perturb vector <b>b</b> to show how that affects vector <b>d</b>.
+  </p>
+
+  <p>
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{d} = \bm{ab}\bm{c}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <button id=ab_toggle>Start/Stop</button>
+  <canvas id=ab width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('ab_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('ab'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, a);
+        var d = ga2d.mul(op, c)
+        f.clear();
+        f.axes();
+        f.vec(a, "a");
+        f.vec(bp, "b");
+        f.vec(c, "c");
+        f.vec(d, "d");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Our generalized form for the geometric product of two vectors is:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+          \bm{B} &= B_1 + B_2 \bm{e_{12}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    We can use what we've learned so far to break that apart into
+    its scalar and Rotor components:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{B} = k e^{\theta \bm{I}}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Start by applying <b>B</b> to a unit basis element, which we know
+    has a norm of 1, which gives us a new vector <b>v</b>.
+  </p>
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{v} &= \bm{B}\bm{e_1} \\
+               &= k e^{\theta \bm{I}} \bm{e_1}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    We can see from the last equation that <b>v</b> has a norm of k,
+    and now that we know k, we can divide <b>B</b> by k to get our Rotor.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        k &= ||\bm{B}\bm{e_1}|| = \sqrt{B_{1}^{2} + B_{2}^{2}} \\
+        e^{\theta \bm{I}} &= \frac{1}{k} \bm{B}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+
+  <h4 id=ratios>Ratios</h4>
+  <p>
+    While applying the operator <b>ab</b> above did show some of the behavior,
+    it may be useful to start over, this time building our operator from a
+    ratio, i.e. if we have two vectors <b>a</b> and <b>b</b>, and given a
+    third vector <b>c</b>, we'd like to calculate the vector <b>d</b> so that
+    they have the same ratio, i.e.
+   </p>
+
+   <dl>
+     <dd>
+       <latex-pic>
+         \bm{d} / \bm{c} = \bm{b} / \bm{a}}
+       </latex-pic>
+     </dd>
+   </dl>
+
+   <p>
+     The geometric product isn't commutative, so we have to choose a side
+     to do the division on, so we will write this as:
+   </p>
+
+
+   <dl>
+     <dd>
+       <latex-pic>
+         \bm{d}\bm{c^{-1}} = \bm{b}\bm{a^{-1}}
+       </latex-pic>
+     </dd>
+   </dl>
+
+   <p>
+     But that's just a simple algrebraic equation we can solve
+     by multiplying both sides by <b>c</b>.
+   </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{d}\bm{c^{-1}}       &= \bm{b}\bm{a^{-1}}       \\
+        \bm{d}\bm{c^{-1}}\bm{c} &= \bm{b}\bm{a^{-1}}\bm{c} \\
+        \bm{d} &= \bm{b}\bm{a^{-1}}\bm{c}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    The operator <b>ba<sup>-1</sup></b> should preserve the angle between
+    <b>a</b> and <b>b</b>, and also dilate <b>d</b> proportionally to the
+    norms of <b>a</b> and <b>b</b>. The following animation shows
+    that relationship, also perturbing <b>b</b> to show the affect on
+    <b>d</b>.
+  </p>
+
+
+  <button id=ratio_toggle>Start/Stop</button>
+  <canvas id=ratio width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('ratio_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('ratio'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, ga2d.inv(a));
+        var d = ga2d.mul(op, c)
+        f.clear();
+        f.axes();
+        f.vec(a, "a");
+        f.vec(bp, "b");
+        f.vec(c, "c");
+        f.vec(d, "d");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <h4 id=conjugates>Conjugates and Inverses</h4>
+
+  <p>
+    Let's see what the difference between <b>ab</b> and <b>ba</b> is.
+    First let's multiply out in terms of basis vectors:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {b} &= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &= a_1 b_1 \bm{e_{1}}  \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
+                              &=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
+                              &=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
+                              - a_2 b_1 \bm{e_{12}} \\
+                              &= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we swap <b>a</b> and <b>b</b> we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{b} \bm {a} &= (b_1 a_1 + b_2 a_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) + (a_2 b_1 - a_1 b_2) \bm{I} \\
+                       &= (a_1 b_1 + a_2 b_2) - (a_1 b_2 - a_2 b_1) \bm{I} \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>In that last step we just factor out a -1 from the coefficient of
+    <b>I</b>. If we substitute:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        B_1  &= a_1 b_1 + a_2 b_2 \\
+        B_2  &= a_1 b_2 - a_2 b_1
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Then we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a} \bm {b} &= B_1 + B_2 \bm{I} \\
+        \bm{b} \bm {a} &= B_1 - B_2 \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    So if we reverse the order of the geometric product of our vectors
+    we end up with the equivalent of the <a href="https://en.wikipedia.org/wiki/Complex_conjugate">complex conjugate</a>.
+  </p>
+
+  <p>
+    We will note the reverse of the product of two vectors with the dagger.
+    While this maps to the conjugate in 𝔾<sup>2</sup>, reversing a product
+    of multiple vectors will be more important and powerful in 𝔾<sup>3</sup>.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B}            &= \bm{a} \bm{b}  &= B_1 + B_2 \bm{I} \\
+        \bm{B}^{\dagger}  &= \bm{b} \bm{a}  &= B_1 - B_2 \bm{I}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    If we multiply them together we find:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B} \bm{B}^{\dagger} &= \bm{abba}  \\
+              &= \bm{a} ||\bm{b}||^2 \bm{a}     \\
+              &= ||\bm{b}||^2 \bm{aa}         \\
+              &= ||\bm{b}||^2 ||\bm{a}||^2    \\
+              &= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Their product just ends up being a scalar, so if divide by that
+    scalar value we should get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B} \frac{\bm{B}^{\dagger}}{||\bm{a}||^2 ||\bm{b}||^2} &= \frac{||\bm{a}||^2 ||\bm{b}||^2}{  ||\bm{a}||^2 ||\bm{b}||^2} \\
+              &= 1
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+  <p>
+    Which means we've found the multiplicative inverse of <b>B</b>.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \bm{B}^{-1} = \frac{\bm{B}^{\dagger}}{\bm{B}\bm{B^{\dagger}}
+    </dd>
+  </dl>
+
+  <p>
+    Normally geometric products aren't commutative, but in this case
+    we can see that we get the same result when we reverse the order
+    of B and B dagger:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{B}^{\dagger}\bm{B} &= \bm{baab}  \\
+              &= \bm{b} ||\bm{a}||^2 \bm{b}     \\
+              &= ||\bm{a}||^2 \bm{bb}         \\
+              &= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    So our inverse will work whether applied on the left or on the right.
+  </p>
+
+  <p>
+    Let's see how that inverse operates by applying it to
+    our previous ratio example. This time we'll not only apply
+    the <b>ba<sup>-1</sup></b> operator, but also apply it's inverse
+    to <b>c</b> to see how it compares.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{d}  &= \bm{b}\bm{a^{-1}}\bm{c}         \\
+        \bm{d'} &= (\bm{b}\bm{a^{-1}})^{-1}\bm{c}
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <button id=inv_ratio_toggle>Start/Stop</button>
+  <canvas id=inv_ratio width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('inv_ratio_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('inv_ratio'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, ga2d.inv(a));
+        var d = ga2d.mul(op, c)
+        var norm = ga2d.mul(op, ga2d.conj(op))[0];
+        var opinv = ga2d.mul(ga2d.scalar(1.0/norm), ga2d.conj(op));
+        var dinv = ga2d.mul(opinv, c)
+        f.clear();
+        f.axes();
+        f.vec(a, "a");
+        f.vec(bp, "b");
+        f.vec(c, "c");
+        f.vec(d, "d");
+        f.vec(dinv, "d'");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Note that starting from conjugates isn't the only way to construct such an inverse, we could,
+    for example, note that because each non-zero vector has a multiplicative
+    inverse, we can come to the same conclusion:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        1 &= \bm{a} (\frac{\bm{a}}{||\bm{a}||^2})                                        \\
+          &= \bm{a} 1 (\frac{\bm{a}}{||\bm{a}||^2})                                      \\
+          &= \bm{a} (\bm{b} (\frac{\bm{b}}{||\bm{b}||^2}) (\frac{\bm{a}}{||\bm{a}||^2}) \\
+          &= \bm{ab} (\frac{\bm{ba}}{||\bm{a}||^2||\bm{b}||^2})                            \\
+      </latex-pic>
+    </dd>
+  </dl>
+
   <h3 id=further_reading>Further Reading</h3>
   <p>
     There are other introductions to GA around the web, some of the ones I've

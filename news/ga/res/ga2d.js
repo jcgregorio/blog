@@ -56,6 +56,18 @@ this.ga2d = this.ga2d || function() {
     ];
   };
 
+  ga2d.conj = function(x) {
+    if (x[1] !== 0 || x[2] !== 0) {
+      throw "Can't take the conjugate of vectors.";
+    }
+    return [
+      x[0],
+      0,
+      0,
+      -x[3]
+    ];
+  };
+
   ga2d.norm = function(x) {
     if (x[0] !== 0 || x[3] !== 0) {
       throw "Can only invert vectors.";
