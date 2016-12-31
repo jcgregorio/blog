@@ -855,7 +855,7 @@
   <h4 id=complex>Complex Numbers</h4>
   <p>
     From our definition of our Rotator, if we set &omega; to 90 degrees then
-    since <em>sin</em> becomes 0 we are left with only <b>I</b>, which is a
+    since <em>cos</em> becomes 0 we are left with only <b>I</b>, which is a
     90 degree Rotator. But if we apply a 90 degree Rotator twice we should get
     a 180 degree Rotator:
   </p>
@@ -1065,7 +1065,7 @@
   </dl>
 
 
-  <h4>Ratios</h4>
+  <h4 id=ratios>Ratios</h4>
   <p>
     While applying the operator <b>ab</b> above did show some of the behavior,
     it may be useful to start over, this time building our operator from a
@@ -1163,7 +1163,7 @@
     })();
   </script>
 
-  <h4>Conjugates and Inverses</h4>
+  <h4 id=conjugates>Conjugates and Inverses</h4>
 
   <p>
     Let's see what the difference between <b>ab</b> and <b>ba</b> is.
@@ -1387,6 +1387,24 @@
       step();
     })();
   </script>
+
+  <p>
+    Note that starting from conjugates isn't the only way to construct such an inverse, we could,
+    for example, note that because each non-zero vector has a multiplicative
+    inverse, we can come to the same conclusion:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        1 &= \bm{a} (\frac{\bm{a}}{||\bm{a}||^2})                                        \\
+          &= \bm{a} 1 (\frac{\bm{a}}{||\bm{a}||^2})                                      \\
+          &= \bm{a} (\bm{b} (\frac{\bm{b}}{||\bm{b}||^2}) (\frac{\bm{a}}{||\bm{a}||^2}) \\
+          &= \bm{ab} (\frac{\bm{ba}}{||\bm{a}||^2||\bm{b}||^2})                            \\
+      </latex-pic>
+    </dd>
+  </dl>
 
   <h3 id=further_reading>Further Reading</h3>
   <p>
