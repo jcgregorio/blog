@@ -1,0 +1,369 @@
+<!DOCTYPE html><html><head>
+    <title>Geometric Algebra applied to Physics</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta value="2017-01-01T11:16:47-05:00" name="created"/></head>
+<body>
+  <style type="text/css" media="screen">
+    img {
+      vertical-align: baseline;
+    }
+
+    th {
+      background: #fff;
+    }
+  </style>
+  <script src="/news/ga/res/ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/news/ga/res/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <p>
+    Geometric Algebra can be applied to Physics, and many of the introductions
+    to GA online cover this, but they immediately jump to electromagnetic
+    fields or quantum mechanics, which is unfortunate since GA can also
+    greatly simplify 2D kinematics. One such example is uniform circular
+    motion.
+  </p>
+
+  <p class=aside>
+    You should be familiar with all the concepts presented in <a
+      href="https://bitworking.org/news/ga/2d">An Introduction to Geometric
+      Algebra over R^2</a> before proceeding.
+  </p>
+
+  <p>
+    If we have a vector <b>p</b> that moves at a constant rate of &omega;
+    rad/s and has a starting position <b>p<sub>0</sub></b>, then we can
+    describe the vector <b>p</b> very easily:
+  </p>
+
+  <dl>
+    <dd><latex-pic>\bm{p} = \bm{p_0} e^{\omega t \bm{I}}</latex-pic></dd>
+  </dl>
+
+  <button id=rotor_toggle>Start/Stop</button>
+  <canvas id=rotor width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('rotor_toggle');
+      var running = false;
+      var omega = 0.5;
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, "p");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Let's figure out what the derivative of a Rotor looks like, by
+    first recalling its definition:
+  </p>
+
+  <dl>
+    <dd><latex-pic> e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}</latex-pic></dd>
+  </dl>
+  <p>
+    We take the derivative with respect to &theta;:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \frac{d}{d \theta} e^{\theta \bm{I}} &=  \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
+            &=  -\sin(\theta) + \cos(\theta)\bm{I} \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    At this point observe that <em>cos</em> and <em>sin</em> just changed
+    places, along with a sign change, but we know of another operation that does
+    the same thing, which is multiplication by <b>I</b>, so we get:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \frac{d}{d \theta} e^{\theta \bm{I}} &= \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
+            &= -\sin(\theta) + \cos(\theta)\bm{I}          \\
+            &= \bm{I} (\cos(\theta) + \sin(\theta)\bm{I})  \\
+            &= \bm{I} e^{\theta \bm{I}}                    \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Not only does the derivative have a nice neat expression, we can read off
+    from the formula what is happening, which is that the derivative is a vector
+    that is rotated 90 degrees from the original vector. Also note that
+    normally the geometric product ins't commutative, but in this case both
+    parts are rotors, so the order doesn't matter.
+  </p>
+
+  <p>
+    We can go through the same process to show what happens if &theta; has
+    a constant multiplier <em>k</em>:
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+          \frac{d}{d \theta} e^{k \theta \bm{I}} &= \frac{d}{d \theta} (\cos(k \theta) + \sin(k \theta)\bm{I}) \\
+            &= k \bm{I} e^{k \theta \bm{I}} \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    With our new derivative in hand we can now find the velocity vector
+    for our position vector <b>p</b>, since velocity is just the derivative
+    of position with respect to time.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{v}  &= \frac{d}{dt} \bm{p} \\
+                &= \frac{d}{dt} \bm{p_0} e^{\omega t \bm{I}} \\
+                &= \bm{p_0} \omega \bm{I}  e^{\omega t \bm{I}} \\
+                &= \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}} \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    Again, because we using Geometric Algebra, we can read off
+    what is going on geometrically from the formula, that is,
+    the derivative is a vector orthogonal to the position vector
+    that is scaled by &omega;.
+  </p>
+
+  <button id=velocity_toggle>Start/Stop</button>
+  <canvas id=velocity width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('velocity_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('velocity'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, "p");
+        f.vecFrom(v, p, "v");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Note that we've drawn the vector as starting from the position,
+    but that's not required.
+  </p>
+
+  <button id=sep_velocity_toggle>Start/Stop</button>
+  <canvas id=sep_velocity width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('sep_velocity_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('sep_velocity'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, "p");
+        f.vec(v, "v");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    We get the acceleration vector in the same manner, by taking
+    the derivative of the velocity vector with respect to time.
+  </p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        \bm{a}  &= \frac{d}{dt} \bm{v}                                      \\
+                &= \frac{d}{dt} \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}}  \\
+                &= \omega \bm{p_0} \bm{I} \omega \bm{I} e^{\omega t \bm{I}} \\
+                &= \omega^2 \bm{p_0} \bm{I} \bm{I} e^{\omega t \bm{I}}      \\
+                &= - \omega^2 \bm{p_0} e^{\omega t \bm{I}}                  \\
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
+
+  <p>
+    And again we can just read off from the formula what is going on
+    geometrically, which is that we end up with a vector that is rotated
+    180 degrees from the position vector, and scaled by &omega;<sup>2</sup>.
+  </p>
+
+  <button id=accel_toggle>Start/Stop</button>
+  <canvas id=accel width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('accel_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('accel'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, "p");
+        f.vec(v, "v");
+        f.vec(a, "a");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    We can place the acceleration and velocity vectors as starting
+    from the positition vector, and that looks like:
+  </p>
+
+  <button id=accel_from_toggle>Start/Stop</button>
+  <canvas id=accel_from width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var button = document.getElementById('accel_from_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('accel_from'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vecFrom(v, p, "v");
+        f.vecFrom(a, p, "a");
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  </script>
+
+  <p>
+    Note how simple this was to derive and that the geometric interpretation
+    could be read off of the resulting formulas. We didn't need to leave the
+    2D plane, that is, all of these calculations took place in 𝔾<sup>2</sup>.
+    The more classical derivations for uniform circular motion rely on the
+    cross-product which takes you out of ℝ<sup>2</sup> into ℝ<sup>3</sup> and
+    which doesn't work in higher level dimensions.
+  </p>
+</body>
+</html>
+
