@@ -1,5 +1,5 @@
 <!DOCTYPE html><html><head>
-    <title>An Introduction to Geometric Algebra over R^2</title>
+    <title>Calculating Area</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=egde,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -93,8 +93,11 @@
 
   <p>
     So let's look at determining the area of a triangle defined by any three
-    points.
-  </p>
+    points. One way would be to take the differences of pairs of points on
+    the triange to construct vectors that represent two sides of the triange.
+    Note that we are also picking an orientation, so we will work in a
+    clockwise manner.
+ </p>
 
   <canvas id=triangle width=300 height=300></canvas>
   <script type="text/javascript" charset="utf-8">
@@ -116,18 +119,15 @@
   </script>
 
   <p>
-    One way would be to take the differences of pairs
-    of points on the triange to construct vectors that represent
-    two sides of the triange. Note that we are also picking an orientation,
-    so we will work in a clockwise manner. To calculate A, the area of
-    the triangle:
- </p>
+    To calculate A, the area of the triangle, we take the exterior product
+    of those two vectors. First we calculate 2 * A:
+  </p>
 
   <dl>
     <dd>
       <latex-pic>
         \begin{align*}
-        A &= (\bm{b} - \bm{a}) \wedge (\bm{c} - \bm{b}) \\
+        2 A &= (\bm{b} - \bm{a}) \wedge (\bm{c} - \bm{b}) \\
         &= \bm{b} \wedge (\bm{c} - \bm{b}) - \bm{a} \wedge (\bm{c} - \bm{b}) \\
         &= \bm{b} \wedge \bm{c} - \bm{b} \wedge \bm{b}  - \bm{a} \wedge \bm{c} + \bm{a} \wedge \bm{b} \\
         &= \bm{b} \wedge \bm{c} - 0 - \bm{a} \wedge \bm{c} + \bm{a} \wedge \bm{b} \\
@@ -138,8 +138,20 @@
       </latex-pic>
     </dd>
   </dl>
+
+  <p>Which gives us:</p>
+
+  <dl>
+    <dd>
+      <latex-pic>
+        \begin{align*}
+        A = \frac{1}{2} (\bm{a} \wedge \bm{b} + \bm{b} \wedge \bm{c} + \bm{c} \wedge \bm{a})
+        \end{align*}
+      </latex-pic>
+    </dd>
+  </dl>
   <p>
-    So the oriented area of the triange is just the exterior product of all
+    So the oriented area of the triange is just half the exterior product of all
     the pairs of vectors as you progress clockwise around the triange.
   </p>
 
