@@ -11,6 +11,10 @@
     observations and relate to a specific project, these issue may not apply
     to you and you should evaluate each product for your own uses.
   </p>
+  <p>
+    <b>Update:</b> To clarify, the versions of InfluxDB and Prometheus that I
+    am talking about are InfluxDB 1.1.1 and Prometheus 1.5.2.
+  </p>
 
   <h2>Push vs Pull</h2>
   <dl>
@@ -59,6 +63,13 @@
     And let&#39;s not even go into the number of times InfluxDB lost all of our
     data, either from a crash or from a failed attempt to upgrade the
     version of InfluxDB that we were running.
+  </p>
+  <p>
+    <b>Update:</b> I was also reminded there's another datastore related issue
+    with startup time, while Prometheus starts in a matter of seconds,
+    InfluxDB would regularly take 5 minutes to restart while it either
+    validated or rebuilt its indices and would not collect data during the
+    entire process.
   </p>
 
   <h2>CPU</h2>
