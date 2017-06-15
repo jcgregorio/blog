@@ -10,7 +10,7 @@ for i in $(find -name \*.html); do # Not recommended, will break on whitespace
   filename="${filename%.*}"
   date=`cat $i | grep "\<meta" | grep -o '[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\}'`
   target=$date-$filename.html
-  title=`grep -Pzo "(?s)(?<=\<title\>).+(?=\<\/title\>)" $i`
+  title=`grep -Pzo "(?s)(?<=\<title\>).+(?=\<\/title\>)" $i | tr -d '\n\r\t\f":'`
   body=`grep -Pzo "(?s)(?<=\<body\>).+(?=\<\/body\>)" $i`
   printf "\n---\nlayout: post\ntitle: %s\n---\n" "$title"
   echo ../../newblog/_posts/$date-$filename.html
