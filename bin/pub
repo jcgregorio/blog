@@ -1,3 +1,0 @@
-#!/bin/bash
-rsync -Cavz dst/ jcgregorio@bitworking.org:/home/jcgregorio/webapps/bitworking/
-
