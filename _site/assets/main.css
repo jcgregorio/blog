@@ -471,3 +471,7 @@ pre {
 
 dd {
   padding-left: 1em; }
+
+dt {
+  font-weight: bold;
+  margin: 1em 0; }
