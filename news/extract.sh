@@ -5,6 +5,7 @@
 # Note: Set YAML upfront permalink for all the top level .html files.
 
 for i in $(find -name \*.html); do # Not recommended, will break on whitespace
+  echo $i
   filename=$(basename "$i")
   extension="${filename##*.}"
   filename="${filename%.*}"
