@@ -23,6 +23,8 @@ permalink: /:categories/:year/:month/:day/:title
 twitter_username: bitworking
 github_username:  jcgregorio
 
+disqus:
+  shortname: bitworking-1 
 # Build settings
 markdown: kramdown
 theme: minima
