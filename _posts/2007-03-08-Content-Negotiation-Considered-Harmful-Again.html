@@ -1,0 +1,100 @@
+---
+layout: post
+title: Content Negotiation Considered Harmful, Again
+
+---
+
+  <p><a href="http://cafe.elharo.com/web/google-and-xhtml/">Elliotte Rusty Harold</a></p>
+<blockquote><p>Apparently Google does not recognize XHTML, at least not when served as application/xhtml+xml. Try <a href="http://www.google.com/search?hl=en&amp;client=firefox-a&amp;rls=org.mozilla%3Aen-US%3Aofficial&amp;hs=WAc&amp;q=%22XOM+1.1+supports+XPath+1.0+reasonably%22&amp;btnG=Search">this search</a> which should return exactly one hit pointing to an XHTML document. Notice that the file format is “unrecognized” and they offer to let you “View it as HTML”.</p></blockquote>
+<p>Ouch. I appear to be suffering from the same fate. Oddly enough, <a href="http://www.intertwingly.net/blog/2007/03/08/Seven-Years-Should-Be-Enough">Sam</a> doesn't seem to have that problem. The difference between us may be in content negotiation. Here is my code for determining when to use <code>application/xhml+xml</code> or <code>text/html</code>:
+</p>
+  <pre><code><span class="Comment"># Only serve XHTML to those clients that can understand it.</span>
+<span class="Statement">if</span> serialization <span class="Statement">in</span> matching:
+        best = mimeparse.best_match(matching.keys(), environ.get('<span class="Constant">HTTP_ACCEPT</span>', 
+        '<span class="Constant">application/xhtml+xml</span>'))
+        (contenttype, serialization) = (best, match[best])
+<span class="Statement">if</span> serialization == '<span class="Constant">xhtml</span>' <span class="Statement">and</span> environ.get('<span class="Constant">HTTP_USER_AGENT</span>', '').find("<span class="Constant">MSIE</span>") &gt;= 0:
+        (contenttype, serialization) = extensions['<span class="Constant">html</span>']</code></pre>
+<p>Note the great bit of code for detecting and compensating
+  for IE, which sends the equivalent of <code>"*/*"</code> in its Accept: header, yet
+  doesn't handle XHTML.
+</p>
+<p>The mimeparse module follows the algorithm given in 
+<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1">RFC 2616</a> for matching the media type against the Accept: header, and it is covered in detail in my XML.com article, 
+"<a href="http://www.xml.com/pub/a/2005/06/08/restful.html">Just use media types?</a>".
+</p>
+<p>Compare this to Sam's detection algorithm, which
+is implemented in his <code><a href="http://intertwingly.net/code/mombo/htaccess">.htaccess</a></code> file:</p>
+<pre><code>RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteCond %{HTTP_ACCEPT} !application/xhtml\+xml\s*;\s*q=0\.?0*(\s|,|$)
+RewriteCond %{REQUEST_URI} \.html$
+RewriteRule .* - [T=application/xhtml+xml;charset=utf-8]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteCond %{HTTP_ACCEPT} !application/xhtml\+xml\s*;\s*q=0\.?0*(\s|,|$)
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule .* - [T=application/xhtml+xml;charset=utf-8]
+</code></pre>
+<p>The difference being that Sam will serve up his content as 
+<code>application/xhtml+xml</code> <b>only if</b> that media type appears explicitly in the Accept: header, and it's not followed with a zero or fractional quality parameter. This neatly fixes the problem for IE and apparently also for the Google crawler. If I were a gambling man I'd wager that Google also sends <code>Accept: */*</code>, and just like IE, doesn't understand XHTML.
+</p>
+<p>I've <a href="http://bitworking.org/news/WebServicesAndContentNegotiation">warned against using content negotiation before</a> and this is just another example of the kinds of problems it can cause.
+</p>
+<p>At this point I will probably drop back to <code>text/html</code> for all my pages and explore <a href="http://www.intertwingly.net/blog/2006/12/05/HOWTO-Embed-MathML-and-SVG-into-HTML4">other means</a> of displaying SVG, or convert the SVG into PNGs on the fly.
+</p><p></p>
+  <div class="commentContent" id="X1">
+    <p><a href="http://www.google.com/search?q=site%3Athebjoernhoehrmannproject.org">Google search for <code>site:thebjoernhoehrmannproject.org</code></a>.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://annevankesteren.nl/">Anne van Kesteren</a> on <a href="#X1" title="2007-03-08T10:34:09.217552">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I got rid of the content negotiation, too (before going public). Inline MathML/SVG is not worth a) losing incremental rendering in Firefox and b) coping with <a href="http://wiki.whatwg.org/wiki/HTML_vs._XHTML#Differences_Between_HTML_and_XHTML">the differences between XHTML and HTML</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X2" title="2007-03-08T10:37:59.311515">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Living and dying by Google.  Sigh.  I had a funky XSLT-based web site for my old .mac site: http://homepage.mac.com/pmuellr .  But of course, google couldn't index any of it.  Really sad, because this is actually pretty good way to add boilerplate html goop around the pages on your site.  I suppose I could have fixed this with a lot of .htaccess magic, but then I'd lose some of the great features of the system anyway, like being able to view the files directly from disk without having to have .htaccess magic fix things.
+    <p class="commentByLine">Posted by
+       <a href="http://muellerware.org">Patrick Mueller</a> on <a href="#X3" title="2007-03-08T11:07:39.571474">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>How about using local quality preferences to weigh in on the content negotiation?</p>
+<p>Your application can be configured to serve pages with MIME types in the following order of highest preference descending:
+
+<ul>
+<li>text/html</li>
+<li>application/xhtml+xml</li>
+</ul>
+</p><p>If the browser requests a resource with an ACCEPT header that matches both of these MIME types then you will always server up the MIME type with the highest local quality, I.E. text/html.</p>
+<p>Only if a browser explicitly requests application/xhtml+xml will they be served XHTML.</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:nslater@gmail.com">Noah Slater</a> on <a href="#X4" title="2007-03-08T11:30:49.516390">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    I think that the biggest reason to avoid serving things as 'application/xhtml+xml' is that both Opera and Firefox have the most monumentally crappy way of handling malformed or invalid XML: they display a generic XML validation error with only the first three lines of the XHTML source, so unless the person experiencing the error understands XML well-formedness they'll probably never see the real server-side error that's causing the problem as they would in IE.<br />
+<br />
+A defect report at bugzilla.mozilla.org reported this problem something like six years ago, but unfortunately every Mozilla developer who sees it reacts with something like "mneeeh, if you can't guarantee your app will always output well-formed XML you shouldn't publish as XHTML!" as if the apps they write, much less *any* web application, actually does that.  Even web services, which have to return well-formed XML to function at all, output plain text error messages in all sorts of conditions, under both .NET and Java and every other platform I've seen.<br />
+<br />
+All they'd have to do is display the full XHTML source along with the invalid XML error and it would be much more workable.  It's really unfortunate because Firefox is otherwise pretty good at providing informative error messages.
+    <p class="commentByLine">Posted by
+       <a href="mailto:ticktock256@reddreamer.com">ticktock256</a> on <a href="#X5" title="2007-03-08T12:01:30.343824">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Hmm, another view might be "Google Considered Harmful, Again".
+
+Going back to your previous post:
+[[
+If I hand you a URI only, and that URI supports conneg, then I get no control over which representation you retrieve.
+]]
+That in itself actually sounds positive, in that the choice is entirely with the consumer. But there are problems with clients like those listed. Dunno, maybe provision of the different representations redundantly at separate URIs (example.xml, example.html...) along with linked references (rel="alternate") may help.
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X6" title="2007-03-08T16:25:55.291140">2007-03-08</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    The problem with content negotiation is not with the content negotiation idea itself, but with how it's wrongly implemented in Internet Explorer and probably Googlebot. Sending 'Accept: */*' is just rediculous. It's like saying the web won't evolve; "we won't have any more content types than what we have currently, but if new content types will emerge, we will certainly understand them because our developers has a time machine and knows everything that will ever happen anywhere on the web!"
+
+Unless what your application does is just dumbly dumping the content to a file system, you can be pretty damn sure labelling it with 'Accept: */*' is highly inappropriate and that it most definately will break something.
+    <p class="commentByLine">Posted by
+       <a href="mailto:asbjorn@tigerstaden.no">Asbjørn Ulsberg</a> on <a href="#X7" title="2007-03-09T09:34:51.884080">2007-03-09</a>
+    </p>
+</div>
+  

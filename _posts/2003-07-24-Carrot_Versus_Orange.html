@@ -1,0 +1,123 @@
+---
+layout: post
+title: Carrot Versus Orange
+
+---
+
+  <p>There has been a brewing discussion on the wiki on how 
+   the AtomAPI needs to be structured. While the discussion is long and
+   some of the issues murky, the question is quite simple and is boiled down
+   into one poll.</p>
+  <p>The poll, which was on <a href="http://www.intertwingly.net/wiki/pie/RestEchoApiDiscuss">RestEchoApiDiscuss</a>, but through the wonder of wiki has now migrated to <a href="http://www.intertwingly.net/wiki/pie/CarrotVsOrangeDiscuss">CarrotVsOrangeDiscuss</a>. The poll is restricted to just looking at the simple case of editing an Atom Entry, and the question is "What should the relationship between URIs and HTTP verbs be?"</p>
+<ol>
+<li>One URI for create, edit and delete</li>
+<li>Each Entry has it's own URI that accepts GET, PUT, and DELETE</li>
+</ol>
+<p>One of the misconceptions hinted at in the discussion on the wiki, but never 
+   flatly stated is that if you choose #2 you can't run everything 
+   through a single CGI script, which will make the system difficult
+   to implement or hard to maintain. This isn't true and I have implemented
+   both interfaces in Python in a side-by-side comparison to demonstrate
+   that they can both be done in a single CGI.</p>
+<p>The first script implements option #1:</p>
+<pre class="example"><code>#!/usr/bin/python 
+  
+import cgitb; cgitb.enable() 
+import os, cgi, urlparse, sys 
+import myLowLevelBloggingAPI 
+import xmltramp 
+  
+  
+method = os.environ['REQUEST_METHOD'] 
+id = None 
+  
+if method == 'POST': 
+   content = sys.stdin.read() 
+   d = xmltramp.parse(content) 
+   if d._name == 'delete': 
+      myLowLevelBloggingAPI.delete(d('id')) 
+   try: 
+      id = d.entry.id 
+   except: 
+      pass 
+   if id == None: 
+      id = myLowLevelBloggingAPI.create(sys.stdin.read()) 
+      print "Status: 201 Created" 
+      print "Location: " + urlparse.urlunparse\
+         (('http', os.environ['SERVER_NAME'],\
+         os.environ['REQUEST_URI'] + '/%d', '', '', ''))\
+          + "\n" % (id, ) 
+   else: 
+      myLowLevelBloggingAPI.update(id, content) 
+      print "Status: 205 Reset Content\n" 
+elif method == 'GET': 
+   id = os.environ.get('PATH_INFO', '') 
+   print "Status: 200 Ok\n" 
+   print myLowLevelBloggingAPI.get(id) 
+</code></pre>
+<p>The second script implements option #2:</p>
+<pre class="example"><code>#!/usr/bin/python 
+  
+import cgitb; cgitb.enable() 
+import os, urlparse, sys 
+import myLowLevelBloggingAPI 
+  
+method = os.environ['REQUEST_METHOD'] 
+id = os.environ.get('PATH_INFO', '') 
+  
+if method == 'POST': 
+   id = myLowLevelBloggingAPI.create(sys.stdin.read()) 
+   print "Status: 201 Created" 
+   print "Location: " + urlparse.urlunparse\
+      (('http', os.environ['SERVER_NAME'],\
+      os.environ['REQUEST_URI'] + '/%d', '', '', ''))\
+      + "\n" % (id, ) 
+elif method == 'GET': 
+   print "Status: 200 Ok\n" 
+   print myLowLevelBloggingAPI.get(id) 
+elif method == 'PUT': 
+   myLowLevelBloggingAPI.update(id, sys.stdin.read()) 
+   print "Status: 205 Reset Content\n" 
+elif method == 'DELETE': 
+   myLowLevelBloggingAPI.delete(id) 
+   print "Status: 200 Ok\n" 
+</code></pre>
+<p>There are several additional things to note from these example implementations:</p>
+<ol>
+<li>If either of these cgi scripts were installed as atom.cgi on example.org then doing a GET on <a href="http://example.org/atom.cgi/1">http://example.org/atom.cgi/1</a> would get the Entry with an 'id' of 1. </li>
+<li>Note that in the second example all the dispatching is done via the HTTP verbs, no parsing of the content is necessary. </li>
+<li>For both examples there is a single CGI script that processes the requests.</li>
+<li>Option #2 is a far simpler script that option #1.</li>
+
+</ol>
+  <div class="commentContent" id="X2">
+    <p>FWIW, I don't believe that you will ever get away from a second level dispatch on POST.  Updating an entry and adding a comment are two distinct operations, both of which map to POST.  There will be others.</p>
+<p>I don't object to separating out PUT and DELETE, but I don't believe that separating out these two, relatively infrequently used, cases solves the root problem.</p>
+<p>Things never turn out to be as orthogonal as people would like.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X2" title="2003-07-25T08:08:14">2003-07-25</a>
+    </p>
+</div><div class="commentContent" id="X1">
+    having one URI for disparate operations does not seem to me to be something that would be easier to maintain, no matter what the common wisdom has it to be, in that by having the operations switched to seperate URIs you can update one cgi without off-handedly effecting another.
+    <p class="commentByLine">Posted by
+       <a href="mailto:bry@itnisk.com">bryan</a> on <a href="#X1" title="2003-07-25T08:24:41">2003-07-25</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Sam,<br />
+  I'm not arguing that there will never be another layer of dispatch above or below POST. The example here is to demonstrate that such dispatching need not <b>require</b> parsing the contents of the request. I also don't think well <b>ever</b> need to dispatch based on the content, as long as we use all <a href="http://bitworking.org/news/Six_Places">Six Places</a> to store information.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2003-07-25T09:27:54">2003-07-25</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Never is a long time.  And the line between content and metadata is a fuzzy one at best.
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X4" title="2003-07-25T09:40:08">2003-07-25</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Help
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X5" title="2003-08-05T18:05:43">2003-08-05</a>
+    </p>
+</div>
+  

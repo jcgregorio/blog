@@ -1,0 +1,50 @@
+---
+layout: post
+title: Time Machine
+
+---
+
+  
+  <p>
+<a href="http://blog.interlinked.org/tutorials/rsync_time_machine.html">
+Time Machine for every Unix out there</a> is a great tutorial 
+on how to get Time Machine like backups using rsync and cron. 
+I don't need it as an external backup, but just
+for the ability to go back in time, you know, when I forget to add
+a file to a repository and blow away the directory believing
+everying is safe in subversion, or when I edit and overwrite an 
+original photo, or, or ... do we really need to go into all the ways
+ I need Time Machine like capabilities? Anyway, also read
+ the comments for pointers to lots of alternatives. </p>
+  <div class="commentContent" id="X1">
+    Have you seen backup2l?
+
+"backup2l supports hierarchical differential backups with a user-specified number of levels and backups per level. With this scheme, the total number of archives that have to be stored only increases logarithmically with the number of differential backups since the last full backup. Hence, small incremental backups can be generated at short intervals while time- and space-consuming full backups are only sparsely needed."
+
+http://backup2l.sourceforge.net/
+    <p class="commentByLine">Posted by
+       <a href="http://tumbolia.org/nslater">Noah Slater</a> on <a href="#X1" title="2009-01-21T07:15:23.433620">2009-01-21</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>The key innovation of Time Machine was to modify Darwin to allow hard-linking of direcories.</p>
+<p>Each Time Machine backup is a complete directory tree of your filesystems. Unmodified files/directories are hard-links. Only the modified ones take up new space on disk.</p>
+<p>On a garden-variety Unix system (without hard-linking of directories), keeping multiple such backups would take up a prohibitive amount of space.</p>
+<p>The other key innovation was a system for real-time tracking of changes to the filesystem (again, requiring hooks into the kernel). Having Rsync scan the entire filesystem for changes at every backup (once an hour, in Time Machine's case), would be tedious in the extreme.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://golem.ph.utexas.edu/~distler/blog/">Jacques</a> on <a href="#X2" title="2009-01-21T10:37:26.098023">2009-01-21</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Jacques,<br />
+<p>
+Probably depends on what you're trying to monitor, I'm not backing up the entire filesystem, just my home directory minus the obvious things like the browser cache. The given rsync directions use hard-links for files, each hourly back up takes up about 1MB for me and completes in less than a second.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2009-01-21T12:17:15.769687">2009-01-21</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I've been using a tool called Rsnapshot (http://www.rsnapshot.org/) for a couple years now. It automates the rsync process and uses filesystem hard links to avoid having additional copies of files for each snapshot. Works great and is reliable.
+    <p class="commentByLine">Posted by
+       <a href="mailto:aaron.laffin@gmail.com">Aaron</a> on <a href="#X4" title="2009-01-22T11:51:53.372877">2009-01-22</a>
+    </p>
+</div>
+  

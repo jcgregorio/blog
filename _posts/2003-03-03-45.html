@@ -1,0 +1,46 @@
+---
+layout: post
+title: The utility of content negotiation
+
+---
+
+  
+  <p><a href="http://www.intertwingly.net/blog/1231.html">Sam Ruby</a> has 
+posted some thoughts on content negotiation, in part he says:</p>
+<blockquote><p>I'm also concerned about the implications of this to other 
+caches. Perhaps Aggie should have an option to turn this feature off in case someone 
+is faced with a less than intelligent proxy which caches?</p></blockquote>
+<p>This brought to mind another problem I had encountered with content negotiaion
+in the context of XML. There is a danger with burying multiple types of documents
+behing a single URL. For example, if you want to take my RSS feed and transform it
+using an XSLT stylesheet using the <a href="http://www.w3.org/2001/05/xslt">W3Cs XSLT Service</a>
+how do you tell it to do the content-negotiation? That is, how do I tell the XSLT Service
+what type of document to negotiate for when it does it's GET to do the transformation.
+As an extreme example, and only for the purposes of illustration, I could have the URL
+<code>http://bitworking.org/news/</code> return, alternately:
+HTML, RSS and the XSLT sheet needed to convert the RSS into HTML. Now when I went 
+to the W3C Service I would put the same URL (<code>http://bitworking.org/news</code>)
+for both the XSL URL and the XML URL. Now the W3C Service might do the correct content negotiation.
+But even if it got this scenario correct, what if I wanted to convert my XSLT style sheet
+into an HTML page via a third XSLT sheet. As you can see, there are myriad ways these files
+can be hooked together and without the ability to guarantee the content type you'll
+eventually end up in trouble.</p>
+<p>The last problem with content negotiation is with a lack of a standard way to
+override the servers selection. For example on RESTLog you can append <code>?xml</code>
+or <code>?html</code> to coerce the return type into XML or HTML respectively. Now adding
+the query parameter creates a new URL so you aren't doing content negotiation at that point.
+The lack of a <em>standard</em> or at least a common idiom on how to override this in the URL was
+driven home to me recently when I went to a site and kept getting the text version of
+a specification when I really wanted the HTML version. There was no documentation
+on the site on how to 'force' a content type. There are no common idioms 
+that would guide me in guessing an override syntax. Finally, in desperation, I pulled the
+HTML version out of Google's cache.</p>
+<p>Now none of these problems has stopped me from adding content negotiation support to RESTLog, nor do 
+I think it should be dropped from Aggie. First because RESTLog has the ability to 
+specify the content type via query parameter. The second is that although content 
+negotiation may not be a viable strategy in the long run, I think it's still early and if we provide tools for
+experimentation, someone may discover a clever solution to the problems I outlined above.
+</p>
+
+  
+  

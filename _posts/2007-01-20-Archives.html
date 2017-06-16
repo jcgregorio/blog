@@ -1,0 +1,42 @@
+---
+layout: post
+title: Archives
+
+---
+
+  
+  <p>The last little bit I needed to add to bring <a href="http://bitworking.org/projects/1812/">1812</a>
+   up to par with the old blogging code base was <a href="http://bitworking.org/news/archives/">archives</a>.
+   The inspiration for this design came from <a href="http://w-uh.com/archive.cgi">Ole</a>.
+</p>
+  <div class="commentContent" id="X1">
+    Isn't reading every file in the Collection for your blog entries a little slow?
+    <p class="commentByLine">Posted by
+       <a href="http://www.ndunn.com">Neil Dunn</a> on <a href="#X1" title="2007-01-21T09:40:11.983419">2007-01-21</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Neil<br />
+<p>Completely non-scientific timings on my part puts it at less than 500ms, which is completely acceptable for a page that won't be accessed very often. I may end up doing some more accurate timings when I dig into performance in general.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:joe@bitworking.org">joe</a> on <a href="#X2" title="2007-01-21T10:46:31.654766">2007-01-21</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    I like it :)
+
+P.S. to Neil - I did a slight optimization in that I save the page when it is generated, and check to see if the saved page is never than my home page.  So after a new post, only the first hit costs the time of regeneration, after that it is just a copy.
+    <p class="commentByLine">Posted by
+       <a href="http://w-uh.com">Ole Eichhorn</a> on <a href="#X3" title="2007-01-21T14:10:08.710765">2007-01-21</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>
+Joe: Fair enough, half a second doesn't sound like the end of the world.
+</p>
+<p>
+Ole: That sounds about right. I bake (build once) my entire site but that's the next best thing for a dynamic site. If you're doing it properly you have to check whether any of your templates have changed recently too.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://www.ndunn.com">Neil Dunn</a> on <a href="#X4" title="2007-01-22T05:55:06.942093">2007-01-22</a>
+    </p>
+</div>
+  

@@ -1,0 +1,3 @@
+ReadmeName README
+HeaderName README.html
+IndexIgnore *.pyc *.pyo *.db log

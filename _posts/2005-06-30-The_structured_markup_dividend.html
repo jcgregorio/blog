@@ -1,0 +1,75 @@
+---
+layout: post
+title: The structured markup dividend
+
+---
+
+  
+  <p><a href="http://radar.oreilly.com/archives/2005/06/behaviour_using.html">
+        Marc Hedlund on the O'Reilly Radar</a> points out the 
+   <a href="http://www.ripcord.co.nz/behaviour/">Behaviour JavaScript Library</a>.</p>
+<blockquote><p>The idea behind this Javascript library is great -- it's similar to what I argued for in <a href="http://oreillynet.com/pub/wlg/2423">Why JSP Sucks So Hard</a>.  As I mentioned in <a href="http://radar.oreilly.com/archives/2005/06/ruby_on_rails_a.html">my post on Ruby on Rails</a>,
+I still find it grating when I see so much non-HTML code in an HTML
+page; and the CSS marker system seems like a great way to hook code and
+markup together. Cheers to the Behaviour folks.</p></blockquote>
+<p>I will note the irony that the original HTML quoted above
+   has inline JavaScript in every anchor:</p>
+<pre><code>
+  &lt;a onmousedown="return insertScript('http://oreillynet.com/pub/wlg/2423')"...
+</code></pre>
+<p>Anyway, I had no idea how cutting edge I was, maybe because it never crossed 
+   my mind to litter my HTML with JavaScript. In my <a href="http://bitworking.org/projects/sparklines/">Sparklines Generator</a>
+   there is only one line of JavaScript in the HTML:
+</p>
+<pre><code>
+  &lt;body class='main' id="top" name="top" onload="setup();"&gt;
+</code></pre>
+<p>All of the <code>on<i>whatever</i></code> behaviours are hooked up on the fly in the setup() function. 
+   It wasn't a conscious decision to be cutting edge, but a practical one
+   that followed from my decision to make the application as data table driven as possible.
+</p>
+<p>Not only are we are seeing the benefits of clean structured markup in faster load times and more flexible designs, 
+   we are also getting the unexpected dividends of enabling new developments 
+   like <a href="http://microformats.org">microformats</a> and 
+   now <a href="http://www.ripcord.co.nz/behaviour/">Unobstrusive JavaScript</a>.
+</p>
+<h3>Further Reading:</h3>
+<ul>
+<li><a href="http://www.digital-web.com/articles/separating_behavior_and_structure_2/">
+          Peter-Paul Koch: Separating behavior and structure</a></li>
+<li><a href="http://www.sitepoint.com/article/structural-markup-javascript">
+          Simon Willison: Enhancing Structural Markup with JavaScript</a></li>
+<li><a href="http://www.kryogenix.org/code/browser/aqlists/">
+          Stuart Langridge: Unobtrusive DHTML</a></li>
+</ul>
+<p><b>Updated:</b> Re-tagged this as 'unobstrusive javascript' to bring it into
+   line with <a href="http://simon.incutio.com/archive/2004/05/26/addLoadEvent">
+   Simon Willison's work on the subject</a>. Also added the further reading section.
+   I may also need to go back and update
+   my Sparklines markup since I used <code>div</code>s instead of <code>fieldset</code>s.
+</p>
+<div style="float: right;">Tags: 
+   <a href="http://technorati.com/tag/sparklines" rel="tag"> sparklines </a>
+<a href="http://technorati.com/tag/microformats" rel="tag"> microformats </a>
+<a href="http://technorati.com/tag/unobtrusive%20javascript" rel="tag">unobtrusive javascript</a>
+</div>
+
+  <div class="commentContent" id="X1">
+    Why are you using &lt;body onload="setup()"&gt; when you can also do it "on the fly"?<br />
+e.g. window.onload = setup; or window.onload = new Function("setup();"); or window.onload = function() { setup(); }; or even something with window.attachEvent/window.addEventListener.
+    <p class="commentByLine">Posted by
+       <a href="http://ltgt.net">Thomas Broyer</a> on <a href="#X1" title="2005-06-30T18:02:26">2005-06-30</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Thomas,<br />
+  Good point.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2005-06-30T18:24:12">2005-06-30</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    These are good ideas. My own markup is starting to feel like spaghetti, between the CSS, html, php, and javascript.  I really need to find time to refactor it.
+    <p class="commentByLine">Posted by
+       <a href="http://jimrthy.blogspot.com">James Ashley</a> on <a href="#X3" title="2005-07-05T01:42:36">2005-07-05</a>
+    </p>
+</div>
+  

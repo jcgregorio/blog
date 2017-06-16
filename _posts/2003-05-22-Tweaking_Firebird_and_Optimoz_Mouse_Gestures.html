@@ -1,0 +1,101 @@
+---
+layout: post
+title: Tweaking Firebird and Optimoz Mouse Gestures
+
+---
+
+  <p>I have been having a lot of fun tweaking <a href="http://www.mozilla.org/projects/firebird/">Firebird</a>, and two things 
+   have been particularly fun to play with, the CSS controlling the Firebird user interface, and the Optimoz Mouse Gestures.</p>
+
+  <p> The file <a href="http://texturizer.net/firebird/edit.html#css">userChrome.css</a>,
+   which, because Firebird is done in XUL, is a CSS file that you can use to control the look and feel of the 
+   application. After having been away from UI design for a while, but having spent more than a good bit of
+   time doing web design using CSS this is real comfortable. As much as web designers complain about the CSS 
+   box model, I think a tool that used CSS to do layout of desktop applications would be great. There is a nicely written 
+   <a href="http://texturizer.net/firebird/tips.html">Tips &amp; Tricks</a> page that explains how to tweak the CSS.
+   Hmmm, add a CSS interpreter for .NET Windows Forms Layout to the list of projects I would love to
+   do but will never have time to start.</p>
+<p>The second part of Firebird that I have been customizing is the <a href="http://optimoz.mozdev.org/gestures/index.html">Optimoz Mouse Gestures</a>. 
+   The upside of the new version of Optimoz Mouse Gestures is the new user interface for customizing the mappings. 
+   The UI is a little clunky, but I don't have any suggestions on how to improve it, and it is 
+   definitely an improvement over the old system which required you to edit a JavaScript file to
+   change any of the mappings.
+   Some of the mappings have changed from the last version I installed under Mozilla, for example, I like to tie "drag-down" to open 
+   a new empty browser tab, or if the drag starts over a link, to open that link in a new tab. This mirrors the functionality of Opera, where
+   I first got hooked on mouse gestures, and is the way it worked in older versions of Optimoz Mouse Gestures. The new version
+   did not open a new tab if you didn't start over a link, and more annoyingly, opened a new tab for all the links you 
+   dragged your mouse over, not just the one you started on. Now there is a UI for mapping gestures to functions, but in this 
+   case the function itself needed to be changed so I had to go in and change the JavaScript. 
+   In the file <code>/chrome/mozgest/content/gestimp.js</code> I changed the 
+   function <code>mgB_LinksInTabs()</code> from:
+   </p>
+<pre class="example"><code>function mgB_LinksInTabs(){
+  var browser = getBrowser();
+  for(i = 0; i &lt; globalOnLink.length; i++) {
+    tab = browser.addTab(globalOnLink[i], getReferrer(document));
+  }
+  return "mgB_LinksInTabs";
+}
+</code></pre>
+<p>to:</p>
+<pre class="example"><code>function mgB_LinksInTabs(){
+  var browser = getBrowser();
+  if (globalOnLink.length &gt;= 1) {
+    tab = browser.addTab(globalOnLink[0], getReferrer(document));
+  } else {
+    mgB_OpenTab();
+  }
+  return "mgB_LinksInTabs";
+}
+</code></pre>
+<p>The last step was to tie this function to the gesture for "drag-down" or "D" in the gestures mapping notation, which 
+   can be done through the UI.</p>
+<p>All in all I have been having a lot of fun with Firebird. And yes, I realize most, if not all,
+   of this stuff can be done in Mozilla also, but with the browser, e-mail and calendar all tied into one package I was
+   a lot more reticent to <em>play</em>. I'm more relaxed now that I can browse with impunity and not worry that some quirky Java program
+   or more likely a large Acrobat file that takes down my browser won't also take out my calendar and e-mail at the same time.</p>
+
+  <div class="commentContent" id="X1">
+    This is great. I too first got hooked on gestures in Opera, and have liked the functionality it gave me.  I've been using Phoenix for quite a while now (since 0.2) and was still on 0.5 until I saw this entry.  Thanks.
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://blog.opencg.org/">David Mitchell</a> on <a href="#X1" title="2003-05-22T12:56:37">2003-05-22</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Joe, 
+  It seems posting to your blog via the CommentAPI returns a 404 in some cases. 
+    <p class="commentByLine">Posted by
+       <a href="http://www.kuro5hin.org/user/Carnage4Life/diary">RE: Tweaking Firebird and Optimoz Mouse Gestures</a> on <a href="#X2" title="2003-05-22T17:38:55">2003-05-22</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    We'll optimize the customization dialog soon.
+
+The multiple link dragover gesture is still there. It requires a finishing move of right-up-left.
+
+I think you must have inadvertantly triggered this.  Properly used, it's quite handy.
+
+*Wap wap watah!*
+    <p class="commentByLine">Posted by
+       <a href="http://optimoz.mozdev.org">Andyed</a> on <a href="#X3" title="2003-05-22T18:41:12">2003-05-22</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    In fact, you do not have to edit JS files to tweak a function. Just choose "Function type: Custom" and paste the code you would  in the JS file (without function()... of course).
+
+And at least for me, the Up stroke opens a blank tab when not performed over a link.
+    <p class="commentByLine">Posted by
+       <a href="http://optimoz.mozdev.org">JensB</a> on <a href="#X4" title="2003-05-22T19:48:05">2003-05-22</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Ahhhh, mgB_OpenTab() does what I want. To get exactly what I was looking for I just needed to switch the mappings of "D" and "U", no custom code needed. Thanks!
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2003-05-23T07:15:24">2003-05-23</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Dare,
+  I don't have access to the error logs here. I'll download the latest RSS Bandit and try it out against a local install of Bulu in an attempt to re-create the 404.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2003-05-23T07:15:34">2003-05-23</a>
+    </p>
+</div>
+  

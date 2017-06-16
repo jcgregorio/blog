@@ -1,0 +1,780 @@
+---
+layout: post
+title: There are no exceptions to Postel's Law.
+
+---
+
+  
+<blockquote><p>be
+                conservative in what you do, be liberal in what you accept from others. 
+                [<a href="http://www.faqs.org/rfcs/rfc793.html">Section 2.10 - RFC 793</a>]
+        </p></blockquote>
+<p>This has been bandied about as a founding precept of the internet
+            for years. I don't think it's ever been more controversial as when it
+            meets XML.</p>
+
+   <p>Mark Pilgrim has been pushing the idea that there are 
+            <a href="http://diveintomark.org/archives/2004/01/08/postels-law">no exceptions 
+                to Postel's Law</a> and that every feed aggregator needs to support
+            his vision of a liberal XML parser, using the above phrase as 
+            his justification. I'm going to approach this
+            very carefully, first by agreeing with Mark that some feed aggregators
+            could support a liberal parsing mode, but carefully delineate how that 
+            has almost nothing to do with exceptions to Postel's Law.
+        </p>
+<p>First, I agree that <ins>when syndication was younger
+           you might have been able to argue that</ins>
+            an aggregator should have liberal parsing. The end user
+            doesn't and shouldn't care that there is anything called XML, nor that
+            it could or couldn't be 'well-formed' or 'valid', both of which are rigorously
+            defined terms for XML. They just want to catch up on their news and anything that
+            slows them down will just force them to switch to another aggregator.
+            This covers the 'be liberal in what you accept from others', but it 
+            completely ignores the 'be conservative in what you do' part of the phrase.
+            It's a two part phrase that describes the characteristics of
+            a robust system by laying out the responsibilities of both the
+            client and the server. Go and read RFC 793 and look at how the 
+            robustness principle is applied, never is the client admonished to accept
+            invalid data. Here is a lengthier wording in RFC 760:
+        </p>
+<blockquote><p>
+                In general, an implementation should be conservative
+                in its sending behavior, and liberal in its receiving behavior.  That
+                is, it should be careful to send well-formed datagrams, but should
+                accept any datagram that it can interpret (e.g., not object to
+                technical errors where the meaning is still clear).
+        </p></blockquote>
+<p>And RFC 2360 is even clearer (emphasis mine):</p>
+<blockquote><p>
+   Or establish restrictions on what a protocol transmits, but be able
+   to deal with every conceivable error received.  <strong>Caution is urged in
+   applying this approach in standards track protocols</strong>.  It has in the
+   past lead to conflicts between vendors when interoperability fails.
+   The sender accuses the receiver of failing to be liberal enough, and
+   the receiver accuses the sender of not being conservative enough.
+   Therefore, <strong>the author is obligated to provide extensive detail on
+   send and receive behavior.</strong>
+</p><p>
+   To avoid any confusion between the two, recommend that standard
+   authors specify send and receive behavior separately.  The
+   description of reception will require the most detailing.  For
+   implementations are expected to continue operating regardless of
+   error received.  Therefore, the actions taken to achieve that result,
+   need to be laid out in the protocol specification.  Standard authors
+   should concern themselves on achieving a level of cooperation that
+   limits network disruption, not just how to survive on the network.
+   The appearance of undefined information or conditions must not cause
+   a network or host failure.  This requires specification on how to
+   attempt acceptance of most of the packets.  <strong>Two approaches are
+   available, either using as much of the packet's content as possible,
+   or invoking error procedures.  The author should specify a dividing
+   line on when to take which approach.</strong>
+</p></blockquote>
+<p>Never is it stated that you should accept absolutely everything
+    under the sun, only that you should accept as much as possible
+    and then have your protocol delineate clearly how invalid 
+    data is to be handled. Well talk later about how XML 
+    covers that. Note also the wording is in terms of vendor interoperability
+    based on a specification, not
+    the acceptance of random dreck hauled in off the street. 
+</p>
+<p>Mark's perceptions may be a bit colored. Two years ago when we both started
+            to get into aggregators and syndication the quality of feeds was much worse than it
+            is now. Upwards of 10% of all feeds were not even well-formed XML, never mind
+            conforming to some notion of validity. With the expected consolidation of blogging
+            software that we all knew would happen, and competition among real vendors
+            making real money <ins>both in the aggregation
+            side and in the blogging software side</ins>, 
+            the quality of the feeds has jumped and it's honestly been
+            a good six months since I've seen a feed that wasn't valid XML.
+        </p>
+<p>Mark states: "There are no exceptions to Postel's Law. Anyone 
+            who tries to tell you differently is probably a client-side 
+            developer who wants the entire world to change so that their 
+            life might be 0.00001% easier. The world doesn't work that way."
+        </p>
+<p>We've already looked at the fact that Mark is ignoring 
+            a full half of Postel's Law, and at the fact that 
+            it was not an admonishment to accept invalid data, but
+            let's ignore that for now and let's dig further into this idea that there are <strong>no</strong> exceptions
+            to Postel's Law in the sense he is using it. </p>
+<p>For example, are there ultra-liberal image viewers? Do you constantly run into
+            JPEG and GIF files that won't display in your browser? How about an ultra-liberal
+            PDF parser? Anyone seen a pop-up ad for an ultra-liberal MP3 player?</p>
+<p>No? That's suprising because according to Mark there are no exceptions to Postel's Law.
+            And if we follow that logic to the end then there must be a market for more
+            liberal consumers of every format.</p>
+<p>Why don't you need an ultra-liberal MP3 player? Because MP3 is a binary formt. No one
+            is sitting up late a night hand-encoding a song. They are using tools to 
+            create the data and tools to consume the data.</p>
+<p>Now you could throw up your hands and complain that I'm not comparing apples to
+            apples since I am putting XML up against binary formats.</p>
+<p> Mark states: "Various people have tried to mandate this principle out of existence, 
+            some going so far as to claim that Postel's Law should not apply to XML, 
+            because (apparently) the three letters X, M, and L are a magical combination 
+            that signal a glorious revolution that somehow overturns the 
+            fundamental principles of interoperability."</p>
+<p>Well, the lettters X, M, L aren't magical, but the XML format does occupy a 
+            rather odd middle ground between a data, text, and presentation.
+            As usual the world isn't simple and the classification for file formats
+            isn't simple either. It actually breaks up into several axes. The first
+            axis is text versus binary. JPEGs is a binary format while many unix 
+            configuration files like /etc/passwd are text files. The distinction 
+            here is a gradation though and not as binary as you might expect, for 
+            example, unicode files in either UTF-8 and UTF-16 are somewhere between
+            text and binary.</p>
+<p>The second axis is data versus language. Of the extreme data side is
+            a JPEG file which is just a rigid description of the bits that make up
+            the image. On the other extreme an HTML file contains written text
+            mixed in with markup that <em>suggests</em> how it is to be displayed.</p>
+<pre>
+
+          text
+            ^
+            |
+   data &lt;---+---&gt; language
+            |
+            V
+         binary
+
+        </pre>
+<p>On this chart where does our JPEG file fit? In the lower left corner. Same
+            for both GIF and MP3. Plain text files, like my ascii art above sit 
+            in the top right corner, while /etc/passwd would sit in the top left corner.
+        </p>
+<p>Here is where things start to get tricky. Where does HTML sit? Because
+            it can be encoded in UTF-8 and UTF-16 it is somewhere between text and ascii,
+            but it is only used for presentation purposes, i.e. the primary consumers
+            of HTML are browsers, which just display the HTML to the user, which puts
+            it strongly to the language side of the data/language axis.</p>
+<p>Where does XML sit? Here is the real flaw in Mark's argument, in that he
+            has a myopic view of XML as only being used for syndication. But XML is 
+            used for much much more. It is used like HTML in XHTML, for markup in syndication,
+            many configuration files for applications are now formatted in XML, and 
+            large corporations stream data between systems using XML. Let's just take
+            two samples from that list, XHTML and a single financial transaction
+            going between two banks. XHTML, like HTML, sits far to the language
+            side of the data/language axis. On the other hand, the financial transaction
+            sits firmly on the data side. Does this context make a difference? Let me put it 
+            this way, do you want your payroll deposit consumed by an ultra-liberal parser
+            that 'fixes' errors in the XML as it consumes it? I didn't think so. But would you 
+            even care if a browser presented you a web page that was missing a closing
+            tag on a div? Again, I didn't think so. Context is important and that's why 
+            blanket statements like "There are no exceptions to Postel's Law" are wrong, aside
+            from the mis-representation of Postel's Law, and the ignoring the
+            other half of the Law bit. <ins>Now when it comes to XHTML you actually
+            have a choice between HTML and XHTML, so if you can't produce
+            well-formed XML then stick to HTML. There is no excuse for not
+            producing well-formed XHTML.</ins>
+</p>
+<p>The other problem with blanket statements like that with XML is that
+            XML has several levels of strictness. The first level is well-formedness
+            and that means the document conforms to the basic rules that <strong>every</strong>
+            XML file has to meet. An additional level of strictness beyond just
+            well-formed is valid, which means that it is valid against 
+            some restriction on it's structure, which could come from
+            a DTD, XML Scheme or a Relax NG schema.  
+        </p>
+<p>Given these two levels of strictness and differing contexts you need
+            to decide how strict you want to be. For example, with an XHTML document
+            I would consider only well-formedness as a restriction for 
+            consumption. On the otherhand, at the very least I want my bank transaction validated
+            against a schema, or two, or three. The context, and whether the information
+            is sitting closer to data or language, determines how strict the consumer
+            should be.
+        </p>
+<p>So let's get back to syndication. Where would a feed be on the chart? 
+            Here is where edge cases come in, as a feed contains both data and language elements. The feed contains 
+            some content clearly on the language side of the data/language axis, but
+            also contains items such as publication data and the permalink which
+            are clearly on the data side of the axis. <del>This is why I agree with Mark, as
+            a feed contains information on the language side of the data/language axis it 
+            should be consumed with a liberal parser, but I argue that syndication
+            in general is an edge case and that strict edicts on how to consume XML
+            either liberal or strict, are inappropriate given the range of applications
+            over which XML is used.</del> <ins>After re-reading this and other's arguments
+            I see well-formedness as the base requirement for something to be 
+            XML. There is no room now for liberal parsers.</ins>
+</p>
+<p><del>The context in which you are 'consuming' the feed is also 
+            important in determining if you should do liberal parsing. </del>
+            Ensuring that the feed is always well-formed XML is important because
+            you don't know what it is being consumed for. The feed might be consumed
+            by an aggregator, but could as easily be destined for
+            transformation via XSLT or searched via XPath statements.</p>
+<del>Displaying to a user, fine, you might want to be liberal. How about 
+            converting the feed into HTML using XSLT? No. Looking for 
+            feeds that contain a link element to a particular site? No.
+            The context is important, if you are consuming the format primarily
+            in a language context then you might need to be liberal, but when consuming
+            it as a data-format then avoid liberal parsing.</del>
+
+<h3>How liberal?</h3>
+<p>The first thing to define is what <strong>I</strong> consider
+            to be a liberal parser. First, I am only looking
+            for well-formed feeds, and if the feed it not 
+            well-formed then there are two fixes you can try
+            to make the feed well-formed. The two main types of errors I have seen
+            in feeds, and these cover 90% of the problem feeds in 
+            existence, are character encoding issues, and the inclusion
+            of undefined character entities. Both of these are fairly easy
+            to scan for and 'fix' before re-submitting the file to an 
+            XML parser to consume. As I stated before though, the number of 
+            problem feeds is dropping and the need for liberal
+            parsing will disappear over time. <ins>For example, the 
+            above two fixes were added to Aggie mostly because of 
+            a single popular feed where these problems crept up a lot (Boing-Boing).
+            It turns out that they were getting a lot of complaints that
+            their feed was broken and did the work to fix their feed.</ins>
+<ins>Liberal parsing is different 
+            for Atom though, being a brand new format there is no reason
+            for any aggregator to accept a broken feed or to be 
+            required to do liberal parsing.</ins>
+</p>
+<p>The biggest problem with liberal parsing is, who gets to decide
+            what's liberal enough? Is Mark Pilgrim feed parser the gold standard of liberalness?
+            Should we fix character encodings? How about character entities? Missing
+            tags? How about if all the brackets were replaced with parentheses?
+            This was one of the great insights in the XML specification in that
+            it gave a very clearly defined lower-limit on what constituted
+            an XML document.</p>
+<p>Let's look at a feed with a couple missing tags:</p>
+<pre><code>&lt;feed&gt;
+                &lt;link href="http://example.com" rel="alternate" type="text/html" /&gt;     
+&lt;/entry&gt;
+&lt;/feed&gt;</code></pre>
+<p>Now does that link element refer to the feed or the entry? How should I
+            decide, besides passing it through Mark's feed parser? You 
+            wouldn't know, which is why XML has a lower bound on what's acceptable,
+            well-formedness, and that lower bound keeps you out of the messy business
+            of trying to guess what the above example is trying to say. 
+            <ins>Besides, <a href="http://tbray.org/ongoing/When/200x/2004/01/11/PostelPilgrim">you've got
+            to be a bozo if you can't generate a well-formed XML file</a>.</ins>
+</p>
+<h3>Summary</h3>
+<p><ins>Like I said, I agree that in the past liberal 
+            feed parsers were be needed, but liberal in the sense that
+            I enumerated above, but that mostly reflects an immature
+            field of feed generation and that problem is rapidly going away.
+            When it comes to Atom there is no reason to accept anything
+            but well-formed feeds.</ins> In 
+            general the statement "There are no exceptions to Postel's Law"
+            is wrong in the context it was used in, gives the wrong impression
+            that all the work falls to the consumer, and also gives the wrong impression
+            that it was advocating the consumption of invalid data.
+            A little digging reveals the true intention of Postel's Law
+            which is something for which I believe there is no escape, that is, as
+            a guiding principle for implementors when building both clients
+            and servers if you want interoperable implementations of a specification.
+        </p>
+<h3>Update</h3>
+<p>Tim Bray has an <a href="http://tbray.org/ongoing/When/200x/2004/01/11/PostelPilgrim">
+            excellent write-up on this same subject</a>.
+           The short answer, if you can't generate a valid
+           XML file then you're a bozo.</p>
+
+  <div class="commentContent" id="X1">
+    <p>re: "Why don't you need an ultra-liberal MP3 player?"</p>
+<p>You do, you just don't realize it.  Never tried to parse MP3 tag info, have you?  Ask anyone who has, and they'll tell you it's just as crappy as trying to parse feeds or anything else.</p>
+<p><a href="http://www.disobey.com/dnn/2003/12/index.shtml#001565">http://www.disobey.com/dnn/2003/12/index.shtml#001565</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2004-01-10T11:46:42">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>re: "do you want your payroll deposit consumed by an ultra-liberal parser..."</p>
+<p>Of course not, and the bank would never do this because they have no reason to do this.  You agree that aggregator clients need to be ultraliberal, and you even agree why they need to be ultraliberal (because they are a near-commodity, and end users will go somewhere else if they are missing news).  But then you throw out this strawman argument about banks in a backend B2B transaction, where the power structure is completely different.  The bank can afford to reject invalid XML, and indeed they have every reason to do so and no reason not to.  If there are problems, they can talk directly to their business partners and work out the kinks.  End users can't be bothered to do that.</p>
+<p>Look, this is a form of the Prisoner's Dilemma.  If everybody cooperates (rejects invalid feeds), then everybody wins.  (And by "everybody", I mean "all developers" -- note that end users lose if all the developers are conspiring against them to reject invalid feeds.)  This view of XML works great in situations where (a) there's no competition, or (b) the people consuming the XML have the (social) power to reject it.  But aggregators <b>do</b> have competition, and they are not in a position to reject anything.  And as with all prisoner dilemma situations, when somebody defects, they win and all the other developers who were "cooperating" (conspiring) get screwed.</p>
+<p>In other words, not only are you trying to wish away Postel's Law, you are trying to wish away the prisoner's dilemma as well.  Lots of luck with that.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X2" title="2004-01-10T12:15:25">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I find it extremely ironic that you're suggesting defecting "just a little", by fixing "some" common problems so you can pigeonhole these feeds through your "sort-of" conforming XML parser (except for all those silly little mistakes that people make, which I'll just quietly tidy up first).  So you're <b>still</b> part of the problem, you just draw the line in the sand in a slightly different place than I do.</p>
+<p>Reminds me of Toby in the West Wing ranting about the estate tax.  "Oh, I go to this meeting, Ginger, and though I compromise, I draw a line in the sand, <br />
+I'm there to insure that only multi-millionaires and not billionaires are exempt from the estate tax.  Reelect the President, Bonnie.  He's on the side of millionaires and not billionaires!"</p>
+<p>Draw your line wherever you like, if it makes you feel better.  In the end, the most liberal parser wins.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X3" title="2004-01-10T12:18:32">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>// Never tried to parse MP3 tag info, have you? <a href="http://www.disobey.com/dnn/2003/12/index.shtml#001565">http://www.disobey.com/dnn/2003/12/index.shtml#001565</a> //</p>
+<p>Good point, poor example. That code parses track metadata out of iTunes' XML file, not out of the tracks' id3 tags. (Personally, I think it parses <em>too</em> liberally -- parses XML with regexes and makes assumptions about ordering -- if it were me, I'd shove it through SAX...)</p>
+<p>And on liberal vs conservative JPEG parsing: <a href="http://norman.walsh.name/2003/07/14/ieoddness">http://norman.walsh.name/2003/07/14/ieoddness</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:james.kew@btinternet.com">James Kew</a> on <a href="#X4" title="2004-01-10T14:54:26">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>I'm consistently getting blank looks when I say that mis-understood application of the "be liberal in what you expect" principle actually is the <b>cause</b> for many interoperability problems. For instance, a big company may have servers sending broken content, but it's no problem for them as <b>their</b> clients accept it. What happens is that everybody else must basically start accepting that broken content as well. Go figure.</p>
+<p>The principle is about accepting messages unless the specs explicitly tell you not do so. For XML, this means that encoding and wellformedness problems are fatal. End of discussion.</p>
+<p>See also <a href="http://greenbytes.de/tech/webdav/rfc3470.html#rfc.section.4.1.p.3">RFC3470, section 4.1</a>.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X5" title="2004-01-10T17:50:54">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Julian, thanks for that link.  You have convinced me that XML is the wrong solution for anything that involves end users.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X6" title="2004-01-10T19:20:44">2004-01-10</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>re: "The biggest problem with liberal parsing is, who gets to decide what's liberal enough? Is Mark Pilgrim's feed parser the gold standard of liberalness?"</p>
+<p>You gave the answer yourself ... RFC 2360 says the dividing line should be in the spec.</p>
+<p>re: "do you want your payroll deposit consumed by an ultra-liberal parser..."</p>
+<p>If the proper response to invalid data is specified in the spec, and the bank system obeys that spec, then why not? I'd rather get paid than not see my money because someone coded "500" instead of "500.00".</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://IAwiki.net/EricScheid">Eric Scheid</a> on <a href="#X7" title="2004-01-11T03:00:32">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>Mark,</p>
+<p>end users do not type nor parse XML. End users use editors. If it happens to be an edit field for markup, it's the editor's job to ensure that something wellformed is stored.</p>
+<p>Different recipients accepting <b>different</b> supersets of a language really really <b>cause</b> interop problems. The best thing is to have a spec such as XML that clearly states that there's no vague area of ok-ness. Either it's wellformed, or it isn't, in which case you throw it away. This is absolutely compatible with the robustness principle.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X8" title="2004-01-11T06:14:49">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>A lot depends on your definition of "end user".</p>
+<p>The advantage of using a common data format (like XML) is that it lowers the barrier to entry (more people know the common format, and can skip quickly over that to the real application).</p>
+<p>The "end user" making the format errors here are not the users using web-based editors typing into comment fields on weblogs.  The "end users" making these errors are the afternoon social software hackers writing their cool tool-of-the-day.</p>
+<p>If the problem were truly the ultimate end user (the one entering comments) then the obvious solution is to stop using an underlying format that pretends to make it easy to simply take unchecked user input and slapping it into the underlying format.  In that sense, user-entered data <b>is</b> payload.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X9" title="2004-01-11T08:58:39">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>The examples of "mature" formats are ridiculous. There are "ultra-liberal" parsers for everything you mentioned. Let's examine them one by one.</p>
+<p>Image Parsers: Yes, I constantly run into images that display correctly in Safari, but work well in IE. They are animated gifs, and they frequently don't display correctly. How about the fact that some SoftImage images won't open in Photoshop but will in GraphicConverter? There's your ultraliberal image parser.</p>
+<p>MP3 players: When iTunes for Windows came out, many people noticed that winamp would successfully play VBR mp3 files that iTunes would not.</p>
+<p>PDF Parser: All programs that have any contact with PostScript are poster children for Postel's Law. They will try to show you something no matter what. Try sending Acrobat a PDF containing an image with invalid masking image accompanying it. Will it not show the image because the mask is wrong? No, it will show you the unmasked image even if it clobbers the surrounding text, leaving the user to highlight text to read it. The information is the important thing, and Acrobat will do everything it can to rescue it. </p>
+<p>It's ridiculous to specify that a client must throw away an invalid feed. The reason is that the importance of the message is unknown to the writers of the spec.</p>
+<p>Let's say you didn't know how to program, or even what Atom was (or that you could open the file in a text editor), but you really really needed the information that was in it. You'd be really really happy when you found the program that ignored the spec's mandated rejection and showed it to you anyway.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X10" title="2004-01-11T16:23:47">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>Robert,</p>
+<p>the trouble here is with "...showed it to you anyway". To show it, it must be somehow parseable. The spec decides what's parseable or not. If one particular client bends that rule, all of a sudden others will need to follow, and the broken feeds will not be fixed.</p>
+<p>So the issue here is about <b>avoiding</b> broken feeds, and the best way to do that is not to have feed readers that accept them.</p>
+<p>In this particular case you mentioned, a feed reader could easily flag the error and offer the user to "view the source" or whatever. In no case it should silently ignore the problem without notifying the user. See <a href="http://www.w3.org/TR/webarch/#no-silent-recovery">Architecture of the World Wide Web, General Architecture Principles #1</a>.</p>
+<p>There's a reason why both the W3C and the IETF (RFC3470) are stating this.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X11" title="2004-01-11T18:04:12">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <p>"In no case it should silently ignore the problem without notifying the user."</p>
+<p>Why is the spec deciding how important an error is to the user? The importance of document validity relative to content and life-in-general is miniscule for most people. I know I would turn off those alerts immediately. </p>
+<p>"You are transmitting cookies..."<br />
+"You are reading an invalid feed..."</p>
+<p>[x] Never show me these messages.</p>
+<p>Is there a single end-user application that acts in the way you're describing?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X12" title="2004-01-11T18:56:56">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <p>Robert: no, there are no end-user applications that work that way, at least not in any competitive field.  As others have commented, every format, every field, every application that you've ever heard of works as hard as possible to handle anything you throw at it, to do so quietly, and without complaint.</p>
+<p>The entire idea that XML is <b>so incredibly special</b> that vendors ought to conspire together against their own users to make their programs more hostile, more arcane, and less useful... it's absurd on its face.  Early aggregators worked this way, but they quickly lost market share to friendlier, more liberal applications that did what users felt was important, rather than what developers felt was important.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X13" title="2004-01-11T22:08:31">2004-01-11</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    <p>"In no case it should silently ignore the problem without notifying the user."</p>
+<p>Yes, there are applications doing that. In fact, the most-used web application (IE6) does it. For instance, when it GETs an XML document that does contain illegal characters (such as control characters), it displays the XML nevertheless, but also display a yellow warning sign in the status bar. Even more drastically, it doesn't display XML content at all if it refers to a DTD that's missing or isn't allowed to be read due to security zone restrictions.</p>
+<p>(Of course similar things happen in Mozilla)</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X14" title="2004-01-12T04:14:33">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    <p>re: "when it GETs an XML document that does contain illegal characters (such as control characters), it displays the XML nevertheless, but also display a yellow warning sign in the status bar."</p>
+<p>In other words, IE is ignoring the error and doing exactly what I recommended that aggregators do a year and a half ago:</p>
+<p><a href="http://diveintomark.org/archives/2002/08/20/how_liberal_is_too_liberal">http://diveintomark.org/archives/2002/08/20/how_liberal_is_too_liberal</a></p>
+<p>"If you want to evangelize within your program, I recommend doing something like iCab does. When it encounters a page authored in valid HTML, it puts a little green smily icon next to the address bar. News aggregators could do something similar: try to parse the feed with a real RDF or XML parser (and indicate success with a smily), and only fall back to a more liberal parser if the strict parser failed (and indicate this with a frown). But you must fall back to something, or you'll just end up punishing your own users for the mistakes of web developers, which accomplishes nothing."</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X15" title="2004-01-12T11:32:55">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    <p>How is "displaying a yellow warning sign" the same thing as "ignoring"?</p>
+<p>By the way, again: it also <b>completely</b> rejects XML if the DTD is missing/not accessible (in which case you'll need "view source" to see the actual content).</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X16" title="2004-01-12T12:53:44">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Well, thank God aggregators don't follow IE's example there, Julian, because the Netscape version of RSS 0.91 uses a DTD that points to a non-existent resource, and RSS 0.91 is the most widely-used version of RSS in the world.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X17" title="2004-01-12T15:32:41">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    <p>Well, yes, that was a funny story.</p>
+<p>Lesson to learn: do not use DTD validation in internet protocols. And if you do, never ever rely on the DTD resource being online. See <a href="http://greenbytes.de/tech/webdav/rfc3470.html#rfc.section.4.14">RFC3470, section 4.14</a>.</p>
+<p>So, yes, if you make that design error, being "liberal" may help. Not making that design error is even better.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X18" title="2004-01-12T16:09:39">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    <p>So you're telling me IE will completely reject an XHTML page if there is a problem with the DTD? No, no you're not. </p>
+<p>What you're talking about is raw xml content that only developers see.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X19" title="2004-01-12T16:24:58">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    <p>Robert,</p>
+<p>IE does not support XHTML. If you serve XHTML content as HTML, it will be handled by the default HTML renderer. If you serve it as XML, it will be displayed using CSS or XSLT stylesheets. In the latter case, it will try to read the DTD (and error if it's not available).</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X20" title="2004-01-12T16:45:15">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X21">
+    <p>You can serve XHTML with a text/html mime type. IE6 will go into "standards mode" if your doctype is in order. Otherwise, it will use a more, shall we say liberal, parser. </p>
+<p>I understand what you're saying, but I find it disingenuous. I'm really not interested in definiton of terms. I'm more interested in what the practical realities are. I don't think I've ever seen a consumer site served as text/xml and styled client side. Are there any sites serving content this way? Which technology that consumers use acts this way? Would you consider XML successful as a consumer technology, in the same way that HTML is?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X21" title="2004-01-12T17:12:03">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X22">
+    <p>As this discussion has inevitably veered into the HTML/XHTML analogy, I feel it would not be horribly off-topic to point out that this page is not valid:</p>
+<p><a href="http://validator.w3.org/check?uri=http%3A%2F%2Fbitworking.org%2Fnews%2FThere_are_no_exceptions_to_Postel_s_Law_">http://validator.w3.org/check?uri=http%3A%2F%2Fbitworking.org%2Fnews%2FThere_are_no_exceptions_to_Postel_s_Law_</a></p>
+<p>It appears that it tries to be valid XHTML, but it has an HTML doctype.  However, it would not have validated as XHTML, even with the correct doctype.</p>
+<p>Thank goodness Julian's browser is ultra-liberal, or we would not be able to have this stimulating conversation at all!</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X22" title="2004-01-12T18:05:00">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X23">
+    <p>Robert, I believe Julian is talking about Mozilla's XML mode, which is triggered when an XHTML page is served with an application/xhtml+xml MIME type.  In this mode, Mozilla is completely unforgiving and will happily display an XML debugging error if the page is not well-formed XML.  IE's "standards mode" still uses an HTML parser; it simply treats your XHTML page as HTML with some strange-but-ignorable slashes in it.</p>
+<p>I have ranted about Mozilla's behavior as well:</p>
+<p><a href="http://diveintomark.org/archives/2002/11/21/a_warning_to_others">http://diveintomark.org/archives/2002/11/21/a_warning_to_others</a></p>
+<p><a href="http://diveintomark.org/archives/2003/01/14/eddies_in_the_spacetime_continuum">http://diveintomark.org/archives/2003/01/14/eddies_in_the_spacetime_continuum</a></p>
+<p>So I am, if nothing else, consistent.  Strict XML parsing should never be used to display information to actual human beings.  Strict parsing is fine if that makes the developer's life easier, but if strict parsing fails, there must always be a liberal fallback that displays as much information as possible.  In this case, I have encouraged developers to display some sort of warning icon that alerts the miniscule percentage of users who actually care that the source data was not well-formed, and possibly gives them a way to verify it for themselves.</p>
+<p>Meanwhile, there are entire organizations devoted to improving the data quality of feeds.  Syndic8.com has an "evangelizers" program that is currently desperately in need of volunteers to contact vendors and publishers (who are not necessarily the same people) and work with them to make their feeds valid.  They track tens of thousands of feeds, and thousands of them stand in disrepair.  If you care about feed quality, that is the way you can make a difference.  All this talk about punishing end users to make some point that only 1% of them would even care about, or even understand, even if you weren't punishing them, is just nonsense.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X23" title="2004-01-12T18:42:24">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X24">
+    <p>No, I was talking about IE's XML mode as well.</p>
+<p>I'm also not sure what you're talking about regarding <em>this</em> page: Mozilla surely tells me that it was served with content type text/html, so it doesn't need to be XML at all. It's a pity it's neither HTML or XHMLT currently, but I don't how this is relevant here. On the other side, <b>if</b> this page would be served as XML, the problem would probably have been detected immediately and fixed by now.</p>
+<p>Robert: when you serve XHTML as text/html, IE will process it as HTML. So if it happens to render the page "correctly" neverlethess, that's because Microsoft has added <b>some</b> workarounds for markup variants that may appear in XHTML, but would be illegal in HTML. However, that doesn't make IE a conforming XHTML browser.</p>
+<p>And no, I wouldn't <b>yet</b> consider XML successful in this kind of way, but that doesn't mean it won't. Both Mozilla and IE have solid XML and XSLT implementations, and it's a matter of having a large enough percentage of people using IE6 or Mozilla before any change will happen.</p>
+<p>Note that we came here because people claimed that no major application is indeed applying proper error handling to XML when displaying it to the user. Both Mozilla and IE do that.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X24" title="2004-01-12T19:03:11">2004-01-12</a>
+    </p>
+</div><div class="commentContent" id="X25">
+    Julian, you need to do some background research into how strict Microsoft's "strict" XML parser really is.  Go ask around on xslt-list, then come back and discuss in a more informed manner.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X25" title="2004-01-13T13:08:37">2004-01-13</a>
+    </p>
+</div><div class="commentContent" id="X26">
+    <p>Mark,</p>
+<p>as far as I can tell, I'm as informed as I can possibly be about MSXML/XSLT (and yes, I'm reading the XSL list). So if you plan to say something about poor XML compliance in MSXML, do that, but don't make vague statements.</p>
+<p>Besides that, what exactly does this have to do with the discussion we're having here?</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X26" title="2004-01-13T13:27:11">2004-01-13</a>
+    </p>
+</div><div class="commentContent" id="X27">
+    <p>Julian,</p>
+<p>I understand your concern that "liberal parsing" would turn Atom into RSS &amp; HTML 4-- a bunch of garbage (to parse). </p>
+<p>Correct me if I'm wrong, but your theory is that if enough people were using compliant browsers, strict parsing would work. I'm willing to consider that argument, but one proof I don't accept is that "it already works, look at XML parsers." When you look at what's been successful with consumers so far, it's been dominated by technologies that use liberal parsing. </p>
+<p>I do admire the aspect of your approach that causes errors to be raised immediately, in a "fail-fast" manner. However, I think that users are the wrong party to raise the issue with.</p>
+<p>I've written a <a href="http://www.franklinmint.fm/blog/archives/000092.html">thought  experiment</a> that contrasts nicely with <a href="http://diveintomark.org/archives/2004/01/14/thought_experiment">Mark's</a>.  Invalid Atom feeds should fail fast for implementors, not users.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X27" title="2004-01-14T13:55:46">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X28">
+    <p>Julian, re: MSXML conformance.  Here's just one example of its failure to conform to the XML specification: <a href="http://www.intertwingly.net/blog/1689.html#c1074112699">http://www.intertwingly.net/blog/1689.html#c1074112699</a></p>
+<p>Do not, under any circumstances, "just load it up in IE" to check for XML well-formedness, let alone validity.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X28" title="2004-01-14T16:36:46">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X29">
+    <p>Your point being? IE6 (with all SPs applied) displays the XML tree, but complains about a parsing error in line 209</p>
+<p>Also keep in mind that if you'd feed that source into MSXML programatically (instead of running it through IE), it would have rejected it right away.</p>
+<p>And yes, running a document through two different XML parsers to ensure it's ok will always be better than relying on just one. No surprise.</p>
+<p>Any more complaints about MSXML? I'm still waiting to find out about where I need to do the background research you suggested :-)</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X29" title="2004-01-14T17:28:56">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X30">
+    <p>Mark, </p>
+<p>Liberalism in adherence to standards is always a slippery slope. Further, where to draw the line will always result in the endgame being a religious-style debate. If I were writing a news reader, I know I would avoid that slippery slope at all costs if it were possible.</p>
+<p>I would suggest that rather than you fighting and debating over the techincal details of how applications should parse data, and to what degree they should adhere to strict standards while parsing that data, that you come up with a reasonable transitional plan for these applications that moves them towards strict adherence while not potentially hurting Atom getting off the ground.</p>
+<p>In other words, help them figure out ways that shows users and developers where their RSS feeds are invalid, and create a transtional strategy to help them weed out bad RSS as quickly as possible, getting to a point where one day RSS will be treated exactly as Atom.</p>
+<p>There are many ways to do this. So many I won't bother jotting any of them down.</p>
+<p>Anyone who cares about standards should want compliance, and as strict as possible. That's why we have standards. </p>
+<p>However, if you really believe it is up to the developers of the world to constantly hack around bugs created by other developers or non-technical people posing as engineers, hack around data that is poorly created and propogated, hack around user intent on what they want to do with data that is malformed or not to spec, then I will say that I think you are heading down the wrong road. That road only leads to the edge of a very high cliff.</p>
+<p>Either that, or stop compalining and write your own Atom NewsReader and make it as liberal as you wish, and support it over the years and all the rest that goes with writing such an application.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.designbyfire.com">Andrei Herasimchuk</a> on <a href="#X30" title="2004-01-14T18:03:38">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X31">
+    <p>I care deeply about standards.  I'm a member of the Web Standards Project ( <a href="http://webstandards.org/">http://webstandards.org/</a> ) and I co-wrote the Feed Validator ( <a href="http://feedvalidator.org/">http://feedvalidator.org/</a> ).  So don't lecture me about standards; I've done more for syndicated feed quality than all the rest of you put together.</p>
+<p>But a client-side end user application is the wrong place to enforce data integrity.  It's just the wrong place.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X31" title="2004-01-14T19:34:02">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X32">
+    <p>Just because you say so doesn't make it so. And you basically missed my point, which is fine. I don't really care one way or the other.</p>
+<p>I'll grant you that your reasoning behind the notion that client-side end user application is the wrong place to enforce data INTEGRITY, but that doesn't neccessarily mean it's the wrong place to enforce data encoding STANDARDS.</p>
+<p>How's that for splitting hairs?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.designbyfire.com">Andrei Herasimchuk</a> on <a href="#X32" title="2004-01-14T20:37:03">2004-01-14</a>
+    </p>
+</div><div class="commentContent" id="X33">
+    Can someone please remind me what the original discussion was?<br />
+I have read about 200 postings and comments on whether Postel's law is correctly interpreted, about whether it makes sense, who is responsible for what, pros and cons of being liberal or not, name-calling, dick-wanking contests, etc. Clearly, this debate will not end in some great consensus - which is OK, since there is nothing wrong in disagreeing.<br />
+Clearly, nobody can tell the aggregator authors (or more generally speaking, tool authors) how they build their software. Some will parse liberally, some more strictly. <br />
+What I'm curious about is how this effects the Atom specification itself. Is the issue whether the spec is supposed to say "Non well-formed feeds MUST be rejected" vs. "SHOULD be rejected"?
+    <p class="commentByLine">Posted by
+       <a href="http://www.innoq.com/blog/st">Stefan Tilkov</a> on <a href="#X33" title="2004-01-15T04:52:13">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X34">
+    <p>I haven't read 200 posts on this subject, but I have read some. So can someone please tell me whether the following is a reasonable summary of the situation:</p>
+<p>Postel's law states "Be strict in what you transmit, liberal in what you recieve". The discussion has centred around the second half of the law. Mark believes the relevant part of the law means that end-user applications should do anything and everything they can to parse an XML document, without regard to it's validity, wellformedness or anything else. He has seems to believe that the only problem with this position is that it makes the lives of UA authors "0.00001%" harder. The source of that number isn't clear, but we can assume it's just unnecessary hyperbole. Interestingly, one could hope to gain an insight into just how much harder processing "anything goes" markup is compared to by comparing the html and xml parsers in Mozilla or some other open source project.</p>
+<p>Mark has totally failed to notice or address some of the very real problems that his version of Postel's law causes for end users, the very people he is claiming to protect. Since authors may only have access to a single client in which to check their document, they are encouraged to transmit documents which rely on the paticular error handling of that client. This means that Mark's interpretation of Postel's law is actually discourages the first part of the law from being upheld. It also means  that different clients will accept different inputs - i.e. it destroys any notion of interoperability. This becomes a particular problem when one UA has a large fraction of the market - cf HTML 4 and the 2785 Tech Evangelism bugs currently open in the mozilla.org bugzilla - each of which makes the user experince at a particular site <b>worse</b> not better, and is a direct result of Mark's interpretation of Postel's law. Mark's interpretation also destroys the possibility of forward compatibility - i.e. extending a specifcation in such a way that it doesn't break older implementations. This problem is also evident in HTML 4 -  Internet Explorer cannot implement a standards complaint DOM whilst retaining backward compatibility because of the way it fixes broken markup ( <a href="http://ln.hixie.ch/?start=1037910467&amp;count=1 ">see Ian Hickson's weblog, for example</a>). This is, again, a serious problem for authors and end users as it prevents the adoption of new technologies in browsers. This need to retain backward compatibility with millions of existing installations has been cited by Microsoft employees as a reason not to pursue the development of Internet Explorer.</p>
+<p>Others have pointed out that Postel's law really doesn't mean what Mark thinks it means. In particular, Postel's law is a statement about the process of writing specifcations rather than the best practice for writing clients. This is interesting because it reveals the fundamental problem; XML does not comply with Postel's law on the client side (although it certianly does require you to be strict in what you send). XML will not let clients be liberal in what they accept - it specifically requires that they drop ill formed content. As Tim Bray points out, this may be beneficial for some applications such as Financial systems where maintaining data integrity is critical. However, he also believes that writing well formed XML is easy. Unfortunatley there are O(100) web sites that claim to be XHTML and are confident enough of this to be parsed by the standards complaint Mozilla XML parser. Almost every other site on the web is invalid or has so little confidence in it's own validity that it asks to be but through the more forgiving HTML parser.</p>
+<p>The obvious upshot of this is that XML is an inappropriate format for a format with little expectation of validity. Somewhere, Mark decides that this makes XML unsutiable for end user applications, as if this was surprising. My own view is that it's really obvious from the XML specifaction that XML is totally inappropriate for applications where well formedness (and/or validity) is not of paramount importance. In this situation a UA has a lot to gain by being more liberal than the standard allows.</p>
+<p>Maybe the people working on Atom should have considered this before jumping on the XML bandwagon.</p>
+<p>My suggestion is that Atom abandons XML 1.0. It does not have the error handling properties required to make for a useful document language for consumption by humans. Instead, Atom should retain the XML syntax (which is popular and powerful), but build error handling into the markup language specifcation (as Postel's law requires*). In principle, this should not be hard to do. After all, we already have the Ultra Liberal Feed Parser. We already have many parsers for malformed HTML. Clearly people already have an idea of how XML errors should be handled. Incoporating these behaviours into a formal specifcation resolves the issues with interoperability and forward compatibility that are mentioned above. </p>
+<p>The CSS working group has already taken this path.</p>
+<p>Once a decent specifcation for error handling in XML-like documents emerges, the next stage is to encourage the w3c to incoporate this functionality into the next major XML release. Obviously it's not appropriate to correct all data all the time, so allow different XML dialects to incoporate different parts of the error handling specifcation - a schema for financial data would have a "valid or nothing" policy whereas a schema for a end-user language such as XHTML would have a liberal (but well defined) error handling policy. This will increase the usefulness of XML beyond the machine-machine communication arena in which it is successful to human-human communications where it is a much vaunted but marginly used technology.</p>
+<p>*Remember, "there are no exceptions to Postel's law"</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X34" title="2004-01-15T10:07:15">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X35">
+    <p>"Postel's law is a statement about the process of writing specifcations rather than the best practice for writing clients."</p>
+<p>This is incorrect. Section 2.10 of RFC 793 is linked at the top of this page. This is the Section in its entirety:</p>
+<p><b>2.10.  Robustness Principle</b></p>
+<p>TCP implementations will follow a general principle of robustness:  be conservative in what you do, be liberal in what you accept from others.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X35" title="2004-01-15T11:10:21">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X36">
+    <p>RFC793 is specifically about TCP. The <b>general</b> principle can be found in RFC2360, section 2.9:</p>
+<p>For instance:</p>
+<p>"  Or establish restrictions on what a protocol transmits, but be able<br />
+  to deal with every conceivable error received.  Caution is urged in<br />
+  applying this approach in standards track protocols.  It has in the<br />
+  past lead to conflicts between vendors when interoperability fails.<br />
+  The sender accuses the receiver of failing to be liberal enough, and<br />
+  the receiver accuses the sender of not being conservative enough.<br />
+  Therefore, the author is obligated to provide extensive detail on<br />
+  send and receive behavior."</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X36" title="2004-01-15T11:54:40">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X37">
+    John Postel is not an author of that RFC. The section you quoted is explicitly disagreeing with Postel's law for standards track protocols. Postel's Law is unequivocally about implementation technique. I can't believe people are trying to twist the meaning of the quote into "Be conservative in what you accept." Sorry, no.
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X37" title="2004-01-15T13:23:58">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X38">
+    <p>Robert,</p>
+<p>but then, this RFC was published by the RFC Editor (who at this time <b>was</b> John Postel) and it specifically applies to our discussion, while RFC793 technically doesn't.</p>
+<p>I get the impression you're seeing a religious principle in something that was a good rule of thumb for a <b>specific</b> use case (and yes, many other use cases). However, both the IETF and the W3C have clearly stated their positions on the "law" vs XML error checking. Isn't that worth considering as well? I'm sure John would agree.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X38" title="2004-01-15T13:57:24">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X39">
+    <p>1.) Good editors publish statements they disagree with.</p>
+<p>2.) I'm not religiously attached to it. As I have previously stated, I'm willing to consider arguments that favor breaking it, which includes your point of view. However, an invalid argument strategy is saying something like this: </p>
+<p>"Postel's law is a statement about the process of writing specifcations rather than the best practice for writing clients."</p>
+<p>This statement is plainly false. </p>
+<p>I agree with you that ill-formed and otherwise invalid feeds need to be caught immediately. However, I think requiring user participation in the feedback loop is a mistake. Atom clients should automatically inform producers about interop problems, not rely on their users to send an email.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X39" title="2004-01-15T14:09:22">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X40">
+    <p>Robert,</p>
+<p>seems that we're almost in agreement. Yes, if the Atom client would have the ability to signal parse errors to the feed producer, that would certainly work better than silent failure.</p>
+<p>Clarification: I'm <b>not</b> saying that Postel's law does not apply. I'm only saying that the robustness principle needs to be followed when the spec is allowing different interpretations. If it doesn't (such as for XML) there's really no room for being liberal. The robustness principle certainly is <b>not</b> suggesting that clients violate "MUST" or "SHOULD" level requirements. If a protocol is defined to use XML, wellformedness <b>is</b> a MUST-level requirement. There can't be any discussion about that (well, at least there shouldn't...). A protocol that specifies anything except error signalling upon XML parse errors is not using XML at all, in which case it should use a different markup language and avoid the inevitably confusion it would cause otherwise.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X40" title="2004-01-15T14:25:45">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X41">
+    <p>OK, I feel that we're getting somwhere here, but let's try and be more specific than "error signalling," as RFC2360 encourages. I think a big problem in this debate is that Tim Bray and others have only clearly advocated notifying the user, not the producer. If we're having this debate about something basic like well-formedness, the future is not bright for Atom schema-related disagreements.</p>
+<p>In pseudo spec language, here's what I advocate:</p>
+<p>The server MUST produce well-formed, valid XML.</p>
+<p>...</p>
+<p>In the presence of XML parsing errors, the client MUST notify [using an as yet undefined method] the server [and user?] of the error. The client MAY partially or fully display the content, in accordance with the feed's [policy header defaulting to "insecure"]. </p>
+<p>// Added thoughts:</p>
+<p>Given a feed with multiple atom:content elements, it's possible for a parser to isolate a problem in one of the content elements. Should the spec mandate turfing all content elements? I don't think so.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X41" title="2004-01-15T15:08:13">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X42">
+    <blockquote class="quote"><p>"Postel's law is a statement about the process of writing specifcations rather than the best practice for writing clients."</p></blockquote>
+<blockquote class="quote"><p>This statement is plainly false. </p></blockquote>
+<p>Then it's not a useful "law" (by "law we really mean "design principle", so it's also misnamed). On the other hand if it really refers to clients, it is an excellent "law" in the sense of prediction about how clients /will/ behave - as Mark as pointed out situations which require cooperation from everyone are unstable to the first person to break the pact.</p>
+<blockquote class="quote"><p>[a specifcation allowing broken XML to be parsed] is not using XML at all, in which case it should use a different markup language </p></blockquote>
+<p>As in different syntax? Why? The XML syntax is fine. One could even make the new specifcation backward compatible with XML so that XML schemas could be simply adapted to the new technology. As far as Ii can see, the <b>only</b> problem with XML is the unrealistic error handling requirements.</p>
+<p>I think you're trying to throw the baby out with the bathwater.</p>
+<blockquote class="quote"><p>In the presence of XML parsing errors, the client MUST notify [using an as yet undefined method] the server [and user?] of the error</p></blockquote>
+<p>The obvious problem is that, even after recieving an indication that the feed is invalid, the author may not have any idea how to correct the problem. This may be the case where the user is using a tool to produce the feed but has no underlying knowledge of the syndication format.</p>
+<p>That doesn't mean providing a feedback mechanism is a bad idea per se, of course.</p>
+<blockquote class="quote"><p>The client MAY partially or fully display the content, in accordance with the feed's [policy header defaulting to "insecure"]. </p></blockquote>
+<p>OK so I don't know a lot about Atom (I am more interested in this from the point of view of XHTML where the same arguments are just as valid) so could you clarify what exactly you mean here? In order for this provision to be useful (and avoid the problems I previously identified), the spec has to be pretty clear on what lengths it may go to "display the content". I presume you don't mean literally dump the raw XML on the screen (even so, this policy would do little for e.g. unrecognised characters). One also has to consider that as well as displaying the data the client may wish to perform other operations with the data e.g. run code based on it's DOM (cf javascript in HTML). A robust system has to account for this possibility as well.</p>
+<p>One could argue that with the wide variety of error handling techniques in different UAs that would make invalid documents render in an unpredictable way and author-notifcation of errors, authors would be likely to write valid code and quickly correct mistakes. In fact, I believe that these rules would lead to a situation where:</p>
+<p>Authors test their feed in the client that they themselves use and look only for whether it displays as they expect.</p>
+<p>Authors don't understand the errors that clients are reporting and so choose to ignore them.</p>
+<p>A system that relies on authors to alter documents in response to validation issues requires the author to have a better grasp of the underlying data format than is reasonable to assume for web publishing.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X42" title="2004-01-15T17:16:43">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X43">
+    <p>I don't think it's unreasonable to rely on authors to alter their documents (ha!). They may be unable to the correct the problem initially, but they'll realize they need the solution when it materializes. </p>
+<p>Example: At some point in the future Movable Type and NetNewsWire develop an imcompatibility when MT 3.7 generates on OS/2 and NetNewsWire 2.1 is running on Mac OS 10.2. Now there will be multiple diverse sources reporting the issue, with precise descriptions. Note that this method would also expose bugs in the client. When a naive MT user sees that MT has updated to version 3.71 to correct the issue, they'll know that they have that problem.</p>
+<p>In regard to your questions on the "policy" element or header ( I think it will have to be an element or attrib, actually), Tim Bray highlighted a problem resulting from the use of Atom for diverse purposes[1]:</p>
+<p>"If, for example, I'm reading one of my favorite blogs, and the aggregator turfs an entry because the (required) 'modified' is missing, I'm going to be irritated. On the other hand, when I'm reading a feed describing my credit-card transactions, if a charge comes through without a date-stamp I want the aggregator to scream loudly and let me know; something here is gravely amiss, either with the credit card, the bank, or the software."</p>
+<p>Multiple people have suggested some indication in Atom that would allow a client to differentiate between the two cases, I've used the term "policy." The extreme side of this argument is that some people are advocating turfing an ill-formed feed in all cases. I don't think that's realistic for any type of client. For non-human driven UAs, such as Googlebot, it becomes even harder to stomach. Should they not index something because of that? After all, the spec mandates that any client should turf the feed. I hope they would try to index whatever they could, ignoring ill-formed fragments if necessary.</p>
+<p>1. <a href="http://www.tbray.org/ongoing/When/200x/2003/08/19/Draconianism">http://www.tbray.org/ongoing/When/200x/2003/08/19/Draconianism</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X43" title="2004-01-15T17:58:34">2004-01-15</a>
+    </p>
+</div><div class="commentContent" id="X44">
+    <blockquote class="quote"><p>I don't think it's unreasonable to rely on authors to alter their documents (ha!). They may be unable to the correct the problem initially, but they'll realize they need the solution when it materializes.</p></blockquote>
+<p>But they won't. For HTML all the solutions exist. You can buy any number of tools that produce well formed valid code. There is detailed information avaliable about the differences between browsers, about what type of markup each will accept and how the DOM works. Yet we've still got 2875 sites which are reported to be broken. This is broken as in "have serious issues in Mozilla", not broken as in "forgot to use &amp;amp; for an ampersand somewhere". The number is probably a tiny fraction of the total number of sites that are actually broken. In all, or almost all of these reported cases the site provider has been provided with detailed feedback about exactly where the problem is. In some cases they have even been provided with a patch to fix the problem (e.g. <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=80479">bug 80479</a> which has been open for almost 3 years now). However the site still refuses to make the changes that are required to work cross browser. </p>
+<p>These are sites that have major functional problems, not sites with a subtle XML error.</p>
+<p>There are lots of possible reasons for this. One obvious one is that the site owner has brought in a third party to design the site and has no in-house expertise beyond the use of a content mangement system. In this situation they would not understand the feedback and would not understand that un upgraded CMS might fix the problem. This is certianly the case for many weblogs where the system has been set up by a third party and the person running the system has little idea how to upgrade or maintain it. Another possible reason is that people simply don't care. maybe they believe that reaching 95% of the clients is 50% of the work required to reach 100% of the clients. This might even be somewhat true, and will continue to be true if you advocate the anything-goes approach to parser design. All the unsolicited bug reports in the world won't elicit a change in someone who isn't interested in fixing the problem.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.acuk/~jg307/">jgraham</a> on <a href="#X44" title="2004-01-16T08:44:25">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X45">
+    Ok, but in my proposal, IE would be sending errors, even though the site still functioned.
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X45" title="2004-01-16T09:08:52">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X46">
+    <blockquote class="quote"><p>Ok, but in my proposal, IE would be sending errors, even though the site still functioned.</p></blockquote>
+<p>But they'd be ignored because the site still functioned.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X46" title="2004-01-16T12:30:10">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X47">
+    <p>Possibly, but since current browsers don't report rendering errors to the server, that's just conjecture. With an automated feedback mechanism, servers would have an accurate count of the problem's occurrence. Whether or not it makes financial sense to fix is their decision.</p>
+<p>Furthermore, there are issues with Atom feeds that don't exist in HTML. For instance, Atom allows elements from other namespaces. Support for other namespaces is bound to vary by client, and an automated reporting mechanism would also serve report validity problems in those namespaces.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X47" title="2004-01-16T12:58:29">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X48">
+    <blockquote class="quote"><p>Possibly, but since current browsers don't report rendering errors to the server, that's just conjecture. </p></blockquote>
+<p>True. I'm not saying that automatic error reporting is a bad thing; to be honest I'm undecided. However I maintain that a lot of the time, the error reports will be automatically discarded.</p>
+<blockquote class="quote"><p>For instance, Atom allows elements from other namespaces</p></blockquote>
+<p>As does XHTML - this is one of the most useful features from my point of view (since it allows MathML among other things). However XHTML is failing because of the valid-or-die error handling approach to XML.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X48" title="2004-01-16T16:17:07">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X49">
+    <p>Interesting. I thought XHTML was failing because it's not supported by Microsoft.</p>
+<p>Anyway, do you have any facts supporting the statement that it's because of XML's error handling?</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X49" title="2004-01-16T16:38:06">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X50">
+    <blockquote class="quote"><p>Interesting. I thought XHTML was failing because it's not supported by Microsoft.</p></blockquote>
+<p>Admittedly, that doesn't help.</p>
+<blockquote class="quote"><p>Anyway, do you have any facts supporting the statement that it's because of XML's error handling?</p></blockquote>
+<p>Whst sort of facts do you want? I can demonstrate weblogs which provide reduced functionality (e.g. no preview for comments) because of the increased difficulty of XHTML processing. I can demonstrate a huge number of documents that claim to be XHTML 1.x but are invalid and would have parsing errors galore if they were sent through an XML parser. I can demonstrate sites that used to be valid (or even just well formed) but are now invalid for some reason. I can show you sites that would be valid XHTML (with the wrong mime type) but a third party system (like an ad-server) inserted invalid code. I can point out that sites (like <a href="http://diveintomark.org/archives/2003/01/14/eddies_in_the_spacetime_continuum">Mark</a>) used to use XHTML, changed the MIME type, realised how difficult XML parsing made their lives and went back to HTML 4.</p>
+<p>None of these things is compelling evidence to back up my claim.</p>
+<p>Despite this, I still believe that, even with support from Microsoft, XHTML-as-XML would not be a success. It requires scrapping all the tools that are quite happily churning out invalid but parsable HTML 4. It requires major unit-testing for all the 'XML-aware' content mangement systems to make sure they don't screw up and produce &amp; rather than &amp;amp;. Ever. It requires that the tools are smart enough to realise that characters that display OK in windows can't just be copied and pasted into an html document, but must be converted to  valid unicode codepoints or into the characterset of the document, otherwise it won't display at all.</p>
+<p>In short XHTML-as-XML requires tools to be an order of magnitude more reliable than they are with HTML.</p>
+<p>Not to mention that people who wish to edit documents by hand have to be just as reliable.</p>
+<p>Now consider the advantages of XHTML-as-XML:<br />
+Clients can run XML parsers against the content and "do all sorts of cool stuff". In reality, most websites are at best semi-structured and wanting to parse the data outside the browser is of marginal interest to the majority of people. For the cases where this is useful, there are other mechanisms of providing real XML data - e.g. via web services.<br />
+Namespaces. This is, as far as I'm concerned, the one true advantage of XHTML over HTML. Given that the web has survived without this for so long, I guess most people don't find it so compelling.</p>
+<p>The disadvantages:<br />
+Make one mistake and your website/online store/business showpiece is reduced to the XML-parsing-error-of-incompetence. With HTML 4 that doesn't happen.</p>
+<p>So I believe XML is killing XHTML because the requirements outweigh the benefits.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X50" title="2004-01-16T19:27:59">2004-01-16</a>
+    </p>
+</div><div class="commentContent" id="X51">
+    <p>Well,</p>
+<p>XHTML is not going to replace HTML anytime soon, right.</p>
+<p>A few more thoughts:</p>
+<p>- Content being advertised as XHMTL but not being XML at all IMHO is mainly caused by user agents that <b>claim</b> to support XHTML, but don't, that is IE. So again, it's the "liberal" clients that are the <b>reason</b> for the breakage, not the solution.</p>
+<p>- And yes, if you have automatical insertions into XHTML, they need to be XHTML as well, otherwise everything will break. So relying on the sender doing the right thing instead of checking yourself is just a mistake. Don't do it. If you're inserting somebody else's content, check it first, or possibly tidy it first (for instance, blog comments written with markup). But don't blame the spec.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X51" title="2004-01-17T04:08:08">2004-01-17</a>
+    </p>
+</div><div class="commentContent" id="X52">
+    <blockquote class="quote"><p>mainly caused by user agents that claim to support XHTML</p></blockquote>
+<p>In what sense claim? As far as I know IE claims to accept XHTML only in so far as the error handling in the html parser is good enough to deal with the differences between the HTML and XHTML syntaxes without a problem. It doesn't even support an initial XML decleration.</p>
+<p>People who are using XHTML believe, by and large, that it's just HTML4 with a slightly cleaner syntax. Most of the people using it are probably doing so because Zeldman, among others, has pushed XHTML-the-brand as the natural companion to CSS in the new age of strutrural markup and stylesheets. If these people knew for a second what the requirements for XHTML were supposed to be, they'd quickly realise that structural markup is just as possible wth HTML 4 and ditch XHTML.</p>
+<blockquote class="quote"><p>But don't blame the spec.</p></blockquote>
+<p>I'm not "blaming" the spec. It's just a spec for a class of document languages. It's not important. However, it is inpractical for documents authored by and intended for humans, because this need for well formedness at all times isn't something that humans need and isn't something that people will be willing to invest in for content aimed at humans.</p>
+<p>The problem is people trying to write document languages for humans based on XML. So if I'm blaming anyone, I'm blaming them, and the W3C for creating all the XML-everywhere hype.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X52" title="2004-01-17T08:25:38">2004-01-17</a>
+    </p>
+</div><div class="commentContent" id="X53">
+    <p>Sorry,</p>
+<p>should have said that some <b>people</b> claim that IE supports XHTML. AFAIK, Microsoft never claimed that.</p>
+<p>We still disagree on whether XML is useful for document languages, but that's fine. I'll just note it works fine for things like DocBook or xml2rfc.</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:julian.reschke@gmx.de">Julian Reschke</a> on <a href="#X53" title="2004-01-17T08:32:26">2004-01-17</a>
+    </p>
+</div><div class="commentContent" id="X54">
+    I guess with docbook, most people using it know what they are doing, and the documents tend to be static and change infrequently - these things are not true of (X)HTML.
+    <p class="commentByLine">Posted by
+       <a href="http://zeus.jesus.cam.ac.uk/~jg307/">jgraham</a> on <a href="#X54" title="2004-01-17T12:39:41">2004-01-17</a>
+    </p>
+</div><div class="commentContent" id="X55">
+    My simplistic view on the subject is that if the XML spec says parsers should be strict, then parsers should be strict.  If anyone disagrees with that, then the discussion should proceed along the lines of changing the spec.
+    <p class="commentByLine">Posted by
+       <a href="http://www.lparky.com/blog/">Louis Parks</a> on <a href="#X55" title="2004-02-22T17:54:53">2004-02-22</a>
+    </p>
+</div>
+  

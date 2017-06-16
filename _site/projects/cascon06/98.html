@@ -1,0 +1,30 @@
+<html>
+<head>
+   <link href="present.css" type="text/css" rel="stylesheet" />
+   <title>Lessons from Dynamic Languages | manage.py</title>
+</head>
+<body>
+  <div class='content'>
+  <div class='nav'>
+  <a accesskey="h" class="up" href="1.html">home</a>
+  
+  
+<a accesskey="j" class="prev" href="97.html">&laquo;</a>
+<a accesskey="k" class="next" href="99.html">&raquo;</a>
+<h1>manage.py</h1>
+</div><div class="page"><p><pre>
+<span class="PreProc">import</span> os, sys
+
+<span class="Statement">def</span> <span class="Identifier">create</span>():
+    <span class="PreProc">from</span> sqlalchemy <span class="PreProc">import</span> Table
+    <span class="PreProc">import</span> model
+    <span class="Statement">for</span> (name, table) <span class="Statement">in</span> vars(model).iteritems():
+        <span class="Statement">if</span> isinstance(table, Table):
+            table.create()
+
+
+<span class="Statement">if</span> __name__ == <span class="Normal">"</span><span class="Constant">__main__</span><span class="Normal">"</span>:
+   <span class="Statement">if</span> <span class="Normal">'</span><span class="Constant">create</span><span class="Normal">'</span> <span class="Statement">in</span> sys.argv:
+        create()
+</pre>
+<p><p></div></div></body></html>

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>PyTextile And Bulu</title>
+    <meta name=created value="2003-06-05T14:42:31">
+  </head>
+  <body>
+  
+   <p>Bulu now has support for Dean Allen’s most excellent <a href="http://www.textism.com/tools/textile/">Texile</a>, using Mark Pilgrim’s <a href="http://diveintomark.org/projects/pytextile/">PyTextile</a>. I had originally installed it for some other project, but after using for a couple of minutes I got hooked. And I mean really, look at these “quote” marks, and my <acronym title="Three Letter Acronym">TLA</acronym>’s, a big step up over hand coding the <span class="caps">HTML</span> in my pages since I am not likely to ever memorize the character codes for the proper quotes. To make it easier to edit, I store both the raw Textile and the converted <span class="caps">HTML</span> in the <span class="caps">XML</span> data files that drive Bulu, you can see this in the <a href="http://bitworking.org/news/PyTextileAndBulu?xml"><span class="caps">XML</span> for this post</a>.</p>
+<p>Now all of this does bring up a question, would Textile cut it as proper content for an <span class="caps">RSS </span><code>description</code> element? That is, there are some people that do not like double encoded <span class="caps">HTML</span> in their description elements. Would Textile be just as bad becuase it is marked up text, or would it pass muster?</p>
+<p>As usual, a couple days of testing and I’ll make a new release of Bulu.</p>
+
+  <div class="commentContent" id="X1">
+    Would it be nice to allow a subset of Textile's features in comments? I mean, you certainly wouldn't allow commenters to insert 400KB images in comments, nor probably allow external HTML markup, but links, acronyms, some special characters and probably other features would be quite nice to have.
+
+As for description, I would prefer to put in that element just a plain text abstract with no markup, being it HTML's or Textile's or whatever. It seemed to me that in best practices proposals coming out these days this idea was gaining consensus.
+    <p class="commentByLine">Posted by
+       <a href="http://www.mycgiserver.com/~gpiancastelli/">Giulio Piancastelli</a> on <a href="#X1" title="2003-06-05T17:12:54">2003-06-05</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I already do that, in fact, I just use the <code>sanitize()</code> function out of Sam Ruby's <a href="http://www.intertwingly.net/code/mombo/post.py">Mombo</a>. But thanks for bringing it up as I still haven't documented anywhere what kind of markup I allow in comments.
+
+That's what I was wondering, what people meant when they said 'plain' text. The other problem is that my posts aren't completely pure Textile, there is still a smattering of HTML in there.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-06-05T22:32:41">2003-06-05</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    The format of the description element is due to what I intended to use it for. Since I intend the description element as containing an abstract of the whole post, and think at it as something usable from any kind of readers (*) and for bulding other types (i.e. mime-types) of content (e.g. CDF), the most natural format it should come in is plain text (where the meaning of 'plain' is the one stated in my previous comment).
+
+(*) Note, in fact, that I would need some way of parsing away HTML or Textile or whatever other markup you used in the description element to excerpt some plain text description for it, OR to have an HTML or Textile interpreter in order to be able to visualize it. Instead, plain text is directly usable for what I intend it to use.
+
+PS - For 'plain text' meaning, see the description elements contained in items from Sam Ruby's and Mark Pilgrim's RSS feeds.
+    <p class="commentByLine">Posted by
+       <a href="http://www.mycgiserver.com/~gpiancastelli/">Giulio Piancastelli</a> on <a href="#X3" title="2003-06-06T09:16:15">2003-06-06</a>
+    </p>
+</div>
+  </body>

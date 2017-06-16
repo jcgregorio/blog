@@ -1,0 +1,9 @@
+
+ * Add more checks for compliance with http://www.ietf.org/ietf/1id-guidelines.txt
+
+ * Add check for inclusion of the draft's file name in the draft itself, according
+   to ...
+
+ * Add warning for numeric references
+
+ * Add check for references which are not referred to in the body of the doucment

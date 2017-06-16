@@ -1,0 +1,1513 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>The AtomAPI</title>
+<style type="text/css">
+a
+{
+  text-decoration: none
+}
+a:hover
+{
+  text-decoration: underline
+}
+a:active
+{
+  text-decoration: underline
+}
+body
+{
+  
+  color: #000000;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 13px;
+}
+dl
+{
+  margin-left: 2em;
+}
+h1
+{
+  color: #333333;
+  font-size: 16px;
+  line-height: 16px;
+  font-family: helvetica, arial, sans-serif;
+  page-break-after: avoid;
+}
+h2
+{
+  color: #000000;
+  font-size: 14px;
+  font-family: helvetica, arial, sans-serif;
+  page-break-after: avoid;
+}
+h3
+{
+  color: #000000;
+  font-size: 13px;
+  font-family: helvetica, arial, sans-serif;
+  page-break-after: avoid;
+}
+p
+{
+  margin-left: 2em;
+  margin-right: 2em;
+}
+pre
+{
+  margin-left: 3em;
+  background-color: lightyellow;
+}
+table
+{
+  margin-left: 2em;
+  font-size: 13px;  
+}
+td.top
+{
+  vertical-align: top;
+}
+td.header
+{
+  color: #ffffff;
+  font-size: 10px;
+  font-family: arial, helvetica, sans-serif;
+  vertical-align: top
+}
+.editingmark
+{
+  background-color: khaki;
+}
+.hotText
+{
+  color:#ffffff;
+  font-weight: normal;
+  text-decoration: none;
+  font-family: chelvetica, arial, sans-serif;
+  font-size: 9px
+}
+.link2
+{
+  color:#ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 9px
+}
+.toowide
+{
+  color: red;
+  font-weight: bold;
+}
+.RFC
+{
+  color:#666666;
+  font-weight: bold;
+  text-decoration: none;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 9px
+}
+.title
+{
+  color: #990000;
+  font-size: 22px;
+  line-height: 22px;
+  font-weight: bold;
+  text-align: right;
+  font-family: helvetica, arial, sans-serif
+}
+.figure
+{
+  font-weight: bold;
+  text-align: center;
+  font-size: 9x;
+}
+.filename
+{
+  color: #333333;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: helvetica, arial, sans-serif;
+}
+
+del
+{
+  color: red;
+}
+
+ins
+{
+  color: blue;
+}
+
+@media print {
+         .noprint {display:none}
+}
+</style>
+<link rel="Contents" href="#rfc.toc">
+<link rel="Author" href="#rfc.authors">
+<link rel="Copyright" href="#rfc.copyright">
+<link rel="Chapter" title="1 Introduction" href="#rfc.section.1">
+<link rel="Chapter" title="2 Terminology" href="#rfc.section.2">
+<link rel="Chapter" title="3 Scope" href="#rfc.section.3">
+<link rel="Chapter" title="4 Introduction" href="#rfc.section.4">
+<link rel="Chapter" title="5 Functional Specification" href="#rfc.section.5">
+<link rel="Chapter" title="6 Security Considerations" href="#rfc.section.6">
+<link rel="Chapter" title="7 Appendices" href="#rfc.section.7">
+<link rel="Chapter" title="8 Revision History" href="#rfc.section.8">
+<link rel="Chapter" title="9 Copyright" href="#rfc.section.9">
+</head>
+<body>
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#000000" align="center" valign="center" width="30" height="30"><b><span class="RFC">&nbsp;RFC&nbsp;</span></b>
+<br>
+<span class="hotText"></span></td>
+</tr>
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<table width="66%" border="0" cellpadding="1" cellspacing="1">
+<tr>
+<td width="33%" bgcolor="#666666" class="header">yes &nbsp;</td><td width="33%" bgcolor="#666666" class="header">J.C. Gregorio&nbsp;</td>
+</tr>
+<tr>
+<td width="33%" bgcolor="#666666" class="header">&nbsp;</td><td width="33%" bgcolor="#666666" class="header">BitWorking, Inc&nbsp;</td>
+</tr>
+<tr>
+<td width="33%" bgcolor="#666666" class="header">&nbsp;</td><td width="33%" bgcolor="#666666" class="header">December 2003&nbsp;</td>
+</tr>
+</table>
+<br>
+<div align="right">
+<span class="title">The AtomAPI</span>
+</div>
+<div align="right">
+<span class="filename">draft-gregorio-08.html</span>
+</div>
+<h1>Abstract</h1>
+<p>This memo presents a technique for 
+                    using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol)
+                    to edit content. </p>
+
+                <p>To provide feedback on this draft RFC 
+                    please visit the <a href="http://www.intertwingly.net/wiki/pie/RestEchoApiDiscuss">Atom Wiki</a>
+                    or join the <a href="http://www.imc.org/atom-syntax/index.html">atom-syntax mailing list</a>.
+                </p>
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#000000" align="center" valign="center" width="30" height="30"><b><span class="RFC">&nbsp;RFC&nbsp;</span></b>
+<br>
+<span class="hotText"></span></td>
+</tr>
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.toc">Table of Contents</a>
+</h1>
+<p>
+            <b>1&nbsp;
+            <a href="#rfc.section.1">Introduction</a></b>
+<br>
+                
+                
+
+            
+
+
+            <b>2&nbsp;
+            <a href="#rfc.section.2">Terminology</a></b>
+<br>
+                
+
+            
+
+            <b>3&nbsp;
+            <a href="#rfc.section.3">Scope</a></b>
+<br>
+                
+            
+
+            <b>4&nbsp;
+            <a href="#rfc.section.4">Introduction</a></b>
+<br>
+                <b>&nbsp;4.1&nbsp;
+            <a href="#rfc.section.4.1">Purpose</a></b>
+<br>
+                    
+                
+                <b>&nbsp;4.2&nbsp;
+            <a href="#rfc.section.4.2">Terminology</a></b>
+<br>
+                    
+                
+
+                <b>&nbsp;4.3&nbsp;
+            <a href="#rfc.section.4.3">The AtomAPI Model</a></b>
+<br>
+                    
+
+                    
+                    
+                
+            
+
+            <b>5&nbsp;
+            <a href="#rfc.section.5">Functional Specification</a></b>
+<br>
+                <b>&nbsp;5.1&nbsp;
+            <a href="#Post">PostURI</a></b>
+<br>
+                    
+                    <b>&nbsp;&nbsp;5.1.1&nbsp;
+            <a href="#Post.Locating">Locating</a></b>
+<br>
+                        
+
+                        
+
+                        
+                    
+                    <b>&nbsp;&nbsp;5.1.2&nbsp;
+            <a href="#Post.Request">Request</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.1.3&nbsp;
+            <a href="#rfc.section.5.1.3">Response</a></b>
+<br>
+                        
+                        <b>&nbsp;&nbsp;&nbsp;5.1.3.1&nbsp;
+            <a href="#rfc.section.5.1.3.1">201</a></b>
+<br>
+                            
+                        
+
+                        <b>&nbsp;&nbsp;&nbsp;5.1.3.2&nbsp;
+            <a href="#rfc.section.5.1.3.2">303</a></b>
+<br>
+                            
+                        
+
+                        <b>&nbsp;&nbsp;&nbsp;5.1.3.3&nbsp;
+            <a href="#rfc.section.5.1.3.3">400</a></b>
+<br>
+                            
+                        
+
+                        <b>&nbsp;&nbsp;&nbsp;5.1.3.4&nbsp;
+            <a href="#rfc.section.5.1.3.4">500</a></b>
+<br>
+                            
+                        
+                    
+                
+
+
+                <b>&nbsp;5.2&nbsp;
+            <a href="#Edit">EditURI</a></b>
+<br>
+                    
+                    
+                    
+                    <b>&nbsp;&nbsp;5.2.1&nbsp;
+            <a href="#Edit.Locating">Locating</a></b>
+<br>
+                        
+
+                        
+
+                        
+                    
+                    <b>&nbsp;&nbsp;5.2.2&nbsp;
+            <a href="#Edit.Request">Request</a></b>
+<br>
+                        
+                    
+                
+
+
+
+
+                <b>&nbsp;5.3&nbsp;
+            <a href="#FeedURI">FeedURI</a></b>
+<br>
+                    
+                    
+                    <b>&nbsp;&nbsp;5.3.1&nbsp;
+            <a href="#Feed.Locating">Locating</a></b>
+<br>
+                        
+
+                        
+
+                    
+                    <b>&nbsp;&nbsp;5.3.2&nbsp;
+            <a href="#Feed.Request">Request</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.3.3&nbsp;
+            <a href="#Feed.Response">Response</a></b>
+<br> 
+                        
+
+                        <b>&nbsp;&nbsp;&nbsp;5.3.3.1&nbsp;
+            <a href="#rfc.section.5.3.3.1">301</a></b>
+<br>
+                            
+                        
+
+                        <b>&nbsp;&nbsp;&nbsp;5.3.3.2&nbsp;
+            <a href="#rfc.section.5.3.3.2">307</a></b>
+<br>
+                            
+                        
+
+                     
+                
+
+                <b>&nbsp;5.4&nbsp;
+            <a href="#rfc.section.5.4">Link Tag</a></b>
+<br>
+                    
+                    
+                    <b>&nbsp;&nbsp;5.4.1&nbsp;
+            <a href="#rfc.section.5.4.1">rel</a></b>
+<br>
+                        
+                    
+                    <b>&nbsp;&nbsp;5.4.2&nbsp;
+            <a href="#rfc.section.5.4.2">href</a></b>
+<br>
+                        
+                    
+                    <b>&nbsp;&nbsp;5.4.3&nbsp;
+            <a href="#rfc.section.5.4.3">title</a></b>
+<br>
+                        
+                    
+                    <b>&nbsp;&nbsp;5.4.4&nbsp;
+            <a href="#rfc.section.5.4.4">type</a></b>
+<br>
+                        
+                    
+                
+
+
+                <b>&nbsp;5.5&nbsp;
+            <a href="#rfc.section.5.5">Atom Request and Response Body Constraints</a></b>
+<br>
+                    
+                    <b>&nbsp;&nbsp;5.5.1&nbsp;
+            <a href="#rfc.section.5.5.1">id</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.2&nbsp;
+            <a href="#rfc.section.5.5.2">link</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.3&nbsp;
+            <a href="#rfc.section.5.5.3">title</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.4&nbsp;
+            <a href="#rfc.section.5.5.4">summary</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.5&nbsp;
+            <a href="#rfc.section.5.5.5">content</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.6&nbsp;
+            <a href="#rfc.section.5.5.6">issued</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.7&nbsp;
+            <a href="#rfc.section.5.5.7">modified</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.8&nbsp;
+            <a href="#rfc.section.5.5.8">created</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.9&nbsp;
+            <a href="#rfc.section.5.5.9">author</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.10&nbsp;
+            <a href="#rfc.section.5.5.10">contributor</a></b>
+<br>
+                        
+                    
+
+                    <b>&nbsp;&nbsp;5.5.11&nbsp;
+            <a href="#rfc.section.5.5.11">generator</a></b>
+<br>
+                        
+                    
+                
+            
+            <b>6&nbsp;
+            <a href="#rfc.section.6">Security Considerations</a></b>
+<br>
+                
+                
+            
+
+            <b>7&nbsp;
+            <a href="#rfc.section.7">Appendices</a></b>
+<br>
+                <b>&nbsp;7.1&nbsp;
+            <a href="#rfc.section.7.1">Example for a weblog</a></b>
+<br>
+                    
+                
+                <b>&nbsp;7.2&nbsp;
+            <a href="#rfc.section.7.2">Example for a wiki</a></b>
+<br>
+                    
+                
+            
+
+           <b>8&nbsp;
+            <a href="#rfc.section.8">Revision History</a></b>
+<br>
+               
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+            
+            <b>9&nbsp;
+            <a href="#rfc.section.9">Copyright</a></b>
+<br>
+                
+            
+        <b>&sect;&nbsp;
+            <a href="#rfc.references">References</a></b>
+<br>
+<b>&sect;&nbsp;
+            <a href="#rfc.authors">Author's Address</a></b>
+<br>
+<b>&sect;&nbsp;
+            <a href="#rfc.copyright">Full Copyright Statement</a></b>
+<br>
+</p>
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.1">1</a>&nbsp;
+    Introduction</h1>
+<p>
+<a name="rfc.section.1.p.1"></a>The AtomAPI is an application level protocol for publishing and editing web resources. 
+                    The protocol at its core is the HTTP transport of Atom formatted representations. 
+                </p>
+<p>
+<a name="rfc.section.1.p.2"></a>To provide feedback on this draft RFC 
+                    please visit the <a href="http://www.intertwingly.net/wiki/pie/RestEchoApiDiscuss">Atom Wiki</a>
+                    or join the <a href="http://www.imc.org/atom-syntax/index.html">atom-syntax mailing list</a>.
+                </p>
+
+
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.2">2</a>&nbsp;
+    Terminology</h1>
+<p>
+<a name="rfc.section.2.p.1"></a>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+                    "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",the 
+                    and "OPTIONAL" in this document are to be interpreted as    
+                    described in RFC2119.
+                </p>
+
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.3">3</a>&nbsp;
+    Scope</h1>
+<p>
+<a name="rfc.section.3.p.1"></a>This document covers the editing of content of a periodically updating website using the 
+                    HTTP and XML. All of the XML payloads are in Atom format, which is documented in
+                    the draft <a href="http://www.mnot.net/drafts/draft-nottingham-atom-format-00.html">Atom 
+                        Syndication Format RFC</a>.
+                </p>
+
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.4">4</a>&nbsp;
+    Introduction</h1>
+<h2>
+<a name="rfc.section.4.1">4.1</a>&nbsp;
+    Purpose</h2>
+<p>
+<a name="rfc.section.4.1.p.1"></a>The AtomAPI is an application level protocol for publishing
+                        and editing web resources.</p>
+<h2>
+<a name="rfc.section.4.2">4.2</a>&nbsp;
+    Terminology</h2>
+<p>
+<a name="rfc.section.4.2.p.1"></a>
+                        <dl>
+                            <dt style="margin-top: .5em">Atom Entry</dt>
+<dd>
+                                A fragment of a full Atom feed. In this case the fragment is
+                                a single 'entry' element and all it's child elements. 
+                            </dd>
+                            <dt style="margin-top: .5em">PostURI</dt>
+<dd>
+                                A URI that is used to create new resources. POSTing an 
+                                Atom Entry to this URI will create a new resource.
+                            </dd>
+                            <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                A URI that is used to edit a resource. The editing is done using
+                                the HTTP verbs GET, PUT and DELETE. The representation of the
+                                resource is always that of an Atom Entry.
+                            </dd>
+                            <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                A URI that has a representation as a full Atom feed. 
+                            </dd>
+                        </dl>
+                    </p>
+<h2>
+<a name="rfc.section.4.3">4.3</a>&nbsp;
+    The AtomAPI Model</h2>
+<p>
+<a name="rfc.section.4.3.p.1"></a>AtomAPI is an application level protocol for publishing 
+                        and editing web resources. Using the common HTTP verbs provides a pattern 
+                        for working with all such web resources:
+                        <ul>
+                            <li>GET is used to retrieve a representation of a resource or perform a read-only query.</li>
+                            <li>PUT is used to update a known resource.</li>
+                            <li>POST is used to create a new dynamically-named resource.</li>
+                            <li>DELETE is used to remove a resource.</li>
+                        </ul>
+                    </p>
+<p>
+<a name="rfc.section.4.3.p.2"></a>There are different kinds of resources managed by the AtomAPI, each of these 
+                        have URIs and those URIs support a subset of the above methods. There are
+                        three major classes of URIs in this specification: PostURI, FeedURI 
+                        and EditURI. This specification defines the expected actions
+                        for each of the methods listed. Note that this does not restrict 
+                        a URI to only supporting just those methods listed, for example
+                        an EditURI could support a POST method, or the OPTIONS method, what
+                        those methods do is beyond the scope of this specification.
+                        <dl>
+                            <dd style="margin-top: .5em">EditURI: PUT, GET, DELETE</dd>
+                            <dd style="margin-top: .5em">PostURI: POST</dd>
+                            <dd style="margin-top: .5em">FeedURI: GET</dd>
+                        </dl>
+                    </p>
+<p>
+<a name="rfc.section.4.3.p.3"></a>This RFC does not specify the form of the URIs that are used. The URI space
+                        of each server is controlled, as defined by HTTP, by the server alone. What
+                        this RFC does specify are the formats of the files that are exchanged
+                        and the actions that can be performed on the URIs embedded in those files.
+                    </p>
+
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.5">5</a>&nbsp;
+    Functional Specification</h1>
+<h2>
+<a name="rfc.section.5.1">5.1</a>&nbsp;
+    <a name="Post">PostURI</a>
+</h2>
+<p>
+<a name="rfc.section.5.1.p.1"></a>The PostURI is used to create entries. These can be either full 
+                        entries, such as a weblog post, or they can be comments, or 
+                        even a wiki page. The client 
+                        POSTs a filled in Atom Entry to this URI. If the request is succesful
+                        then multiple new URIs may be created that contain representations
+                        of varying types. For example, POSTing an Atom entry to a PostURI
+                        may create a new weblog entry with both an HTML and Atom representation
+                        now available. The URI of the newly created Atom representation may in
+                        fact be an EditURI through which the resource can be edited.
+                    </p>
+<h3>
+<a name="rfc.section.5.1.1">5.1.1</a>&nbsp;
+    <a name="Post.Locating">Locating</a>
+</h3>
+<p>
+<a name="rfc.section.5.1.1.p.1"></a>For creating a new site Entry, the link tag is used. 
+                            Note that a link tag is used in both HTML and in the Atom 
+                            format. A link tag of the following format points to the 
+                            PostURI for a site. In HTML the link tags are always found
+                            in the head element, while in Atom they may appear as children 
+                            of the Feed and entry elements.
+                        </p>
+<a name="rfc.figure.u.1"></a>
+                            <pre>                                &lt;link rel="service.post"
+                                type="application/x.atom+xml"
+                                href="URI for Posting goes here"
+                                title="The name of the site."&gt;
+                            
+</pre>
+                        <p>
+<a name="rfc.section.5.1.1.p.3"></a>Note: Multiple link tags may appear together and can be 
+                            distinguished by having different 'rel', 'type' and 'title' attributes.
+                        </p>
+<h3>
+<a name="rfc.section.5.1.2">5.1.2</a>&nbsp;
+    <a name="Post.Request">Request</a>
+</h3>
+<p>
+<a name="rfc.section.5.1.2.p.1"></a>The request contains a filled in Atom entry, subject to 
+                            the constraints in section @@ TBD @@.
+                        </p>
+<h3>
+<a name="rfc.section.5.1.3">5.1.3</a>&nbsp;
+    Response</h3>
+<p>
+<a name="rfc.section.5.1.3.p.1"></a>The expected status codes from a POST are 201, 303, 
+                            400, and 500. 401, 404, and 410 are also possible.
+                        </p>
+<h3>
+<a name="rfc.section.5.1.3.1">5.1.3.1</a>&nbsp;
+    201</h3>
+<p>
+<a name="rfc.section.5.1.3.1.p.1"></a>Response includes a Location: header with the URI of the created 
+                                resource, i.e. the URI used to edit the entry, as opposed 
+                                to the URI used to display the content. The body of the 
+                                response will contain the entry "filled in" with time stamps 
+                                and any other data the server choses to reveal. This must contain 
+                                enough information to enable a client to issue a subsequent PUT 
+                                to this location. Note that the server may chose to omit the content 
+                                in the response, particularly if it is large.
+                            </p>
+<h3>
+<a name="rfc.section.5.1.3.2">5.1.3.2</a>&nbsp;
+    303</h3>
+<p>
+<a name="rfc.section.5.1.3.2.p.1"></a>The body of this response does not contain the filled in Entry, 
+                                but the filled in Entry can be found under a different URI and 
+                                SHOULD be retrieved using a GET method on that resource. The 
+                                different URI SHOULD be given by the Location field in the response.
+                            </p>
+<h3>
+<a name="rfc.section.5.1.3.3">5.1.3.3</a>&nbsp;
+    400</h3>
+<p>
+<a name="rfc.section.5.1.3.3.p.1"></a>Indicates that the server believes that that data sent constitutes 
+                                an invalid request. A short description of the error will appear 
+                                on the status line itself. A longer description 
+                                will appear in the body.
+                            </p>
+<h3>
+<a name="rfc.section.5.1.3.4">5.1.3.4</a>&nbsp;
+    500</h3>
+<p>
+<a name="rfc.section.5.1.3.4.p.1"></a>Indicates that the server detected an internal error on the server 
+                                processing this request (such as an unhandled exception). A short 
+                                description of the error will appear on the status line itself. 
+                                A longer description will appear in the body.
+                            </p>
+<h2>
+<a name="rfc.section.5.2">5.2</a>&nbsp;
+    <a name="Edit">EditURI</a>
+</h2>
+<p>
+<a name="rfc.section.5.2.p.1"></a>An EditURI is used to edit a single entry. Each entry that is editable
+                        MUST have a unique URI. This URI supports both GET and PUT and they are
+                        used in tandem for an editing cycle. The client GET's the represenation
+                        which is formatted as an Atom entry. The client may then update the 
+                        entry and then PUT it back to the same URI. The PUT will cause all
+                        the related resources to be updated, for example, the HTML representaion.
+                    </p>
+<p>
+<a name="rfc.section.5.2.p.2"></a>Note that the value of the content element in the Atom entry does not
+                        have to exactly match the content element for the same entry
+                        when it is represented in an Atom feed. For example, a server may allow
+                        the client to post entries whose content is formatted as WikiML, yet 
+                        the server may clean up such markup and transform it into well-formed XHTML
+                        before placing it in the publicly avialable Atom feed. Another scenario
+                        is summaries, the EditURI is for editing the full content of an entry, but the
+                        server may only present excerpts when it produces an Atom feed.
+                    </p>
+<p>
+<a name="rfc.section.5.2.p.3"></a>A client will send a DELETE to the EditURI to delete an entry.</p>
+<h3>
+<a name="rfc.section.5.2.1">5.2.1</a>&nbsp;
+    <a name="Edit.Locating">Locating</a>
+</h3>
+<p>
+<a name="rfc.section.5.2.1.p.1"></a>For editing a site Entry, the link tag is used. 
+                            Note that a link tag is used in both HTML and in the Atom 
+                            format. A link tag of the following format points to the 
+                            EditURI for a site. In HTML the link tags for editing are always found
+                            in the head element, while in Atom they may appear as children 
+                            of the entry elements.
+                        </p>
+<a name="rfc.figure.u.2"></a>
+                            <pre>                                &lt;link rel="service.edit"
+                                type="application/x.atom+xml"
+                                href="URI for Editing goes here"
+                                title="Readable description of the e<span class="toowide">ntry."&gt;</span>
+                            
+</pre>
+                        <p>
+<a name="rfc.section.5.2.1.p.3"></a>Note: The critical characteristic of this link tag is the 
+                            @rel of 'service.edit' and the @type of 'application/x.atom+xml'.
+                        </p>
+<h3>
+<a name="rfc.section.5.2.2">5.2.2</a>&nbsp;
+    <a name="Edit.Request">Request</a>
+</h3>
+<p>
+<a name="rfc.section.5.2.2.p.1"></a>A PUT request, and a GET response both 
+                            contain a filled in Atom entry, subject to 
+                            the constraints in section @@ TBD @@.
+                        </p>
+<h2>
+<a name="rfc.section.5.3">5.3</a>&nbsp;
+    <a name="FeedURI">FeedURI</a>
+</h2>
+<p>
+<a name="rfc.section.5.3.p.1"></a>The FeedURI is used to retrieve a represenation in Atom format. 
+                        Note that this feed is different from a typical Atom feed
+                        in that it contains "link" elements for navigating
+                        and manipulating the content of the site. For example
+                        there should be a "link" element with rel="next" whose
+                        URI points to the next block of entries on the site. Similarly
+                        the feed element can contain a "link" element with 
+                        rel="service.post", the URI of which is a PostURI. 
+                        Individual entries should contain "link" elements with 
+                        rel="service.edit" whose URIs are EditURIs.
+                    </p>
+<p>
+<a name="rfc.section.5.3.p.2"></a>@@ Editor's Note: @@ Note that the "service.feed" takes the 
+                        place of the Introspection File and the Search facet 
+                        in previous versions of the specification. That is, facet discovery,
+                        which was previously done by inspecting the Introspection file is now
+                        done by looking for "link" tags with an attribute "rel" set to 
+                        "service.[something]" in the "service.feed" file. 
+                        At the same time the same representation replaces the 
+                        search facet by having "link" tags that point to other feeds using
+                        well knows 'rel' attribute values such as 'next' and 'prev', or the 
+                        search can branch in multiple directions by specifying multiple link
+                        tags with rel="service.feed" and having differing title attributes that 
+                        announce the kind of search results in that feed.
+                    </p>
+<h3>
+<a name="rfc.section.5.3.1">5.3.1</a>&nbsp;
+    <a name="Feed.Locating">Locating</a>
+</h3>
+<p>
+<a name="rfc.section.5.3.1.p.1"></a>A link tag of the following format points to the 
+                            FeedURI. 
+                        </p>
+<a name="rfc.figure.u.3"></a>
+                            <pre>                                &lt;link rel="service.feed"
+                                type="application/x.atom+xml"
+                                href="URI goes here"
+                                title="The name of the site."&gt;
+                            
+</pre>
+                        <h3>
+<a name="rfc.section.5.3.2">5.3.2</a>&nbsp;
+    <a name="Feed.Request">Request</a>
+</h3>
+<p>
+<a name="rfc.section.5.3.2.p.1"></a>The request is a simple GET. No other verbs are currently
+                            specified for this URI.
+                        </p>
+<h3>
+<a name="rfc.section.5.3.3">5.3.3</a>&nbsp;
+    <a name="Feed.Response">Response</a>
+</h3>
+<p>
+<a name="rfc.section.5.3.3.p.1"></a>The expected status codes from a GET are 200, 301, 307,                           
+                            and 500. 401, 404, and 410 are also possible.                          
+                        </p>
+<h3>
+<a name="rfc.section.5.3.3.1">5.3.3.1</a>&nbsp;
+    301</h3>
+<p>
+<a name="rfc.section.5.3.3.1.p.1"></a>The Feed has moved permanently, the new URI is given in the
+                                the Location header.
+                            </p>
+<h3>
+<a name="rfc.section.5.3.3.2">5.3.3.2</a>&nbsp;
+    307</h3>
+<p>
+<a name="rfc.section.5.3.3.2.p.1"></a>The Feed has moved temporarily, the new URI is given in the
+                                the Location header.
+                            </p>
+<h2>
+<a name="rfc.section.5.4">5.4</a>&nbsp;
+    Link Tag</h2>
+<p>
+<a name="rfc.section.5.4.p.1"></a>The link tag is used in both HTML and Atom formats. There are slight differences
+                        between the two usages. Here are the commonalities, differences, 
+                        and a list of well-known values for the rel attribute.
+                    </p>
+<p>
+<a name="rfc.section.5.4.p.2"></a><a href="http://www.w3.org/TR/html4/struct/links.html#edef-LINK">
+                        The link tag in HTML documents</a> appears in the 'head' of the document.
+                        The 'head' section only allows a linear list of 'link' tags.
+                        The Atom format allows 'link' tags as children of both the
+                        'feed' element and of the 'entry' element. Note that this gives the information
+                        present in the link tag more context. 
+                        For example ... @@ TBD @@
+                    </p>
+<h3>
+<a name="rfc.section.5.4.1">5.4.1</a>&nbsp;
+    rel</h3>
+<p>
+<a name="rfc.section.5.4.1.p.1"></a>This attribute describes the relationship 
+                            from the current document, be it HTML or Atom, to the 
+                            anchor specified by the href attribute. The value of this 
+                            attribute is a space-separated list of link types.
+                            Note that these values are case insensitive. With type="application/x.atom+xml"
+                            we have the following interpretations of the relations.
+                            <dl>
+                                <dt style="margin-top: .5em">alternate</dt>
+<dd>
+                                    The URI in the href attribute points to an alternate
+                                    representation of the containing resource.
+                                </dd>
+                                <dt style="margin-top: .5em">start</dt>
+<dd>
+                                    The Atom feed at the URI supplied in the href attribute
+                                    contains the first feed in a linear sequence of entries.
+                                </dd>
+                                <dt style="margin-top: .5em">next</dt>
+<dd>
+                                    The Atom feed at the URI supplied in the href attribute
+                                    contains the next N entries in a linear sequence of entries.
+                                </dd>
+                                <dt style="margin-top: .5em">prev</dt>
+<dd>
+                                    The Atom feed at the URI supplied in the href attribute
+                                    contains the previous N entries in a linear sequence of entries.
+                                </dd>
+                                <dt style="margin-top: .5em">service.edit</dt>
+<dd>
+                                    The URI given in the href attribute is used 
+                                    to edit a representation of the referred resource.
+                                </dd>
+                                <dt style="margin-top: .5em">service.post</dt>
+<dd>
+                                    The URI in the href attribute is used to create
+                                    new resources.
+                                </dd>
+                                <dt style="margin-top: .5em">service.feed</dt>
+<dd>
+                                    The URI given in the href attribute is a starting point
+                                    for navigating content and services.
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.4.2">5.4.2</a>&nbsp;
+    href</h3>
+<p>
+<a name="rfc.section.5.4.2.p.1"></a>
+                            URI of the resource being described by this link element.
+                        </p>
+<h3>
+<a name="rfc.section.5.4.3">5.4.3</a>&nbsp;
+    title</h3>
+<p>
+<a name="rfc.section.5.4.3.p.1"></a>
+                            Offers advisory information about the link. Rendered to the user to help
+                            them choose among a set of links with the same rel and type attributes.
+                        </p>
+<h3>
+<a name="rfc.section.5.4.4">5.4.4</a>&nbsp;
+    type</h3>
+<p>
+<a name="rfc.section.5.4.4.p.1"></a>
+                            The content type of the resource avaialable at the URI given in the
+                            href attribute of the link element. Most of the link types in this
+                            specification are on type 'application/x.atom+xml'.
+                        </p>
+<h2>
+<a name="rfc.section.5.5">5.5</a>&nbsp;
+    Atom Request and Response Body Constraints</h2>
+<p>
+<a name="rfc.section.5.5.p.1"></a>The Atom format is used as the representation 
+                        of all the resources in this specification. As it is used in 
+                        differing contexts, there are different constraints
+                        of which elements may be present, and how their values should 
+                        be interpreted. 
+                    </p>
+<h3>
+<a name="rfc.section.5.5.1">5.5.1</a>&nbsp;
+    id</h3>
+<p>
+<a name="rfc.section.5.5.1.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>
+                                    MUST NOT be present.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MUST be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.2">5.5.2</a>&nbsp;
+    link</h3>
+<p>
+<a name="rfc.section.5.5.2.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>
+                                    MAY be present. Servers may use the 
+                                    information to determine the URI of the created resource. 
+                                    Relative URLs are to be interpreted relative to xml:base.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MUST be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.3">5.5.3</a>&nbsp;
+    title</h3>
+<p>
+<a name="rfc.section.5.5.3.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>
+                                    MUST be present.
+                                    The element may be empty, to explicitly indicate "no title". 
+                                    Servers SHOULD NOT try to generate a title if one is not 
+                                    provided. The type attribute MAY be present, and if not it
+                                    defaults to "text/plain". If present, it MUST represent a mime 
+                                    type that the server supports
+                                    The mode attribute MAY be present, if not it defaults to "xml". 
+                                    If present, it must be "xml", "base64", or "escaped".
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MUST be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MUST be present. The element may be empty, 
+                                            to explicitly indicate "no title". 
+                                            Servers SHOULD NOT try to generate a title if one is not 
+                                            provided.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.4">5.5.4</a>&nbsp;
+    summary</h3>
+<p>
+<a name="rfc.section.5.5.4.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MAY be present, if not present, indicates the server is welcome to 
+                                    produce its own summary. If present but empty then the 
+                                    server SHOULD NOT generate a summary of its own.
+                                    The type attribute MAY be present, if not it defaults 
+                                    to "text/plain". If present it must represent a mime type that the server supports.
+                                    The mode attribute MAY be present and defaults to "xml". 
+                                    If present, it must be "xml","base64", or "escaped".
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. The element may be empty, 
+                                            to explicitly indicate "no summary". 
+                                            Servers SHOULD NOT try to generate a title if one is not 
+                                            provided.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.5">5.5.5</a>&nbsp;
+    content</h3>
+<p>
+<a name="rfc.section.5.5.5.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MAY be present but may be empty, to explicitly indicate "no content".
+                                    The type attribute MAY be present, but defaults to "text/plain" if not present.
+                                    It must represent a mime type that the server supports. 
+                                    The MODE attribute may be present and defaults to "xml" if not present.
+                                    It must be "xml","base64", or "escaped".
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. The element may be empty, 
+                                            to explicitly indicate "no content". 
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.6">5.5.6</a>&nbsp;
+    issued</h3>
+<p>
+<a name="rfc.section.5.5.6.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MUST be present but may be empty in which case it signifies
+                                    "now" in the timezone of the server.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MUST be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MUST be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MUST be present. Server policy determines
+                                            if an updated time is accepted.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.7">5.5.7</a>&nbsp;
+    modified</h3>
+<p>
+<a name="rfc.section.5.5.7.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MUST NOT be present.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. The element may be empty, 
+                                            to explicitly indicate that 'now' on the 
+                                            server time is to be used. 
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.8">5.5.8</a>&nbsp;
+    created</h3>
+<p>
+<a name="rfc.section.5.5.8.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. The server may or may not
+                                            accept an updated value. If the server does 
+                                            not allow updating the issued time then any
+                                            PUT request with a differenct issued value
+                                            MUST be rejected.
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.9">5.5.9</a>&nbsp;
+    author</h3>
+<p>
+<a name="rfc.section.5.5.9.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MAY be present. If not present the server determines
+                                    the author. If present and it conflicts with valid values
+                                    as determined by the server, then the server may change
+                                    the value of author.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. 
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.10">5.5.10</a>&nbsp;
+    contributor</h3>
+<p>
+<a name="rfc.section.5.5.10.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MAY be present. 
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MAY be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MAY be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MAY be present. 
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+<h3>
+<a name="rfc.section.5.5.11">5.5.11</a>&nbsp;
+    generator</h3>
+<p>
+<a name="rfc.section.5.5.11.p.1"></a>
+                            <dl>
+                                <dt style="margin-top: .5em">PostURI</dt>
+<dd>MUST be present. The 
+                                    value of the element indicates the 
+                                    code base used to create this request.
+                                    MUST contain a valid URI. MUST also have
+                                    an attribute 'version' with a version number.
+                                </dd>
+                                <dt style="margin-top: .5em">FeedURI</dt>
+<dd>
+                                    MUST NOT be present.
+                                </dd>
+                                <dt style="margin-top: .5em">EditURI</dt>
+<dd>
+                                    <dl>
+                                        <dt style="margin-top: .5em">GET</dt>
+<dd>
+                                            MUST NOT be present.
+                                        </dd>
+                                        <dt style="margin-top: .5em">PUT</dt>
+<dd>
+                                            MUST NOT be present. 
+                                        </dd>
+                                    </dl>
+                                </dd>
+                            </dl>
+                        </p>
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.6">6</a>&nbsp;
+    Security Considerations</h1>
+<p>
+<a name="rfc.section.6.p.1"></a>@@TBD@@ Talk here about using HTTP basic and digest authentication.</p>
+<p>
+<a name="rfc.section.6.p.2"></a>@@TBD@@ Talk here about denial of service attacks using large XML files, 
+                    or the billion laughs DTD attack.
+                </p>
+
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.7">7</a>&nbsp;
+    Appendices</h1>
+<h2>
+<a name="rfc.section.7.1">7.1</a>&nbsp;
+    Example for a weblog</h2>
+<p>
+<a name="rfc.section.7.1.p.1"></a>Fill this in with an example for how all the above is
+                        used for a weblog. 
+                        Start with main HTML page, link tag of type service.feed 
+                        to the 'introspection' file.
+                        1. Creating a new entry
+                        2. Finding an old entry
+                        3. editing an old entry
+                        4. commenting on a entry (via HTML and Atom)
+                    </p>
+<h2>
+<a name="rfc.section.7.2">7.2</a>&nbsp;
+    Example for a wiki</h2>
+<p>
+<a name="rfc.section.7.2.p.1"></a>Fill this is like above but for a wiki.</p>
+
+           <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.8">8</a>&nbsp;
+    Revision History</h1>
+<p>
+<a name="rfc.section.8.p.1"></a>Rev 08 - 01Dec2003 - Refactored the specification, merging the Introspection 
+                  file into the feed format. Also dropped the distinction between the 
+                  type of URI used to create new entries and the kind used to create comments.
+                  Dropped user preferences.</p>
+<p>
+<a name="rfc.section.8.p.2"></a>Rev 07 - 06Aug2003 - Removed the use of the RSD file for auto-discovery. Changed copyright
+                    until a final standards body is chosen. Changed query parameters for the search facet
+                    to all begin with atom- to avoid name collisions. Updated all the Entries to follow
+                    the 0.2 version. Changed the format of the search results and template file
+                    to a pure element based syntax.
+                </p>
+<p>
+<a name="rfc.section.8.p.3"></a>Rev 06 - 24Jul2003 - Moved to PUT for updating Entries.
+                    Changed all the mime-types to application/x.atom+xml. Added template 
+                    editing. Changed 'edit-entry' to 'create-entry' in the Introspection file
+                    to more accurately reflect it's purpose.
+                </p>
+<p>
+<a name="rfc.section.8.p.4"></a>Rev 05 - 17Jul2003 - Renamed everything Echo into Atom. Added
+                    version numbers in the Revision history.
+                    Changed all the mime-types to application/atom+xml.
+                </p>
+<p>
+<a name="rfc.section.8.p.5"></a>Rev 04 - 15Jul2003 - Updated the RSD version used from 0.7 to 1.0. Change the method of deleting
+                    an Entry from POSTing &lt;delete/&gt; to using the HTTP DELETE verb. Also changed the 
+                    query interface to GET instead of POST. Moved Introspection Discovery to be up under
+                    Introspection. Introduced the term 'facet' for the services listed in the Introspection file.
+                </p>
+<p>
+<a name="rfc.section.8.p.6"></a>Rev 03 - 10Jul2003 - Added a link to the Wiki near the front of the 
+                    document. Added a section on finding an Entry. Retrieving an Entry
+                    now broken out into it's own section. Changed the HTTP status code for
+                    a successful editing of an Entry to 205.
+                </p>
+<p>
+<a name="rfc.section.8.p.7"></a>Rev 02 - 7Jul2003 - Entries are no longer returned from POSTs, instead they are retrieved via GET.
+                    Cleaned up figure titles, as they are rendered poorly in HTML. All content-types 
+                    have been changed to application/atom+xml.
+                </p>
+<p>
+<a name="rfc.section.8.p.8"></a>Rev 01 - 5Jul2003 - Renamed from EchoAPI.html to follow the more commonly used format: 
+                    draft-gregorio-NN.html. Renamed all
+                    references to URL to URI. Broke out introspection into it's own section. Added the Revision History section.
+                    Added more to the warning that the example URIs are not normative.
+                </p>
+            <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.section.9">9</a>&nbsp;
+    Copyright</h1>
+<p>
+<a name="rfc.section.9.p.1"></a>Copyright (C) Joe Gregorio (2003). All Rights Reserved.</p>
+        <hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<h1>
+<a name="rfc.references">References</a>
+</h1>
+<table border="0">
+
+
+<tr>
+<td valign="top" nowrap="nowrap"><b><a name="RFC2119">[RFC2119]</a></b></td><td valign="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>,&nbsp;"<a href="http://www.ietf.org/rfc/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP&nbsp;14, RFC&nbsp;2119, March&nbsp;1997.</td>
+</tr>
+</table>
+<hr class="noprint">
+<table class="noprint" border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right">
+<tr>
+<td bgcolor="#990000" align="center" width="30" height="15"><a href="#rfc.toc" CLASS="link2"><b class="link2">&nbsp;TOC&nbsp;</b></a></td>
+</tr>
+</table>
+<a name="rfc.authors">
+<h1>Author's Address</h1>
+</a>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td>&nbsp;</td><td>Joe Gregorio</td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>BitWorking, Inc</td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>1002 Heathwood Dairy Rd.<br>
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>Apex, NC&nbsp;27502</td>
+</tr>
+<tr>
+<td>&nbsp;</td><td>US</td>
+</tr>
+<tr>
+<td align="right"><b>Phone:&nbsp;</b></td><td><a href="tel:+1 919 272 3764">+1 919 272 3764</a></td>
+</tr>
+<tr>
+<td align="right"><b>EMail:&nbsp;</b></td><td><a href="mailto:joe@bitworking.com">joe@bitworking.com</a></td>
+</tr>
+<tr>
+<td align="right"><b>URI:&nbsp;</b></td><td><a href="http://bitworking.com/">http://bitworking.com/</a></td>
+</tr>
+<tr>
+<td>&nbsp;</td><td></td>
+</tr>
+</table>
+</body>
+</html>

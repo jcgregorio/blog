@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>Caching HTTP Requests in Python using httpcache.py</title>
+    <meta name=created value="2003-04-06T00:46:29">
+  </head>
+  <body>
+  
+  <p>I really like <a href="http://python.org/">Python</a>. The more I work with the language
+the more I like it. It has a nice clean syntax and a 
+very nice set of standard libraries. In particular
+it has a wide range of web <a href="http://python.org/doc/current/lib/lib.html">libraries</a>, from low-level
+sockets, to cgi processing, to a library for connecting to an IMAP server, it
+has it all. It even has three libraries
+for pulling content off the web, httplib, urllib and urllib2. If
+you know you are going to just be pulling information
+over http then you can use <a href="http://python.org/doc/current/lib/module-httplib.html">httplib</a>,
+which acts as a web client. One of the omissions
+in httplib that I noticed was that it does not handle
+compressed content, nor does it cache results, nor does
+it use ETags to avoid retrieving files that haven't
+changed since the last time you requested them. I have worked
+with RSS news aggregators and seen the dramatic performance gains
+that these features provide. Thus I give you <a href="/projects/httpcache/">httpcache.py</a>.
+It does all that, and a little bit more.
+</p>
+<p>The little bit more is a little meta-data thing.
+That is, when I store the content from the URL in
+the cache, I also store all the headers that I 
+received when I pulled that file. In addition httpcache.py provides
+a way to add and/or update the values of the headers
+stored in the cache. This gives a nice clean place to 
+store meta-data for that content. </p>
+<p id="python_ess_ref">For Python, the book <a href="http://www.amazon.com/exec/obidos/ASIN/0735710910/bitworking-20">Python Essential Reference (2nd Edition)</a>
+is my constant companion. If you already know another programming language
+then this is the only Python book you will need to get up and running.
+It contains a quick tutorial section, basic language reference, and then
+covers <em>most</em> of the libraries that come standard with Python. I empahasized
+most, because it doesn't cover any of the XML libraries, instead referring you
+to another book that just covers XML for Python.</p>
+<p><strong>14-May-2003</strong> An updated version has been posted. This fixes the coversion of the md5 hash into a string by 
+   dropping the redundant '0x's. It also fixes gzip support and adds another unit test case.</p>
+<p><strong>21-Oct-2004</strong> <a href="/projects/httpcache/">Httpcache.py now has it's own project page</a>. Go there 
+ for downloads and the latest news.</p>
+  <div class="commentContent" id="X1">
+    ython Essential Reference (2nd Edition) is a really good reference, one of my office mates has
+has it and it is pretty thourough. I just got Python in a Nutshell
+    <p class="commentByLine">Posted by
+       <a href="http://john.beimler.org/">John Beimler</a> on <a href="#X1" title="2003-04-06T09:00:08">2003-04-06</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    and its one of the best all around references I've read. Its also a bit smaller so it's easier to carry around. 
+
+BTW - Joe - embedding HTML into text here seems to cut off the comments. 
+    <p class="commentByLine">Posted by
+       <a href="http://john.beimler.org/">John Beimler</a> on <a href="#X2" title="2003-04-06T17:06:53">2003-04-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    It does appear to be. I will look at the transformation code.
+You can see that the full text of you comment did get saved,
+it is just getting truncated on display:
+
+http://bitworking.org/news/76/1?xml
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2003-04-06T18:51:03">2003-04-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I was going to have to build a cache for a Python version of Stapler. At this rate I'll only have to glue the right parts together. Hmmm!
+    <p class="commentByLine">Posted by
+       <a href="http://markpasc.org/">Mark Paschal</a> on <a href="#X4" title="2003-04-06T20:13:16">2003-04-06</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Cool. Glad my code could be of use.
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2003-04-07T15:05:29">2003-04-07</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Did you ever notice problems with fetching gzipped resources? I keep seeing this error:
+
+http://aspn.activestate.com/ASPN/Mail/Message/python-Tutor/1537279
+
+when fetching a particular URL ( http://www.wigu.com/ ), because gzip.GzipFile tries to tell() the "file-like" object.
+    <p class="commentByLine">Posted by
+       <a href="http://markpasc.org/">Mark Paschal</a> on <a href="#X6" title="2003-05-14T02:21:47">2003-05-14</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Mark,
+   I have updated the code and posted the new version. Let me know if this fixes the problem.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X7" title="2003-05-23T09:15:52">2003-05-23</a>
+    </p>
+</div>
+  </body>

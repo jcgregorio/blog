@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>IBM, Sun, Java, and Smalltalk</title>
+    <meta name=created value="2009-04-04T08:35:10.443312">
+  </head>
+  <body>
+  
+  <p><a href="http://www.reddit.com/r/programming/comments/89u69/if_ibm_owns_java_javaworld/c08n6ao">A comment on reddit</a>:</p>
+<blockquote><p>So could we finally pull away the curtain and show how VisualAge
+    is really Smalltalk underneath, kill off Java except as legacy callable
+    libraries, and get back to working in Smalltalk like we were doing in
+    1995?</p></blockquote>
+<p>An amazing amount about IBM can be explained by 
+the Java/Smalltalk schism that took place almost 15 years
+ago, though internally you'd think it happened just last week.</p>
+  <div class="commentContent" id="X1">
+    I tool some smalltalk classes back in 1998 or 1999.  This was ParcPlace smalltalk, not IBM, but those guys just laughed off java.  Then, at OOPSLA in 99, I remember the Smalltalk guys showing how they could convert their smalltalk code to java.  
+
+Smalltalk is a nice language and environment but:
+
+1. Smalltalk never built up an open community.
+2. Smalltalk never tried to get itself into the University system
+
+That said, I have seen lots of good programs written in Smalltalk over the years.
+    <p class="commentByLine">Posted by
+       <a href="mailto:dave@tauzell.org">Dave</a> on <a href="#X1" title="2009-04-05T15:49:30.544516">2009-04-05</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    As I recall, Visual Age is just a morphing of the technologies of Object Technologies International of Ottawa, Canada. IBM bought OTI around then, and took their Visual Smalltalk environment, and morphed it into Java / Visual Age. I think it has morphed again into Eclipse...
+<p>
+I programmed once in a derivative of Smalltalk called RPL, and I absolutely loved it after I learned how to do conditionals and counted loops using the Smalltalk syntax. </p>
+
+Smalltalk had two causes of failure:
+<ol>
+<li> It never beat Microsoft at price/performance on development tools. They tried the Unix pricing formula (thousands per seat) instead of the Windows formula (hundreds per seat). Not a good way to win the loyalty of programming shops. The productivity gains of Smalltalk only work with star programmers, not average ones, and therefore don't justify a Unix pricing model. </li>
+<li> Smalltalk did not have an imperative C-like syntax for conditionals, counted loops, etc. That made it too hard for most programmers. Matz did not go this route with Ruby, and Ruby is doing quite well. The predecessor of Java was called "Oak", and it was much more like Smalltalk. However, Sun had the good sense to make the language look more like C in order to attract more developers. </li>
+</ol>
+
+Smalltalk did get itself into the University system (e.g. Carleton University), but that was just not enough. 
+<p>
+At some point, the masters of the JVM will introduce support for closures/blocks and pave the way to support languages such as Ruby and Smalltalk to compile directly down to JVM bytecodes. .Net 3.5 has already done this, so JVM could not be far behind. Once that happens, I'm sure many enterprise shops will start accepting other JVM languages into their development toolchains.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://www.squidoo.com/sqlitehammer">Jay Godse</a> on <a href="#X2" title="2009-04-06T01:03:18.281571">2009-04-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    The problem with the JVM is not lack of support for blocks or ST syntax (that's easy), it's lack of support for dynamic features and the fact that the libraries have been designed for static OOP.  That's not fixable; you might as well start from scratch.
+    <p class="commentByLine">Posted by
+       <a href="mailto:kdfjks_bitworking@spamavert.com">mike</a> on <a href="#X3" title="2009-04-06T04:48:38.242701">2009-04-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Jay: What exactly has the .Net 3.5 VM added to support closures?
+    <p class="commentByLine">Posted by
+       <a href="http://www.javac.info">Neal Gafter</a> on <a href="#X4" title="2009-04-06T09:08:53.256486">2009-04-06</a>
+    </p>
+</div>
+  </body>

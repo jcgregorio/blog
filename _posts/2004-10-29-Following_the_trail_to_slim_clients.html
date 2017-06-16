@@ -1,0 +1,44 @@
+---
+layout: post
+title: Following the trail to slim clients
+
+---
+
+  
+  <p><a href="http://weblog.infoworld.com/udell/2004/10/26.html#a1102">Jon Udell</a> 
+   has a new InfoWorld article
+   <a href="http://www.infoworld.com/article/04/10/22/43OPstrategic_1.html">
+    Under Gmail's hood
+   </a>.
+   (On a side note, check this page to see why you don't put smart quotes in your page titles.)
+   This leads to <a href="http://johnvey.com/features/gmailapi/">
+    Johnvey Hwang's more detailed writeup of Gmail internals</a>, which 
+   in turn leads to <a href="http://jibbering.com/2002/4/httprequest.html">
+   this little gem on XMLHttpRequest</a>, and at the end links
+   to <a href="http://jibbering.com/2002/5/dynamic-update-svg.html">
+   a small tutoral on using JavaScript and HTTP requests to dynamically update
+   SVG documents</a>.
+</p>
+<p>What I found most fascinating was the Gmail JavaScript UI Engine:</p>
+<blockquote><p>
+As early adopters discovered long before I did, there's an architecture behind this JavaScript/ DHTML wizardry. The best description I've found is from Johnvey Hwang, who deconstructed Gmail's JavaScript code and created a .Net-based Gmail API. As Hwang described in his July 5 write-up, Gmail loads a JavaScript "UI engine" into your browser at the beginning of each session. Oddpost, he noted, was the first Web mail application to perfect this technique. That was a prophetic statement: Just four days later, on July 9, Yahoo acquired Oddpost.
+</p><p>
+Because Gmail's behavior is embedded in the UI engine, all subsequent interaction between the browser and the Gmail service is just an exchange of data. What Hwang calls the DataPack format is not XML, though; it's JavaScript. When you make a request to the Gmail service, whether to refresh your inbox or to modify the list of labels you can attach to messages, the response is a minimal set of JavaScript function calls and associated data objects that the engine uses to update the display. 
+</p>
+</blockquote>
+<p>Later Jon goes on to ask:</p>
+<blockquote><p>So is Gmail a rich Internet application? Sure. Although that label most often applies to Java, .Net, and Flash clients, Gmail shows that Web clients can join the club too. But crucially, Gmail's architecture is open to other kinds of rich clients, too. It doesn't have to be a zero-sum game.</p></blockquote>
+<p>It's interesting that Gmail is manuevering between the categories of <em>thick</em> and <em>thin</em> clients. Maybe there should be a whole new category for 'slim' clients and
+Gmail and Oddpost are just the first entries.</p>
+
+  <div class="commentContent" id="X1">
+    <p>What sucks so utterly with Gmail is that they haven't made it possible to use without JavaScript turned on. All web applications should be usable without JavaScript, not only because it's right, but also because it's easy.</p>
+<p>The server side logic is there already; why should the logic care whether the data came POSTed through an ordinary HTML form or through JavaScript in the client? Well, it shouldn't, and all well written web applications behave that way.</p>
+<p>So while I admire Gmail's use of JavaScript to make the application work snappy on JavaScript-supporting clients, I think it sucks to require JavaScript and XMLHTTP support to make it work.</p>
+<p>On a side note, I hate that Google never generate valid HTML, but I guess that's just too much to require from any company with more than four developers in the staff.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.virtuelvis.com/quark/">Asbjorn Ulsberg</a> on <a href="#X1" title="2004-10-30T09:11:57">2004-10-30</a>
+    </p>
+</div>
+  

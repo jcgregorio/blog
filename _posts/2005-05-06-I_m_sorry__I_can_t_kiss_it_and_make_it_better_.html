@@ -1,0 +1,364 @@
+---
+layout: post
+title: I'm sorry, I can't kiss it and make it better.
+
+---
+
+  
+  <p>Let me tell you a story.</p>
+<p>My son, my oldest son, <i>had</i> two bad habits. <i>Had</i> being the material word. </p>
+<p>His first bad habit was that he would sit at the dinner table with his legs and arms pulled into his shirt. This would stretch out his shirts in the front making him look like he was wearing maternity clothes. I have nothing against maternity clothes, but on an eight year old? Not so much.</p>
+<p>His second bad habit was that he would sit at the table and lean real far forward on the front of his chair. He would do this at the same time that he had his arms and legs pulled into his shirt.</p>
+<a style="float:right" href="http://www.amazon.com/exec/obidos/ASIN/B0002CK9P2/bitworking-20">
+<img src="http://images.amazon.com/images/P/B0002CK9P2.01.MZZZZZZZ.jpg" alt="Weebles: On the Move- Town Vehicle" title="Weebles: On the Move- Town Vehicle" />
+</a>
+<p>He's balanced there between his seat and the table like a weeble-wobble.</p>
+<p>You can see where this is going.</p>
+<p>Let's take a little break here to discuss my parenting strategies. I firmly believe there are just some things that a child will only learn through experience (read <em>pain</em>). Many times children can just be stubborn, or choose not to believe you, and ignore your warnings. I understand this. I did this myself. No matter how many times my parents told me that the iron was hot, it wasn't until I actually touched it and burned my finger did I believe them. That feeds into my parenting strategy, if they misbehave and end up in pain, I believe that's the right time to reinforce the message, make sure the lesson is tightly coupled with the pain, that way they're less likely to forget.</p>
+<p>Back to my son, the weeble. We told him, time and again, not to sit that way at the table. Each time he would stop. Each time we'd catch him doing it again later.</p>
+<p>Until, of course, the chair slid out from behind him one day, and having no arms to stop his fall his chin slammed into the corner of the table and then he fell like a sack of potatoes to the floor. I sprung into parenting action, standing over him:</p>
+<blockquote><p>"See! See! I told you not to sit in the chair like that! I told you you would fall and hurt yourself!"</p></blockquote>
+<p>I also picked him up off the floor and comforted him, but you gotta get the message in while the pain is still fresh.</p>
+<p><b>While the pain is still fresh.</b> Let's stop talking about my son. Let's start talking about <i>you</i>. Any by <i>you</i> I mean all the web application developers out there that have been mis-using HTTP. Now I've been telling <i>you</i> over and over <a href="http://www.xml.com/pub/a/2005/01/05/restful.html">how to use HTTP correctly</a>, how to <a href="http://www.xml.com/pub/a/2004/12/01/restful-web.html">build you web applications in a RESTful manner</a>, and the consequences you could face if you didn't. Well, you didn't listen to me, did you <a href="http://37signals.com/svn/archives2/google_web_accelerator_hey_not_so_fast_an_alert_for_web_app_designers.php">37Signals</a>? Did you? Now Google releases their <a href="http://webaccelerator.google.com/">Web Accelerator</a> and your application is broken. Apparently you used GET to delete items from <a href="http://www.backpackit.com/">Backpack</a> and when Googles Web Accelerator pre-fetches that URI in you web app, items get deleted. Let's make this clear, Google didn't break your application, your application was broken, Google was just the first person to point it out to you. Do you feel the pain? Do you feel it?</p><p>
+<blockquote><p>"See! See! I told you not to use GET for non-safe and non-idempotent actions! I told you your web applications would break!"</p></blockquote>
+</p><p>You gotta get the messsage in while the pain is still fresh.</p>
+<p>Oh, and the follow up from my little story? My son never sat like a weeble-wobble at the table again.</p>
+
+  <div class="commentContent" id="X1">
+    Ok - am I missing something or is  possible to do a HTTP DELETE or PUT with HTML?  Can you have a href that does a POST instead of a get? (without using javascript?)  Assuming you can't, how can developers use RESTful methods from HTML pages?
+    <p class="commentByLine">Posted by
+       <a href="mailto:">mac</a> on <a href="#X1" title="2005-05-06T21:23:33">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>I do understand that doing PUT and DELETE operations can't be done from a straight HTML form, but you can always make that a POST instead of a GET. </p>
+<p>"Can you have a href that does a POST instead of a get?"</p>
+<p>No. That's the point! POST incurs obligations.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2005-05-06T21:56:24">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I couldn't agree more.</p>
+<p>With all the finger-pointing in Google's direction, I was beginning to think that the web-development community would miss the wake-up call.  I'm glad to see that some people aren't afraid to make a follow-up call in the event the first goes unanswered.  ;-)</p>
+<p>Cheers.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://community.moertel.com/">Tom Moertel</a> on <a href="#X3" title="2005-05-06T22:02:52">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Well in the real world of web development sometimes you need to use a &lt;href&gt; rather than a &lt;form&gt; purely for design reasons. Its historical. HTTP is and has been abused forever. </p>
+<p>Now let me assure you I understand the REASONS for RESTful behaviour, and in the Web Services area I can see no reason not to be RESTful, but in the browser we have a problem and like it or now most of the web development community don't even know what a GET is..</p>
+<p>Google should have known how many WEB applications misuse HTTP Get and infact you could argue they promoted the use of SES urls, (web accelerator doesn't follow query string urls). </p>
+<p>Education and better browsers are whats needed.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">mac</a> on <a href="#X4" title="2005-05-06T22:25:22">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Yes, lot's of people are doing it, like Google for example.</p>
+<p>See: <a href="http://www.intertwingly.net/blog/784.html">http://www.intertwingly.net/blog/784.html</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X6" title="2005-05-06T22:58:13">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>"Well in the real world of web development sometimes you need to use a &lt;href&gt; rather than a &lt;form&gt; purely for design reasons."</p>
+<p>Baloney. There is a <b>reason</b> HTML requires you to press a button to execute a POST. That is because POST incurs obligations and GET doesn't. Now you're feeling the pain. Feel it burn.</p>
+<p>Please cut the "lot's of people are doing it" cop-out line. 17,000 people die in drunk driving accidents in the U.S. every year. Does that make it OK?</p>
+<p>"most of the web development community don't even know what a GET is.."</p>
+<p>Then most of the web developement community needs to start looking for another job. Repeat after me, "Would you like fries with that?"</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2005-05-06T23:01:57">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>That's "Would <i>you</i> like fries with that?".</p>
+<p>/me ducks</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.asheesh.org/">Asheesh Laroia</a> on <a href="#X7" title="2005-05-06T23:12:35">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>I commented on this here:</p>
+<p>&lt;a href="http://www.cincomsmalltalk.com/blog/blogView?showComments=true&amp;entry=3292874232"&gt;http://www.cincomsmalltalk.com/blog/blogView?showComments=true&amp;entry=3292874232&lt;/a&gt;</p>
+<p>Small question - If GET should never have side effects, then isn't a 304 a bad response?  From the HTTP spec:</p>
+<p>" In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval. These methods ought to be considered "safe". This allows user agents to represent other methods, such as POST, PUT and DELETE, in a special way, so that the user is made aware of the fact that a possibly unsafe action is being requested.</p>
+<p>Naturally, it is not possible to ensure that the server does not generate side-effects as a result of performing a GET request; in fact, some dynamic resources consider that a feature. The important distinction here is that the user did not request the side-effects, so therefore cannot be held accountable for them. "</p>
+<p>So - if you take the purist line (which the spec does not, by my reading), then a 304 response to a GET is bad - it comes in response to a server side state change after a previous request.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.cincomsmalltalk.com/blog/blogView">James Robertson</a> on <a href="#X8" title="2005-05-06T23:26:05">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>James,<br />
+  You seem to be confusing /any/ server-side state change with non-idempotency. They are not equivalent concepts. </p>
+<p>Besides which a 304 is not returned as a result of a GET, it's returned as a result of a "Conditional GET".</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X9" title="2005-05-06T23:36:36">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Joe,<br />
+  Every browser I know of does conditional-get all the time, so it's a distinction w/o a difference.  Most news aggregators do as well.
+    <p class="commentByLine">Posted by
+       <a href="http://www.cincomsmalltalk.com/blog/blogView">James Robertson</a> on <a href="#X10" title="2005-05-06T23:44:58">2005-05-06</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    James,<br />
+  GET, Conditional GET, and Partial GET all have different semantics. Section 9.1 of RFC 2616. While you're at it, read Section 9.3 on "safe" and "idempotent" methods.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X11" title="2005-05-07T00:03:43">2005-05-07</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <p>mac: "Education and better browsers are whats needed."</p>
+<p>Joe: "Then most of the web developement community needs to start looking for another job."</p>
+<p>Yup, I think that's the idea:</p>
+<p><a href="http://www.dehora.net/journal/2005/05/only_the_paranoid_survive.html">http://www.dehora.net/journal/2005/05/only_the_paranoid_survive.html</a></p>
+<p>At the same time, I'll probably end up doing what Ian Bicking is going to do; warn people off GWA until we review whatever we have running.</p>
+<p>I was involved in a rewriting proxy (aka accelerator) project a few years back. It's pretty wild what these things can do, especially if you have a javascript interpreter intercepting pages. Google can use this to drive their operating costs right down assuming they get people to fix their webapps and aren't forced to withdraw under pressure. The opportunites for gathering click data for session tracking across multiple websites are immense. And I suspect this is just the beginning; eventually accelerators will be used maliciously; using GET for side-effects is also a security problem.</p>
+<p>The TAG really should pick this issue up (I'm thinking about HTML forms mainly). It's one thing to preach the right thing; it's another to allow HTML  and XForms out the door.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.dehora.net/journal/">Bill de hOra</a> on <a href="#X12" title="2005-05-07T05:18:32">2005-05-07</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    Point me to where an RFC says MUST or MUST NOT. It may be bad, but if it's not prohibited then you have to live with it. Cue mention of liberal/conservative quote.
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Daniel</a> on <a href="#X13" title="2005-05-07T06:05:53">2005-05-07</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    <p>Daniel: Via RFC 2119 (http://www.faqs.org/rfcs/rfc2119.html):</p>
+<p>'SHOULD NOT  This phrase, or the phrase "NOT RECOMMENDED" mean that there may exist valid reasons in particular circumstances when the particular behavior is acceptable or even useful, but the full implications should be understood and the case carefully weighed before implementing any behavior described with this label.'</p>
+<p>To me, this implies that the "you" who has to "live with it" is the implementor-- i.e. anyone who's implemented a GET as a DELETE.</p>
+<p>For instance, while it might be acceptable or even useful to whack yourself between the eyes with a ball-peen hammer if there happens to be a poisonous alien bug sitting there with a weakness for ball-peen hammers-- it's not really recommended in general practice.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.decafbad.com">l.m.orchard</a> on <a href="#X14" title="2005-05-07T09:57:16">2005-05-07</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    <p>"Until, of course, the chair slid out from behind him one day, and having no arms to stop his fall his chin slammed into the corner of the table and then he fell like a sack of potatoes to the floor."</p>
+<p>Haha! The same thing happened to me when I was 7, except I ended up in the hospital for a week in observation. Had a serious injury in my head. </p>
+<p>Oh, and I also touched the iron once heh.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://jonasgalvez.com/blog">Jonas Galvez</a> on <a href="#X15" title="2005-05-07T18:16:52">2005-05-07</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    Why do I have this nagging feeling that we are about to learn that "most of the web development community" is demonstrably less intelligent than Joe's 8 year old son?
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Bitter</a> on <a href="#X16" title="2005-05-08T03:09:30">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Remind me not to leave my kid in Joe's care.
+    <p class="commentByLine">Posted by
+       <a href="http://www.geodog.us">Geodog</a> on <a href="#X17" title="2005-05-08T04:07:02">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    <p>Bitter: Because clients tend to go with the cheapest bid. Thus to be able to offer the cheapest price, the supplier  cuts back on the cost of the employees doing the work...</p>
+<p>As with web accessibility, you have educate the client first, before it's even worth bothering with the web development community (95% of which don't read blogs like this).</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.akrabat.com">Rob...</a> on <a href="#X18" title="2005-05-08T04:39:55">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    <p>The problem in situations like this though is that 99% of the time these issues don't happen.  </p>
+<p>Its hard to justify to your boss that you should migrate to using POST when there are no bugs caused by this issue and you already have 100000 bugs and features pressing.</p>
+<p>That said I think correct application design should be done in the FIRST place so that you don't have to revisit it later.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://peerfear.org">Kevin Burton</a> on <a href="#X19" title="2005-05-08T13:11:49">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    <p>Joe - due to the way HTML works, it's just not a practical restriction to place on web UI design, that any action which changes state in any way at all, should be the result of the user submitting a form. Maybe in your web apps, but not in general. I don't care if you think that everyone should use form submit buttons for these actions, the wider community disagrees, and finds it very useful to be able to present these kinds of actions as links.</p>
+<p>So instead of acting all smug and absolutist about it, you should acknowledge that a problem exists - HTML doesn't give us quite the right tools to comply with the relevant part of the HTTP spec. What we need is a method="POST" attribute on links, for example. Sure you can use javascript to submit a hidden form, but that's an ugly  hack and not everyone has javascript enabled anyway.</p>
+<p>Also, idempotency alone isn't sufficient - many state-changing actions are idempotent, but you still don't want Google performing those actions without any user input. What matters is that the action is happening ONCE, as opposed to NOT AT ALL. What happens when the action is repeated more than once isn't very relevant in this context.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.drownedinsound.com/">Matthew</a> on <a href="#X20" title="2005-05-08T13:37:35">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X21">
+    <p>Matthew,<br />
+  "the wider community disagrees, and finds it very useful to be able to present these kinds of actions as links."</p>
+<p>  The wider community just got burned by Google Web Accelerator. For a reason. That reason is that GET is supposed to be both <b>safe</b> and <b>idempotent</b>. </p>
+<p>What amazes me most about the whole affair is that all this pushback is supposedly coming from "professional" developers. Sorry, I get paid to write code. When someone finds a bug, do I complain about the person that found the bug? Ban that person from using my system? Complain about my need to mis-use the underlying technology? Flaunt my ignorance of the underlying specifications? Or do I drag my ass back to my cube and fix the bug the right way? I fix the bug.</p>
+<p>Not only do I acknowledge that a problem exists, I actually did something about it, bringing the issue to the attention of the TAG <b>over a year ago</b>:</p>
+<p><a href="http://lists.w3.org/Archives/Public/www-tag/2004Feb/0046.html">http://lists.w3.org/Archives/Public/www-tag/2004Feb/0046.html</a></p>
+<p>I've also contributed feedback to the WHAT-WG on the Web Applications 1.0 and Web Forms 2.0 specifications.</p>
+<p>What have you done?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X21" title="2005-05-08T14:04:46">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X22">
+    <p>So tell me then, how do I present a POST action in the same visual style as a link, without resorting to messy hacks?</p>
+<p>This is a very common requirement and the standards don't provide a satisfactory way of doing it. So the standards are widely ignored and a new consensus standard forms around common usage. Google have shown a blatant disregard for this consensus standard.</p>
+<p>Glad to see you've taken the issue up with the W3C, though.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Matt</a> on <a href="#X22" title="2005-05-08T14:30:26">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X23">
+    <p>Also, as a 'professional developer' I (and I expect most others here) have been aware of the issue for quite some time. I try to use forms and POST methods whenever appropriate and possible, although sometimes the only realistic way of presenting the action is as a link, and so I make a concious decision to flout the (inadequate) standards in a widely accepted fashion.</p>
+<p>This is what happens when standards fail to meet needs. It's not ideal, but smugly condemning it isn't going to help the problem one bit.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Matt</a> on <a href="#X23" title="2005-05-08T14:44:45">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X24">
+    <p>Matthew,</p>
+<p>Why is it necessary to present unsafe actions as links?  Links are pointers to resources. They are invitations to fetch those resources, which are presumed to be safe.</p>
+<p>Can you present some realistic situations where a sensible design cannot be made using buttons instead of links?</p>
+<p>Difficulty certainly isn't a reason to avoid buttons.  In my current Rails project, I replaced unsafe links with buttons, and it was easy.  All I did was create a 'button_to' method to use instead of 'link_to' for unsafe actions.  Ten lines of code.  That's it.</p>
+<p>See: <a href="http://community.moertel.com/ss/space/start/2005-05-08/1#Taking_the_unsafe_GETs_out_of_Rails">http://community.moertel.com/ss/space/start/2005-05-08/1#Taking_the_unsafe_GETs_out_of_Rails</a></p>
+<p>Does it all boil down to "links are sexier"?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://community.moertel.com/">Tom Moertel</a> on <a href="#X24" title="2005-05-08T15:45:38">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X25">
+    How do you do a post looking like a link?  You just style your submit button with CSS, no messy hack involved.  As a professional developer you should already know hot to do this.
+    <p class="commentByLine">Posted by
+       <a href="mailto:">David</a> on <a href="#X25" title="2005-05-08T16:40:36">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X26">
+    <p>Here's a bit of CSS to make all INPUTs of class="hyperlink" resemble hyperlinks more closely, presuming that a blue hyperlink on a white (or transparent, if supported) background is desired.</p>
+<p>INPUT.hyperlink { border: 0; text-decoration: underline: padding: none; color: blue; background-color: white; background-color: rgba(255, 255, 255, 0); }</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.crystalflame.net/">Richard Soderberg</a> on <a href="#X26" title="2005-05-08T17:06:43">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X28">
+    <p>Styling form submit buttons with CSS didn't work consistently cross-browser last time I tried it. I don't think you can get hover effects to work like links either, in IE at least.</p>
+<p>Most of the situations where links have been particularly necessary are where the user is given the opportunity to mutate aspects of the UI and site behaviour somehow, or mutate an on-screen object (table, diagram etc) by clicking on what design dictates must be a fairly compact link.  Believe it or not some of us have to work with designers, too, who don't appreciate being told certain things have to be presented as form submit buttons.</p>
+<p>Anyway cheers for the righteous superiority guys, I'm off.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Matthew</a> on <a href="#X28" title="2005-05-08T20:53:02">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X29">
+    <p>Matt,</p>
+<p>  "So tell me then, how do I present a POST action in the same visual style as a link, without resorting to messy hacks?"</p>
+<p>You don't. And that's the point:</p>
+<p>From Section 9.1 of RFC 2616:</p>
+<p> "In particular, the convention has been established that the GET and HEAD methods SHOULD NOT have the significance of taking an action other than retrieval. These methods ought to be considered "safe". This allows user agents to represent other methods, such as POST, PUT and DELETE, in a special way, so that the user is made aware of the fact that a possibly unsafe action is being requested."</p>
+<p>See also: <a href="http://philringnalda.com/blog/2005/05/i_wonder_why_buttons_look_like_that.php">http://philringnalda.com/blog/2005/05/i_wonder_why_buttons_look_like_that.php</a></p>
+<p>"Making the fire alarm look just like a light switch isn't an example of daring and innovative design, it's just dangerous."<br />
+<br />
+Be sure to follow the link in the comments from Aristotle Pagaltzis.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X29" title="2005-05-08T21:50:41">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X30">
+    No offense, Joe, but you should probably learn what "idempotent" means before using the term in support of your argument. :-)
+    <p class="commentByLine">Posted by
+       <a href="mailto:">art</a> on <a href="#X30" title="2005-05-08T22:32:57">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X31">
+    <p>Art,<br />
+  From section Section 9.1.2 of RFC 2616:</p>
+<p>  "Methods can also have the property of "idempotence" in that (aside from error or expiration issues) the side-effects of N &gt; 0 identical requests is the same as for a single request. The methods GET, HEAD, PUT and DELETE share this property. Also, the methods OPTIONS and TRACE SHOULD NOT have side effects, and so are inherently idempotent."</p>
+<p>Using a GET for a non-idempotent action, for example, adding an item to your shopping cart, is, as the spec says, a no-no.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X31" title="2005-05-08T23:04:46">2005-05-08</a>
+    </p>
+</div><div class="commentContent" id="X32">
+    <p>Joe,</p>
+<p>The example you've given isn't necessarily non-idempotent.  One could quite easily ensure that a link to add an item to a shopping cart only adds the item once.</p>
+<p>N &gt; 0 identical requests would still result in 1 new item in the cart ...</p>
+<p>Or have I missed something?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.koziarski.net/">Michael Koziarski</a> on <a href="#X32" title="2005-05-09T01:18:54">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X27">
+    <p>What is the compelling usability case for making unsafe actions look like links?  Did I miss it?</p>
+<p>Let me thow out a bold claim to stimulate conversation:  Almost every design that uses links to perform unsafe actions can be replaced with a design that respects the standards and is no less usable. Further, I suspect that in most cases, "no less" can be strengthened to "more."</p>
+<p>True? False?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://community.moertel.com/">Tom Moertel</a> on <a href="#X27" title="2005-05-09T02:06:05">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X33">
+    Michael,<br />
+  In the first place, I was referring to Art's comment, where he seems to be implying that I mis-used the term idempotent. I had said, "I told you not to use GET for non-safe and non-idempotent actions!" As you can see, using GET for a non-idempotent operation is clearly wrong.<br />
+<br />
+  Now, as for your contention: "One could quite easily ensure that a link to add an item to a shopping cart only adds the item once." Can you explain how you would <b>quite easily</b> do that?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X33" title="2005-05-09T09:52:02">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X34">
+    Broken spec + whiny told-you-so developer = hot air.  Let's concentrate on fixing the spec.  Links vs. buttons are a UI decision not an I/O decision - I think we can agree visual design should be strictly decoupled from I/O.  Basically Google screwed up by not taking reality into account, which they do on occasion, let them fix their own turd.  If Microsoft did something similar you'd be down their throat in an instant.
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Legand</a> on <a href="#X34" title="2005-05-09T12:01:29">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X35">
+    <p>Legand,<br />
+  As I pointed out, if you had taken the time to actually read the full thread, I <b>have</b> been doing something about it, for <a href="#X21">over a year</a>. </p>
+<p>What have you done?</p>
+<p>"I think we can agree visual design should be strictly decoupled from I/O."</p>
+<p>You would think wrong. Or at least you would be ignorant of the fact that it is poor user-interface design to to present 'safe' and 'unsafe' operations in an indistinguishable way.</p>
+<p>I haven't commented on the rest of the GWA service but I do find it egregious enough that I have banned it from my server. I probably would have just left it at banning with out comment, but in my browsing ran into far too many "designers" complaining that GWA 'broke' their application.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X35" title="2005-05-09T13:45:14">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X36">
+    <p>Mike,</p>
+<p>Is there a reason this store would forbid customers from buying an item in quantity?</p>
+<p>Honestly, I get the feeling that a few people here are just arguing for the sake of argument. Who cares if an action can be made idempotent by severely limiting its functionality? You can make everything idempotent by ignoring repeated requests. Does it honestly affect the applicability of the example? Does it have any meaning?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:elideli@hotmail.com">E.D. Elijah</a> on <a href="#X36" title="2005-05-09T14:26:48">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X37">
+    <p>Joe,  I completely agree with you over the  issue of idempotency.  While the current crop of browsers make our lives difficult, that's no excuse for breaking the rules.  But Idempotent and safe aren't the same thing.</p>
+<p>If your 'add to cart link' is of the form</p>
+<p><a href="http://www.example">http://www.example</a>.com/shoppingcart/#{RequestID}/add/#{ItemIDToAdd}</p>
+<p>Then you can keep track of the 'requestIDs' which have been processed using either shared memory, or a database table with a unique index.</p>
+<p>Having said that, I still use post whenever I'm doing something like this.</p>
+<p>We'd appreciate any feedback you have for our additions to rails.</p>
+<p><a href="http://dev.rubyonrails.org/ticket/1269">http://dev.rubyonrails.org/ticket/1269</a></p>
+<p>Our approach is going to be a link_to_post helper function which creates a form with a javascript link to submit it.  Plus a post_button helper which creates the same form but with a proper submit button to submit it.</p>
+<p>If you can see anything wrong with this (besides Phil Ringnalda's valid points) then please either email me or post a comment on the tracker.</p>
+<p>We want to get this right.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.koziarski.net/">Michael Koziarski</a> on <a href="#X37" title="2005-05-09T17:39:31">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X38">
+    Not a comment.  Just a request.  I found a post by I.m.orchard 2005-05-07 to be extremely useful in many contexts beyond the current discussion.  I would like permission to e-mail it to a somewhat hard-headed child.<br />
+It states very elegantly what I have tried to convey with varying success.<br />
+May I copy and paste it into an e-mail and  how must I cite it so as not to violate the copyrights of your blog and your poster?  Alternatively, must I seek I.m.orchard's permission to quote him.  The child in question would be thoroughly intimidated by having to wade through the tech discussions to get to the relevant posting.  Thank you.
+    <p class="commentByLine">Posted by
+       <a href="mailto:First_lady_of_leisure@yahoo.com">S. Smith</a> on <a href="#X38" title="2005-05-09T17:53:06">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X39">
+    S.Smith,<br />
+  Copying parts of this page to email someone is well within the realm of "fair use", which means you don't need to ask anyone permission. See the quote from the Chicago Manual of Style on this page:<br />
+<a href="http://joi.ito.com/archives/2003/05/14/defending_creative_commons.html">http://joi.ito.com/archives/2003/05/14/defending_creative_commons.html</a>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X39" title="2005-05-09T19:15:57">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X40">
+    <p>Michael,<br />
+  Glad to hear that you want to get this right.</p>
+<p>  With respect to your strategy for adding a RequestId to the 'add to cart' link, here are some things to think about:</p>
+<p>1. The obvious one is that GWA would follow that link and add the item to your cart.<br />
+2. What if I keep changing my mind? What if I add the item to my cart, change my mind and delete it, then change my mind one last time and hit the back button to get back to my starting page and try to add it to my cart again? If you don't keep track of deletions then I won't be able to re-add the item, bacause I can only use that URI once. If you do keep track of deletions then GWA could come behind and re-add items to my cart that I had already deleted.</p>
+<p>As you said, you use POST for these kinds of operations, which is good.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X40" title="2005-05-09T22:41:44">2005-05-09</a>
+    </p>
+</div><div class="commentContent" id="X41">
+    <p>Here's a quick demo I knocked up that shows how to style buttons like hyperlinks:</p>
+<p><a href="http://richardathome.no-ip.com/examples/inline_form/index.php">http://richardathome.no-ip.com/examples/inline_form/index.php</a></p>
+<p>View/Edit is a link, Delete is a button</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://richardathome.no-ip.com">Richard@Home</a> on <a href="#X41" title="2005-05-10T10:28:19">2005-05-10</a>
+    </p>
+</div>
+  

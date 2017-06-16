@@ -1,0 +1,155 @@
+<html>
+  <head>
+    <title>RDF and Longhorn Lessons</title>
+    <meta name=created value="2003-11-12T13:52:12">
+  </head>
+  <body>
+  <p>Recently I ranted about the Longhorn, and relished in Clay Shirky's pointed barbs
+  at the Semantic Web. Both of these topics deserve a little more elaboration before
+  I finish.</p>
+  <h3 id="RDF"><a href="#RDF">RDF</a></h3>
+<p><a href="http://unadorned.org/dandruff/archives/2003/11/10/002076.html#002076">Some</a> are suprised
+  at the strength of my reaction when I talk about the <a href="http://www.eod.com/devil/archive/semantic_web.html">
+  Semantic Web</a>. This has more to do with 
+  history than any strong feelings about the actual technology and goals of the project.</p>
+<p>The biggest source of irritation with the whole Semantic Web effort comes
+not from the project or it's goals, but with the behaviour of its ardent supporters.
+Their constant interjecting of themselves into every XML format discussion with pushing
+for every XML format to be RDF is tiring at first and infuriating in the long run.
+No matter which format I am working on, be it
+RSS, OPML, Atom, etc. there's always a Semantic Web advocate waiting to pounce, pointing
+at all my elements and namespaces and wagging a finger, "sure, you may have elements
+and namespaces, but it doesn't <strong>mean</strong> anything." Don't believe me? 
+Check this out:</p>
+<blockquote id="atom-syntax"><p>
+One thing about the syntax that concerns me greatly is that there doesn't
+yet appear to be a consistent way of interpreting material from other
+namespaces. I believe this to be a make or break issue for interop.</p>
+<p>
+The issue was however thoroughly covered in RSS 1.0 thanks to RDF/XML. 
+<br /><a href="http://www.imc.org/atom-syntax/mail-archive/msg00004.html
+">[atom-syntax]</a>
+</p></blockquote>
+<p> Yes, I selectively quoted from that message, but realize 
+his is the <strong>fourth</strong> message on the atom-syntax mailing list. The FOURTH!
+What were the three messages that came before that? All messages saying "test", because the list 
+was that new. This was the very first message with any content on the list!</p>
+<p>You don't see any "rules based systems" people jumping in explaining the <em>right</em>  
+way to format our data. Not any ASN.1 people either. No database people jumping in
+extolling the virtures of storing the data in a table instead of XML. No, not all, just
+the RDF advocates. I would really like to see the RDF community stop suggesting 
+that every format has to be serialized as RDF/XML. 
+Instead what would be more useful and welcome would be to offer useful feedback, 
+like how the format could be structured to make it easier to transform <em>into</em> RDF.
+For example, we learned a lot from working on XSLT to transform Atom in RDF:</p>
+<blockquote id="learn-from-rdf"><p>this effort provided an alternate insight into this data, 
+  which surfaced a number of questions I never pondered before.  For example: is the order of contributors significant?  This needs to be answered and documented.<br />
+<a href="http://www.intertwingly.net/blog/1560.html">[Sam Ruby]</a>
+</p></blockquote>
+<p>Now some working on RDF are dogmatic and unwilling to accept anything but pure RDF/XML.
+Suggest that a format that is transformable into RDF/XML is just as good 
+as having the format as pure RDF and some in the RDF camp
+will tell you that it's not enough, that applying an XSLT transform
+is prohibitively expensive:</p>
+<blockquote id="shelley"><p>If a person who has the Pie/Echo/Atom syndication feed does not run an XSLT transform on the data to create RDF/XML versions of the data, the web bots then will need to do this, and this makes most data gathering techniques prohibitive.<br />
+<a href="http://weblog.burningbird.net/fires/001550.htm
+">[Shelley Powers]</a>
+</p></blockquote>
+<p>It is unreasonable to expect everyone to conform to a single vision 
+of how data should be serialized. Not every format needs to be serialized in RDF. 
+There is already a huge amount
+of data available, billions of pages of HTML and hundreds of thousands of feeds
+of RSS. How many terabytes of Apache log files are there in the world?. 
+That is all useful information that is not going to be re-written in RDF.
+Some people are beginning to come to this same conclusion:</p>
+<blockquote id="Mazzocchi"><p>Moreover, in light in my semantic web involvement, I'm getting more and 
+more unconfortable with RDF (see my semantic web fight club pictures in 
+boston in the gallery at http://www.betaversion.org/~stefano/) and I'm 
+more and more heading myself into the concept of 'data emergence' where 
+you don't go around bothering people to markup their data as *you* like 
+it, but *you* make an effort to collect their data and make a sense out 
+of it. I'm starting to call it 'pedantic web' myself :)<br />
+<a href="http://nagoya.apache.org/eyebrowse/ReadMsg?listName=community@apache.org&amp;msgNo=1439
+">[Stefano Mazzocchi]</a>
+</p></blockquote>
+<h3 id="Longhorn"><a href="#Longhorn">Longhorn</a></h3>
+<p>With Longhon I
+do have a little sympathy for the employess of Microsoft as no matter what approach
+they take it will be attacked.
+ With their current approach to XAML they are seen as 
+trying to break or avoid standards by coming up with their own technologies. But consider this: what
+if they had used XHTML, SVG, CSS, etc and then strapped on the extensions they saw that 
+they obviously needed? In that case they would have been accused of embrace-extend-extinguish.
+Either way they couldn't win, but then again, life is tough when you are a monopoly.</p>
+<p>Sam nails it <a href="http://www.intertwingly.net/blog/1645.html">when he says</a>, "What I believe 
+we are seeing is domain experts seeking each other out.  Crossing organizational and philosophical boundaries."
+It was great to get <a href="http://anopinion.net/posts/156.aspx">thoughtful feedback</a> from the WinFS API Program Manager Mike Deem and his response got me thinking about this problem
+ and motivated me to work on a solution that fits my needs today.</p>
+<h3 id="indexed-life"><a href="#indexed-life">My Indexed Life</a></h3>
+<p>What I am working on is moving all my content into HTML. For work 
+I have an internal weblog, so that is obviously already available in HTML format. 
+The next piece is email. Since I use Mozilla all my email is stored in mbox format
+and it was trivial to convert each mbox file into a set of HTML 
+pages using <a href="http://www.hypermail.org/">Hypermail</a>.
+</p>
+<p>Now that I've got a pile of HTML documents on the linux box, I can throw
+<a href="http://swish-e.org/">SWISH-E</a> at the pile and make it keyword searchable.
+Now I have searching that crosses my blog and email. The last two pieces of the
+puzzle are source code and other documents. With source code the plan is 
+to do scheduled pulls out of version control and then run <a href="http://lxr.linux.no/">lxr</a> over all the code.
+That leaves documents. I haven't even started looking, but given the open nature
+of the OpenOffice file format I have no doubt I can find code to convert OpenOffice
+documents into HTML.</p>
+<p>There are benefits to this loosely coupled approach.</p>
+<ol>
+<li>Each email has it's own URI.  Now
+   when referring to an old email instead of 
+  obliquely referring to it, or forwarding around an old copy, I just send 
+  its permalink. As Jon Udell put it: <a href="http://www.infoworld.com/article/02/05/17/020520pllinks_1.html">Hyperlinks matter</a>.</li>
+<li>I can try different search engines. Actually, given the loosely coupled nature of the whole
+   scheme I can run multiple search engines at the same time and try
+   them out, or even run multiple search engines and merge the results! This merging, of course, would be 
+   easier if all the search engines were members of the <a href="http://wellformedweb.org">Well-Formed Web</a>,
+   all of them producing their output in alternate pure XML formats, but we'll get there.
+   </li>
+</ol>
+<p>I'll keep you updated as this experiment proceeds.</p>
+
+  <div class="commentContent" id="X1">
+    <p>Joe... </p>
+<p>I feel the same about you XML advocates.  Everytime I start to work on an RDF format, be it RSS, OPML, Atom, you guys jump in and try to XMLify it </p>
+<p>;)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Kevin Burton</a> on <a href="#X1" title="2003-11-12T18:46:45">2003-11-12</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>as for transforming Open Office docs to html, you might want to take a look at this resource: <a href="http://andreas.web-graphics.com/quickguide-sxw-xhtml/">http://andreas.web-graphics.com/quickguide-sxw-xhtml/</a></p>
+<p>I haven't tried it yet myself, but it looks useful.  (the html open office puts out of its own accord is appalling.)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.epersonae.com">Elaine</a> on <a href="#X2" title="2003-11-24T11:56:53">2003-11-24</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Elaine,<br />
+  Thanks for the link. I just got to look at some OpenOffice exported HTML today, as I was converting a spreadsheet. Sure, a quick pass through Tidy and VIM and I was happy, but good grief, the original was just horrendous.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X3" title="2003-11-24T14:37:30">2003-11-24</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Just noticed this post. Joe, I don't really care if Atom is in RDF or not. And I really don't have much interest in evangelizing it to the XML group. I'm shutting down my Practical RDF weblog, and may even close down Semantic Web for Poets, or refocus it I will continue to use RDF for my tech and apps, and hope for my little s &amp; w semantic web, and will provide whatever I come up with, freely, for interested folks. But I will do so only within my own space.  </p>
+<p>Sooooo....</p>
+<p>One less advocate, Joe. One less voice. A little more peace for you.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X4" title="2003-11-25T00:44:09">2003-11-25</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    "the web bots then will need to [create RDF/XML versions of the data] and this makes most data gathering techniques prohibitive."
+
+This is hilarious when considering the major web search engine actually indexes PDF files (without expecting authors to HTMLize it first) and lately even paper catalogs and books. This redefines "prohibitive".
+    <p class="commentByLine">Posted by
+       <a href="mailto:">ralf</a> on <a href="#X5" title="2004-02-04T19:08:56">2004-02-04</a>
+    </p>
+</div>
+  </body>

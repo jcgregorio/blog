@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <title>Proposed changes to draft-gregorio-07</title>
+    <meta name=created value="2003-10-24T11:49:33">
+  </head>
+  <body>
+  <p>I've been discussing search as being the most
+  angst filled facet. After having tossed around a couple
+  ideas, here is a concrete proposal for how to change
+  the spec in the next revision. While I'm at it let's
+  slip in another proposal for the 'createEntry' facet too.</p>
+  <p>First, a quick review, the Introspection file lists 
+   all the facets that an implementation of the AtomAPI
+   implements.</p>
+<pre class="example"><code>
+   &lt;?xml version="1.0" encoding='utf-8'?&gt;
+   &lt;introspection xmlns="http://purl.org/atom/ns#" &gt; 
+     &lt;create-entry&gt;http://example.org/reilly/&lt;/create-entry&gt;
+     &lt;user-prefs&gt;http://example.org/reilly/prefs&lt;/user-prefs&gt;
+     &lt;search-entries&gt;http://example.org/reilly/search&lt;/search-entries&gt;
+     &lt;edit-template&gt;http://example.org/reilly/templates&lt;/edit-template&gt;
+     &lt;categories&gt;http://example.org/reilly/categories&lt;/categories&gt;
+    &lt;/introspection&gt;     
+
+</code></pre>
+<p>The 'search-entries' facet, which is described in 
+   <a href="http://bitworking.org/rfc/draft-gregorio-07.html#Model_Find">Secion 5.5 of the draft RFC</a>
+   gets split into two
+   different facets in the <a href="http://bitworking.org/rfc/draft-gregorio-07.html#rfc.section.5.1">Introspection file</a>. 
+   Remove &lt;search-entries/&gt; and add in two new
+   elements: &lt;recent-entries/&gt; and &lt;browse-entries/&gt;.</p>
+<h3>recent-entries</h3>
+<p> The recent-entries facet allows the client to retrieve information
+   about the last N entries to the site. This will function just like 
+   the 'search-entries' facet except that it will only accept one
+   search parameter 'atom-last'. The 'atom-last' query parameter
+   is set to the number of recent entries to return. It returns a file in the 
+   same format as is currently specified for the 'search-entries' facet.</p>
+<p>For example, if the 'recent-entries' element has the URI <code>http://example.org/recent/</code>
+   for a value, then doing a GET on the URI:</p>
+<pre class="example"><code>http://example.org/recent/?atom-last=2</code></pre>
+<p>Will retrieve descriptions of the last 2 Entries. The results returned 
+   would look like:</p>
+<pre class="example"><code>
+HTTP/1.1 200 Ok 
+Content-Type: application/x.atom+xml
+
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;recent-entries xmlns="http://purl.org/atom/ns#" &gt; 
+  &lt;entry&gt;
+    &lt;title&gt;My First Post&lt;/title&gt;
+    &lt;id&gt;http://example.org/reilly/1&lt;/id&gt;
+  &lt;/entry&gt;
+  &lt;entry&gt;
+    &lt;title&gt;My Second Post&lt;/title&gt;
+    &lt;id&gt;http://example.org/reilly/2&lt;/id&gt;
+  &lt;/entry&gt;
+&lt;/recent-entries&gt;
+
+</code></pre>
+<p>Now there have been questions regarding the use of <code>id</code> and 
+   <code>title</code> in the search results. The use of <code>id</code>
+   isn't consistent with the use in the Atom format, or at least it could
+   conflict with the use that the server implementation had chosen. <code>Title</code>
+   is also a bit problematic in that an Entry may not have a title. Here is a 
+   proposed alternative:
+
+</p>
+<pre class="example"><code>
+HTTP/1.1 200 Ok 
+Content-Type: application/x.atom+xml
+
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;recent-entries xmlns="http://purl.org/atom/ns#" &gt; 
+  &lt;resource&gt;
+    &lt;description&gt;My First Post&lt;/description&gt;
+    &lt;link&gt;http://example.org/reilly/1&lt;/link&gt;
+  &lt;/resource&gt;
+  &lt;resource&gt;
+    &lt;description&gt;My Second Post&lt;/description&gt;
+    &lt;link&gt;http://example.org/reilly/2&lt;/link&gt;
+  &lt;/resource&gt;
+
+&lt;/recent-entries&gt;
+</code></pre>
+<p><code>description</code> is a string that is to be displayed to the
+   user when choosing an Entry to edit. It should contain enough
+   information that the user can adequately distinguish between
+   Entries. It could contain the title of the Entry if it had one,
+   but that is just suggested practice and the server 
+   completely determines the content of this
+   element.</p>
+<p>The <code>link</code> element contains the 'editEntry' URI for the 
+   Entry being described.</p>
+<h3>browse-entries</h3>
+<p>The browse-entries facet contains a URI of a file in 
+   'archive' format. This is the alternate search mechanism
+    I discussed in <a href="http://bitworking.org/news/Atom_Archive_Format">
+    Reconsidering Search (Kinda) in the AtomAPI</a> and elaborated on further
+    in <a href="http://www.imc.org/atom-syntax/mail-archive/msg00763.html">a message
+    to the atom-syntax mailing list</a>.</p>
+<p>Both the 'recent-entries' facet and the 'browse-entries' facet 
+   are optional. This lets the implementation
+   choose which, if any, searching mechanism works best.</p>
+<h3>Hinting at a location </h3>
+<p>The last proposed change is for the 'create-entry' facet. In this
+   case I propose that the &lt;link&gt; element of the POSTed Entry
+   can optionally be filled in with a relative URI path. The value of
+   the &lt;link&gt; element can serve as a hint to the server on
+   what URI to assign the Entry. This could be used by Blosxom to 
+   determine the directory to place the entry. The link element
+   is optional and the server may ignore its value when processing
+   a POST to create a new Entry. Here is an example of a POST to
+   create an Entry with the <code>link</code> tag filled in:</p>
+<pre class="example"><code>
+POST /some-atom-cgi-handler.cgi HTTP/1.1
+Content-Type: application/x.atom+xml
+
+&lt;entry&gt;
+    &lt;link&gt;/tech/pantherUpgrade.html&lt;/link&gt;
+    &lt;title&gt;Mac OS: less crap&lt;/title&gt;
+    &lt;content type="application/xhtml+xml" mode="xml"&gt;
+        &lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
+           The NYT has a glowing
+           article about the Panther upgrade to Mac OS X...
+        &lt;/div&gt;
+    &lt;/content&gt;
+    &lt;issued&gt;2003-10-23T08:17:00-04:00&lt;/issued&gt;
+    &lt;modified&gt;2003-10-23T08:17:00-04:00&lt;/modified&gt;
+&lt;/entry&gt;
+
+</code></pre>
+
+  <div class="commentContent" id="X1">
+    <p>Looking good. <br />
+I'm not sure why recent-entries should be treated as a special kind of query, it seems like building in a limitation. Will we also need a last-weeks-entries element, for instance?</p>
+<p>The modified entry list looks an improvement, but if you're talking about resources and their description, surely this could be modified a little so that it's also valid RDF. </p>
+<p>Nice to see the introspection example is now valid RDF, btw.</p>
+<p>Personally I'm not sure about the hint - it seems to me that decisions about location should be entirely down to the server, and if it goes in as a hint, it's only a matter of time before people build systems that rely on it.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X1" title="2003-10-24T14:24:20">2003-10-24</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Danny,<br />
+  Recent-entries is just a list of entries in reverse chronological order, so if you want to go back further in time you request more entries. What I am trying to get to is the simplest thing that could work for clients and not be too much of a burden for servers to implement.</p>
+<p>  So what are the 'little' changes I can make to the entry list to make it valid RDF?</p>
+<p>  The problem is that there are systems  such as Bloxsom that need the location to be specified. Any suggestions on where else that information could go?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-10-24T15:12:23">2003-10-24</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I'm quite concerned that the content and structure of the recent-entries and browse-entries data is so vaguely defined and explicitly left up to the server. This makes life difficult for a client app that wants to download a blog to local storage and allow the user to view and edit it. Such a client will want to give the user a lot of control over how to view data.</p>
+<p>By contrast, the browse-entries format is about giving the server control, which means that a client app isn't sure what it's going to get. It really just wants a no-nonsense list of entries with all available metadata that it can use to populate its local database and UI. The more the server tries to get clever about what information to show and how to organize it, the more likely that the client app is going to have trouble extracting what it needs.</p>
+<p>This also goes for the completely vague "description" field in the recent-entries results. A client app isn't going to know what to do with this. I guess the best guess is to shove it into the subject field of the incomplete entry; but that leads to the prospect that, after the user decides to view the entry and the client downloads its entire data, the subject will change suddenly. This doesn't make a lot of sense to the user.</p>
+<p>IMHO Atom should just expose the raw data behind the blog to an application. Server-side fanciness and formatting should be left up to the CGI code that generates the HTML.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:jens@mac.com">Jens Alfke</a> on <a href="#X3" title="2003-10-27T16:40:39">2003-10-27</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>"IMHO Atom should just expose the raw data behind the blog to an application."</p>
+<p>We now have three suggested interfaces  for how to choose an Entry to edit: the original multi-parameter search facet, the  simplified 'recent-entries' search facet, and finally the a static page navigation (either in the RESTLog archive format I proposed or in Sam Rubys suggested navigation).</p>
+<p>Do you have a concrete suggestion for an alternative mechanism?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2003-10-27T19:28:44">2003-10-27</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>My understand is that the browse-entries provides a way to navigate entries in multiple dimensions (category, timeline, etc.) which are optionally and creatively determined and supported by the server implementation. Is this understanding correct?</p>
+<p>It also seems, however, some of us (including myself) see the need for browsing (searching/navigation) entries remotely (on the entries on server) and locally (entries that are on user's local storage) uniformly using the same set of API's. Local entries include archived entries, drafted but not yet published entries, and also entries that are created and available on the server. It is, of course, possible, but the client implementation and the server implementation could not be decoupled.</p>
+<p>I have not thought of an concrete alternative (though still trying...)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X5" title="2003-10-27T21:24:53">2003-10-27</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X6" title="2005-03-06T07:00:26">2005-03-06</a>
+    </p>
+</div>
+  </body>

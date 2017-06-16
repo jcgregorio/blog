@@ -1,0 +1,194 @@
+---
+layout: post
+title: No Fishing - or - Why 'robots.txt and 'favicon.ico' are bad ideas andshouldn't be emulated.
+
+---
+
+  <p>The idea of hard coding a URI, like is done for <code>robots.txt</code> is a bad idea. Let's 
+   not continue to make the same mistakes over and over again.</p>
+  <p><a href="http://www.robotstxt.org/wc/robots.html">Robots.txt</a>
+   is part of the Robot Exclusion Protocol. Part of the protocol
+   is a fixed URI at which a robot can find a <code>robots.txt</code>
+   file to parse.  The
+   traditional location of the <code>robots.txt</code> file has been at the root
+   of a domain, though it should be noted that the robot exclusion 
+   protocol also defines a <a href="http://www.robotstxt.org/wc/exclusion.html#meta">META tag 
+	   that allows HTML authors to indicate to visiting robots if a document 
+	   may be indexed, or used to harvest more links. </a> Now 
+   the location of the <code>robots.txt</code> file is in a fixed location.
+   The idea was that this would help web-crawlers find it easier, but giving it a 
+   fixed location with respect to the domain  is a bad idea and is rooted in a particularly naive view
+   of the web circa 1996.</p>
+<p>If the idea of using a fixed URI for the location of a special file
+   was restricted to just <code>robots.txt</code> then maybe things 
+   wouldn't be so bad. But Microsoft saw this 
+   bahavior and now use it with their <code>favicon.ico</code>, which
+      again is fixed at the root of the domain.</p>
+<p>And finally on October 13th Dave Winer if following in their 
+    footsteps and has proposed <a href="http://blogs.law.harvard.edu/tech/myPublicFeedsOpml">
+    yet another file at a fixed URL</a>.
+</p><p>Let's state it clearly now for the record. The idea of using a fixed location
+      is a dumb idea and should not be done. It was a not-so-good idea
+      when the robot exclusion protocol was rolled out and it's an even worse
+      idea today. Don't do it. Here's why:</p>
+<dl>
+<dt>Bandwidth</dt>
+<dd>I get over a hundreds hits a day on my robots.txt
+     file. Well, it would be a 100 hits a day except
+     <strong>I don't have robots.txt file</strong>, so over 100
+     times a day I return a 404. That's wasted bandwidth for
+     me and wasted time for the user agent. I pay for my bandwidth,
+     and now I get to pay for bandwidth on a protocol whether or not
+     I support it!</dd>
+<dt>Extensibility</dt>
+<dd> There
+   is no consistent framework for adding to the list of special files.
+   No central repository, no configuration file, no special file
+   that points to all the other special files. The current use is
+   define a name for your special file, then have everyone dump that file
+   at the root of their domain. That's not extensible, it's chaotic, and
+   it also intrudes on my control over my URI space.</dd>
+<dt>Semantics</dt>
+<dd>Well, this isn't really about semantics, but about the meaning of a phrase, "What
+   is a web-site"? This used to be a simple question with a simple
+   answer back in 1997. Each web-site was rooted as a single domain. In that era it might
+   have been acceptable to think that was how all web sites 
+   would be, one per domain, and thus forcing
+   a file at a specific location under a domain might be okay. Kinda. If you squint your eyes.
+   Today the world is a much richer and more varied place. We do not have a single domain
+   per website. Want an example? Just look at
+   all the web-sites that sit below the domain <code>radio.weblogs.com</code>.
+   Let's make this perfectly clear, Dave Winer is proposing a method
+   that will be unusable by his own customers. Users of Radio that
+   decide to let Userland host their content will be unable to use
+   the hardcoded URI to <code>myPublicFeeds.opml</code> because
+   there are multple sites hosted on radio.weblogs.com, each one under it's own directory,
+   <code>http://radio.weblogs.com/nnnnnnn</code> where 'nnnnnnn' is the users id number.
+   </dd>
+<dt>Discoverability</dt>
+<dd>There is no way to discover ahead of time if 
+   a <code>robots.txt</code> file is present. Similarly, if new
+   files, like <code>favicon.ico</code> or <code>/w3c/p3p.xml</code> come into 
+      common usage, how are user agents supposed to know
+      about them. How can anyone stumble across them and learn
+      what they do by, dare I say it, "view source". They can't. 
+      The web works because of links,
+      I go from here to there and there to here all the while following links. 
+      Links are what drive the web, links are the power behind google. 'Robots.txt'
+      and similar schemes break that model. Think of it this way, the links on the 
+      web work like paths. You follow those links and you stay to the path. Now what are you
+      doing when you go poking around for a file that may or may not be there?
+      You're going fishing. You've left the path and are now angling in my pond.</dd>
+</dl>
+<p>This isn't a passing issue or an edge case. This is actually an 
+   <a href="http://www.w3.org/2001/tag/ilist#siteData-36">issue</a>
+   in front of the <a href="http://www.w3.org/2001/tag/" title="Technical Architecture Group">W3C TAG</a> today.
+   <a href="http://lists.w3.org/Archives/Public/www-tag/2003Feb/0093.html">
+    Tim Berners-Lee initially raised this issue</a> and <a href="http://tbray.org/ongoing/">Tim Bray</a> 
+   followed-up with a <a href="http://lists.w3.org/Archives/Public/www-tag/2003Feb/0297.html">strawman solution</a>
+   which works from the basis of trying to answer the question "What is a web-site?".
+   </p>
+<p>Schemes that used fixed URIs are doing nothing more than fishing for information. Consider my site to now have
+   a "No Fishing" sign posted. Now it's obviously too late for <code>favicon.ico</code>
+   and <code>robots.txt</code>, but it's not too late to nip this in the bud for any further
+   uses. Please do not implement Dave Winers fixed URI scheme for <code>myPublicFeeds.opml</code>.
+   If it does get implemented and deployed I will auto-ban any IP that requests that file. I will
+   also auto-ban any user-agent that also requests that file. I encourage you to do the same.</p>
+<p><strong style="font-size:2em">No Fishing!</strong></p>
+<p><strong>Update:</strong> Sam Ruby has <a href="http://www.intertwingly.net/blog/1611.html">
+   opened up a discussion for an alternate mechanism</a>.</p>
+
+  <div class="commentContent" id="X1">
+    <p>I may have read Dave's proposal a bit more optimistically, and it certainly isn't what I'd call a "spec", but...</p>
+<p>I figure when he used "http://www.foobar.com/" and the associated "http://www.foobar.com/myPublicFeeds.opml", he wasn't asserting that the thing would -have- to be hanging off the domain.</p>
+<p>If some client considers "http://example.org/foo/bar/~baz/waka/" to be a "site", then that client could look for an index under there ("../myPublicFeeds.opml").</p>
+<p>Now, I agree with the rest of the writing.  Except maybe the vehemence.  </p>
+<p>404's don't cost much in bandwidth.  Semantics aren't too tough if you let any URL be a legit "site" (as I posited above).  </p>
+<p>I think Dave tends too strongly to the quick-hack-that-works, under the shield of "well, you don't know what's coming, so don't bother to plan for it, and besides, here's working code".</p>
+<p>But that doesn't mean he's out to screw the web with (muhaha!) yet another OPML application with hard-coded cutesy URIs.</p>
+<p>In general, I think the TAG issue is a Good Thing, and we really are scratching the surface on site metadata.  It'd be nice to have some infrastructure to hang innovations on.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Jeremy Dunck</a> on <a href="#X1" title="2003-10-16T02:42:37">2003-10-16</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>I would be the first to say that "fishing" isn't very elegant but to be honest I think you are dead wrong on each of your above issues.</p>
+<p>If you can come up with a better reasoning why fishing is a bad idea I would be willing to entertain the thought but there are a large number of benefits to using URI probing to find resources.</p>
+<p>For example your bandwidth issue is irrelevant.  So if a 404 is unacceptable how do you expect it to be done?</p>
+<p>Maybe I fetch / and look for autodiscovery link tags?  Maybe I fetch a site manifest at /manifest.rdf and start from there?</p>
+<p>The robots.txt example is a good one.  How am I supposed to find out that I can't spider your website if I have to fetch a resource in order to discover the location of robots.txt?</p>
+<p>I think that for a lot of resources there should be mechanisms that don't use fishing but these are different scenarios.</p>
+<p>The use of RSS auto-discovery is a good example.  In NewsMonster I have to fetch your entire HTML page just to find your feed.  Not very efficient.</p>
+<p>If it was always located at /index.rss I wouldn't have a problem.</p>
+<p>Peace</p>
+<p>Kevin</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://newsmonster.org">Kevin Burton</a> on <a href="#X2" title="2003-10-22T22:40:57">2003-10-22</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Kevin,<br />
+  I list 4 reasons fishing is bad: Bandwidth, Semantics, Extensibility and Discoverability. You pan the Bandwith issue which is admitedly the weakest arguement, but ignore the other three.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X3" title="2003-10-23T08:12:57">2003-10-23</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Actually... one major reason why discovery, extensibility, and semantics can't be given a better technical solution is <b>because</b> of bandwidth.</p>
+<p>I didn't want to seem like I was beating a dead horse...</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Kevin Burton</a> on <a href="#X4" title="2003-10-24T19:02:31">2003-10-24</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>make an empty robots.txt file on your server and the bandwidth problem goes away; your server will return the file which is 0 bytes.</p>
+<p>I don't really have a problem with robots.txt or favicon.ico but I agree that you can't keep just making up new files... think about long term, what if there ended up being hundreds of files with special purposes that needed to sit in a specific location - that wouldn't be good.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Greg</a> on <a href="#X5" title="2004-08-12T21:43:18">2004-08-12</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Greg,<br />
+  Serving up an empty robots.txt file hardly takes 0 bytes, have you forgotten about all those HTTP headers?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2004-08-13T08:16:36">2004-08-13</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Well, you see a lot of discussions that try to be informed, and most that are amateur.</p>
+<p>From a real domain owner's point of view, one hit, no matter how much bandwidth it uses, that wastes the domain owner's time and bandwidth, is abuse of bandwidth.</p>
+<p>Robots do that.</p>
+<p>From a design engineer's point of view, anyone who suggests a static file is living in about 1946.</p>
+<p>The first guy here is right: robots.txt was a very bad idea.  A static IRI, when they can't even decide on the acronym [URL was working quite fine], is a bad idea.</p>
+<p>In logic, you can't dismiss 3 ideas saying they hinge on 1 at the beginning, particularly by simply stating it as opinion.  You must "prove" what you say too,just as you demand of the idea #1.</p>
+<p>If you want to discuss bad ideas built on bad precepts, you can begin with those PHP .css and .rss thingees that break html.  Go to SourceForge.net and see just how badly PHP breaks the basic web idea; and the developers don't care.</p>
+<p>HTML is supposed to provide information, quickly, efficiently.  That means, readable text, not dumb colors, stupid dropdowns, and a wrapper that can't even interpret long established text oriented W3.org HTML</p>
+<p>But the robots.txt file was, and is, idiotic to begin with.  Particularly when the robots no longer index meaningful information, but a muck of pollution from unrelated advertising.</p>
+<p>Have you ever done a search for something simple only to come up with the ability to purchase "general relativity" on Yahoo.com?  I don't think Einstein has put it there or on ebay, or msn, fore sale.</p>
+<p>Serving an empty robots.txt still takes up bandwidth, size is non-sequitar.</p>
+<p>What's really needed is a protocol that tells all robots:</p>
+<p>"Do Not Call Again under penalty of law."</p>
+<p>That's what's needed.</p>
+<p>Robots are approaching the level of "Denial Of Service" attacks.  If you don't think this is so, you have never run a real domain.</p>
+<p>The reality here is cost to the owners, not doublespeak by the pro's and con's on the issue.  If a bandwidth purchaser says he wants these robots to stop sucking his bandwidth, then that is what he means, and it doesn't matter if it's one microsecond of it or one million.  He's paying for the bandwidth, and using it from the outside is still bandwidth theft to him.  His site wasn't put there for the robots and the corporations that use them, but for himself and his business.  The end result is that the big companies can use their search bots to effectively shut out smaller sites.  And that is Denial Of Service, perpetrated by the biggies under the control of mostly Microsoft, and its partners, and presents a monopolistic practice.</p>
+<p>Couple that with the number of people sitting on various boards, like the IETF, IANA, ICANN, and what you have is a wrongfully administered Internet.</p>
+<p>Instead of robots.txt ideaology, there should be an idea for a protocol that tells the big sites not to call again, just like the National Do Not Call Registry.</p>
+<p>Why would Microsoft owned robots, like Yahoo, need to index every image, every sound file, every software file, etc.?  There can be only one reason for this, prior search, with all of its implications.  How can anyone even argue that indexing of a site, which is Copyright Protected from inception, is justifiable?</p>
+<p>It seems to me, as a site and copyright owner, that indexing, searching, and these proposed files are the distraction from the real issue, Copyright Infringement.</p>
+<p>How about a protocol that tells the bots the site is copyrighted and indexing may be done only with the express written permission of the site owner, that is, the Copyright Owner?</p>
+<p>When a robot breaks the law, the robots owner is thereby responsible.</p>
+<p>The issue is not going away simply because someone says there are not four parts, or reasons, or that robots are not bad, or that Mr. Winer's proposals seem valid, it is, however, now going to lead to more serious issues which "Will" govern Mr. Winer's proposals, valid arguments including Copyright Law.</p>
+<p>The first wrong assumption is that indexing of content is not subject to Copyright Law.</p>
+<p>And that, is definitely wrong.</p>
+<p>Before someone comes strolling in from the Internet to my business, I do have a right to ask what they're intentions are: to steal or harvest from my business, or are they going to be a legal customer, advertisers, and so on.</p>
+<p>And then I, not the Internet stroller, sets the rules for behavior at my place of business.</p>
+<p>Search Engines banging away at my site content is no different from someone playing with the locks on the door to see if they can "break in."  And the static URL or URI is nothing more than a deceptive type of master key.</p>
+<p>And the numerous bots do steal bandwidth, without asking permission. That is quite ignorant of them.  They purport to take information to be used for the benefit of the site, and then post 20 other paid advertising sites first.  In other words, the major search engines lie.</p>
+<p>Which negates the whole validity of both the robots.txt and the idea of static things to begin with.</p>
+<p>It used to be that search engines and spiders indexed meaningful intelligent information.  Useful for finding something relevant.  This is no longer true.  A simple search for a definition, or a thesis statement, will nearly always result in unrelated garbage.  Search enginers also do not understand grammar, and that I suspect is done on purpose.  To promote the paid advertisers first.  However, this was not, and is not, the purpose of spiders and search engines, it is the purpose of those who do not belong in control of content indexing.</p>
+<p>Perhaps now we need laws governing spiders, search engines, and the like, to protect ourselves from robots that are becoming as bad as spam email.</p>
+<p>It were better if Tim Berners-Lee would propose a protocol for a Do Not Call Back switch for unwanted intruders.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.Musics.com/">GinEric</a> on <a href="#X7" title="2005-05-27T11:18:47">2005-05-27</a>
+    </p>
+</div>
+  

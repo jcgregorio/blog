@@ -1,0 +1,114 @@
+---
+layout: post
+title: The professionalization of scripting languages
+
+---
+
+  
+  <p>So by now everyone should have seen the <a href="http://webkit.org/blog/189/announcing-squirrelfish/">SquirrelFish</a> announcement.
+And <a href="http://www.avibryant.com/2008/06/maglev-recap.html">MagLev</a>.
+And you've see Steve Yegge's presentation, 
+"<a href="http://steve-yegge.blogspot.com/2008/05/dynamic-languages-strike-back.html">Dynamic Languages Strike Back</a>".
+And you've been following the discussion about the relative merits of
+stack versus register based VMs.</p>
+<p class="aside"> As an aside, note that the Java VM is stack based and the <a href="http://en.wikipedia.org/wiki/Dalvik_virtual_machine">Dalvik VM</a>
+on <a href="http://code.google.com/android/">Android</a> is register based.
+</p>
+<p>All of those things on their own are interesting, but what's more important
+is that we're talking about them all at the same time. There's real research 
+going on to produce faster VMs and that research is being applied
+to real scripting languages today. What we are priveleged to witness, something
+that wasn't happening a year ago, and will probably be complete in another
+year or two, is the professionalization of scripting languages.
+There was a time when you could whip out a parser in lex and yacc, stitch together
+a naive VM and throw it over the wall and you'd have a new scripting language.
+Those days are coming to a close and in a few years (if not months) you won't be able
+get traction with anything unless it does direct
+threading, is register based, has generational GC, does peephole optimizations, does trace-folding, does type-inferenced
+inline caching, etc. That's not a bad thing, real work being applied to improving the performance
+of scripting languages is great and should greatly increase the areas where they'll be applied
+as long standing concerns about performance are removed and the benefits of increased
+productivity come to the fore.
+</p>
+<p>If you haven't been keeping up on all of this then start with the 
+  three papers that the <a href="http://webkit.org/blog/189/announcing-squirrelfish/">SquirrelFish announcement</a> references.
+  They're clear, well written, and are a good starting place before diving
+  into the rest of the literature.
+</p>
+<p>And yes, it's all true, once you trace all of this stuff back
+  it all eventually leads to Smalltalk. Poor old disrespected Smalltalk,
+  all those years of work, all that cutting edge research, and nary a bit
+  of credit, which is particularly galling if you think about the fact that,
+  to date, the language that has benefitted the most from Smalltalk is Java.
+</p>
+  <div class="commentContent" id="X1">
+    <p>Nobody writes a parser anymore; we describe it to yacc/lex. Maybe abstractions will be created that do type-inferenced inline caching and generational GC. Not that I really know how... maybe by describing these features as possible parse-tree manipulations?</p>
+<p>Smalltalk had/has a language-aware version-control system. That's something else I'd like to get my grubby mints on.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://lbruno.org">Luis Bruno</a> on <a href="#X1" title="2008-06-08T07:19:54.490937">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    For those who don't know, Smalltalk-80 still lives on at http://www.squeak.org It would be a fun project to slip one of the fast new VMs under the hood of Squeak and see how it runs.
+    <p class="commentByLine">Posted by
+       <a href="http://www.squeak.org">Jerry</a> on <a href="#X2" title="2008-06-08T08:28:28.466839">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <i>Nobody writes a parser anymore; we describe it to yacc/lex</i>
+
+I don't know about that. Many high-profile projects use hand-coded parsers (that, true, were written a few years ago, but are still maintained), like GCC and Lua.
+    <p class="commentByLine">Posted by
+       <a href="http://reddit.com">bof</a> on <a href="#X3" title="2008-06-08T15:56:16.994033">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <blockquote><p>Many high-profile projects use hand-coded parsers</p></blockquote>
+<p>Agreed, if you read the papers I linked to, one of them is on the implementation of Lua 5.0 and in that paper they state that up until 3.0 Lua used Yacc, but they found that a hand written parser was smaller, more efficient, more portable and fully reentrant. Of course if you are early in the design of your language then you would probably go with Lex/Yacc as it can make changing the syntax easier.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X4" title="2008-06-08T16:07:55.145731">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Or you write your parser yourself because you want to be gung-ho and you've never done it before, and writing it yourself is more rewarding than figuring out how to use existing tools.  Or you'd like to make the language you're writing self-hosted.
+    <p class="commentByLine">Posted by
+       <a href="http://google.com">Reid</a> on <a href="#X5" title="2008-06-08T16:37:55.758102">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    The way you wrote, some might think it is getting harder to make new dynamic programming languages. But actually, it's much easier than ever before, because new languages can now run on preexisting virtual machines instead of having to create their own. LLVM, Parrot, JVM, DLR. A new language implementation that targets one of these will usually be running much faster with much less effort than a language implementation that created it's own custom virtual machine.
+    <p class="commentByLine">Posted by
+       <a href="http://jamesjustinharrell.com/">James Justin Harrell</a> on <a href="#X6" title="2008-06-08T20:05:16.619491">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    A note regarding your side: the Dis virtual machine for Bell Labs' Plan 9 is also register-based and dates from the same era as the Java VM.
+    <p class="commentByLine">Posted by
+       <a href="http://www.google.com">Jim G</a> on <a href="#X7" title="2008-06-08T20:10:13.842620">2008-06-08</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Not sure register-based VMs are required. The .Net VM, for example, is stack-based and performs quite well. I think the Smalltalk VM is as well but I'm not sure about that one.
+    <p class="commentByLine">Posted by
+       <a href="mailto:joe@joe.com">joe</a> on <a href="#X8" title="2008-06-09T04:36:37.314808">2008-06-09</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Not sure register-based VMs are required. The .Net VM, for example, is stack-based and performs quite well. I think the Smalltalk VM is as well but I'm not sure about that one.
+    <p class="commentByLine">Posted by
+       <a href="mailto:joe@joe.com">joe</a> on <a href="#X9" title="2008-06-09T04:36:41.685526">2008-06-09</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Smalltalk has a few really cool things, but to be honest I prefer both ruby and python's syntax to smalltalk. What should also be said is that smalltalk never really was a "scripting" language in the sense what perl, python, ruby, php were. 
+
+Maybe this was one reason why it never became too popular.
+
+PS: This comment formular is unusual... this is now the third try, but will also be my last. Why cant people make easier forms... i am no robot, so why make life so much harder, would be easier to say "dont comment", or just put up one of those incredible hard captcha images.... :(
+    <p class="commentByLine">Posted by
+       <a href="mailto:markus@hotmail.com">markus</a> on <a href="#X10" title="2008-06-09T10:02:23.726435">2008-06-09</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Markus,<br />
+<p>Sorry you had trouble with the comment form. All the other options
+I've tried have eventually allowed spam through. This system, on top of 
+being accessible, has also been almost completely spam-proof for over a year. 
+Where 'almost completely spam-proof' == only one spam comment in the past year.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X11" title="2008-06-09T10:58:36.420222">2008-06-09</a>
+    </p>
+</div>
+  

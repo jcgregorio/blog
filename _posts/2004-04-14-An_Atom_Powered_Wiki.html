@@ -1,0 +1,82 @@
+---
+layout: post
+title: An Atom-Powered Wiki
+
+---
+
+  
+  <p>My latest article, <a href="http://www.xml.com/pub/a/2004/04/14/atomwiki.html">
+   An Atom-Powered Wiki</a>, is now available at <a href="http://xml.com">XML.com</a>.
+   In this article I cover the steps needed to create
+   an Atom Enabled wiki, paying attention in particular
+   to the character encoding issues. As <a href="http://www.intertwingly.net/blog/1760.html">
+   Sam Ruby has pointed out</a> character encoding may be the 
+   number one cause of ill-formed feeds. The code for both the client
+   and the server are both available as downloads from 
+   the <a href="http://piki.bitworking.org/piki.cgi">live version of the wiki I describe 
+   in the article</a>. If you feel so inclined you can download
+   the client and test it against the wiki for yourself, just make sure
+   that you have the unicode enabled version of <a href="http://www.wxwidgets.org">
+   wxWidgets</a> (<a href="http://www.wxwidgets.org/name.htm">nee wxWindows</a>).
+</p>
+<p>At the end of the article I cover two of the 
+   most glaring issues with the implementation, first
+   that the 'issued' element is not information that is 
+   currently stored in PikiPiki, but since the 'issued'
+   element is required we just used the 'modified' time
+   in it's place. </p>
+<p> The second rough spot that was covered is that 
+   there is no way to detect before hand which types of
+   content an AtomAPI server will accept in a 'content' element.
+   There is an entry on the <a href="http://www.intertwingly.net/wiki/pie/AtomApiContentNegotiation">
+   Atom Wiki dealing with just this
+   issue of negotiating the type of content a server will accept</a>.
+
+   These were the two of the biggest issues, but there are more and they are 
+   covered in 
+   <a href="http://www.intertwingly.net/wiki/pie/AtomForWikis">a fairly 
+   comprehensive page</a> on applying the Atom API to wikis that, un-ironically,
+   is available on the Atom Wiki. 
+</p>
+
+  <div class="commentContent" id="X1">
+    <p>Great stuff! Exactly the kind of thing needed to find out where Atom's currently lacking, and a good read too ;-)</p>
+<p>I'd be interested to see how easily the system could be modified for InterWiki purposes - a bunch of folks are talking about using XHTML as the standard interop language between Wikis (with different WikiMarkup). Hopefully this would make a reasonable Atom payload...</p>
+<p>Anyhow, keep up the good work.<br />
+<br />
+All the related links I've got:<br />
+&lt;a href="http://66.70.191.189/cgi-bin/mt-search.cgi?IncludeBlogs=1&amp;search=interwiki"&gt;http://66.70.191.189/cgi-bin/mt-search.cgi?IncludeBlogs=1&amp;search=interwiki&lt;/a&gt;</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X1" title="2004-04-15T04:36:14">2004-04-15</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    PS. <br />
+<a href="http://tinyurl.com/3b6ba">http://tinyurl.com/3b6ba</a>
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X2" title="2004-04-15T05:02:42">2004-04-15</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>PPS. ...and how about SVG as a payload?</p>
+<p><a href="http://tinyurl.com/2q3nj">http://tinyurl.com/2q3nj</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X3" title="2004-04-15T06:31:51">2004-04-15</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    The actual files don't seem to be available anymore - have they been moved elsewhere?
+    <p class="commentByLine">Posted by
+       <a href="http://the.taoofmac.com">Rui Carmo</a> on <a href="#X4" title="2005-04-27T03:53:08">2005-04-27</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Sorry about that, the link was broken. I have now fixed it. The files are available at <a href="http://piki.bitworking.org/downloads">http://piki.bitworking.org/downloads</a>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2005-04-27T07:22:34">2005-04-27</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Many thanks. I'll look into those (I've been thinking of doing a Wiki with an Atom file store, and this will help me cut through most of the red tape ;))
+    <p class="commentByLine">Posted by
+       <a href="http://the.taoofmac.com">Rui Carmo</a> on <a href="#X6" title="2005-04-27T08:04:27">2005-04-27</a>
+    </p>
+</div>
+  

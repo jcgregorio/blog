@@ -1,0 +1,66 @@
+---
+layout: post
+title: CommentAPI POST Return
+
+---
+
+  
+   <p>What comes back from the server once you <span class="caps">POST</span> a comment via the <a href="http://wellformedweb.org/story/9">CommentAPI</a>? That’s the question. Right now the specification says that the only <strong>required</strong> response is the <span class="caps">HTTP</span> status code. Currently there are two differing implementations. One returns a result code of 303 with a Location: header that points to a new <span class="caps">URL</span>. Another returns the number of comments for that item.</p>
+<p>Any other implementations I am missing?</p>
+<p>Any suggestions on how this should work?</p>
+<p>You know, specification writing is hard. I just finished a very enlightenting conversation with someone on the <span class="caps">REST</span>Log <span class="caps">API</span> that made me realize how much better that specification needs to be. So I am taking some time to read some <span class="caps">RFC</span>’s, some of the classics and some of the newer ones. Hopefully I can re-write the specs in a much clearer format that will ease implementation problems.</p>
+
+  <div class="commentContent" id="X1">
+     <p>Spec writing <strong>is</strong> hard.  Please jot down notes as you go of what you’ve learned in making them better.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X1" title="2003-06-19T09:12:53">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X2">
+     <p>I expect it to return a 200 on Success and an error (4xx or 5xx) otherwise. All this talk of 303s and the like for simple posting interfaces seems excessive.</p>
+<p>Secondly what <span class="caps">HTTP</span> status code is returned in the implementation that gives back “number of comments for that item” ?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.kuro5hin.org/user/Carnage4Life/diary">Dare Obasanjo</a> on <a href="#X2" title="2003-06-19T09:38:51">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X3">
+     <p>My implementation return back an <span class="caps">RSS</span> item.  This appeals to my sense of symmetry.</p>
+<p>Things with default values get filled in.  For example, &lt;link&gt; tags may get added.  There is plenty of room for expansion for things like &lt;slash:comments&gt;.</p>
+<p>Using the same format as the input means thtat there is virtually zero learning curve.</p>
+<p>For those who care about such things, I have documented the schema that I use in a <span class="caps">WSDL</span> document.  In addition to the schema, what the <span class="caps">WSDL</span> document says is that if you literally send an <span class="caps">RSS</span> item as a document to the given service/port/soap:address/@location, you can expect to get an <span class="caps">RSS</span> item back.</p>
+<p>An example of such a <span class="caps">WSDL</span> document can be found at <a href="http://www.intertwingly.net/blog/1447.wsdl">http://www.intertwingly.net/blog/1447.wsdl</a></p>
+<p>The <span class="caps">WSDL</span> document for each entry is referenced in my <span class="caps">RSS 2</span>.0 feed via the wsil:description/@location</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X3" title="2003-06-19T10:28:17">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X4">
+     <p>I love the idea of posting a comment as an <span class="caps">RSS</span> item and getting an <span class="caps">RSS</span> item back, but which item is it? The comment item or the item for the thing being commented? If the former, there’s no way to get back the new number of comments on that item. If the latter, then both the new number of comments and the <span class="caps">URL</span> for editing the post could be returned.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.sellsbrothers.com">Chris Sells</a> on <a href="#X4" title="2003-06-19T11:35:56">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X5">
+     <p>I currently return a 200, but thinking about it, it should probably be a 201 created response, which would then also match the <span class="caps">REST</span>Log posting <span class="caps">API</span>.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.pocketsoap.com/weblog/">Simon Fell</a> on <a href="#X5" title="2003-06-19T11:52:05">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X6">
+     <p>Chris: ;-)</p>
+<p>Let’s see if I can avoid awakening Joe’s inner hamster….</p>
+<p>One &lt;item&gt; in, two &lt;item&gt;s out makes a lot of sense.  I can see the potential for a lot of tools benefiting from having direct access to all this information without having to issue additional requests.</p>
+<p>Of course, <span class="caps">XML</span> has a restriction that a document has exactly one outermost element, so some sort of wrapper element would be required…</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X6" title="2003-06-19T15:09:35">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X7">
+     <p><span class="caps">LOL</span>, my inner hamster..</p>
+<p>But for <span class="caps">RSS </span>‘items’ you already have a pre-made envelope, it’s called ‘channel‘.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X7" title="2003-06-19T22:53:24">2003-06-19</a>
+    </p>
+</div>
+  

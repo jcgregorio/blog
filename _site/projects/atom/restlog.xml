@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+    <!ENTITY rfc2119 PUBLIC '' 
+      'http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml'>
+]>
+
+<!-- 
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+-->
+<?rfc toc="yes" ?>
+<?rfc symrefs="yes" ?>
+<?rfc sortrefs="yes"?>
+<?rfc iprnotified="no" ?>
+<?rfc strict="yes" ?>
+
+<rfc category="std" ipr="full2026" docName="sample.txt">
+    <front>
+        <title>RESTLog</title>
+        <author initials='J.C' surname="Gregorio" fullname='Joe Gregorio'>
+            <organization>BitWorking, Inc</organization>
+	        <address>
+		<postal>
+		    <street>1002 Heathwood Dairy Rd.</street>
+		    <city>Apex</city> <region>NC</region> <code>27502</code>
+		    <country>US</country>
+		</postal>
+		<phone>+1 919 272 3764</phone>
+		<email>joe@bitworking.com</email>
+		<uri>http://bitworking.com/</uri>
+                </address>
+        </author>
+        <date month="July" year="2003"/>
+        <abstract><t>This memo presents a technique for 
+using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol)
+to edit content. </t></abstract>
+    </front>
+
+    <middle>
+
+        <section title="Introduction">
+
+<t>RESTLog is an application level protocol for publishing, and editing web resources. 
+RESTLog unifies many disparate publishing mechanisms into a single, simple, 
+extensible protocol. That protocol at it's core is the HTTP transport of an XML payload. 
+There are only two XML vocabularies for the XML payloads, the RSS 2.0 XML format,
+and the RESTLog Archive Format.</t>
+       </section>
+
+        <section title="Terminology">
+            <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+            "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+            and "OPTIONAL" in this document are to be interpreted as
+            described in <xref target="RFC2119"/>.</t>
+        </section>
+
+         <section title="Motivation">
+             <t>As of the writing of this specification there many different and competing specifications
+for editing a web-site, in particular protocols for editing weblogs. Some of those protocols include 
+the Blogger API, the metaWeblog API, and 
+.</t>
+              <t>The various implementations of the different APIs are all slightly different
+and even different implementations of the same API have issues. For example,
+quoted from the RSD specification: [http://archipelago.phrasewise.com/rsd]
+</t>
+
+              <t>Blogger has "plant.blogger.com", "api/RPC2", and the blogID. The "Path to Service" is case sensitive. 
+If a user enters "/api/rpc2" in their preferences they get an error in html, courtesy of Tomcat, 
+that states "The requested resource (/rpc2) is not available.". The error message is subject to 
+change in format. This same problem could apply to every case.
+	       </t>
+
+               <t>Moveable Type uses an endpoint of "mt/mt-xmlrpc.cgi", and the domain level of the URL depends 
+  on the installation. The site identifier is the blogID number.
+ </t>
+
+               <t>Manila and Radio use "rpc2", case insensitive. Manila's domain level URL depends on the installation 
+but it does provide the "sitename" through the ManilaRPC API. Whew! Radio has a consistent siteID (as of this writing).
+</t>
+
+               <t>Conversant has its own API plus support for basic Blogger API. It uses x|x|x identifier where the various 
+flexible elements of Conversant are "x". Familiarity with Conversant is somewhat required. These elements 
+are also required when specifiying a message, so you need a message "number" that looks like this x|x|x|123. 
+Path to service is rpc2, and case insensitive (not tested).
+</t>
+
+                <t>As you can imagine, plenty of folks have struggled to get this information exactly correct for each case. 
+Anything that helps automate the process or gives users up to date information on the specific service 
+their employing would help mitigate this difficulty.
+</t>
+
+
+                 <t>Also, the above specifications are all based on XML-RPC, which is an RPC style
+protocol that doesn't have any accomodations for extensibility. RESTLog is 
+a 'document' style protocol, where extensibility is enabled via the use of xml namespaces.
+</t>
+
+           </section>
+           <section title="Scope">
+             <t>This document covers the transfer of RSS 2.0 and RESTLog Archive formatted XML Payloads to accomplish
+the specific tasks of creating a new weblog post, and editing an old weblog post. This specification
+also covers the RESTLog Archive Format, but defers to @@XXXX@@, which specifies the RSS 2.0
+format.
+</t>
+             <t>The protocol is defined primarily to allow remote editing of content on a weblog. The protocol is 
+restricted to editing Entries in a weblog and does not cover editing templates, images, blogrolls, etc.
+</t>
+
+           </section>
+           <section title="The RESTLog Model">
+             <t>The entry point to start editing any weblog with the RESTLog API is a set of two URIs. These two URIs, which we shall refer to as "createURI", and "archiveURI",
+are used for, respectively, creating a new entry and getting a list of the all the Entries on a site. Each of these URI's support some of 
+the HTTP verbs. For example, to create a new Entry, an RSS Item fragment is POSTed to "createURI". The minimum set of verbs that each interface
+must support is specified. Other HTTP verbs may be supported by each URI, this specification is only concerned with the 
+verbs that must be present, and does not restrict the supported verbs to just those specified. Also note that the URL's used for RESTLog 
+editing need bear no relation to the URIs used to access the HTML version
+of the content.</t>
+             <t>To get a list of Entries that already exist, the client does a GET on the "archiveURI". The list of Entries returned may be sufficient for the
+user, or further retrievals may be required to get the Entries the user is trying to manipulate, see the RESTLog Archive Format for more details, 
+particularly the "more" element. </t>
+           <section title="Creating a new Entry">
+             <t></t>
+             <figure title="Create New Entry">
+               <preamble>To create a new Entry on the server, the client POSTs an Entry to the "createURI". For example,
+                  if "createURI" were "http://example.com/news", the headers and body of the HTTP request to "example.org"
+                  would look like: </preamble>
+                 <artwork><![CDATA[
+POST /news HTTP/1.1
+Content-Type: text/xml
+
+<?xml version="1.0" encoding='iso-8859-1'?>
+<item>
+  <title>My First Post</title>
+  <author>joe@bitworking.org</author>
+  <description>This is the content of 
+    my first post. I will update this later 
+    to be more colorful.</description>
+</item>
+                 ]]></artwork>
+                 <postamble>This would create a new weblog Entry with title "My First Post". </postamble>
+             </figure>
+           </section><!-- Creating a new Entry  -->
+           <section title="Editing an entry">
+             <t>To begin the editing process, the URI of the RSS 2.0 item fragment representating the Entry must be 
+found. The "archiveURI" is the place to begin that discovery process, by doing a GET on that URI. 
+The content returned from that request will be an XML document in the RESTLog Archive Format.
+</t>        
+             <figure title="Retrieving the Archive">
+               <preamble>For example, if "archiveURI" were "http://example.com/archive", the headers and body of the HTTP request to "example.org"
+                  would look like: </preamble>
+                 <artwork><![CDATA[
+GET /archive HTTP/1.1
+Accept: text/xml
+                 ]]></artwork>
+                 <postamble>This would return a list of some of the Entrys on the weblog.</postamble>
+             </figure>
+
+             <figure title="Response from the Archive">
+               <preamble>The response from such a request would look like: </preamble>
+                 <artwork><![CDATA[
+HTTP/1.1 200 OK
+Content-Type: text/xml
+ 
+<?xml version="1.0" encoding='iso-8859-1'?>
+<archives xmlns="http://www.purl.org/RESTLog/archives/1.0">
+ <group title="Last Ten Entries">
+    <res href="http://sample.org/news/100">Most Recent Post</res>
+    <res href="http://sample.org/news/99">Yesterdays</res>
+    .
+    .
+    .
+    <res href="http://sample.org/news/91">Post From The Past</res>
+ </group>
+ <more href="http://sample.org/archive/all">All Items</more>
+ <group title="By Category">
+    <more href="http://sample.org/archive/technology">Tech</more>
+    <more href="http://sample.org/archive/books">Book Reviews</more>
+    <more href="http://sample.org/archive/personal">Personal</more>
+ </group>
+</archives>                 ]]></artwork>
+                 <postamble>This would return a list of some of the Entrys on the weblog.</postamble>
+             </figure>
+
+             <t>Now the Entry that the user is looking for may not be in the list and they may need
+to go further into the archive. For example, if they knew they wanted to edit a Tech Entry that didn't 
+appear in the "Last 10 Entries", then they would retrieve the Archive
+document that resides at "http://sample.org/archive/technology", which could contain some or all
+of the Entries in the Tech category. Note that the document at "http://sample.org/archive/technology" 
+could also contain additional "more" elements.</t>
+             <t>The use of multiple GET's and traversing 
+a web of links allows the server to present the Entries in multiple ways to the user. One alternative
+to this would be to present a single long list of Entries, maybe with attributes attached. That might be
+useful, but the document could get quite long and cumbersome to transfer. It also puts the
+effort onto the RESTLog client to sort, categorize and display the contents of the archive.
+In addition, adding new attributes would require an update to the client software to take advantage of the
+new information.</t>
+             <t>Another approach would be to allow a query syntax that allowed searching for Entries
+based on Date or keyword. The downfall of this approach is the same, in that the addition of new
+seach parameters requiring updating the client software.</t>
+             <t>Once a resource has been chosen the client can do a GET on that resource to get an RSS 2.0 formatted 
+representation of that Entry. Editing of the content or other elements takes place, then the client PUT's the modified Entry back to the 
+same URI to update the Entry. </t>
+           </section>
+           <section title="Deleting an entry">
+             <t>Once a resource has been chosen the client can do a DELETE on that resource to delete the Entry. </t>
+           </section>
+           <section title="Discovery">
+             <t>RSD is used as the format to hold both the "createURI" and the "archviveURI". When editing a web site, 
+the RSD file needs to be found before editing can begin. 
+Part of the RSD specification is for Auto-Discovery, the addition of an HTML 'link' tag to 
+a web page that contains the URI of the RSD file. Please see the @@external link?@@ RSD Specification for more details.
+</t>
+             <t>@@ What about WSIL? @@ </t>
+           </section>
+           <t>None.</t>
+        </section>
+
+        <section title="Functional Specification">
+           <section title="Formats">
+             <section title="RSS 2.0">
+               <t>None.</t>
+             </section>
+             <section title="RSD">
+               <t>None.</t>
+             </section>
+             <section title="Archive Format">
+               <t>None.</t>
+             </section>
+             <t>None.</t>
+           </section>
+           <section title="Entry Points">
+             <section title="Verbs">
+               <t>None.</t>
+             </section>
+             <section title="Result Codes">
+               <t>None.</t>
+             </section>
+             <section title="Content">
+               <t>None.</t>
+             </section>
+             <t>None.</t>
+           </section>
+        </section>
+
+        <section title="Security Considerations">
+        <t>None.</t>
+        </section>
+    </middle>
+
+    <back>
+        <references>&rfc2119;</references>
+    </back>
+
+</rfc>
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/css/feed.xsl"?>
+<feed version="0.3"
+    xmlns="http://purl.org/atom/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcterms="http://purl.org/dc/terms/" 
+    xml:base="http://diveintomark.org/"
+    xml:lang="en"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <dc:title>dive into mark</dc:title>
+    <tagline>the best of all possible worlds</tagline>
+    <dcterms:isFormatOf>/</dcterms:isFormatOf>
+    <link rel="comments" type="application/atom+xml" xlink:href="/xml/comments.xml" title="Recent comments" />
+    <dcterms:modified>2004-06-02T19:52:48Z</dcterms:modified>
+    <dc:identifier>tag:diveintomark.org,2001-07-29:/</dc:identifier>
+    <dc:rights>Copyright 2001-2004, Mark Pilgrim, all rights reserved</dc:rights>
+    <generator xlink:href="http://wordpress.org/" version="1.2">WordPress</generator>
+    <entry>
+        <dc:creator>Mark Pilgrim</dc:creator>
+        <dc:title>The apostrophe is the modern day Shibboleth</dc:title>
+        <dc:isFormatOf>http://diveintomark.org/archives/2004/06/02/apostrophe</dc:isFormatOf>
+        <dc:identifier>tag:diveintomark.org,2004-06-02:/archives/20040602195248</dc:identifier>
+        <dcterms:issued>2004-06-02T19:52:48Z</dcterms:issued>
+        <dcterms:created>2004-06-02T19:52:48Z</dcterms:created>
+        <dcterms:modified>2004-06-02T19:52:48Z</dcterms:modified>
+
+        <dc:subject>Writers</dc:subject>
+        <dcterms:abstract>One of the disadvantages of dealing with a copy editor is that I now have a much higher sensitivity to grammatical errors.  (202 words)</dcterms:abstract>
+        <dc:description type="text/html" mode="escaped" xml:base="http://diveintomark.org/archives/2004/06/02/apostrophe"><![CDATA[	<p>One of the disadvantages of</p>
+            <ol>
+                <li><a href="http://diveintomark.org/archives/2004/05/12/copy-editor">dealing with copy editors</a> and</li>
+                <li>reading <a href="http://www.amazon.com/exec/obidos/ASIN/1592400876/ref%3Dnosim/diveintomark20">Eats, Shoots &amp; Leaves</a></li>
+            </ol>
+            <p>is that I now have a much higher sensitivity and much lower tolerance for grammatical errors.  It&#8217;s like after you quit smoking, and you realize that all of your friends smell badly.  Or when you&#8217;re on a diet, and you realize that everyone around you is fat.  Or (to end on a positive note) when you&#8217;re newly engaged, and suddenly the world around you is a sea of diamond rings.</p>
+            <p>The world around me is a sea of grammatical errors.</p>
+            <p>At the YMCA, this sign sits above the water fountain:</p>
+            <blockquote>
+                <p>REMEMBER NO SPITTING!!!!!</p>
+                <p>IN THE FOUNTAIN, THANK&#8217;S!!!!!</p>
+            </blockquote>
+            <p>On the way home from work, there is a handmade sign on the side of the road:</p>
+            <blockquote>
+                <p>Window Tinting</p>
+                <p>Cars $150</p>
+                <p>SUV&#8217;s $180</p>
+            </blockquote>
+            <p>At our day care center, one room has this sign in the window:</p>
+            <blockquote>
+                <p>THE TODDLER&#8217;S ARE OUTSIDE</p>
+            </blockquote>
+            <p>The <a href="http://www.apostrophe.fsnet.co.uk/">Apostrophe Protection Society</a> is nice, but it&#8217;s so&#8230; British.  What it needs is a militant wing.  Like those culture jammers that go around <a href="http://www.gizmodo.com/archives/strip-pix-burn-iraq-009574.php">defacing iPod posters</a>.  OK, &#8220;culture jammers&#8221; probably overstates it.</p>
+            <p>Hey look, <a href="http://directory.google.com/Top/Society/Activism/Media/Culture_Jamming/">culture jamming has its own DMOZ category</a>.  And its own <a href="http://en.wikipedia.org/wiki/Culture_jamming">Wikipedia page</a>.  As does <a href="http://en.wikipedia.org/wiki/Apostrophe_(mark)">the apostrophe</a>.</p>
+            <p>The apostrophe is the modern day <a href="http://www.ruf.rice.edu/~kemmer/Words/shibboleth.html">Shibboleth</a>.</p>
+            ]]></dc:description>
+    </entry>
+</feed>

@@ -1,0 +1,213 @@
+---
+layout: post
+title: CommentAPI
+
+---
+
+  
+  <p>This version of RESTLog that I am running also supports the 
+<a href="http://wellformedweb.org/story/9">CommentAPI</a>.
+The easiest way to explain it is that you can post 
+a comment via posting an RSS item fragment. Here is how 
+you would do it with <a href="http://curl.haxx.se/">cURL</a>:</p>
+<pre class="example"><code>curl --header "Content-type: text/xml" 
+  --data "&lt;item&gt;&lt;title&gt;Joe&lt;/title&gt;&lt;description&gt;Posted via cURL.&lt;/description&gt;&lt;/item&gt;" 
+  http://bitworking.org/news/comments/52
+</code></pre>
+<p>Note that the above is typed in as a single command line, just broken up
+here to fit on the screen better.</p>
+  <div class="commentContent" id="X1">
+    Posted via cURL.
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X1" title="2003-03-11T20:49:13">2003-03-11</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Just so I am clear, shouldn't all the examples start with
+
+POST /news/5 HTTP/1.1
+
+Otherwise, how does the receiver know which blog entry is to be updated?
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X2" title="2003-03-12T12:30:02">2003-03-12</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Yup, you're right. Corrected now. 
+
+While I was at it I also updated my sites to include the auto-discovery link I specified.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2003-03-12T13:33:49">2003-03-12</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    : Dare Obasanjo: "I need some indication in the RSS feed or on the page identified by the URL that it supports RESTLog POST for submitting comments. I don't want people composing lengthy messages and posting them to Wired or Don's blog only to get a 404"
+
+How about this:
+
+
+
+The element contains the URL of the endpoint to which comments should be posted.
+    <p class="commentByLine">Posted by
+       <a href="http://www.snellspace.com/blog/archives/000327.html">James Snell</a> on <a href="#X4" title="2003-03-12T16:19:34">2003-03-12</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    This didn't show up in the previous post..
+
+http://wellformedweb.org/story/9
+    <p class="commentByLine">Posted by
+       <a href="http://www.snellspace.com/blog/archives/000327.html">James Snell</a> on <a href="#X5" title="2003-03-12T16:21:05">2003-03-12</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Hmmm.. the markup sample that I'm trying to post just ain't showin' up with this form.  Check it out here instead: http://www.snellspace.com/blog/archives/000327.html
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X6" title="2003-03-12T16:22:38">2003-03-12</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Back when this API was first posted and you didn't have comments here, we traded some email on how this could API could stick with the theme of a simple RSS core with modules. For the public record and commentary I thought I'd post this snippet.
+
+---
+
+{snip}
+
+There is however a dc:source element which is probably most appropriate. It appears to have no RDF string attached either. Its marked as being PCDATA.[2] The documentation (which is labeled obsolete, but I don't see a more up-to-date version) says source should "A Reference to a resource from which the present resource is derived." Furthermore "the present resource may be derived from the Source resource in whole or in part.  Recommended best practice is to reference the resource by means of a string or number conforming to a formal identification system."
+
+BTW, you have a author tag in your example without the dc prefix. you would also have to add the dublin core namespace declartion.
+
+---
+
+NOTE: There is no author in the dublin core. I should noted that  could be . (See even the best of us get confused by these overlapping tags.)
+    <p class="commentByLine">Posted by
+       <a href="http://tima.mplode.com/">Timothy Appnel</a> on <a href="#X10" title="2003-03-13T07:51:27">2003-03-13</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Sorry about the problems with posting
+XML. I have updated the code and XML should now be allowed:
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X11" title="2003-03-13T08:25:43">2003-03-13</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Ah, yes. Then let me repeat my last sentence since the XML got stripped.
+--
+NOTE: There is no author in the dublin core. I should noted that &lt;author&gt; could be &lt;dc:creator&gt;. (See even the best of us get confused by these overlapping tags.)
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://tima.mplode.com/">Timothy Appnel</a> on <a href="#X12" title="2003-03-13T10:35:36">2003-03-13</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    I'm working on implementing the CommentAPI and have been trying to work out how to best set things up so that comments, TrackBacks and the like are routed to the correct post.
+I'm presuming that each post would have an associated URL. Since the app I maintain can't produce workable URLs in the fashion of the likes of MovableType e.g. /news/comments/5 
+is it acceptable to produce URLs of the form http://www.mysite.com/commentAPI.asp?id=123456&amp;xml= 
+id= relates to the post's ID and xml= provides the name half of a name/value pair where the value would be the RSS item fragment appended on posting.
+I've been trying out various methods of implementing the API and this is the only way I can come up with to get the post's ID into the mix.
+
+I've run some tests using MS XMLHTTP to post the XML and everything seems to work as planned.
+
+The app is BlogWorks XML (http://www.blogworks.com) and is developed in ASP.
+Thanks in advance for any thoughts or comments
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian frost</a> on <a href="#X13" title="2003-03-14T14:08:51">2003-03-14</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    Adrian,
+    The format of the URL doesn't matter as long as it contains enough information for *your* cgi to figure out which post the comment belongs to. The client software, whatever is doing the pinging/commenting in this case is not supposed to be looking at the structure of the URI, just using it as it is. Just so you know, I'm not using Moveable Type, but my own stuff:
+
+http://wellformedweb.org/story/2
+
+    I am not clear on the use of the 'xml=' parameter. As long as the URL is unique and can be found via the auto-discovery then it should be fine, just curious how it is being used. 
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X14" title="2003-03-14T15:15:32">2003-03-14</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    You may well be write about the xml= thing :-) I was working up a page that could take in comments posted using MS XMLHTTP and via a form. The xml= may be redundant however.
+
+One thing I don't get (amongst many...) is how the auto-discovery can work for a whole page of posts with unique IDs - particularly the way I have to specify the URL to the ping receiving page. At best I could use the link to point to the general page but no specific post ID information would be attached.
+Maybe I've grasped the wrong end of the stick on the whole auto-dsicovery thing.
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian Frost</a> on <a href="#X15" title="2003-03-14T16:16:51">2003-03-14</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    Adrian,
+   If you look at my pages you'll see that I only have the link tags for the CommentAPI on the individual item pages, not on the main page. Similarly the 'wfw:comment' tag that appears in the rss feed is an 'item' level  element not a 'channel' level element. Don't look for that just yet as I haven't added it to my RSS feeds, still waiting for feedback on the design before I roll it out.
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X16" title="2003-03-14T18:40:42">2003-03-14</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Joe,
+In that case I'm probably scuppered as far as the auto discovery goes as BlgWorks doesn't produce items/posts on individual pages. 
+Do you think some kind of RDF as for TrackBack would be appropriate in that case?
+Adding the wfw:comment element to my RSS feeds wouldn't be too much of a problem although I'd figured that the comments sub-element in RSS 2.0 would be appropriate too.
+
+You were right about the xml= thing. I can make the incoming page handle both XMLHTTP posted data and form data without needing the xml= tacked onto the end of the URL.
+
+So, overall looking good I think. I have a basic model working which won't be too difficult to integrate into the app as I made some changes with the CommentAPI in mind just before releasing the beta of the new version.
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X17" title="2003-03-15T01:47:50">2003-03-15</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    Adrian,
+    Would it be possible for BlogWorks to put multiple 'link' elements on the same page, one for each story? I am asking just for your content generation side. I still don't know what that would mean for the comment generation side. I need to do some digging and see if it's possible to supply multiple 'link' tags that are all the same except for the 'title' attribute.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X18" title="2003-03-15T16:54:10">2003-03-15</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    Having followed through the discussion at http://www.intertwingly.net/blog/1261.html is the wfw namespace set in stone? i.e. can I use it in developing my blogging app's RSS feed functions?
+
+Also, regarding the incoming Item fragments. Will they be solely standard RSS 2.0 or are there likely to be extra bits and pieces added through namespaces? I'm not sure if I'm really asking the right question but would like to know if I'm coding for a narrowly defined set of elements that maybe received or need to be able to take in anything and everything in the item element.
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X19" title="2003-03-15T17:36:57">2003-03-15</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    Joe,
+
+Posted the above before reading your comment about link tags.
+Link tags for each post would be simple. Could be added 'fully formed' by writing a new placeholder tag into the blogging engine
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X20" title="2003-03-15T17:39:27">2003-03-15</a>
+    </p>
+</div><div class="commentContent" id="X21">
+    Sorry to say that I haven't been following the discussion carefully enough: did I miss the part where the comment author got mapped to title? That'll be a problem for my comments, which have titles. dc:creator seems like a better fit to me.
+    <p class="commentByLine">Posted by
+       <a href="http://philringnalda.com">Phil Ringnalda</a> on <a href="#X21" title="2003-03-17T19:21:08">2003-03-17</a>
+    </p>
+</div><div class="commentContent" id="X22">
+    Adrian,
+   Expect other bits and pieces added in their own namespaces. Like Dublin Core and all the RSS 1.0 Modules.
+
+Phil,
+   That sounds like a good idea, I was bumping into this problem just today. I will post a seperate item to get feedback on this idea.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X22" title="2003-03-17T22:26:41">2003-03-17</a>
+    </p>
+</div><div class="commentContent" id="X23">
+    Just been looking at the RSS spec. The author element is for the author's email address so presumably the dc:creator element is for their name as text?
+
+Will incoming item fragments that use Dublin Core and the like include their own namespace declarations each time? In my app the incoming stuff gets written more or less straight into another RSS file and I'm not keen to have to have every possible namespace declaration already built in.
+
+Finally, for blog apps that don't do page-per-post stuff i.e. everything is on one page + archives, thus making the link tag somewhat impratical, could the wfw:comment element be added to any TrackBack rdf that was already present?
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X23" title="2003-03-18T05:56:24">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X24">
+    My Excerpt
+    <p class="commentByLine">Posted by
+       <a href="http://www.bar.com/">Foo Bar</a> on <a href="#X24" title="2004-05-06T03:28:35">2004-05-06</a>
+    </p>
+</div><div class="commentContent" id="X25">
+    
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X25" title="2004-05-06T03:29:26">2004-05-06</a>
+    </p>
+</div><div class="commentContent" id="X26">
+    My Excerpt
+    <p class="commentByLine">Posted by
+       <a href="http://www.bar.com/">CommentAPI</a> on <a href="#X26" title="2004-05-06T03:31:20">2004-05-06</a>
+    </p>
+</div><div class="commentContent" id="X27">
+    A friend told me of your site. That?s definitely what i was looking for. I will surely recommend you.
+    <p class="commentByLine">Posted by
+       <a href="mailto:webmaster@jseek.de">Jenny Lou</a> on <a href="#X27" title="2005-04-28T02:46:37">2005-04-28</a>
+    </p>
+</div>
+  

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+    "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+    <svg xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+             <defs>
+                     <path id="textPath" d="M10 50 C10 0 90 0 90 50 C140 190 190 190 120 10 C0 300 0 0 150 150 "
+                                style="stroke: black; fill: none;"/>
+                                    </defs>
+                                        <use xlink:href="#textPath" />
+                                            <text>
+                                                    <textPath xlink:href="#textPath">I. Drove. In. Boston. I. Drove. In. Boston. I. Drove. In. Boston. I. Drove. In. Boston. I. Drove. In. Boston. I. Drove. In. Boston. I. Drove. In. Boston. </textPath>
+                                                        </text>
+                                                        </svg>
+

@@ -1,0 +1,79 @@
+---
+layout: post
+title: Combinatorial Critter Generator Web Service
+
+---
+
+  
+  <p>
+<img src="http://bitworking.org/projects/critters/medium/joegregorio" style="float: right;" />
+Inspired by 
+            <a href="http://www.levitated.net/bones/walkingFaces/index.html">Combinatorial Critters</a>,
+            and <a href="http://www.splitbrain.org/blog/2007-01/20_monsterid_as_gravatar_fallback">MonsterID</a>, 
+            which allow you to create critters from combinations of parts, I 
+            just couldn't help but think, "That would be so much better as a web service", and thus the 
+<a href="http://bitworking.org/projects/critters/">
+Critter Generator</a> was born.
+</p>
+<p style="text-align: center;">
+<img src="http://bitworking.org/projects/critters/small/e" />
+<img src="http://bitworking.org/projects/critters/small/f" />
+<img src="http://bitworking.org/projects/critters/small/g" />
+<img src="http://bitworking.org/projects/critters/small/h" />
+</p>
+<p>Now, as you will soon realize, I am not much of an artist, so if you want to take a crack 
+  at creating monster parts I'd love to update the service with some real art, and if anyone
+sends in another 'set' of parts I'll update the service to allow selecting among the sets
+sent in.
+</p>
+<p>The source images are 300x500 PNGs with transparent backgrounds. There are five sets of images:</p>
+<ol>
+<li>face<b>N</b>.png
+</li><li>eyes<b>N</b>.png
+</li><li>foot<b>N</b>.png
+</li><li>hair<b>N</b>.png
+</li><li>mouth<b>N</b>.png
+</li></ol>
+<p>Where N is from 1 to 8. I then use ImageMagick to convert the full size originals
+into the three smaller sizes used by the web service. The 
+<a href="http://bitworking.org/projects/critters/src/critters/">source
+code</a> listed off the 
+<a href="http://bitworking.org/projects/critters/">project page</a> also contains all the images if you want to get 
+a feel for how they work. If you just want to peek at the source code for the service you can <a href="http://bitworking.org/projects/critters/src/critters/critter.py">see it here</a>.
+</p>
+  <div class="commentContent" id="X1">
+    <p>Great idea.</p>
+<p>I see you're not caching the critters. I think I'd be wary about running a potentially popular service that generates an image for every (<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.19" title="Yay, HTTP!">non-repeat</a>) request. Then again, you have some experience running PIL-based services. If caching ever is needed, since it's CGI, you can use the <a href="http://hoohoo.ncsa.uiuc.edu/cgi/out.html" title="subhead 'Parsed Headers'">Location pseudo-header</a> and let Apache do what it's good at.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://domnit.org/">Lenny</a> on <a href="#X1" title="2007-02-23T00:01:11.855377">2007-02-23</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    This may be just too meta... but you could add another web service layer by farming out the art production with Mechanical Turk.  See <a href="http://www.thesheepmarket.com/">The Sheep Market</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://www.anseljh.com/">Ansel</a> on <a href="#X2" title="2007-02-26T14:14:48.902307">2007-02-26</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    If someone could do this with Miis, I would &lt;3 them forever.
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X3" title="2007-02-26T15:40:50.558890">2007-02-26</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I ported your fabulous generator to PHP to use it as a plugin for an elearning management software. We got many laughs about those critters :-)
+
+Thanks!
+    <p class="commentByLine">Posted by
+       <a href="http://mainland.virtuos.uos.de/mlunzena/irgendwieanders">Marcus</a> on <a href="#X4" title="2007-02-28T12:15:05.471850">2007-02-28</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    I ported your fabulous generator to PHP to use it as a plugin for an elearning management software. We got many laughs about those critters :-)
+<br />
+Thanks!
+
+<img src="http://mainland.virtuos.uos.de/mlunzena/irgendwieanders/critter_webservice.php/medium/mlunzena" />
+<br />
+darcs get <a href="http://mainland.virtuos.uos.de/mlunzena/irgendwieanders">http://mainland.virtuos.uos.de/mlunzena/irgendwieanders</a>
+    <p class="commentByLine">Posted by
+       <a href="http://mainland.virtuos.uos.de/mlunzena/irgendwieanders">Marcus</a> on <a href="#X5" title="2007-02-28T12:15:06.343119">2007-02-28</a>
+    </p>
+</div>
+  

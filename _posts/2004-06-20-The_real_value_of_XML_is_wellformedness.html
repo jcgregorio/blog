@@ -1,0 +1,29 @@
+---
+layout: post
+title: The real value of XML is wellformedness
+
+---
+
+  
+  <p>Almost two years ago I switched away from Radio to 
+  my own home grown tools for blogging. Because the Radio
+  site was statically generated I didn't bother moving all my old content
+  into the new system, instead I just
+  exported the site data as an XML file in case I needed it at 
+  a later date. That file has lain dormant all this time.
+  Now I am slowly preparing to move all my content over to pyblosxom
+  and started to work with that large exported blob of data.
+</p>
+<h3>Except</h3>
+<p>When I tried to load it into an XML parser it failed to load.
+   As it turns out the file was riddled with character set
+   encoding problems, in particular quote marks. After much
+   hand tweaking I finally have it in shape where a real 
+   XML parser can open in up. Now I can get on with the job
+   of importing the data into pyblosxom. It isn't supposed to be this hard.
+</p>
+<p>The real value of XML is interop and the currency of that 
+   interop is syntax as expressed in the term "well-formed".</p>
+
+  
+  

@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Sparklines Moved</title>
+    <meta name=created value="2009-03-05T16:14:55.831123">
+  </head>
+  <body>
+  
+  <p>My site is now running on a <a href="http://cornerhost.blogspot.com/2009/03/scandium-and-vanadium-online.html">shiny new server</a> at cornerhost.
+Because of the transition my local install of Python 2.5 started to fail on the new architecture. It was a quick fix to download
+Python 2.5 and rebuild it from source and then install the extra libraries I needed, and it was also a good indication
+of how fast the new machines are: the build from scratch of Python went very fast. The downside is that 
+in the process of the transition my <a href="http://sparklines.bitworking.info/">sparklines service</a> also stopped for the same reason and that gets a
+decent amount of traffic. The failure was entirely my fault, and I don't like the idea of people depending on that service and it not being available
+so I've moved it to App Engine. I previously <a href="http://bitworking.org/news/397/porting-sparklines-to-app-engine">blogged how I'd re-written the service so it runs both on cornerhost
+    and also on App Engine</a>, but now I've taken it one step further and all requests to the service will redirect to 
+the App Engine instance. If you're running a service that uses sparklines then you should use <a href="http://sparklines.bitworking.info/">the new URI</a>
+and avoid the latency of the extra round-trip to <code>bitworking.org</code>.
+</p>
+<p>One last thing to note about the migrated sparklines service is its URI:</p>
+<blockquote><pre><code>http://sparklines.bitworking.info/</code></pre></blockquote>
+<p>That is a Google App Engine application running inside a Google Apps domain.
+The Apps domain is my newly registered <code>bitworking.<b>info</b></code>, (don't worry, all
+the rest of my content will remain here on <code>bitworking.org</code>), and I installed
+my App Engine application into that domain at the <code>sparklines.bitworking.info</code> address.
+See the <a href="http://code.google.com/appengine/articles/domains.html">documentation</a> for more information.
+</p>
+  
+  </body>

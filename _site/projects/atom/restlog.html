@@ -1,0 +1,463 @@
+<html><head><title>RESTLog</title>
+<STYLE type='text/css'>
+    .title { color: #990000; font-size: 22px; line-height: 22px; font-weight: bold; text-align: right;
+             font-family: helvetica, arial, sans-serif }
+    .filename { color: #666666; font-size: 18px; line-height: 28px; font-weight: bold; text-align: right;
+                  font-family: helvetica, arial, sans-serif }
+    p.copyright { color: #000000; font-size: 10px;
+                  font-family: verdana, charcoal, helvetica, arial, sans-serif }
+    p { margin-left: 2em; margin-right: 2em; }
+    span.emph { font-style: italic; }
+    span.strong { font-weight: bold; }
+    span.verb { font-style: oblique; }
+    li { margin-left: 3em;  }
+    ol { margin-left: 2em; margin-right: 2em; }
+    ul.text { margin-left: 2em; margin-right: 2em; }
+    pre { margin-left: 3em; color: #333333 }
+    ul.toc { color: #000000; line-height: 16px;
+             font-family: verdana, charcoal, helvetica, arial, sans-serif }
+    H3 { color: #333333; font-size: 16px; line-height: 16px; font-family: helvetica, arial, sans-serif }
+    H4 { color: #000000; font-size: 14px; font-family: helvetica, arial, sans-serif }
+    TD.header { color: #ffffff; font-size: 10px; font-family: arial, helvetica, san-serif; valign: top }
+    TD.author-text { color: #000000; font-size: 10px;
+                     font-family: verdana, charcoal, helvetica, arial, sans-serif }
+    TD.author { color: #000000; font-weight: bold; margin-left: 4em; font-size: 10px; font-family: verdana, charcoal, helvetica, arial, sans-serif }
+     A:link { color: #990000; font-weight: bold;
+              font-family: MS Sans Serif, verdana, charcoal, helvetica, arial, sans-serif }
+     A:visited { color: #333333; font-weight: bold;
+                 font-family: MS Sans Serif, verdana, charcoal, helvetica, arial, sans-serif }
+     A:name { color: #333333; font-weight: bold;
+              font-family: MS Sans Serif, verdana, charcoal, helvetica, arial, sans-serif }
+    .link2 { color:#ffffff; font-weight: bold; text-decoration: none;
+             font-family: monaco, charcoal, geneva, MS Sans Serif, helvetica, monotype, verdana, sans-serif;
+             font-size: 9px }
+    .RFC { color:#666666; font-weight: bold; text-decoration: none;
+           font-family: monaco, charcoal, geneva, MS Sans Serif, helvetica, monotype, verdana, sans-serif;
+           font-size: 9px }
+    .hotText { color:#ffffff; font-weight: normal; text-decoration: none;
+               font-family: charcoal, monaco, geneva, MS Sans Serif, helvetica, monotype, verdana, sans-serif;
+               font-size: 9px }
+</style>
+</head>
+<body bgcolor="#ffffff" text="#000000" alink="#000000" vlink="#666666" link="#990000">
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<table width="66%" border="0" cellpadding="0" cellspacing="0"><tr><td><table width="100%" border="0" cellpadding="2" cellspacing="1">
+<tr valign="top"><td width="33%" bgcolor="#666666" class="header">Network Working Group</td><td width="33%" bgcolor="#666666" class="header">J. Gregorio</td></tr>
+<tr valign="top"><td width="33%" bgcolor="#666666" class="header">Internet-Draft</td><td width="33%" bgcolor="#666666" class="header">BitWorking, Inc</td></tr>
+<tr valign="top"><td width="33%" bgcolor="#666666" class="header">Expires: December 30, 2003</td><td width="33%" bgcolor="#666666" class="header">July 1, 2003</td></tr>
+</table></td></tr></table>
+<div align="right"><font face="monaco, MS Sans Serif" color="#990000" size="+3"><b><br><span class="title">RESTLog</span></b></font></div>
+<div align="right"><font face="monaco, MS Sans Serif" color="#666666" size="+2"><b><span class="filename">sample.txt</span></b></font></div>
+<font face="verdana, helvetica, arial, sans-serif" size="2">
+
+<h3>Status of this Memo</h3>
+<p>
+This document is an Internet-Draft and is in full conformance with all provisions of Section 10 of RFC2026.</p>
+<p>
+Internet-Drafts are working documents of the Internet Engineering
+Task Force (IETF), its areas, and its working groups.
+Note that other groups may also distribute working documents as
+Internet-Drafts.</p>
+<p>
+Internet-Drafts are draft documents valid for a maximum of six months
+and may be updated, replaced, or obsoleted by other documents at any time.
+It is inappropriate to use Internet-Drafts as reference material or to cite
+them other than as "work in progress."</p>
+<p>
+The list of current Internet-Drafts can be accessed at
+<a href='http://www.ietf.org/ietf/1id-abstracts.txt'>http://www.ietf.org/ietf/1id-abstracts.txt</a>.</p>
+<p>
+The list of Internet-Draft Shadow Directories can be accessed at
+<a href='http://www.ietf.org/shadow.html'>http://www.ietf.org/shadow.html</a>.</p>
+<p>
+This Internet-Draft will expire on December 30, 2003.</p>
+
+<h3>Copyright Notice</h3>
+<p>
+Copyright (C) The Internet Society (2003). All Rights Reserved.</p>
+
+<h3>Abstract</h3>
+
+<p>This memo presents a technique for 
+using XML (Extensible Markup Language) and HTTP (HyperText Transport Protocol)
+to edit content. 
+</p><a name="toc"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<h3>Table of Contents</h3>
+<ul compact class="toc">
+<b><a href="#anchor1">1.</a>&nbsp;
+Introduction<br></b>
+<b><a href="#anchor2">2.</a>&nbsp;
+Terminology<br></b>
+<b><a href="#anchor3">3.</a>&nbsp;
+Motivation<br></b>
+<b><a href="#anchor4">4.</a>&nbsp;
+Scope<br></b>
+<b><a href="#anchor5">5.</a>&nbsp;
+The RESTLog Model<br></b>
+<b><a href="#anchor6">5.1</a>&nbsp;
+Creating a new Entry<br></b>
+<b><a href="#anchor7">5.2</a>&nbsp;
+Editing an entry<br></b>
+<b><a href="#anchor8">5.3</a>&nbsp;
+Deleting an entry<br></b>
+<b><a href="#anchor9">5.4</a>&nbsp;
+Discovery<br></b>
+<b><a href="#anchor10">6.</a>&nbsp;
+Functional Specification<br></b>
+<b><a href="#anchor11">6.1</a>&nbsp;
+Formats<br></b>
+<b><a href="#anchor12">6.1.1</a>&nbsp;
+RSS 2.0<br></b>
+<b><a href="#anchor13">6.1.2</a>&nbsp;
+RSD<br></b>
+<b><a href="#anchor14">6.1.3</a>&nbsp;
+Archive Format<br></b>
+<b><a href="#anchor15">6.2</a>&nbsp;
+Entry Points<br></b>
+<b><a href="#anchor16">6.2.1</a>&nbsp;
+Verbs<br></b>
+<b><a href="#anchor17">6.2.2</a>&nbsp;
+Result Codes<br></b>
+<b><a href="#anchor18">6.2.3</a>&nbsp;
+Content<br></b>
+<b><a href="#anchor19">7.</a>&nbsp;
+Security Considerations<br></b>
+<b><a href="#rfc.references1">&#167;</a>&nbsp;
+References<br></b>
+<b><a href="#rfc.authors">&#167;</a>&nbsp;
+Author's Address<br></b>
+<b><a href="#rfc.copyright">&#167;</a>&nbsp;
+Intellectual Property and Copyright Statements<br></b>
+</ul>
+<br clear="all">
+
+<a name="anchor1"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.1"></a><h3>1.&nbsp;Introduction</h3>
+
+<p>RESTLog is an application level protocol for publishing, and editing web resources. 
+RESTLog unifies many disparate publishing mechanisms into a single, simple, 
+extensible protocol. That protocol at it's core is the HTTP transport of an XML payload. 
+There are only two XML vocabularies for the XML payloads, the RSS 2.0 XML format,
+and the RESTLog Archive Format.
+</p>
+<a name="anchor2"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.2"></a><h3>2.&nbsp;Terminology</h3>
+
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+            "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY",
+            and "OPTIONAL" in this document are to be interpreted as
+            described in <a href="#RFC2119" title="Bradner, S., Key words for use in RFCs to Indicate Requirement Levels, March 1997.">[RFC2119]</a>.
+</p>
+<a name="anchor3"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.3"></a><h3>3.&nbsp;Motivation</h3>
+
+<p>As of the writing of this specification there many different and competing specifications
+for editing a web-site, in particular protocols for editing weblogs. Some of those protocols include 
+the Blogger API, the metaWeblog API, and 
+.
+</p>
+<p>The various implementations of the different APIs are all slightly different
+and even different implementations of the same API have issues. For example,
+quoted from the RSD specification: [http://archipelago.phrasewise.com/rsd]
+
+</p>
+<p>Blogger has "plant.blogger.com", "api/RPC2", and the blogID. The "Path to Service" is case sensitive. 
+If a user enters "/api/rpc2" in their preferences they get an error in html, courtesy of Tomcat, 
+that states "The requested resource (/rpc2) is not available.". The error message is subject to 
+change in format. This same problem could apply to every case.
+	       
+</p>
+<p>Moveable Type uses an endpoint of "mt/mt-xmlrpc.cgi", and the domain level of the URL depends 
+  on the installation. The site identifier is the blogID number.
+ 
+</p>
+<p>Manila and Radio use "rpc2", case insensitive. Manila's domain level URL depends on the installation 
+but it does provide the "sitename" through the ManilaRPC API. Whew! Radio has a consistent siteID (as of this writing).
+
+</p>
+<p>Conversant has its own API plus support for basic Blogger API. It uses x|x|x identifier where the various 
+flexible elements of Conversant are "x". Familiarity with Conversant is somewhat required. These elements 
+are also required when specifiying a message, so you need a message "number" that looks like this x|x|x|123. 
+Path to service is rpc2, and case insensitive (not tested).
+
+</p>
+<p>As you can imagine, plenty of folks have struggled to get this information exactly correct for each case. 
+Anything that helps automate the process or gives users up to date information on the specific service 
+their employing would help mitigate this difficulty.
+
+</p>
+<p>Also, the above specifications are all based on XML-RPC, which is an RPC style
+protocol that doesn't have any accomodations for extensibility. RESTLog is 
+a 'document' style protocol, where extensibility is enabled via the use of xml namespaces.
+
+</p>
+<a name="anchor4"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.4"></a><h3>4.&nbsp;Scope</h3>
+
+<p>This document covers the transfer of RSS 2.0 and RESTLog Archive formatted XML Payloads to accomplish
+the specific tasks of creating a new weblog post, and editing an old weblog post. This specification
+also covers the RESTLog Archive Format, but defers to @@XXXX@@, which specifies the RSS 2.0
+format.
+
+</p>
+<p>The protocol is defined primarily to allow remote editing of content on a weblog. The protocol is 
+restricted to editing Entries in a weblog and does not cover editing templates, images, blogrolls, etc.
+
+</p>
+<a name="anchor5"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.5"></a><h3>5.&nbsp;The RESTLog Model</h3>
+
+<p>The entry point to start editing any weblog with the RESTLog API is a set of two URIs. These two URIs, which we shall refer to as "createURI", and "archiveURI",
+are used for, respectively, creating a new entry and getting a list of the all the Entries on a site. Each of these URI's support some of 
+the HTTP verbs. For example, to create a new Entry, an RSS Item fragment is POSTed to "createURI". The minimum set of verbs that each interface
+must support is specified. Other HTTP verbs may be supported by each URI, this specification is only concerned with the 
+verbs that must be present, and does not restrict the supported verbs to just those specified. Also note that the URL's used for RESTLog 
+editing need bear no relation to the URIs used to access the HTML version
+of the content.
+</p>
+<p>To get a list of Entries that already exist, the client does a GET on the "archiveURI". The list of Entries returned may be sufficient for the
+user, or further retrievals may be required to get the Entries the user is trying to manipulate, see the RESTLog Archive Format for more details, 
+particularly the "more" element. 
+</p>
+<a name="rfc.section.5.1"></a><h4><a name="anchor6">5.1</a>&nbsp;Creating a new Entry</h4>
+
+<p>
+</p><br><hr size="1" shade="0">
+
+<p>To create a new Entry on the server, the client POSTs an Entry to the "createURI". For example,
+                  if "createURI" were "http://example.com/news", the headers and body of the HTTP request to "example.org"
+                  would look like: 
+</p></font><pre>
+POST /news HTTP/1.1
+Content-Type: text/xml
+
+&lt;?xml version="1.0" encoding='iso-8859-1'?>
+&lt;item>
+  &lt;title>My First Post&lt;/title>
+  &lt;author>joe@bitworking.org&lt;/author>
+  &lt;description>This is the content of 
+    my first post. I will update this later 
+    to be more colorful.&lt;/description>
+&lt;/item>
+                 </pre><font face="verdana, helvetica, arial, sans-serif" size="2">
+
+<p>This would create a new weblog Entry with title "My First Post". 
+</p><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Create New Entry&nbsp;</b></font><br></td></tr></table><hr size="1" shade="0">
+
+<a name="rfc.section.5.2"></a><h4><a name="anchor7">5.2</a>&nbsp;Editing an entry</h4>
+
+<p>To begin the editing process, the URI of the RSS 2.0 item fragment representating the Entry must be 
+found. The "archiveURI" is the place to begin that discovery process, by doing a GET on that URI. 
+The content returned from that request will be an XML document in the RESTLog Archive Format.
+
+</p><br><hr size="1" shade="0">
+
+<p>For example, if "archiveURI" were "http://example.com/archive", the headers and body of the HTTP request to "example.org"
+                  would look like: 
+</p></font><pre>
+GET /archive HTTP/1.1
+Accept: text/xml
+                 </pre><font face="verdana, helvetica, arial, sans-serif" size="2">
+
+<p>This would return a list of some of the Entrys on the weblog.
+</p><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Retrieving the Archive&nbsp;</b></font><br></td></tr></table><hr size="1" shade="0">
+<br><hr size="1" shade="0">
+
+<p>The response from such a request would look like: 
+</p></font><pre>
+HTTP/1.1 200 OK
+Content-Type: text/xml
+
+&lt;?xml version="1.0" encoding='iso-8859-1'?>
+&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0">
+ &lt;group title="Last Ten Entries">
+    &lt;res href="http://sample.org/news/100">Most Recent Post&lt;/res>
+    &lt;res href="http://sample.org/news/99">Yesterdays&lt;/res>
+    .
+    .
+    .
+    &lt;res href="http://sample.org/news/91">Post From The Past&lt;/res>
+ &lt;/group>
+ &lt;more href="http://sample.org/archive/all">All Items&lt;/more>
+ &lt;group title="By Category">
+    &lt;more href="http://sample.org/archive/technology">Tech&lt;/more>
+    &lt;more href="http://sample.org/archive/books">Book Reviews&lt;/more>
+    &lt;more href="http://sample.org/archive/personal">Personal&lt;/more>
+ &lt;/group>
+&lt;/archives>                 </pre><font face="verdana, helvetica, arial, sans-serif" size="2">
+
+<p>This would return a list of some of the Entrys on the weblog.
+</p><table border="0" cellpadding="0" cellspacing="2" align="center"><tr><td align="center"><font face="monaco, MS Sans Serif" size="1"><b>&nbsp;Response from the Archive&nbsp;</b></font><br></td></tr></table><hr size="1" shade="0">
+
+<p>Now the Entry that the user is looking for may not be in the list and they may need
+to go further into the archive. For example, if they knew they wanted to edit a Tech Entry that didn't 
+appear in the "Last 10 Entries", then they would retrieve the Archive
+document that resides at "http://sample.org/archive/technology", which could contain some or all
+of the Entries in the Tech category. Note that the document at "http://sample.org/archive/technology" 
+could also contain additional "more" elements.
+</p>
+<p>The use of multiple GET's and traversing 
+a web of links allows the server to present the Entries in multiple ways to the user. One alternative
+to this would be to present a single long list of Entries, maybe with attributes attached. That might be
+useful, but the document could get quite long and cumbersome to transfer. It also puts the
+effort onto the RESTLog client to sort, categorize and display the contents of the archive.
+In addition, adding new attributes would require an update to the client software to take advantage of the
+new information.
+</p>
+<p>Another approach would be to allow a query syntax that allowed searching for Entries
+based on Date or keyword. The downfall of this approach is the same, in that the addition of new
+seach parameters requiring updating the client software.
+</p>
+<p>Once a resource has been chosen the client can do a GET on that resource to get an RSS 2.0 formatted 
+representation of that Entry. Editing of the content or other elements takes place, then the client PUT's the modified Entry back to the 
+same URI to update the Entry. 
+</p>
+<a name="rfc.section.5.3"></a><h4><a name="anchor8">5.3</a>&nbsp;Deleting an entry</h4>
+
+<p>Once a resource has been chosen the client can do a DELETE on that resource to delete the Entry. 
+</p>
+<a name="rfc.section.5.4"></a><h4><a name="anchor9">5.4</a>&nbsp;Discovery</h4>
+
+<p>RSD is used as the format to hold both the "createURI" and the "archviveURI". When editing a web site, 
+the RSD file needs to be found before editing can begin. 
+Part of the RSD specification is for Auto-Discovery, the addition of an HTML 'link' tag to 
+a web page that contains the URI of the RSD file. Please see the @@external link?@@ RSD Specification for more details.
+
+</p>
+<p>@@ What about WSIL? @@ 
+</p>
+<p>None.
+</p>
+<a name="anchor10"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.6"></a><h3>6.&nbsp;Functional Specification</h3>
+
+<a name="rfc.section.6.1"></a><h4><a name="anchor11">6.1</a>&nbsp;Formats</h4>
+
+<a name="rfc.section.6.1.1"></a><h4><a name="anchor12">6.1.1</a>&nbsp;RSS 2.0</h4>
+
+<p>None.
+</p>
+<a name="rfc.section.6.1.2"></a><h4><a name="anchor13">6.1.2</a>&nbsp;RSD</h4>
+
+<p>None.
+</p>
+<a name="rfc.section.6.1.3"></a><h4><a name="anchor14">6.1.3</a>&nbsp;Archive Format</h4>
+
+<p>None.
+</p>
+<p>None.
+</p>
+<a name="rfc.section.6.2"></a><h4><a name="anchor15">6.2</a>&nbsp;Entry Points</h4>
+
+<a name="rfc.section.6.2.1"></a><h4><a name="anchor16">6.2.1</a>&nbsp;Verbs</h4>
+
+<p>None.
+</p>
+<a name="rfc.section.6.2.2"></a><h4><a name="anchor17">6.2.2</a>&nbsp;Result Codes</h4>
+
+<p>None.
+</p>
+<a name="rfc.section.6.2.3"></a><h4><a name="anchor18">6.2.3</a>&nbsp;Content</h4>
+
+<p>None.
+</p>
+<p>None.
+</p>
+<a name="anchor19"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<a name="rfc.section.7"></a><h3>7.&nbsp;Security Considerations</h3>
+
+<p>None.
+</p>
+<a name="rfc.references1"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<h3>References</h3>
+<table width="99%" border="0">
+<tr><td class="author-text" valign="top"><b><a name="RFC2119">[RFC2119]</a></b></td>
+<td class="author-text"><a href="mailto:sob@harvard.edu">Bradner, S.</a>, "<a href="ftp://ftp.isi.edu/in-notes/rfc2119.txt">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997 (<a href="ftp://ftp.isi.edu/in-notes/rfc2119.txt">TXT</a>, <a href="http://xml.resource.org/public/rfc/html/rfc2119.html">HTML</a>, <a href="http://xml.resource.org/public/rfc/xml/rfc2119.xml">XML</a>).</td></tr>
+</table>
+
+<a name="rfc.authors"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<h3>Author's Address</h3>
+<table width="99%" border="0" cellpadding="0" cellspacing="0">
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Joe Gregorio</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">BitWorking, Inc</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">1002 Heathwood Dairy Rd.</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">Apex, NC  27502</td></tr>
+<tr><td class="author-text">&nbsp;</td>
+<td class="author-text">US</td></tr>
+<tr><td class="author" align="right">Phone:&nbsp;</td>
+<td class="author-text">+1 919 272 3764</td></tr>
+<tr><td class="author" align="right">EMail:&nbsp;</td>
+<td class="author-text"><a href="mailto:joe@bitworking.com">joe@bitworking.com</a></td></tr>
+<tr><td class="author" align="right">URI:&nbsp;</td>
+<td class="author-text"><a href="http://bitworking.com/">http://bitworking.com/</a></td></tr>
+</table>
+<a name="rfc.copyright"><br><hr size="1" shade="0"></a>
+<table border="0" cellpadding="0" cellspacing="2" width="30" height="15" align="right"><tr><td bgcolor="#990000" align="center" width="30" height="15"><a href="#toc" CLASS="link2"><font face="monaco, MS Sans Serif" color="#ffffff" size="1"><b>&nbsp;TOC&nbsp;</b></font></a><br></td></tr></table>
+<h3>Intellectual Property Statement</h3>
+<p class='copyright'>
+The IETF takes no position regarding the validity or scope of
+any intellectual property or other rights that might be claimed
+to  pertain to the implementation or use of the technology
+described in this document or the extent to which any license
+under such rights might or might not be available; neither does
+it represent that it has made any effort to identify any such
+rights. Information on the IETF's procedures with respect to
+rights in standards-track and standards-related documentation
+can be found in BCP-11. Copies of claims of rights made
+available for publication and any assurances of licenses to
+be made available, or the result of an attempt made
+to obtain a general license or permission for the use of such
+proprietary rights by implementors or users of this
+specification can be obtained from the IETF Secretariat.</p>
+<p class='copyright'>
+The IETF invites any interested party to bring to its
+attention any copyrights, patents or patent applications, or
+other proprietary rights which may cover technology that may be
+required to practice this standard. Please address the
+information to the IETF Executive Director.</p>
+<h3>Full Copyright Statement</h3>
+<p class='copyright'>
+Copyright (C) The Internet Society (2003). All Rights Reserved.</p>
+<p class='copyright'>
+This document and translations of it may be copied and furnished to
+others, and derivative works that comment on or otherwise explain it
+or assist in its implementation may be prepared, copied, published and
+distributed, in whole or in part, without restriction of any kind,
+provided that the above copyright notice and this paragraph are
+included on all such copies and derivative works. However, this
+document itself may not be modified in any way, such as by removing
+the copyright notice or references to the Internet Society or other
+Internet organizations, except as needed for the purpose of
+developing Internet standards in which case the procedures for
+copyrights defined in the Internet Standards process must be
+followed, or as required to translate it into languages other than
+English.</p>
+<p class='copyright'>
+The limited permissions granted above are perpetual and will not be
+revoked by the Internet Society or its successors or assignees.</p>
+<p class='copyright'>
+This document and the information contained herein is provided on an
+&quot;AS IS&quot; basis and THE INTERNET SOCIETY AND THE INTERNET ENGINEERING
+TASK FORCE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+BUT NOT LIMITED TO ANY WARRANTY THAT THE USE OF THE INFORMATION
+HEREIN WILL NOT INFRINGE ANY RIGHTS OR ANY IMPLIED WARRANTIES OF
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+<h3>Acknowledgement</h3>
+<p class='copyright'>
+Funding for the RFC Editor function is currently provided by the
+Internet Society.</p>
+</font></body></html>

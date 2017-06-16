@@ -1,0 +1,3 @@
+AddType application/atom+xml .atom
+AddType video/x-ms-wmv .wmv
+

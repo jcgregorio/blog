@@ -1,0 +1,108 @@
+---
+layout: post
+title: Mercurial, SSH, and a local install
+
+---
+
+  
+  <p>
+I have the latest and greatest version of <a href="http://www.selenic.com/mercurial/">Mercurial</a> on
+my laptop but the other machines I want to 'push' to
+over ssh are either a shared host without Mercurial installed
+or are pinned to a release of a distro
+that has a very old version of Mercurial.
+This means that I had to <a href="http://www.selenic.com/mercurial/wiki/index.cgi/UnixInstall"><code>$ make install-home</code></a>, 
+which leaves me with a problem, 
+which is that the installed Mercurial files won't be
+on my Python path when I ssh in. That means I see
+this when I ssh in from my laptop:
+</p>
+<pre><code>$ ssh bitworking.org /home/jcgregorio/bin/hg
+Traceback (most recent call last):
+  File "/home/jcgregorio/bin/hg", line 14, in ?
+    from mercurial import demandimport; demandimport.enable()
+ImportError: No module named mercurial
+~
+$ 
+</code></pre>
+<p>
+The easiest way I found to fix 
+this to add the following two lines to 
+the beginning of <code>~/bin/hg</code>
+on the server:
+</p>
+<pre><code>import sys
+sys.path.append('/home/jcgregorio/lib/python')
+</code></pre>
+<p>Then  I need to specify the exact location
+   of <code>hg</code> from the command line on the laptop, so it uses
+   my locally installed version on the server:
+</p>
+<pre><code>$ hg push --remotecmd ~/bin/hg ssh://bitworking.org/myproject/
+</code></pre>
+<p>That <code>--remotecmd</code> can be made to go away if I add it 
+  to the config file for the project on the laptop. I created the file 
+  <code>.hg/hgrc</code> and added the following lines:
+</p>
+<pre><code>[ui]
+remotecmd = ~/bin/hg
+</code></pre>
+<p>
+Now I can finally run:
+</p>
+<pre><code>$ hg push ssh://bitworking.org/myproject/
+</code></pre>
+  <div class="commentContent" id="X1">
+    I solved the problem by adding a couple of lines to <code>.profile</code> (or <code>.bash_profile</code> or whatever) on my shared host:
+
+<p>
+<code>
+export PATH=~/bin:$PATH<br />
+export PYTHONPATH=~/lib/python:$PYTHONPATH
+</code>
+</p>
+
+You might have to adjust that <code>PYTHONPATH</code> value, though.  Depending on the way you installed Mercurial, it's probably something more like <code>~/lib/python2.5/site-packages</code>.
+
+Is there a reason this won't work for you?
+    <p class="commentByLine">Posted by
+       <a href="mailto:mccutchen@gmail.com">Will</a> on <a href="#X1" title="2008-07-31T02:32:02.592315">2008-07-31</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Will,<br />
+<p>It would probably work, but it's rather invasive as that change would then apply to everything that runs over ssh.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X2" title="2008-07-31T07:47:46.953988">2008-07-31</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I, too, went the <em>invasive</em> route.</p>
+<p>I don't have root, but <code>~/bin</code> contains all the executables that I have installed, and <code>~/lib/python</code> contains all of the python libraries.  Since all of them are available to me when I ssh in, I can simply forget about the difference between system wide installation and per user installation.  As none of them have been modified, upgrading is a snap.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://intertwingly.net/blog/">Sam Ruby</a> on <a href="#X3" title="2008-07-31T08:44:44.667944">2008-07-31</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Like Sam, I went the invasive route on purpose, because I wanted the software and Python libs I had installed myself to always be used rather than the system-wide software.
+
+Though you could make it slightly less invasive by sticking your personal <code>bin</code> and <code>lib</code> dirs at the end of the search paths:
+
+<p><code>
+export PATH=$PATH:~/bin<br />
+export PYTHONPATH=$PYTHONPATH:~/lib/python
+</code></p>
+
+That way your local software/libraries would only be used if they were not available system-wide.
+
+(I know I'm telling you stuff that you already know... for some reason, I felt compelled to spell all this out.  Sorry!)
+    <p class="commentByLine">Posted by
+       <a href="mailto:mccutchen@gmail.com">Will</a> on <a href="#X4" title="2008-07-31T13:31:33.600227">2008-07-31</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Will,<br />
+<blockquote><p>(I know I'm telling you stuff that you already know... for some reason, I felt compelled to spell all this out. Sorry!)</p></blockquote>
+<p>NP, the reason I wrote this up is for people who were looking for a solution.
+If they come here and find a few alternatives, all the better!</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X5" title="2008-07-31T14:05:38.850586">2008-07-31</a>
+    </p>
+</div>
+  

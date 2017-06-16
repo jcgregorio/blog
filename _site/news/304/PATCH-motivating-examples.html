@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title>PATCH motivating examples</title>
+    <meta name=created value="2008-03-04T14:20:32.592801">
+  </head>
+  <body>
+  
+  <p><a href="http://intertwingly.net/blog/2008/02/21/APP-Level-Patch">Sam Ruby</a>:</p> <blockquote> <p>Spend some time up front specifying the behaviors that you want to address.  In the case of Atom, adding an entry, deleting an entry, adding a category to an entry, fixing a typo in the content are examples of common scenarios.  Feel free to use the Atom wiki for this purpose. </p></blockquote> <p> <br />To move the discussion of PATCH forward <a href="http://www.intertwingly.net/wiki/pie/PatchMotivatingExamples">I've posted some examples on the Atom Wiki</a>. They're good examples because the highlight the problem with coming up with a PATCH format for Atom. The largest of those problems is ordering in Atom. That is:</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;<br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;<br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;<br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;<br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;<br />       &lt;summary&gt;Some text.&lt;/summary&gt;<br />    &lt;/entry&gt;</code></pre>
+<p>and</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;<br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;<br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;<br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;<br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;<br />       &lt;summary&gt;Some text.&lt;/summary&gt;<br />    &lt;/entry&gt;</code></pre>
+<p>are the same even though the &lt;updated&gt; element has moved. You can create a patch format that required the server to always serialize elements the same order. For example, in the first example we could order our elements:</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;  <b>              #1</b><br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;   <b>         #2</b><br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;  <b>  #3 </b><br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt; <b>#4</b><br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;  <b>              #5</b><br />       &lt;summary&gt;Some text.&lt;/summary&gt;            <b>              #6</b><br />    &lt;/entry&gt;</code></pre>
+<p>Then our patch format becomes a matter of sending over the element number, and information on either the updated element value or updated attribute values. For example, to change the summary to "foo" we could send:</p><pre><code>{
+  "n": 6,
+  "value": "foo"
+}
+</code></pre>
+<p>But given that order is not significant for Atom we may not want to use that approach.<br /><br />Once you step outside of ordering you need some other way of addressing the elements and attributes that are changed. Note that relying on an already existing XML technology like XPath doesn't solve the problem. For example, here is a severely elided example from Google Calendar:</p><pre><code>&lt;?xml version='1.0' encoding='utf-8'?&gt;<br />&lt;entry xmlns='http://www.w3.org/2005/Atom'<br />    xmlns:batch='http://schemas.google.com/gdata/batch'<br />    xmlns:gCal='http://schemas.google.com/gCal/2005'<br />    xmlns:gd='http://schemas.google.com/g/2005'&gt;<br />  &lt;id&gt;http://www.google.com/calenda...ervobk3ng&lt;/id&gt;<br />  ...<br />  &lt;gd:who rel='http://schemas.google.com/g/2005#event.attendee'<br />      valueString='Fred Flintstone' <br />      email='fred@example.com'&gt;<br />    &lt;gd:attendeeStatus value='http://schemas.google.com/g/2005#event.invited' /&gt;<br />  &lt;/gd:who&gt;<br />  &lt;gd:who rel='http://schemas.google.com/g/2005#event.organizer'<br />      valueString='Joe Gregorio' <br />      email='joe@bitworking.org'&gt;<br />    &lt;gd:attendeeStatus value='http://schemas.google.com/g/2005#event.accepted' /&gt;<br />  &lt;/gd:who&gt;<br />  &lt;gd:where /&gt;<br />&lt;/entry&gt;<br /></code></pre>
+<p>If I wanted to send back a patch to update Fred's <code>gd:attendeeStatus</code>, what XPath would I construct to isolate that element and attribute?</p><pre><code>atom:entry/gd:who/gd:attendeeStatus/@value</code></pre>
+<p>No, since that will capture both attendees.</p><pre><code>atom:entry/gd:who[position()=0]/gd:attendeeStatus/@value</code></pre>
+<p>No, since that relies on the ordering of the elements.</p><pre><code>atom:entry/gd:who[valueString="Fred Flintstone"]/gd:attendeeStatus/@value</code></pre>
+<p>Maybe, but is there any guarantee that valueStrings are unique?</p><pre><code>atom:entry/gd:who[email="fred@example.com"]/gd:attendeeStatus/@value</code></pre>
+<p>This is right, but how would a generic client know how to construct such an XPath? </p>
+<p>I am bringing this up to highlight the questions that need to be answered. </p>
+<ol>
+<li>Does the patch format work only for base Atom elements? 
+</li><li>Will it work for any and all extensions? 
+</li><li>Do we assume that all extensions are order independent? 
+</li><li>Do we presume that the server can always reconstruct the element ordering? 
+</li><li>Do we require out-of-band information to use or construct the patch representation?</li></ol>
+<p>The gd:attendeeStatus example points out that we either need out-of-band information, i.e. that @email uniquely identifies a gd:who element, or that order is preserved. The only other option is to include "in-band" information that makes constructing patches possible, for example, adding id attributes to each element.</p>
+  <div class="commentContent" id="X1">
+    Maybe you could expand a bit more on what problem exactly PATCH is trying to solve. This is still unclear to me, and probably others as well, because I seem to see different interpretations. Is it about:<br />
+1) *patching* the entire resource (as in: PUT, but trying to save bandwidth)<br />
+2) updating part of the resource/a subresource (probably best solved by giving it a separate URI, and using PUT on that, I'll try not to repeat myself and point to a <a href="http://bitworking.org/news/296/How-To-Do-RESTful-Partial-Updates#X17">comment</a> I made on one of your previous posts)<br />
+3) batch processing, in the sense of doing multiple updates from the previous point at the same time (there seem to be different ways you could approach this: you could do the equivalent of multiple PUT'S on different Atom entries as a PATCH of the collection, or multiple updates on one entry as a BATCH of PUT's on subresources etc...)<br />
+<br />
+So: why exactly PATCH? What are the use cases where PATCH is better than the other solutions and vice versa? And should an Atom PATCH format try to solve all these cases, or only those things that cannot be done using other approaches?
+    <p class="commentByLine">Posted by
+       <a href="mailto:steven.vereecken@gmail.com">Steven Vereecken</a> on <a href="#X1" title="2008-03-04T16:40:02.376496">2008-03-04</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Steven,<br />
+<p>Not #3.</p>
+<p>#1 and #2 are different solutions to the same problem, which is the one I want to address, how to update a small portion of a resource without re-transmitting the entire representation back in a PUT.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2008-03-04T16:57:17.646587">2008-03-04</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>Joe,</p>
+<p>You ask "5. Do we require out-of-band information to use or construct the patch representation?"</p>
+<p>I'd argue that patches should be usable without out-of-band information.  Providing out-of-band information to optimize the patch, however, seems eminently reasonable.</p>
+<p>As a discussion starter, I've created a <a href="http://guruj.net/node/141">theoretical patch format</a> which should work with any ordered or unordered XML file structure.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://guruj.net">Stephen Bounds</a> on <a href="#X3" title="2008-03-04T22:51:46.584662">2008-03-04</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I don't think it's a huge burden to assume the client has additional semantic knowledge about the elements (that email is a unique key in this case).  In most cases it's constructing the XML from some other source (such as a web form) anyway, and so has to have explicit or implicit schema knowledge anyway.
+    <p class="commentByLine">Posted by
+       <a href="http://abstractioneer.org">John</a> on <a href="#X4" title="2008-03-05T02:07:45.527845">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Optimizations don't have to be 100% to be useful.  A set of rules can be defined for Atom base elements and attributes.  Individual extensions may provide additional rules for those extensions.
+
+Generic clients may simply opt to always use PUT.  Or to only support the base Atom rules and a limited set of extensions, using PUT whenever any other extension is modified.
+
+While it may not be possible in this case, more tangible use cases (actually observed and captured existing usage would be ideal) would be helpful.
+    <p class="commentByLine">Posted by
+       <a href="http://intertwingly.net/blog">Sam Ruby</a> on <a href="#X5" title="2008-03-05T05:34:46.079010">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Joe,<br />
+<p>You say "#1 and #2 to be different solutions to the same problem", OK, no problem with that (well, I think they are conceptually different operations, but in practice, you'd use them for the same purpose, so it probably doesn't matter). But   PATCH is solution #1, and I'm not yet sure why/when this would be desirable over the other solution.<br />
+(This is also why I put in #3: if the answer is: so that you can do updates to multiple parts at the same time, this could be categorized under #3)</p>
+<p>The advantages of #2 over #1 would seem to me:<br />
+- simpler<br />
+- no need for new http method<br />
+- no need for a PATCH format (just representation of the subresource)<br />
+- the server side can actually update that part as a separate thing (if supported, but it can indicate edit-uri's for those things), as in: the title is updated, instead of: a patch is applied, which happens to result in an entry with a different title.<br />
+Disadvantages:<br />
+- less powerful (only applicable to what the server has implemented as subresources, not ANY change to the xml)<br />
+- problematic with multiple elements belonging together, but having no container element (eg. Atom categories: you can't have an identifier on the "set of categories", because there is no grouping element. So you'd either need to change Atom, or invent a group-edit-uri or something, so you'd know where to POST new categories to)</p>
+<p>I'm not sure this clarifies what I meant, but I hope so ;-)</p>
+<p>PS: inspired by this, but offtopic: some kind of asynchronous patch support in the browser, for responses rather than request... That would be a nice way to do "Restful Ajax": GET the new page by applying a patch to the old page. You'd get smooth dynamic page updates AND get to keep distinct URI's (and a fallback mechanism for browsers that don't support it).<br />
+Ok, I'll stop dreaming ;-)</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:steven.vereecken@gmail.com">Steven Vereecken</a> on <a href="#X6" title="2008-03-05T15:20:50.161914">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    I respect you both immensely but if you think the answer to patch is line by line diffs you guys have seriously cracked.
+    <p class="commentByLine">Posted by
+       <a href="mailto:rektide@voodoowarez">rektide</a> on <a href="#X7" title="2008-03-05T17:53:47.220119">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Stephen Bounds<br />
+<p>The xpatch:keys document in your proposal looks like
+out of band information to me.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X8" title="2008-03-05T21:13:03.987124">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Steven,<br />
+<blockquote><p>
+- no need for a PATCH format (just representation of the subresource)
+</p></blockquote>
+<p>
+Were you not <a href="http://intertwingly.net/blog/2008/02/15/Embrace-Extend-then-Innovate">paying attention</a>? That's "Blechy" and I'm not going there again.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X9" title="2008-03-05T21:16:32.172730">2008-03-05</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Joe, well, that's the problem: I feel I've missed the point where it was decided that PATCH was the best/only possible "non-blechy" solution and why... (or maybe I just wasn't convinced myself and didn't get that everyone else was) But I'll leave it...
+    <p class="commentByLine">Posted by
+       <a href="mailto:steven.vereecken@gmail.com">Steven Vereecken</a> on <a href="#X10" title="2008-03-06T11:23:46.069517">2008-03-06</a>
+    </p>
+</div>
+  </body>

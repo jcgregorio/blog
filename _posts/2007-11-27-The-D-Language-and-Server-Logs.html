@@ -1,0 +1,33 @@
+---
+layout: post
+title: The D Language and Server Logs
+
+---
+
+  
+  <p>So as a practical use of D I tried re-writing my Python program I use to process my referrer logs in D. My first pass was pretty sloppy and I end up touching every character in the file at least twice and in some cases three times. I thought I'd definitely be in need of a re-write, but the version I got working can rip through a 6MB file in 0.25 seconds, and that includes generating the HTML output.</p> <p>I believe part of the speed comes from the use of 'invariant', which is like const in C and C++, but much stricter, that is, while const says a variable may not change, invariant says the underlying data will never change, and could, for example, be embedded in ROM. The other source of speed is probably D's use of non-null terminated strings. The other nice part of the code is that with bit of type inference that the D compiler does and useful expressions like 'foreach', the code was fairly easy to port from Python.</p> <p><a href="http://bitworking.org/projects/pastebin/main.cgi/bin/19">The code is here</a>.</p>
+  <div class="commentContent" id="X1">
+    I wonder if someone has written an article about how much the use of inefficient languages contributes to the greenhouse effect and climate change. I bet you could get a very decent flamewar on with something like that.
+    <p class="commentByLine">Posted by
+       <a href="http://www.juripakaste.fi/blog/">Juri Pakaste</a> on <a href="#X1" title="2007-11-28T06:09:42.156298">2007-11-28</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Um, there's a Delete button on the page that displays the code. I've got past the phase of pushing red buttons when I see them, but is that intentional?
+    <p class="commentByLine">Posted by
+       <a href="http://eternusuk.blogspot.com/">James Abley</a> on <a href="#X2" title="2007-11-28T07:55:12.373319">2007-11-28</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    James,<br />
+<p>No worries, both the creating and deleting of pastebin entries
+  is protected by authentication.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2007-11-28T10:44:16.925821">2007-11-28</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    So, how fast was the python version?
+    <p class="commentByLine">Posted by
+       <a href="http://www.martin-probst.com">martin</a> on <a href="#X4" title="2007-11-28T13:42:46.516901">2007-11-28</a>
+    </p>
+</div>
+  

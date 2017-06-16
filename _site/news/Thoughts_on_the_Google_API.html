@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <title>Thoughts on the Google API</title>
+    <meta name=created value="2003-08-10T12:07:48">
+  </head>
+  <body>
+  
+  <p>It's been a while since Google released it's SOAP based API and 
+   all ensuing discussion. I only recently have had a chance to play with 
+   the API and it does raise a question.</p>
+<p><a href="http://webservices.xml.com/pub/a/ws/2002/04/24/google.html">Paul Prescod</a>
+   covered what the API would have looked like if it were formulated under
+   REST, but his formulation does have a major weakness, in that it encodes
+   the Google Key into the URI. The problem is that the URI may show up in referrer 
+   logs and thus increasing your chance of getting your key stolen.</p>
+<p>On the other hand, Google opted for SOAP and thus embeds the key directly in the 
+   requesting SOAP body.</p>
+<p>What both of these approaches ignore is that there are 
+  <a href="http://wellformedweb.org/news/Six_Places">Six Places</a> to store information
+   in any HTTP request/response pair. In particular they both ignore HTTP headers,
+   which in this case is the perfect location to store the Google key.</p>
+<p>So if you remember, the old unrestricted pre-SOAP Google interface was
+   to just replace <code>/search</code> to <code>/xml</code>. If I were to 
+   search for the word 'adagio' using such a REST version of the API then the 
+   request would look like:</p>
+<pre class="example"><code>GET /xml?q=adagio HTTP/1.1
+Host: www.google.com
+Accept: application/xml 
+X-Google-Key: 734981732987374940</code></pre>
+<p>Now the key doesn't get held in the URI and the API reverts to a simple GET
+with no need for POSTing SOAP envelope wrapped XML query parameters.</p>
+
+  <div class="commentContent" id="X1">
+    <p>Is there any reason not to use HTTP Authentication / Authorization for the key? Something like this (for user bitworking.org with the given Google-Key):</p>
+<p>GET /documents?q=adagio HTTP/1.1<br />
+Host: www.google.com<br />
+Accept: application/xml <br />
+Authorization: Basic Yml0d29ya2luZy5vcmc6NzM0OTgxNzMyOTg3Mzc0OTQw</p>
+<p><em>/documents</em> would work for both HTML and XML. As names <em>xml</em> and <em>search</em> both miss the point IMHO: Google talks about how "Your search - someStrangeWord - did not match any <b>documents</b>."</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:regexbot@myrealbox.com">Arien</a> on <a href="#X1" title="2003-08-11T02:08:47">2003-08-11</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Yes, that is also a possibility.</p>
+<p>The one downside to that is if you are <b>extremely</b> worried about performance or server load. With HTTP authentication you end up doing a round-trip since the server has to challenge the client to get the authentication. That performance hit is not present on subsequent calls to the same or URI or any URI below the one given, since the client should automatically send the credentials on those requests.</p>
+<p>With respect to the /document /search and /xml I was just copying what Google currently does, or did, as the case may be.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X2" title="2003-08-11T13:09:54">2003-08-11</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    As <a href="http://www.faqs.org/rfcs/rfc2617.html">RFC 2617</a> clearly states, the client may send an Authorization header without the server asking for one, so the round-trip is in no way required.
+    <p class="commentByLine">Posted by
+       <a href="mailto:regexbot@myrealbox.com">Arien</a> on <a href="#X3" title="2003-08-12T03:13:22">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Arien,<br />
+  That might be true with Basic auth, but since Digest auth is a Challenge-Response mechanism, where the server Challenges with a nonce value that is used in the Response, the round trip is required on the first request.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2003-08-12T06:26:18">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Good catch. :-)</p>
+<p>But then, this is not a consequence of using HTTP authentication instead of the X-Google-Key header (as you said above): the round-trip would be required in either case when doing things Digest-style.</p>
+<p>Anyway, I'm not trying to pick nits. I was just curious as to why you used a nonstandard header.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:regexbot@myrealbox.com">Arien</a> on <a href="#X5" title="2003-08-12T08:49:18">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p><a href="http://www.intertwingly.net/blog/1557.html#c1060610077">http://www.intertwingly.net/blog/1557.html#c1060610077</a></p>
+<p>"And I can't help but note that I can't just include a link here to the validator output since the RDF validator uses POST for it's form instead of GET."</p>
+<p>Paul's proposal retains this essential characteristic of HTTP GET.  Your's destroys it.</p>
+<p>If one really wants to superimpose a request/response semantics over an interaction, I'd suggest that HTTP POST be used.  That's what it was designed for.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X6" title="2003-08-12T09:33:14">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Nice catch Sam, but it only lends support to Ariens idea of using HTTP auth. </p>
+<p>It also completely ignores the implementation costs. I could either use my current HTTP library and just add one custom header or bring in the entire SOAP processing model.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X7" title="2003-08-12T10:36:07">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>... where "entire SOAP processing model" reduces to "scan for mustUnderstand and reply with faults on errors".</p>
+<p>HTTP Auth would have been a resonable solution in this case.  The issues with HTTP Auth tend to be on the server side, something that Google presumably could have handled.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X8" title="2003-08-12T17:10:13">2003-08-12</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>... where the entire processing model includes the mandated PSVI (Post Scheme Validation Infoset) where this:</p>
+<p>&lt;Amount&gt;12.30&lt;/Amount&gt;</p>
+<p>turns into this:</p>
+<p>&lt;Amount&gt;12.30000000000000&lt;/Amount&gt;</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X9" title="2003-08-13T11:51:03">2003-08-13</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>Grep <a href="http://www.w3.org/TR/SOAP/">http://www.w3.org/TR/SOAP/</a> or  <a href="http://www.w3.org/TR/soap12-part1/">http://www.w3.org/TR/soap12-part1/</a> for PSVI.  You won't find it.</p>
+<p>SOAP does not prereq WSDL or a schema.  Even if a schema is used, amount may simply be a string.  Take a close look at the Atom 0.2 specifications: how many floats do you see?</p>
+<p>Even in the toolkits where xsd is used, you will find that such mappings have a lot more wiggle room than you might expect.  See <a href="http://www.intertwingly.net/stories/2002/02/01/toInfinityAndBeyondTheQuestForSoapInteroperability.html"> To infinity and beyond - the quest for SOAP interoperability</a> for more insight on this subject.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X10" title="2003-08-14T08:20:31">2003-08-14</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>J:\TMP&gt;wget <a href="http://www.w3.org/TR/soap12-part1/">http://www.w3.org/TR/soap12-part1/</a></p>
+<p>J:\TMP&gt;grep -i -c infoset index.html<br />
+29</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X11" title="2003-08-14T11:09:30">2003-08-14</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <p>Just stumbled upon this type of URL (via <a href="http://jeremy.zawodny.com/blog/archives/000945.html#comments">comments at Jeremy Zawodny's blog</a>):</p>
+<p><a href="http://www.google.com/keyword/adagio">http://www.google.com/keyword/adagio</a></p>
+<p>Nice.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:regexbot@myrealbox.com">Arien</a> on <a href="#X12" title="2003-08-23T09:55:12">2003-08-23</a>
+    </p>
+</div>
+  </body>

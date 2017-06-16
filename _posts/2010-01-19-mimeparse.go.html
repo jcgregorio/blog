@@ -1,0 +1,58 @@
+---
+layout: post
+title:  mimeparse.go 
+
+---
+
+    <p>I just checked in a <a href=http://code.google.com/p/mimeparse/source/browse/#svn/trunk/go>port of mimeparse to Go</a>.</p>
+    <p>The list of supported languages for mimeparse is now: Erlang, JavaScript, Perl, PHP, Python, Ruby, Java, and <a href=http://golang.org/>Go</a>.</p>
+    <p>The Go code size is a little larger than the original Python, 187 lines of code for Go 
+    versus 123 for Python. Now 27 of those added lines are lines just containing
+    a single '}', so the difference isn't even that large.
+    Some of the increase is size is also probably me not producing very idiomatic Go code,
+    so take all these observations, and the code itself, with a grain of salt, as I'm a
+    Go newbie. One of the things I missed from Python is list comprehensions, and 
+    it was one of the things that I was going to point to
+    as making a big difference in the length of the code. I'm not going to
+    claim that now, because when I look at the difference between the Python <code>parse_mime_type</code>
+    where the parsing of the mime type parameters is done, and the equivalent
+    in the Go <code>ParseMimeType</code> you can see that while the list comprehension in Python is 
+    smaller, it is also more difficult to read, and it has a bug. I still thing there
+    are places where it would be useful, for example, in <code><a href=http://code.google.com/p/mimeparse/source/browse/trunk/go/mimeparse.go#145>ParseHeader()</a></code>.
+    </p>
+    <p><b>Python</b></p>
+    <pre class=prettyprint>    params = dict([tuple([s.strip() for s in param.split("=")])\
+            for param in parts[1:] ])
+    </pre>
+    <p><b>Go</b></p>
+    <pre class=prettyprint>    params := make(map[string] string);
+    for _, s := range parts {
+        subparts := strings.Split(s, "=", 2);
+        if len(subparts) == 2 {
+          params[strings.TrimSpace(subparts[0])] = strings.TrimSpace(subparts[1]);
+        } else {
+          params[strings.TrimSpace(subparts[0])] = "";
+        }
+    }
+    </pre>
+    <p>
+    One of the surprising things about the Go code is the strong typing; that is, 
+    while Go is strongly statically typed, the code isn't cluttered with
+    types. The type inferencing makes a tremendous amount of code noise
+    disappear. For the most part you see types explicitly in the function
+    declarations, but in the body they are mostly absent.
+    </p>
+    <p>
+    One of the other things that keeps the code size small is functions. Yes,
+    functions, because sometimes that's all you need, without being forced to put
+    everything in a class, if you know what I mean. 
+    </p>
+    <p>
+    Unfortunately with the simplicity of mimeparse, I didn't get to 
+    use some of the coolest features of Go, such as channels and interfaces.
+    Of all the things that Go introduces, interfaces are one of the biggest changes
+    and also one of the most important. <a href=http://research.swtch.com/2009/12/go-data-structures-interfaces.html>Russ Cox has 
+      a good overview of them</a>, and delves into the implementation details in
+    the compiler.
+    </p>
+  

@@ -1,0 +1,33 @@
+---
+layout: post
+title:  Buzz 
+
+---
+
+    <p>
+    So, <a href=http://buzz.google.com/>Buzz</a> is finally out. We've 
+    been dogfooding it internally for a while and it's been great.
+    </p>
+    <p>
+    One of the best aspects of Buzz is the use of open standards. 
+    It's just feeds. And if you want to hook up a new data source
+    to Buzz, <a href=http://www.google.com/buzz/bradfitz/PPjHXDhANAC/Want-to-connect-your-blog-or-some-other-feed-to>
+      it is just a matter of adding a link/@rel='me'</a>. That two way connection
+    between your profile page and the source is the proof that it is a source
+    that you truly own. That's a pretty easy thing to do if you
+    are a service provider, adding a little markup to allow integration
+    with Buzz. And it's not like that information gets locked up; you
+    can always pull the site connectivity information back out via the <a href=http://code.google.com/apis/socialgraph/>Social
+      Graph API</a>. Here is <a href="http://socialgraph-resources.googlecode.com/svn/trunk/samples/findyours.html?q=http://www.google.com/profiles/joe.gregorio%0D%0A%0D%0A%0D%0A">
+      a demo site for querying the Social Graph API</a>. 
+    </p>
+    <p>Once you get that working you can always go back and 
+    add support for fast updates by pinging a
+    <a href=http://code.google.com/p/pubsubhubbub/>PubSubHubbub</a> hub. 
+    Again, this is a really simple thing to do, and 
+    I've done it for <a href=http://code.google.com/p/piccolo-pub/source/browse/hubping>Piccolo</a>.
+    </p>
+    <p>See <a href=http://www.google.com/buzz/dclinton/XxER6oP4WGe/The-best-way-to-get-a-sense-of-where-the-Buzz-API>DeWitt's post</a>
+    for where this is all headed and the other open protocols that are going to be integrated.
+    </p>
+  

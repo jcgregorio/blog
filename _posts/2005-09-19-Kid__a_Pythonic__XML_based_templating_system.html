@@ -1,0 +1,50 @@
+---
+layout: post
+title: Kid, a Pythonic, XML-based templating system
+
+---
+
+  
+  <p>I have got way too many projects going on at any one time, but
+ one of the things that has always bothered me in Python 
+ is the lack of a good templating system and I've always wanted
+ to write my own. I've used Cheetah but it's 
+ just a text templating facility and knows nothing of XML so 
+ producing well-formed XML with it is tricky. On the other hand
+ <a href="http://www.zope.org/Wikis/DevSite/Projects/ZPT/TAL">TAL</a> 
+ looks good but sits on top of a very large framework. 
+  If I were to design my own <em>perfect</em> 
+ templating system for Python it would be XML based, 
+ with syntax like TAL, and a structure like PHP that allows
+ putting pure Python on processing instructions. It would also
+ be just a library and not part of a framework.</p>
+<p>One of the nice things about the Python community is
+  that if you procrastinate long enough someone else will 
+  come along and write the code you want; which is exactly
+  what Ryan Tomayko did with his newly released library 
+  <a href="http://kid.lesscode.org/">Kid</a>, a 
+  Pythonic, XML-based templating system.
+</p>
+<ul class="tags">
+<li><a href="http://technorati.com/tag/python" rel="tag"> python </a></li>
+<li><a href="http://technorati.com/tag/kid" rel="tag"> kid </a></li>
+<li><a href="http://technorati.com/tag/xml" rel="tag"> xml </a></li>
+<li><a href="http://technorati.com/tag/templating" rel="tag"> templating </a></li>
+</ul>
+
+  <div class="commentContent" id="X1">
+    TAL/ZPT is actually very independent of Zope, and has been distributed independently from nearly its beginning.
+    <p class="commentByLine">Posted by
+       <a href="http://blog.ianbicking.org">Ian Bicking</a> on <a href="#X1" title="2005-09-20T03:52:56">2005-09-20</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Two pointers to TAL/ZPT implementations separate from the Zope framework:</p>
+<p>SimpleTAL - <a href="http://www.owlfish.com/software/simpleTAL/">http://www.owlfish.com/software/simpleTAL/</a></p>
+<p>OpenTAL - <a href="http://savannah.nongnu.org/projects/opental/">http://savannah.nongnu.org/projects/opental/</a></p>
+<p>I've used both of these with some satisfaction in my personal projects, but I'm hoping to get into Kid at some point.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://decafbad.com">l.m.orchard</a> on <a href="#X2" title="2005-09-23T12:09:14">2005-09-23</a>
+    </p>
+</div>
+  

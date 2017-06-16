@@ -1,0 +1,96 @@
+---
+layout: post
+title: Pudge Mailing List
+
+---
+
+  
+  <p><a href="http://bitworking.org/news/148/Five-things-I-hate-about-Python#X1">cavorite</a>:</p>
+<blockquote><p><a href="http://pudge.lesscode.org/">Pudge</a> is a documentation system for Python that generates documentation files from docstrings and uses Restructured Text syntax. You can see a running example in <a href="http://pythonpaste.org/">Python Paste</a>.
+Maybe you could give it a try.</p></blockquote>
+<p>Pudge does look promising. I was able to successfully pull the code from subversion, 
+  and after a small patch ;) to setup.py, I was able to install it:
+</p>
+<pre><code>Index: setup.py
+===================================================================
+--- setup.py    (revision 134)
++++ setup.py    (working copy)
+@@ -1,6 +1,5 @@
+ # bootstrap setuptools if necessary
+-from ez_setup import use_setuptools
+-use_setuptools()
++from distutils.core import setup
+ 
+ import os
+ import os.path
+@@ -38,7 +37,6 @@
+                ('licenses', )]:
+     package_data.extend(get_data_files(os.path.join(*subdir)))
+ 
+-from setuptools import setup
+ 
+ setup(
+     name=name,
+</code></pre>
+<p>I wanted to check the archives to see 
+  if there had been a discussion about the use
+  of setuptools, but it appears the 
+  <a href="http://lesscode.org/mailman/listinfo/pudge">mailing list</a>,
+  linked from the front page of the project, has gone 404.
+</p>
+  <div class="commentContent" id="X1">
+    It does look promising from a technological standpoint, but as far as I can tell the project is dead. No trac, no blog, no mailing list, and no public release.
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X1" title="2007-03-23T11:40:21.100471">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I think that pudge was originally written by Ryan Tomayko, who has since moved on to Rails and Ruby land.  The chances of him continuing the project are slim to none, which is a shame, since its a really nice project.  We are using it for <a href="http://elixir.ematia.de">the elixir website and documentation</a>, and are very pleased with it.
+
+Someone should pick it up, port it to Genshi, and make a release!
+    <p class="commentByLine">Posted by
+       <a href="http://cleverdevil.org">Jonathan LaCour</a> on <a href="#X2" title="2007-03-23T11:44:39.472239">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    I remember seeing a while back in #pylons or #pythonpaste that <tt>ianbicking</tt> and <tt>benbangert</tt> started a fork of <a href="http://pudge.groovie.org">pudge</a> due to the stagnating development efforts of it's creator. Sadly the fork seems to have suffered a similar fate. The track instance is down but the <a href="http://pudge.groovie.org/svn">SVN repository</a> is available.
+    <p class="commentByLine">Posted by
+       <a href="http://redflavor.com">Eivind Uggedal</a> on <a href="#X3" title="2007-03-23T12:07:42.419345">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I totally agree with you Joe [1], the first thing I hate about python is the lack of a the-facto documentation tool (like javadoc for java, rubydoc for ruby...).<br /><br />
+
+I think this aspect is really hurting python takeoff among new comers as much as it's bothering seasoned python programmers dealing.<br /><br />
+
+Unfortunately the python core developers are underestimating this problem, python badly needs *one and only one* documentation tool, and while I think we can live with so many web framework I think a documentation tool it's so *crucial* that there should be *one and only one*, working well and easily.<br /><br />
+
+Regarding Pudge, I will quote Jonathan, it's pretty nice, it produces good looking and usable output (just look at Elixir docs), it's not trying to mimic javadoc (like epydoc) since you can't document python in the same way you document java (where everything is always inside a class), it has nice syntax coloring of source code that you can navigate, it uses a lightweight markup like Rest instead of an heavy one like javadoc.<br /><br />
+
+Unfortunately, as Jonathan said, Ryan (the original author) has left python development for Ruby and RoR but luckily before doing so he also left us with Kid and Pudge, two brilliant ideas but almost unmaintained.<br /><br />
+
+Thanks to Genshi we've got what Ryan envisioned as Kid 2.0 [2] and it is in a pretty good state [3].<br /><br />
+
+Someone should do the same by picking up the poor Pudge, porting it to Kid 2.0 (==Genshi) as Jonathan said, giving it a new home (webfaction offers free trac hosting for python opensource projects), new features and giving python a rocking documentation tool.<br /><br />
+
+I can't do it right now, but I *may* end-up doing it (after summer 2007) if someone doesn't. ;-)<br /><br />
+
+[1] http://bitworking.org/news/148/Five-things-I-hate-about-Python<br />
+[2] http://tomayko.com/articles/2006/11/11/xml-templating-in-python-evolves<br />
+[3] http://genshi.edgewall.org/timeline<br />
+    <p class="commentByLine">Posted by
+       <a href="mailto:michele.cella@gmail.com">michele</a> on <a href="#X4" title="2007-03-23T13:23:17.317127">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Yeah, a few of us maintain Pudge enough to keep it alive.  But barely.  Together with buildutils it makes it fairly easy to maintain a small project.  
+
+</p><p>I agree we really need a real documentation system, though I think it doesn't need to be a completely singular system.  There's at least three distinct pieces, I think: displaying source, extracted reference documentation, and hand-written documentation.  And probably other pieces, like wikis and whatnot.  Once you have a set of these tools working together, allowing any one of these tools to be implemented by more than one package isn't that big a deal.
+
+</p><p>I still think the decomposition of the problem I outlined <a href="http://blog.ianbicking.org/decomposing-document-generation.html">on my blog</a> would be a good way to approach it, and allows for the adaptation of existing documentation (e.g., epydoc) projects and achieving useful intermediate results.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://blog.ianbicking.org">Ian Bicking</a> on <a href="#X5" title="2007-03-23T14:20:53.660555">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    The mailing list is no longer being maintained but the archives should still be somewhere on the web. Let me see what I can dig up. If anyone sees anything else that looks like it disappeared, contact me directly (rtomayko@gmail.com) and I'll see what I can do.
+    <p class="commentByLine">Posted by
+       <a href="http://tomayko.com">Ryan Tomayko</a> on <a href="#X6" title="2007-03-24T15:19:53.723703">2007-03-24</a>
+    </p>
+</div>
+  

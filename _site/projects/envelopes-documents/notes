@@ -1,0 +1,274 @@
+Envelopes and Documents 
+
+Envelopes and Documents
+
+A story told in pictures
+ 
+Joe Gregorio
+
+
+Envelope
+[envelope.jpg]
+
+Document
+{{{
+Network Working Group                                   J. Gregorio, Ed.
+Internet-Draft                                                       IBM
+Intended status: Standards Track                         B. de hOra, Ed.
+Expires: September 5, 2007                                 Propylon Ltd.
+                                                           March 4, 2007
+
+
+                      The Atom Publishing Protocol
+                   draft-ietf-atompub-protocol-14.txt
+
+Status of this Memo
+
+   By submitting this Internet-Draft, each author represents that any
+   applicable patent or other IPR claims of which he or she is aware
+   have been or will be disclosed, and any of which he or she becomes
+   aware will be disclosed, in accordance with Section 6 of BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+}}}
+
+They're Different
+
+= Envelope != Document
+
+
+Envelope
+[envelope.jpg]
+
+Document
+{{{
+Network Working Group                                   J. Gregorio, Ed.
+Internet-Draft                                                       IBM
+Intended status: Standards Track                         B. de hOra, Ed.
+Expires: September 5, 2007                                 Propylon Ltd.
+                                                           March 4, 2007
+
+
+                      The Atom Publishing Protocol
+                   draft-ietf-atompub-protocol-14.txt
+
+Status of this Memo
+
+   By submitting this Internet-Draft, each author represents that any
+   applicable patent or other IPR claims of which he or she is aware
+   have been or will be disclosed, and any of which he or she becomes
+   aware will be disclosed, in accordance with Section 6 of BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+}}}
+
+
+Platypus 
+[postcard.jpg]
+
+[http://flickr.com/photos/retrogradeheart/27713473/   retrogradeheart]
+
+This is an envelope
+[envelope.jpg]
+
+So is this
+[envelope-other.jpg]
+
+You can put anything in an envelope and send it somewhere
+[box.jpg]
+
+Well, almost anything
+[maybe-not.jpg]
+
+This is a document (APP) 
+
+{{{
+Network Working Group                                   J. Gregorio, Ed.
+Internet-Draft                                                       IBM
+Intended status: Standards Track                         B. de hOra, Ed.
+Expires: September 5, 2007                                 Propylon Ltd.
+                                                           March 4, 2007
+
+
+                      The Atom Publishing Protocol
+                   draft-ietf-atompub-protocol-14.txt
+
+Status of this Memo
+
+   By submitting this Internet-Draft, each author represents that any
+   applicable patent or other IPR claims of which he or she is aware
+   have been or will be disclosed, and any of which he or she becomes
+   aware will be disclosed, in accordance with Section 6 of BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+}}}
+
+
+So is this (web page)
+<iframe src="http://bitworking.org/news/157/Atom-Publishing-Protocol-Interop-Event">
+
+So is this
+[dollar.jpg]
+
+So is a magazine
+[magazine.jpg]
+
+And a book
+[book.jpg]
+
+And a mook
+[mook.jpg]
+
+The AtomPub WG did something cool
+[yes.jpg]
+
+They might have done it by accident
+[no.jpg]
+
+But it's still good
+[yes.jpg]
+
+They defined an Atom Entry
+{{{
+     &lt;entry>
+       &lt;title>Atom-Powered Robots Run Amok&lt;/title>
+       &lt;link href="http://example.org/2003/12/13/atom03"/>
+       &lt;id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id>
+       &lt;updated>2003-12-13T18:30:02Z&lt;/updated>
+       &lt;summary>Some text.&lt;/summary>
+     &lt;/entry>
+}}}
+----
+Which defines the essential pieces of a "Document"
+
+Essentials
+
+ * Title
+ * Author(s)
+ * ID
+ * Published
+ * Content
+
+Title
+[dollar-title.jpg]
+
+Author(s)
+[dollar-author.jpg]
+
+ID
+[dollar-id.jpg]
+
+Date Published
+[dollar-published.jpg]
+
+Content
+[dollar-content.jpg]
+
+So what?
+
+The cool thing about documents is all the 'stuff' you can do with them.
+
+Collect them
+[collect.jpg]
+
+Sorted
+[sorted.jpg]
+
+Or Unsorted
+[unsorted.jpg]
+
+Publish them
+[published.jpg]
+
+Some are even editable
+
+{{{
+Network Working Group                                   J. Gregorio, Ed.
+Internet-Draft                                                       IBM
+Intended status: Standards Track                         B. de hOra, Ed.
+Expires: September 5, 2007                                 Propylon Ltd.
+                                                           March 4, 2007
+
+
+                      The Atom Publishing Protocol
+                   draft-ietf-atompub-protocol-14.txt
+
+Status of this Memo
+
+   By submitting this Internet-Draft, each author represents that any
+   applicable patent or other IPR claims of which he or she is aware
+   have been or will be disclosed, and any of which he or she becomes
+   aware will be disclosed, in accordance with Section 6 of BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+}}}
+
+
+
+
+Others, not so much
+[dollar.jpg]
+
+And finally, you can delete them
+[delete.jpg]
+
+Axiom
+
+= Atom Entry == Document
+
+Corollary
+
+= Atom Entry != Envelope 
+
+What is the APP?
+
+= APP == Things you can do with documents
+
+Yay!
+
+[yay.jpg]
+
+
+But wait
+
+[a-no.jpg]
+
+Not the end of the story
+
+There are other things you might want to do with a document.
+
+Special Purpose
+
+[money.jpg]
+
+Document += ? 
+
+Some types of documents have a special purpose.
+----
+You can still treat them as documents
+----
+But there's more
+
+For a special purpose, not all documents can be treated the same.
+
+[not-money.jpg]
+
+Welcome to APP extensions
+[a-yes.jpg]
+

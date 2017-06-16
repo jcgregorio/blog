@@ -1,0 +1,50 @@
+---
+layout: post
+title: Six Places
+
+---
+
+  <p>In a single HTTP Request/Response transaction there are a 
+total of six places that information can be stored. If you are designing
+a web service, which of the six you choose depends on the context, 
+i.e. where and how your service is going to be used.</p>
+  <p>For an illustrative example, consider this elided request/response from the <a href="http://bitworking.org/rfc/draft-gregorio-01.html">draft EchoAPI RFC</a>. Here is the request:</p>
+<pre class="example"><code>POST /reilly HTTP/1.1
+Content-Type: application/not-echo+xml
+
+&lt;?xml version="1.0" encoding='iso-8859-1'?&gt;
+&lt;entry&gt; 
+    &lt;title&gt;My First Entry&lt;/title&gt; 
+    &lt;subtitle&gt;In which a newbie learns to blog...&lt;/subtitle&gt; 
+    &lt;summary&gt;A very boring entry...&lt;/summary&gt; 
+    ...
+&lt;/entry&gt;</code></pre>
+<p>And the response is:</p>
+<pre class="example"><code>HTTP/1.1 201 Created
+Content-Type: application/not-echo+xml
+
+&lt;?xml version="1.0" encoding='iso-8859-1'?&gt;
+&lt;entry&gt; 
+    &lt;title&gt;My First Entry&lt;/title&gt; 
+    &lt;subtitle&gt;In which a newbie learns to blog...&lt;/subtitle&gt; 
+    &lt;summary&gt;A very boring entry...&lt;/summary&gt; 
+ 
+    &lt;link&gt;http://example.org/reilly/2003/02/05#My_First_Entry&lt;/link&gt;
+    &lt;id&gt;urn:example.org:reilly:1&lt;/id&gt;
+    ...
+&lt;/entry&gt;</code></pre>
+<p>The six different locations to store information are:</p>
+<ol>
+<li>The request URI. Okay, this is the first line of the request and also contains the method, like GET or PUT, I'm lumping them together to simplify things.</li>
+<li>The request headers, in RFC 822 format, you might remember that  <a href="http://bitworking.org/news/RFC822">I've talked about RFC 822 Headers before</a>. </li>
+<li>The request message body.</li>
+<li>The response status code. This is the first line of the </li>
+<li>The response headers, again in RFC 822 format.</li>
+<li>The response message body.</li>
+</ol>
+<p>That's a lot of choices. When designing a service it's not always clear where some components of a message should be placed. For example, if you are attaching to a service that requires authentication, do you encode the authentication information into the requesting URI, do you use one of the HTTP authentication mechanisms which puts the authentication in the request headers, or do you put a name and password into the message body being sent? You could also send custom HTTP headers with authentication information. None of the choices are inherently better than another. All of the choices have their pros and cons, and each are appropriate depending on the context.</p>
+<p>For example, <a href="http://wellformedweb.org/story/2">Bulu</a>, the code that runs this site, encodes the authentication information in the URI when doing <a href="http://bitworking.org/news/Editable_Comments">Editable Comments</a>. It's the least secure method, but the given the context, editing comments on a weblog, it's adequate. On the other hand, Bulu uses one of the HTTP Authentication mechanisms when creating or editing entries. That action requires more security than editing comments.</p>
+<p>So where should you store <em>your</em> information? Beats me, but just keep in mind that as you design your service that you have six places to choose from.</p>
+
+  
+  

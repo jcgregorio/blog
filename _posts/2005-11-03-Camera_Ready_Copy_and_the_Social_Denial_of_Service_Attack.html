@@ -1,0 +1,121 @@
+---
+layout: post
+title: Camera-Ready Copy and the Social Denial-of-Service Attack
+
+---
+
+  
+   <p>From the wikipedia article on <a href="http://en.wikipedia.org/wiki/Denial_of_service_attack">
+                    Denial-of-service</a> attacks:</p>
+<blockquote><p>A denial-of-service attack (also, DoS attack) is an attack on a computer system
+                    or network that causes a loss of service to users, typically the loss of network
+                    connectivity and services by consuming the bandwidth of the victim network or
+                    overloading the computational resources of the victim system.
+                    </p></blockquote>
+<p>In particular, one vector of attack to pay attention to is</p>
+<blockquote><p>consumption of computational resources, such as bandwidth, disk space, or CPU time</p></blockquote>
+<p>
+                    This kind of attack is successful because of an inherent asymmetry between the
+                    attacker and the attacked. The attacker performs very little computation
+                    to send the packets, but the server has to accept them and perform some computation
+                    to determine if they are valid or bogus. In this way an attacker with the same
+                    or less computational power can overwhelm a bigger host.
+                    </p><p>
+</p><p>
+                    These same kinds of attacks are repeated in many different kinds of
+                    media where the asymmetry is present. For example sending
+                    email is practically computation free, but reading
+                    and processing it takes time. The result? Spam. With the advent of
+                    many competing blogging services starting a blog is also practically
+                    free, and the predictable result is
+                    <a href="http://www.tbray.org/ongoing/When/200x/2005/10/14/Splogs">splogs</a>.
+                    </p>
+<p>
+                    There are different kinds of defenses, but the one I want you
+                    to keep in mind is removing the asymmetry, making the computation
+                    requirements on both sides closer in parity. The importance of this
+                    will become apparent in a bit.
+                    </p>
+<h3>Getting Social</h3>
+<p>
+                    The reason I bring this up is because not only do denial of
+                    service attacks occur in electronic networks, they also occur
+                    in the real world. The one I want to talk about is the
+                    "social denial-of-service" attack. This can happen, for instance,
+                    in the case of an IETF Working Group where all of the work
+                    is supposed to be consensus based. In that scenario it is
+
+                    very easy for an attacker to derail progress with a constant stream
+                    of objections and wildly divergent proposals.
+                    </p>
+<p>
+                    The IETF, being the IETF, has an RFC for this.
+                    </p>
+<p>From <a href="http://www.faqs.org/rfcs/rfc3683.html">RFC 3683 - A Practice for Revoking Posting Rights to IETF Mailing Lists</a>:
+                    </p>
+<blockquote><p>
+                        Notably, in a small number of cases, a participant has engaged in
+                        what amounts to a "denial-of-service" attack to disrupt the
+                        consensus-driven process.  Typically, these attacks are made by
+                        repeatedly posting messages that are off-topic, inflammatory, or
+                        otherwise counter-productive.  In contrast, good faith disagreement
+                        is a healthy part of the consensus-driven process.
+                        </p><p>
+                        For example, if a working group is unable to reach consensus, this is
+                        an acceptable, albeit unfortunate, outcome; however, if that working
+                        group fails to achieve consensus because it is being continuously
+                        disrupted, then the disruption constitutes an abuse of the
+                        consensus-driven process.  Interactions of this type are
+                        fundamentally different from "the lone voice of dissent" in which a
+                        participant expresses a view that is discussed but does not achieve
+                        consensus.  In other words, individual bad faith should not trump
+                        community goodwill.
+                        </p>
+</blockquote>
+<p>
+                    Let's go back to electronic denial-of-service attacks. They worked
+                    because of an inherent asymmetry between the attacker and the
+                    attacked. The same is true of the social denial-of-service attack where
+                    arguments, responses, rebuttals and more importantly time has to be spent
+                    responding to the bad faith objections, which are easily written up
+                    and tossed onto the mailing list.
+                    </p>
+<p>
+                    Remember that one way to fight a denial of service attack is to
+                    raise the amount of computation required by the attacker. In the case of
+                    a Working Group the way to do that is by requiring disruptions
+                    to take more time and energy. This is where the call for "camera ready
+                    copy in the form of a Pace" comes from in the AtomPub WG. Camera
+                    ready copy is much more difficult to write than a one or two line
+                    objection tossed into a mailing list. Only if you are willing to
+                    put in the work to write up a Pace with reasonable text will it
+                    start to take up the time of the WG. Your willingness to
+                    put in the time and effort to create camera ready copy
+                    will distinguish your proposals and objections from
+                    those of an attacker.
+                    </p>
+<p>
+                    So if you are participating in the AtomPub WG don't be put off
+                    if you're asked to put up a Pace with "camera ready copy", you
+                    are after all helping in the fight against social denial-of-service
+                    attacks.
+                    </p>
+<h3>Acknowledgements</h3>
+<p>
+                    Many thanks to <a href="http://diveintomark.org">Mark Pilgrim</a> for the many long talks we've had about
+                    this subject. In the course of those talks we've come up with
+                    two observations, the first by me:
+                    </p>
+<dl>
+<dt>Axiom</dt>
+<dd>Any technical group of sufficient size and activity will
+                        spontaneously generate its very own sociopath.</dd>
+</dl>
+<p>And a corollary by Mark:</p>
+<dl>
+<dt>Corollary</dt>
+<dd>If you scan the list and can't spot the sociopath, it's you.</dd>
+</dl>
+
+  
+  

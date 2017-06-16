@@ -1,0 +1,153 @@
+---
+layout: post
+title: RESTful JSON Client
+
+---
+
+  
+<p>
+As promised, <a href="http://bitworking.org/projects/jep/cookbook/main.cgi/cookbook/">
+here is the RESTful JSON client I referred to
+previously</a>. I am willing to bet you weren't expecting JavaScript.
+</p>
+
+  
+<p><b>Note:</b> this has only been tested in FireFox 1.5 on Ubuntu, your mileage
+may vary. Here is a screenshot to refer to if the page doesn't work
+for you.</p>
+<p><img src="http://bitworking.org/images/2006/10/jep-cookbook.png" /></p>
+<p>
+<a href="http://bitworking.org/projects/jep/cookbook/static/list.js.html">Here is a pretty printed version of the JavaScript
+</a>,
+in case you haven't pull down the 
+<a href="http://bitworking.org/projects/jep/cookbook/">source code for yourself
+via bzr</a>.
+This code only relies on
+one external library, <a href="http://www.mochikit.com/">MochiKit</a> for the JSON serializer.
+Yes, that's heavyweight for just one small
+bit of functionality, but <a href="http://www.json.org/js.html">the alternative has
+copyright issues</a> we don't need to rehash here again.
+</p>
+<p>
+As for the operation of the application, there are five 
+links, click on them and the recipe shows up in the
+form elements below. From there you can update or 
+delete the recipe, or type in a new recipe and press
+"Create" to have it added to the list. All of this happens
+via calls to the JSON Server implementation
+<a href="http://bitworking.org/news/restful_json_server">I described previously</a>.
+</p>
+<p>
+So what, what have I done here, besides re-invent GMail, poorly?
+While the interface is nothing special AJAX-wise it is 
+unique is that the back end protocol is RESTful and not RPC.
+Admittedly at this point it is a pretty
+naive implementation and there are basic
+optimizations that we can do now that we have a
+RESTful interface, for example, implementing
+ETags and gzip, which I will do a in a future
+article.
+</p>
+<p>
+One of the things I learned from doing this implementation
+was the feedback it provided into the <a href="http://bitworking.org/news/restful_json">
+original idea
+for the protocol that I had outlined before</a>.
+One of the things that seems akward is that
+the interaction with the server is pretty chatty regardless
+of the size of the member entry representations.
+One of the first things that should change is that 
+in the case of small payloads, like our
+recipe, it may make sense to include the 
+entity in the collection document. So instead of 
+just supplying:
+</p>
+<pre><code>
+{
+  "members": [
+    {"href": "1"}, 
+    {"href": "2"}, 
+    {"href": "3"}, 
+    {"href": "4"}
+    ], 
+  "next": null
+}
+</code></pre>
+<p>
+We could optionally include the actual member representation
+via an "entity" name/value pair.
+</p>
+<pre><code>
+{
+  "members": [
+    {"href": "1",
+<b>     "entity", {
+        "instructions": "First, get a trout...", 
+        "id": 1, 
+        "title": "Trout on a stick"
+        }</b>
+    }, 
+    ...
+  ], 
+  "next": null
+}
+</code></pre>
+<p>
+That could help reduce the number of 
+requests to member resources
+when populating a list, like we do when the cookbook
+page starts. 
+</p>
+<p>
+But we could even take that optimization
+one step further, because we really should
+do a GET every time the user clicks on a link to
+make sure the latest version of the recipe is 
+presented. Having the entity in the collection
+document doesn't really give us anything in that
+case since we don't know if the verson on the client
+is stale. One thing we could do is include
+the ETag for each member resource in the 
+collection document. That would allow us to
+do a conditional GET on the member the first
+time the user clicked on the link and if the
+member was unchanged we would get a 304 Not Modified 
+response and no entity body, which 
+is potentially much fast than doing a non-conditional
+GET.
+</p>
+<p>
+Let's revise our collection document one more
+time to reflect those ideas:
+</p>
+<pre><code>
+{
+  "members": [
+    {"href": "1",
+<b>     "etag":"0hf0239hf2hf9fds09sadfo90ua093j", </b>
+     "entity", {
+        "instructions": "First, get a trout...", 
+        "id": 1, 
+        "title": "Trout on a stick"
+        } 
+    }, 
+    ...
+  ], 
+  "next": null
+}
+</code></pre>
+<p>
+Note that both "etag" and "entity" should be optional.
+</p>
+<p>This is looking pretty good, the initial idea was 
+easy to implement on both the client and the server
+and the first implementations have provided some good 
+feedback on the structure of the protcol. I think I ought to
+say a bit more on where I think this overlaps with the 
+<a href="http://bitworking.org/projects/atom/">Atom Publishing Protocol</a>
+and also maybe write up the protocol more
+formally, all of which I will do in future entries.
+</p>
+
+  
+  

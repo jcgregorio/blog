@@ -6,4 +6,5 @@ node_modules/
 bower_components/
 out/
 letsencrypt.cache
-
+Gemfile.lock
+.sass-cache

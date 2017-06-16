@@ -1,0 +1,110 @@
+---
+layout: post
+title: Thoughts on VIM
+
+---
+
+  <p>I said I was <a href="http://bitworking.org/news/Leaving_Emacs">leaving emacs</a>, 
+and I have. I am now in the process of learning vi, or more precisely <a href="http://www.vim.org/">VIM</a>.</p>
+  <p>VIM is a quite mature and capable platform, not the same
+  vi I used years ago on Sun stations. It is a rewrite
+  of the vi editor, with Bram Moolenaar as the main author
+  and maintainer. It has all the major features you'd expect from 
+  a modern text editor such as syntax highlighting and scriptability.</p>
+<p>Learning it has been quite fun and the transition from
+ emacs to VIM has been quite enlightening. Here are some of my 
+ observations as I move from one to the other.</p>
+<dl>
+<dt>Scripting</dt>
+<dd>This honestly is the hook that got me to try VIM in the first place,
+     the <a href="http://bitworking.org/news/Leaving_Emacs#X7">comment</a> 
+     that VIM could be scripted with Python. I've got my weak spots,
+     and that hit it. I have never fully wrapped my head around emacs lisp,
+     and never thought that it was an appropriate scripting language 
+     for an editor. VIM has it's own language plus allows you to script
+     in other languages. Talk about pushing my buttons.
+  </dd>
+<dt>Language</dt>
+<dd>Emacs is driven by Control and Meta key combinations. They're nice and short
+     but not very mnemonic. VIM on the other hand uses words, honest to goodness
+     words to perform actions. Part of this difference is modalness, which I will
+     talk about next. Want to create a new buffer? That's :new. How about
+     editing a file? That's :edit. All of the commands have shorter versions
+     that are accepted, for example :e for :edit. The neat thing is that
+     you can type in a partial command then press the tab key to cycle through
+     all the possible completions. That's the power of language. </dd>
+<dt>Modality</dt>
+<dd>VIM has a modal interface, that is, you can be in one of several
+    different modes at any one time. For example when you first start
+    editing a file you are 'Normal' mode, press <code>i</code> or <code>a</code>
+    and you are in 'Insert' mode, a mode that allows new text
+    to be inserted. It's interesting that 'modal' interfaces
+    today are generally eschewed, being considered too difficult to learn
+    and too mistake prone. I thought this too until my switch to VIM.
+    Interesting also that I just saw a small bit of an interview with 
+    <a href="http://bootstrap.org/">Dr. Douglas C. Engelbart</a>, who for just one
+    of his accomplishments invented the mouse. 
+    He talked about the current user interfaces to 
+    applications as being mouse driven and very easy to learn, but in the long
+    run that same mode of interaction made the programs less productive
+    than it could be. Using the mouse, Ctrl keys, and Meta keys allows you 
+    to avoid creating a program with a modal interface, but at what cost? 
+    Drop language as a primary interface mechanism and you can create a non-modal 
+    interface, but in the process are you losing too powerful a tool? It does
+    make me wonder if modality and language are the key to the popularity 
+    of certain programs, for example <a href="http://pr.linuxjournal.com/article.php?sid=785">
+    for the third year in a row Vim was voted favorite editor</a>.
+    Similarly there is the fanatical following of 
+    <a href="http://www.escape.com/~yesss/_xywhat.htm">xyWrite</a>.
+   </dd>
+</dl>
+
+  <div class="commentContent" id="X1">
+    Speaking of modality, you might be interested in this tutorial about <a href="http://www.dina.dk/~abraham/religion/vi-tutorial.html">how to move the cursor one character forward in vi</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2003-10-12T11:46:38">2003-10-12</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Cool, glad you're checking out vim.</p>
+<p>If you search around a bit on google you'll find an implementation of the game of life in vims built in scripting language. Crazy vim hackers :-)</p>
+<p>:g!/line/del</p>
+<p>Delete all lines not matching pattern 'line'</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Anu</a> on <a href="#X2" title="2003-10-13T07:23:33">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>You say: </p>
+<blockquote><p>Emacs is driven by Control and Meta key combinations. They're nice and short but not very mnemonic. VIM on the other hand uses words, honest to goodness words to perform actions.</p></blockquote>
+<p>Which isn't <em>entirely</em> fair -- any command that you can run via some Control/Meta/Alt combination in Emacs can also be run by doing 'M-x command'. That doesn't seem substantially different than ':command' to me.</p>
+<p>As for how mnemonic the combinations are, changing them is always an option...</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://genehack.org">genehack</a> on <a href="#X3" title="2003-10-13T16:09:35">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Mark is trolling of course; you can use the arrow keys to do that in vim, regardless of mode.
+    <p class="commentByLine">Posted by
+       <a href="mailto:falken@lostinthenoise.net">foo'</a> on <a href="#X4" title="2003-10-13T22:00:25">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Perhaps my howto is of interest to you:</p>
+<p> <a href="http://www.pinkjuice.com/howto/vimxml/">Vim as XML Editor</a></p>
+<p>It's still a draft, I appreciate any feedback.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.pinkjuice.com/">Tobi</a> on <a href="#X5" title="2003-10-18T11:27:05">2003-10-18</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Tobi,<br />
+  Thanks for the pointer. I will definitely check it out.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X6" title="2003-10-20T12:01:42">2003-10-20</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    You script emacs with <a href="http://www.iro.umontreal.ca/~pinard/pymacs/HTML/What-is-Pymacs-.html#What%20is%20Pymacs%3f">pymacs</a>, although it does require some emacs lisp knowledge.
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X7" title="2003-10-29T12:34:35">2003-10-29</a>
+    </p>
+</div>
+  

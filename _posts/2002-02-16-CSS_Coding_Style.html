@@ -1,0 +1,278 @@
+---
+layout: post
+title: CSS Coding Style
+
+---
+
+  
+<p>A basic guide to formatting CSS. This document, like so much on this site, is a work in progress.
+As I do more with stylesheets and learn what works and what doesn't that
+experience will be codified here.</p>
+<p></p>
+  
+<p>Also, like so much of the content on this site, this is not a diatribe
+or a directorate. I am not writing this to tell <i>you</i> how you
+should code your stylesheets. I am posting this to provide others with
+one point of view and a starting point for their own coding standards.
+Kernighan says it best in "The practice of programming" that it does not
+matter <em>which</em> coding style you pick, as long as you pick
+one and apply it consistently. </p>
+<h3>Class vs ID Selectors</h3>
+<p>Prefer class over ID selectors. Styles can be applied to an element
+by either selecting it by class or by ID. For example title is a class
+selector and #footer is an ID selector:</p>
+<pre class="example"><code>  &lt;head&gt;
+    &lt;style&gt;
+        .title { 
+           color: orange; 
+        }
+        #footer { 
+           font-size: 0.8em; 
+        }
+    &lt;/style&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+     &lt;h1 class="title"&gt;BitWorking&lt;/h1&gt;
+     &lt;span id="footer"&gt;Copyright 2002&lt;/span&gt;
+  &lt;/body&gt;
+</code></pre>
+<p>Always use class selectors for applying styles. ID's are also used
+for scripting access to elements and in XHTML there are restrictions on
+how many elements can have the same id.</p>
+<h3>Font sizes</h3>
+<p>Use "em" for font sizing. This will keep the site more accessible. Avoid use "pt" or "px" for setting a font size. See the <a href="http://www.w3.org/TR/WCAG10-CSS-TECHS/#units">CSS Techniques for Web Content Accessibility Guidelines 1.0</a> for more details.</p>
+<h3>Naming Conventions</h3>
+<p>Naming conventions are always a controversial subject. Just ask 3 different
+programmers about Hungarian Notation. I'm sure you will get 3 different,
+and possibly emotional, responses. Since I am fairly new to CSS I will fall
+back on skillsets I already have. My CSS naming conventions will lean
+heavily on my C/C++ naming conventions.</p>
+<h4>Case</h4>
+<p>First for the case of the names themselves. I prefer to start class names
+with lowercase letters and each embedded word in the name starts with a capital.
+HTML elements are in lower case in anticipation of XHTML.
+For example:</p>
+<pre class="example"><code>&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+    h1 {}
+    p, ol, li {}
+    .myNewFunkyStyle { ...  }
+    .myFloatingFooter { ... }
+    .mainBodyContent P { ... }
+    .redBorderDiv { ... }
+  &lt;/style&gt;
+</code></pre>
+<h4>Names</h4>
+<p>The names of the classes need to be clear and descriptive. I have
+seen two major naming conventions in stylesheets. To guide the
+discussion here is out motivating example: </p>
+<pre class="example"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      .A { font-size: 2em;  }
+      .B { float: left; }
+      .C { font-size: 0.8em; }
+      .D { color: rgb(100, 100, 100); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="A"&gt;&lt;h1&gt;Header&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="B"&gt;Navigation Bar&lt;/div&gt;
+    &lt;div class="C"&gt;Content&lt;/div&gt;
+    &lt;div class="D"&gt;Footer&lt;/div&gt;     
+  &lt;/body&gt;
+</code></pre>
+<p>
+Here our page is divided into four logical blocks, the Header, Navigation Bar, Content, and the Footer.
+We have given them class names of A,B,C and D respectively. The question is what should A, B, C and D really be?
+Our choices fall into two broad categories. We could name the classes after the type of formatting they provide:
+</p>
+<pre class="example"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      .largeFont { font-size: 2em;  }
+      .floatLeft { float: left; }
+      .small { font-size: 0.8em; }
+      .brightColor { color: rgb(255, 200, 200); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="largeFont"&gt;&lt;h1&gt;Header&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="floatLeft"&gt;Navigation Bar&lt;/div&gt;
+    &lt;div class="small"&gt;Content&lt;/div&gt;
+    &lt;div class="brightColor"&gt;Footer&lt;/div&gt;           
+</code></pre>
+<p>
+You might be tempted to follow this convention but it has a major problem.
+It does not keep the separation of content and layout and that can cause 
+maintenance issues. For example, what if you suddenly have a hankering for a noir
+design and change your footer to a darker color <code>.brightColor { color: rgb(0,0,0); }</code>?
+Now the term "brightColor" is not only not helpful, it is downright wrong! 
+</p>
+<p>
+    It is a tempting naming convention because it <em>seems</em> to 
+make it easier to apply the same style to different classes. What it we
+wanted to make our content bright like our footer?
+</p>
+<pre class="example"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      .largeFont { font-size: 2em;  }
+      .floatLeft { float: left; }
+      .small { font-size: 0.8em; }
+      .brightColor { color: rgb(255, 200, 200); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="brightColor"&gt;&lt;h1&gt;Header&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="floatLeft"&gt;Navigation Bar&lt;/div&gt;
+    &lt;div class="brightColor"&gt;Content&lt;/div&gt;
+    &lt;div class="brightColor"&gt;Footer&lt;/div&gt;           
+</code></pre>
+<p>
+But this is not really a savings. You still have the problem of changing the style to 
+a darker color and now "brightColor" is non-descriptive for multiple parts of your
+document! There is a better way...
+</p>
+<p>
+    The alternative is to name your classes on how they are logically used on the 
+document. For example:
+</p>
+<pre class="example"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      .header { font-size: 2em;  }
+      .navigationBar { float: left; }
+      .content { font-size: 0.8em; }
+      .footer { color: rgb(100, 100, 100); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="header"&gt;&lt;h1&gt;Header&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="navigationBar"&gt;Navigation Bar&lt;/div&gt;
+    &lt;div class="content"&gt;Content&lt;/div&gt;
+    &lt;div class="footer"&gt;Footer&lt;/div&gt;        
+</code></pre>
+<p>
+    Here the classes are named based on the type of content they will be
+applied to. Now we can change the style and the class names will
+remain relavent. But what if we want to re-use the same formatting for 
+different classes? CSS provides a notation the provides for re-using styles while letting
+us keep our class names distinct:
+</p>
+<pre class="example"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;style&gt;
+      .header { font-size: 2em;  }
+      .navigationBar { float: left; }
+      .content, .footer { color: rgb(100, 100, 100); }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class="header"&gt;&lt;h1&gt;Header&lt;/h1&gt;&lt;/div&gt;
+    &lt;div class="navigationBar"&gt;Navigation Bar&lt;/div&gt;
+    &lt;div class="content"&gt;Content&lt;/div&gt;
+    &lt;div class="footer"&gt;Footer&lt;/div&gt;        
+</code></pre>
+<p>
+Here we accomplished the same thing as we did earlier with "brightColor" but
+we <em>didn't change the content</em> of the web page, only the style. So now 
+the naming style should be obvious. Name classes after the content they describe, not
+the type of style they provide.
+</p>
+<h3>Spacing and Punctuation</h3>
+<p>Spacing and punctuation should be pretty obvious from the following example:</p>
+<pre class="example"><code>    .header { 
+        font-size       : 2em;  
+    }
+    .navigationBar,
+    .content,
+    .header i { 
+        font-size       : 0.8em; 
+        border          : solid black 1px;
+        border-left     : solid black 5px;
+        border-right    : solid black 5px;
+    }
+</code></pre>
+
+  <div class="commentContent" id="X1">
+    <p>You might want to reconsider the "class over id" recommendation. That is soooo 2001. </p>
+<p>Seriously, though, you can do most of the things you want to do with classes by using ids. Ids have an added benefit of providing an anchor point within the site. Good structural mark up and css that is primarily id and context driven tends to be cleaner and easier to read.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X1" title="2004-05-04T22:23:21">2004-05-04</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Jef,<br />
+  Then why do I see 'class' used in your pages, for example on your paragraphs styled with "posted"? Similarly I looked through your CSS and didn't find a rule for id="a0000943377". </p>
+<p>  Id and class have different uses, id's must be unique in a page, and for repeating elements like your 'posted' paragraphs, you will have to use a class. In contrast id's are used to uniquely identify components of a page, such as you have done for the repeating entries on your weblog. While they are good for URIs that makes them less than useful for styling with CSS. While the CSS specs do allow you to attach styles based on 'id' there are advantages to using class and many times where you will be forced to using 'class' over 'id' as you appear to have been. My suggestion still stands to use 'class' over 'id', no matter how stylish it is to use id's these days.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2004-05-05T07:50:35">2004-05-05</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>FWIW, the site is a typepad.com (aka blogs.com) site, not one I personally authored. I just blog the content. </p>
+<p>And please note that I did not say that classes have no use. I merely stated that [I believe] you are missing out on some of the power of css by using classes. </p>
+<p>Per the preamble to your style guide, I am hopeful that you might consider trying an approach different than your own to see whether it is better or not rather than merely dismissing it out of hand. Proof would be in the pudding at that point, I suppose. I would be happy to be wrong about it, too.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X3" title="2004-05-07T19:15:44">2004-05-07</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Jef,<br />
+  Could you outline some benefits of using id over class? The only one you mention is that of serving a dual-role as an anchor point. In contrast using 'id' limits you to just one instance per document. Are there other benefits I am overlooking?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2004-05-10T21:02:05">2004-05-10</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>No one is saying to use ID instead of class. The two complement each other, rather than acting as replacements for one another, and should be used together.</p>
+<p>Definitely, class should be used when there will be more than one instance of it in the page. As you have noted, classes can and should be used to help provide additional meaning to elements, as Jef does in his page with the "posted" class. However, there are occasions when an element may semantically belong to one class but need to be presented somewhat differently from its fellows. In a case such as this, it can be given the proper class, and then aspects can be overridden based on an id.</p>
+<p>An example which comes readily to mind would be a case where scripting is used to mark the first or last element in a list, perhaps the first "posted" entry on the page. My marking it with an id of "first", the item could be given similar font and size, but (for example) colored differently.</p>
+<p>This would be a dumb example, were it not for one fact: IE does not support ::first-child or ::last-child. This method provides gives scripters a practical workaround for that flaw, and in fact it's a workaround in common use today.</p>
+<p>There are essentially three ways to style an item in CSS, and all three have their place. Rule-based selectors (descendant, adjacent, first-child, etc.) should be used when you are marking up based on position, that is, where in the HTML text the item is. Class selectors are used when you are marking up based on meaning, that is, some special grouping you have assigned, such as "posted". ID selectors should be used when marking up based on identity, that is, a single specific item in the HTML. Position and meaning can be combined (with rules and classes) for even more power; technically ID selectors can also be combined, but doing so just creates redundant markup.</p>
+<p>There is one final advantage to using id when appropriate, though it's not much of one: most browsers will parse it slightly faster. This is unlikely to make any noticeable difference unless you are using hundreds or thousands of elements anyway, but it's worth including just for the sake of completeness.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Millennium</a> on <a href="#X5" title="2004-05-11T11:26:12">2004-05-11</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Joe, </p>
+<p>Yeah. What Millenium said. </p>
+<p>I think that one of the primary benefits of using id (in combination with rule based selectors) is that it keeps the markup as free and clean as possible of presentation cruft. </p>
+<p>I also think that id is more appropriate for identifying sections of a page layout, e.g. header, footer, content. A class would apply to something that recurs, e.g. article within the content section, but the articles can most likely be marked up with heading and paragraph tags and styled with rule-based descendant selectors hanging off of the, e.g. content id.</p>
+<p>FWIW, my only real concern is the following statement: "Always use class selectors for applying styles," because it shackles how exactly a page may be styled. I would rather see something like "Minimize the use of style related attributes such as class and style in inline markup."</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X6" title="2004-05-11T12:28:24">2004-05-11</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    HELP!
+    <p class="commentByLine">Posted by
+       <a href="mailto:thewitch423@yahoo.com">Raven</a> on <a href="#X7" title="2004-05-13T22:44:05">2004-05-13</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <p>Don't forget that you can combine classes</p>
+<p>.menuItem<br />
+{<br />
+  font-weight : bold;<br />
+}</p>
+<p>.active<br />
+{<br />
+  color : red;<br />
+}</p>
+<p>&lt;a href="blablablah.." class="menuItem active"&gt;text&lt;/a&gt;</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X12" title="2004-09-12T14:01:11">2004-09-12</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <p>You are wrong. There's no need at all to mix upp CSS with ID's. Leave the ID to the developer and the class to the GUI-people. </p>
+<p>A projekt involving more than one person will get in deadlock mode too often if the ID wasn't controlled by the developers themselves.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Joachim</a> on <a href="#X13" title="2005-10-18T18:05:17">2005-10-18</a>
+    </p>
+</div>
+  

@@ -1,0 +1,71 @@
+---
+layout: post
+title: Microformats and Syndication
+
+---
+
+  
+  <p><a href="http://epeus.blogspot.com/2005_06_01_epeus_archive.html#111929498572588813">Kevin Marks</a>, among others, has announced the launch of <a href="http://microformats.org">microformats.org</a>. One question this raises is how does this markup survive a trip through an aggregator? I have done a little testing and found that <a href="http://bloglines.com">Bloglines</a> keeps class attributes intact. Are there exceptions? Do 'rel's pass through unmolested? What do other aggregators do? </p>
+<p>You might claim that it doesn't matter since all this stuff is just supposed to be in a web page, but I disagree. The value starts to really add up if these microformats can survive a trip through an aggregator.  Imagine if my aggregator can pick up hCards and keep track of them for me (along with a link back to the entry where they were found). Even if the aggregator clients don't start adding these features, web based aggregators could still be enhanced by adding microformat processing capabilities via Greasemonkey scripts.</p>
+<div style="float:right">Tags: <a href="http://technorati.com/tag/microformat" rel="tag" class="tag">microformat</a> <a href="http://technorati.com/tag/syndication" rel="tag" class="tag">syndication</a></div>
+<h3>Survey Results</h3>
+<table>
+<caption><em><b>Web-Based Aggregator Microformat Preserving Scorecard</b></em></caption>
+<tr><th>Service</th> <th>Preserves Microformats</th></tr>
+<tr><td><a href="http://bloglines.com">Bloglines</a></td> <td>Yes</td></tr>
+<tr><td><a href="http://www.rojo.com">Rojo</a></td> <td>Yes</td></tr>
+<tr><td><a href="http://kinja.com">Kinja</a></td> <td>No</td></tr>
+<tr><td><a href="http://my.yahoo.com">Yahoo!</a></td> <td>No</td></tr>
+<tr><td><a href="http://msnspaces.com">MSN Spaces</a></td> <td>Beats me, it refuses to let me sign in.</td></tr>
+<tr><td><a href="http://newsgator.com">NewsGator Online Edition</a></td> <td>No. (Converts 'abbr' elements to 'p'. Fails to preserve class attributes and titles.)</td></tr>
+</table>
+<p><b>Update:</b> Here is the feed I have been testing with: 
+       <a href="http://bitworking.org/projects/microformats/index.rss">
+           http://bitworking.org/projects/microformats/index.rss</a>
+</p>
+  <div class="commentContent" id="X1">
+    (Missing an http:// on your microformats link. Feel free to delete this comment.)
+    <p class="commentByLine">Posted by
+       <a href="http://adamv.com">Adam Vandenberg</a> on <a href="#X1" title="2005-06-22T14:20:18">2005-06-22</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Adam,<br />
+  Fixed. Thanks!
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2005-06-22T14:40:28">2005-06-22</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>My Universal Feed Parser retains both class and rel in embedded HTML content.</p>
+<p><a href="http://feedparser.org/docs/html-sanitization.html">http://feedparser.org/docs/html-sanitization.html</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X3" title="2005-06-25T11:10:57">2005-06-25</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>There's another issue coming with this.</p>
+<p>Name clashing by lack of namespace. Some peole might argue that I make the things complicated, but it's a real issue. Specifically when you start to design application. </p>
+<p>What's happening when </p>
+<p>1. the head profile attribute is not here anymore to say: The semantics of this class is defined by this URI, which will be the case in an aggregator.</p>
+<p>2. If the aggregator or the application X starts to recognize values without the profile URI, it will step on my feet.  I may have chosen the same class value in my XHTML than the ones of a microformats, but with a complete different semantics.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.la-grange.net/">karl</a> on <a href="#X4" title="2005-06-29T18:53:25">2005-06-29</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Joe: What feed(s) did you use for testing?  I'd like to try the same thing and see if my code lets 'em through or not. (It should, but ya never know, with things like jTidy in the mix.)
+    <p class="commentByLine">Posted by
+       <a href="http://admin.support.journurl.com/">Roger Benningfield</a> on <a href="#X5" title="2005-07-02T00:58:16">2005-07-02</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Roger,<br />
+  I have updated the post with a pointer to the feed I used for testing.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2005-07-07T01:20:30">2005-07-07</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Joe: Thanks! As expected, everything made it through. The only things I'm explicitly blocking are @on* and @style, but I also run all incoming content through jTidy, and I never know when it's going to decide to do something odd.
+    <p class="commentByLine">Posted by
+       <a href="http://admin.support.journurl.com/">Roger Benningfield</a> on <a href="#X7" title="2005-07-07T05:29:19">2005-07-07</a>
+    </p>
+</div>
+  

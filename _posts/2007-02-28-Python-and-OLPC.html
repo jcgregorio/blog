@@ -1,0 +1,37 @@
+---
+layout: post
+title: Python and OLPC
+
+---
+
+  
+  <p><a href="http://www.artima.com/weblogs/viewpost.jsp?thread=197203">Guido van Rossum</a></p>
+<blockquote><p>The plan is to write all applications in Python (except for the web browser), and a "view source" button should show the Python source for the currently running application. In the tradition of Smalltalk (Alan Kay is on the OLPC board, and has endorsed the project's use of Python) the user should be able to edit any part of a "live" aplication and see the effects of the change immediately in the application's behavior. 
+</p></blockquote>
+<p>Oh, yeah, and the <a href="http://wiki.laptop.org/go/Forth_Lesson_0">OLPC firmware is written in Forth</a>. Forth!
+</p>
+  <div class="commentContent" id="X1">
+    FORTH isn't actually that oddball a choice -- PowerPC Macs also had FORTH-based firmware that booted the system and initialized PCI cards, right up until the Intel transition last year. One of my co-workers (who's half my age!) wrote FORTH code for a living at his previous position on the OpenFirmware team.
+
+My last experience with FORTH was hacking the FIG interpreter on an Apple ][ in 1982, so this kind of makes me go "wow!" too; but FORTH is actually a good choice, since it's insanely small (under 8k bytes for a typical interpreter) and very fast, but significantly higher-level (and more portable) than assembly.
+
+But the really insane thing about FORTH to me is that, in the intervening 25 years, no one managed to evolve the language to support advanced features like named local parameters or local variables. According to my co-worker, you _still_ had to do everything in pure RPN, including remembering the offsets on the stack for the parameters and locals. And yet people managed to implement things like USB drivers and SHA-1 hash algorithms in it...
+    <p class="commentByLine">Posted by
+       <a href="mailto:jens@mooseyard.com">Jens</a> on <a href="#X1" title="2007-03-01T22:10:59.319089">2007-03-01</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Jens,<br />
+<p>The <b>!</b> in my "Forth!" wasn't an exclamation of 
+   horror, but of 
+   <a href="http://bitworking.org/news/122/Ward-Cunningham-Interview">pleasant   
+   surprise</a>. I've got a history with Forth going all the way back to
+   learning GraForth in high school.
+</p>
+<p>For some people that little nugget of information may go 
+  a long way towards explaining my way of thinking...
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X2" title="2007-03-02T00:43:34.403673">2007-03-02</a>
+    </p>
+</div>
+  

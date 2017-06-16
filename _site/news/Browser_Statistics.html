@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Browser Statistics</title>
+    <meta name=created value="2003-05-29T10:30:04">
+  </head>
+  <body>
+  
+  <table summary="Browser Statistics" border="1" cellspacing="0" cellpadding="3">
+<caption>
+        Browser requests for BitWorking in the last week.
+    </caption>
+<tr><th>Browser</th><th>Percentage of Requests</th></tr>
+<tr><td>MSIE</td> <td>44%</td></tr>
+<tr><td>Moz/Netscape</td> <td>54%</td></tr>
+<tr><td>Opera</td> <td>2%</td></tr>
+</table>
+<p>YMMV.</p>
+<p><strong>Update:</strong> Well, there's lies, damn lies, and statistics.
+  Based on feedback from <a href="http://bitworking.org/news/Browser_Statistics#X1">Fabrice</a>
+  I went back and filtered the last six days of logs and took only hits
+  that accessed the root of BitWorking, and then manually stripped out
+  all the robots, spiders, scrapers, aggregators and other non-desktop browser agents. 
+  Wow, was I suprised at the wild and woolly internet agent ecology that's sprouted up.
+  What I ended up with after all the filtering now looks like:</p>
+<strong>Updated again on 30May2003, I mis-counted some agents.</strong>
+<table summary="Browser Statistics" border="1" cellspacing="0" cellpadding="3">
+<caption>
+        Real Browser Requests For <code>http://bitworking.org/</code> in the last week.
+    </caption>
+<tr><th>Browser</th><th>Percentage of Requests</th></tr>
+<tr><td>MSIE</td> <td>45%</td></tr>
+<tr><td>Moz/Netscape</td> <td>50%</td></tr>
+<tr><td>Opera</td> <td>5%</td></tr>
+</table>
+<p>Note that in the above I didn't filter based on incoming IP address. Back to the drawing board.</p>
+
+  <div class="commentContent" id="X1">
+    IE could even be considered at a lower percentage (for weblogs) because a lot of RSS clients are using it to display web pages, which doesn't mean that the users are using IE as their default browser.
+    <p class="commentByLine">Posted by
+       <a href="http://dotnetweblogs.com/fmarguerie/">Fabrice</a> on <a href="#X1" title="2003-05-29T13:48:24">2003-05-29</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Good point. Maybe I'll dig through the logs and remove the hits to the RSS feeds.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-05-29T14:58:11">2003-05-29</a>
+    </p>
+</div>
+  </body>

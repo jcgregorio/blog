@@ -1,0 +1,128 @@
+---
+layout: post
+title: Comments via the CommentAPI
+
+---
+
+  
+  <p>Phil has pointed out that the <a href="http://wellformedweb.org/story/9">CommentAPI</a>
+   details how pingbacks and trackbacks are mapped to the RSS 'item' element but it does not
+   detail how a comment is mapped. I have been using a mapping on my implementation 
+   of the CommentAPI but haven't documented it. Here is the current mapping:
+</p>
+<pre class="example"><code>&lt;item&gt;
+  &lt;title&gt;Joe&lt;/title&gt;  
+  &lt;link&gt;http://bitworking.org&lt;/link&gt;  
+  &lt;description&gt;The actual text of the comment goes here.&lt;/description&gt;
+&lt;/item&gt;</code></pre>
+<p>I.e. the 'title' is the comment authors name and the 'description' is the 
+   comment content. Note that the 'link' element is either a link or could also contain an e-mail address.</p>
+<p><a href="http://bitworking.org/news/52#X21">Phil</a> has suggested that the 'title' element
+   should not be used for the authors name but instead used for the title of the comment
+   and instead 'dc:creator' should be used for the comment authors name. What do you think?</p>
+
+  <div class="commentContent" id="X1">
+    Thus proving that you don't need verbs to have semantic arguments.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2003-03-18T10:04:55">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    It gets worse: I don't like link for author homepage, either ;)
+
+For there to be any value in using RSS rather than an arbitrary XML format (like http://groups.yahoo.com/group/caifxml/ for example), the RSS should be reusable as-is. For example, I've been wanting a blog of comments I've left on other blogs, just to keep track of threads. If I had a blog that let me POST an RSS fragment, then I could just POST a comment, and then rePOST it to my threads blog, but I'm certainly not going to title my item with my own name (more likely, I'd use "Re: whatever your post title was"), and I'd also want the link to be the permalink URL for my comment on your blog, not my homepage URL. What, if anything, are you planning on returning after a successful POST?
+    <p class="commentByLine">Posted by
+       <a href="http://philringnalda.com">Phil Ringnalda</a> on <a href="#X2" title="2003-03-18T11:57:43">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Is this where the idea of the wfw namespace might come in handy? 
+Rather than bending existing element definitions from the Dublin Core or wherever build a new comment/trackback/pingback specific set.
+I may be barking up the wrong tree there and/or missing the point of the dc: namespace but is it at least worth thinking about.
+
+Also, could POSTs be asynchronous such that the sender doesn't even bother to wait for a response? 
+I've changed my weblog.com pinging scripts to act this way and the savings in terms of timeouts and errors has been significant. Maybe the whole comment thing needs to be more traceable than pinging on updates - but again, I chuck it in for consideration.
+
+Thanks
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X3" title="2003-03-18T12:23:07">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I have no idea how this is going to format (no preview here), but here goes:
+
+Sam Ruby <rubys></rubys>
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X4" title="2003-03-18T12:31:13">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Second attempt:
+
+<author>Sam Ruby &lt;rubys@intertwingly.net&gt;</author>
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X5" title="2003-03-18T12:32:27">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Phil,
+   Here are the responses you get from different types of posts:
+
+http://bitworking.org/archival/comment_soap_transcript2.txt
+
+If you notice, you get a SOAP response if you use a SOAP envelope, but that is just an experimental part of the interface. If you POST w/o a SOAP Envelope the return is a little bit of HTML with a link to the comment in it. Also, in the headers of the response is the Location: header which is also set to the URL of the comment. For example:
+
+HTTP/1.1 303 See Other
+Date: Tue, 18 Mar 2003 18:11:39 GMT
+Server: Apache/1.3.27 (Unix)  (Red-Hat/Linux) PHP/4.1.2 DAV/1.0.2 mod_ssl/2.8.12 OpenSSL/0.9.6
+Location: http://bitworking.org/news/58#5
+Transfer-Encoding: chunked
+Content-Type: text/html
+
+<html><body><h1>New Item Created.</h1><a href="http://bitworking.org/news/58#5">http://bitworking.org/news/58#5</a></body></html>
+
+I will add the 303 and Location header as suggestions in the specification.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2003-03-18T13:17:55">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Sam,
+
+The MSXML parser (yeah, I know...) chokes on the @ in the e-mail address if it is within the &lt; and &gt;
+Could it be simplified to all plain text:
+<author>Sam Ruby[rubys@intertwingly.net]</author>
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X7" title="2003-03-18T13:24:41">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Adrian: I'd prefer to stay compatible with RFC 822.  Would @ work?
+
+http://www.ietf.org/rfc/rfc822.txt
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X8" title="2003-03-18T15:57:55">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    What reason is there for not having exactly the same semantics as an RSS feed?
+
+As I am fond of saying, an RSS feed is conceptually a stream of information capsules, all comingn from the same source. From this POV, CommentsAPI is simply an RSS feed which is pushed, rather than pulled, to its destination.
+    <p class="commentByLine">Posted by
+       <a href="http://radio.weblogs.com/0106548/">Ziv Caspi</a> on <a href="#X9" title="2003-03-18T16:36:51">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Sam's right, of course: the author name and the author email should both come from any 822-valid construction in the author element (I think I'll be posting "me@mine.com (Phil Ringnalda)" to avoid the risk of doing something stupid encoding brackets, though).
+
+So much for my plan to do it quick and easy in PHP, since 822's only 21 years old, so all PHP's parsers for it are in experimental extensions and beta PEAR modules. Maybe the LazyWeb will provide me with a simple Python script to translate to a Movable Type POST.
+    <p class="commentByLine">Posted by
+       <a href="http://philringnalda.com">Phil Ringnalda</a> on <a href="#X10" title="2003-03-19T00:32:09">2003-03-19</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Sam, 
+Parser even chokes on @ - kinda wishing I'd developed in PHP and XML rather than ASP and XML :-)
+    <p class="commentByLine">Posted by
+       <a href="http://www.xasperate.com">Adrian</a> on <a href="#X11" title="2003-03-19T01:13:50">2003-03-19</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    I have updated the spec to the best of my ability to reflect the discussion. Let's continue the discussion here:
+
+http://bitworking.org/news/63
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking">joe</a> on <a href="#X12" title="2003-03-19T10:01:18">2003-03-19</a>
+    </p>
+</div>
+  

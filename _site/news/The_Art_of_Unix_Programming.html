@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>The Art of Unix Programming</title>
+    <meta name=created value="2003-12-02T13:19:35">
+  </head>
+  <body>
+  <p>I don't know how I missed this, but back on September 23 ESR's book 
+  <a href="http://www.faqs.org/docs/artu/index.html">The Art of Unix Programming</a>
+  went to Rev 1, which means it is the version of the content
+  that is going into <a href="http://www.amazon.com/exec/obidos/ASIN/0131429019/bitworking-20">the print book</a>. </p>
+
+  <a href="http://www.amazon.com/exec/obidos/ASIN/0131429019/bitworking-20">
+<img class="unframed" src="http://images.amazon.com/images/P/0131429019.01.MZZZZZZZ.jpg" alt="The Art of UNIX Programming" title="The Art of UNIX Programming" />
+</a>
+<p>There is <strong>a lot</strong>
+  of information in there and I have only skimmed a few chapters
+  but I found them all excellent. For example 
+  <a href="http://www.faqs.org/docs/artu/ch07s03.html#id2923889">
+  Threads - Threat or Menace?</a> stresses using multiple processes over threads.
+  That brought back memories of a multi-threaded Windows application I 
+  did at my last job. We had upwards of 5 threads running in that 
+  application and we had all the synchronization and memory sharing 
+  problems you'd expect with such a system. These weren't just 5 identical worker
+  threads all doing the same task, no each one was handling a 
+  different task, and all the data the application was handling 
+  got piped through some subset of the threads. On one hand, under Windows,
+  threads are extremely cheap, spawning them is easy and they take up
+  very few resources. On the other hand, as ESR points out in his book, 
+  it's not the threads that are the problem it's the <acronym title="Inter-Process Communication">
+  IPC</acronym> and locking that will get you. As far as running 5 threads 
+  we were pretty happy with ourselves for that, 
+  mostly because one of the applications we worked with most was 
+  MS Outlook which at times had upwards of 13 threads running.
+</p>
+
+  <div class="commentContent" id="X1">
+    I've already seen it in bookstores.
+    <p class="commentByLine">Posted by
+       <a href="http://www.michaelbernstein.com">Michael Bernstein</a> on <a href="#X1" title="2003-12-03T15:55:01">2003-12-03</a>
+    </p>
+</div>
+  </body>

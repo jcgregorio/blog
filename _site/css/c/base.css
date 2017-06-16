@@ -1,0 +1,288 @@
+   
+* { 
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    border: 1px solid red;
+}
+
+body {
+    text-align: left;
+    text-align:center;
+    word-spacing: 0em;
+    color: #000000;
+    background: #ccc;
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    /* letter-spacing: -0.03em; */
+    line-height: 1.3em; 
+}
+
+.body {
+    width: 37em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    background: #ddd;
+}
+img  {
+	border:       0px solid white;
+	color:        white;
+	border-width: 0;
+}
+
+p {
+    line-height: 1.3em; 
+}
+
+div {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 280%;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.5em;
+}
+
+a,
+a:link,
+a:active,
+a:visited
+{
+    color: #007;
+}
+
+
+
+a:hover
+{
+    text-decoration: underline;
+}
+
+h2 a, 
+h2 a:link,
+h2 a:active,
+h2 a:visited
+{
+    text-decoration: underline;
+}
+
+.working {
+    border: solid black 1px;
+    margin: 0;
+    padding: 0.1em 0.1em 0.1em 0;
+    color: black;
+    background: white;
+}
+.title {
+    top: 0;
+    text-align: left;
+    padding-bottom: 2em;
+    background: url("http://bitworking.org/images/2005/9/Image3.jpg") no-repeat left bottom;
+    color: #EEE;
+    font-family: Candara, Gill, "Gill Sans", "Trebuchet MS", "Lucida Grande", Geneva, Monaco; 
+}
+
+.title a,
+.title a:link,
+.title a:active,
+.title a:visited,
+.title a:hover
+{
+    color: #FFF;
+}
+
+.title li {
+    float: left; padding: 0 0.5em; margin: 0; margin-right: -1px; list-style-type: none; 
+}
+
+.title h1 {
+    margin-left: 0.3em;
+}
+
+.content {
+    text-align: left;
+    margin-bottom: 3em;
+    margin-top: 0;
+    clear: both;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+h2 {
+    margin: 0;
+}
+
+dt {
+    font-weight: bold;
+}
+
+dd {
+    line-height: 20px;
+}
+
+.commentContent {
+        background-color: rgb(245, 245, 245);
+        margin-top: 2em;
+        margin-bottom: 1em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        padding-left: 1em;
+}
+
+
+.item {
+    margin-top: 3em;
+    padding-bottom: 2px;
+    padding-left: 1em;
+    padding-right: 2em;
+}
+
+
+
+.item h2 {
+    margin-left: -0.5em;
+    font-size: 1.5em; 
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    word-spacing: 0.05em;
+    padding: 0 0.1em;
+    line-height: 1.1em;
+
+}
+
+
+.fisk h2 {
+    margin-left: 0em;
+}
+.permalink {
+    padding-left: 0.2em;
+    display: block;
+    float: right;
+}
+
+.footercopyright {
+	border-top: 	solid black 1px;
+	margin-top: 	1em;
+}
+
+.footer {
+    display: block;
+	width: 		95%;
+	margin-top: 	5em;
+	text-align: 	center;
+	font-size: 	0.8em;
+	padding: 	1em;
+	clear: 		both;
+}
+
+.unframed {
+    padding: 1em;
+    float: right;
+}
+
+.framed {
+   padding:    0.5em; 
+   border:     solid black 3px; 
+   margin:     1em
+}
+
+.speakerA {
+  color:  rgb(0, 54, 87);
+  display: block;
+  width:  8em;
+  float: left;
+  font-weight: bold;
+}
+
+.speakerB {
+  color:  rgb(143, 16, 18);
+  display: block;
+  width:  8em;
+  float: left;
+  font-weight: bold;
+}
+
+ins {
+	background-color: rgb(255, 255, 0);
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1.1em;
+}
+
+
+pre, pre code, code {
+    font-size:  1em;
+    line-height: 1em;
+    color: green;
+}
+
+
+th {
+	background-color: rgb(215, 215, 215);
+}
+
+blockquote {
+	/* font-style: italic; */
+}
+
+blockquote p {
+    background-color: #eee;
+	padding: 0.5em;
+}
+
+.diff {
+	background-color: rgb(255, 255, 0);
+}
+
+code {
+        color: green;
+}
+
+.example {
+	background-color: 	rgb(240, 240, 240);
+	border:			solid black 1px;
+	padding: 		0.5em;
+}
+
+
+abbr, acronym, .help {
+        border-bottom: 1px dotted #333;
+        cursor:        help;
+}
+
+.ad {
+    margin-top: 1em;
+    text-align: center;
+}
+
+table {
+    font-size: 10pt;
+    font-family: Verdana, Arial, Helvetica, sans-serif; 
+}
+
+.tags li { 
+    float: right; 
+    padding: 0 0.5em; 
+    margin: 0; 
+    margin-right: -1px; 
+    list-style-type: none; 
+}
+
+.rant {
+    font-weight: bold;
+    color: #900; 
+}
+
+.fisk {
+    margin-left: 2em;
+    padding: 0.5em;
+    background-color: rgb(240, 240, 240); 
+}

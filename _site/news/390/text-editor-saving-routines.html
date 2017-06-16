@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Text Editor Saving Routines</title>
+    <meta name=created value="2009-01-05T15:18:40.927617">
+  </head>
+  <body>
+  
+  <p>I have, for reasons that will become obvious in a week or so, been looking at
+    text editors and what happens when you save a file. For example, if we are editing the file
+    <code>filename.txt</code>, different things will happen when you
+    save the file depending on which editor you are using.
+    VIM is fairly straight forward in that it renames the original file
+    to <code>filename.txt<b>~</b></code>, writes the modified
+    contents to <code>filename.txt</code>, and then if that is successful
+    deletes <code>filename.txt<b>~</b></code>. 
+    </p>
+<p>Emacs does roughly the same thing as VIM, but by default doesn't clean up the <code>filename.txt<b>~</b></code> file.
+    </p>
+<p>Eclipse is by far the simplest, truncating <code>filename.txt</code> 
+    to a length of 0 and then writing the new contents.
+    </p>
+<p>Gedit is by far the most byzantine, first it writes the contents of the modified buffer 
+    to a hidden file <code>.gedit-save-NNNN</code>, then it renames the original file
+    to <code>filename.txt<b>~</b></code>, then renames <code>.gedit-save-NNN</code> to <code>filename.txt</code>
+    and finally deletes <code>filename.txt<b>~</b></code>.
+    What makes Gedit really stand out from other text editors is that
+    if for some reason the filesystem doesn't support 'rename' then Gedit refuses
+    to save the file, as opposed to VIM and Emacs which will just write new
+    contents to <code>filename.txt</code>. As you can imagine that's controversial
+    behavior and <a href="https://bugs.launchpad.net/ubuntu/+source/gedit/+bug/34813">there's 
+    a long and painful bug thread on it</a>, which is filled with all the painful things 
+    you'd expect it to be filled with, like claiming it's not a bug, or that
+    the bug is in some other piece of software, or that it's not a problem
+    under 'normal' usage, or that any other way of saving files is unsafe.
+    Like I said, painful.
+    </p>
+<p>
+    But I'm willing to believe there are even more complex cases, and if you know of an editor 
+    that has an even more convoluted save routine I'd be glad to hear about it.
+    </p>
+  <div class="commentContent" id="X1">
+    <p>There's actually more to emacs (should be no surprise).</p>
+<p>First, emacs will keep automatic backups, like #filename.txt#, while a file is in the process of being edited (every so-many keystrokes); these go away when a file is finally successfully saved.  If it can't create the auto-backup, it will warn you but will still allow you to proceed.</p>
+<p>When saving, to create the backup file emacs can use two methods: RENAME filename.txt to filename.txt~, or COPY filename.txt to filename.txt~.  It will generally try the rename approach first, if possible, unless the original file is a link or the file ownership permissions are mismatched, or the user has customized emacs to use the copying approach first.</p>
+<p>Also emacs can perform version controlled backups, where it creates filename.txt.~1~, filename.txt.~2~, filename.txt.~3~, etc.</p>
+<p>Another related thing that emacs does is to use lock files.  This prevents (or at least alerts the user) having two different emacs processes editing the same file simultaneously and potentially overwriting the changes of the other.  This feature alone has saved me countless times, as I tend to have dozens of terminals and screen sessions and ssh's going at once.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://deron.meranda.us/">Deron Meranda</a> on <a href="#X1" title="2009-01-05T16:28:39.913772">2009-01-05</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Put:<pre>
+
+ set backup
+
+</pre></p><p>...in your ~/.vimrc ... to not do the delete part (ie. dtrt. :).
+</p><p>
+ I'm actually surprised that (x)emacs doesn't do the same thing as gedit, as that makes the window where you have no filename.txt much smaller. Although obviously breaking when rename doesn't work is wrong (so you can't edit symlinks in gedit?)</p>
+    <p class="commentByLine">Posted by
+       <a href="http://james-antill.name/">James Antill</a> on <a href="#X2" title="2009-01-05T17:16:42.859359">2009-01-05</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p><a href="http://www.jedit.org/">jEdit</a> lets you opt in to something like vim/emacs disk writing behavior.  Its label for the option, "Two-stage save (safer but resets file owner on Unix)", does raise an interesting point about the RENAME+CREATE approach.</p>
+<p>It seems that COPY+OVERWRITE would be safer re. preservation of file permissions and ownership.  However if there was an undetected write-failure during the copy operation, the original may be truncated without a usable backup.  Also, COPY+OVERWRITE would require more bytes to be written compared to RENAME+CREATE.  I guess that's why emacs only falls back to the former if the latter will result in changed ownership/permissions.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://paul.annesley.cc/">Paul Annesley</a> on <a href="#X3" title="2009-01-05T20:43:49.482948">2009-01-05</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Back in the days before git or BitKeeper, a <a href="http://lkml.indiana.edu/hypermail/linux/kernel/9706.3/0139.html">neat trick</a> (§1.6) in Linux development was used - create your scratch copy of the tree using <tt>cp -av --link</tt>, then <tt>diff</tt> becomes much faster. This works because <tt>patch</tt> uses RENAME+CREATE, which doesn't change the hard-linked file, which COPY+OVERWRITE does.
+    <p class="commentByLine">Posted by
+       <a href="mailto:trs80@ucc.asn.au">James</a> on <a href="#X4" title="2009-01-05T21:05:42.740897">2009-01-05</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Textmate is also quite interesting. You can use it for editing a form in Safari as I'm doing it right now. The file I'm editing for this comment is in located in /private/var/folders/F8/F8wKkW36HM424d8akEXcdE+++TI/-Tmp-/
+
+name of the file is "Joe\ Gregorio\ \|\ BitWorking\ \|\ Text\ Editor\ Saving\ Routines.safari"
+
+Then when I save it, the content of the form is updated.
+
+When I close it, the file is destroyed and I'm back to the form.
+
+In Normal editing mode, it doesn't seem to create a temporary file or I haven't found yet where. :)
+    <p class="commentByLine">Posted by
+       <a href="http://www.la-grange.net">karl</a> on <a href="#X5" title="2009-01-06T02:11:26.201356">2009-01-06</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    You are right that at the file system level, Eclipse just overwrites the file contents. However, internally it keeps a local history of file contents for all changed files. If anything goes wrong at the file system level, your work won't be lost - you can use "Restore from Local History..." or "Replace With &gt; History..." to get it back. The local history settings can be changed using Windows &gt; Preferences &gt; General &gt; Workspace &gt; Local History.
+    <p class="commentByLine">Posted by
+       <a href="http://borisoneclipse.blogspot.com">Boris Bokowski</a> on <a href="#X6" title="2009-01-06T11:50:46.150308">2009-01-06</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    BBEdit on the Mac has its own way of keeping backups, but you probably don't care about platform-specific files.
+
+BTW, for FLOSS, "joe" keeps file~.txt by default. I turn off that option as soon as I install it.
+    <p class="commentByLine">Posted by
+       <a href="http://LookIt.proper.com">Paul Hoffman</a> on <a href="#X7" title="2009-01-07T23:01:24.899222">2009-01-07</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    James,<br />
+<blockquote><p>cp -av --link</p></blockquote>
+<p>That's just sick. I also just love the implicit implication in that FAQ that you would obviously know your text editors file saving algorithm.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X8" title="2009-01-08T23:45:41.015600">2009-01-08</a>
+    </p>
+</div>
+  </body>

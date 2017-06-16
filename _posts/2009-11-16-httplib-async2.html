@@ -1,0 +1,20 @@
+---
+layout: post
+title:  httplib2.HttpAsync() 
+
+---
+
+        <p>
+        I've created a new mercurial repository in httplib2 called <a href="http://code.google.com/p/httplib2/source/browse/?repo=async2">async2</a>.
+        The goal is to address issues <a href="http://code.google.com/p/httplib2/issues/detail?id=5">#5</a>,
+        <a href="http://code.google.com/p/httplib2/issues/detail?id=25">#25</a>,
+        <a href="http://code.google.com/p/httplib2/issues/detail?id=44">#44</a>
+        and address these in a way that makes it possible
+        to experiment with <a href=http://sites.google.com/a/chromium.org/dev/spdy/spdy-whitepaper>SPDY</a>
+        in httplib2, which would be difficult if not impossible with the
+        current blocking IO implementation.  The very rough goal is to create,
+        or creatively reuse, a non-blocking async version of httplib, and then
+        have httplib2 choose between the blocking or non-blocking version based
+        on how the library is used.
+        </p>
+    

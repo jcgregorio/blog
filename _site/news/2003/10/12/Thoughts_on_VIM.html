@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Thoughts on VIM</title>
+  <meta name="description" content="I said I was leaving emacs, and I have. I am now in the process of learning vi, or more precisely VIM. VIM is a quite mature and capable platform, not the sa...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://192.168.1.95:4000/news/2003/10/12/Thoughts_on_VIM">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Thoughts on VIM</h1>
+    <p class="post-meta">
+      <time datetime="2003-10-12T00:00:00-04:00" itemprop="datePublished">
+        
+        Oct 12, 2003
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+      <p>I said I was <a href="http://bitworking.org/news/Leaving_Emacs">leaving emacs</a>, 
+and I have. I am now in the process of learning vi, or more precisely <a href="http://www.vim.org/">VIM</a>.</p>
+  <p>VIM is a quite mature and capable platform, not the same
+  vi I used years ago on Sun stations. It is a rewrite
+  of the vi editor, with Bram Moolenaar as the main author
+  and maintainer. It has all the major features you'd expect from 
+  a modern text editor such as syntax highlighting and scriptability.</p>
+<p>Learning it has been quite fun and the transition from
+ emacs to VIM has been quite enlightening. Here are some of my 
+ observations as I move from one to the other.</p>
+<dl>
+<dt>Scripting</dt>
+<dd>This honestly is the hook that got me to try VIM in the first place,
+     the <a href="http://bitworking.org/news/Leaving_Emacs#X7">comment</a> 
+     that VIM could be scripted with Python. I've got my weak spots,
+     and that hit it. I have never fully wrapped my head around emacs lisp,
+     and never thought that it was an appropriate scripting language 
+     for an editor. VIM has it's own language plus allows you to script
+     in other languages. Talk about pushing my buttons.
+  </dd>
+<dt>Language</dt>
+<dd>Emacs is driven by Control and Meta key combinations. They're nice and short
+     but not very mnemonic. VIM on the other hand uses words, honest to goodness
+     words to perform actions. Part of this difference is modalness, which I will
+     talk about next. Want to create a new buffer? That's :new. How about
+     editing a file? That's :edit. All of the commands have shorter versions
+     that are accepted, for example :e for :edit. The neat thing is that
+     you can type in a partial command then press the tab key to cycle through
+     all the possible completions. That's the power of language. </dd>
+<dt>Modality</dt>
+<dd>VIM has a modal interface, that is, you can be in one of several
+    different modes at any one time. For example when you first start
+    editing a file you are 'Normal' mode, press <code>i</code> or <code>a</code>
+    and you are in 'Insert' mode, a mode that allows new text
+    to be inserted. It's interesting that 'modal' interfaces
+    today are generally eschewed, being considered too difficult to learn
+    and too mistake prone. I thought this too until my switch to VIM.
+    Interesting also that I just saw a small bit of an interview with 
+    <a href="http://bootstrap.org/">Dr. Douglas C. Engelbart</a>, who for just one
+    of his accomplishments invented the mouse. 
+    He talked about the current user interfaces to 
+    applications as being mouse driven and very easy to learn, but in the long
+    run that same mode of interaction made the programs less productive
+    than it could be. Using the mouse, Ctrl keys, and Meta keys allows you 
+    to avoid creating a program with a modal interface, but at what cost? 
+    Drop language as a primary interface mechanism and you can create a non-modal 
+    interface, but in the process are you losing too powerful a tool? It does
+    make me wonder if modality and language are the key to the popularity 
+    of certain programs, for example <a href="http://pr.linuxjournal.com/article.php?sid=785">
+    for the third year in a row Vim was voted favorite editor</a>.
+    Similarly there is the fanatical following of 
+    <a href="http://www.escape.com/~yesss/_xywhat.htm">xyWrite</a>.
+   </dd>
+</dl>
+
+  <div class="commentContent" id="X1">
+    Speaking of modality, you might be interested in this tutorial about <a href="http://www.dina.dk/~abraham/religion/vi-tutorial.html">how to move the cursor one character forward in vi</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2003-10-12T11:46:38">2003-10-12</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Cool, glad you're checking out vim.</p>
+<p>If you search around a bit on google you'll find an implementation of the game of life in vims built in scripting language. Crazy vim hackers :-)</p>
+<p>:g!/line/del</p>
+<p>Delete all lines not matching pattern 'line'</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Anu</a> on <a href="#X2" title="2003-10-13T07:23:33">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>You say: </p>
+<blockquote><p>Emacs is driven by Control and Meta key combinations. They're nice and short but not very mnemonic. VIM on the other hand uses words, honest to goodness words to perform actions.</p></blockquote>
+<p>Which isn't <em>entirely</em> fair -- any command that you can run via some Control/Meta/Alt combination in Emacs can also be run by doing 'M-x command'. That doesn't seem substantially different than ':command' to me.</p>
+<p>As for how mnemonic the combinations are, changing them is always an option...</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://genehack.org">genehack</a> on <a href="#X3" title="2003-10-13T16:09:35">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Mark is trolling of course; you can use the arrow keys to do that in vim, regardless of mode.
+    <p class="commentByLine">Posted by
+       <a href="mailto:falken@lostinthenoise.net">foo'</a> on <a href="#X4" title="2003-10-13T22:00:25">2003-10-13</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Perhaps my howto is of interest to you:</p>
+<p> <a href="http://www.pinkjuice.com/howto/vimxml/">Vim as XML Editor</a></p>
+<p>It's still a draft, I appreciate any feedback.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.pinkjuice.com/">Tobi</a> on <a href="#X5" title="2003-10-18T11:27:05">2003-10-18</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Tobi,<br />
+  Thanks for the pointer. I will definitely check it out.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X6" title="2003-10-20T12:01:42">2003-10-20</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    You script emacs with <a href="http://www.iro.umontreal.ca/~pinard/pymacs/HTML/What-is-Pymacs-.html#What%20is%20Pymacs%3f">pymacs</a>, although it does require some emacs lisp knowledge.
+    <p class="commentByLine">Posted by
+       <a href="http://www.franklinmint.fm">Robert Sayre</a> on <a href="#X7" title="2003-10-29T12:34:35">2003-10-29</a>
+    </p>
+</div>
+  
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,63 @@
+---
+layout: post
+title: URI Templates
+
+---
+
+  
+  
+<p>
+  I've been working over the past couple months with 
+  <a href="http://blog.unto.net/work/uri-templates-draft/">DeWitt Clinton</a>, 
+  <a href="http://www.mnot.net/blog/2006/10/04/uri_templating">Mark Nottingham</a>, 
+  <a href="http://weblogs.java.net/blog/mhadley/">Marc Hadley</a>, 
+  <a href="http://www.pacificspirit.com/blog/">Dave Orchard</a>, 
+  and <a href="http://www.snellspace.com/wp/?p=467">James Snell</a> 
+  on a <a href="http://www.ietf.org/internet-drafts/draft-gregorio-uritemplate-00.txt">
+  draft specification for URI Templates</a>, which finally 
+  got published yesterday. To provide feedback on this 
+  Internet-Draft, join the <a href="http://lists.w3.org/Archives/Public/uri/">W3C URI mailing
+  list</a>, and just like I've done for the <a href="http://bitworking.org/projects/atom/">Atom Publishing Protocol</a> I'll keep a 
+  <a href="http://bitworking.org/projects/URI-Templates/">URI Template project 
+  page</a> open that will always points to the latest version.
+  </p>
+<p>
+  URI Templates are a simple idea that I covered back in 
+  April of last year in  
+  <a href="http://www.xml.com/pub/a/2005/04/06/restful.html">Constructing or Traversing URIs?</a>,
+  allowing you to parametrize a URI with
+  variables that you would substitute in order to generate
+  a URI. For example, if you knew your userid was
+  'fred' and you were given a URI template of the form:
+  </p>
+<pre><code>  http://example.org/users/{userid}</code></pre>
+<p>
+  You could do the substitution and get a URI:
+  </p>
+<pre><code>  http://example.org/users/fred</code></pre>
+<p>
+  They show up in lots of places, like 
+  <a href="http://www.opensearch.org/Specifications/OpenSearch/1.1#OpenSearch_URL_template_syntax">Open Search</a>, 
+  <a href="https://wadl.dev.java.net/">WADL</a>, even 
+  in 
+  <a href="http://www.w3.org/TR/2006/CR-wsdl20-adjuncts-20060327/#_http_operation_location_cited_ser">WSDL</a>, 
+  and there are more places where they'll
+  be showing up in the future. Instead of having everyone
+  define slightly different mechansism we decided to 
+  sit down and spec it out in the
+  hopes that it will increase interop and 
+  make it easier for other specifications
+  to adopt URI Templates.
+  </p>
+<p>
+  See 
+  <a href="http://blog.unto.net/work/uri-templates-draft/">DeWitt</a>, 
+  <a href="http://www.mnot.net/blog/2006/10/04/uri_templating">Mark</a>, 
+  and <a href="http://www.snellspace.com/wp/?p=467">James</a> for more info.
+  </p>
+<p>
+  Also see <a href="http://www.snellspace.com/wp/?p=469">James on URI Templates in XML</a>.
+  </p>
+
+  
+  

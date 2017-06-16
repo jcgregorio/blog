@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>For small values of "Web"</title>
+    <meta name=created value="2007-05-31T10:55:11.859171">
+  </head>
+  <body>
+  
+  <p><a href="http://www-03.ibm.com/developerworks/blogs/page/woolf?entry=wadl_declared_interfaces_for_rest&amp;ca=dat-bl">Bobby Woolf</a>:</p>
+<blockquote><p>A lot of what it boils down to for me is that independently-declared and <b>strongly-typed</b> interfaces are a good thing. [<i>Emphasis mine.</i>]</p></blockquote>
+<p>Sorry, you lost me right there.</p>
+<p><img alt="Different environments internalizing the same representation differently" src="http://bitworking.org/images/2007/02/rest.png" title="Different environments internalizing the same representation differently" /></p>
+<p>Here's the <a href="http://bitworking.org/news/125/REST-and-WS">full article</a> if you don't understand the image.</p>
+  <div class="commentContent" id="X1">
+    <p>I want to believe.  I swear, I do.  Help me!
+
+</p><p>Consider an API as complex as <a href="http://www.flickr.com/services/api/">the Flickr API</a>.  How do you "do this in REST" without somehow describing the structure of some of the data returned?  For example, take the structure returned from the <a href="http://www.flickr.com/services/api/flickr.people.getInfo.html">flickr.people.getInfo</a> api.  
+
+</p><p>If I was to take you and Mark Baker at your word, the documentation provided by the Flickr API site wouldn't be required, since "all you need to know is HTTP/1.1".
+
+</p><p>I'm not buying it.
+
+</p><p>And of course, the real world is much more complex than the Flickr API.  Ratchet the complexity of the returned data up a factor or two.
+
+</p><p>Or, cutting closer to the bone, why bother having an APP spec, when it's, after all, just REST (well, I assume it's RESTy ~smile~).  Shouldn't need a spec, should we?</p>
+    <p class="commentByLine">Posted by
+       <a href="http://muellerware.org">Patrick Mueller</a> on <a href="#X1" title="2007-05-31T13:57:09.355787">2007-05-31</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Patrick,<br />
+<p>If you can find me, 'at my word', where I say, "all you need to know is HTTP/1.1", then I'll buy you a drink.</p>
+<p>What I wanted to talk about today was strong typing, I'll address the flow/interaction issue in a later post.</p>
+<blockquote><p>And of course, the real world is much more complex than the Flickr API.</p></blockquote>
+<p>I'm not sure where you live, but Flickr is in <b>my</b> 'real world'.</p>
+<p>I will concede that there are services that are more complex, 
+but WSDL/XML-Schema is brittle in the face of that complexity, just ask <a href="http://www.somebits.com/weblog/tech/bad/whySoapSucks.html">Nelson</a>.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X2" title="2007-05-31T14:29:11.001318">2007-05-31</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    I have another related comment <a href="http://www.cincomsmalltalk.com/blog/blogView?showComments=true&amp;entry=3358001349#3358063354">here</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://muellerware.org">Patrick Mueller</a> on <a href="#X3" title="2007-05-31T14:34:33.139323">2007-05-31</a>
+    </p>
+</div>
+  </body>

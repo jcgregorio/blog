@@ -1,0 +1,106 @@
+---
+layout: post
+title: RSS, Comments, and nested Items
+
+---
+
+  I recently implemented per-item RSS feeds for comments on BitWorking.org. In the process had to decide what the channel level <code>title</code>, <code>link</code> and <code>description</code> should be. I settled on making them the contents of the original item that the comments were on.
+   <p>The <a href="http://www.intertwingly.net/blog/1471.html">whole situation</a> does point to a striking symmetry in <span class="caps">RSS</span> that really isn’t supported by the current element naming conventions. That is, the major elements of channel (title, link, description) are the same as the major elements of item (title, link, description).</p>
+<p>Ok, here is the main <span class="caps">RSS</span> feed of intertwingly (with some content elided for clarity):</p>
+<p><pre class="example"><code>&lt;rss version="0.91"&gt;</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+      &lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+      &lt;/description&gt;
+<p>And here is the comment feed:</p>
+<p><pre class="example"><code>&lt;rss version="2.0"</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby: Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+    &lt;description&gt;Simon Willison: Parsing simple HTML with regular expressions is...
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+      &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+      &lt;/description&gt;
+    &lt;/item&gt;
+<p>What would a main feed look like that contained both stories <strong>and</strong> comments? How about nesting items?</p>
+<p><pre class="example"><code>&lt;rss version="0.91"&gt;</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+          &lt;item&gt;
+            &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+            &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+            &lt;description&gt;Agreed. I was in regex-hell this weekend trying to....
+            &lt;/description&gt;
+          &lt;/item&gt;
+        &lt;/item&gt;
+<p>Of course, if you are going to this, why bother with the ‘rss’ element and why not rename ‘channel’ to ‘item’ too:</p>
+<p><pre class="example"><code>  &lt;item&gt;</code></pre></p>
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+        &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+        &lt;item&gt;
+          &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+          &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+          &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+          &lt;/description&gt;
+        &lt;/item&gt;
+      &lt;/item&gt;
+<p>But now you‘re pretty far from what we call <span class="caps">RSS</span>…</p>
+
+  <div class="commentContent" id="X1">
+     <p>A main feed should not contain both stories and comments. People already complain about the bandwidth costs of fetching a whole document because one or two items changed. Extending this to refetching a whole [significantly larger] document when a comment to any of the comment changes seems to be asking for a network traffic disaster.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.kuro5hin.org/user/Carnage4Life/diary/">Dare Obasanjo</a> on <a href="#X1" title="2003-06-16T16:11:12">2003-06-16</a>
+    </p>
+</div><div class="commentContent" id="X2">
+     <p>If the individual items are referenced rather than always included, the consumer can choose whether or not to go fetch the content.</p>
+<p>In fact, if you add the ability to reference to related links, leaving the choice of fetching up to the consumer, you could end up representing the entire blogosphere in a single virtual <span class="caps">XML</span> document! has some pretty cool implications…</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://kenneth.lefebvre.us">Kenneth LeFebvre</a> on <a href="#X2" title="2003-06-20T15:32:15">2003-06-20</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>You last example is actually pretty much my preference.  Items adequately describe both top level items and sub level items like comments.  Nesting is an ideal way of expressing comments, either as threaded or flat (ie. items with in top level items, or items in items... to infinity).</p>
+<p>What worries me here is how much additional traffic is needed to provide updates to an aggregator.  Take a threaded discussion that is already 4 items deep (top level, comment, reply to comment, reply to reply).  If I add a new, 5th level reply, how does the RSS feed convey that to the aggregator.</p>
+<p>Although nested items is good for full listings, I don't think its as good for deep updates.  Potentially, we should have top level items, and have comments either pulled through a seperate per item feed (which could be recursive), or a flat item listing, both top level and responses, but include a 'parentguid' element, so that the aggregator can stitch the context back together if it wants to.</p>
+<p>Or maybe its a combination of the above.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.orificeworld.com">Dave Meehan</a> on <a href="#X3" title="2003-06-27T07:27:35">2003-06-27</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Joe,</p>
+<p>I just wanted to let you know that I am totally with you on this one.  We've used OPML has a channel aggregator markup, and it is just a complete hack.  It would be much more natural if we could do all this in RSS.  I certainly hope that Atom provides for nested items.  </p>
+<p>In response to the various comments above:</p>
+<p>1. We've done something similar to RESTLog.  XLink is used in the "raw" view of the channel and item resources to link the channel and items together.</p>
+<p>2. Each channel is also associated with a REST-ful queue service that allows scalable queries for items on that channel in some state, e.g., published or historical items in some date range.</p>
+<p>3. When a naive client requests a "channel", they get the integrated RSS element view of the channel with all items that are currently marked as published.  The generated representation is marked as cachable so that its only regenerated when the channel resource is touched.</p>
+<p>4. We are currently considering a modification of the implementation that does away with the "channel" element and permits nested "item" elements.  This can be made efficient on the data base by encoding (Left,Right,Depth) indices for the sub-items in an DBMS index.  From that index you can get any ordering over the sub-items (depth-first, breadth-first, etc).  We can then join against the state of the RSS items in the backing queue table and deliver a view of the heirarchical set of items in some state, e.g., all published items on some topic(s).  Of course, this only works when all the sub-items are actually in the same DBMS.  So an entire "hierarchical channel" would have to be on one machine, but that seems reasonable since, for a naive client, it is one resource.</p>
+<p>5. Several people mention concerns over the size of the representation being sent to a client.  I guess that this just depends on your application.  Some times its worth it.</p>
+<p>6. One shortcoming of all of this is that the resulting markup can not be masqueraded as RSS any more since RSS does not allow nested items.  We can get away with this for treating the channel, item and comment elements as "item" resources and rewriting them when we serialize it as an XML representation of the RSS channel, but nested items would have to be moved into a namespace or they would break validators (and they might break RSS clients anyway).</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://wiki.cognitiveweb.org/RealSimpleSyndication">Bryan Thompson</a> on <a href="#X4" title="2004-01-02T11:34:15">2004-01-02</a>
+    </p>
+</div>
+  

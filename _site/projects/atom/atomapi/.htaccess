@@ -1,0 +1,5 @@
+AuthUserFile /home/jcgregorio/friends
+AuthName "Friends Only File Area"
+AuthType Basic
+require valid-user
+AddType image/svg+xml .svg

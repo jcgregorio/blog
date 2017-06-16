@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding='utf-8'?>
+<app:collection title="" href="" xmlns:app="http://purl.org/atom/app#">
+    <app:member-type>application/atom+xml;type=entry</app:member-type>
+  <app:list-template>http://example.org/{index}</app:list-template>
+</app:collection>

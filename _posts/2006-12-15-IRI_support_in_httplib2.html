@@ -1,0 +1,29 @@
+---
+layout: post
+title: IRI support in httplib2
+
+---
+
+  
+  
+<p>
+This <a href="http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1597769&amp;group_id=161082&amp;atid=818434">bug</a> is now 
+closed and <a href="http://bitworking.org/projects/httplib2/">httplib2</a> now has support
+for <a href="http://www.ietf.org/rfc/rfc3987.txt">IRIs</a>. The code for doing such a transformation
+lives in its <a href="http://httplib2.svn.sourceforge.net/viewvc/httplib2/trunk/httplib2/iri2uri.py?view=markup">
+   own file with unit tests</a> in case you
+want that functionality outside of httplib2. This
+is currently in trunk and will appear in the next 
+release.
+</p>
+<p>
+As an aside you will notice the first half of the file
+   is a data structure, the second half is the algorithm,
+   and the <a href="http://www.cartalk.com/">third half</a> is the unit tests.
+</p>
+<p>
+<a href="http://www.amazon.com/Algorithms-Structures-Prentice-Hall-Automatic-Computation/dp/0130224189">Algorithms + Data Structures = Programs</a>
+</p>
+
+  
+  

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN"
+  "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:py="http://purl.org/kid/ns#">
+  <head>
+    <title>My Cookbook</title> 
+    <script type="text/javascript" src="../../static/list.js"><!--HTML Compatibility--></script>
+    <script type="text/javascript" src="../../static/MochiKit/Base.js"><!--HTML Compatibility--></script>
+</head>
+
+<body>
+
+  <ol id="atitlebar">
+    <li py:for="row in range(5)"><a href="#" id="p$row">${rows[row]}</a></li>
+  </ol>
+
+  <p>
+     <label for="title">Title: </label><br/>
+     <input id="title" type="text" size="100" value=" "/><br/>
+     <label for="instructions">Instructions: </label><br/>
+     <textarea id="instructions" cols="100" rows="10">
+     </textarea><br/>
+     <input id="update" type="submit" value="Save"/>
+     <input id="delete" type="submit" value="Delete"/>
+     <input id="create" type="submit" value="Create"/>
+  </p>
+  <p><span style="background:yellow;" id="status"/></p>
+  </body>
+
+</html>

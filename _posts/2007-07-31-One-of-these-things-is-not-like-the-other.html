@@ -1,0 +1,210 @@
+---
+layout: post
+title: One of these things is not like the other
+
+---
+
+  <p>
+  Two of the sites below are driven off flat files, the third is driven off of a database.
+  Can you spot the difference?
+</p>
+  <table style="width: 194px;"><tr><td align="center" style="height: 194px;"><a href="http://picasaweb.google.com/joe.gregorio/OneOfTheseThingsIsNotLikeTheOther"><img height="160" src="http://lh5.google.com/joe.gregorio/Rq48COAz0UE/AAAAAAAAACc/wNzs6VvggHY/s160-c/OneOfTheseThingsIsNotLikeTheOther.jpg" style="margin: 1px 0 0                 4px;" width="160" /></a></td></tr><tr><td style="text-align: center; font-family: arial,sans-serif; font-size: 11px;"><a href="http://picasaweb.google.com/joe.gregorio/OneOfTheseThingsIsNotLikeTheOther" style="color: #4D4D4D; font-weight: bold; text-decoration: none;">One
+                of these things is not like the other</a></td></tr></table>
+<p>Now this is not to pick on Mark, or WordPress, or MySQL.
+The reason I picked Mark, Sam, and myself is that we are all 
+hosted at cornerhost, and yet only one of us is having a problem,
+and <a href="http://bitworking.org/news/218/N-1">that problem stems from <code>N = 1</code> thinking</a>. 
+In this case Mark's blog is running on
+  a MySQL database which is served off another machine.
+  You might think that running the database off another machine
+  would make his site more robust, but instead it actually does
+  the opposite.
+</p><p></p><p>Since the web server is on one machine and MySQL on another,
+the chance of Mark's site going down is:</p>
+<pre><code>1-(1-P(F<sub>1</sub>))*(1-P(F<sub>2</sub>))</code></pre>
+<p>That is, one minus the probability of the Apache server machine not failing
+(over some set period of time) times the probability of the MySQL server not failing
+(over that same set period of time).
+If we assume, for generality that both machines have the same
+chance of failure, then we get:</p>
+<pre><code>1-(1-P(F))^2</code></pre>
+<p>Sam and I both serve our sites off local
+flat files, so our probablity of failure is limited to that one
+machine. Which gives us:</p>
+<pre><code>P(F)</code></pre>
+<p> When I was talking about <code>N = 1</code> systems this is exactly
+the type of thing I was talking about. What if the database
+was an <code>N &gt; 1</code> system, say composed of three machines, again all
+with the same failure rating, and let's assume that the web serving 
+was done the same way, with three machines all running a web server. Then the
+chance of a failure is that either all three web server machines fail, or 
+all three database machines fail. That gives us a chance of failure of:
+</p>
+<pre><code>1-(1-P(F)^3)*(1-P(F)^3)</code></pre>
+<p>That is, one minus the chance that either the MySQL server cluster doesn't fail
+and the web server cluster doesn't fail. The chance that a cluster doesn't fail is
+one minus the chance that all three machines in the cluster fail.
+</p>
+<p>Let's plug in some numbers to see how dramatic a difference
+this makes. If we happen to have an outrageously high failure rate like 1%
+per machine then Mark has a 2%  (0.199% actually) chance of failure, while Sam and I
+both have a 1% chance of failure. Compare that to the 
+replicated scenario where we have three web servers and three
+database servers, which has a chance of failure of 0.0002%.
+</p>
+<p>That's pretty dramatic. But what if we just lived in a world where
+<code>N &gt; 1</code> and databases and web servers were just built
+that way, and let's also presume that there are just two machines, like
+we have today in Mark's WordPress install. What does a change of 
+failure look like there? In that case, you would only fail if both
+servers went down at the same time:</p>
+<pre><code>P(F)*P(F)</code></pre>
+<p>Using our 1% failure chance from above we get a failure chance
+of 0.01%. That's quite a bit different from the same two machines
+today with an <code>N = 1</code> legacy providing a 2% chance of failure.
+</p>
+<p>Think about it; that dramatic increase in reliability, close to two
+  orders of magnitude, comes not from hardware, or Moore's Law, 
+  but from designing software differently.
+</p>
+<p><b>N.B.</b>: Updated to do the math correctly for <code>N = 1</code> cases.
+ See the comments for the discussion. The numbers don't actually change, but that's just
+ an artifact of me choosing a probablity of failure of 1% and not of my math actually 
+being right the first time.
+</p>
+  <div class="commentContent" id="X1">
+    While your conclusions are correct, I think your math is just a bit off. Perhaps I misread what you wrote, but it seems to me that if you have two servers with identical chance of failure P(F), then the chance of failure is actually
+
+1 - (1 - P(F))^2
+
+which is to say, the chance that they both won't be up at the same time. Which turns out to be very, very slightly better than the case you outlined (1%) because very occasionally, they both go down at the same time. Not enough to affect your argument, of course. 
+
+This is essentially the birthday problem. Many have written about this. I wrote about it at http://www.pluralsight.com/wiki/default.aspx/Craig/BirthdayProblemCalculator.html
+
+For three web servers and three databases, you could calculate the chance of failure as "not (not (all of the web servers are down) and not (all of the databases are down))". Which works out to: 
+
+1 - (1 - P(F)^3) * (1 - P(F)^3)
+
+For your 1%, this is almost but not quite 0.0002%. 
+
+Excuse me if I've misread what you wrote.
+    <p class="commentByLine">Posted by
+       <a href="http://www.pluralsight.com/craig">Craig</a> on <a href="#X1" title="2007-07-31T13:05:18.598898">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    "the chance that they both won't be up at the same time."
+
+If either of the machines is down, then the whole system is down since both are required for correct operation.
+
+-Dave
+    <p class="commentByLine">Posted by
+       <a href="http://sttysane.blogspot.org">Dave</a> on <a href="#X2" title="2007-07-31T13:56:59.297773">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    P(F1)*P(F2) was probably a typo, since by assuming F1 = F2 he got: P(F) + P(F) on the next line.
+    <p class="commentByLine">Posted by
+       <a href="mailto:jess.austin@gmail.com">Jess Austin</a> on <a href="#X3" title="2007-07-31T16:59:21.414207">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Whew...Thanks, Jess...I was starting to think I'd lost all knowledge of probability.
+    <p class="commentByLine">Posted by
+       <a href="http://jerryandsarasteele.typepad.com">Jerry</a> on <a href="#X4" title="2007-07-31T17:29:14.124009">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Jess,<br />
+<p>Thanks, now fixed.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X5" title="2007-07-31T17:49:25.050017">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Craig,<br />
+<p>Yes, I failed to include the case of overlapping failures, and even your analysis isn't quite correct since this is a probability of failure over a range of time, and I didn't say how long the server would be down once it failed, etc. The rough numbers are, however, good enough to get the point across.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X6" title="2007-07-31T18:10:16.344483">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    So SQLite would be an example of <i>N &gt; 1</i> thinking?
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X7" title="2007-07-31T19:46:33.972501">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Aristotle,<br />
+<p>No, what made you think that?</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X8" title="2007-07-31T20:35:13.868074">2007-07-31</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>You still say "That is, the probability of the Apache server machine failing   times the probability of the MySQL server failing", even though you've corrected the math.
+</p>
+<p>
+Also I think the simplistic example is <b>very generous</b> for the Apache-httpd + MySQL case, as you are taking a single "chance of failure" percentage for each  entire machine.
+</p>
+<p>
+In reality both machines probably have separate HW, probably have maintenance periods at different times (for both software and hardware), different backup times, you have two pieces of software that need errata at different times, with that config. you might well be relying on a second network card in the Webserver (plus wires, plus switches) so it can speak to the internal network which the DB is on, unless you are insane you'll be relying on internal DNS working, relying on someone not screwing up the Apache-httpd config. (or firewall/SELinux/etc.) so it can't speak to the DB, etc. etc. etc.
+</p>
+<p>
+And that's just off the top of my head, lumping all of those into P(F2) and that'll be much higher. So a real comparison could easily be:
+</p>
+<pre>
+P(F1) vs. P(F1) + P(F2)
+
+==
+
+0.1% vs. 0.1% + 0.1% + 0.2%
+
+==
+
+1 failure every 3 years vs. more than one a year
+</pre>
+    <p class="commentByLine">Posted by
+       <a href="http://www.and.org/">James Antill</a> on <a href="#X9" title="2007-08-01T01:32:47.578023">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>Joe: why not? There’s no central database server machine involved. Heck, there’s not even a central database server <em>process</em> involved. So what does <i>N = 1</i> actually mean? And do your uptime probability calculations have anything whatsoever to do with it?</p>
+<p>Hint: I think your argument consists of a series of individually valid points adding up to a non-sequitur.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X10" title="2007-08-01T02:24:01.977287">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    You might want to take into account also that Wordpress, even entirely unmodified, makes about 20 queries per page, some of them returning quite large result sets. So the Wordpress-with-remote-DB setup will also be extremely non-load-tolerant, and will be rendered unusably slowly (and thus, effectively, down) at load levels that other sites would survive happily.
+    <p class="commentByLine">Posted by
+       <a href="http://myblog.rsynnott.com">Robert Synnott</a> on <a href="#X11" title="2007-08-01T07:08:40.493015">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Aristotle,<br />
+<p>Using SQLite would be the same as Sam and I using a flat file store, we're using <code>N = 1</code> software and sticking to a scenario where the number of machines equals one. Adding more machines to a system <b>should</b> increase a systems reliability, but as of today most software is written with an <code>N = 1</code> mindset and so moving to more machines actually is either not possible, or is  more fragile.
+</p>
+
+Robert,<br />
+<p>No, I don't want to take any of that into account. What I wanted to do 
+  was to show with a very broad brush that:
+</p>
+<pre><code>P(F1) + P(F2) + ... + P(F<sub>n</sub>) ≫ P(F1)*P(F2)*...*P(F<sub>n</sub>)
+</code></pre>
+<p>Which is the difference between <code>N = 1</code> and <code>N &gt; 1</code> thinking.</p>
+
+James,<br />
+<p>I've now changed 'times' to 'plus'. Thanks.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X12" title="2007-08-01T10:16:59.667251">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    That math is still wrong, I think. If you want the probability of anyone server failing in  a two server system, you don't want to just add them. Because, say each server had a 75% chance of failing. That would give a 150% chance of the two server system failing, which makes no sense. So, what you need to do is take 1-((1-P(F<sub>1</sub>))(1-P(F<sub>2</sub>))). This is the inverse of the probability of both being online, or the probability that at least one is offline. For the 75% chance example, that shows a much more sane 93.75% chance of either one failing. Given the 1% chance of failure, the chance of the two server system failing is actually 1.99%, not 2%. Close, but it makes a difference.
+    <p class="commentByLine">Posted by
+       <a href="http://xn--47-fcc.com/img">Logan</a> on <a href="#X13" title="2007-08-01T13:37:25.119488">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    do the math from the success perspective and you avoid all that "minus one ness"
+
+a 1% chance of failure is also 99% chance of success.  if you need both machines (a serial dependency)  you get (.99 * .99) chance of success (.9801)
+    <p class="commentByLine">Posted by
+       <a href="http://sorry.org">paul</a> on <a href="#X14" title="2007-08-01T17:01:30.505979">2007-08-01</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    Logan,<br />
+<p>Agreed, I had the math wrong, I have now updated the post accordingly. Thanks.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X15" title="2007-08-02T12:22:38.060962">2007-08-02</a>
+    </p>
+</div>
+  

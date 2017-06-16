@@ -1,0 +1,170 @@
+
+  What are we trying to accomplish
+
+  * Syndicate sensitive information for a select audience.
+  ** Private or semi-private
+
+  Kinds of data
+    Build reports, credit card info, my google adsense revenue.
+  
+  Publishing a stream of information, some of which is 
+  public and some of which is private isn't new
+  (think of private vs public calendar items).
+
+  === Bonus points for ==
+  
+  * Only protect some entries in a feed
+  * Share as little information as possible with intermediaries.
+
+  There are advantages to solving this for the 
+  web based aggregator. (Content can then be pumped back
+  out via the APP).
+
+  Info Graphic
+  ------------
+  Browser <- Web Based Aggregator <- Source
+  Browser <- Desktop Aggregator <- Source
+  
+  Anatomy of an Atom entry:
+
+  <?xml version="1.0" encoding="utf-8"?>
+   <feed xmlns="http://www.w3.org/2005/Atom">
+     <title type="text">dive into mark</title>
+     <subtitle type="html">
+       A &lt;em&gt;lot&lt;/em&gt; of effort
+       went into making this effortless
+     </subtitle>
+     <updated>2005-07-31T12:29:29Z</updated>
+     <id>tag:example.org,2003:3</id>
+     <link rel="alternate" type="text/html"
+      hreflang="en" href="http://example.org/"/>
+     <link rel="self" type="application/atom+xml"
+      href="http://example.org/feed.atom"/>
+     <rights>Copyright (c) 2003, Mark Pilgrim</rights>
+     <generator uri="http://www.example.com/" version="1.0">
+       Example Toolkit
+     </generator>
+     <entry>
+       <title>Atom draft-07 snapshot</title>
+       <link rel="alternate" type="text/html"
+        href="http://example.org/2005/04/02/atom"/>
+       <link rel="enclosure" type="audio/mpeg" length="1337"
+        href="http://example.org/audio/ph34r_my_podcast.mp3"/>
+       <id>tag:example.org,2003:3.2397</id>
+       <updated>2005-07-31T12:29:29Z</updated>
+       <published>2003-12-13T08:29:29-04:00</published>
+       <author>
+         <name>Mark Pilgrim</name>
+         <uri>http://example.org/</uri>
+         <email>f8dy@example.com</email>
+       </author>
+       <contributor>
+         <name>Sam Ruby</name>
+       </contributor>
+       <contributor>
+         <name>Joe Gregorio</name>
+       </contributor>
+       <content type="xhtml" xml:lang="en"
+        xml:base="http://diveintomark.org/">
+         <div xmlns="http://www.w3.org/1999/xhtml">
+           <p><i>[Update: The Atom draft is finished.]</i></p>
+         </div>
+       </content>
+     </entry>
+   </feed> 
+
+   What if I encrypt just the title and content? Is the feed still usable
+   by an intermediary? What if I encrypt the whole feed?
+
+== Alternatives ==
+
+  "Just" use...
+
+  Individual feeds with Basic/Digest (Have to give the passwords to your aggregator, such as bloglines.)
+
+  Maybe Atom will save us? Sorry, but no,
+
+  RFC 4287 Section 5.2
+  ""The root of an Atom Document (i.e., atom:feed in an Atom Feed
+  Document, atom:entry in an Atom Entry Document) MAY be encrypted,
+  using the mechanisms described by XML Encryption Syntax and
+  Processing [W3C.REC-xmlenc-core-20021210].""
+
+  XML Encryption (Again, if using a service like bloglines you need to 
+  give then a way to decrypt.) And they don't pass through
+  the Atom Entry, they take the atom:content, santitize it, then
+  put it up in a web page.
+
+  Everything so far requires the intermediary 
+  to do the decryption.
+
+== What we've learned so far. ==
+
+  Passwords don't cut it, but encryption might, if we can keep
+  it to the element level.
+
+== Enter the greasemonkey ==
+
+  Move the decryption as close to my face as possible.
+
+  What is greasemonkey? 
+    Greasemonkey is a Firefox extension which lets you to add bits of DHTML
+    ("user scripts") to any web page to change its behavior. In much the same way
+    that user CSS lets you take control of a web page's style, user scripts let
+    you easily control any aspect of a web page's design or interaction.
+
+  So I can, in theory, write my decryption in JavaScript, but how do 
+  I know what to decrypt?
+
+== Microformats == 
+
+  Designed for humans first and machines second, microformats are a set of
+  simple, open data formats built upon existing and widely adopted standards.
+
+  Human readable today, machine readable tomorrow.
+     
+   <div class="encrypted blowfish" style="border: 2px solid black; padding: 0.3em; color: red;">
+     <p>The following data is encrypted. Please install
+        the SecureSyndication Greasemonkey script to 
+        view the encrypted content.
+     </p>
+     <div class="encdata">
+        WORK:C7FDDC3B50FF0BE0E6F47CBD54AC149FA6E42F1DD9C8AEA48F4D400B6970C14082858FF94901795DBE1C7D380ED6AA16A1B2F8039C6782D604F1CA906A6F1C7CFEB52DED873A557228333D3A6E8B3712BD115C4AC0643B86
+     </div>
+   </div>
+
+
+== JavaScript and Math ==
+
+  Let's not go there, shall we? We'll just say that 
+  doing the bit level operations required on unsigned 
+  32-bit values in JavaScript could take a whole 45
+  minute session on it's own.
+
+== Putting it all together ==
+
+  Show it all working on 
+
+== Pass-through testing on web-based aggregators ==
+
+  What we need is for our microformat to pass
+  unmolested through a web based aggregator.
+
+  http://bitworking.org/news/Microformats_and_Syndication
+
+== Other uses ==
+
+  Note that you can use this to tunnel *anything* onto
+  a bloglines web page. Presumably this is from a 
+  trusted source. If it's not you are opening up
+  yourself to trouble.
+ 
+== Turning it around with the APP ==
+
+  Use Atom + hCalendar to synchronize calendars
+
+  You want one subscription place for your calendar
+  but want to include private items that only your 
+  spouse sees.
+
+

@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Good questions about the APP</title>
+    <meta name=created value="2007-06-13T12:59:22.452564">
+  </head>
+  <body>
+  
+  <p><a href="http://bitworking.org/news/197/In-which-we-narrowly-save-Dare-from-inventing-his-own-publishing-protocol#X8">From the comments</a>, Winter has some good questions and observations about the APP.</p>
+<blockquote><p>I was surprised to see the Media Collection model as the
+preferred approach in some cases and was wondering if I was missing
+something.</p></blockquote>
+<p>It's not preferred, but there is a dividing line. An Atom Entry is a good
+representation of a 'document'; it has things like title, author, id, etc.
+There are all things you see on every real world document, whether it be
+a book, a magazine, a form at the DMV, or a dollar bill. There are many
+things for which a mapping into an Entry will be natural, and also note that while
+you may edit a document via the APP and the representations are in the form of
+Entries, you can offer that resource in a multitude of representations. (Think,
+for example, of a calendar entry and all the formats you have to choose from.)
+There are, of course, things you can't map <em>into</em> an Entry, and for
+those we have the media collection. I think there is a continuum between what
+you would put in an Entry versus put in a media collection, and the 'best'
+place to draw the dividing line is going to come from some real world
+experience.  </p>
+<p>When you say "large Media Collections" I think there are two possibilities,
+the first of having many members, and the second of having members that are
+large.</p>
+<p>Earlier versions of the APP had <a href="http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-04.html#collection_doc">a very light listing format</a> - 
+just a URI and a title. It
+was successfully argued that a richer listing format would be better,
+allowing clients to construct a view that was appropriate for their particular
+user. By using Atom as the listing format you can present
+a sorted list of entries based on title,
+updated, published, category, etc. If we went with the light format
+then you would <em>have</em> to download each entry before presenting a list of
+entries to the user. This is also a way of addressing large collections: by 
+listing the collection you get a fair amount of meta-data about the members
+of the collection without having to GET each individual entry, i.e. the server
+gives enough information up front that retrieving each individual entry
+is not necessary.</p>
+<p>If you still need to retrieve all the members of a large collection, for a collection with 
+members that are large, then the cost of setting up 
+and tearing down a socket will be negligble compared to the time to retrieve
+a single member, so having to do individual requests for members really isn't the
+performance bottleneck.</p>
+<p>Collections with many members that are small could be expensive if you had to retrieve
+   each representation during an <b>initial sync</b> using only the <b>core protocol</b> if you were unable to use 
+   <b>keep-alive</b> and <b>pipelining</b>.</p>
+<p>I want to highlight some parts of that last sentence:</p>
+<dl>
+<dt>initial sync</dt>
+<dd>If you want to keep a client up to date with a collection, with the addition of
+     app:edited and the use of atom:ids it is possible, after initially syncing
+     up a client with all the members on a server, to come back later and only
+     retrieve the representations of the members that have changed
+     since your last sync.</dd>
+<dt>keep-alive</dt>
+<dd>Much of the overhead of many small requests comes from setting up and tearing down
+    sockets, and the use of HTTP 1.1 keep-alive can do much to mitigate that overhead.
+  </dd>
+<dt>pipelining</dt>
+<dd>Current support for <a href="http://en.wikipedia.org/wiki/HTTP_pipelining">pipelining</a> is spotty on the web in general, but if an
+    effort went into improving the situation for APP then that would 
+    also help the web in general and web browsers in particular.
+  </dd>
+<dt>core protocol</dt>
+<dd>There is nothing to give special support to this scenario in the core
+   protocol, but there are extension points where this could be added. For example,
+   if a common use case was found to be a large number of small member entries and 
+   the performance of that scenario needed addressing, a simple extension could be defined for a collections
+   that allowed a server to indicate to the client that the entries in the collection feed were
+   complete representations.
+    </dd>
+</dl>
+<p>I hope you take away several things from this, the first being that we did 
+ indeed think of these things - and talk about them - at length - for years.
+ The second is that the APP that gets published is the core protocol, a solid base
+ on which extensions can and will be built, and that the extensibility of that
+ core protocol was also discussed at length. The third is that the APP was designed
+ to actually use HTTP, instead of treating it merely as a transport, and that 
+ for many of the things you may be used to seeing specified in a protocol we actually
+ rely on the mechanisms of HTTP.
+</p>
+  <div class="commentContent" id="X1">
+    This is great stuff (along with Bill de hÓra's recent posts), but I can't help noticing the mismatch between your level of expertise and that of certain APP detractors.  You're having a meeting of the minds about pipelining and syncing and the theory of partial updates, and your opponents are saying, "AHA, so you admit it's JUST A THEORY!"
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2007-06-13T20:16:44.184680">2007-06-13</a>
+    </p>
+</div>
+  </body>

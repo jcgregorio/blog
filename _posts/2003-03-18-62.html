@@ -1,0 +1,47 @@
+---
+layout: post
+title: Pushing Back
+
+---
+
+  
+  <p><a href="http://www.intertwingly.net/blog/1279.html">Sam</a>'s example isn't
+very persuasive for why a <a href="http://www.intertwingly.net/blog/1276.html#c1047924640">namespace should to be added 
+to the 'item' element</a> in the <a href="http://bitworking.org/story/9">CommenAPI</a>. 
+Here is my own eerily similar example of why the namespace isn't needed and 
+the SOAP envelope is <strong>optional</strong>.</p>
+<pre class="example">xsd <a href="http://bitworking.org/archival/CommentAPI.xsd.txt">CommentAPI.xsd</a> /c
+csc <a href="http://bitworking.org/archival/capiClient.cs.txt">capiClient.cs</a> CommentAPI.cs
+</pre>
+<p>Corrent me if I am wrong, but is the only thing that is causing problems
+is WSDL's requirement that the items in the SOAP Body be placed in a 
+non-nil namespace? If that is the case then the problem isn't with the CommentAPI but with WSDL.</p>
+
+  <div class="commentContent" id="X1">
+    Joe,
+
+Just to be clear, VisualStudio.NET users are not a market you choose to serve.  Do I have that right?
+
+One problem I have with most of the Web Services specs is that they generally all weasel worded.  They say should or may when they really mean must.
+
+My intent is to be conservative in what I do and liberal in what I accept.  All requests and replies that I generate will be fully SOAP compliant including all the shoulds.  This being said, I will be liberal in how I interpret any requests or responses I may receive.
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X1" title="2003-03-18T12:52:26">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Sam, 
+   WSDL *requires* a non-nil namespace on items in the SOAP Body?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-03-18T13:28:27">2003-03-18</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Joe, I wish the answer was cut and dry.  
+
+Try wsdl.exe against: http://intertwingly.net/stories/2003/03/18/nonamespace.wsdl and let me know if the error message you receive makes any sense to you.
+
+Some related reading: http://www.intertwingly.net/stories/2002/01/25/whatObjectDoesSoapAccess.html#ApacheSOAP
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X3" title="2003-03-18T14:57:39">2003-03-18</a>
+    </p>
+</div>
+  

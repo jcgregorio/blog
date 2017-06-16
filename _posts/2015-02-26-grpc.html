@@ -1,0 +1,34 @@
+---
+layout: post
+title: gRPC
+
+---
+
+  <p>
+    Today Google launched <a href="http://www.grpc.io/">gRPC</a>, a new HTTP/2
+    and Protocol Buffer based system for building APIs. This is Google&#39;s third
+    system for web APIs.
+  </p>
+  <p>
+    The first system was Google Data, which was based on the <a href="http://www.ietf.org/rfc/rfc5023.txt">Atom Publishing Protocol [RFC
+      5023]</a>. It was an XML protocol over HTTP. The serving system for that grew,
+    but started to hit scalability issues at around 50 APIs. The scaling
+    issues weren&#39;t in the realm of serving QPS, but more in the management of
+    that many APIs, such as rolling out new features across all APIs and all
+    clients.
+  </p>
+  <p>
+    Those growing pains and lessons learned led to the next generation of APIs
+    that launched in 2010. In addition to writing a whole new serving
+    infrastructure to make launching APIs easier, it was also a time to shed
+    XML and build the protocol on JSON. This Google I/O video contains good
+    overview of the system:
+  </p>
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/nyu5ZxGUfgs?rel=0" frameborder="0" allowfullscreen=""> </iframe>
+  <p>
+    Now, five years later, a third generation API system has been developed,
+    and the team took the opportunity to make another leap, moving to HTTP/2
+    and Protocol Buffers. This is the first web API system from Google that I
+    haven&#39;t been involved in, but I&#39;m glad to see them continuing to push the
+    envelope on web APIs.
+  </p>

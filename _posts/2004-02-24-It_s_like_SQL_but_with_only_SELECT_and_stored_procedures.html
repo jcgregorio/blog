@@ -1,0 +1,66 @@
+---
+layout: post
+title: It's like SQL but with only SELECT and stored procedures
+
+---
+
+  <p>I've <a href="http://bitworking.org/news/HTTP_and_HTML">ranted 
+  on the brokenness of HTML</a> the last time Bill brought up
+the subject, but now the it appears the damage is spreading.</p>
+
+  
+<blockquote><p>Russell is rightly annoyed about all this, but he's rightly annoyed at the wrong things, the wrong people, and that's understandable given how we got here. I take the opposite view to Russ; not having mainstream availability of PUT and DELETE is the singularly most broken aspect of web technology today.</p>
+<p>Let's go back. There is a broken spec in this story, but it's not Atom and and it's not HTTP. It's, wait for it... HTML. The reason technologies like SOAP and the Midp and Flash only use those verbs is because HTML only allowed POST and GET in forms. That's where the rot started. [<a href="http://www.dehora.net/journal/archives/000371.html">Web Idiocy (PUT, POST, J2ME, Atom, and reliable messaging)</a>]</p></blockquote>
+<p>and later on</p>
+<blockquote><p>Trust me, it's not an academic issue, and it's not limited to RM; basic content management is in scope too. <strong>For those of you that don't monkey about with HTTP for a living, I can sum up the problem of the problem of not having PUT and DELETE like this - imagine dealing with a subset of SQL that doesn't suppport UPDATE and DELETE</strong> or Java Collections that didn't have an add() method. It's an insanely stupid way of working. But if you never knew SQL had UPDATE to begin with, and it was useful, perhaps that wouldn't be as apparent.</p>
+<p>The irony is, that while some of us are left to compromizing with the fallout from uninformed specs, a number of people think that PUT and DELETE are some sort of esoterica that only a spec wonk could care about. And now, over on the Atom list some people are talking about workarounds. To heck with that. Get Sun to fix the Midp <strong>and the W3C TAG to fix HTML/XForms</strong>. The latter is worth emphasizing - as far as I can tell, this issue isn't even on the TAG's radar.</p></blockquote>
+<p>Emphasis mine.</p>
+<p>Here is the part that irks me, the XForms working group was told
+  that missing DELETE was a problem, even PUT was under discussion. I submitted <a href="http://lists.w3.org/Archives/Public/www-forms-editor/2003Feb/0014.html">feedback on a draft</a> <strong>7 months</strong> before XForms became a <a href="http://www.w3.org/TR/2003/REC-xforms-20031014/">recommendation</a>, only to be ignored. 
+Now that the groups is <a href="http://www.w3.org/TR/2004/NOTE-xforms-11-req-20040126/">setting their charter for their 1.1 work</a>, I've 
+<a href="http://lists.w3.org/Archives/Public/www-forms-editor/2004Jan/0002.html">submitted
+the same item</a>. I can only assume I'll be ignored again. Of course, I don't expect much from this group, remember, these are <a href="http://www.w3.org/2001/tag/issues.html#whenToUseGet-7">the 
+same people that tried to deprecate GET</a>. Yes, you read that correctly,
+they wanted to deprecate GET in forms, an issue that had to rise to the
+level of the <acronym title="Technical Architecture Group"><a href="http://www.w3.org/2001/tag/">TAG</a></acronym> before getting resolved, resulting in the TAG finding 
+<a href="http://www.w3.org/2001/tag/doc/whenToUseGet.html">URIs, Addressability, and the use of HTTP GET and POST</a>.</p>
+<p>Oh, and if you're thinking, "Just use SOAP", please read carefully
+the <a href="http://www.markbaker.ca/2002/09/Blog/2003/12/31#2003-12-ws-network-effects">warning signs</a> <a href="http://www.infoworld.com/article/04/02/20/08OPstrategic_1.html">being raised</a>.</p>
+
+  <div class="commentContent" id="X1">
+    Joe, could you please answer the question I asked over at Russell's?
+
+<a title="http://www.russellbeattie.com/notebook/1006253.html#040436">http://www.russellbeattie.com/notebook/1006253.html#040436</a>
+
+It's obvious that you get some satsifaction out of correcting past mistakes, but what do rest of the people get in return?
+    <p class="commentByLine">Posted by
+       <a href="http://www.docuverse.com/blog/donpark/">Don Park</a> on <a href="#X1" title="2004-02-24T07:27:40">2004-02-24</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I don't get it. How are HTML forms supposed to work with PUT and DELETE? DELETE I can sort of see if there's no form data to submit, but PUT? Is it just supposed to replace the page with a big application/x-wwwurlencoded blob? That sounds pretty un-useful.
+    <p class="commentByLine">Posted by
+       <a href="http://www.aaronsw.com/">Aaron Swartz</a> on <a href="#X2" title="2004-02-29T14:22:31">2004-02-29</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Aaron, didn't you leave this comment? 
+
+<a title="http://wellformedweb.org/news/WebServicesAndContentNegotiation#X5">http://wellformedweb.org/news/WebServicesAndContentNegotiation#X5</a>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2004-02-29T19:30:54">2004-02-29</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>"I don't get it. How are HTML forms supposed to work with PUT and DELETE? DELETE I can sort of see if there's no form data to submit, but PUT? Is it just supposed to replace the page with a big application/x-wwwurlencoded blob? That sounds pretty un-useful. "</p>
+<p>Dude... the form supports an attribute with the URI of the resource to replace via the PUT request - you don't replace the /current/ page...</p>
+<p>Also, isn't there an enctype attribute for FORMs?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">MikeD</a> on <a href="#X4" title="2004-03-27T02:54:32">2004-03-27</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    i need sql sample query's
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X5" title="2005-10-13T02:41:39">2005-10-13</a>
+    </p>
+</div>
+  

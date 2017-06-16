@@ -1,0 +1,298 @@
+<html>
+  <head>
+    <title>WSGIDispatcher</title>
+    <meta name=created value="2007-04-24T11:09:34.833262">
+  </head>
+  <body>
+  
+  <p>Introducing WSGIDispatcher [<a href="http://bitworking.org/projects/1812/wsgidispatcher.py">code</a>][<a href="http://bitworking.org/projects/1812/wsgidispatcher.html">docs</a>][<a href="http://bitworking.org/projects/1812/tests/test_dispatcher.py">tests</a>]. It's just like 
+<a href="http://lukearno.com/projects/selector/">Luke Arno's Selector</a>,
+except for the following:</p>
+<ul>
+<li>The license is MIT.</li>
+<li>It does not use setuptools.</li>
+<li>It has no external dependencies.</li>
+<li>It has unit tests.</li>
+<li>Regular expressions are compiled lazily.</li>
+<li>Non-regex path expression are treated as string matches, not regular expressions.
+</li><li>You can mix and match templates and regular expressions in the same instance of Dispatcher().</li>
+<li>Hooking up applications that handle all methods doesn't require _ANY_.</li>
+</ul>
+<p>The lazy compilation of regular expressions is important when running
+as CGI; you don't want to have each template compiled
+until you know all the previous template rules failed to match.
+</p>
+<p>For now the code sits in the <a href="http://bitworking.org/projects/1812/">1812</a> project.
+I haven't decided if it's enough code to warrant being in a standalone project
+or if it can just live as a part of 1812.
+</p>
+<p><a href="http://bitworking.org/news/148/Five-things-I-hate-about-Python">I've mentioned previously</a> that I'm not thrilled with Python documentation options, so for this module  I'm experimenting with <a href="http://docutils.sourceforge.net/">docutils</a>. All of the documentation is in the module doc strings as reStructured Text, which I then extract and convert into HTML using the docutils library.
+</p>
+  <div class="commentContent" id="X2">
+    <p>Regarding the documentation problem, have you considered the use of <a href="http://docs.python.org/lib/module-doctest.html">doctests</a>? Make the documentation do double-duty as functional tests in addition to the unit tests you have. If you do explore this option, you may want to also use <a href="http://cheeseshop.python.org/pypi/ZopeTestbrowser">zope.testbrowser</a> for testing the web based functionality.</p>
+<p>BTW, note that in your current docs, you repeat the URL 'http://localhost:8000/index/Joe' twice, with two different outputs ('Hello Joe' vs. 'Hi there'), which is exactly the kind of documentation error doctests are good at catching.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://michaelbernstein.com">Michael R. Bernstein</a> on <a href="#X2" title="2007-04-24T13:04:05.154683">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Ha, you are just reluctant to separate it into its own package because you aren't using the handy things Setuptools gives you to manage the packages!
+    <p class="commentByLine">Posted by
+       <a href="http://blog.ianbicking.org">Ian Bicking</a> on <a href="#X3" title="2007-04-24T13:32:12.015339">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Michael,<br />
+<p>I fixed the bug in the docs, thanks! I will look at doctests.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2007-04-24T14:29:19.761500">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    I am not really sure why you list "does not use setuptools" as though it is a feature. While I understand setuptools can make some aspects difficult regarding packaging modules for distributions, overall, using setuptools has been extremely helpful in my own experience. Can you explain?
+    <p class="commentByLine">Posted by
+       <a href="http://ionrock.org/blog/">Eric</a> on <a href="#X5" title="2007-04-24T14:47:08.338234">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Eric,<br />
+<p>Setuptools is so focused on helping the developer it actually ends up being hostile to the consumer of any libraries that use it.</p>
+<p>For example:</p>
+<pre><code>
+joe@joe-laptop:~$ wget http://cheeseshop.python.org/packages/source/P/Pylons/Pylons-0.9.2.tar.gz
+joe@joe-laptop:~$ tar -xzf Pylons-0.9.2.tar.gz 
+joe@joe-laptop:~$ cd Pylons-0.9.2
+/home/joe/Pylons-0.9.2
+joe@joe-laptop:~/Pylons-0.9.2$ python setup.py install
+The required version of setuptools (&gt;=0.6c2) is not available, and
+can't be installed while this script is running. Please install
+ a more recent version first.
+
+(Currently using setuptools 0.6c1 (/usr/lib/python2.4/site-packages/setuptools-0.6c1-py2.4.egg))
+joe@joe-laptop:~/Pylons-0.9.2$ 
+</code></pre>
+<p>Now let's say you were actually lucky enough to download
+  a package that used a version of setuptools that was
+actually present, or one that used a version of setuptools
+that was actually there when it 
+went to download the file from the cheeseshop. Your problems,
+as a user, do not end there. For example:</p>
+<pre><code>joe@joe-laptop:~$ wget http://cheeseshop.python.org/packages/source/w/wsgiref/wsgiref-0.1.2.zip
+joe@joe-laptop:~$ unzip wsgiref-0.1.2.zip 
+joe@joe-laptop:~$ cd wsgiref-0.1.2
+/home/joe/wsgiref-0.1.2
+joe@joe-laptop:~/wsgiref-0.1.2$ sudo python setup.py install
+
+joe@joe-laptop:~/wsgiref-0.1.2$ cd ..
+joe@joe-laptop:~$ python
+Python 2.4.4c1 (#2, Oct 11 2006, 21:51:02) 
+[GCC 4.1.2 20060928 (prerelease) (Ubuntu 4.1.1-13ubuntu5)] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import wsgiref
+&gt;&gt;&gt; help(wsgiref)
+Traceback (most recent call last):
+  File "", line 1, in ?
+  File "/usr/lib/python2.4/site-packages/setuptools-0.6c1-py2.4.egg/site.py", line 339, in __call__
+    
+  File "/usr/lib/python2.4/pydoc.py", line 1656, in __call__
+    self.help(request)
+  File "/usr/lib/python2.4/pydoc.py", line 1700, in help
+    else: doc(request, 'Help on %s:')
+  File "/usr/lib/python2.4/pydoc.py", line 1483, in doc
+    pager(title % desc + '\n\n' + text.document(object, name))
+  File "/usr/lib/python2.4/pydoc.py", line 303, in document
+    if inspect.ismodule(object): return self.docmodule(*args)
+  File "/usr/lib/python2.4/pydoc.py", line 1060, in docmodule
+    for file in os.listdir(object.__path__[0]):
+OSError: [Errno 20] Not a directory: '/usr/lib/python2.4/site-packages/wsgiref-0.1.2-py2.4.egg/wsgiref'
+&gt;&gt;&gt; 
+</code></pre>
+<p>Oops.</p>
+<p>And don't even bother trying to read the source, because it's
+locked up in an egg. </p>
+<p>And shall we mention what setuptools is doing behind the scenes?
+See <a href="http://www.jacobian.org/writing/2007/mar/04/hate-python/">Jacob's post on that</a>.
+</p>
+<p>So, as you can see, 'not using setuptools' is indeed a feature, for the users of my code.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2007-04-24T15:32:57.076358">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Is there a reason nobody's taking HTTP_HOST into account in doing routing? It's kinda nice to use host names as params...
+    <p class="commentByLine">Posted by
+       <a href="http://webseitz.fluxent.com/wiki">Bill Seitz</a> on <a href="#X7" title="2007-04-24T16:15:13.938828">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Hi great news, but one thing i found disturbing with selector was (at least few months ago) that it wasn't able to dispatch to static files. Maybe i'm wrong in my reasonning (design) but i think it would be interesting to have this functionality into the same module. What is your thought on this question ?
+    <p class="commentByLine">Posted by
+       <a href="http://seb.dbzteam.com">sébastien</a> on <a href="#X8" title="2007-04-24T17:36:48.749300">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Thanks for the explanation. I must say that I have not run into these issues through using easy_install, but I could see how it would be a problem. With that said, I would prefer to use easy_install in the same way I prefer apt over working with RPMs. Like everything in life there is a healthy balance that should be strived for.
+    <p class="commentByLine">Posted by
+       <a href="http://ionrock.org/blog/">Eric</a> on <a href="#X9" title="2007-04-24T18:37:13.741681">2007-04-24</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Bill,<br />
+<p>Presumably because that type of routing is best left to routers?</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X10" title="2007-04-25T01:01:43.306817">2007-04-25</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    The documentation, when discussing range specifiers, uses the word 'color' where I think the word 'colon' is meant.
+
+<cite>The range specifier follows a <b>color</b> in the template name</cite>
+
+Regarding setuptools. Does this mean I cannot get this module via easy_install?
+
+If so, that's too bad. Currently I use Selector, but have to hand-install Collection.py, that's a pain.
+
+Anyway, I think this is a great combination of functionality that previously required two different packages. Thanks!
+    <p class="commentByLine">Posted by
+       <a href="http://www.murkworks.com">Brad</a> on <a href="#X11" title="2007-04-25T06:46:22.197223">2007-04-25</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Sorry, I'll try to clarify the use-case.
+
+If you're hosting multiple "spaces" that share the same code base, you might like to use different host names, or even domain names, per user.
+
+I suppose if your WSGI server is proxied behind Apache you could have rules in there to map http://webseitz.fluxent.com/wiki/FrontPage to http://fluxent.com/webseitz/wiki/FrontPage or something. Is that an approach you'd recommend?
+
+I don't see using a *router* for something like that.
+    <p class="commentByLine">Posted by
+       <a href="http://webseitz.fluxent.com/wiki">Bill Seitz</a> on <a href="#X12" title="2007-04-25T10:38:29.215197">2007-04-25</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    Brad,<br />
+<p>Fixed the typo, thanks!</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X13" title="2007-04-25T13:42:23.922818">2007-04-25</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    Bill,<br />
+<p>Yeah, if you're on the same machine it's a matter of how your
+web server is configured. If you're going for scale then
+you will distribute those names among a bunch of servers
+via DNS, which is what I meant when I said router.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X14" title="2007-04-25T13:44:24.625630">2007-04-25</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    <p>I think it’s quite premature to dismiss host-based dispatching off hand like that. There are many good reasons to want to do it.</p>
+<p>One is speed: browsers are generally configured to be very conservative about the number of concurrent connections to the same host; if you serve your images, stylesheets and script sources from multiple different hostnames, you can get them much faster to users with browsers in the default configuration (ie. 98% of the population).</p>
+<p>Another is security: Javascript loaded from <code>jcg.users.example.org</code> won’t be able to access cookies set by headers or scripts from <code>ap.users.example.org</code>. There are much lower barriers between the cookies on pages <code>example.org/users/jcg</code> and <code>example.org/users/ap</code>.</p>
+<p>Feeds are another use case: since the number of bots which don’t know a 410 from a hole in the ground remains greater than the number of those who do, it is desirable to serve feeds from single-purpose hosts such as <code>feed.weblog.example.org</code> rather than <code>example.org/weblog/feed/</code>, because then you can throw out the DNS entry when you pull the rug from under the feed, causing all future requests to die instantly long before they reach your webserver.</p>
+<p>Etc etc etc…</p>
+<p>Sure, some of these might involve distributing the responsibilities to several machines and involving routers. However, that is usually something that takes place quite far along into the lifetime of the app; prior to very high loads that might make such separation necessary, these requests will realistically all end up in the same process. For that process, the hostname is really nothing more than another part of the path, only written backwards and with funny directory separators.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X15" title="2007-04-26T04:13:01.513749">2007-04-26</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    Also, if you're adding new "spaces" all the time, does mod_proxy do dynamic mapping from rules or regexp, or do you have to manually add each mapping (and restart Apache)?
+    <p class="commentByLine">Posted by
+       <a href="http://webseitz.fluxent.com/wiki">Bill Seitz</a> on <a href="#X16" title="2007-04-27T11:50:23.536476">2007-04-27</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Hi All,
+<br /><br />
+I want to address a few things above. (Disclaimer: I am the author of Selector.)
+<br /><br />
+1. Is Setuptools a Feature or a Bug? 
+<br /><br />
+This totally depends on your target users. It is absurd to be absolute about it. If you are mainly worried about ~$5/month hosting environments with no rights, it sucks. If you are focused on other environments (like the ones that more serious developers usually have) it is a huge help. For me it has been an extremely valuable set of tools.
+<br /><br />
+Joe, I think the way you portray your setuptools difficulties is a little disingenuous. Anyone who has read the APP list might suspect that your real problem with it is that it helps the rest of us at the expense of shared hosting users. That is a valid point, but does not justify your dramatic reenactments of setuptools errors.
+<br /><br />
+I think that supporting setuptools is a huge help for some environments and a huge hindrance to others. Lets not limit ourselves to one-size-fits-all solutions.
+<br /><br />
+2. Selector and Host-based Dispatch.
+<br /><br />
+There is more than one type of dispatcher in the Selector distribution. It is very easy to do host-based dispatch and the right place to do it depends on the app. A router is not always the right place, even if saying so makes for an easy, glib blow-off. Please email me or the WSGI-Components list if you want to talk about it more.
+<br /><br />
+3. Selector and Static Content.
+<br /><br />
+I have another module called Static that is easy to hook to Selector.
+<br /><br />
+http://lukearno.com/projects/static/
+<br /><br />
+If you are looking for a light framework that uses Selector, you can use SimpleWeb, Ro Baccia (though, I suppose that will be changing) and I just released one myself, called Rest in Python:
+<br /><br />
+http://lukearno.com/projects/rip/ 
+<br /><br />
+4. MIT License
+<br /><br />
+I hear a lot of FUD about the LGPL but that is all it is. I hope that everyone understands that the LGPL is not viral for Python:
+<br /><br />
+http://www.gnu.org/licenses/lgpl-java.html
+<br /><br />
+5. Selector and Unit Tests
+<br /><br />
+Joe, you have asked me about unit tests a couple of times and I was sort of hoping that you would contribute. They are needed. Actually, someone was working on some but they had a baby and got a little distracted. Anybody want to write some unit tests? :) If not, it is on my to-do list.
+<br /><br />
+6. Lazy Regex Compilation
+<br /><br />
+This is _not_ a feature, unless you are running CGI apps... say on a cheap shared hosting account with no rights. It means that all the patterns up to the point where a match is made are compiled to handle each request instead of all of them at start-up. For my apps, I usually run an SCGI (flup) server for months at a time and like my regexes to be compiled once at start-up and not at all for each request. Again, this is all about holding us all to the lowest common denominator of the ~$5/month shared hosting with no rights and CGI as your only option for Python.
+<br /><br />
+I think it is good to have alternatives that are tailored to different types of users, but lets acknowledge that and not act as if our favorite way to do things is the One Right Way. I am glad that there will be another alternative for low-end shared hosting deployment.
+<br /><br />
+Cheers,<br />
+- Luke<br />
+http://lukearno.com/<br />
+    <p class="commentByLine">Posted by
+       <a href="http://lukearno.com/">Luke Arno</a> on <a href="#X17" title="2007-04-27T16:12:31.110709">2007-04-27</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    Luke,<br />
+<blockquote><p>It means that all the patterns up to the point where a match is made are compiled to handle each request... </p></blockquote>
+<p>Looking at the code you'll see that the compiled regexs are 
+cached, and they will only be compiled once each in a long running process. Also, the  problems I had were not on a shared host, those sessions were captured on my laptop. There are plenty of other technical points that could be made, other points that could be responded to, but all of that is besides the point, the <i>real</i> point:</p>
+<blockquote><p>If you are mainly worried about ~$5/month hosting environments with no rights, it sucks. If you are focused on other environments (like the ones that more serious developers usually have) it is a huge help.
+</p></blockquote>
+<p>Thank you for so perfectly exemplifying the setuptools attitude. An attitude that is baked into setuptools, and I believe, the same attitude that's the root cause of why setuptools got rejected from inclusion in Python 2.5. Until there is a version of setuptools that works for everyone, including "the lowest common denominator", and not just "serious developers", then no one should be advocating its use.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X18" title="2007-04-27T22:07:47.270296">2007-04-27</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    Joe, 
+<br /><br />
+If you have an idea of how to provide some of the key features that setuptools provides (easy_install, dependency handling, resource management, etc...), which are far too useful for me to justify passing up, in a way that will work for cheap shared hosting too, please tell us about it. If you can't, then we ought to blaze forward. By making the experience of using Python as compelling as possible, I think we might eventually push shared hosting providers to make arrangements to provide that experience.  If we just try to wait it out, the problems involved will never be solved and Python will be the next PHP.
+<br /><br />
+Setuptools is far from perfect, but we need to make it better or replace it with something better. Just throwing it away is not constructive. Pretending that the problems that setuptools solves are not there is not a solution. If it doesn't work for you, don't use it, but try to understand the priorities of those for whom it does. For me and my work setuptools is a huge win. I, like many developers these days, generally write software that provides a service and the "consumer" just installs a standard client (a browser). My dream is not to have my blogging program installed in the cgi-bins of tens of thousands shared hosting accounts. If that is your goal, fine. Just don't expect the rest of us to cripple our software for your goals. If I can also support the shared hosting case, great. First, I have to support the environment that I and my target audience (developers who provide _services_) work and play in.
+<br /><br />
+I hope that setuptools will become more user friendly and easier to provide in a shared hosting setting. I hope that at the same time, as setuptools matures and more people use it, that shared hosting providers will feel a greater demand for it and make the effort to provide it. (This could be setuptools or something like it. I don't care about that.) If these two currents do not converge, we may never escape the stone age of distribution and deployment. ...Unless, of course, you have that all-at-once, should-have-been-obvious-all-along idea about how to meet everyone's needs, which would be great. I am all ears. ;)
+<br /><br />
+Cheers,<br />
+- Luke
+<br />
+    <p class="commentByLine">Posted by
+       <a href="http://lukearno.com/">Luke Arno</a> on <a href="#X19" title="2007-04-28T00:36:37.560992">2007-04-28</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    Luke,<br />
+<p>I told you:</p>
+<blockquote><p>... the  problems I had were not on a shared host, those sessions were captured on my laptop. </p></blockquote>
+<p>You responded:</p>
+<blockquote><p> 
+If you have an idea of how to provide some of the key features that setuptools provides ... in a way that will work for cheap shared hosting too, please tell us about it.</p></blockquote>
+<p>Then added:</p>
+<blockquote><p>
+I hope that setuptools will become more user friendly and easier to provide in a shared hosting setting.</p></blockquote>
+<p>And later declared:</p>
+<blockquote><p>I am all ears.</p></blockquote>
+<p>I would say the evidence was to the contrary.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X20" title="2007-04-28T01:02:05.723430">2007-04-28</a>
+    </p>
+</div><div class="commentContent" id="X21">
+    <p>Joe,</p>
+<p>
+You said that <q>the <em>real</em> point</q> was that, <q>[u]ntil there is a version of setuptools that works for everyone,</q> that <q>no one should be advocating its use.</q> If you were not talking about shared hosting, at least primarily, I don't know what your <em>real</em> point was. Maybe just you and your laptop?
+</p>
+<p>
+I already stated that I found your dramatic reenactment disingenuous and I am still not buying it. Your mis-configured laptop proves nothing. It takes a few seconds to correct your problem by getting a more recent version, as the error suggests. You have been waving these error messages or ones like them around for months (at least). I was ignoring your sales demonstration. ("The _other_ brand of paper towel just pushes the mess around!" does nothing for me.) 
+</p>
+<p>
+If you want to talk about how to actually solve the real issues, like shared hosting; if you want to talk honestly about how we can improve setuptools or replace it with something better, I _am_ all ears. If you are going to treat this as only a verbal sparing match or simply insist that setuptools be thrown away without offering an alternative, I will be bored soon.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://lukearno.com/">Luke Arno</a> on <a href="#X21" title="2007-04-28T17:42:02.674535">2007-04-28</a>
+    </p>
+</div>
+  </body>

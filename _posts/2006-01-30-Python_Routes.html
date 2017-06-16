@@ -1,0 +1,40 @@
+---
+layout: post
+title: Python Routes
+
+---
+
+  
+  <p><a href="http://routes.groovie.org/index.html">Routes</a> is a Python re-implementation of the Rails routes system that 
+ allows for a two-way mapping between URLs and a dictionary. That is, you can pass it a URL and it will 
+ make sure it conforms to your specifications and it will then pull out the relavent bits as specified.
+ Just as importantly it allows you to pass info back in and it will generate the appropriate URL.
+</p>
+<pre><code>
+&gt;&gt;&gt; from routes import Mapper
+&gt;&gt;&gt; m = Mapper()
+&gt;&gt;&gt; m.prefix = 'http://bitworking.org/some.cgi'
+&gt;&gt;&gt; m.connect(':(collection)/:(id)')
+&gt;&gt;&gt; m.create_regs([])
+
+&gt;&gt;&gt; m.match("http://bitworking.org/some.cgi/trash")
+<b>{'action': 'index', 'controller': 'content', 'id': None, 
+  'collection': 'trash'}</b>
+&gt;&gt;&gt; m.match("http://bitworking.org/some.cgi/trash/QWERT")
+<b>{'action': 'index', 'controller': 'content', 'id': 'QWERT', 
+  'collection': 'trash'}</b>
+&gt;&gt;&gt; m.match("http://bitworking.org/some.cgi/livestore/QWERT/junk")
+<b>None</b>
+
+&gt;&gt;&gt; m.generate(collection='livestore', id="Thisisatest")
+<b>http://bitworking.org/some.cgi/livestore/Thisisatest</b>
+</code></pre>
+<p>Seems like a pretty nice library with lots of unit tests. The one downside
+  is the <code>.egg</code> distribution, which has never worked for me.
+  It was simpler to just pull the latest out of 
+  the subversion repository and copy it into site-packages.
+</p>
+<p><a href="http://routes.groovie.org/">Routes</a>, <a href="http://bitworking.org/projects/dispatch/">dispatch</a> and <a href="http://kid.lesscode.org">Kid</a> together would make a nice <i>un-framework</i>.</p>
+
+  
+  

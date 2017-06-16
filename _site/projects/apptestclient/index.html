@@ -1,0 +1,159 @@
+<html>
+<head>
+     <!--#include virtual="header.html" -->
+     <title>Joe Gregorio | BitWorking | Projects | Atom Publishing Protocol Test Client</title>
+</head>
+<body class='main' id="top" name="top" >
+    <div class="body">
+        <!--#include virtual="titlebar.html" -->
+
+        <div class="content">
+            
+            <div>
+
+                <h2>APP Test Client</h2>
+
+                <a href="app-test-client-screenshot.png "><img style="float:right; margin:1em" src="app-test-client-screenshot-small.png"/></a>
+
+                <p>The APP Test Client is a GUI based <a href="../atom">Atom Publishing Protocol</a> 
+                Client. You can use it to publish content to an APP enabled site.
+                It is a validating client, which means that while performing APP operations it will validate the servers 
+                operations and the format of the documents transferred.
+                It also keeps a log of all transactions. All of this is 
+                designed to aid developers in creating APP servers and ensuring that
+                those implementations conform to the specification.
+                The APP Test Client is written in Python using the wxPython libraries
+                and is cross-platform. So far it has been run successfully under
+                Linux and Windows.
+                </p>
+
+                <h3>News</h3>
+
+                <p>The latest version has been updated for draft-12 and has some
+                additional functionality, such as being able to export
+                the diagnostics to a file. Also, the configuration is now stored
+                in a traditional INI file format. </p>
+
+                <h3>Download/Installation</h3>
+
+                <p>If you run Windows then the easiest way to get up and running
+                   will be to install the binary.
+                </p>
+
+                <h4>Windows Binary</h4>
+
+                <p><a href="http://bitworking.org/projects/apptestsuite/client/binaries/appeditor-2007-02-03.zip">Download appeditor-2007-02-03.zip</a></p>
+                
+                <p>If you just want to run the application I have built
+                a standalone Windows executable which you can run without having 
+                to install Python or wxPython. Just download and unzip.
+                Run the executable <tt>appeditor.exe</tt> found in the 'dist' directory. Included in the 
+                zip is a <code>config.ini</code> file that automatically connects you
+                to my APP Test Server. See below for the INI file format 
+                and how to add your own server.
+                </p>
+
+                <h4>Pulling the source code</h4>
+
+                <p>
+                If you have Python and wxPython already installed you can always
+                pull the source directly from subversion and run the 
+                application.
+                </p>
+
+                <pre><code>$ svn co http://feedvalidator.googlecode.com/svn/trunk/apptestsuite/client/  apptestclient
+...
+$ cd apptestclient
+$ cp config-example.ini config.ini
+$ python appeditor.py 
+            </code></pre>
+
+                <p>This works even under Windows, just install Python 2.5
+                and the latest version of wxPython for Python 2.5 and you 
+                will be ready to run, there are no prerequisites besides 
+                those two.
+                </p>
+
+                <h3>Config.ini Format</h3>
+
+                <p>The servers that the APP Test Client connects to is controlled
+                by the <tt>config.ini</tt> file located in the same directory as 
+                the executable. Here is an example config.ini file: </p>
+
+                <pre><code>[APP Test Site]
+uri=http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document
+name=None
+password=None</code></pre>
+
+                <p>Each section in the INI file describes an APP service. The 'uri'
+               contains the URI 
+                of the Service Document. If the APP service is protected
+                then supply 'name' and 'password' parameters in the same section
+                of the INI file. You may add any number of APP services 
+                to the config file. The APP Test Client uses
+                httplib2 for it's connectivity which means that it supports
+                the following kinds of authentication:
+                Basic, Digest, WSSE, HMAC Digest and Google Account Authentication.
+                See the <a href="../httplib2">httplib2</a> documentation for more details.
+                </p>
+
+                <p>As always, all the source for both the client and server
+                are available and are licensed under an MIT license.
+                </p>
+
+
+<h3>Requirements</h3>
+
+<p>It's easiest just to use Python 2.5 and a matching build of
+wxPython. If you don't use
+Python 2.5 then you will have to install elementtree and possibly 
+other modules to get it to run.</p>
+
+<h3>Feedback</h3>
+
+<p>
+Send any feedback and bug reports to me at joe@bitworking.org.
+</p>
+
+
+<h3>Notes</h3>
+
+<p>The client uses a local module of the feedvalidator
+and does not send any content to <a href="http://feedvalidator.org">http://feedvalidator.org</a>.
+</p>
+
+<h3>To Do</h3>
+
+<p>
+Lots.
+</p>
+
+<h3>Additional Information</h3>
+
+<p>
+   <dl>
+       <dt>Author</dt>
+       <dd>Joe Gregorio</dd>
+
+       <dt>License</dt>
+       <dd>MIT</dd>
+
+       <dt>Other Libraries</dt>
+       <dd>This application makes use of the following libraries:</dd>
+       <dd>The source includs a snapshot of the <a href="http://feedvalidator.org/">feedvalidator</a></dd>
+       <dd><a href="../httplib2">httplib2</a></dd>
+       
+       <dt>Contributors</dt>
+
+       <dd> (Your Name Here) </dd>
+   </dl>
+</p>
+    
+
+            </div>
+        </div>
+     <!--#include virtual="footer.html" -->
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+---
+layout: post
+title:  JSON, XML and the Web 
+
+---
+
+    <p><a href=http://blog.jclark.com/2010/11/xml-vs-web_24.html>James Clark</a>:</p>
+
+    <blockquote>
+      <p>
+      It's "Yay", because for important use cases JSON is dramatically better
+      than XML.  In particular, JSON shines as a programming
+      language-independent representation of typical programming language data
+      structures.  This is an incredibly important use case and it would be
+      hard to overstate how appallingly bad XML is for this. The fundamental
+      problem is the mismatch between programming language data structures and
+      the XML element/attribute data model of elements. This leaves the
+      developer with three choices, all unappetising: </p>
+
+      <p>
+      <ul>
+        <li> live with an inconvenient element/attribute representation of the data;
+        </li><li> descend into XML Schema hell in the company of your favourite data binding tool;
+        </li><li> write reams of code to convert the XML into a convenient data structure.
+      </li></ul>
+      </p>
+   </blockquote>
+
+   <p><a href=http://bitworking.org/news/425/atompub-is-a-failure>I came to
+     that same conclusion a while ago</a>:</p> 
+   <blockquote>
+     <p>
+     The last motivation was for a common interchange format. The idea was that
+     with a common format you could build up libraries and make it easy to move
+     information around. The 'problem' in this case is that a better format
+     came along in the interim: JSON. JSON, born of Javascript, born of the
+     browser, is the perfect 'data' interchange format, and here I am
+     distinguishing between 'data' interchange and 'document' interchange. If
+     all you want to do is get data from point A to B then JSON is a much
+     easier format to generate and consume as it maps directly into data
+     structures, as opposed to a document oriented format like Atom, which has
+     to be mapped manually into data structures and that mapping will be
+     different from library to library.  
+     </p>
+   </blockquote>
+
+   <p>There are still plenty of use cases for 'documents' of XML, but APIs 
+   on the web is not one of them.
+   </p>
+  

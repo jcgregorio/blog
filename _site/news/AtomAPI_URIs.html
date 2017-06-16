@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>AtomAPI URIs</title>
+    <meta name=created value="2003-07-29T01:04:41">
+  </head>
+  <body>
+  <p>The URIs in the <a href="http://bitworking.org/rfc/draft-gregorio-06.html">draft AtomAPI RFC</a> 
+are not normative, they are examples.
+
+The draft RFC isn't about specifying the form of the URLs that
+are to be used. Yes, there are <a href="http://www.w3.org/Provider/Style/URI.html">guidelines you should follow
+when creating URIs</a>, but those
+are just general guidelines. That is an important document and if you're creating
+server side software you should know it already. </p>
+<p><ins datetime="2003-07-29T08:25:00-04:00"><strong>Updated:</strong> Now includes the template editing facet.</ins></p>
+
+  <p>In the end, it's the server that controls the URI space for that domain. Now, for convenience
+that space may be mapped to a file system hierarchy, but
+again, there's no requirement for that to be true.  So what does the RFC specify? It lays out
+the <em>formats</em> of the files that can be returned, and the <em>actions</em> that can be performed
+on the URIs. Note that URIs are embedded in some of those formats. That embedding, that 
+intertwingling of format and URI, is the crux of hypertext, and we are using
+HTTP as our protocol, the Hypertext Transfer Protocol. 
+Here then is an abbreviated description of the AtomAPI as it stands today, with
+all the example URIs contracted into short names. </p>
+<table border="1" cellspacing="0" cellpadding="3" summary="AtomAPI URIs and associated Formats and Verbs">
+<tr> <th>URI</th> <th>HTTP Verbs</th> <th>Format</th> <th>Return values</th> </tr>
+<tr> <td id="introspectionURI">introspectionURI</td> <td>GET</td> <td><a href="#Introspection">Introspection</a></td> <td></td> </tr>
+<tr> <td id="createURI">createURI</td> <td>POST</td> <td><a href="#AtomEntry">AtomEntry</a></td> <td>returns an <a href="#entryURI">entryURI</a> in the Location: header.</td> </tr>
+<tr> <td id="prefsURI">prefsURI</td> <td>GET, PUT</td> <td><a href="#Preferences">Preferences</a></td> <td></td> </tr>
+<tr> <td id="entryURI">entryURI</td> <td>GET, PUT, DELETE</td> <td><a href="#AtomEntry">AtomEntry</a></td> <td></td> </tr>
+<tr> <td id="searchURI">searchURI</td> <td>GET</td> <td><a href="#SearchResults">SearchResults</a></td> <td></td> </tr>
+<tr> <td id="commentURI">commentURI</td> <td>POST</td> <td><a href="#AtomEntry">AtomEntry</a></td> <td>returns an <a href="#entryURI">entryURI</a> in the Location: header.</td> </tr>
+<tr> <td id="findTemplateURI">findTemplateURI</td> <td>GET</td> <td><a href="#FindTemplate">FindTemplate</a></td> <td></td> </tr>
+<tr> <td id="templateURI">templateURI</td> <td>GET, PUT</td> <td>any</td> <td></td> </tr>
+</table>
+<h3 id="Introspection">Introspection</h3>
+<pre class="example"><code>&lt;introspection xmlns="http://example.com/newformat#" &gt; 
+  &lt;create-entry&gt;<a href="#createURI">createURI</a>&lt;/create-entry&gt;
+  &lt;user-prefs&gt;<a href="#prefsURI">prefsURI</a>&lt;/user-prefs&gt;
+  &lt;search-entries&gt;<a href="#searchURI">searchURI</a>&lt;/search-entries&gt;
+  &lt;edit-template&gt;<a href="#templateURI">templateURI</a>&lt;/edit-template&gt;
+&lt;/introspection&gt;</code></pre>
+<h3 id="SearchResults">SearchResults</h3>
+<pre class="example"><code>&lt;search-results xmlns="http://example.com/newformat#" &gt; 
+  &lt;match title="My First Post"&gt;<a href="#entryURI">entryURI</a>&lt;/match&gt;
+  &lt;match title="My Second Post"&gt;<a href="#entryURI">entryURI</a>&lt;/match&gt;
+&lt;/search-results&gt;
+</code></pre>
+<h3 id="FindTemplate">FindTemplates</h3>
+<pre class="example"><code>&lt;templates xmlns="http://example.com/newformat#" &gt;
+ &lt;template title="Main"&gt;<a href="#templateURI">templateURI</a>&lt;/template&gt; 
+ &lt;template title="Story"&gt;<a href="#templateURI">templateURI</a>&lt;/template&gt; 
+ &lt;template title="Feed"&gt;<a href="#templateURI">templateURI</a>&lt;/template&gt; 
+&lt;/templates&gt;</code></pre>
+<h3 id="Preferences">Preferences</h3>
+<pre class="example"><code>&lt;userprefs xmlns="http://example.com/newformat#" &gt; 
+   &lt;name&gt;Reilly&lt;/name&gt;
+   &lt;id&gt;1234&lt;/id&gt;
+   &lt;email&gt;reilly@example.org&lt;/email&gt;
+&lt;/userprefs&gt;</code></pre>
+<h3 id="AtomEntry">AtomEntry</h3>
+<pre class="example"><code>&lt;entry xmlns="http://example.com/newformat#" &gt;  
+    &lt;title&gt;My First Entry&lt;/title&gt; 
+    &lt;subtitle&gt;In which a newbie learns to blog...&lt;/subtitle&gt; 
+    &lt;summary&gt;A very boring entry...&lt;/summary&gt; 
+ 
+    &lt;author&gt; 
+      &lt;name&gt;Bob B. Bobbington&lt;/name&gt; 
+      &lt;homepage&gt;http://bob.name/&lt;/homepage&gt; 
+      &lt;weblog&gt;http://bob.blog/&lt;/weblog&gt; 
+    &lt;/author&gt; 
+
+    &lt;issued&gt;2003-02-05T12:29:29&lt;/issued&gt; 
+    &lt;created&gt;2003-02-05T14:10:58Z&lt;/created&gt; 
+    &lt;modified&gt;2003-02-05T14:10:58Z&lt;/modified&gt; 
+    
+    &lt;link&gt;http://example.org/reilly/2003/02/05#My_First_Entry&lt;/link&gt;
+    &lt;id&gt;urn:example.org:reilly:1&lt;/id&gt;
+ 
+    &lt;content type="application/xhtml+xml" xml:lang="en-us"&gt; 
+      &lt;p xmlns="..."&gt;Hello, &lt;em&gt;weblog&lt;/em&gt; world! 2 &lt; 4!&lt;/p&gt; 
+    &lt;/content&gt;  
+&lt;/entry&gt; </code></pre>
+
+  <div class="commentContent" id="X1">
+    the result of FindTemplate appears to have changed from draft 0.6 to 0.7 but you haven't updated this page.  Likewise for Entry SearchResults.  Thank you for maintaining all this information.
+    <p class="commentByLine">Posted by
+       <a href="http://www.brainopolis.com/roller/page/lance">Lance Lavandowska</a> on <a href="#X1" title="2003-08-29T14:57:09">2003-08-29</a>
+    </p>
+</div>
+  </body>

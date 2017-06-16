@@ -1,0 +1,209 @@
+MegaData
+
+Lessons from large systems
+
+Joe Gregorio
+
+IBM
+
+WebSphere Technology Institute
+
+Rules of Engagement
+
+Interrupt at any time
+
+Constraints
+
+[tichy.jpg]
+
+<a href="http://www.boingboing.net/2006/04/21/miroslav_tichs_home_.html">Miroslav Tichý</a>
+
+
+MegaData
+
+Why do I care?
+----
+REST
+----
+REST Scales
+
+
+Examples in the wild
+ 
+== <a href="http://jeffjonas.typepad.com/">Jeff Jonas</a>
+----
+    The work Jeff does is pretty amazing and you should read
+    <a href="http://jeffjonas.typepad.com/TTI-Vanguard-NextGen-Technologies.pdf">this paper</a>.
+----
+    Storing a billion rows in a database
+----
+    no joins
+----
+    no transactions
+----
+    no stored procedures
+----
+    no triggers
+
+Aside
+
+ <a href="http://scholar.google.com/scholar?num=100&hl=en&lr=&cluster=15454859772549443008">Michael Stonebraker</a>
+  states that stored procedures and triggers may be too little, you
+  want full programmability in some cases, ala 
+  <a href="http://labs.google.com/papers/sawzall.html">Sawzall</a>, 
+  <a href="http://www.sqlite.org/capi3.html">sqlite user defined functions</a>.
+
+
+Del.icio.us
+
+== <a href="http://joshua.schachter.org/">Joshua Schacter</a>
+----
+        Joshua has similar suggestions from his experience
+        building del.icio.us
+----
+ no joins
+----
+ no transactions
+----
+ <a href="http://joshua.schachter.org/2007/01/autoincrement.html">no autoincrement</a>.
+
+
+BigTable
+
+== Google BigTable
+----
+"Bigtable is a distributed storage system for managing structured data that is designed to scale to a very large size: petabytes of data across thousands of commodity servers."
+----
+<a href="http://labs.google.com/papers/bigtable.html">Paper</a>
+<a href="http://video.google.com/videoplay?docid=7278544055668715642&q=bigtable">Video</a>
+----
+  Constrained database that is built on top of GFS and chubby.
+----
+  No transactions
+----
+  No joins
+
+
+BigTable
+
+  Can configure for column-oriented operation
+----
+  Used in: crawling/indexing, blogger, orkut, docs, maps, earth, code.google.com, etc.
+
+eBay
+
+<a href="http://www.addsimplicity.com/downloads/eBaySDForum2006-11-29.pdf">Slides from Randy Shoup and Dan Pritchett</a>
+----
+    referential integrity, joins, and sorting moved
+    out of the database and into the application.
+
+
+I'm detecting a pattern here.
+
+Common Themes
+----
+<b>Distributed</b>: The data has to be distributed across multiple machines.
+----
+<b>Joinless</b>: No joins, and no referential integrity, at least at the data store level.
+----
+<b>De-Normalized</b>: No one said this explicily, but I presume there is a lot of de-normalization going on if you are avoiding joins.
+----
+<b>Transcationless</b>: No transactions
+
+
+Heresy
+
+== <a href="http://dictionary.reference.com/search?q=heresy">Heresy</a>
+
+    Defn: "Opinion or doctrine at variance with the orthodox or accepted doctrine, esp. of a church or religious system."
+
+
+Constraints
+
+Constraints precede performance
+
+
+REST
+
+<a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/introduction.htm">REST</a>
+----
+<blockquote><p>REST provides a set of architectural <b>constraints</b> that, when applied as a whole, 
+    emphasizes scalability of component interactions, generality of interfaces, independent 
+    deployment of components, and intermediary components to reduce interaction latency, 
+    enforce security, and encapsulate legacy systems.</p></blockquote>
+
+
+Objections
+
+There are all about storing huge amounts of data
+----
+What about other performance metrics?
+----
+How about raw speed?
+
+
+git
+
+<a href="http://www.kernel.org/pub/software/scm/git/docs/#Discussion">git</a>:
+Git is distributed version control system focused on speed, effectivity and real-world usability on large projects.
+----
+    At the lowest level in git there are only three operations on the content store:
+    Create, read, and delete. 
+----
+    Internally, you don't even get to choose the name of
+    a file when it is created, all the data is written into
+    a file (deflated with zlib) where the filename is the sha1 hash
+    of the contents.
+----
+   <a href="http://www.selenic.com/mercurial/wiki/index.cgi/Design">Mercurial uses a similar system</a>. 
+----
+   Git is used for managing the linux source tree; Mercurial is used for FireFox.
+
+
+
+One size fits all
+
+ <a href="http://scholar.google.com/scholar?num=100&hl=en&lr=&cluster=15454859772549443008">“One Size Fits All”: An Idea Whose Time Has Come and Gone</a>
+
+  M Stonebraker, U Çetintemel
+---- 
+<b>Summary:</b> You can get one to two orders of magnitude performance
+  increase by avoiding a "one size fits all" database. Examples
+  from streaming, data warehousing, text search.
+----
+<b>one to two orders of magnitude</b>
+----
+You could do a lot worse than spending a couple weeks reading 
+everything Michael Stonebraker has ever written.
+
+
+Constraints
+
+What do you want?
+----
+What do you need?
+----
+What are you willing to give up?
+
+
+Constraints
+
+[tichy.jpg]
+
+
+
+The End
+
+== Further Reading
+
+<a href="http://acmqueue.com/modules.php?name=Content&pa=showpage&pid=337">ACM Queue - Learning from THE WEB</a>
+
+<a href="http://radar.oreilly.com/archives/2006/04/web_20_and_databases_part_1_se.html">O'Reilly Radar > Web 2.0 and Databases Part 1: Second Life</a>
+
+<a href="http://radar.oreilly.com/archives/2006/04/database_war_stories_2_bloglin.html">O'Reilly Radar > Database War Stories #2: bloglines and memeorandum</a>
+
+<a href="http://martinfowler.com/bliki/Transactionless.html">MF Bliki: Transactionless</a>
+
+<a href="http://www.adambosworth.net/archives/000038.html">Where have all the good databases gone</a>
+
+

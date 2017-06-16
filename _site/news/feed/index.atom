@@ -1,0 +1,2508 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://192.168.1.95:4000/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="http://192.168.1.95:4000/" rel="alternate" type="text/html" /><updated>2017-06-15T20:23:18-04:00</updated><id>http://192.168.1.95:4000/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Tech Driven Deflation</title><link href="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation</id><content type="html" xml:base="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation">&lt;p&gt;
+    The article &lt;a href=&quot;https://singularityhub.com/2017/04/14/will-tech-driven-deflation-export-japans-economic-woes-to-the-world/&quot;&gt;Will Tech-Driven Deflation Export Japan’s Economic Woes to the World?&lt;/a&gt;
+    reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;:
+  &lt;/p&gt;
+  &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/uGI00HV7Cfw?rel=0&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;p&gt;
+    The origin for the above video is &lt;a href=&quot;http://bestreviews.com/electronics#evolution-of-the-desk&quot;&gt;http://bestreviews.com/electronics#evolution-of-the-desk&lt;/a&gt;.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Each time an object gets digitized that&amp;#39;s one less object to
+    manufacture, one less object to ship, one less object consuming
+    raw materials. It&amp;#39;s actually more surprising that this hasn&amp;#39;t had
+    an even larger impact on the U.S. economy.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">The article Will Tech-Driven Deflation Export Japan’s Economic Woes to the World? reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;: The origin for the above video is http://bestreviews.com/electronics#evolution-of-the-desk.</summary></entry><entry><title type="html">Prometheus vs InfluxDB</title><link href="http://192.168.1.95:4000/news/2017/03/18/prometheus" rel="alternate" type="text/html" title="Prometheus vs InfluxDB" /><published>2017-03-18T00:00:00-04:00</published><updated>2017-03-18T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2017/03/18/prometheus</id><content type="html" xml:base="http://192.168.1.95:4000/news/2017/03/18/prometheus">&lt;p&gt;
+    We just finished migrating all of our monitoring from &lt;a href=&quot;https://www.influxdata.com/&quot;&gt;InfluxDB&lt;/a&gt; to &lt;a href=&quot;https://prometheus.io/&quot;&gt;Prometheus&lt;/a&gt; and I thought I&amp;#39;d write up
+    our reasons for the change. Please note that these are my own personal
+    observations and relate to a specific project, these issue may not apply
+    to you and you should evaluate each product for your own uses.
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;b&gt;Update:&lt;/b&gt; To clarify, the versions of InfluxDB and Prometheus that I
+    am talking about are InfluxDB 1.1.1 and Prometheus 1.5.2.
+  &lt;/p&gt;
+
+  &lt;h2&gt;Push vs Pull&lt;/h2&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;InfluxDB&lt;/dt&gt;
+    &lt;dd&gt;
+      InfluxDB is a push based system, i.e. your running application needs
+      to actively push data into the monitoring system.
+    &lt;/dd&gt;
+    &lt;dt&gt;Prometheus&lt;/dt&gt;
+    &lt;dd&gt;
+      Prometheus is a pull based system, the Prometheus server fetches the
+      metrics values from the running application periodically.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    With centralized control of how polling is done with Prometheus I can
+    switch from polling every minute to every 10 seconds just by adjusting the
+    configuration of the Prometheus server. With InfluxDB I would have to
+    redeploy every application with a change to how often they should push
+    metrics. In addition the Prometheus pull method allows Prometheus to
+    create and offer a synthetic &amp;#34;UP&amp;#34; metric that monitors whether an
+    application is up and running.
+    For short lived applications Prometheus has a &lt;a href=&quot;https://github.com/prometheus/pushgateway&quot;&gt;push gateway&lt;/a&gt;.
+  &lt;/p&gt;
+
+  &lt;h2&gt;Datastore&lt;/h2&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;InfluxDB&lt;/dt&gt;
+    &lt;dd&gt;
+      InfluxDB has a monolithic database for both metric values and indices.
+    &lt;/dd&gt;
+    &lt;dt&gt;Prometheus&lt;/dt&gt;
+    &lt;dd&gt;
+      Prometheus uses LevelDB for indices, but each metric is stored in its
+      own file.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    Both use key/value datastores, but how they use them is very different
+    and it affects the performance of the products. InfluxDB was
+    slower and took up substantially more disk space than Prometheus for the
+    same exact set of metics. Just starting up InfluxDB and sending a small
+    number of metrics to it caused the datastore to grow to 1GB, and then
+    grow rapidly from there to 100&amp;#39;s of GB for our full set of metrics,
+    while Prometheus has yet to crack 10GB with all of our metrics.
+    And let&amp;#39;s not even go into the number of times InfluxDB lost all of our
+    data, either from a crash or from a failed attempt to upgrade the
+    version of InfluxDB that we were running.
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;b&gt;Update:&lt;/b&gt; I was also reminded there's another datastore related issue
+    with startup time, while Prometheus starts in a matter of seconds,
+    InfluxDB would regularly take 5 minutes to restart while it either
+    validated or rebuilt its indices and would not collect data during the
+    entire process.
+  &lt;/p&gt;
+
+  &lt;h2&gt;CPU&lt;/h2&gt;
+  &lt;p&gt;
+    Probably closely related to the datastore efficiency, InfluxDB was coming
+    close to maxing out the server it was running on, while Prometheus running
+    on an identical instance peaks at maybe 0.2 load.
+  &lt;/p&gt;
+
+  &lt;h2&gt;Query Language&lt;/h2&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;InfluxDB&lt;/dt&gt;
+    &lt;dd&gt;
+      InfluxDB uses a variant of SQL.
+    &lt;/dd&gt;
+    &lt;dt&gt;Prometheus&lt;/dt&gt;
+    &lt;dd&gt;
+      Uses a substantially simpler and more direct querying model.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    What would you rather type?
+  &lt;/p&gt;
+  &lt;pre&gt;    &lt;code&gt;SELECT * FROM &amp;#34;cpu_load_short&amp;#34; WHERE &amp;#34;value&amp;#34; &amp;gt; 0.9&lt;/code&gt;
+  &lt;/pre&gt;
+  &lt;p&gt;or&lt;/p&gt;
+  &lt;pre&gt;    &lt;code&gt;cpu_load_short &amp;gt; 0.9&lt;/code&gt;
+  &lt;/pre&gt;
+
+  &lt;h2&gt;Configuration&lt;/h2&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;InfluxDB&lt;/dt&gt;
+    &lt;dd&gt;
+      Configuration is done through a mix of config files and SQL
+      commands sent to the server.
+    &lt;/dd&gt;
+    &lt;dt&gt;Prometheus&lt;/dt&gt;
+    &lt;dd&gt;
+      Text files.
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    Prometheus config is simply YAML files, and the entire config is done via
+    files. With InfluxDB you have to worry that some of the config, for
+    example, creating the named database that metrics are to be stored in,
+    actually gets done. Additionally Prometheus just picks more reasonable
+    defaults, for example, it defaults to only storing data for 15 days, while
+    InfluxDB defaults to storing all data forever, and if you don&amp;#39;t want to
+    store all data forever you need to construct an SQL command to send to the
+    server to control how data is retained.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">We just finished migrating all of our monitoring from InfluxDB to Prometheus and I thought I&amp;#39;d write up our reasons for the change. Please note that these are my own personal observations and relate to a specific project, these issue may not apply to you and you should evaluate each product for your own uses. Update: To clarify, the versions of InfluxDB and Prometheus that I am talking about are InfluxDB 1.1.1 and Prometheus 1.5.2.</summary></entry><entry><title type="html">Geometric Algebra applied to Physics</title><link href="http://192.168.1.95:4000/news/ga/physics.html" rel="alternate" type="text/html" title="Geometric Algebra applied to Physics" /><published>2017-01-01T00:00:00-05:00</published><updated>2017-01-01T00:00:00-05:00</updated><id>http://192.168.1.95:4000/news/ga/physics</id><content type="html" xml:base="http://192.168.1.95:4000/news/ga/physics.html">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+    img {
+      vertical-align: baseline;
+    }
+
+    th {
+      background: #fff;
+    }
+  &lt;/style&gt;
+  &lt;script src=&quot;/news/ga/res/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/news/ga/res/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;p&gt;
+    Geometric Algebra can be applied to Physics, and many of the introductions
+    to GA online cover this, but they immediately jump to electromagnetic
+    fields or quantum mechanics, which is unfortunate since GA can also
+    greatly simplify 2D kinematics. One such example is uniform circular
+    motion.
+  &lt;/p&gt;
+
+  &lt;p class=aside&gt;
+    You should be familiar with all the concepts presented in &lt;a
+      href=&quot;https://bitworking.org/news/ga/2d&quot;&gt;An Introduction to Geometric
+      Algebra over R^2&lt;/a&gt; before proceeding.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    If we have a vector &lt;b&gt;p&lt;/b&gt; that moves at a constant rate of &amp;omega;
+    rad/s and has a starting position &lt;b&gt;p&lt;sub&gt;0&lt;/sub&gt;&lt;/b&gt;, then we can
+    describe the vector &lt;b&gt;p&lt;/b&gt; very easily:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{p} = \bm{p_0} e^{\omega t \bm{I}}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=rotor_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=rotor width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('rotor_toggle');
+      var running = false;
+      var omega = 0.5;
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, &quot;p&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Let's figure out what the derivative of a Rotor looks like, by
+    first recalling its definition:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    We take the derivative with respect to &amp;theta;:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \frac{d}{d \theta} e^{\theta \bm{I}} &amp;=  \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
+            &amp;=  -\sin(\theta) + \cos(\theta)\bm{I} \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    At this point observe that &lt;em&gt;cos&lt;/em&gt; and &lt;em&gt;sin&lt;/em&gt; just changed
+    places, along with a sign change, but we know of another operation that does
+    the same thing, which is multiplication by &lt;b&gt;I&lt;/b&gt;, so we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \frac{d}{d \theta} e^{\theta \bm{I}} &amp;= \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
+            &amp;= -\sin(\theta) + \cos(\theta)\bm{I}          \\
+            &amp;= \bm{I} (\cos(\theta) + \sin(\theta)\bm{I})  \\
+            &amp;= \bm{I} e^{\theta \bm{I}}                    \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Not only does the derivative have a nice neat expression, we can read off
+    from the formula what is happening, which is that the derivative is a vector
+    that is rotated 90 degrees from the original vector. Also note that
+    normally the geometric product ins't commutative, but in this case both
+    parts are rotors, so the order doesn't matter.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    We can go through the same process to show what happens if &amp;theta; has
+    a constant multiplier &lt;em&gt;k&lt;/em&gt;:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \frac{d}{d \theta} e^{k \theta \bm{I}} &amp;= \frac{d}{d \theta} (\cos(k \theta) + \sin(k \theta)\bm{I}) \\
+            &amp;= k \bm{I} e^{k \theta \bm{I}} \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    With our new derivative in hand we can now find the velocity vector
+    for our position vector &lt;b&gt;p&lt;/b&gt;, since velocity is just the derivative
+    of position with respect to time.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{v}  &amp;= \frac{d}{dt} \bm{p} \\
+                &amp;= \frac{d}{dt} \bm{p_0} e^{\omega t \bm{I}} \\
+                &amp;= \bm{p_0} \omega \bm{I}  e^{\omega t \bm{I}} \\
+                &amp;= \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}} \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Again, because we using Geometric Algebra, we can read off
+    what is going on geometrically from the formula, that is,
+    the derivative is a vector orthogonal to the position vector
+    that is scaled by &amp;omega;.
+  &lt;/p&gt;
+
+  &lt;button id=velocity_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=velocity width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('velocity_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('velocity'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, &quot;p&quot;);
+        f.vecFrom(v, p, &quot;v&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Note that we've drawn the vector as starting from the position,
+    but that's not required.
+  &lt;/p&gt;
+
+  &lt;button id=sep_velocity_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=sep_velocity width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('sep_velocity_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('sep_velocity'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, &quot;p&quot;);
+        f.vec(v, &quot;v&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We get the acceleration vector in the same manner, by taking
+    the derivative of the velocity vector with respect to time.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a}  &amp;= \frac{d}{dt} \bm{v}                                      \\
+                &amp;= \frac{d}{dt} \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}}  \\
+                &amp;= \omega \bm{p_0} \bm{I} \omega \bm{I} e^{\omega t \bm{I}} \\
+                &amp;= \omega^2 \bm{p_0} \bm{I} \bm{I} e^{\omega t \bm{I}}      \\
+                &amp;= - \omega^2 \bm{p_0} e^{\omega t \bm{I}}                  \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    And again we can just read off from the formula what is going on
+    geometrically, which is that we end up with a vector that is rotated
+    180 degrees from the position vector, and scaled by &amp;omega;&lt;sup&gt;2&lt;/sup&gt;.
+  &lt;/p&gt;
+
+  &lt;button id=accel_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=accel width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('accel_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('accel'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vec(p, &quot;p&quot;);
+        f.vec(v, &quot;v&quot;);
+        f.vec(a, &quot;a&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We can place the acceleration and velocity vectors as starting
+    from the positition vector, and that looks like:
+  &lt;/p&gt;
+
+  &lt;button id=accel_from_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=accel_from width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('accel_from_toggle');
+      var running = false;
+      var omega = 0.5;
+      var omegaScalar = ga2d.scalar(omega);
+      var I = [0, 0, 0, 1];
+      var start = Date.now();
+      var p0 = ga2d.vec(0, -1);
+      var f = new draw_ga2d.Frame(document.getElementById('accel_from'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var p = ga2d.mul(p0, rotor);
+        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
+        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.vecFrom(v, p, &quot;v&quot;);
+        f.vecFrom(a, p, &quot;a&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Note how simple this was to derive and that the geometric interpretation
+    could be read off of the resulting formulas. We didn't need to leave the
+    2D plane, that is, all of these calculations took place in 𝔾&lt;sup&gt;2&lt;/sup&gt;.
+    The more classical derivations for uniform circular motion rely on the
+    cross-product which takes you out of ℝ&lt;sup&gt;2&lt;/sup&gt; into ℝ&lt;sup&gt;3&lt;/sup&gt; and
+    which doesn't work in higher level dimensions.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">An Introduction to Geometric Algebra over R^2</title><link href="http://192.168.1.95:4000/news/ga/2d.html" rel="alternate" type="text/html" title="An Introduction to Geometric Algebra over R^2" /><published>2016-12-21T00:00:00-05:00</published><updated>2016-12-21T00:00:00-05:00</updated><id>http://192.168.1.95:4000/news/ga/2d</id><content type="html" xml:base="http://192.168.1.95:4000/news/ga/2d.html">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+    img {
+      vertical-align: baseline;
+    }
+
+    th {
+      background: #fff;
+    }
+
+    body {counter-reset: h3}
+    h3 {counter-reset: h4}
+    h4 {counter-reset: h5}
+    h5 {counter-reset: h6}
+
+    h3:before {counter-increment: h3; content: counter(h3) &quot;. &quot;}
+    h4:before {counter-increment: h4; content: counter(h3) &quot;.&quot; counter(h4) &quot;. &quot;}
+    h5:before {counter-increment: h5; content: counter(h3) &quot;.&quot; counter(h4) &quot;.&quot; counter(h5) &quot;. &quot;}
+    h6:before {counter-increment: h6; content: counter(h3) &quot;.&quot; counter(h4) &quot;.&quot; counter(h5) &quot;.&quot; counter(h6) &quot;. &quot;}
+
+  &lt;/style&gt;
+  &lt;script src=&quot;/js/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/js/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;div class=floatnav&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#linear_algebra&quot;&gt;Linear Algebra&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#geometric_algebra&quot;&gt;Geometric Algebra&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#applications&quot;&gt;Applications&lt;/a&gt;&lt;/li&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;#multiplying_vectors&quot;&gt;Multiplying Vectors&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#rotors&quot;&gt;Rotors&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#double_angle&quot;&gt;Double Angle Formula&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#complex&quot;&gt;Complex Numbers&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#B&quot;&gt;Characterizing B&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#ratios&quot;&gt;Ratios&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;#conjugates&quot;&gt;Conjugates&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;p&gt;
+    Geometric Algebra is fascinating, and I believe solves a large number of
+    problems that arise from a more traditional approach to vectors, but
+    I&amp;#39;ve been very disappointed with the quality of books and explanations
+    I&amp;#39;ve found, most of them zooming off into abstract realms too quickly,
+    or spending an inordinate amount of time building up a generalized theory
+    before finally getting to something useful.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Below is an explanation of Geometric Algebra that will start with a simple
+    two dimensional vector space, i.e. ℝ&lt;sup&gt;2&lt;/sup&gt;.  This will be a concise
+    introduction to 𝔾&lt;sup&gt;2&lt;/sup&gt;, the Geometric Algebra over ℝ&lt;sup&gt;2&lt;/sup&gt;,
+    and then quickly pivot to applications in 𝔾&lt;sup&gt;2&lt;/sup&gt;. This introduction
+    will not cover the fascinating history of GA, &lt;a href=&quot;&lt;/a://en.wikipedia.org/wiki/Clifford_algebra&quot;&gt;Clifford Algebras&lt;/a&gt;, or
+    &lt;a href=&quot;https://en.wikipedia.org/wiki/Hermann_Grassmann&quot;&gt;Hermann Grassman&lt;/a&gt;.
+  &lt;/p&gt;
+  &lt;p&gt;
+    I'll presume a familiarity with &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Linear_algebra&quot;&gt;Linear Algebra&lt;/a&gt;,
+    and then we'll introduce the geometric product on
+    that and we'll have the Geometric Alegebra
+    over two dimensions: 𝔾&lt;sup&gt;2&lt;/sup&gt;.
+  &lt;/p&gt;
+  &lt;p&gt;
+  &lt;/p&gt;
+  &lt;h3 id=linear_algebra&gt;Linear Algebra&lt;/h3&gt;
+
+  &lt;blockquote&gt;
+    Linear algebra is the branch of mathematics concerning vector spaces and
+    linear mappings between such spaces. It includes the study of lines,
+    planes, and subspaces, but is also concerned with properties common to all
+    vector spaces. -&lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Linear_algebra&quot;&gt;Wikipedia&lt;/a&gt;
+  &lt;/blockquote&gt;
+  &lt;p&gt;
+    You should be familiar with the following axioms and definitions from
+    Linear Algebra:
+  &lt;/p&gt;
+
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;(\bm{a} + \bm{b}) + \bm{c} = \bm{a} + (\bm{b} + \bm{c})&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Associative&lt;/td&gt; &lt;td&gt;(1)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} + \bm{b}  = \bm{b} + \bm{a} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Commutative&lt;/td&gt; &lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{0} + \bm{b}  = \bm{b} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Identity&lt;/td&gt; &lt;td&gt;(3)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{-a} + \bm{a} = \bm{0}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Inverse&lt;/td&gt; &lt;td&gt;(4)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;c(\bm{a} + \bm{b}) = c\bm{a} + c\bm{b} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Scalar Distributive&lt;/td&gt; &lt;td&gt;(5)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;1 \bm{b}  = \bm{b} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Multiplicative Identity&lt;/td&gt; &lt;td&gt;(6)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \cdot \bm{b} = ||\bm{a}|| ||\bm{b}|| \cos \theta&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Dot/Inner Product&lt;/td&gt; &lt;td&gt;(7)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \cdot \bm{b} = \sum_{i}\bm{a_i}\bm{b_i} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Dot/Inner Product (Alternate)&lt;/td&gt; &lt;td&gt;(8)&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;In particular, for  ℝ&lt;sup&gt;2&lt;/sup&gt; we have an orthonormal basis:&lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{e_{1}} := (1,0) &lt;/latex-pic&gt;&lt;/dd&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{e_{2}} := (0,1) &lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;where:&lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{e_{1}} \perp \bm{e_{2}} &lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;canvas id=basis width=150 height=150&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var e1 = ga2d.vec(1, 0);
+      var e2 = ga2d.vec(0, 1);
+      var f = new draw_ga2d.Frame(document.getElementById('basis'));
+      f.axes();
+      f.vec(e1, &quot;e1&quot;);
+      f.vec(e2, &quot;e2&quot;);
+      f.expandTo([0, 2, 0, 0]);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We know how to do vector addition and scalar multiplication of vectors,
+    and that any vector can be represented as a linear combination of
+    basis elements.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \bm{a} &amp;= -1 \bm{e_{1}} + 2 \bm{e_{2}} \\
+          \bm{b} &amp;= 2 \bm{e_{1}} + 3 \bm{e_{2}} \\
+          \bm{a} + \bm{b} &amp;=  1 \bm{e_1} + 5 \bm{e_2}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;canvas id=add width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(-1, 2);
+      var b = ga2d.vec(2, 3);
+      var c = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('add'));
+      f.axes();
+      f.vec(a, &quot;a&quot;);
+      f.vec(b, &quot;b&quot;);
+      f.vec(c, &quot;a+b&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Things to remember about the dot product, or inner product, is that it is 0 for orthogonal
+    vectors:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{e_{1}} \perp \bm{e_{2}} \implies \bm{e_1} \cdot \bm{e_2} = 0&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    And that a vector dot with itself gives the square of the norm of the
+    vector, since &lt;latex-pic&gt;\cos 0 = 1&lt;/latex-pic&gt;:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{a} \cdot \bm{a} = {||\bm{a}||}^2&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    One important thing to notice about Linear Algebra is how often you have
+    to step outside of ℝ&lt;sup&gt;2&lt;/sup&gt; to get work done.  That is, operations
+    frequently have to take place outside ℝ&lt;sup&gt;2&lt;/sup&gt; or those operations
+    give you results outside of ℝ&lt;sup&gt;2&lt;/sup&gt;. For example, the dot product of
+    two vector returns a scalar, which is not a member of ℝ&lt;sup&gt;2&lt;/sup&gt;.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; \bm{a} \cdot \bm{b} := ||\bm{a}|| ||\bm{b}|| \cos(\theta) &lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    Similarly, to rotate vectors you have to create matrices, which don't
+    exist in ℝ&lt;sup&gt;2&lt;/sup&gt;, and apply them to vectors through matrix
+    multiplication.
+  &lt;/p&gt;
+  &lt;p&gt;
+    One final example is the cross-product, which takes two vectors and
+    operates on them to produce a vector that is orthogonal to the original
+    two vectors, but if you are in ℝ&lt;sup&gt;2&lt;/sup&gt; it doesn't exist, you have to
+    then view that cross-product vector as existing in ℝ&lt;sup&gt;3&lt;/sup&gt;, which
+    the original ℝ&lt;sup&gt;2&lt;/sup&gt; is embedded in.
+  &lt;/p&gt;
+  &lt;p&gt;
+    All of this stands in stark contrast to 𝔾&lt;sup&gt;2&lt;/sup&gt;, where these
+    operations take place in 𝔾&lt;sup&gt;2&lt;/sup&gt;, in fact, many of the constructs we
+    use in Linear Algebra, such as rotations, exist as elements of
+    𝔾&lt;sup&gt;2&lt;/sup&gt;, and applying those operations is just a matter of taking the
+    geometric product of those objects. Not only is 𝔾&lt;sup&gt;2&lt;/sup&gt; closed under
+    many of these operations, but the operations exist as elements in
+    𝔾&lt;sup&gt;2&lt;/sup&gt;.
+  &lt;/p&gt;
+
+  &lt;h3 id=geometric_algebra&gt;Geometric Algebra&lt;/h3&gt;
+
+  &lt;p&gt;
+    The Geometric Algebra of 𝔾&lt;sup&gt;2&lt;/sup&gt; builds upon ℝ&lt;sup&gt;2&lt;/sup&gt;,
+    extending it by adding multiplication, i.e. a geometric product.
+    Before we get to the geometric product we need to first quickly learn
+    about the exterior product.
+  &lt;/p&gt;
+
+  &lt;h4 id=exterior_product&gt;Exterior Product&lt;/h4&gt;
+
+  &lt;p&gt;
+    The exterior product operates on two vectors and is written as:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{a} \wedge \bm{b}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;canvas id=wedge width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var a_neg = ga2d.mul(ga2d.scalar(-1), a);
+      var b_neg = ga2d.mul(ga2d.scalar(-1), b);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge'));
+      f.vec(a, &quot;a&quot;);
+      f.vecFrom(b, a, &quot;b&quot;);
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    The exterior product represents the oriented area defined by the two
+    vectors, or more precisely is represents an oriented area in the plane
+    defined by those vectors, also known as a bivector. There are two
+    important aspects of this, the first is that the exact shape doesn't
+    matter. For example, the bivectors represented below are equal
+    because they have the same orientation (counter-clockwise) and the same
+    area (3).
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; (1, 0) \wedge (0, 3) =  (3, 0) \wedge (0, 1)&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;canvas id=wedge2 width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(1, 0);
+      var b = ga2d.vec(0, 3);
+      var c = ga2d.vec(3, 0);
+      var d = ga2d.vec(0, 1);
+      var ab = ga2d.add(a, b);
+      var cd = ga2d.add(c, d);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge2'));
+      f.vec(a, &quot;(1, 0)&quot;);
+      f.vecFrom(b, a, &quot;(0, 3)&quot;);
+      f.vec(c, &quot;(3, 0)&quot;);
+      f.vecFrom(d, c, &quot;(0, 1)&quot;);
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.region([
+        [0,0,0,0],
+        c,
+        cd,
+        d,
+      ], &quot;&quot;, &quot;rgba(255, 0, 100, 0.2)&quot;);
+      f.expandTo([0, 4, 0, 0]);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    The second important factor is that the exterior product is
+    anticommutative, that is, if you reverse the order of the vectors
+    involved then the sign of the exterior product changes.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{a} \wedge \bm{b} = - \bm{b} \wedge \bm{a}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    Using two of the vectors above, note that the order that they are used in
+    the exterior product will make the bivectors either clockwise or counter-clockwise.
+  &lt;/p&gt;
+
+  &lt;canvas id=wedge_reverse width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(1, 0);
+      var b = ga2d.vec(0, 3);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse'));
+      f.vec(a, &quot;(1, 0)&quot;);
+      f.vecFrom(b, a, &quot;(0, 3)&quot;);
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;canvas id=wedge_reverse_2 width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var c = ga2d.vec(0, 3);
+      var d = ga2d.vec(1, 0);
+      var cd = ga2d.add(c, d);
+      var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse_2'));
+      f.vec(c, &quot;(0, 3)&quot;);
+      f.vecFrom(d, c, &quot;(1, 0)&quot;);
+      f.region([
+        [0,0,0,0],
+        c,
+        cd,
+        d,
+      ], &quot;&quot;, &quot;rgba(255, 0, 100, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    The properties of the exterior product are:
+  &lt;/p&gt;
+
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;(\bm{a} \wedge \bm{b}) \wedge \bm{c} = \bm{a} \wedge (\bm{b} \wedge \bm{c})&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Associative&lt;/td&gt; &lt;td&gt;(1)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;c(\bm{a} \wedge \bm{b}) = c\bm{a} \wedge \bm{b} = \bm{a} \wedge c\bm{b}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Scalar Associativity&lt;/td&gt; &lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \wedge (\bm{b} + \bm{c}) = \bm{a} \wedge \bm{b} + \bm{a} \wedge \bm{c}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Left Distributive&lt;/td&gt; &lt;td&gt;(3)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;(\bm{a} + \bm{b}) \wedge \bm{c} = \bm{a} \wedge \bm{c} + \bm{b} \wedge \bm{c}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Right Distributive&lt;/td&gt; &lt;td&gt;(4)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \wedge \bm{b} = -\bm{b} \wedge \bm{a}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Anti-symmetric&lt;/td&gt; &lt;td&gt;(5)&lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \parallel \bm{b} \Rightarrow \bm{a} \wedge \bm{b} = 0&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Zero for Parallel Vectors.&lt;/td&gt; &lt;td&gt;(6)&lt;/td&gt; &lt;/tr&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;
+    In what is going to become a recurring theme, let's look at what
+    this means in terms of basis vectors. Since any vector can be written
+    as a linear combination of basis vectors we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \bm{a} &amp;= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{b} &amp;= b_1 \bm{e_{1}} + b_2 \bm{e_{2}}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    If we take their exterior product we get:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} \wedge \bm {b} &amp;= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}}) \wedge (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &amp;= a_1 b_1 \bm{e_{1}} \wedge \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}} \wedge \bm{e_{2}}               &amp; \text{via 1} \\
+                              &amp;=  0 + a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}} \wedge \bm{e_{1}} + 0            &amp; \text{via 6} \\
+                              &amp;=  a_1 b_2 \bm{e_{1}} \wedge \bm{e_{2}}
+                              - a_2 b_1 \bm{e_{1}} \wedge \bm{e_{2}}                &amp; \text{via 5} \\
+                              &amp;= ( a_1 b_2  - a_2 b_1 )\bm{e_{1}} \wedge \bm{e_{2}} &amp; \text{via 2}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    So the exterior product of any two vectors can expressed as just a scalar
+    mulitple of &lt;b&gt;e&lt;sub&gt;1&lt;/sub&gt;^e&lt;sub&gt;2&lt;/sub&gt;&lt;/b&gt;
+  &lt;/p&gt;
+
+  &lt;h4 id=geometric_product&gt;Geometric Product&lt;/h4&gt;
+
+  &lt;p&gt;
+    Now that we know about the exterior product, we can define the geometric
+    product, which is just the sum of the inner product and the exterior product:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{a} \bm{b} := \bm{a} \cdot \bm{b} +\bm{a} \wedge \bm{b}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Using just the above definition you can show that the geometric product
+    has the following properties:
+  &lt;/p&gt;
+
+  &lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;(\bm{a} \bm{b}) \bm{c} = \bm{a} (\bm{b} \bm{c})&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Associative&lt;/td&gt; &lt;td&gt;(1)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;c(\bm{a} \bm{b}) = c\bm{a} \bm{b} = \bm{a} c \bm{b}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Scalar Associativity&lt;/td&gt; &lt;td&gt;(2)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} (\bm{b} + \bm{c}) = \bm{a} \bm{b} + \bm{a} \bm{c}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Left Distributive&lt;/td&gt; &lt;td&gt;(3)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;(\bm{a} + \bm{b}) \bm{c} = \bm{a} \bm{c} + \bm{b} \bm{c}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Right Distributive&lt;/td&gt; &lt;td&gt;(4)&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \parallel \bm{a} \Rightarrow \bm{a} \bm{a} = \bm{a} \cdot \bm{a} = ||\bm{a}|| &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Norm&lt;/td&gt; &lt;td&gt;(5)&lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \bm{b} \neq \bm{b} \bm{a} &lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Non-Commutative, except in some cases.&lt;/td&gt; &lt;td&gt;(6)&lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \neq 0 \Rightarrow \bm{a} (\frac{1}{||\bm{a}||^2} \bm{a}) = 1&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Vector Inverses&lt;/td&gt; &lt;td&gt;(7)&lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;latex-pic&gt;\bm{a} \perp \bm{b} \Rightarrow \bm{a} \bm{b} = \bm{a} \wedge \bm{b}&lt;/latex-pic&gt;&lt;/td&gt; &lt;td&gt;Orthogonal vector multiplication.&lt;/td&gt; &lt;td&gt;(8)&lt;/td&gt; &lt;/tr&gt;
+  &lt;/table&gt;
+
+  &lt;p&gt;
+    With the geometric product as defined above, and vector addition, our
+    Geometric Algebra 𝔾&lt;sup&gt;2&lt;/sup&gt; forms a &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Associative_algebra&quot;&gt;unital
+      associative algebra&lt;/a&gt; with an orthonormal basis:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        1, \bm{e_1}, \bm{e_2}, \bm{e_{1} e_{2}}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    We can work out a multiplication table for the basis elements, with
+    the observation that if two elements are orthogonal then their dot product
+    is zero, so that implies that the geometric product reduces to the
+    exterior product between orthogonal vectors, which is anti-symmetric.
+    So that implies for each of our basis vectors:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{e_1} \bm{e_2} = \bm{e_1} \wedge \bm{e_2}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    And that implies, by the anti-symmetry of the exterior product:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{e_1} \bm{e_2} = - \bm{e_2} \bm{e_1}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    And the geometric product of any basis element with itself, because
+    they are parallel means the exterior product is zero, so:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{e_1} \bm{e_1} = \bm{e_1} \cdot \bm{e_1} = ||\bm{e_1}||^2 = 1
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Note that we'll end up writing a lot of equations with basis vectors
+    multiplied together, so it's useful to have a shorthand, i.e.
+    &lt;b&gt;e&lt;sub&gt;12&lt;/sub&gt;&lt;/b&gt; will be used as a short-hand for
+    &lt;b&gt;e&lt;sub&gt;1&lt;/sub&gt; e&lt;sub&gt;2&lt;/sub&gt;&lt;/b&gt;.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    We can now complete a multiplication table for the geometric
+    product of all the basis elements:
+  &lt;/p&gt;
+
+  &lt;latex-pic&gt;
+    \begin{table}[]
+    \centering
+    \begin{tabular}{l|llll}
+           &amp; 1       &amp; e_1     &amp; e_2    &amp; e_{12} \\ \hline
+    1      &amp; 1       &amp; e_1     &amp; e_2    &amp; e_{12} \\
+    e_1    &amp; e_1     &amp; 1       &amp; e_{12} &amp; e_2    \\
+    e_2    &amp; e_2     &amp; -e_{12} &amp; 1      &amp; -e_1   \\
+    e_{12} &amp; e_{12}  &amp; -e_2    &amp; e_1    &amp; -1
+    \end{tabular}
+    \end{table}
+  &lt;/latex-pic&gt;
+
+  &lt;p&gt;
+    Now that we know what elements of  𝔾&lt;sup&gt;2&lt;/sup&gt; look like and how to
+    manipulate them, it's now time to put them to work.
+  &lt;/p&gt;
+  &lt;h3 id=applications&gt;Applying Geometric Algebra&lt;/h3&gt;
+
+  &lt;h4 id=multiplying_vectors&gt;Multiplying Vectors&lt;/h4&gt;
+  &lt;p&gt;
+    Let's  start by multiplying two vectors:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \bm{a} &amp;= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{b} &amp;= b_1 \bm{e_{1}} + b_2 \bm{e_{2}}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Under the geometric product we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} \bm {b} &amp;= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &amp;= a_1 b_1 \bm{e_{1}}  \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
+                              &amp;=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
+                              &amp;=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
+                              - a_2 b_1 \bm{e_{12}} \\
+                              &amp;= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{e_{12}}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    We can see that from the product of two vectors we get a scalar and a bivector.
+  &lt;/p&gt;
+  &lt;p&gt;
+    What if we take a scalar and a bivector and multiply it by a vector?
+    Note that below we are using a capital letter for our scalar plus bivector.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+          \bm{a} &amp;= a_1 \bm{e_{1}} + a_2 \bm{e_{2}} \\
+          \bm{B} &amp;= B_1 + B_2 \bm{e_{12}}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} \bm {B} &amp;= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (B_1  + B_2 \bm{e_{12}}) \\
+                          &amp;= a_1 B_1 \bm{e_{1}}
+                           + a_1 B_2 \bm{e_{1}}  \bm{e_{12}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_2 B_2 \bm{e_{2}}  \bm{e_{12}} \\
+                           &amp;= a_1 B_1 \bm{e_{1}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_1 B_2 \bm{e_{1}}  \bm{e_{12}}
+                           + a_2 B_2 \bm{e_{2}}  \bm{e_{12}} \\
+                           &amp;= a_1 B_1 \bm{e_{1}}
+                           + a_2 B_1 \bm{e_{2}}
+                           + a_1 B_2 \bm{e_{2}}
+                           - a_2 B_2 \bm{e_{1}} \\
+                           &amp;= ( a_1 B_1  - a_2 B_2 )\bm{e_{1}}
+                           + ( a_2 B_1 + a_1 B_2 ) \bm{e_{2}}  \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    That product gives us back a vector, so &lt;b&gt;B&lt;/b&gt; is an element of 𝔾&lt;sup&gt;2&lt;/sup&gt;
+    that operates on vectors through the geometric product to give us another
+    vector.
+  &lt;/p&gt;
+  &lt;h4 id=rotors&gt;Rotors&lt;/h4&gt;
+  &lt;p&gt;
+    A special case of &lt;b&gt;B&lt;/b&gt; is called a Rotor. This
+    Rotor is an element of 𝔾&lt;sup&gt;2&lt;/sup&gt; that is just a restatement of &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Euler's_formula&quot;&gt;Euler's formula&lt;/a&gt;
+    in 𝔾&lt;sup&gt;2&lt;/sup&gt;.
+  &lt;/p&gt;
+  &lt;p&gt;
+    First, for reasons that will become clearer later, we will begin to
+    abbreviate &lt;b&gt;e&lt;sub&gt;12&lt;/sub&gt;&lt;/b&gt; as &lt;b&gt;I&lt;/b&gt;. Our Rotor is then defined
+    as:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt; e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    If you multiply any vector by this Rotor on the right it will rotate
+    that vector &amp;theta; degrees in the direction from &lt;b&gt;e&lt;sub&gt;1&lt;/sub&gt;&lt;/b&gt; to
+    &lt;b&gt;e&lt;sub&gt;2&lt;/sub&gt;&lt;/b&gt;. If you multiply that same vector on the left by
+    this Rotor it will be rotated &amp;theta; degrees in the opposite direction.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    For example, here is a dynamic illustration of the Rotor in action,
+    In this case, we are multiplying &lt;b&gt;e&lt;sub&gt;1&lt;/sub&gt;&lt;/b&gt; by
+    e&lt;sup&gt;&amp;omega;t&lt;b&gt;I&lt;/b&gt;&lt;/sup&gt;, where t is time, and &amp;omega; is
+    the rate, in radians per second, that the vector undergoes rotation.
+    In this example we set &amp;omega; = 1, so the vector should complete
+    a full circle every 2&amp;pi; seconds.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{v} = \bm{e_1} e^{t \bm{I}}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=rotor_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=rotor width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('rotor_toggle');
+      var running = false;
+      var omega = 1;
+      var start = Date.now();
+      var e1 = ga2d.vec(1, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var dest = ga2d.mul(e1, rotor);
+        f.clear();
+        f.expandTo([0, 1, 1, 0]);
+        f.expandTo([0, -1, -1, 0]);
+        f.axes();
+        f.vec(dest, &quot;v&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+  &lt;p&gt;
+    Caveat: Rotors only work like this in ℝ&lt;sup&gt;2&lt;/sup&gt;, in ℝ&lt;sup&gt;3&lt;/sup&gt; and
+    above the formulation changes, so be aware of that.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Using geometric algebra makes it easy to read off this formula
+    and determine what is going to happen, i.e. the &lt;b&gt;e&lt;sub&gt;1&lt;/sub&gt;&lt;/b&gt;
+    vector is going to be operated on via geometric product and the result
+    will be another vector that is rotated &lt;em&gt;&amp;omega; t&lt;/em&gt; radians in
+    a counter-clockwise direction.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Since our Rotator is a member of 𝔾&lt;sup&gt;2&lt;/sup&gt; it can be combined with
+    other operations. For example, we could start with a vector &lt;em&gt;p&lt;/em&gt; at
+    an initial position and then perturb it by adding it to another vector
+    that is multiplied by our Rotor. In this case we set &amp;omega; = 2.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{v} = \bm{p} + 0.5 \bm{e_1} e^{2 t \bm{I}}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=sum_rotor_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=sum_rotor width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('sum_rotor_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var p = ga2d.vec(1, 1);
+      var e1 = ga2d.vec(0.5, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('sum_rotor'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var dest = ga2d.add(p, ga2d.mul(e1, rotor));
+        f.clear();
+        f.expandTo([0, 1.5, 1.5, 0]);
+        f.axes();
+        f.vec(dest, &quot;v&quot;);
+        f.vec(p, &quot;p&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We can take that one step further and rotate the whole thing around
+    the origin, where we set &amp;omega;&lt;sub&gt;1&lt;/sub&gt; = 2.9 and &amp;omega;&lt;sub&gt;2&lt;/sub&gt; =
+    1.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;\bm{v} = (\bm{p} + 0.5 \bm{e_1} e^{\omega_1 t \bm{I}})e^{\omega_2 t \bm{I}}&lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=sum_rotor2_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=sum_rotor2 width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('sum_rotor2_toggle');
+      var running = false;
+      var omega1 = 2.9;
+      var omega2 = 1;
+      var start = Date.now();
+      var p = ga2d.vec(1, 1);
+      var e1 = ga2d.vec(0.5, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('sum_rotor2'));
+      var step = function() {
+        var rotor1 = ga2d.e(omega1 * (Date.now() - start)/1000);
+        var rotor2 = ga2d.e(omega2 * (Date.now() - start)/1000);
+        var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
+        f.clear();
+        f.expandTo([0, 2, 2, 0]);
+        f.expandTo([0, -2, -2, 0]);
+        f.axes();
+        f.vec(dest, &quot;v&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    That might be easier to follow if instead of drawing the vector
+    we draw the trail of points where the vector has been.
+  &lt;/p&gt;
+
+
+  &lt;button id=trail_rotor2_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=trail_rotor2 width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('trail_rotor2_toggle');
+      var running = false;
+      var omega1 = 2.9;
+      var omega2 = 1;
+      var start = Date.now();
+      var p = ga2d.vec(1, 1);
+      var e1 = ga2d.vec(0.5, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('trail_rotor2'));
+      var lastPoint = [];
+      var step = function() {
+        var rotor1 = ga2d.e(omega1 * (Date.now() - start)/1000);
+        var rotor2 = ga2d.e(omega2 * (Date.now() - start)/1000);
+        var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
+        if (lastPoint === []) {
+          lastPoint = dest;
+          return
+        }
+        f.reset();
+        f.segment(lastPoint, dest);
+        f.draw();
+        lastPoint = dest;
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          lastPoint = [];
+          f.clear();
+          f.expandTo([0, 2, 2, 0]);
+          f.expandTo([0, -2, -2, 0]);
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;h4 id=double_angle&gt;Double Angle Formula&lt;/h4&gt;
+
+  &lt;p&gt;
+    Some of the power of Geometric Algebra comes from being able to go back
+    and forth between looking at a problem geometrically and looking at it
+    algrebraically. For example, it is easy to reason that rotating a vector
+    &amp;theta; degrees twice is the same as rotating that same vector 2 &amp;theta;
+    degrees. We can write that out as an algebraic expression:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        e^{2 \theta \bm{I}} = e^{\theta \bm{I}} e^{\theta \bm{I}}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    If we expand both sides of the equations above using the definition of
+    &lt;em&gt;e&lt;/em&gt; we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \cos 2 \theta + \sin 2 \theta \bm{I} &amp;= (\cos \theta + \sin \theta \bm{I}) (\cos \theta + \sin \theta \bm{I}) \\
+           &amp;= \cos^2 \theta + 2 \cos \theta \sin \theta \bm{I} + \sin^2 \theta \bm{I}^2 \\
+           &amp;= \cos^2 \theta + 2 \cos \theta \sin \theta \bm{I} - \sin^2 \theta \\
+           &amp;= \cos^2 \theta - \sin^2 \theta  + 2 \cos \theta \sin \theta \bm{I}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Comparing the coefficients on the left hand side of the equation to that on
+    the right hand side we find we have derived the
+    &lt;a href=&quot;http://mathworld.wolfram.com/Double-AngleFormulas.html&quot;&gt;Double Angle Formulas&lt;/a&gt;:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \cos 2 \theta = \cos^2 \theta  - \sin^2 \theta
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \sin 2 \theta = 2 \cos \theta \sin \theta
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    You could start with the same geometric reasoning about any two angles,
+    &amp;alpha; and &amp;beta;, and use the same derivation to get the general &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities&quot;&gt;Angle
+      sum identities&lt;/a&gt;.  The power here is the ability to move back and
+    forth between algebraic and geometric reasoning quickly and easily.
+  &lt;/p&gt;
+
+  &lt;h4 id=complex&gt;Complex Numbers&lt;/h4&gt;
+  &lt;p&gt;
+    From our definition of our Rotator, if we set &amp;omega; to 90 degrees then
+    since &lt;em&gt;cos&lt;/em&gt; becomes 0 we are left with only &lt;b&gt;I&lt;/b&gt;, which is a
+    90 degree Rotator. But if we apply a 90 degree Rotator twice we should get
+    a 180 degree Rotator:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;&lt;latex-pic&gt;
+        \begin{align*}
+        \bm{I} \bm{I} &amp;= \bm{e_{12}} \bm{e_{12}} \\
+                      &amp;= \bm{e_1} \bm{e_2} \bm{e_1} \bm{e_2} \\
+                      &amp;= - \bm{e_1} \bm{e_1} \bm{e_2} \bm{e_2} \\
+                      &amp;= - 1 \bm{e_2} \bm{e_2} \\
+                      &amp;= - 1 \\
+        \end{align*}
+    &lt;/latex-pic&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    And -1 is exactly what we would expect, since that's what you multiply
+    a vector by to rotate it 180 degrees. But what we also have is a quantity
+    in 𝔾&lt;sup&gt;2&lt;/sup&gt; that when squared is equal to -1. This should remind you
+    of &lt;em&gt;i&lt;/em&gt; in the complex numbers ℂ, but without the need to take the
+    square root of a negative number, or invoke anything imaginary. In
+    fact the subset of all linear combinations of &lt;b&gt;{1, I}&lt;/b&gt; is closed
+    under the geometric product and is isomorphic to ℂ.
+  &lt;/p&gt;
+
+  &lt;h4 id=B&gt;Characterizing B&lt;/h4&gt;
+
+  &lt;p&gt;Now that we have learned about Rotors, let's apply that knowledge
+    to characterize elements of the form:
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+          \bm{B} &amp;= B_1 + B_2 \bm{e_{12}}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    First, let's look at the relationship between any two non-zero vectors.
+  &lt;/p&gt;
+
+  &lt;canvas id=two width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(-1, 2);
+      var b = ga2d.vec(2, 3);
+      var f = new draw_ga2d.Frame(document.getElementById('two'));
+      f.axes();
+      f.vec(a, &quot;a&quot;);
+      f.vec(b, &quot;b&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We can reason out geometrically that given &lt;b&gt;b&lt;/b&gt; we can get &lt;b&gt;a&lt;/b&gt;
+    from it by first scaling &lt;b&gt;b&lt;/b&gt; to have a norm of 1, then rotating it to
+    have the same direction as &lt;b&gt;a&lt;/b&gt;, and then finally scaling that unit
+    vector to have the same length as &lt;b&gt;a&lt;/b&gt;. Now write that out
+    algrebraically, where &amp;theta; is the angle between the two vectors.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} &amp;= ||\bm{a}|| e^{\theta \bm{I}} \frac{1}{||\bm{b}||} \bm{b} \\
+               &amp;= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    If we look at any product of two non-zero vectors, &lt;b&gt;ab&lt;/b&gt;, we know we
+    get an operator that, under the geometric product, takes vectors and
+    returns new vectors. If we substitute our derivation of how to get &lt;b&gt;a&lt;/b&gt;
+    from &lt;b&gt;b&lt;/b&gt;, then we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{ab} &amp;= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} \bm{b} \bm{b} \\
+                &amp;= \frac{||\bm{a}||}{||\bm{b}||} e^{\theta \bm{I}} ||\bm{b}||^2  \\
+                &amp;= ||\bm{a}|| ||\bm{b}|| e^{\theta \bm{I}}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    So every such operator &lt;b&gt;ab&lt;/b&gt; is actually just a rotation and a
+    dilation. We can see this in action if we have the operator &lt;b&gt;ab&lt;/b&gt; and
+    apply it to vector &lt;b&gt;c&lt;/b&gt; to get vector &lt;b&gt;d&lt;/b&gt;. The animation will
+    perturb vector &lt;b&gt;b&lt;/b&gt; to show how that affects vector &lt;b&gt;d&lt;/b&gt;.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{d} = \bm{ab}\bm{c}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=ab_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=ab width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('ab_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('ab'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, a);
+        var d = ga2d.mul(op, c)
+        f.clear();
+        f.axes();
+        f.vec(a, &quot;a&quot;);
+        f.vec(bp, &quot;b&quot;);
+        f.vec(c, &quot;c&quot;);
+        f.vec(d, &quot;d&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Our generalized form for the geometric product of two vectors is:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+          \bm{B} &amp;= B_1 + B_2 \bm{e_{12}}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    We can use what we've learned so far to break that apart into
+    its scalar and Rotor components:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{B} = k e^{\theta \bm{I}}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Start by applying &lt;b&gt;B&lt;/b&gt; to a unit basis element, which we know
+    has a norm of 1, which gives us a new vector &lt;b&gt;v&lt;/b&gt;.
+  &lt;/p&gt;
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{v} &amp;= \bm{B}\bm{e_1} \\
+               &amp;= k e^{\theta \bm{I}} \bm{e_1}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    We can see from the last equation that &lt;b&gt;v&lt;/b&gt; has a norm of k,
+    and now that we know k, we can divide &lt;b&gt;B&lt;/b&gt; by k to get our Rotor.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        k &amp;= ||\bm{B}\bm{e_1}|| = \sqrt{B_{1}^{2} + B_{2}^{2}} \\
+        e^{\theta \bm{I}} &amp;= \frac{1}{k} \bm{B}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+
+  &lt;h4 id=ratios&gt;Ratios&lt;/h4&gt;
+  &lt;p&gt;
+    While applying the operator &lt;b&gt;ab&lt;/b&gt; above did show some of the behavior,
+    it may be useful to start over, this time building our operator from a
+    ratio, i.e. if we have two vectors &lt;b&gt;a&lt;/b&gt; and &lt;b&gt;b&lt;/b&gt;, and given a
+    third vector &lt;b&gt;c&lt;/b&gt;, we'd like to calculate the vector &lt;b&gt;d&lt;/b&gt; so that
+    they have the same ratio, i.e.
+   &lt;/p&gt;
+
+   &lt;dl&gt;
+     &lt;dd&gt;
+       &lt;latex-pic&gt;
+         \bm{d} / \bm{c} = \bm{b} / \bm{a}}
+       &lt;/latex-pic&gt;
+     &lt;/dd&gt;
+   &lt;/dl&gt;
+
+   &lt;p&gt;
+     The geometric product isn't commutative, so we have to choose a side
+     to do the division on, so we will write this as:
+   &lt;/p&gt;
+
+
+   &lt;dl&gt;
+     &lt;dd&gt;
+       &lt;latex-pic&gt;
+         \bm{d}\bm{c^{-1}} = \bm{b}\bm{a^{-1}}
+       &lt;/latex-pic&gt;
+     &lt;/dd&gt;
+   &lt;/dl&gt;
+
+   &lt;p&gt;
+     But that's just a simple algrebraic equation we can solve
+     by multiplying both sides by &lt;b&gt;c&lt;/b&gt;.
+   &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{d}\bm{c^{-1}}       &amp;= \bm{b}\bm{a^{-1}}       \\
+        \bm{d}\bm{c^{-1}}\bm{c} &amp;= \bm{b}\bm{a^{-1}}\bm{c} \\
+        \bm{d} &amp;= \bm{b}\bm{a^{-1}}\bm{c}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    The operator &lt;b&gt;ba&lt;sup&gt;-1&lt;/sup&gt;&lt;/b&gt; should preserve the angle between
+    &lt;b&gt;a&lt;/b&gt; and &lt;b&gt;b&lt;/b&gt;, and also dilate &lt;b&gt;d&lt;/b&gt; proportionally to the
+    norms of &lt;b&gt;a&lt;/b&gt; and &lt;b&gt;b&lt;/b&gt;. The following animation shows
+    that relationship, also perturbing &lt;b&gt;b&lt;/b&gt; to show the affect on
+    &lt;b&gt;d&lt;/b&gt;.
+  &lt;/p&gt;
+
+
+  &lt;button id=ratio_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=ratio width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('ratio_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('ratio'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, ga2d.inv(a));
+        var d = ga2d.mul(op, c)
+        f.clear();
+        f.axes();
+        f.vec(a, &quot;a&quot;);
+        f.vec(bp, &quot;b&quot;);
+        f.vec(c, &quot;c&quot;);
+        f.vec(d, &quot;d&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;h4 id=conjugates&gt;Conjugates and Inverses&lt;/h4&gt;
+
+  &lt;p&gt;
+    Let's see what the difference between &lt;b&gt;ab&lt;/b&gt; and &lt;b&gt;ba&lt;/b&gt; is.
+    First let's multiply out in terms of basis vectors:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} \bm {b} &amp;= (a_1 \bm{e_{1}} + a_2 \bm{e_{2}})  (b_1 \bm{e_{1}} + b_2 \bm{e_{2}}) \\
+                              &amp;= a_1 b_1 \bm{e_{1}}  \bm{e_{1}}
+                               + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                               + a_2 b_1 \bm{e_{2}}  \bm{e_{1}}
+                               + a_2 b_2 \bm{e_{2}}  \bm{e_{2}} \\
+                              &amp;=  a_1 b_1 + a_1 b_2 \bm{e_{1}}  \bm{e_{2}}
+                              + a_2 b_1 \bm{e_{2}}  \bm{e_{1}} + a_2 b_2 \\
+                              &amp;=  a_1 b_1 + a_2 b_2 + a_1 b_2 \bm{e_{12}}
+                              - a_2 b_1 \bm{e_{12}} \\
+                              &amp;= (a_1 b_1 + a_2 b_2) + (a_1 b_2  - a_2 b_1) \bm{I}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    If we swap &lt;b&gt;a&lt;/b&gt; and &lt;b&gt;b&lt;/b&gt; we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{b} \bm {a} &amp;= (b_1 a_1 + b_2 a_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &amp;= (a_1 b_1 + a_2 b_2) + (b_1 a_2 - b_2 a_1) \bm{I} \\
+                       &amp;= (a_1 b_1 + a_2 b_2) + (a_2 b_1 - a_1 b_2) \bm{I} \\
+                       &amp;= (a_1 b_1 + a_2 b_2) - (a_1 b_2 - a_2 b_1) \bm{I} \\
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;In that last step we just factor out a -1 from the coefficient of
+    &lt;b&gt;I&lt;/b&gt;. If we substitute:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        B_1  &amp;= a_1 b_1 + a_2 b_2 \\
+        B_2  &amp;= a_1 b_2 - a_2 b_1
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Then we get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{a} \bm {b} &amp;= B_1 + B_2 \bm{I} \\
+        \bm{b} \bm {a} &amp;= B_1 - B_2 \bm{I}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    So if we reverse the order of the geometric product of our vectors
+    we end up with the equivalent of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Complex_conjugate&quot;&gt;complex conjugate&lt;/a&gt;.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    We will note the reverse of the product of two vectors with the dagger.
+    While this maps to the conjugate in 𝔾&lt;sup&gt;2&lt;/sup&gt;, reversing a product
+    of multiple vectors will be more important and powerful in 𝔾&lt;sup&gt;3&lt;/sup&gt;.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{B}            &amp;= \bm{a} \bm{b}  &amp;= B_1 + B_2 \bm{I} \\
+        \bm{B}^{\dagger}  &amp;= \bm{b} \bm{a}  &amp;= B_1 - B_2 \bm{I}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    If we multiply them together we find:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{B} \bm{B}^{\dagger} &amp;= \bm{abba}  \\
+              &amp;= \bm{a} ||\bm{b}||^2 \bm{a}     \\
+              &amp;= ||\bm{b}||^2 \bm{aa}         \\
+              &amp;= ||\bm{b}||^2 ||\bm{a}||^2    \\
+              &amp;= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Their product just ends up being a scalar, so if divide by that
+    scalar value we should get:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{B} \frac{\bm{B}^{\dagger}}{||\bm{a}||^2 ||\bm{b}||^2} &amp;= \frac{||\bm{a}||^2 ||\bm{b}||^2}{  ||\bm{a}||^2 ||\bm{b}||^2} \\
+              &amp;= 1
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    Which means we've found the multiplicative inverse of &lt;b&gt;B&lt;/b&gt;.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \bm{B}^{-1} = \frac{\bm{B}^{\dagger}}{\bm{B}\bm{B^{\dagger}}
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Normally geometric products aren't commutative, but in this case
+    we can see that we get the same result when we reverse the order
+    of B and B dagger:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{B}^{\dagger}\bm{B} &amp;= \bm{baab}  \\
+              &amp;= \bm{b} ||\bm{a}||^2 \bm{b}     \\
+              &amp;= ||\bm{a}||^2 \bm{bb}         \\
+              &amp;= ||\bm{a}||^2 ||\bm{b}||^2
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    So our inverse will work whether applied on the left or on the right.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Let's see how that inverse operates by applying it to
+    our previous ratio example. This time we'll not only apply
+    the &lt;b&gt;ba&lt;sup&gt;-1&lt;/sup&gt;&lt;/b&gt; operator, but also apply it's inverse
+    to &lt;b&gt;c&lt;/b&gt; to see how it compares.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        \bm{d}  &amp;= \bm{b}\bm{a^{-1}}\bm{c}         \\
+        \bm{d'} &amp;= (\bm{b}\bm{a^{-1}})^{-1}\bm{c}
+        \end{align*}
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;button id=inv_ratio_toggle&gt;Start/Stop&lt;/button&gt;
+  &lt;canvas id=inv_ratio width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var button = document.getElementById('inv_ratio_toggle');
+      var running = false;
+      var omega = 2;
+      var start = Date.now();
+      var a = ga2d.vec(0.8, 0);
+      var b = ga2d.vec(1, 0.2);
+      var c = ga2d.vec(0, 0.5);
+      var p = ga2d.vec(0.2, 0);
+      var f = new draw_ga2d.Frame(document.getElementById('inv_ratio'));
+      var step = function() {
+        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
+        var bp = ga2d.add(b, ga2d.mul(rotor, p))
+        var op = ga2d.mul(bp, ga2d.inv(a));
+        var d = ga2d.mul(op, c)
+        var norm = ga2d.mul(op, ga2d.conj(op))[0];
+        var opinv = ga2d.mul(ga2d.scalar(1.0/norm), ga2d.conj(op));
+        var dinv = ga2d.mul(opinv, c)
+        f.clear();
+        f.axes();
+        f.vec(a, &quot;a&quot;);
+        f.vec(bp, &quot;b&quot;);
+        f.vec(c, &quot;c&quot;);
+        f.vec(d, &quot;d&quot;);
+        f.vec(dinv, &quot;d'&quot;);
+        f.draw();
+        if (running) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
+      button.addEventListener('click', function() {
+        running = !running;
+        if (running) {
+          start = Date.now();
+          window.requestAnimationFrame(step);
+        }
+      });
+      step();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Note that starting from conjugates isn't the only way to construct such an inverse, we could,
+    for example, note that because each non-zero vector has a multiplicative
+    inverse, we can come to the same conclusion:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      &lt;latex-pic&gt;
+        \begin{align*}
+        1 &amp;= \bm{a} (\frac{\bm{a}}{||\bm{a}||^2})                                        \\
+          &amp;= \bm{a} 1 (\frac{\bm{a}}{||\bm{a}||^2})                                      \\
+          &amp;= \bm{a} (\bm{b} (\frac{\bm{b}}{||\bm{b}||^2}) (\frac{\bm{a}}{||\bm{a}||^2}) \\
+          &amp;= \bm{ab} (\frac{\bm{ba}}{||\bm{a}||^2||\bm{b}||^2})                            \\
+      &lt;/latex-pic&gt;
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;h3 id=further_reading&gt;Further Reading&lt;/h3&gt;
+  &lt;p&gt;
+    There are other introductions to GA around the web, some of the ones I've
+    found helpful are:
+  &lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href=&quot;http://www.jaapsuter.com/geometric-algebra/&quot;&gt;Geometric Algebra Primer&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;http://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=7943&amp;context=etd_theses&quot;&gt;Geometric Algebra: An Introduction with Applications in Euclidean and Conformal Geometry&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">Pat McCrory in the context of elite overproduction.</title><link href="http://192.168.1.95:4000/news/2016/12/05/mccrory_in_context" rel="alternate" type="text/html" title="Pat McCrory in the context of elite overproduction." /><published>2016-12-05T00:00:00-05:00</published><updated>2016-12-05T00:00:00-05:00</updated><id>http://192.168.1.95:4000/news/2016/12/05/mccrory_in_context</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/12/05/mccrory_in_context">&lt;p&gt;
+    As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in
+    the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile
+    behavior in a larger context. While it would be tempting to try to
+    psychoanalyze his continued intransigence as yet another man-child temper
+    tantrum, there are larger forces at work, of which McCrory is just one
+    sad symptom.
+  &lt;/p&gt;
+  &lt;p&gt;
+    The root of the problem stems from the ever widening wealth gap and
+    subsequent &lt;a href=&quot;https://www.bloomberg.com/view/articles/2013-11-20/blame-rich-overeducated-elites-as-our-society-frays&quot;&gt;elite
+      overproduction&lt;/a&gt;. As more and more millionaires and billionaires are
+    minted they seek to convert their newfound wealth into political power.
+    But the levers of power are limited, there&amp;#39;s a finite number of House and
+    Senate seats, there are only 50 governors, and only one President. No
+    new power levers are being created, yet there are more and more people
+    scrambling for them. More and more millionaires think they should be on
+    the city council or run for their state legislature, while more
+    billionaires think they too should be President. In a simple example of
+    the law of supply and demand, you can see the price of running for office
+    rising steeply over the last 40 years, &lt;a href=&quot;http://www.bbc.com/news/the-reporters-35365848&quot;&gt;with the cost of
+      running for President exceeding $2 billion in 2012&lt;/a&gt;.
+  &lt;/p&gt;
+  &lt;p&gt;
+    But what happens when the demand outstrips the supply so that no manner
+    of money can buy you that cherished lever of power? When there are
+    multiple millionaires, each backed by a group of billionaires, all vying
+    for power? What do you pay then? You pay in social norms. Common decency. The
+    destruction of these are the price you pay. Pat McCrory, in a desperate
+    bid to retain his power, is willing to violate every norm of U.S.
+    democracy and attempt to destroy all faith in the election process, the
+    same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be
+    governor, well then, he might as well burn down the entire edifice so no
+    one else can be either.
+  &lt;/p&gt;
+  &lt;p&gt;
+    You can also see this playing out on the national stage, with Donald Trump
+    willing to violate every norm, digging deep into the veins of xenophobia,
+    racism, and bigotry to propel himself into office. Under normal
+    circumstances no politician would openly court the worse side of the human
+    tribal instinct, the horrors from the last rise of fascism leading up to
+    WWII have been too close and too fresh in memory. But time has passed, the
+    last survivors of WWII are dying out, the reality of tens of millions of
+    people dying in wars, revolutions, and pogroms are just dry history
+    lessons now, not to be considered in the raw and ugly scramble for power.
+  &lt;/p&gt;
+  &lt;p&gt;
+    So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior
+    has become, he is just a symptom of a much larger breakdown in political
+    norms, and these are just a couple steps along a longer arc of societal
+    disintegration. We&amp;#39;re already seeing the normal U.S. two-party system
+    fragment into five distinct parties; the neo-liberal wing of the
+    Democratic party as exemplified by Hillary Clinton, the populist wing of
+    Bernie Sanders followers, the traditional big business GOP, the Tea Party
+    republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the
+    disruption, merely the beginning. Layer on global warming, the continued
+    disruption of technology, and the world wide migration of people from
+    rural areas into cities and we have all the ingredients for massive
+    upheaval. Will we descend into our own Cultural Revolution, shatter the
+    country in another Civil War, or will the similar rise of fascism across
+    Europe lead to another world engulfing spasm of death and desctruction?
+    &lt;a href=&quot;http://www.salon.com/2016/10/01/breaking-point-america-approaching-a-period-of-disintegration-argues-anthropologist-peter-turchin/&quot;&gt;The
+      patterns are all there, the roots of the problem can be clearly mapped
+      out, and while there&amp;#39;s no guaranteed way to avoid the coming
+      disintegration, maybe we should at least try&lt;/a&gt;.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry><entry><title type="html">Surely we've seen this before. Not.</title><link href="http://192.168.1.95:4000/news/2016/11/19/seen_this_before" rel="alternate" type="text/html" title="Surely we&amp;#39;ve seen this before. Not." /><published>2016-11-19T00:00:00-05:00</published><updated>2016-11-19T00:00:00-05:00</updated><id>http://192.168.1.95:4000/news/2016/11/19/seen_this_before</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/11/19/seen_this_before">&lt;p&gt;You might think that as the U.S. moves from an industrial and
+    manufacturing based economy to a knowledge based economy that we surely
+    have weathered similar tranistions. For example, as we moved from an
+    agricultural economy to a manufacturing based one. While we did indeed
+    weather the same changes, the vital difference is the timescale over which
+    those changes took place.
+  &lt;/p&gt;
+  &lt;p&gt;As you can see from this data on
+    &lt;a href=&quot;https://ourworldindata.org/agricultural-employment/&quot;&gt;agricultural
+      employment&lt;/a&gt;, we did experience a loss of 6 million agricultural jobs
+    over a 50 year period from 1910 to 1960. In contrast, from &lt;a href=&quot;https://www.brookings.edu/blog/the-avenue/2016/03/15/voter-anger-explained-in-one-chart/&quot;&gt;Voter
+      anger explained—in one chart&lt;/a&gt;, you can see that the U.S. economy
+    also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry><entry><title type="html">This is voter suppression.</title><link href="http://192.168.1.95:4000/news/2016/11/01/suppression_2016" rel="alternate" type="text/html" title="This is voter suppression." /><published>2016-11-01T00:00:00-04:00</published><updated>2016-11-01T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2016/11/01/suppression_2016</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/11/01/suppression_2016">&lt;p&gt;
+    To get an idea of voter suppression in action let&amp;#39;s
+    overlap the &lt;a href=&quot;http://demographics.coopercenter.org/DotMap/&quot;&gt;The
+      Racial Dot Map&lt;/a&gt; with &lt;a href=&quot;http://www.wakegov.com/elections/info/early/locations/Pages/default.aspx&quot;&gt;Wake
+    County&lt;/a&gt;&amp;#39;s early voting locations.
+  &lt;/p&gt;
+  &lt;img style=&quot;width: 40em;&quot; src=&quot;/images/suppression.png&quot; title=&quot;All of southeast Raleigh, a predominantly minority area, has no early voting locations.&quot;/&gt;</content><author><name></name></author><summary type="html">To get an idea of voter suppression in action let&amp;#39;s overlap the The Racial Dot Map with Wake County&amp;#39;s early voting locations.</summary></entry><entry><title type="html">The LCD Toy Universe</title><link href="http://192.168.1.95:4000/news/2016/09/27/lcd" rel="alternate" type="text/html" title="The LCD Toy Universe" /><published>2016-09-27T00:00:00-04:00</published><updated>2016-09-27T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2016/09/27/lcd</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/09/27/lcd">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+    .plot {
+      border-bottom: solid lightgray 1px;
+      border-left: solid lightgray 1px;
+      margin: 1em 0;
+    }
+
+    canvas {
+      display: block;
+    }
+
+		button {
+			min-width: 5.14em;
+			background-color: #fff;
+			color: #1f78b4;
+			text-align: center;
+			text-transform: uppercase;
+			outline: none;
+			border-radius: 3px;
+			padding: 0.6em 1.2em;
+			border: solid lightgray 1px;
+			margin: 0.6em;
+		}
+
+		button:hover {
+			background: #eee;
+		}
+
+		button:focus {
+			background-color: #ddd;
+			transition: background-color 0.1s cubic-bezier(0.4, 0, 0.2, 1) ;
+		}
+
+    select,
+    input,
+    label {
+      margin: 0.6em 0 0.6em 0.6em;
+      padding: 0.2em;
+      background: whitesmoke;
+    }
+
+    span {
+      margin-right: 0.5em;
+    }
+  &lt;/style&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;button id=restart&gt;Restart&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input type=&quot;checkbox&quot; name=&quot;esf&quot; id=&quot;esf&quot;&gt;&lt;label for=&quot;esf&quot;&gt;ESF&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input type=&quot;checkbox&quot; name=&quot;pauli&quot; id=&quot;pauli&quot;&gt;&lt;label for=&quot;pauli&quot;&gt;Pauli&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;input type=&quot;text&quot; name=&quot;percent&quot; id=&quot;percent&quot; size=3 value=&quot;10&quot; disabled&gt;&lt;label for=&quot;percent&quot;&gt;%&lt;/label&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;select name=&quot;initial&quot; id=&quot;initial&quot;&gt;
+        &lt;option value=&quot;low&quot;&gt;Low Entropy&lt;/option&gt;
+        &lt;option value=&quot;high&quot;&gt;High Entropy&lt;/option&gt;
+      &lt;/select&gt;
+      &lt;label for=initial&gt;Initial Conditions&lt;/label&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;canvas width=640 height=480 id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+
+  &lt;div&gt;Entropy: &lt;span id=entropy&gt;&lt;/span&gt; Mean: &lt;span id=entropy_mean&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;canvas class=plot width=300 height=105 id=&quot;entropy_plot&quot;&gt;&lt;/canvas&gt;
+
+  &lt;div&gt;Entities: &lt;span id=entity_count&gt;&lt;/span&gt; Mean: &lt;span id=entity_count_mean&gt;&lt;/span&gt;&lt;/div&gt;
+  &lt;canvas class=plot width=300 height=105 id=&quot;entity_count_plot&quot;&gt;&lt;/canvas&gt;
+
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      function initPlot(canvasId, detailName, max) {
+        var samples = [];
+
+        var displayValue = document.getElementById(canvasId);
+        var displayMean = document.getElementById(canvasId + &quot;_mean&quot;);
+
+        var canvas = document.getElementById(canvasId+&quot;_plot&quot;);
+        var ctx = canvas.getContext(&quot;2d&quot;);
+
+        function plot() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.strokeStyle = &quot;darkblue&quot;;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          if (samples.length == 0) {
+            return;
+          }
+          ctx.moveTo(0, canvas.height - (samples[0]/max)*canvas.height);
+
+          samples.forEach(function(value, x) {
+            ctx.lineTo(x+1, canvas.height - (value/max)*canvas.height);
+          });
+          ctx.stroke();
+        }
+
+        document.addEventListener(&quot;entropy&quot;, function(e) {
+          var value = e.detail[detailName];
+          displayValue.textContent = value.toPrecision(2);
+          samples.push(value);
+          if (samples.length &gt; canvas.width) {
+            samples = samples.slice(samples.length - canvas.width);
+          }
+          var total = samples.reduce(function(prev, cur) { return prev + cur; });
+          displayMean.textContent = (total/samples.length).toPrecision(2);
+          plot();
+        });
+
+        document.addEventListener(&quot;clear-entropy&quot;, function(e) {
+          samples = [];
+          plot();
+        });
+      }
+
+      var MAX_X  = 5;
+      var MAX_Y  = 4;
+      var CELL_SIZE = 40;
+      var WIDTH  = MAX_X * CELL_SIZE; // px
+      var HEIGHT = MAX_Y * CELL_SIZE; // px
+      var MARGIN = 5;   // px
+      var DX     = WIDTH/MAX_X - 2*MARGIN;
+      var DY     = HEIGHT/MAX_Y - 2*MARGIN;
+
+      // esf_percent is the chance that an atom moves
+      // if it is in contact with another atom. Note
+      // that the chance an atom moves if not in contact
+      // with another atom is 100%.
+      var esf_percent = 0.1;
+
+      var esf = false;  // True if the electrostatic force is taken
+                        // into consideration when moving an atom.
+                        // Controlled by a checkbox.
+      var pauli = false; // True if the Pauli exclusion principle applies
+                         // and atoms can't occupy the same location.
+
+      // Each atom the LCD universe is a segment between two adjacent
+      // points, so the representation of an atom will be the x,y coordinates
+      // of one end (the head), and then a value that encodes the directions from that
+      // end to the other end (the tail). I.e.
+      //
+      //   var atom = {
+      //    x: 1,
+      //    y: 2,
+      //    d: 0,
+      //   }
+      //
+      // Where d encodes the direction via DIR.
+
+      // DIR is the encoding of the four possible directions
+      // an atom may face. The 't' value is the index of the
+      // opposite direction, used in 'transpose'.
+      var DIR = {
+        0: { x:  0, y:  1, t: 1},
+        1: { x:  0, y: -1, t: 0},
+        2: { x:  1, y:  0, t: 3},
+        3: { x: -1, y:  0, t: 2},
+      };
+
+      initPlot(&quot;entropy&quot;, &quot;entropy&quot;, 1);
+      initPlot(&quot;entity_count&quot;, &quot;entities&quot;, 7);
+
+      // Give each position in the universe a unique id, unique
+      // up to transposition.
+      function atomId(atom) {
+        return &quot;&quot; + Math.floor(2 * (atom.x + DIR[atom.d].x/2))+ &quot;,&quot; + Math.floor(2 * (atom.y + DIR[atom.d].y/2));
+      }
+
+      // The initial positions of the atoms, forming the Central Galaxy, i.e
+      // the 7-segment display.
+
+      var low_entropy = [
+        {x: 2, y: 1, d: 2},
+        {x: 2, y: 3, d: 2},
+
+        {x: 2, y: 2, d: 2},
+        {x: 2, y: 2, d: 0},
+        {x: 2, y: 2, d: 1},
+
+        {x: 3, y: 2, d: 0},
+        {x: 3, y: 2, d: 1},
+      ];
+
+      var high_entropy = [
+        {x: 0, y: 0, d: 2},
+        {x: 2, y: 0, d: 2},
+        {x: 4, y: 0, d: 2},
+
+        {x: 0, y: 4, d: 2},
+        {x: 2, y: 4, d: 2},
+        {x: 4, y: 4, d: 2},
+
+        {x: 0, y: 2, d: 2},
+      ];
+
+      var initial = low_entropy;
+
+      var atoms = JSON.parse(JSON.stringify(initial));
+
+      function idsOf(arr) {
+        var ids = [];
+        arr.forEach(function(atom) {
+          ids.push(atomId(atom));
+        });
+        return ids;
+      }
+
+      // LCD records the ids of all the positions in the Central Galaxy.
+      var LCD = idsOf(low_entropy);
+
+      var canvas = document.getElementById(&quot;canvas&quot;);
+      canvas.width  = WIDTH;
+      canvas.height = HEIGHT;
+      var ctx = canvas.getContext(&quot;2d&quot;);
+
+      // An atom is the same if you switch the head and the tail.
+      // This function switches the head and tail. Used in randMove.
+      function transpose(atom) {
+        return {
+          x: atom.x + DIR[atom.d].x,
+          y: atom.y + DIR[atom.d].y,
+          d: DIR[atom.d].t,
+        }
+      }
+
+      function head(atom) {
+        return {
+          x: atom.x,
+          y: atom.y,
+        }
+      }
+
+      function tail(atom) {
+        return {
+          x: atom.x + DIR[atom.d].x,
+          y: atom.y + DIR[atom.d].y,
+        }
+      }
+
+      function isValid(atom) {
+        var t = tail(atom);
+        return (t.x &gt;= 0) &amp;&amp; (t.x &lt;= MAX_X) &amp;&amp; (t.y &gt;= 0) &amp;&amp; (t.y &lt;= MAX_Y);
+      }
+
+      function drawGrid() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx.strokeStyle = &quot;lightgray&quot;;
+        ctx.lineWidth = 1;
+        for (var x = 0; x &lt;= MAX_X ; x++) {
+          ctx.beginPath();
+          ctx.moveTo(MARGIN + x*DX, MARGIN);
+          ctx.lineTo(MARGIN + x*DX, MARGIN + MAX_Y * DY);
+          ctx.stroke();
+        }
+        for (var y = 0; y &lt;= MAX_Y; y++) {
+          ctx.beginPath();
+          ctx.moveTo(MARGIN            , MARGIN + y*DY);
+          ctx.lineTo(MARGIN +MAX_X * DX, MARGIN + y*DY);
+          ctx.stroke();
+        }
+      }
+
+      function drawAtom(atom) {
+        ctx.strokeStyle = &quot;red&quot;;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        var h = head(atom);
+        var t = tail(atom);
+        ctx.moveTo(MARGIN + h.x*DX, MARGIN + h.y*DY);
+        ctx.lineTo(MARGIN + t.x*DX, MARGIN + t.y*DY);
+        ctx.stroke();
+      }
+
+      // Move the atom to a new random position according to the rules.
+      function randMove(atom) {
+        // Randomly swap head and tail, so movement isn't biased.
+        if (Math.random() &gt; 0.5) {
+          atom = transpose(atom);
+        }
+        // Choose a direction at random until you get a valid atom, i.e.
+        // one where the tail still sits in the universe.
+        atom.d = Math.floor(Math.random() * 4);
+        while (!isValid(atom)) {
+          atom.d = Math.floor(Math.random() * 4);
+        }
+        // Now swap head and tail.
+        atom = transpose(atom);
+        // Choose a direction at random until you get a valid atom, i.e.
+        // one where the tail still sits in the universe.
+        atom.d = Math.floor(Math.random() * 4);
+        while (!isValid(atom)) {
+          atom.d = Math.floor(Math.random() * 4);
+        }
+
+        return atom;
+      }
+
+      // Does the point sit in the Central Galaxy?
+      function endInCentralGalaxy(pt) {
+        return pt.x &gt;= 2 &amp;&amp; pt.x &lt;= 3 &amp;&amp; pt.y &gt;= 1 &amp;&amp; pt.y &lt;= 3;
+      }
+
+      function touchesCentralGalaxy(atom) {
+        return endInCentralGalaxy(head(atom)) || endInCentralGalaxy(tail(atom));
+      }
+
+      function ptEqual(a, b) {
+        return a.x == b.x &amp;&amp; a.y == b.y;
+      }
+
+      function atomsTouch(a, b) {
+        return ptEqual(head(a), head(b)) ||
+               ptEqual(head(a), tail(b)) ||
+               ptEqual(tail(a), head(b)) ||
+               ptEqual(tail(a), tail(b));
+      }
+
+      function atomTouchesSet(atom, set) {
+        for (var i = 0; i &lt; set.length; i++) {
+          if (atomsTouch(atom, set[i])) {
+            return true;
+          }
+        }
+        return false;
+      }
+
+      function start() {
+        atoms = JSON.parse(JSON.stringify(initial));
+        document.dispatchEvent(new CustomEvent(&quot;clear-entropy&quot;));
+        drawGrid();
+        atoms.forEach(function(atom){
+          drawAtom(atom);
+        });
+        calculateEntropy();
+      }
+
+      function calculateEntropy() {
+        var inLCD = {};
+        var u = 0;
+        var b = 0;
+        var t = 0;
+        atoms.forEach(function(atom) {
+          var id = atomId(atom);
+          // An atom is in the Central Galaxy if its ID matches
+          // an ID in LCD.
+          if (LCD.indexOf(id) != -1) {
+            inLCD[id] = 1;
+            b += 1;
+          } else if (touchesCentralGalaxy(atom)) {
+            t += 1;
+          }
+        });
+        u = atoms.length - Object.keys(inLCD).length;
+        var ent = ((14 + 4*u - 2*b - t)/42);
+
+        // Now calculate the number of distinct entities.
+        var entities = [];
+        var atomsCopy = atoms.slice();
+        while (atomsCopy.length &gt; 0) {
+          var entity = [atomsCopy.pop()];
+          var added = true;
+          while (added) {
+            added = false;
+            for (var i = 0; i &lt; atomsCopy.length; i++) {
+              if (atomTouchesSet(atomsCopy[i], entity)) {
+                added = true;
+                entity.push(atomsCopy[i]);
+                atomsCopy.splice(i, 1);
+                break;
+              }
+            }
+          }
+          entities.push(entity);
+        }
+
+        document.dispatchEvent(new CustomEvent(&quot;entropy&quot;, {
+          detail: {
+            entropy: ent,
+            entities: entities.length,
+          }
+        }));
+      }
+
+      start();
+
+      window.setInterval(function() {
+        drawGrid();
+        var ids = idsOf(atoms);
+        for (var i = 0; i &lt; atoms.length; i++) {
+          var otherAtoms = atoms.slice();
+          otherAtoms.splice(i, 1);
+          if (esf) {
+            if (atomTouchesSet(atoms[i], otherAtoms)) {
+              if (Math.random() &lt; esf_percent) {
+                atoms[i] = randMove(atoms[i]);
+              }
+            } else {
+              atoms[i] = randMove(atoms[i]);
+            }
+          } else {
+            atoms[i] = randMove(atoms[i]);
+          }
+          if (pauli) {
+            otherIds = ids.slice();
+            otherIds.splice(i, 1);
+            while (otherIds.indexOf(atomId(atoms[i])) != -1) {
+              atoms[i] = randMove(atoms[i]);
+            }
+          }
+          drawAtom(atoms[i]);
+        }
+        calculateEntropy();
+      }, 100);
+
+      document.getElementById(&quot;restart&quot;).addEventListener(&quot;click&quot;, function() {
+        start();
+      });
+
+      document.getElementById(&quot;esf&quot;).addEventListener(&quot;click&quot;, function(e) {
+        esf = e.target.checked;
+        document.getElementById(&quot;percent&quot;).disabled = !esf;
+        start();
+      });
+
+      document.getElementById(&quot;pauli&quot;).addEventListener(&quot;click&quot;, function(e) {
+        pauli = e.target.checked;
+        start();
+      });
+
+      document.getElementById(&quot;percent&quot;).addEventListener(&quot;input&quot;, function(e) {
+        esf_percent = (+e.target.value)/100;
+        console.log(esf_percent);
+        start();
+      });
+
+      document.getElementById(&quot;initial&quot;).addEventListener(&quot;change&quot;, function(e) {
+        initial = e.target.selectedIndex == 0 ? low_entropy : high_entropy;
+        start();
+      });
+
+    })();
+  &lt;/script&gt;
+  &lt;p&gt;
+    &lt;a href=&quot;&quot;&gt;Quanta Magazine&lt;/a&gt; published an interesting article in their
+    &lt;a href=&quot;https://www.quantamagazine.org/tag/Insights-Puzzle/&quot;&gt;Insights
+      Puzzle&lt;/a&gt; column called &lt;a
+      href=&quot;https://www.quantamagazine.org/20160913-the-physics-of-time-puzzle/&quot;&gt;Seeing
+      Time Through a Liquid Crystal Display&lt;/a&gt;. Above is my version of the
+    simulation, which operates on a basic level like the simulation
+    presented in the article, but then adds in a few twists. At this point
+    you should to read the arctile to understand the basic simulation.
+  &lt;/p&gt;
+  &lt;p&gt;
+    I added a second measure, which is just the number of connected objects in
+    the simultion. This will be a value from 1 to 7, where 1 is achieved when
+    all the atoms are touching, and 7 is achieved when no atom touches another
+    atom. You can start the simulation in either of these configurations by
+    choosing either &quot;Low Entropy&quot; or &quot;High Entropy&quot; for the initial
+    conditions. I added this because the initial definition of entropy given
+    in the article was a little unsatisfactory, as it fixed the low entropy
+    state to the middle of the universe, which means the figure 8 could
+    reappear perfectly formed two steps to the right and that would still be
+    measured as maximum entropy.
+  &lt;/p&gt;
+  &lt;p&gt;
+    The second deviation from the article's proposed simulation is the
+    addition of 'forces' that influence the interation of the atoms in the
+    universe. These are ways of injecting stratified stability into the
+    system. The first force is 'ESF', a force that acts like the
+    electrostatic force, that is, when two atoms are touching the
+    probability that they wlll move is reduced. The actual probability that
+    an atom moves when in contact with at least one other atom is controlled
+    via the &quot;%&quot; input, which defaults to 10%.
+  &lt;/p&gt;
+  &lt;p&gt;
+    The second 'force' added in the simulation is similar to the Pauli
+    Exclusion Principle, which stops atoms from occupying the same location.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Both of the forces can be turned on and off via checkboxes. When
+    conditions are changed, such as changing the ESF percent, the simulation
+    is restarted and the graphs are cleared.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">.plot { border-bottom: solid lightgray 1px; border-left: solid lightgray 1px; margin: 1em 0; }</summary></entry><entry><title type="html">HTTPS</title><link href="http://192.168.1.95:4000/news/2016/09/19/letsencrypt" rel="alternate" type="text/html" title="HTTPS" /><published>2016-09-19T00:00:00-04:00</published><updated>2016-09-19T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2016/09/19/letsencrypt</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/09/19/letsencrypt">&lt;p&gt;
+    Bitworking is now served over HTTPS thanks to &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let&amp;#39;s Encrypt&lt;/a&gt;,
+    in particular to the &lt;a href=&quot;https://godoc.org/rsc.io/letsencrypt&quot;&gt;rsc.io/letsencrypt&lt;/a&gt; Go library
+    which made it trivial to implement.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Next up, &lt;a href=&quot;http://www.w3.org/TR/webmention/&quot;&gt;Webmention&lt;/a&gt;.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">Bitworking is now served over HTTPS thanks to Let&amp;#39;s Encrypt, in particular to the rsc.io/letsencrypt Go library which made it trivial to implement. Next up, Webmention.</summary></entry><entry><title type="html">Inertial Balance</title><link href="http://192.168.1.95:4000/news/2016/08/16/interial_balance" rel="alternate" type="text/html" title="Inertial Balance" /><published>2016-08-16T00:00:00-04:00</published><updated>2016-08-16T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2016/08/16/interial_balance</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/08/16/interial_balance">&lt;p&gt;
+    What to do when it&amp;#39;s late at night and your high schooler says his table
+    wasn&amp;#39;t able to complete their physics lab today because they were missing
+    equipment, and the teacher said, maybe half jokingly, that they could
+    complete the lab at home if they didn&amp;#39;t finish it in class?
+    That&amp;#39;s right, you build experimental equipment in your garage.
+  &lt;/p&gt;
+  &lt;p&gt;
+    This is the &lt;a href=&quot;http://www.arborsci.com/inertial-balance&quot;&gt;Interial
+      Balance&lt;/a&gt; we built from scratch using two hacksaw blades. It took
+    about about 20 minutes to build and then another 10 to actually run the
+    experiment.
+  &lt;/p&gt;
+  &lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/V-iUcxvZsls&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;p&gt;
+    I hope we don't have to &quot;junkyard wars&quot; all of his labs, but this was fun
+    and quick to build.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">What to do when it&amp;#39;s late at night and your high schooler says his table wasn&amp;#39;t able to complete their physics lab today because they were missing equipment, and the teacher said, maybe half jokingly, that they could complete the lab at home if they didn&amp;#39;t finish it in class? That&amp;#39;s right, you build experimental equipment in your garage. This is the Interial Balance we built from scratch using two hacksaw blades. It took about about 20 minutes to build and then another 10 to actually run the experiment. I hope we don't have to &quot;junkyard wars&quot; all of his labs, but this was fun and quick to build.</summary></entry></feed>

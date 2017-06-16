@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>The future of ...</title>
+    <meta name=created value="2007-05-08T19:27:08.414868">
+  </head>
+  <body>
+  
+  <p><a href="http://mail.python.org/pipermail/python-3000/2007-May/007414.html">Guido van Rossum</a>:</p>
+<blockquote><p>Just because Java was once aimed at a set-top box OS that didn't
+support multiple address spaces, and just because process creation in
+Windows used to be slow as a dog, doesn't mean that multiple processes
+(with judicious use of IPC) aren't a much better approach to writing
+apps for multi-CPU boxes than threads.</p></blockquote>
+<p><a href="http://bitworking.org/news/126/Intel-80-core-processor">I obviously agree</a>.</p>
+  <div class="commentContent" id="X1">
+    I don't get it. There's nothing magic that makes process scheduling faster than thread scheduling — on most OS's, a process is just a bag of threads plus an address space (and some other globals), and the kernel schedules all threads of all processes against each other.
+
+Switching from multiple threads to multiple processes is merely a choice to _copy_ state rather than _sharing_ it -- instead of multiple threads using the resources of a single interpreter, each thread ends up with its own copy. Sure, this reduces contention. But it multiplies the memory overhead (which itself has serious implications for performance, at least on desktop OS's which are typically RAM-starved). 
+
+And since these tasks are probably going to need to communicate with each other, you need a lot of IPC, which can add significant overhead, especially if you want to use higher-level communication like remote method invocation.
+
+Admittedly, some of these points are non-issues for web servers, where the server tasks don't need to communicate much, and everyone's used to throwing massive amounts of RAM at performance problems. But there's more to life than web servers.
+    <p class="commentByLine">Posted by
+       <a href="http://mooseyard.com/Jens">Jens Alfke</a> on <a href="#X1" title="2007-05-09T11:29:07.905475">2007-05-09</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Jens,<br />
+<blockquote><p>...merely a choice to _copy_ state rather than _sharing_ it...</p></blockquote>
+<p>I think "merely" needs to be added to the list of <a href="http://fishbowl.pastiche.org/2003/10/07/just_is_a_fourletter_word">alarm bell phrases</a>.</p>
+<blockquote><p>And since these tasks are probably going to need to communicate with each other, you need a lot of IPC, which can add significant overhead</p></blockquote>
+<p><a href="http://danga.com/djabberd/">Not really, if it's done right</a>, and presuming you don't need to scale. If you do need to scale, than all that IPC  becomes inter-machine communication.</p>
+<blockquote><p>...especially if you want to use higher-level communication like remote method invocation.</p></blockquote>
+<p><a href="http://bitworking.org/news/How_to_create_a_REST_Protocol">You must be new here</a>.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2007-05-09T12:53:32.268345">2007-05-09</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Applicative trumps imperative in the large. There is various evidence of this in <a href="http://labs.google.com/papers/mapreduce.html">all sorts of different areas</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X3" title="2007-05-09T21:23:44.233692">2007-05-09</a>
+    </p>
+</div>
+  </body>

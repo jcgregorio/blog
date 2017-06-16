@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<reference anchor='REC-xml-infoset'
+           target='http://www.w3.org/TR/2004/REC-xml-infoset-20040204'>
+<front>
+<title>XML Information Set (Second Edition)</title>
+
+<author initials='J.' surname='Cowan' fullname='John Cowan'>
+    <organization />
+</author>
+
+<author initials='R.' surname='Tobin' fullname='Richard Tobin'>
+    <organization />
+</author>
+
+<date month='February' day='4' year='2004' />
+</front>
+
+<seriesInfo name='World Wide Web Consortium Recommendation' value='REC-xml-infoset-20040204' />
+<format type='HTML' target='http://www.w3.org/TR/2004/REC-xml-infoset-20040204' />
+</reference>

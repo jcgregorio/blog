@@ -1,0 +1,74 @@
+<html>
+    <head>
+    <script type="text/javascript" src="http://bitworking.org/projects/apexlearningcenter/jquery-1.2.1.js"></script>
+        <script type="text/javascript">
+function courseCodes(json) {
+
+    var select = ["<select>"];
+    select.push("<option></option>");
+    for (var i = 0; i < json.feed.entry.length; i++) {
+        var title = json.feed.entry[i].title.$t;
+        select.push("<option>", title, "</option>");
+    }
+    select.push("</select>");
+
+    $(select.join("")).replaceAll(".courses"); 
+}
+
+        </script>
+
+
+    </head>
+    <body>
+                  <div class="content-item " id="foo"><div id='g_body'><p></p><form
+                              method="post"
+                              action="http://bitworking.org/projects/apexlearningcenter/mail.cgi"><p>Student
+                              Name<br><input size="60" id="name"
+                              name="name"></p><p><label
+                                  for="address">Address</label><br><input
+                              size="80" id="address"
+                              name="address"></p><p><label for="dob">Date of
+                                  Birth</label><br><input size="10" id="dob"
+                              name="dob" value="mm/dd/yy"></p><p><label
+                                  for="phone">Phone</label><br><input size="30"
+                              id="phone" name="phone"></p><p><label
+                                  for="altphone">Alternate
+                                  Phone</label><br><input size="30"
+                              id="altphone" name="altphone"></p><p><label
+                                  for="parentname">Parent
+                                  Name</label><br><input size="30"
+                              id="parentname" name="parentname"></p><p><label
+                                  for="parentemail">Parent
+                                  Email</label><br><input size="30"
+                              id="parentemail" name="parentemail"></p><p><label
+                                  for="school">Child&#39;s School (or Business
+                                  Name for the Web Page Design
+                                  Clinic)</label><br><input size="30"
+                              id="school" name="school"></p><p><label
+                                  for="track">Track (If
+                                  applicable)</label><br><input size="30"
+                              id="track" name="track"></p><iframe style="float:
+                                  right;"
+                                  src="http://spreadsheets.google.com/pub?key=pV3OyDzNovIFZIXH4XgsWJg&amp;output=html&amp;gid=0&amp;single=true&amp;widget=true"
+                                  frameborder="0" height="300"
+                                  width="500"></iframe><p><label
+                                  for="courses">Courses</label><br><input
+                              size="10" id="courses" class="courses" name="courses"><br><input
+                              size="10" id="courses" class="courses" name="courses"><br><input
+                              size="10" id="courses" class="courses" name="courses"><br><input
+                              size="10" id="courses" class="courses" name="courses"><br><input
+                              size="10" id="courses" class="courses" name="courses"><br><input
+                              size="10" id="courses" class="courses"
+                              name="courses"><br></p><p><label
+                                  for="discount">Discount
+                                  Code</label><br><input size="10"
+                              id="discount" name="discount"></p><p><input
+                              value=" Submit "
+                              type="submit"></p></form></div></div>
+
+
+<script type="text/javascript" src="http://spreadsheets.google.com/feeds/list/o09348461495030281047.2744393525451891033/od6/public/values?alt=json-in-script&amp;callback=courseCodes">
+</script>
+    </body>
+</html>
+

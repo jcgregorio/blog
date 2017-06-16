@@ -1,0 +1,36 @@
+---
+layout: post
+title: Stack-based hardware in the days of First Class Functions
+
+---
+
+  
+  <p>From Wikipedia, <a href="http://en.wikipedia.org/wiki/Funarg_problem">The Funarg Problem</a></p>
+<blockquote><p>
+<b>Funarg</b> is an abbreviation for "functional argument"; 
+in <a href="http://en.wikipedia.org/wiki/Computer_science" title="Computer science">computer science</a>, the <b>funarg problem</b> relates to the 
+difficulty of implementing <a href="http://en.wikipedia.org/wiki/Function_%28programming%29" title="Function (programming)">functions</a> as 
+<a href="http://en.wikipedia.org/wiki/First-class_object" title="First-class object">first-class objects</a> 
+in <a href="http://en.wikipedia.org/wiki/Stack-oriented_programming_language" title="Stack-oriented programming language">stack-based programming language</a> implementations.
+</p></blockquote>
+<p>I've been thinking about this in the context of the <a href="http://bitworking.org/news/321/The-Professionalization-of-Scripting-Languages">Professionalization of Scripting Languages</a>,
+  does anyone know if any of the processor manufacturers are working on adding silicon 
+  support for activation records?
+</p>
+  <div class="commentContent" id="X1">
+    Well, if they think this problem is peculiar to stack-based programming-language implementations, they should consider the difficulty of non-stack-based programming-language implementations.  What a strange thought.
+
+There were ALGOL 60 implementations, and of course PL/I in its odd way, that had to deal with the cactus problem.  The Funarg problem is easier to solve than the coroutine and multiple-thread cross-communication problems.  
+
+In a way, the creation of objects with garbage-collected lifecycles provides an implementation mechanism for closures too.  The pain is that the caller has to be aware that a closure (method on a class instance) is being invoked, and it is usually difficult to pass an instance method around as if it were a function or procedure reference.
+
+The idea with closures is that the recipient of one (say, as a parameter) doesn't know they are any different than any other function-like thingy that can be invoked, applied to arguments, etc.
+
+Now that there are lambda-expressions in .NET, I suppose it would be useful to see if they get the closures right or even lead to properly-bound closures.  Time to resuscitate Knuth's ManOrBoy compiler test and try it out with the various scripting-language funarg provisions.
+
+I would not pray for a silicon solution.  The tendency of hardware guys who do this has been to yield instant designs that don't actually work and have to be worked around with software anyhow.  I would treat that as a later optimization.  The big thing is figuring out how to handle lexical binding from a closure into its environment.
+    <p class="commentByLine">Posted by
+       <a href="http://miser-theory.info/astraendo/pn">orcmid</a> on <a href="#X1" title="2008-07-11T11:03:45.325197">2008-07-11</a>
+    </p>
+</div>
+  

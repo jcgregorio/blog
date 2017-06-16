@@ -1,0 +1,31 @@
+---
+layout: post
+title: JavaScript Everywhere
+
+---
+
+  
+  <p><a href="http://weblogs.mozillazine.org/roadmap/archives/2007/07/new_projects.html">Brendan covers some really exciting announcements</a> about the 
+<a href="http://www.mozilla.org/projects/tamarin/">Tamarin</a> project, which 
+aims to:</p>
+<blockquote><p>implement a high-performance, open source implementation of the ECMAScript 4th edition (ES4) language specification. The Tamarin virtual machine will be used by Mozilla within SpiderMonkey, the core JavaScript engine embedded in Firefox®, and other products based on Mozilla technology. The code will continue to be used by Adobe as part of the ActionScript™ Virtual Machine within Adobe® Flash® Player.
+</p></blockquote>
+<p>Not only will Tamarin become the VM for JavaScript in FireFox, there's work being 
+done on getting it working in IE, and also work to get IronPython and IronRuby to also map
+onto Tamarin. This is an interesting development as it appears that with Tamarin 
+we have a solid VM, with JIT support, that will be widely available and embedded into
+many applications and that actually deigns to touch "C"-land. The nice part is that in theory
+Rhino could also be brought up to ES4 and then you'd have a language that was available
+in "C"-land and on the JVM, if that kind of thing is important to you.
+</p>
+<p>That at least gets us half of the requirements for a 'real' language, which is 
+  technical depth on the language development side. The other half of the equation
+ is going to be a broad set of libraries, which I am going to need if I am going to
+write server-side applications in Tamarin. Currently there isn't a lot there and it will
+be interesting to see if/when we have <a href="http://www.swig.org/">SWIG</a>
+for Tamarin.
+</p>
+<p><b>Update:</b> <a href="http://jerakeen.org/blog/2007/07/server-side-javascript-under-apache/">A similar
+  perspective on the need for libraries</a> from Tom Insam, who wrote <a href="http://www.modjs.org/">mod_js</a>.</p>
+  
+  

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<rss version="2.0" xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <channel>
+    <title>BitWorking Blowfish Encrypted Test Feed</title>
+    <link>http://bitworking.org/projects/blowfish/</link>
+    <description>Secure Sydication With Blowfish and GreaseMonkey</description>
+    <dc:creator>Joe Gregorio</dc:creator>
+   <item>
+      <title>A Test Entry</title>
+      <link>http://bitworking.org/projects/blowfish</link>
+      <description>
+            &lt;div class="encrypted blowfish">
+                &lt;p>The following data is encrypted. Please install
+                the &lt;a href="http://bitworking.org/projects/securesyndication/">SecureSyndication&lt;/a> Greasemonkey script to 
+                    view the encrypted content.&lt;/p>
+                    &lt;div class="encdata">WORK:C7FDDC3B50FF0BE0E6F47CBD54AC149FA6E42F1DD9C8AEA48F4D400B6970C14082858FF94901795DBE1C7D380ED6AA16A1B2F8039C6782D604F1CA906A6F1C7CFEB52DED873A557228333D3A6E8B3712BD115C4AC0643B86&lt;/div>
+            &lt;/div>
+
+        &lt;div>The unencrypted content in this div should remain unchanged.&lt;/div>
+      </description>
+
+      <dc:date>2005-07-07T00:01:00-05:00</dc:date>      
+   </item>
+  </channel>
+</rss>
+
+
+
+
+
+

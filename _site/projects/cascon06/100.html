@@ -1,0 +1,23 @@
+<html>
+<head>
+   <link href="present.css" type="text/css" rel="stylesheet" />
+   <title>Lessons from Dynamic Languages | urls.py</title>
+</head>
+<body>
+  <div class='content'>
+  <div class='nav'>
+  <a accesskey="h" class="up" href="1.html">home</a>
+  
+  
+<a accesskey="j" class="prev" href="99.html">&laquo;</a>
+<a accesskey="k" class="next" href="101.html">&raquo;</a>
+<h1>urls.py</h1>
+</div><div class="page"><p><pre>
+<span class="PreProc">import</span> selector
+<span class="PreProc">import</span> view
+
+urls = selector.Selector()
+urls.add(<span class="Normal">'</span><span class="Constant">/blog/</span><span class="Normal">'</span>, GET=view.list)
+urls.add(<span class="Normal">'</span><span class="Constant">/blog/{id}/</span><span class="Normal">'</span>, GET=view.member_get)
+</pre>
+<p><p></div></div></body></html>

@@ -1,0 +1,314 @@
+<html>
+  <head>
+    <title>How To Use Mime-Types To Get Your Aggregator To Subscribe To An Atom
+	Feed</title>
+    <meta name=created value="2003-12-06T01:19:40">
+  </head>
+  <body>
+  <p>There has been much talk today, and in the far past, of how 
+    to automatically handle syndication subscription. The conversation
+    was first brought up and <a href="http://www.rassoc.com/gregr/weblog/archive.aspx?post=656">
+        thoroughly discussed by Greg Reinacker</a>.
+    The issue has <a href="http://www.imc.org/atom-syntax/mail-archive/msg01344.html">
+        resurfaced on the [atom-syntax] mailing list</a>.
+    Now there are a small contingent of folks pushing for a new
+    uri scheme called 'feed:' that would enable syndication subscription.
+    <a href="http://www.w3.org/TR/webarch/#pr-new-scheme-expensive">Creating
+        a new URI scheme is a bad idea, don't do it</a>. </p>
+  <p>So what is the alternative to hooking onto a new URI scheme? Well,
+    the correct way to this is to hook onto the mime-type. 
+    Mime-types are the fundamental way types of files are identified 
+    in HTTP, and SMTP and in other areas too but well just concentrate
+    on HTTP for now. Atom feeds have the mime-type of 'application/atom+xml'.</p>
+<p>How do we go about using mime-types to connect an Atom feed sitting on
+    a web server to a client aggregator application? There are two sides
+    to the equation, the client side, and the server side.</p>
+<h3>Server Side</h3>
+<p>In order for this to work the Atom feed must be server up with 
+    a mime-type of 'application/atom+xml'. There are two general
+    cases to consider. Either the file is server up statically or it is
+    generated on the fly by a CGI program. The CGI generated case is the 
+    easiest of the two. When producing the output from the CGI program
+    just include the <code>Content-type:</code> header with the correct
+    mime-type:</p>
+<pre class="example"><code>Content-type: application/atom+xml</code></pre>
+<p>The case for statically served files is only slightly
+    more complicated, in this case you just need to let Apache
+    know about the new mime-type. You do that by using the
+    <a href="http://httpd.apache.org/docs/mod/mod_mime.html#addtype">
+        AddType directive</a>, which maps a file extension to a mime-type.
+    In the directory that you are storing the Atom feeds in 
+    add the following line to your <code>.htaccess</code> file:</p>
+<pre class="example"><code>AddType application/atom+xml .atom</code></pre>
+<p>Now any file stored with a <code>.atom</code> file extension will
+    be served up with the mime-type of 'application/atom+xml'.</p>
+<h3>Client Side</h3>
+<p>The server side of the equation was easy, things get a little more
+    complicated on the client side. To make things easier we'll assume
+    you are running under Windows, people in the know of how to do
+    these things under Mac and unix should feel free to speak up 
+    in the comments. Under Windows the mapping of mime-types to
+    applications is handled through the registry. So let's walk
+    through the process of setting up the registry to handle
+    the Atom mime-type. To make the discussion concrete here 
+    is a little stub of a C program
+    that is going to stand in for our aggregator:
+</p>
+<pre class="example"><code>  #include &lt;stdio.h&gt;
+  #include &lt;conio.h&gt;
+        
+  int main(int argc, char * argv[]) {
+     printf("Atom Handling Application.");
+     printf("The Atom Feed is located at: %s\n", argv[1]);
+     getch();
+     return 1;
+  }</code></pre>
+<p>When called this program just prints the command line argument
+    it was passed and then waits for the user to press any
+    key before the program completes. If you have 
+    Microsoft's C++ compiler installed you can build it with:
+</p>
+<pre class="example"><code>cl -GX handle.c</code></pre>
+<p>Or if you have the Borland compiler installed:</p>
+<pre class="example"><code>bcc32 handle.c</code></pre>
+<p>Either way you end up with an executable <code>handle.exe</code>.
+    For the rest of this dicussion we'll assume that handle.exe
+    is installed at the fixed location <code>C:\AtomHandler\handle.exe</code>.
+    New values are then added to the Registry to map the mime-type 
+    <code>application/atom+xml</code> to our handler application.
+    Just like under Apache mapping of mime-types is done using file
+    extensions even if a file with that extension is never involved.
+    I'll explain that in a minute. First we hook into the file extension
+    <code>.atom</code>. The following three snippets are from 
+    exported sections of the registry. You would not actually
+    hand edit or manually add these items to your registry,
+    instead the application installation program needs to
+    take care of this step. 
+</p>
+<pre class="example"><code>[HKEY_CLASSES_ROOT\.atom]
+        @="atom_file"
+</code></pre>
+<p>This binds the <code>.atom</code> extension to a
+    name, a kind of indirection, of "atom_file". Now we
+    need to add values to the registry to indicate 
+    what to do when encountering a file with this
+    extension:
+</p>
+<pre class="example"><code>[HKEY_CLASSES_ROOT\atom_file]
+@="Atom Syndication Program"
+
+[HKEY_CLASSES_ROOT\atom_file\shell]
+
+[HKEY_CLASSES_ROOT\atom_file\shell\open]
+
+[HKEY_CLASSES_ROOT\atom_file\shell\open\command]
+@="\"C:\\AtomHandler\\handle.exe\" %1"</code></pre>
+<p>Now this will run our handle application
+    and pass the name of the file in as 
+    the first argument on the command line.
+    The last step is to map the mime-type to 
+    the file extension. This is done with
+    the following keys:</p>
+<pre class="example"><code>[HKEY_CLASSES_ROOT\MIME\Database\Content Type\application/atom+xml]
+        "Extension"=".atom"
+</code></pre>
+<p>Now you can see why the file extension is necessary, even 
+    if it is never used, that is, even if you never have a
+    file with the extension ".atom" on your hard drive, you still
+    need to register the extension so you have some thing to 
+    map through, from the mime-type to the extension and finally
+    to the handling application. Now, at least under my testing
+    with Mozilla and IE under Windows, both applications will now 
+    use this information to launch the correct application. Unfortunately
+    IE comes up with rather ominous warning box the first time you
+    click on an Atom feed:</p>
+<img src="http://bitworking.org/images/IEWarning_6Dec2003.jpg" alt="MS Internet Explorer warning box about files of certain types." />
+<p>Mozilla comes up with a similar, but less ominous dialog
+    box the first time an Atom feed is encountered. </p>
+<p>What happens is that the browsers download the file into 
+    a temporary location and then pass the name of that file
+    to our handler application. At this point, if an aggregator
+    was setup as the handler of the Atom feed it could parse
+    the feed and ask the user if they wished to subscribe.
+    Well...except that the aggregator can't subscribe to the
+    feed because all it has is the feed, what it really needs 
+    is the URI of the feed. That is, the Atom feed the user
+    just clicked on is stored on disk and the actual URI 
+    that the browser downloaded the file from is not 
+    avialable to the handling application. So to make
+    this scheme work, the URI of the Atom feed needs to
+    be included in the Atom feed itself. This is another place
+    where 
+        the new 'link' tag syntax shines. If you look at the
+    example feed I have provided it contains just such a tag,
+    as a child of the feed element:</p>
+<pre class="example"><code>&lt;link rel="self" 
+        href="http://bitworking.org/projects/atom/examples/example-feed.atom"/&gt;
+</code></pre>
+<p>Note that the link tag uses the attribute 'rel' with a value of
+    'self' to uniquely indicate that the 'href' attribute contains the 
+    URI of this Atom feed. Aggregator subscription
+    to Atom feeds can be handled seemlessly without
+    registering a new URI scheme. If the <code>feed:</code> URI 
+    scheme were followed it looks like it
+    <a href="http://groups.yahoo.com/group/aggregators/message/641">
+        would actually require
+        registering such a scheme with each browser installed        
+        on the computer</a>.
+</p>
+<p><strong>Note:</strong> No matter what scheme ends up being used, the
+    user must be prompted to confirm that they wish to subscribe
+    to the feed. What the browser is doing is just 
+    retrieving a representation with GET and <a href="http://www.w3.org/TR/webarch/#pr-deref-safe">
+        Agents do not incur
+        obligations by retrieving a representation.</a>
+</p>
+<p>If you would like to test this out I have an example feed setup
+    at <a href="http://bitworking.org/projects/atom/examples/example-feed.atom">
+        http://bitworking.org/projects/atom/examples/example-feed.atom</a>.</p>
+<h3>Further Reading</h3>
+<p><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/dnwue/html/ch11c.asp">Using the Registry</a>
+</p>
+<h3>Update</h3>
+<p>I have updated the text above and the example to reflect the final version of Atom 1.0.</p>
+
+  <div class="commentContent" id="X1">
+    <p>Joe: None of this is particularly helpful for the vast majority of syndication efforts, which are now RSS-based, and will continue to be so well into the future.</p>
+<p>IOW, you're proposing an Atom solution to a problem much bigger than Atom.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://admin.support.journurl.com/">Roger Benningfield</a> on <a href="#X1" title="2003-12-06T09:18:56">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    So that gives you just one more reason to upgrade to Atom.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-12-06T09:47:06">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>Joe - thanks for go where many of would fear to tread (the Windows registry).</p>
+<p>Roger - one of the justifications for Atom is to get beyond the limitations of RSS. But in this particular case, I don't see why RSS couldn't use the same solution.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X3" title="2003-12-06T09:55:37">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Joe: That's a 'nother kettle of fish. :) </p>
+<p>Danny: I agree, something similar could be cooked up for RSS... and I'd be happy to play along if it happened. But I have nothing but sympathy for those running servers and clients that don't have the necessary flexibility, and I wouldn't lose one moment's sleep if the aggregator developers decide to just skip it all and push forward with feed: or subscribe:.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://admin.support.journurl.com/">Roger Benningfield</a> on <a href="#X4" title="2003-12-06T17:07:13">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Why did you pick "start" as the link relationship? Would it not be better as "subscribe"?</p>
+<p>What rel type would you use to point to the first in a collection of archived feeds (cv: rel="next")?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://IAwiki.net/EricScheid">Eric Scheid</a> on <a href="#X5" title="2003-12-06T23:39:36">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Eric,<br />
+<a href="http://www.w3.org/TR/html401/types.html#type-links">http://www.w3.org/TR/html401/types.html#type-links</a>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X6" title="2003-12-06T23:51:59">2003-12-06</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Thanks for that link. It also led me to @profile, which then confused me with 'scheme's for @content (instead of schemes for @name, then I remembered we're talking about &lt;link&gt; not &lt;meta&gt;. But I digress.</p>
+<p>"<b>Start</b> -- Refers to the first document in a collection of documents. This link type tells search engines which document is considered by the author to be the starting point of the collection."</p>
+<p>Ah-huh? I think I see your logic now... The subscription address is where you find the first document in the collection of documents which will be created some time in the future (as the feed is updated).</p>
+<p>The fact that the subscription address is where you can find the most recently added postings, in a continuing series, and thus semantically might be called "last", or more properly "last, for now", and not where you would find the first postings in such a collection, is neither here nor there ;-)</p>
+<p>Unless you are retro-actively posting to your feed, that is.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://IAwiki.net/EricScheid">Eric Scheid</a> on <a href="#X7" title="2003-12-07T04:08:15">2003-12-07</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    So Eric, if you had a blog, you would have your visitors 'Start' at the main page looking at the oldest post first? Unlike you, the HTML spec makes no assumptions about the "correct" ordering for a collection of documents, which are traditionally reverse-chronological in the case of weblogs.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X8" title="2003-12-07T07:58:58">2003-12-07</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>So it looks like "Start" can be confusing ;-) My own preference would be for a core registry of Atom-specific terms in Atom's namespace. The Atom documentation could even say that Atom.Subscribe is equivalent to HTML.Start.</p>
+<p>btw, given the way people have been using it in the examples, I guess it's reasonable to take rel="something"<br />
+to be equivalent to rel="Atom.something"<br />
+which will also be the same as <br />
+<a href="http://atomsnamespace.org/schema#something">http://atomsnamespace.org/schema#something</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X9" title="2003-12-07T08:28:32">2003-12-07</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    The Atom namespace is <a href="http://purl">http://purl</a>.org/atom/ns#.  At least that's what the feed format and API use.  Anything within purl.org/atom/ is available for further expansion, as needed.
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X10" title="2003-12-07T23:17:22">2003-12-07</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Thanks Mark. I've some updating to do...
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X11" title="2003-12-08T08:09:25">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Joe, if you're trying to find out which method is easier, shouldn't you have bothered to write up how to do the same thing with URI schemes. Otherwise, what's the point of this article?
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Graham</a> on <a href="#X12" title="2003-12-08T09:13:23">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <p>Think of the feed as a WinAmp playlist file, and the RSS as a shoutcast stream.</p>
+<p>You don't need a new feed protocol, just a new mime-type and a file that contains the RSS location.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.xt1.org/index.php?m=200312#31">Christian Mogensen</a> on <a href="#X13" title="2003-12-08T09:54:30">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    Graham,<br />
+  It's a How-To. I have no interest in exploring which method is <b>easier</b>. A new URI scheme, as I explain in the article, and has also been explained repeatedly on [atom-syntax] and [www-tag] is the wrong thing to do. This is a How-To article. It shows you how-to properly use mime-types on the worlds most popular web server and on Windows with both Mozilla and IE.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X14" title="2003-12-08T09:56:31">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    Thank you Christian you nailed it. If the syndication community wants to do this for both RSS and Atom then a 'subscription' file with a new mime-type could be used and the solution would apply to both Atom and RSS.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X15" title="2003-12-08T10:00:14">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    <p>If I had a blog nobody would read it, which is no different to not having a blog. Good thing I don't think you're a blog-snob ;-)</p>
+<p>Point taken on HTML spec. My mistake.</p>
+<p>I wouldn't use 'start' to point to the resource to watch for updates, I'd probably use 'subscribe' (or another string). I'd use 'start' to provide guidance to a robot as to where would be a good place to start crawling, and then 'next' to point to the next resource (etc). It would be good if the robot doesn't have to back track to the 'start' to find more stuff.</p>
+<p>On 'subscribe', just to muddy the waters, I wouldn't assume it points to the resource to watch for updates either. It could point to a html page which asks for money first. In which case I suppose I could use @type to specify that the @href in the &lt;link&gt; points to a resource which should be handled by a web browser.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:eric.scheid@ironclad.net.au">Eric Scheid</a> on <a href="#X16" title="2003-12-08T19:28:55">2003-12-08</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    <p>This discussion is also occurring on the W3C www-tag mailing list, where the consensus seems to be that if a helper application needs to get the original URL, then the user agent should also be passing it, as well as the representation.</p>
+<p>In other words, don't create a new scheme, don't create a new mime type just for subscriptions, just pass the original URL to the helper.</p>
+<p>Of course, this doesn't help in the short term. One suggestion was that the RSS feed include a link to it's own URL, which would allow the aggregator to subscribe to it.</p>
+<p>Malcolm</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">Malcolm</a> on <a href="#X18" title="2003-12-10T09:55:46">2003-12-10</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    <p>Joe:  Can you clarify/explain why you say that "the user must be prompted to confirm that they wish to subscribe to the feed"?</p>
+<p>My reading of the web architecture draft you link to is that your server MAY NOT infer anything from the fact that my client retreived the feed representation (e.g.: it shouldn't add me to a ('push') email list).</p>
+<p>That's very different from saying that my client MAY NOT then do something with that representation once retrieved (e.g.: add it to a local list, thereby subscribing me to a ('pull') Atom feed).</p>
+<p>Rather than being a matter of web architecture, isn't that latter option down to me, firmly in the realm of which client I choose to use and how I choose to configure/empower it?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.dib-online.info/">David Bruce</a> on <a href="#X17" title="2003-12-10T10:15:50">2003-12-10</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    David,<br />
+  You are correct, the web architecture document refers to only obligations accrued at the server side of doing a GET.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X19" title="2003-12-12T08:23:21">2003-12-12</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    <p>I'm currently looking at a similar approach for initiating a WebDAV mount from HTML content (for instance, for Mozilla to be able to initiate opening the Microsoft Webfolder client).</p>
+<p>I got it working nicely under Windows, but I'm not so sure about how to write/register the application on MacOS X / Safari. Did anybody try that for the Atmom feed thingy?</p>
+<p>Julian</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://greenbytes.de/tech/webdav">Julian Reschke</a> on <a href="#X20" title="2004-04-02T09:06:28">2004-04-02</a>
+    </p>
+</div>
+  </body>
