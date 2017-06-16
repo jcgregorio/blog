@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-15T23:12:41-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Moving to Jekyll</title><link href="https://bitworking.org/news/2017/06/15/moving-to-jekyll" rel="alternate" type="text/html" title="Moving to Jekyll" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/moving-to-jekyll</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/moving-to-jekyll">&lt;p&gt;I am in the process of moving this blog over to
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-15T23:27:36-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/15/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/noisy_frogs_small.png&quot; alt=&quot;Graph showing a peak noise level of 72 dB.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;BTW,
+&lt;a href=&quot;https://play.google.com/store/apps/details?id=com.google.android.apps.forscience.whistlepunk&amp;amp;hl=en&quot;&gt;Google Science Journal&lt;/a&gt;
+is awesome.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why yes, the frogs in the pond across the road are rather loud.</summary></entry><entry><title type="html">Moving to Jekyll</title><link href="https://bitworking.org/news/2017/06/15/moving-to-jekyll" rel="alternate" type="text/html" title="Moving to Jekyll" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/moving-to-jekyll</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/moving-to-jekyll">&lt;p&gt;I am in the process of moving this blog over to
 &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, while at the same time admitting that I’m
 never going to finish writing my own blogging software, and that I really
 should concentrate on the writing, and not the underlying software.&lt;/p&gt;
@@ -2497,11 +2503,4 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
     Both of the forces can be turned on and off via checkboxes. When
     conditions are changed, such as changing the ESF percent, the simulation
     is restarted and the graphs are cleared.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">.plot { border-bottom: solid lightgray 1px; border-left: solid lightgray 1px; margin: 1em 0; }</summary></entry><entry><title type="html">HTTPS</title><link href="https://bitworking.org/news/2016/09/19/letsencrypt" rel="alternate" type="text/html" title="HTTPS" /><published>2016-09-19T00:00:00-04:00</published><updated>2016-09-19T00:00:00-04:00</updated><id>https://bitworking.org/news/2016/09/19/letsencrypt</id><content type="html" xml:base="https://bitworking.org/news/2016/09/19/letsencrypt">&lt;p&gt;
-    Bitworking is now served over HTTPS thanks to &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;Let&amp;#39;s Encrypt&lt;/a&gt;,
-    in particular to the &lt;a href=&quot;https://godoc.org/rsc.io/letsencrypt&quot;&gt;rsc.io/letsencrypt&lt;/a&gt; Go library
-    which made it trivial to implement.
-  &lt;/p&gt;
-  &lt;p&gt;
-    Next up, &lt;a href=&quot;http://www.w3.org/TR/webmention/&quot;&gt;Webmention&lt;/a&gt;.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">Bitworking is now served over HTTPS thanks to Let&amp;#39;s Encrypt, in particular to the rsc.io/letsencrypt Go library which made it trivial to implement. Next up, Webmention.</summary></entry></feed>
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">.plot { border-bottom: solid lightgray 1px; border-left: solid lightgray 1px; margin: 1em 0; }</summary></entry></feed>
