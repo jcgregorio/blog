@@ -16,3 +16,7 @@ let's just say that after years of watching abuse and generally uncivil
 behavior on all the social networks I've decided to revert to old technology
 from a simpler time, where I get to have absolute control over what appears
 next to my writing. Call me old fashioned.
+
+*Update*: And comments are now enabled, the [Jekyll Minima
+theme](https://github.com/jekyll/minima) and [Disqus](https://disqus.com/)
+made that way too easy.
