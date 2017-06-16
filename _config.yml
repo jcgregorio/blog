@@ -24,7 +24,10 @@ twitter_username: bitworking
 github_username:  jcgregorio
 
 disqus:
-  shortname: bitworking-1 
+  shortname: bitworking-1
+
+google_analytics: UA-1974123-1
+
 # Build settings
 markdown: kramdown
 theme: minima
