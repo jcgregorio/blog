@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-15T23:46:26-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-16T09:08:07-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/15/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/noisy_frogs_small.png&quot; alt=&quot;Graph showing a peak noise level of 72 dB.&quot; /&gt;&lt;/p&gt;
@@ -35,6 +35,13 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
     manufacture, one less object to ship, one less object consuming
     raw materials. It&amp;#39;s actually more surprising that this hasn&amp;#39;t had
     an even larger impact on the U.S. economy.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;b&gt;Update:&lt;/b&gt; A &lt;a href=&quot;https://www.brookings.edu/wp-content/uploads/2016/08/varian.pdf&quot;&gt;great
+      slide deck from Hal Varian&lt;/a&gt; covers the same ground with a slightly different take, pointing
+    out that much of this progress not only doesn't increase GDP, it actually
+    reduces it, which is a problem of using GDP as a metric.
   &lt;/p&gt;</content><author><name></name></author><summary type="html">The article Will Tech-Driven Deflation Export Japan’s Economic Woes to the World? reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;: The origin for the above video is http://bestreviews.com/electronics#evolution-of-the-desk.</summary></entry><entry><title type="html">Prometheus vs InfluxDB</title><link href="https://bitworking.org/news/2017/03/18/prometheus" rel="alternate" type="text/html" title="Prometheus vs InfluxDB" /><published>2017-03-18T00:00:00-04:00</published><updated>2017-03-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/03/18/prometheus</id><content type="html" xml:base="https://bitworking.org/news/2017/03/18/prometheus">&lt;p&gt;
     We just finished migrating all of our monitoring from &lt;a href=&quot;https://www.influxdata.com/&quot;&gt;InfluxDB&lt;/a&gt; to &lt;a href=&quot;https://prometheus.io/&quot;&gt;Prometheus&lt;/a&gt; and I thought I&amp;#39;d write up
     our reasons for the change. Please note that these are my own personal

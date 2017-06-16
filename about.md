@@ -18,3 +18,14 @@ data, and any linear combination of such.
 
 The postings on this site are my own and don't necessarily represent my
 employer's positions, strategies or opinions.
+
+
+Comments
+========
+
+The comment policy for BitWorking is that all comments must be polite.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uWM2E9oHlhA?rel=0" frameborder="0" allowfullscreen></iframe>
+
+But I still reserve the right to delete any comment at any time for any
+reason.
