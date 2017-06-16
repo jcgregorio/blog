@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e -x
+
+ssh jcgregorio@bitworking.org 'cd ~/blog; git pull'
