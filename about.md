@@ -4,12 +4,17 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+My name is Joe Gregorio and I am the father of three boys and one girl and a
+husband to Lynne Gregorio. We live in sunny North Carolina where I work for
+Google on the [Skia](https://skia.org) graphics library. I am the editor of
+the Atom Publishing Protocol and the coauthor of the URI Templates spec. I
+have a deep interest in web technologies: I wrote The RESTFul Web column for
+the online O’Reilly publication XML.com, wrote the first desktop aggregator
+written in C#, and have published various Python modules to help in putting
+together RESTful web services such as mimeparse, httplib2, and the
+google-api-python-client. I'm is interested in Go, Polymer, Web Components,
+REST, web services, APIs, URI templates, the Atom Publishing Protocol, big
+data, and any linear combination of such.
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jekyll" %} /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+The postings on this site are my own and don't necessarily represent my
+employer's positions, strategies or opinions.
