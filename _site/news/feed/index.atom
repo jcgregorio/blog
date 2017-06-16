@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://192.168.1.95:4000/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="http://192.168.1.95:4000/" rel="alternate" type="text/html" /><updated>2017-06-15T20:59:27-04:00</updated><id>http://192.168.1.95:4000/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">This is a test</title><link href="http://192.168.1.95:4000/news/2017/06/15/this-is-a-test" rel="alternate" type="text/html" title="This is a test" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2017/06/15/this-is-a-test</id><content type="html" xml:base="http://192.168.1.95:4000/news/2017/06/15/this-is-a-test"></content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">Tech Driven Deflation</title><link href="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation</id><content type="html" xml:base="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="http://192.168.1.95:4000/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="http://192.168.1.95:4000/" rel="alternate" type="text/html" /><updated>2017-06-15T20:59:43-04:00</updated><id>http://192.168.1.95:4000/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Tech Driven Deflation</title><link href="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation</id><content type="html" xml:base="http://192.168.1.95:4000/news/2017/04/19/tech-driven-deflation">&lt;p&gt;
     The article &lt;a href=&quot;https://singularityhub.com/2017/04/14/will-tech-driven-deflation-export-japans-economic-woes-to-the-world/&quot;&gt;Will Tech-Driven Deflation Export Japan’s Economic Woes to the World?&lt;/a&gt;
     reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;:
   &lt;/p&gt;
@@ -2488,4 +2488,21 @@
   &lt;/p&gt;
   &lt;p&gt;
     Next up, &lt;a href=&quot;http://www.w3.org/TR/webmention/&quot;&gt;Webmention&lt;/a&gt;.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">Bitworking is now served over HTTPS thanks to Let&amp;#39;s Encrypt, in particular to the rsc.io/letsencrypt Go library which made it trivial to implement. Next up, Webmention.</summary></entry></feed>
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">Bitworking is now served over HTTPS thanks to Let&amp;#39;s Encrypt, in particular to the rsc.io/letsencrypt Go library which made it trivial to implement. Next up, Webmention.</summary></entry><entry><title type="html">Inertial Balance</title><link href="http://192.168.1.95:4000/news/2016/08/16/interial_balance" rel="alternate" type="text/html" title="Inertial Balance" /><published>2016-08-16T00:00:00-04:00</published><updated>2016-08-16T00:00:00-04:00</updated><id>http://192.168.1.95:4000/news/2016/08/16/interial_balance</id><content type="html" xml:base="http://192.168.1.95:4000/news/2016/08/16/interial_balance">&lt;p&gt;
+    What to do when it&amp;#39;s late at night and your high schooler says his table
+    wasn&amp;#39;t able to complete their physics lab today because they were missing
+    equipment, and the teacher said, maybe half jokingly, that they could
+    complete the lab at home if they didn&amp;#39;t finish it in class?
+    That&amp;#39;s right, you build experimental equipment in your garage.
+  &lt;/p&gt;
+  &lt;p&gt;
+    This is the &lt;a href=&quot;http://www.arborsci.com/inertial-balance&quot;&gt;Interial
+      Balance&lt;/a&gt; we built from scratch using two hacksaw blades. It took
+    about about 20 minutes to build and then another 10 to actually run the
+    experiment.
+  &lt;/p&gt;
+  &lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/V-iUcxvZsls&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+  &lt;p&gt;
+    I hope we don't have to &quot;junkyard wars&quot; all of his labs, but this was fun
+    and quick to build.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">What to do when it&amp;#39;s late at night and your high schooler says his table wasn&amp;#39;t able to complete their physics lab today because they were missing equipment, and the teacher said, maybe half jokingly, that they could complete the lab at home if they didn&amp;#39;t finish it in class? That&amp;#39;s right, you build experimental equipment in your garage. This is the Interial Balance we built from scratch using two hacksaw blades. It took about about 20 minutes to build and then another 10 to actually run the experiment. I hope we don't have to &quot;junkyard wars&quot; all of his labs, but this was fun and quick to build.</summary></entry></feed>
