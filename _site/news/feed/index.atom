@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-16T21:09:32-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-16T21:18:42-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/15/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/noisy_frogs_small.png&quot; alt=&quot;Graph showing a peak noise level of 72 dB.&quot; /&gt;&lt;/p&gt;
@@ -164,8 +164,8 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
       background: #fff;
     }
   &lt;/style&gt;
-  &lt;script src=&quot;/news/ga/res/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-  &lt;script src=&quot;/news/ga/res/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/js/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/js/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
   &lt;p&gt;
     Geometric Algebra can be applied to Physics, and many of the introductions
     to GA online cover this, but they immediately jump to electromagnetic
@@ -187,7 +187,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
   &lt;/p&gt;
 
   &lt;dl&gt;
-    &lt;dd&gt;&lt;latex-pic&gt;\bm{p} = \bm{p_0} e^{\omega t \bm{I}}&lt;/latex-pic&gt;&lt;/dd&gt;
+    &lt;dd&gt;$$\boldsymbol{p} = \boldsymbol{p_0} e^{\omega t \boldsymbol{I}}$$&lt;/dd&gt;
   &lt;/dl&gt;
 
   &lt;button id=rotor_toggle&gt;Start/Stop&lt;/button&gt;
@@ -230,7 +230,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
   &lt;/p&gt;
 
   &lt;dl&gt;
-    &lt;dd&gt;&lt;latex-pic&gt; e^{\theta \bm{I}} := \cos(\theta) + \sin(\theta)\bm{I}&lt;/latex-pic&gt;&lt;/dd&gt;
+    &lt;dd&gt;$$ e^{\theta \boldsymbol{I}} := \cos(\theta) + \sin(\theta)\boldsymbol{I}$$&lt;/dd&gt;
   &lt;/dl&gt;
   &lt;p&gt;
     We take the derivative with respect to &amp;theta;:
@@ -238,12 +238,12 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
 
   &lt;dl&gt;
     &lt;dd&gt;
-      &lt;latex-pic&gt;
+      $$
         \begin{align*}
-          \frac{d}{d \theta} e^{\theta \bm{I}} &amp;=  \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
-            &amp;=  -\sin(\theta) + \cos(\theta)\bm{I} \\
+          \frac{d}{d \theta} e^{\theta \boldsymbol{I}} &amp;=  \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\boldsymbol{I}) \\
+            &amp;=  -\sin(\theta) + \cos(\theta)\boldsymbol{I} \\
         \end{align*}
-      &lt;/latex-pic&gt;
+      $$
     &lt;/dd&gt;
   &lt;/dl&gt;
 
@@ -255,14 +255,14 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
 
   &lt;dl&gt;
     &lt;dd&gt;
-      &lt;latex-pic&gt;
+      $$
         \begin{align*}
-          \frac{d}{d \theta} e^{\theta \bm{I}} &amp;= \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\bm{I}) \\
-            &amp;= -\sin(\theta) + \cos(\theta)\bm{I}          \\
-            &amp;= \bm{I} (\cos(\theta) + \sin(\theta)\bm{I})  \\
-            &amp;= \bm{I} e^{\theta \bm{I}}                    \\
+          \frac{d}{d \theta} e^{\theta \boldsymbol{I}} &amp;= \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\boldsymbol{I}) \\
+            &amp;= -\sin(\theta) + \cos(\theta)\boldsymbol{I}          \\
+            &amp;= \boldsymbol{I} (\cos(\theta) + \sin(\theta)\boldsymbol{I})  \\
+            &amp;= \boldsymbol{I} e^{\theta \boldsymbol{I}}                    \\
         \end{align*}
-      &lt;/latex-pic&gt;
+      $$
     &lt;/dd&gt;
   &lt;/dl&gt;
 
@@ -281,12 +281,12 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
 
   &lt;dl&gt;
     &lt;dd&gt;
-      &lt;latex-pic&gt;
+      $$
         \begin{align*}
-          \frac{d}{d \theta} e^{k \theta \bm{I}} &amp;= \frac{d}{d \theta} (\cos(k \theta) + \sin(k \theta)\bm{I}) \\
-            &amp;= k \bm{I} e^{k \theta \bm{I}} \\
+          \frac{d}{d \theta} e^{k \theta \boldsymbol{I}} &amp;= \frac{d}{d \theta} (\cos(k \theta) + \sin(k \theta)\boldsymbol{I}) \\
+            &amp;= k \boldsymbol{I} e^{k \theta \boldsymbol{I}} \\
         \end{align*}
-      &lt;/latex-pic&gt;
+      $$
     &lt;/dd&gt;
   &lt;/dl&gt;
 
@@ -298,14 +298,14 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
 
   &lt;dl&gt;
     &lt;dd&gt;
-      &lt;latex-pic&gt;
+      $$
         \begin{align*}
-        \bm{v}  &amp;= \frac{d}{dt} \bm{p} \\
-                &amp;= \frac{d}{dt} \bm{p_0} e^{\omega t \bm{I}} \\
-                &amp;= \bm{p_0} \omega \bm{I}  e^{\omega t \bm{I}} \\
-                &amp;= \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}} \\
+        \boldsymbol{v}  &amp;= \frac{d}{dt} \boldsymbol{p} \\
+                &amp;= \frac{d}{dt} \boldsymbol{p_0} e^{\omega t \boldsymbol{I}} \\
+                &amp;= \boldsymbol{p_0} \omega \boldsymbol{I}  e^{\omega t \boldsymbol{I}} \\
+                &amp;= \omega \boldsymbol{p_0} \boldsymbol{I} e^{\omega t \boldsymbol{I}} \\
         \end{align*}
-      &lt;/latex-pic&gt;
+      $$
     &lt;/dd&gt;
   &lt;/dl&gt;
 
@@ -404,15 +404,15 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
 
   &lt;dl&gt;
     &lt;dd&gt;
-      &lt;latex-pic&gt;
+      $$
         \begin{align*}
-        \bm{a}  &amp;= \frac{d}{dt} \bm{v}                                      \\
-                &amp;= \frac{d}{dt} \omega \bm{p_0} \bm{I} e^{\omega t \bm{I}}  \\
-                &amp;= \omega \bm{p_0} \bm{I} \omega \bm{I} e^{\omega t \bm{I}} \\
-                &amp;= \omega^2 \bm{p_0} \bm{I} \bm{I} e^{\omega t \bm{I}}      \\
-                &amp;= - \omega^2 \bm{p_0} e^{\omega t \bm{I}}                  \\
+        \boldsymbol{a}  &amp;= \frac{d}{dt} \boldsymbol{v}                                      \\
+                &amp;= \frac{d}{dt} \omega \boldsymbol{p_0} \boldsymbol{I} e^{\omega t \boldsymbol{I}}  \\
+                &amp;= \omega \boldsymbol{p_0} \boldsymbol{I} \omega \boldsymbol{I} e^{\omega t \boldsymbol{I}} \\
+                &amp;= \omega^2 \boldsymbol{p_0} \boldsymbol{I} \boldsymbol{I} e^{\omega t \boldsymbol{I}}      \\
+                &amp;= - \omega^2 \boldsymbol{p_0} e^{\omega t \boldsymbol{I}}
         \end{align*}
-      &lt;/latex-pic&gt;
+      $$
     &lt;/dd&gt;
   &lt;/dl&gt;
 
