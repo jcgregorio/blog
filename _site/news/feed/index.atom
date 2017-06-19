@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-18T19:21:06-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-19T10:46:13-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/north-carolina-urbanization">&lt;p&gt;
   The rural areas of North Carolina are emptying out.
 &lt;/p&gt;
@@ -20,7 +20,9 @@
 &lt;p style=&quot;text-align: center; font-size: 90%;&quot;&gt;
   &lt;a href=&quot;http://www.indexmundi.com/facts/united-states/quick-facts/north-carolina/population-growth#table&quot;&gt;
  North Carolina County Population vs Count Population Growth Rate (2010 -
- 2014).&lt;/a&gt;
+ 2014).&lt;/a&gt;&lt;br&gt;
+ Click on the graph to toggle between population density and county
+ population.
 &lt;/p&gt;
 
 &lt;p&gt;
@@ -82,180 +84,218 @@
 
 &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
-var margin = {top: 20, right: 20, bottom: 60, left: 60},
+(function () {
+  var margin = {top: 20, right: 20, bottom: 60, left: 60},
     width = 640 - margin.left - margin.right,
     height = 480 - margin.top - margin.bottom;
 
-var x = d3.scalePow().exponent(1/10).range([0, width]);
-var y = d3.scaleLinear().range([height, 0]);
+  var mode = 0;
+  var xlabels = [&quot;Density (people/mi^2)&quot;, &quot;Population per County (100000)&quot;];
 
-var svg = d3.select(&quot;#plot&quot;).append(&quot;svg&quot;)
-  .attr(&quot;width&quot;, width + margin.left + margin.right)
-  .attr(&quot;height&quot;, height + margin.top + margin.bottom)
-  .append(&quot;g&quot;)
-  .attr(&quot;transform&quot;,
-    &quot;translate(&quot; + margin.left + &quot;,&quot; + margin.top + &quot;)&quot;);
+  var x = d3.scalePow().exponent(1/10).range([0, width]);
+  var y = d3.scaleLinear().range([height, 0]);
 
-var tooltip = d3.select(&quot;#plot&quot;).append(&quot;div&quot;)
-  .attr(&quot;class&quot;, &quot;tooltip&quot;)
-  .style(&quot;opacity&quot;, 0);
+  var svg = d3.select(&quot;#plot&quot;).append(&quot;svg&quot;)
+    .attr(&quot;width&quot;, width + margin.left + margin.right)
+    .attr(&quot;height&quot;, height + margin.top + margin.bottom)
+    .append(&quot;g&quot;)
+    .attr(&quot;transform&quot;,
+      &quot;translate(&quot; + margin.left + &quot;,&quot; + margin.top + &quot;)&quot;);
 
-var data = [
-  // Name, % change, population, size
-  [&quot;Alamance&quot;,3,155792, 435],
-  [&quot;Alexander&quot;,0.5,37392, 263],
-  [&quot;Alleghany&quot;,-2.5,10879, 236],
-  [&quot;Anson&quot;,-4.4,25765, 537],
-  [&quot;Ashe&quot;,-0.6,27126, 427],
-  [&quot;Avery&quot;,-0.1,17773, 247],
-  [&quot;Beaufort&quot;,-0.4,47585, 959],
-  [&quot;Bertie&quot;,-5.6,20106, 741],
-  [&quot;Bladen&quot;,-1.5,34657, 887],
-  [&quot;Brunswick&quot;,10.6,118836, 860],
-  [&quot;Buncombe&quot;,5.1,250539, 660],
-  [&quot;Burke&quot;,-1.6,89486, 515],
-  [&quot;Cabarrus&quot;,7.8,192103, 365],
-  [&quot;Caldwell&quot;,-1.9,81484, 474],
-  [&quot;Camden&quot;,3.5,10331, 306],
-  [&quot;Carteret&quot;,3.5,68811, 1341],
-  [&quot;Caswell&quot;,-2.7,23082, 428],
-  [&quot;Catawba&quot;,0.1,154534, 414],
-  [&quot;Chatham&quot;,8.2,68698, 709],
-  [&quot;Cherokee&quot;,-1.1,27141, 497],
-  [&quot;Chowan&quot;,-1.5,14572, 233],
-  [&quot;Clay&quot;,-0.1,10581, 221],
-  [&quot;Cleveland&quot;,-1,97076,469 ],
-  [&quot;Columbus&quot;,-2,56953, 954],
-  [&quot;Craven&quot;,1,104510, 774],
-  [&quot;Cumberland&quot;,2.2,326328, 658],
-  [&quot;Currituck&quot;,6.1,24976, 526],
-  [&quot;Dare&quot;,3.5,35104, 1562],
-  [&quot;Davidson&quot;,0.7,164072, 567],
-  [&quot;Davie&quot;,0.5,41434, 267],
-  [&quot;Duplin&quot;,2.4,59882, 819],
-  [&quot;Durham&quot;,9.1,294460, 298],
-  [&quot;Edgecombe&quot;,-2.9,54933, 507],
-  [&quot;Forsyth&quot;,4.2,365298, 413],
-  [&quot;Franklin&quot;,3.7,62860, 495],
-  [&quot;Gaston&quot;,2.4,211127, 364],
-  [&quot;Gates&quot;,-5.1,11567, 346],
-  [&quot;Graham&quot;,-2.4,8644, 302],
-  [&quot;Granville&quot;,1.7,58500, 537],
-  [&quot;Greene&quot;,-1.3,21093, 266],
-  [&quot;Guilford&quot;,4.9,512119, 658],
-  [&quot;Halifax&quot;,-3.1,52970, 731],
-  [&quot;Harnett&quot;,10.5,126666, 601],
-  [&quot;Haywood&quot;,0.7,59471, 555],
-  [&quot;Henderson&quot;,4.1,111149, 375],
-  [&quot;Hertford&quot;,-1.4,24308, 360],
-  [&quot;Hoke&quot;,9.9,51611, 392],
-  [&quot;Hyde&quot;,-2.3,5676, 1424],
-  [&quot;Iredell&quot;,4.5,166675, 597],
-  [&quot;Jackson&quot;,1.8,40981, 494],
-  [&quot;Johnston&quot;,7.4,181423, 796],
-  [&quot;Jones&quot;,-0.8,10076, 473],
-  [&quot;Lee&quot;,3.1,59662, 259],
-  [&quot;Lenoir&quot;,-1.7,58485, 402],
-  [&quot;Lincoln&quot;,2,79829, 307],
-  [&quot;Macon&quot;,-0.1,33875, 519],
-  [&quot;Madison&quot;,1.8,21157, 452],
-  [&quot;Martin&quot;,-4.3,23454, 461],
-  [&quot;McDowell&quot;,-0.1,44965, 446],
-  [&quot;Mecklenburg&quot;,10.1,1012539, 546],
-  [&quot;Mitchell&quot;,-1.7,15311, 222],
-  [&quot;Montgomery&quot;,-1.4,27395, 502],
-  [&quot;Moore&quot;,5.5,93077, 706],
-  [&quot;Nash&quot;,-1.5,94357, 543],
-  [&quot;New Hanover&quot;,6.7,216298, 328],
-  [&quot;Northampton&quot;,-7.4,20463, 551],
-  [&quot;Onslow&quot;,5.5,187589, 909],
-  [&quot;Orange&quot;,5,140420, 401],
-  [&quot;Pamlico&quot;,-1.5,12948, 566],
-  [&quot;Pasquotank&quot;,-2.1,39787, 289],
-  [&quot;Pender&quot;,7.8,56250, 933],
-  [&quot;Perquimans&quot;,0.1,13466, 329],
-  [&quot;Person&quot;,-0.8,39132, 404],
-  [&quot;Pitt&quot;,4.3,175354, 655],
-  [&quot;Polk&quot;,-0.7,20357, 239],
-  [&quot;Randolph&quot;,0.7,142778, 790],
-  [&quot;Richmond&quot;,-1.9,45733, 480],
-  [&quot;Robeson&quot;,0.4,134760, 951],
-  [&quot;Rockingham&quot;,-2.1,91696, 572],
-  [&quot;Rowan&quot;,0.1,138630, 524],
-  [&quot;Rutherford&quot;,-1.8,66600, 566],
-  [&quot;Sampson&quot;,1,64050, 947],
-  [&quot;Scotland&quot;,-1.6,35576, 321],
-  [&quot;Stanly&quot;,0,60600, 404],
-  [&quot;Stokes&quot;,-2.1,46419, 456],
-  [&quot;Surry&quot;,-1,72968, 538],
-  [&quot;Swain&quot;,2.1,14274, 541],
-  [&quot;Transylvania&quot;,-0.1,33045, 381],
-  [&quot;Tyrrell&quot;,-6.6,4115, 600],
-  [&quot;Union&quot;,8.6,218568, 640],
-  [&quot;Vance&quot;,-1.8,44614, 270],
-  [&quot;Wake&quot;,10.8,998691, 857],
-  [&quot;Warren&quot;,-3.5,20231, 444],
-  [&quot;Washington&quot;,-4.9,12570, 424],
-  [&quot;Watauga&quot;,2.9,52560, 313],
-  [&quot;Wayne&quot;,1.5,124456, 557],
-  [&quot;Wilkes&quot;,-0.7,68838, 760],
-  [&quot;Wilson&quot;,0.2,81401, 374],
-  [&quot;Yadkin&quot;,-1.6,37792, 337],
-  [&quot;yancey&quot;,-1.1,17614, 313]
-]
+  var tooltip = d3.select(&quot;#plot&quot;).append(&quot;div&quot;)
+    .attr(&quot;class&quot;, &quot;tooltip&quot;)
+    .style(&quot;opacity&quot;, 0);
 
-data.forEach(function(d) {
-  d[4] = d[2]/d[3];
-});
+  var data = [
+    // Name, % change, population, size
+    [&quot;Alamance&quot;,3,155792, 435],
+    [&quot;Alexander&quot;,0.5,37392, 263],
+    [&quot;Alleghany&quot;,-2.5,10879, 236],
+    [&quot;Anson&quot;,-4.4,25765, 537],
+    [&quot;Ashe&quot;,-0.6,27126, 427],
+    [&quot;Avery&quot;,-0.1,17773, 247],
+    [&quot;Beaufort&quot;,-0.4,47585, 959],
+    [&quot;Bertie&quot;,-5.6,20106, 741],
+    [&quot;Bladen&quot;,-1.5,34657, 887],
+    [&quot;Brunswick&quot;,10.6,118836, 860],
+    [&quot;Buncombe&quot;,5.1,250539, 660],
+    [&quot;Burke&quot;,-1.6,89486, 515],
+    [&quot;Cabarrus&quot;,7.8,192103, 365],
+    [&quot;Caldwell&quot;,-1.9,81484, 474],
+    [&quot;Camden&quot;,3.5,10331, 306],
+    [&quot;Carteret&quot;,3.5,68811, 1341],
+    [&quot;Caswell&quot;,-2.7,23082, 428],
+    [&quot;Catawba&quot;,0.1,154534, 414],
+    [&quot;Chatham&quot;,8.2,68698, 709],
+    [&quot;Cherokee&quot;,-1.1,27141, 497],
+    [&quot;Chowan&quot;,-1.5,14572, 233],
+    [&quot;Clay&quot;,-0.1,10581, 221],
+    [&quot;Cleveland&quot;,-1,97076,469 ],
+    [&quot;Columbus&quot;,-2,56953, 954],
+    [&quot;Craven&quot;,1,104510, 774],
+    [&quot;Cumberland&quot;,2.2,326328, 658],
+    [&quot;Currituck&quot;,6.1,24976, 526],
+    [&quot;Dare&quot;,3.5,35104, 1562],
+    [&quot;Davidson&quot;,0.7,164072, 567],
+    [&quot;Davie&quot;,0.5,41434, 267],
+    [&quot;Duplin&quot;,2.4,59882, 819],
+    [&quot;Durham&quot;,9.1,294460, 298],
+    [&quot;Edgecombe&quot;,-2.9,54933, 507],
+    [&quot;Forsyth&quot;,4.2,365298, 413],
+    [&quot;Franklin&quot;,3.7,62860, 495],
+    [&quot;Gaston&quot;,2.4,211127, 364],
+    [&quot;Gates&quot;,-5.1,11567, 346],
+    [&quot;Graham&quot;,-2.4,8644, 302],
+    [&quot;Granville&quot;,1.7,58500, 537],
+    [&quot;Greene&quot;,-1.3,21093, 266],
+    [&quot;Guilford&quot;,4.9,512119, 658],
+    [&quot;Halifax&quot;,-3.1,52970, 731],
+    [&quot;Harnett&quot;,10.5,126666, 601],
+    [&quot;Haywood&quot;,0.7,59471, 555],
+    [&quot;Henderson&quot;,4.1,111149, 375],
+    [&quot;Hertford&quot;,-1.4,24308, 360],
+    [&quot;Hoke&quot;,9.9,51611, 392],
+    [&quot;Hyde&quot;,-2.3,5676, 1424],
+    [&quot;Iredell&quot;,4.5,166675, 597],
+    [&quot;Jackson&quot;,1.8,40981, 494],
+    [&quot;Johnston&quot;,7.4,181423, 796],
+    [&quot;Jones&quot;,-0.8,10076, 473],
+    [&quot;Lee&quot;,3.1,59662, 259],
+    [&quot;Lenoir&quot;,-1.7,58485, 402],
+    [&quot;Lincoln&quot;,2,79829, 307],
+    [&quot;Macon&quot;,-0.1,33875, 519],
+    [&quot;Madison&quot;,1.8,21157, 452],
+    [&quot;Martin&quot;,-4.3,23454, 461],
+    [&quot;McDowell&quot;,-0.1,44965, 446],
+    [&quot;Mecklenburg&quot;,10.1,1012539, 546],
+    [&quot;Mitchell&quot;,-1.7,15311, 222],
+    [&quot;Montgomery&quot;,-1.4,27395, 502],
+    [&quot;Moore&quot;,5.5,93077, 706],
+    [&quot;Nash&quot;,-1.5,94357, 543],
+    [&quot;New Hanover&quot;,6.7,216298, 328],
+    [&quot;Northampton&quot;,-7.4,20463, 551],
+    [&quot;Onslow&quot;,5.5,187589, 909],
+    [&quot;Orange&quot;,5,140420, 401],
+    [&quot;Pamlico&quot;,-1.5,12948, 566],
+    [&quot;Pasquotank&quot;,-2.1,39787, 289],
+    [&quot;Pender&quot;,7.8,56250, 933],
+    [&quot;Perquimans&quot;,0.1,13466, 329],
+    [&quot;Person&quot;,-0.8,39132, 404],
+    [&quot;Pitt&quot;,4.3,175354, 655],
+    [&quot;Polk&quot;,-0.7,20357, 239],
+    [&quot;Randolph&quot;,0.7,142778, 790],
+    [&quot;Richmond&quot;,-1.9,45733, 480],
+    [&quot;Robeson&quot;,0.4,134760, 951],
+    [&quot;Rockingham&quot;,-2.1,91696, 572],
+    [&quot;Rowan&quot;,0.1,138630, 524],
+    [&quot;Rutherford&quot;,-1.8,66600, 566],
+    [&quot;Sampson&quot;,1,64050, 947],
+    [&quot;Scotland&quot;,-1.6,35576, 321],
+    [&quot;Stanly&quot;,0,60600, 404],
+    [&quot;Stokes&quot;,-2.1,46419, 456],
+    [&quot;Surry&quot;,-1,72968, 538],
+    [&quot;Swain&quot;,2.1,14274, 541],
+    [&quot;Transylvania&quot;,-0.1,33045, 381],
+    [&quot;Tyrrell&quot;,-6.6,4115, 600],
+    [&quot;Union&quot;,8.6,218568, 640],
+    [&quot;Vance&quot;,-1.8,44614, 270],
+    [&quot;Wake&quot;,10.8,998691, 857],
+    [&quot;Warren&quot;,-3.5,20231, 444],
+    [&quot;Washington&quot;,-4.9,12570, 424],
+    [&quot;Watauga&quot;,2.9,52560, 313],
+    [&quot;Wayne&quot;,1.5,124456, 557],
+    [&quot;Wilkes&quot;,-0.7,68838, 760],
+    [&quot;Wilson&quot;,0.2,81401, 374],
+    [&quot;Yadkin&quot;,-1.6,37792, 337],
+    [&quot;yancey&quot;,-1.1,17614, 313]
+  ]
 
-svg.append('text')
-  .attr('transform', 'rotate(-90)')
-  .attr('dx', '-20em')
-  .attr('dy', '-2em')
-  .text('County Population Change (%)');
-
-svg.append('text')
-  .attr('transform', `translate(${width/2},${height + 2*margin.bottom/3})`)
-  .attr('id', 'x-label')
-  .attr('dx', '-8em')
-  .text('County Population Density (people/sq mile)');
-
-x.domain(d3.extent(data, function(d) { return d[4]; }));
-y.domain(d3.extent(data, function(d) { return d[1]; }));
-
-
-// Enter the scatterplot.
-svg.selectAll(&quot;dot&quot;)
-  .data(data)
-  .enter().append(&quot;circle&quot;)
-  .attr(&quot;r&quot;, 5)
-  .attr(&quot;cx&quot;, function(d) { return x(d[4]); })
-  .attr(&quot;cy&quot;, function(d) { return y(d[1]); })
-  .attr(&quot;fill&quot;, function(d) { return d[1] &lt; 0 ? &quot;#ff3333&quot; : &quot;#009999&quot;; })
-  .attr(&quot;title&quot;, function(d) { return d[0]; })
-  .on(&quot;mouseover&quot;, function(d) {
-    tooltip.transition()
-      .duration(200)
-      .style(&quot;opacity&quot;, .9);
-    tooltip.html(d[0])
-      .style(&quot;left&quot;, (d3.event.pageX + 5) + &quot;px&quot;)
-      .style(&quot;top&quot;, (d3.event.pageY - 28) + &quot;px&quot;);
-  })
-  .on(&quot;mouseout&quot;, function(d) {
-    tooltip.transition()
-      .duration(500)
-      .style(&quot;opacity&quot;, 0);
+  data.forEach(function(d) {
+    d[4] = d[2]/d[3];
   });
 
-// Add the X Axis
-svg.append(&quot;g&quot;)
-  .attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
-  .call(d3.axisBottom(x));
+  svg.append('text')
+    .attr('transform', 'rotate(-90)')
+    .attr('dx', '-20em')
+    .attr('dy', '-2em')
+    .text('County Population Change (%)');
 
-// Add the Y Axis
-svg.append(&quot;g&quot;)
-  .call(d3.axisLeft(y));
+  svg.append('text')
+    .attr('transform', `translate(${width/2},${height + 2*margin.bottom/3})`)
+    .attr('dx', '-8em')
+    .attr('id', 'xlabel')
+    .text(xlabels[mode]);
 
+  x.domain(d3.extent(data, function(d) { return d[4]; }));
+  y.domain(d3.extent(data, function(d) { return d[1]; }));
+
+
+  // Enter the scatterplot.
+  svg.selectAll(&quot;circle&quot;)
+    .data(data)
+    .enter().append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, 5)
+    .attr(&quot;cx&quot;, function(d) { return x(d[4]); })
+    .attr(&quot;cy&quot;, function(d) { return y(d[1]); })
+    .attr(&quot;fill&quot;, function(d) { return d[1] &lt; 0 ? &quot;#ff3333&quot; : &quot;#009999&quot;; })
+    .attr(&quot;title&quot;, function(d) { return d[0]; })
+    .on(&quot;mouseover&quot;, function(d) {
+      tooltip.transition()
+        .duration(200)
+        .style(&quot;opacity&quot;, .9);
+      tooltip.html(d[0])
+        .style(&quot;left&quot;, (d3.event.pageX + 5) + &quot;px&quot;)
+        .style(&quot;top&quot;, (d3.event.pageY - 28) + &quot;px&quot;);
+    })
+    .on(&quot;mouseout&quot;, function(d) {
+      tooltip.transition()
+        .duration(500)
+        .style(&quot;opacity&quot;, 0);
+    });
+  d3.selectAll(&quot;svg&quot;)
+    .on(&quot;click&quot;, function(d) {
+      toggle();
+    });
+
+  // Add the X Axis
+  svg.append(&quot;g&quot;)
+    .attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
+    .attr(&quot;id&quot;, &quot;xaxis&quot;)
+    .call(d3.axisBottom(x));
+
+  // Add the Y Axis
+  svg.append(&quot;g&quot;)
+    .call(d3.axisLeft(y));
+
+  function toggle() {
+    mode = (mode+1)%2;
+    var t = d3.transition()
+      .duration(750);
+
+    svg.selectAll('#xlabel')
+      .text(xlabels[mode]);
+
+    if (mode ==0) {
+      data.forEach(function(d) {
+        d[4] = d[2]/d[3];
+      });
+    } else {
+      data.forEach(function(d) {
+        d[4] = d[2]/100000;
+      });
+    }
+    x.domain(d3.extent(data, function(d) { return d[4]; }));
+    y.domain(d3.extent(data, function(d) { return d[1]; }));
+    svg.selectAll(&quot;circle&quot;)
+      .data(data, function(d) { return d; })
+      .transition(t)
+      .attr(&quot;cx&quot;, function(d) { return x(d[4]); })
+
+    d3.selectAll(&quot;#xaxis&quot;)
+      .call(d3.axisBottom(x));
+  }
+
+})();
 &lt;/script&gt;</content><author><name></name></author><summary type="html">The rural areas of North Carolina are emptying out. .tooltip { position: absolute; width: 200px; height: 28px; pointer-events: none; }</summary></entry><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/noisy_frogs_small.png&quot; alt=&quot;Graph showing a peak noise level of 72 dB.&quot; /&gt;&lt;/p&gt;
