@@ -100,6 +100,118 @@ var svg = d3.select("#plot").append("svg")
   .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
 
+var tooltip = d3.select("#plot").append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
+var data = [
+  // Name, % change, population, size
+  ["Alamance",3,155792, 435],
+  ["Alexander",0.5,37392, 263],
+  ["Alleghany",-2.5,10879, 236],
+  ["Anson",-4.4,25765, 537],
+  ["Ashe",-0.6,27126, 427],
+  ["Avery",-0.1,17773, 247],
+  ["Beaufort",-0.4,47585, 959],
+  ["Bertie",-5.6,20106, 741],
+  ["Bladen",-1.5,34657, 887],
+  ["Brunswick",10.6,118836, 860],
+  ["Buncombe",5.1,250539, 660],
+  ["Burke",-1.6,89486, 515],
+  ["Cabarrus",7.8,192103, 365],
+  ["Caldwell",-1.9,81484, 474],
+  ["Camden",3.5,10331, 306],
+  ["Carteret",3.5,68811, 1341],
+  ["Caswell",-2.7,23082, 428],
+  ["Catawba",0.1,154534, 414],
+  ["Chatham",8.2,68698, 709],
+  ["Cherokee",-1.1,27141, 497],
+  ["Chowan",-1.5,14572, 233],
+  ["Clay",-0.1,10581, 221],
+  ["Cleveland",-1,97076,469 ],
+  ["Columbus",-2,56953, 954],
+  ["Craven",1,104510, 774],
+  ["Cumberland",2.2,326328, 658],
+  ["Currituck",6.1,24976, 526],
+  ["Dare",3.5,35104, 1562],
+  ["Davidson",0.7,164072, 567],
+  ["Davie",0.5,41434, 267],
+  ["Duplin",2.4,59882, 819],
+  ["Durham",9.1,294460, 298],
+  ["Edgecombe",-2.9,54933, 507],
+  ["Forsyth",4.2,365298, 413],
+  ["Franklin",3.7,62860, 495],
+  ["Gaston",2.4,211127, 364],
+  ["Gates",-5.1,11567, 346],
+  ["Graham",-2.4,8644, 302],
+  ["Granville",1.7,58500, 537],
+  ["Greene",-1.3,21093, 266],
+  ["Guilford",4.9,512119, 658],
+  ["Halifax",-3.1,52970, 731],
+  ["Harnett",10.5,126666, 601],
+  ["Haywood",0.7,59471, 555],
+  ["Henderson",4.1,111149, 375],
+  ["Hertford",-1.4,24308, 360],
+  ["Hoke",9.9,51611, 392],
+  ["Hyde",-2.3,5676, 1424],
+  ["Iredell",4.5,166675, 597],
+  ["Jackson",1.8,40981, 494],
+  ["Johnston",7.4,181423, 796],
+  ["Jones",-0.8,10076, 473],
+  ["Lee",3.1,59662, 259],
+  ["Lenoir",-1.7,58485, 402],
+  ["Lincoln",2,79829, 307],
+  ["Macon",-0.1,33875, 519],
+  ["Madison",1.8,21157, 452],
+  ["Martin",-4.3,23454, 461],
+  ["McDowell",-0.1,44965, 446],
+  ["Mecklenburg",10.1,1012539, 546],
+  ["Mitchell",-1.7,15311, 222],
+  ["Montgomery",-1.4,27395, 502],
+  ["Moore",5.5,93077, 706],
+  ["Nash",-1.5,94357, 543],
+  ["New Hanover",6.7,216298, 328],
+  ["Northampton",-7.4,20463, 551],
+  ["Onslow",5.5,187589, 909],
+  ["Orange",5,140420, 401],
+  ["Pamlico",-1.5,12948, 566],
+  ["Pasquotank",-2.1,39787, 289],
+  ["Pender",7.8,56250, 933],
+  ["Perquimans",0.1,13466, 329],
+  ["Person",-0.8,39132, 404],
+  ["Pitt",4.3,175354, 655],
+  ["Polk",-0.7,20357, 239],
+  ["Randolph",0.7,142778, 790],
+  ["Richmond",-1.9,45733, 480],
+  ["Robeson",0.4,134760, 951],
+  ["Rockingham",-2.1,91696, 572],
+  ["Rowan",0.1,138630, 524],
+  ["Rutherford",-1.8,66600, 566],
+  ["Sampson",1,64050, 947],
+  ["Scotland",-1.6,35576, 321],
+  ["Stanly",0,60600, 404],
+  ["Stokes",-2.1,46419, 456],
+  ["Surry",-1,72968, 538],
+  ["Swain",2.1,14274, 541],
+  ["Transylvania",-0.1,33045, 381],
+  ["Tyrrell",-6.6,4115, 600],
+  ["Union",8.6,218568, 640],
+  ["Vance",-1.8,44614, 270],
+  ["Wake",10.8,998691, 857],
+  ["Warren",-3.5,20231, 444],
+  ["Washington",-4.9,12570, 424],
+  ["Watauga",2.9,52560, 313],
+  ["Wayne",1.5,124456, 557],
+  ["Wilkes",-0.7,68838, 760],
+  ["Wilson",0.2,81401, 374],
+  ["Yadkin",-1.6,37792, 337],
+  ["yancey",-1.1,17614, 313]
+]
+
+data.forEach(function(d) {
+  d[4] = d[2]/d[3];
+});
+
 svg.append('text')
   .attr('transform', 'rotate(-90)')
   .attr('dx', '-20em')
@@ -110,131 +222,21 @@ svg.append('text')
   .attr('transform', `translate(${width/2},${height + 2*margin.bottom/3})`)
   .attr('id', 'x-label')
   .attr('dx', '-8em')
-  .text('County Population (100,000)');
+  .text('County Population Density (people/sq mile)');
 
-var tooltip = d3.select("#plot").append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 0);
-
-var data = [
-  ["Alamance",3,155792],
-  ["Alexander",0.5,37392],
-  ["Alleghany",-2.5,10879],
-  ["Anson",-4.4,25765],
-  ["Ashe",-0.6,27126],
-  ["Avery",-0.1,17773],
-  ["Beaufort",-0.4,47585],
-  ["Bertie",-5.6,20106],
-  ["Bladen",-1.5,34657],
-  ["Brunswick",10.6,118836],
-  ["Buncombe",5.1,250539],
-  ["Burke",-1.6,89486],
-  ["Cabarrus",7.8,192103],
-  ["Caldwell",-1.9,81484],
-  ["Camden",3.5,10331],
-  ["Carteret",3.5,68811],
-  ["Caswell",-2.7,23082],
-  ["Catawba",0.1,154534],
-  ["Chatham",8.2,68698],
-  ["Cherokee",-1.1,27141],
-  ["Chowan",-1.5,14572],
-  ["Clay",-0.1,10581],
-  ["Cleveland",-1,97076],
-  ["Columbus",-2,56953],
-  ["Craven",1,104510],
-  ["Cumberland",2.2,326328],
-  ["Currituck",6.1,24976],
-  ["Dare",3.5,35104],
-  ["Davidson",0.7,164072],
-  ["Davie",0.5,41434],
-  ["Duplin",2.4,59882],
-  ["Durham",9.1,294460],
-  ["Edgecombe",-2.9,54933],
-  ["Forsyth",4.2,365298],
-  ["Franklin",3.7,62860],
-  ["Gaston",2.4,211127],
-  ["Gates",-5.1,11567],
-  ["Graham",-2.4,8644],
-  ["Granville",1.7,58500],
-  ["Greene",-1.3,21093],
-  ["Guilford",4.9,512119],
-  ["Halifax",-3.1,52970],
-  ["Harnett",10.5,126666],
-  ["Haywood",0.7,59471],
-  ["Henderson",4.1,111149],
-  ["Hertford",-1.4,24308],
-  ["Hoke",9.9,51611],
-  ["Hyde",-2.3,5676],
-  ["Iredell",4.5,166675],
-  ["Jackson",1.8,40981],
-  ["Johnston",7.4,181423],
-  ["Jones",-0.8,10076],
-  ["Lee",3.1,59662],
-  ["Lenoir",-1.7,58485],
-  ["Lincoln",2,79829],
-  ["Macon",-0.1,33875],
-  ["Madison",1.8,21157],
-  ["Martin",-4.3,23454],
-  ["McDowell",-0.1,44965],
-  ["Mecklenburg",10.1,1012539],
-  ["Mitchell",-1.7,15311],
-  ["Montgomery",-1.4,27395],
-  ["Moore",5.5,93077],
-  ["Nash",-1.5,94357],
-  ["New Hanover",6.7,216298],
-  ["Northampton",-7.4,20463],
-  ["Onslow",5.5,187589],
-  ["Orange",5,140420],
-  ["Pamlico",-1.5,12948],
-  ["Pasquotank",-2.1,39787],
-  ["Pender",7.8,56250],
-  ["Perquimans",0.1,13466],
-  ["Person",-0.8,39132],
-  ["Pitt",4.3,175354],
-  ["Polk",-0.7,20357],
-  ["Randolph",0.7,142778],
-  ["Richmond",-1.9,45733],
-  ["Robeson",0.4,134760],
-  ["Rockingham",-2.1,91696],
-  ["Rowan",0.1,138630],
-  ["Rutherford",-1.8,66600],
-  ["Sampson",1,64050],
-  ["Scotland",-1.6,35576],
-  ["Stanly",0,60600],
-  ["Stokes",-2.1,46419],
-  ["Surry",-1,72968],
-  ["Swain",2.1,14274],
-  ["Transylvania",-0.1,33045],
-  ["Tyrrell",-6.6,4115],
-  ["Union",8.6,218568],
-  ["Vance",-1.8,44614],
-  ["Wake",10.8,998691],
-  ["Warren",-3.5,20231],
-  ["Washington",-4.9,12570],
-  ["Watauga",2.9,52560],
-  ["Wayne",1.5,124456],
-  ["Wilkes",-0.7,68838],
-  ["Wilson",0.2,81401],
-  ["Yadkin",-1.6,37792],
-  ["yancey",-1.1,17614]
-]
-
-data.forEach(function(d) {
-  d[2] = d[2]/100000;
-});
-
-x.domain(d3.extent(data, function(d) { return d[2]; }));
+x.domain(d3.extent(data, function(d) { return d[4]; }));
 y.domain(d3.extent(data, function(d) { return d[1]; }));
 
-// Add the scatterplot.
+
+// Enter the scatterplot.
 svg.selectAll("dot")
   .data(data)
-    .enter().append("circle")
-    .attr("r", 5)
-    .attr("cx", function(d) { return x(d[2]); })
-    .attr("cy", function(d) { return y(d[1]); })
-    .attr("fill", function(d) { return d[1] < 0 ? "#ff3333" : "#009999"; })
-    .attr("title", function(d) { return d[0]; })
+  .enter().append("circle")
+  .attr("r", 5)
+  .attr("cx", function(d) { return x(d[4]); })
+  .attr("cy", function(d) { return y(d[1]); })
+  .attr("fill", function(d) { return d[1] < 0 ? "#ff3333" : "#009999"; })
+  .attr("title", function(d) { return d[0]; })
   .on("mouseover", function(d) {
     tooltip.transition()
       .duration(200)
@@ -248,7 +250,6 @@ svg.selectAll("dot")
       .duration(500)
       .style("opacity", 0);
   });
-
 
 // Add the X Axis
 svg.append("g")

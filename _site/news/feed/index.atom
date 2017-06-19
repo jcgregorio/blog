@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-18T11:51:26-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/18/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/18/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/18/north-carolina-urbanization">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-18T19:21:06-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/north-carolina-urbanization">&lt;p&gt;
   The rural areas of North Carolina are emptying out.
 &lt;/p&gt;
 &lt;style&gt;
@@ -96,6 +96,118 @@ var svg = d3.select(&quot;#plot&quot;).append(&quot;svg&quot;)
   .attr(&quot;transform&quot;,
     &quot;translate(&quot; + margin.left + &quot;,&quot; + margin.top + &quot;)&quot;);
 
+var tooltip = d3.select(&quot;#plot&quot;).append(&quot;div&quot;)
+  .attr(&quot;class&quot;, &quot;tooltip&quot;)
+  .style(&quot;opacity&quot;, 0);
+
+var data = [
+  // Name, % change, population, size
+  [&quot;Alamance&quot;,3,155792, 435],
+  [&quot;Alexander&quot;,0.5,37392, 263],
+  [&quot;Alleghany&quot;,-2.5,10879, 236],
+  [&quot;Anson&quot;,-4.4,25765, 537],
+  [&quot;Ashe&quot;,-0.6,27126, 427],
+  [&quot;Avery&quot;,-0.1,17773, 247],
+  [&quot;Beaufort&quot;,-0.4,47585, 959],
+  [&quot;Bertie&quot;,-5.6,20106, 741],
+  [&quot;Bladen&quot;,-1.5,34657, 887],
+  [&quot;Brunswick&quot;,10.6,118836, 860],
+  [&quot;Buncombe&quot;,5.1,250539, 660],
+  [&quot;Burke&quot;,-1.6,89486, 515],
+  [&quot;Cabarrus&quot;,7.8,192103, 365],
+  [&quot;Caldwell&quot;,-1.9,81484, 474],
+  [&quot;Camden&quot;,3.5,10331, 306],
+  [&quot;Carteret&quot;,3.5,68811, 1341],
+  [&quot;Caswell&quot;,-2.7,23082, 428],
+  [&quot;Catawba&quot;,0.1,154534, 414],
+  [&quot;Chatham&quot;,8.2,68698, 709],
+  [&quot;Cherokee&quot;,-1.1,27141, 497],
+  [&quot;Chowan&quot;,-1.5,14572, 233],
+  [&quot;Clay&quot;,-0.1,10581, 221],
+  [&quot;Cleveland&quot;,-1,97076,469 ],
+  [&quot;Columbus&quot;,-2,56953, 954],
+  [&quot;Craven&quot;,1,104510, 774],
+  [&quot;Cumberland&quot;,2.2,326328, 658],
+  [&quot;Currituck&quot;,6.1,24976, 526],
+  [&quot;Dare&quot;,3.5,35104, 1562],
+  [&quot;Davidson&quot;,0.7,164072, 567],
+  [&quot;Davie&quot;,0.5,41434, 267],
+  [&quot;Duplin&quot;,2.4,59882, 819],
+  [&quot;Durham&quot;,9.1,294460, 298],
+  [&quot;Edgecombe&quot;,-2.9,54933, 507],
+  [&quot;Forsyth&quot;,4.2,365298, 413],
+  [&quot;Franklin&quot;,3.7,62860, 495],
+  [&quot;Gaston&quot;,2.4,211127, 364],
+  [&quot;Gates&quot;,-5.1,11567, 346],
+  [&quot;Graham&quot;,-2.4,8644, 302],
+  [&quot;Granville&quot;,1.7,58500, 537],
+  [&quot;Greene&quot;,-1.3,21093, 266],
+  [&quot;Guilford&quot;,4.9,512119, 658],
+  [&quot;Halifax&quot;,-3.1,52970, 731],
+  [&quot;Harnett&quot;,10.5,126666, 601],
+  [&quot;Haywood&quot;,0.7,59471, 555],
+  [&quot;Henderson&quot;,4.1,111149, 375],
+  [&quot;Hertford&quot;,-1.4,24308, 360],
+  [&quot;Hoke&quot;,9.9,51611, 392],
+  [&quot;Hyde&quot;,-2.3,5676, 1424],
+  [&quot;Iredell&quot;,4.5,166675, 597],
+  [&quot;Jackson&quot;,1.8,40981, 494],
+  [&quot;Johnston&quot;,7.4,181423, 796],
+  [&quot;Jones&quot;,-0.8,10076, 473],
+  [&quot;Lee&quot;,3.1,59662, 259],
+  [&quot;Lenoir&quot;,-1.7,58485, 402],
+  [&quot;Lincoln&quot;,2,79829, 307],
+  [&quot;Macon&quot;,-0.1,33875, 519],
+  [&quot;Madison&quot;,1.8,21157, 452],
+  [&quot;Martin&quot;,-4.3,23454, 461],
+  [&quot;McDowell&quot;,-0.1,44965, 446],
+  [&quot;Mecklenburg&quot;,10.1,1012539, 546],
+  [&quot;Mitchell&quot;,-1.7,15311, 222],
+  [&quot;Montgomery&quot;,-1.4,27395, 502],
+  [&quot;Moore&quot;,5.5,93077, 706],
+  [&quot;Nash&quot;,-1.5,94357, 543],
+  [&quot;New Hanover&quot;,6.7,216298, 328],
+  [&quot;Northampton&quot;,-7.4,20463, 551],
+  [&quot;Onslow&quot;,5.5,187589, 909],
+  [&quot;Orange&quot;,5,140420, 401],
+  [&quot;Pamlico&quot;,-1.5,12948, 566],
+  [&quot;Pasquotank&quot;,-2.1,39787, 289],
+  [&quot;Pender&quot;,7.8,56250, 933],
+  [&quot;Perquimans&quot;,0.1,13466, 329],
+  [&quot;Person&quot;,-0.8,39132, 404],
+  [&quot;Pitt&quot;,4.3,175354, 655],
+  [&quot;Polk&quot;,-0.7,20357, 239],
+  [&quot;Randolph&quot;,0.7,142778, 790],
+  [&quot;Richmond&quot;,-1.9,45733, 480],
+  [&quot;Robeson&quot;,0.4,134760, 951],
+  [&quot;Rockingham&quot;,-2.1,91696, 572],
+  [&quot;Rowan&quot;,0.1,138630, 524],
+  [&quot;Rutherford&quot;,-1.8,66600, 566],
+  [&quot;Sampson&quot;,1,64050, 947],
+  [&quot;Scotland&quot;,-1.6,35576, 321],
+  [&quot;Stanly&quot;,0,60600, 404],
+  [&quot;Stokes&quot;,-2.1,46419, 456],
+  [&quot;Surry&quot;,-1,72968, 538],
+  [&quot;Swain&quot;,2.1,14274, 541],
+  [&quot;Transylvania&quot;,-0.1,33045, 381],
+  [&quot;Tyrrell&quot;,-6.6,4115, 600],
+  [&quot;Union&quot;,8.6,218568, 640],
+  [&quot;Vance&quot;,-1.8,44614, 270],
+  [&quot;Wake&quot;,10.8,998691, 857],
+  [&quot;Warren&quot;,-3.5,20231, 444],
+  [&quot;Washington&quot;,-4.9,12570, 424],
+  [&quot;Watauga&quot;,2.9,52560, 313],
+  [&quot;Wayne&quot;,1.5,124456, 557],
+  [&quot;Wilkes&quot;,-0.7,68838, 760],
+  [&quot;Wilson&quot;,0.2,81401, 374],
+  [&quot;Yadkin&quot;,-1.6,37792, 337],
+  [&quot;yancey&quot;,-1.1,17614, 313]
+]
+
+data.forEach(function(d) {
+  d[4] = d[2]/d[3];
+});
+
 svg.append('text')
   .attr('transform', 'rotate(-90)')
   .attr('dx', '-20em')
@@ -106,131 +218,21 @@ svg.append('text')
   .attr('transform', `translate(${width/2},${height + 2*margin.bottom/3})`)
   .attr('id', 'x-label')
   .attr('dx', '-8em')
-  .text('County Population (100,000)');
+  .text('County Population Density (people/sq mile)');
 
-var tooltip = d3.select(&quot;#plot&quot;).append(&quot;div&quot;)
-  .attr(&quot;class&quot;, &quot;tooltip&quot;)
-  .style(&quot;opacity&quot;, 0);
-
-var data = [
-  [&quot;Alamance&quot;,3,155792],
-  [&quot;Alexander&quot;,0.5,37392],
-  [&quot;Alleghany&quot;,-2.5,10879],
-  [&quot;Anson&quot;,-4.4,25765],
-  [&quot;Ashe&quot;,-0.6,27126],
-  [&quot;Avery&quot;,-0.1,17773],
-  [&quot;Beaufort&quot;,-0.4,47585],
-  [&quot;Bertie&quot;,-5.6,20106],
-  [&quot;Bladen&quot;,-1.5,34657],
-  [&quot;Brunswick&quot;,10.6,118836],
-  [&quot;Buncombe&quot;,5.1,250539],
-  [&quot;Burke&quot;,-1.6,89486],
-  [&quot;Cabarrus&quot;,7.8,192103],
-  [&quot;Caldwell&quot;,-1.9,81484],
-  [&quot;Camden&quot;,3.5,10331],
-  [&quot;Carteret&quot;,3.5,68811],
-  [&quot;Caswell&quot;,-2.7,23082],
-  [&quot;Catawba&quot;,0.1,154534],
-  [&quot;Chatham&quot;,8.2,68698],
-  [&quot;Cherokee&quot;,-1.1,27141],
-  [&quot;Chowan&quot;,-1.5,14572],
-  [&quot;Clay&quot;,-0.1,10581],
-  [&quot;Cleveland&quot;,-1,97076],
-  [&quot;Columbus&quot;,-2,56953],
-  [&quot;Craven&quot;,1,104510],
-  [&quot;Cumberland&quot;,2.2,326328],
-  [&quot;Currituck&quot;,6.1,24976],
-  [&quot;Dare&quot;,3.5,35104],
-  [&quot;Davidson&quot;,0.7,164072],
-  [&quot;Davie&quot;,0.5,41434],
-  [&quot;Duplin&quot;,2.4,59882],
-  [&quot;Durham&quot;,9.1,294460],
-  [&quot;Edgecombe&quot;,-2.9,54933],
-  [&quot;Forsyth&quot;,4.2,365298],
-  [&quot;Franklin&quot;,3.7,62860],
-  [&quot;Gaston&quot;,2.4,211127],
-  [&quot;Gates&quot;,-5.1,11567],
-  [&quot;Graham&quot;,-2.4,8644],
-  [&quot;Granville&quot;,1.7,58500],
-  [&quot;Greene&quot;,-1.3,21093],
-  [&quot;Guilford&quot;,4.9,512119],
-  [&quot;Halifax&quot;,-3.1,52970],
-  [&quot;Harnett&quot;,10.5,126666],
-  [&quot;Haywood&quot;,0.7,59471],
-  [&quot;Henderson&quot;,4.1,111149],
-  [&quot;Hertford&quot;,-1.4,24308],
-  [&quot;Hoke&quot;,9.9,51611],
-  [&quot;Hyde&quot;,-2.3,5676],
-  [&quot;Iredell&quot;,4.5,166675],
-  [&quot;Jackson&quot;,1.8,40981],
-  [&quot;Johnston&quot;,7.4,181423],
-  [&quot;Jones&quot;,-0.8,10076],
-  [&quot;Lee&quot;,3.1,59662],
-  [&quot;Lenoir&quot;,-1.7,58485],
-  [&quot;Lincoln&quot;,2,79829],
-  [&quot;Macon&quot;,-0.1,33875],
-  [&quot;Madison&quot;,1.8,21157],
-  [&quot;Martin&quot;,-4.3,23454],
-  [&quot;McDowell&quot;,-0.1,44965],
-  [&quot;Mecklenburg&quot;,10.1,1012539],
-  [&quot;Mitchell&quot;,-1.7,15311],
-  [&quot;Montgomery&quot;,-1.4,27395],
-  [&quot;Moore&quot;,5.5,93077],
-  [&quot;Nash&quot;,-1.5,94357],
-  [&quot;New Hanover&quot;,6.7,216298],
-  [&quot;Northampton&quot;,-7.4,20463],
-  [&quot;Onslow&quot;,5.5,187589],
-  [&quot;Orange&quot;,5,140420],
-  [&quot;Pamlico&quot;,-1.5,12948],
-  [&quot;Pasquotank&quot;,-2.1,39787],
-  [&quot;Pender&quot;,7.8,56250],
-  [&quot;Perquimans&quot;,0.1,13466],
-  [&quot;Person&quot;,-0.8,39132],
-  [&quot;Pitt&quot;,4.3,175354],
-  [&quot;Polk&quot;,-0.7,20357],
-  [&quot;Randolph&quot;,0.7,142778],
-  [&quot;Richmond&quot;,-1.9,45733],
-  [&quot;Robeson&quot;,0.4,134760],
-  [&quot;Rockingham&quot;,-2.1,91696],
-  [&quot;Rowan&quot;,0.1,138630],
-  [&quot;Rutherford&quot;,-1.8,66600],
-  [&quot;Sampson&quot;,1,64050],
-  [&quot;Scotland&quot;,-1.6,35576],
-  [&quot;Stanly&quot;,0,60600],
-  [&quot;Stokes&quot;,-2.1,46419],
-  [&quot;Surry&quot;,-1,72968],
-  [&quot;Swain&quot;,2.1,14274],
-  [&quot;Transylvania&quot;,-0.1,33045],
-  [&quot;Tyrrell&quot;,-6.6,4115],
-  [&quot;Union&quot;,8.6,218568],
-  [&quot;Vance&quot;,-1.8,44614],
-  [&quot;Wake&quot;,10.8,998691],
-  [&quot;Warren&quot;,-3.5,20231],
-  [&quot;Washington&quot;,-4.9,12570],
-  [&quot;Watauga&quot;,2.9,52560],
-  [&quot;Wayne&quot;,1.5,124456],
-  [&quot;Wilkes&quot;,-0.7,68838],
-  [&quot;Wilson&quot;,0.2,81401],
-  [&quot;Yadkin&quot;,-1.6,37792],
-  [&quot;yancey&quot;,-1.1,17614]
-]
-
-data.forEach(function(d) {
-  d[2] = d[2]/100000;
-});
-
-x.domain(d3.extent(data, function(d) { return d[2]; }));
+x.domain(d3.extent(data, function(d) { return d[4]; }));
 y.domain(d3.extent(data, function(d) { return d[1]; }));
 
-// Add the scatterplot.
+
+// Enter the scatterplot.
 svg.selectAll(&quot;dot&quot;)
   .data(data)
-    .enter().append(&quot;circle&quot;)
-    .attr(&quot;r&quot;, 5)
-    .attr(&quot;cx&quot;, function(d) { return x(d[2]); })
-    .attr(&quot;cy&quot;, function(d) { return y(d[1]); })
-    .attr(&quot;fill&quot;, function(d) { return d[1] &lt; 0 ? &quot;#ff3333&quot; : &quot;#009999&quot;; })
-    .attr(&quot;title&quot;, function(d) { return d[0]; })
+  .enter().append(&quot;circle&quot;)
+  .attr(&quot;r&quot;, 5)
+  .attr(&quot;cx&quot;, function(d) { return x(d[4]); })
+  .attr(&quot;cy&quot;, function(d) { return y(d[1]); })
+  .attr(&quot;fill&quot;, function(d) { return d[1] &lt; 0 ? &quot;#ff3333&quot; : &quot;#009999&quot;; })
+  .attr(&quot;title&quot;, function(d) { return d[0]; })
   .on(&quot;mouseover&quot;, function(d) {
     tooltip.transition()
       .duration(200)
@@ -245,7 +247,6 @@ svg.selectAll(&quot;dot&quot;)
       .style(&quot;opacity&quot;, 0);
   });
 
-
 // Add the X Axis
 svg.append(&quot;g&quot;)
   .attr(&quot;transform&quot;, &quot;translate(0,&quot; + height + &quot;)&quot;)
@@ -255,13 +256,13 @@ svg.append(&quot;g&quot;)
 svg.append(&quot;g&quot;)
   .call(d3.axisLeft(y));
 
-&lt;/script&gt;</content><author><name></name></author><summary type="html">The rural areas of North Carolina are emptying out. .tooltip { position: absolute; width: 200px; height: 28px; pointer-events: none; }</summary></entry><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/15/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
+&lt;/script&gt;</content><author><name></name></author><summary type="html">The rural areas of North Carolina are emptying out. .tooltip { position: absolute; width: 200px; height: 28px; pointer-events: none; }</summary></entry><entry><title type="html">Noisy Frogs</title><link href="https://bitworking.org/news/2017/06/noisy-frogs" rel="alternate" type="text/html" title="Noisy Frogs" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/noisy-frogs</id><content type="html" xml:base="https://bitworking.org/news/2017/06/noisy-frogs">&lt;p&gt;Why yes, the frogs in the pond across the road are rather loud.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/images/noisy_frogs_small.png&quot; alt=&quot;Graph showing a peak noise level of 72 dB.&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;BTW,
 &lt;a href=&quot;https://play.google.com/store/apps/details?id=com.google.android.apps.forscience.whistlepunk&amp;amp;hl=en&quot;&gt;Google Science Journal&lt;/a&gt;
-is awesome.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why yes, the frogs in the pond across the road are rather loud.</summary></entry><entry><title type="html">Moving to Jekyll</title><link href="https://bitworking.org/news/2017/06/15/moving-to-jekyll" rel="alternate" type="text/html" title="Moving to Jekyll" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/15/moving-to-jekyll</id><content type="html" xml:base="https://bitworking.org/news/2017/06/15/moving-to-jekyll">&lt;p&gt;I am in the process of moving this blog over to
+is awesome.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why yes, the frogs in the pond across the road are rather loud.</summary></entry><entry><title type="html">Moving to Jekyll</title><link href="https://bitworking.org/news/2017/06/moving-to-jekyll" rel="alternate" type="text/html" title="Moving to Jekyll" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/moving-to-jekyll</id><content type="html" xml:base="https://bitworking.org/news/2017/06/moving-to-jekyll">&lt;p&gt;I am in the process of moving this blog over to
 &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, while at the same time admitting that I’m
 never going to finish writing my own blogging software, and that I really
 should concentrate on the writing, and not the underlying software.&lt;/p&gt;
@@ -277,7 +278,7 @@ next to my writing. Call me old fashioned.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Update&lt;/em&gt;: And comments are now enabled, the &lt;a href=&quot;https://github.com/jekyll/minima&quot;&gt;Jekyll Minima
 theme&lt;/a&gt; and &lt;a href=&quot;https://disqus.com/&quot;&gt;Disqus&lt;/a&gt;
-made that way too easy.&lt;/p&gt;</content><author><name></name></author><summary type="html">I am in the process of moving this blog over to Jekyll, while at the same time admitting that I’m never going to finish writing my own blogging software, and that I really should concentrate on the writing, and not the underlying software.</summary></entry><entry><title type="html">Tech Driven Deflation</title><link href="https://bitworking.org/news/2017/04/19/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/04/19/tech-driven-deflation</id><content type="html" xml:base="https://bitworking.org/news/2017/04/19/tech-driven-deflation">&lt;p&gt;
+made that way too easy.&lt;/p&gt;</content><author><name></name></author><summary type="html">I am in the process of moving this blog over to Jekyll, while at the same time admitting that I’m never going to finish writing my own blogging software, and that I really should concentrate on the writing, and not the underlying software.</summary></entry><entry><title type="html">Tech Driven Deflation</title><link href="https://bitworking.org/news/2017/04/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/04/tech-driven-deflation</id><content type="html" xml:base="https://bitworking.org/news/2017/04/tech-driven-deflation">&lt;p&gt;
     The article &lt;a href=&quot;https://singularityhub.com/2017/04/14/will-tech-driven-deflation-export-japans-economic-woes-to-the-world/&quot;&gt;Will Tech-Driven Deflation Export Japan’s Economic Woes to the World?&lt;/a&gt;
     reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;:
   &lt;/p&gt;
@@ -298,7 +299,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
       slide deck from Hal Varian&lt;/a&gt; covers the same ground with a slightly different take, pointing
     out that much of this progress not only doesn't increase GDP, it actually
     reduces it, which is a problem of using GDP as a metric.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">The article Will Tech-Driven Deflation Export Japan’s Economic Woes to the World? reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;: The origin for the above video is http://bestreviews.com/electronics#evolution-of-the-desk.</summary></entry><entry><title type="html">Prometheus vs InfluxDB</title><link href="https://bitworking.org/news/2017/03/18/prometheus" rel="alternate" type="text/html" title="Prometheus vs InfluxDB" /><published>2017-03-18T00:00:00-04:00</published><updated>2017-03-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/03/18/prometheus</id><content type="html" xml:base="https://bitworking.org/news/2017/03/18/prometheus">&lt;p&gt;
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">The article Will Tech-Driven Deflation Export Japan’s Economic Woes to the World? reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;: The origin for the above video is http://bestreviews.com/electronics#evolution-of-the-desk.</summary></entry><entry><title type="html">Prometheus vs InfluxDB</title><link href="https://bitworking.org/news/2017/03/prometheus" rel="alternate" type="text/html" title="Prometheus vs InfluxDB" /><published>2017-03-18T00:00:00-04:00</published><updated>2017-03-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/03/prometheus</id><content type="html" xml:base="https://bitworking.org/news/2017/03/prometheus">&lt;p&gt;
     We just finished migrating all of our monitoring from &lt;a href=&quot;https://www.influxdata.com/&quot;&gt;InfluxDB&lt;/a&gt; to &lt;a href=&quot;https://prometheus.io/&quot;&gt;Prometheus&lt;/a&gt; and I thought I&amp;#39;d write up
     our reasons for the change. Please note that these are my own personal
     observations and relate to a specific project, these issue may not apply
@@ -2184,7 +2185,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
   &lt;ul&gt;
     &lt;li&gt;&lt;a href=&quot;http://www.jaapsuter.com/geometric-algebra/&quot;&gt;Geometric Algebra Primer&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href=&quot;http://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=7943&amp;context=etd_theses&quot;&gt;Geometric Algebra: An Introduction with Applications in Euclidean and Conformal Geometry&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">Pat McCrory in the context of elite overproduction.</title><link href="https://bitworking.org/news/2016/12/05/mccrory_in_context" rel="alternate" type="text/html" title="Pat McCrory in the context of elite overproduction." /><published>2016-12-05T00:00:00-05:00</published><updated>2016-12-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/12/05/mccrory_in_context</id><content type="html" xml:base="https://bitworking.org/news/2016/12/05/mccrory_in_context">&lt;p&gt;
+  &lt;/ul&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">Pat McCrory in the context of elite overproduction.</title><link href="https://bitworking.org/news/2016/12/mccrory_in_context" rel="alternate" type="text/html" title="Pat McCrory in the context of elite overproduction." /><published>2016-12-05T00:00:00-05:00</published><updated>2016-12-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/12/mccrory_in_context</id><content type="html" xml:base="https://bitworking.org/news/2016/12/mccrory_in_context">&lt;p&gt;
     As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in
     the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile
     behavior in a larger context. While it would be tempting to try to
@@ -2249,7 +2250,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
       patterns are all there, the roots of the problem can be clearly mapped
       out, and while there&amp;#39;s no guaranteed way to avoid the coming
       disintegration, maybe we should at least try&lt;/a&gt;.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry><entry><title type="html">Surely we’ve seen this before. Not.</title><link href="https://bitworking.org/news/2016/11/19/seen_this_before" rel="alternate" type="text/html" title="Surely we've seen this before. Not." /><published>2016-11-19T00:00:00-05:00</published><updated>2016-11-19T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/11/19/seen_this_before</id><content type="html" xml:base="https://bitworking.org/news/2016/11/19/seen_this_before">&lt;p&gt;You might think that as the U.S. moves from an industrial and
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry><entry><title type="html">Surely we’ve seen this before. Not.</title><link href="https://bitworking.org/news/2016/11/seen_this_before" rel="alternate" type="text/html" title="Surely we've seen this before. Not." /><published>2016-11-19T00:00:00-05:00</published><updated>2016-11-19T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/11/seen_this_before</id><content type="html" xml:base="https://bitworking.org/news/2016/11/seen_this_before">&lt;p&gt;You might think that as the U.S. moves from an industrial and
     manufacturing based economy to a knowledge based economy that we surely
     have weathered similar tranistions. For example, as we moved from an
     agricultural economy to a manufacturing based one. While we did indeed
@@ -2262,7 +2263,7 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
     over a 50 year period from 1910 to 1960. In contrast, from &lt;a href=&quot;https://www.brookings.edu/blog/the-avenue/2016/03/15/voter-anger-explained-in-one-chart/&quot;&gt;Voter
       anger explained—in one chart&lt;/a&gt;, you can see that the U.S. economy
     also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry><entry><title type="html">This is voter suppression.</title><link href="https://bitworking.org/news/2016/11/01/suppression_2016" rel="alternate" type="text/html" title="This is voter suppression." /><published>2016-11-01T00:00:00-04:00</published><updated>2016-11-01T00:00:00-04:00</updated><id>https://bitworking.org/news/2016/11/01/suppression_2016</id><content type="html" xml:base="https://bitworking.org/news/2016/11/01/suppression_2016">&lt;p&gt;
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry><entry><title type="html">This is voter suppression.</title><link href="https://bitworking.org/news/2016/11/suppression_2016" rel="alternate" type="text/html" title="This is voter suppression." /><published>2016-11-01T00:00:00-04:00</published><updated>2016-11-01T00:00:00-04:00</updated><id>https://bitworking.org/news/2016/11/suppression_2016</id><content type="html" xml:base="https://bitworking.org/news/2016/11/suppression_2016">&lt;p&gt;
     To get an idea of voter suppression in action let&amp;#39;s
     overlap the &lt;a href=&quot;http://demographics.coopercenter.org/DotMap/&quot;&gt;The
       Racial Dot Map&lt;/a&gt; with &lt;a href=&quot;http://www.wakegov.com/elections/info/early/locations/Pages/default.aspx&quot;&gt;Wake

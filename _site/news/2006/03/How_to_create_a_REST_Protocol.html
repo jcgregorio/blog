@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>How to create a REST Protocol</title>
+  <meta name="description" content="If you follow web services, then you may have heard of REST. REST is an architectural style that can be used to guide the construction of web services. Recen...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2006/03/How_to_create_a_REST_Protocol">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1974123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">How to create a REST Protocol</h1>
+    <p class="post-meta">
+      <time datetime="2006-03-24T00:00:00-05:00" itemprop="datePublished">
+        
+        Mar 24, 2006
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+       <p>If you follow web services, then you may have heard
+		of REST. REST is an architectural style that can be
+		used to guide the construction of web
+		services. Recently, there have been attempts to create
+		such services that have met with mixed success.  This
+		article outlines a series of steps you can follow in
+		creating your protocol--guidance that will help you
+		get all the benefits that REST has to offer, while
+		avoiding common pitfalls.
+		</p>
+<p>[<em>This article originally appeared on XML.com in December of 2004.</em>]</p>
+   <p>If you follow web services, then you may have heard
+		of REST. REST is an architectural style that can be
+		used to guide the construction of web
+		services. Recently, there have been attempts to create
+		such services that have met with mixed success.  This
+		article outlines a series of steps you can follow in
+		creating your protocol--guidance that will help you
+		get all the benefits that REST has to offer, while
+		avoiding common pitfalls.
+		</p>
+<h3>What Is REST?</h3>
+<p>What is REST anyway? It is an architectural style.
+		An architectural style is a named, coordinated set of
+		architectural constraints.</p>
+<blockquote><p>A software architecture is defined by a
+			configuration of architectural
+			elements--components, connectors, and
+			data--constrained in their relationships in
+			order to achieve a desired set of
+			architectural properties.  [<a href="http://www.ics.uci.edu/%7Efielding/pubs/dissertation/software_arch.htm#sec_1_2">Roy
+			Fielding</a>]</p></blockquote>
+<h3>Why Follow REST?</h3>
+<p>
+		The whys of REST are covered on the <a href="http://rest.blueoxen.net/cgi-bin/wiki.pl?FrontPage">REST
+		Wiki</a>.  There are advantages to be had, from
+		scalability, to simplifying implementation, to
+		increasing the ability for your service to be reused.
+		Jon Udell has two great articles, <a href="http://www.xml.com/pub/a/2004/03/17/udell.html">
+		The Beauty of REST</a> and <a href="http://udell.roninhouse.com/bytecols/2001-08-15.html">
+		Tangled in Threads: The power of the URL-line</a>, that
+		cover the benefits of a 'composable' system.
+		</p>
+<p>Look at it this way: if you're using the
+		infrastructure of the web to move your data around,
+		shouldn't you follow the best practices that will help
+		your data move more smoothly through the system? It's
+		better to go with the flow than to try to swim up
+		stream.</p>
+<h3>How to Create a RESTful Interface</h3>
+<p>Now we get to the meat of the matter. Instead of
+			covering this from an architectural view, I'll
+			approach it from a recipe perspective, a
+			series of steps you take and questions you
+			can answer, that will hopefully guide you to
+			creating a great REST interface.
+		</p>
+<p>To create a REST service, you need to answer the following
+		questions, and you should answer them in this order:</p>
+<ol>
+<li>What are the URIs? </li>
+<li>What's the format? </li>
+<li>What methods are supported at each URI? </li>
+<li>What status codes could be returned?</li>
+</ol>
+<p>In laying out these questions, I didn't use the
+		proper naming conventions; instead, I used the common
+		names for things that most developers are familiar
+		with. As we answer each question, I'll also introduce
+		the proper nomenclature.</p>
+<h3>Question 1: What Are the URIs?</h3>
+<p>The proper nomenclature would be "What are the
+		resources?" The things identified by URIs are
+		"resources." That is the terminology used in Roy
+		Fielding's thesis and also the same terminology used
+		in <a href="http://www.w3.org/TR/webarch/#information-resource">
+		Architecture of the World Wide Web, First
+		Edition</a>. Resources are identified by URIs.
+		</p>
+<p>You might be creating a RPC protocol, or worse, if
+		you only have a single URI that everything goes
+		through. Many years ago, one of the first intranet
+		services I put together was a web interface to an ECO
+		(Engineering Change Order) system. Every time a part
+		was changed, an ECO was filed and had to flow through
+		this system. I created a single script that handled
+		the whole system, a single script that took all it's
+		parameters via POST. That meant there was no way to
+		bookmark a page in the system; each page had the same
+		URI: <code>/cgi-bin/eco.cgi</code>.  Employees wanted
+		to bookmark certain ECOs or send shortcuts via email,
+		but they couldn't because the URI in the address bar
+		never changed. It was always the
+		same, <code>/cgi-bin/eco.cgi</code>, unchanging, like
+		the blinking 12:00 on an unprogrammed VCR.  The
+		employees didn't know about REST, but what they did
+		know implicitly is that each resource, in this case, an
+		ECO, should have its own URI.
+		</p>
+<p>Break your problem down into the types of resources
+		you want to manipulate. The thing to remember is that
+		each resource should have its own URI. Try to list all
+		the resources you could possibly need at this
+		step. Two places to consider when looking for
+		potential resources are collections and search
+		interfaces.  A "collection of resources" may, in itself,
+		be a whole new resource. </p>
+<p>A search interface is another source of
+		resources. You enter criteria for the resources you
+		want to find, and a list of matching resources are
+		returned. You may notice, though, that the results of a
+		search are just a collection of resources, ones that
+		match a particular criteria, and as such, this is
+		really just a narrower version of the first case of a
+		resource collection.
+		</p>
+<p>Consider a very simple example of a system for
+		maintaining an employee contact list. For our example,
+		it will contain each employees name, title, and
+		contact information. In such a system, each user should
+		have their own URI with an appropriate
+		representation. That representation should contain the
+		name, title, and contact information for that
+		employee.</p>
+<p>There is also a collection of resources that is, in
+		   itself, another resource. The collection of all
+		   employees is another resource in our system. So we
+		   have identified two kinds of resources in this tiny
+		   system, and so there will be two types of URIs:</p>
+<ol>
+<li>Employee (One URI per employee)</li>
+<li>All Employees</li>
+</ol>
+<p>After you've identified the resources via their
+		URIs, it's time to consider the next question.</p>
+<h3>Question 2: What's the Format? </h3>
+<p>The proper terminology here is "representation."
+		You can't actually reach out and touch the resources
+		behind the URIs you identified in Step 1. What you
+		<em>can </em> do is exchange representations of those
+		resources.  When I do a GET on an "employee" resource,
+		I need to get something back which conveys information
+		about that employee. These days HTML, XML, images,
+		sound, and movies are all potential formats that could
+		be used. For now, we'll restrict ourselves to using
+		XML: it's a pretty popular format, lots of tools are
+		available to process it, and there is an expectation
+		that when you say "web services," you are referring
+		primarily to the exchange of XML documents. And, yeah,
+		this is being published on XML.com!
+		</p>
+<p>For each of the resources you listed in Step 1, you
+		need to decide what the representations are going to
+		look like. If possible, reuse existing formats if they
+		are applicable. This can increase the chances that
+		your system can be composed with other systems.
+		</p>
+<p>In our example employee contact list above, we could
+		have the following representations:</p>
+<dl>
+<dt id="employee-format">Employee Format</dt>
+<dd>For the sake of exposition, I will make up
+			a new XML format for this information. <a href="http://dictionary.reference.com/search?q=exposition">Exposition</a>--"A statement or rhetorical discourse intended
+			to give information about or an explanation of
+			difficult material"--which just means that I
+			get to cheat as long as you learn something in
+			the process.
+			</dd>
+<dd><pre><code>&lt;employee xmlns='http://example.org/my-example-ns/'&gt;
+    &lt;name&gt;Full name goes here.&lt;/name&gt;
+    &lt;title&gt;Persons title goes here.&lt;/title&gt;
+    &lt;phone-number&gt;Phone number goes here.&lt;/phone-number&gt;
+
+&lt;/employee&gt;</code></pre>
+</dd>
+<dt id="employee-list-format">Employee List Format</dt>
+<dd>Since each employee will have his or her own 
+			URI with all the details there, our list will only
+			include that URI.</dd>
+<dd><pre><code>&lt;employee-list xmlns='http://example.org/my-example-ns/'&gt;
+    &lt;employee-ref href="URI of the first employee"/&gt;
+	 Full name of the first employee goes here.&lt;/employee&gt;
+
+    &lt;employee-ref href="URI of employee #2"/&gt;Full name&lt;/employee&gt;
+    .
+    .
+    &lt;employee-ref href="URI of employee #N"/&gt;Full name&lt;/employee&gt;
+&lt;/employee-list&gt;</code></pre>
+</dd>
+</dl>
+<p>Note that we haven't mapped the representations to
+		resources just yet.  To do that, we need to consider
+		the methods.</p>
+<h3>Question 3: What Methods Are Supported at Each URI?</h3>
+<p>In the proper nomenclature, how do the URIs we
+		defined in Step 1 get <em>dereferenced</em>?</p>
+<blockquote>
+<p>Agents may use a URI to access the
+			referenced resource; this is
+			called <dfn>dereferencing the
+			URI</dfn>. Access may take many forms,
+			including retrieving a representation of the
+			resource (for instance, by using HTTP GET or
+			HEAD), adding or modifying a representation of
+			the resource (for instance, by using HTTP POST
+			or PUT, which in some cases may change the
+			actual state of the resource if the submitted
+			representations are interpreted as
+			instructions to that end), and deleting some
+			or all representations of the resource (for
+			instance, by using HTTP DELETE, which in some
+			cases may result in the deletion of the
+			resource itself).  [<a href="http://www.w3.org/TR/webarch/#dereference-uri">Architecture
+			of the World Wide Web, First Edition</a>]
+			</p>
+</blockquote>
+<p>We'll restrict the discussion to accessing
+		resources using one the four basic HTTP methods that
+		can be applied to a URI: GET, POST, PUT, and DELETE.  HEAD
+		is really a GET without a response body, and there are
+		also others defined by RFC 2616 like OPTIONS. In
+		addition, specs like WebDAV introduce even more
+		methods. That's nice, but you should be able to go
+		very far with just the four basic methods, which align
+		nicely with CRUD, an acronym from the database world
+		which stands for <a href="http://en.wikipedia.org/wiki/CRUD.">Create,
+		Retrieve, Update, and Delete</a>.
+		</p>
+<table border="1" cellpadding="3" cellspacing="0">
+<tbody><tr> <th>HTTP Method</th> <th>CRUD Action</th> <th>Description</th></tr>
+<tr> <td>POST</td> <td>CREATE</td> <td>Create a new resource</td> </tr>
+<tr> <td>GET</td> <td>RETRIEVE</td> <td>Retrieve a representation of a resource</td> </tr>
+<tr> <td>PUT</td> <td>UPDATE</td> <td>Update a resource</td> </tr>
+<tr> <td>DELETE</td> <td>DELETE</td> <td>Delete a resource</td> </tr>
+</tbody></table>
+<p>I hesitated to include this table. By presenting it,
+		I wanted to point out the overlap in the four basic
+		methods of HTTP. What I <strong>don't</strong> want to
+		happen is that you start thinking of web resources as
+		SQL tables. Don't do that.
+		</p>
+<p>Make sure your GETs are side-effect free. This is a
+		biggie, the one where many services get it wrong. GETs
+		must be both <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.1">
+		safe</a> and
+		<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.1.2">
+			idempotent</a>. In turn, <a href="http://www.w3.org/DesignIssues/Axioms.html#state">
+			anything which does not have side effects
+			should use GET</a>.
+
+		</p><p>So if you want to create a new resource, use
+		POST. Want to retrieve a representation of a resource?
+		Use GET. To update a current resource, use
+		PUT. Finally, to delete a resource, use DELETE.
+		</p>
+<p>Once you have decided on the URIs (Step 1), picked
+		representations (Step 2), and decided on methods (Step
+		3), you need to match them all up.  At the very least,
+		you'll need to pick a representation for the response
+		of every GET and a representation to place in the
+		request for PUT and POST. Optionally, you may want to
+		consider the representation, if any is returned from
+		a POST.
+		</p>
+<p>Let's go back to our employee contact list, and now
+		we can match up the resources, the representations,
+		and the methods.
+		</p>
+<table border="1" cellpadding="3" cellspacing="0">
+<tbody><tr> <th>Resource</th> <th>Method</th> <th>Representation</th> </tr>
+<tr> <td>Employee</td> <td>GET</td> <td>Employee Format</td> </tr>
+<tr> <td>Employee</td> <td>PUT</td> <td>Employee Format</td> </tr>
+<tr> <td>Employee</td> <td>DELETE</td> <td>N/A</td> </tr>
+<tr> <td>All Employees</td> <td>GET</td> <td>Employee List Format</td> </tr>
+<tr> <td>All Employees</td> <td>POST</td> <td>Employee Format</td> </tr>
+</tbody></table>
+<h3>Question 4: What Status Codes Could Be Returned?</h3>
+<p>Not only do you need to know what type of
+		representation is returned, you also need to enumerate
+		the typical HTTP status codes that could be
+		returned. In a perfect world, this step wouldn't be
+		necessary since a good implementation would handle
+		every status code correctly. In practice, you should
+		list all the status codes you expect to return. This
+		will provide good guidance for implementers on the
+		conditions they should be testing for.
+		</p>
+<p>We'll update our table for our employee contact
+		   list to include the expected status codes</p>
+<table border="1" cellpadding="3" cellspacing="0">
+<tbody><tr> <th>Resource</th> <th>Method</th> <th>Representation</th> <th>Status Codes</th> </tr>
+<tr> <td>Employee</td> <td>GET</td> <td>Employee Format</td> <td>200, 301, 410</td> </tr>
+<tr> <td>Employee</td> <td>PUT</td> <td>Employee Format</td> <td>200, 301, 400, 410</td> </tr>
+<tr> <td>Employee</td> <td>DELETE</td> <td>N/A</td> <td>200, 204</td> </tr>
+<tr> <td>All Employees</td> <td>GET</td> <td>Employee List Format</td> <td>200, 301</td> </tr>
+<tr> <td>All Employees</td> <td>POST</td> <td>Employee Format</td> <td>201, 400</td> </tr>
+</tbody></table>
+<h3>Warning Signs</h3>
+<p>Even following these steps, you could still make
+		some mistakes.  Paul Prescod has created a list of <a href="http://www.prescod.net/rest/mistakes/">Common
+		REST Mistakes</a> that is worth reviewing as you work
+		on your protocol.</p>
+<h3>Review</h3>
+<p>Let's review. To build a good REST service you need
+		to answer the following questions:</p>
+<ol>
+<li>What are the URIs? </li>
+<li>What's the format? </li>
+<li>What methods are supported at each URI? </li>
+<li>What status codes could be returned?</li>
+</ol>
+<p>And that's all there is to it. You don't believe
+		me?  Good, because it's not true. There's lots more to
+		discuss, like compression, etags, caching,
+		extensibility, idioms, and implementations. See you
+		next month.</p>
+<ul class="tags">
+<li><a href="http://technorati.com/tag/rest" rel="tag"> REST </a></li>
+</ul>
+
+  
+  
+
+  </div>
+
+  
+    
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2006/03/How_to_create_a_REST_Protocol';
+      this.page.identifier = 'https://bitworking.org/news/2006/03/How_to_create_a_REST_Protocol';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

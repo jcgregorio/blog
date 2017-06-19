@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Analog Devices Blackfin DSP</title>
+  <meta name="description" content="In the past I&#39;ve talked about my experience with TI and their support for their DSPs. Given that experience I am now looking at Analog Devices and their Blac...">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2004/03/Analog_Devices_Blackfin_DSP">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1974123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Analog Devices Blackfin DSP</h1>
+    <p class="post-meta">
+      <time datetime="2004-03-30T00:00:00-05:00" itemprop="datePublished">
+        
+        Mar 30, 2004
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+      <p>In the past I've talked about my experience 
+  with <a href="http://bitworking.org/news/TI_Code_Composer_Studio__product_quality__and_Tech_Support">TI and their support for their DSPs</a>. 
+  Given that experience I am now
+  looking at <a href="http://www.analog.com">Analog Devices</a> and their <a href="http://www.analog.com/processors/processors/blackfin/index.html">
+  Blackfin</a> line of DSPs.</p>
+
+  <p>Compared to the TI part this has turned out to be a breath of fresh air.
+   The Analog folks look like they've put a lot of effort into thinking about,
+   and talking to, their customers and how they use DSPs, and that's reflected
+   in their newest line of DSPs.
+</p>
+<dl>
+<dt>DIO</dt>
+<dd><p>One of the biggest differences is the number of generic digital I/Os
+  that the Analog DSPs provide. The Blackfins typically come with 16 
+  digital I/O lines, which is quite a bit more than you will
+  usually find on a DSP, and these I/Os are truly general purpose,
+  usable as inputs and outputs, aggregated as 10, 12, 14 or 16 bit
+  input or output port suitable for interfacing to an ADC or DAC, and 
+  oh by the way, if they're configured as inputs they can each be 
+  setup to trigger interrupts.</p>
+<p>This is incredibly important. If you are using DSP you probably want to
+   <em>control</em> something based on that signal. Now there are exceptions,
+   for example the digital processing for an MP3 player would just be from memory 
+   out to a DAC that fed the headphones, so in theory you only need a 
+   data bus interface and no DIOs. But that's theory and doesn't match up
+   well with reality. The reality is that the MP3 Player has a user interface
+   with buttons and knobs and <em>something</em> has to handle that 
+   user input. Now the traditional thinking is that you have two processors, 
+   one DSP for the signal processing, and a second less powerful processor
+   for handling everything else. DSPs have become
+   more powerful and there are more spare cycles. That is, the DSP has more than
+   enough power to handle the signal processing with some to spare. Those
+   spare cycles can be applied toward the <em>everything else</em> processing,
+   unless of course you don't have the DIOs. </p>
+<p>DIOs on the DSP are important because in a good design they may actually help 
+   displace another processor which reduces cost, energy requirements,
+   heat, and the number of development platforms you need to maintain.
+  </p>
+</dd>
+<dt>Algebraic notation</dt>
+<dd><p>The assembler for the Blackfin uses algebraic notation as opposed to
+   a more traditional assembler notation. For example, to set the value of 
+   a register R0 to 12 you use:</p>
+<pre><code>R0 = 12;</code></pre>
+<p>Now compare this to the more traditional assembler:</p>
+<pre><code>MOV A0, 12;</code></pre>
+<p>Which just feels like a language designed by a crack addled Yoda.</p>
+</dd>
+<dt>Write One To Set</dt>
+<dd><p>This bit is absolutely brilliant. One of things you do all the time
+  in embedded firmware is set bits. Or clear bits. Almost all of the 
+  peripherals on modern CPUs are memory mapped which means that 
+  you read and write to memory addresses to control their behavior.
+  The problem is that a bunch of bits that control different aspects
+  of the peripheral are all packed into the same word, and if you want
+  to change something you read the word out into a register, flip the 
+  bits you want changed, then write the value back into the memory 
+  mapped register. That's a minimum of three operations, and you can
+  end up spending a lot of time flipping 
+  bits in memory mapped registers.</p>
+<pre><code>MOV A0, B0[X+23];
+AND A0, 0x0080, A0;
+MOV B0[X+23], A0;</code></pre>
+<p>I don't know where Analog came up with this, if it's even original to them
+  or they borrowed it from someone else, but many of the registers 
+ are W1S (write-1-to-set) or W1C (write-1-to-clear). That is, writing a value
+  into a W1S register will set the bits where ever there is a 1 in the value
+  written, the rest of the bits remain unchanged. Similarly for W1C, you write
+  1's where you want the bits cleared, the remaining bits remain unchanged.
+  Analog combines these, so that a single register may actually have multiple
+  memory mapped areas, a W1C register, a W1S register, and a normal register.
+  This makes for dramatic code reduction. For example, the above code which
+  sets bit 7 of a memory mapped register becomes a single instruction
+  if the register is W1S:
+</p>
+<pre><code>MOV 0x0080, B0[X+23];</code></pre>
+<p>That's 1/3 of the code size, and also 3 times faster to execute.</p>
+</dd>
+<dt>Circular Buffers</dt>
+<dd><p>Another common task in signal processing is handling buffers, 
+   and those are commonly circular buffers. The Blackfin has native support
+   for such constructs, where you setup 2 registers to define the beginning
+   and length of a circular buffer, and then use a third register as
+   an index into the buffer. The CPU takes care of keeping the 
+   index register on track, you just keep on incrementing and it folds
+   back down to the beginning of the buffer automagically. This 
+   increases the speed of your loops since you don't need to check 
+   for overflow everytime through.</p></dd>
+</dl>
+<p>These are just some of the advantages of the new Blackfin chips.
+  I've just started exploring  but it appears Analog has done
+  a really good job listening to their customers and it shows
+  in their products.</p>
+<p>Oh, and that level of quality seems to 
+  extend across the company, a quick note to webmaster@analog.com
+  got a personal answer in about 12 hours, and the one documentation
+  bug I reported got answered and closed out in a day.</p>
+
+  <div class="commentContent" id="X1">
+    <blockquote class="quote"><p>single instruction if the register is W1S:</p>
+<p>MOV 0x0080, B0[X+23];</p></blockquote>
+<p>Wouldn't this be (to be consistent w/ the "algebraic notation")?:<br />
+  B0[X+23] = 0x0080</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:DamonC@goatporn.com">Damon</a> on <a href="#X1" title="2004-03-31T07:48:48">2004-03-31</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Yes it would.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2004-03-31T08:48:59">2004-03-31</a>
+    </p>
+</div>
+  
+
+  </div>
+
+  
+    
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2004/03/Analog_Devices_Blackfin_DSP';
+      this.page.identifier = 'https://bitworking.org/news/2004/03/Analog_Devices_Blackfin_DSP';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
