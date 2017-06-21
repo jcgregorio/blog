@@ -181,7 +181,7 @@
     width = 640 - margin.left - margin.right,
     height = 480 - margin.top - margin.bottom;
 
-  var xlabels = ["Density (people/mi^2)", "Population per County (100000)"];
+  var xlabels = ["Density (people/mi^2)", "Population per County (100K)"];
 
   var x = d3.scalePow().exponent(1/10).range([0, width]);
   var y = d3.scaleLinear().range([height, 0]);
@@ -334,10 +334,16 @@
     .attr('id', 'xlabel')
     .text(xlabels[mode]);
 
+  svg.append('text')
+    .attr('id', 'r')
+    .attr('dx', '25em')
+    .attr('dy', '20em')
+    .text('r=');
+
   x.domain(d3.extent(data, function(d) { return d[4]; }));
   y.domain(d3.extent(data, function(d) { return d[1]; }));
 
-  function plotLine() {
+  function plotLine(t) {
     var xSeries=[];
     var ySeries=[];
     data.forEach(function(d) {
@@ -346,7 +352,6 @@
     });
 
     var ls = leastSquares(xSeries, ySeries);
-    console.log(ls);
     xSeries.sort(function(a, b) {
       return a - b;
     });
@@ -356,14 +361,15 @@
     var y2= ls.m * x2 + ls.b;
     x1 = Math.pow(10, x1);
     x2 = Math.pow(10, x2);
-    console.log(x1, y1, x2, y2);
-    svg.selectAll('#fit')
+    svg.selectAll('#fit').transition(t)
       .attr('x1', x(x1))
       .attr('y1', y(y1))
       .attr('x2', x(x2))
       .attr('y2', y(y2));
+    svg.selectAll('#r')
+      .text('r=' + ls.r.toPrecision(2));
   }
-  plotLine();
+  plotLine(d3.transition());
 
   // Enter the scatterplot.
   svg.selectAll("circle")
@@ -413,7 +419,7 @@
     calcDerivedColumn();
     x.domain(d3.extent(data, function(d) { return d[4]; }));
     y.domain(d3.extent(data, function(d) { return d[1]; }));
-    plotLine();
+    plotLine(t);
     svg.selectAll("circle")
       .data(data, function(d) { return d; })
       .transition(t)
