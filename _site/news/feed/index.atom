@@ -1,5 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-21T11:21:13-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/north-carolina-urbanization">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-21T11:55:54-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Compute and Moore’s Law</title><link href="https://bitworking.org/news/2017/06/compute-and-moores-law" rel="alternate" type="text/html" title="Compute and Moore's Law" /><published>2017-06-21T00:00:00-04:00</published><updated>2017-06-21T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/compute-and-moores-law</id><content type="html" xml:base="https://bitworking.org/news/2017/06/compute-and-moores-law">&lt;p&gt;This article from Technology Review,
+&lt;a href=&quot;https://www.technologyreview.com/s/607917/how-ai-can-keep-accelerating-after-moores-law/&quot;&gt;How AI Can Keep Accelerating After Moore’s Law&lt;/a&gt;
+is a good follow-on from a previous article
+&lt;a href=&quot;https://www.technologyreview.com/s/601441/moores-law-is-dead-now-what/&quot;&gt;Moore’s Law Is Dead. Now What?&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;From the second article:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Engineers have kept GPUs getting more powerful because they can be more
+specialized to the particular math they need to perform for graphics or
+machine learning, he says.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In order to continue to squeeze more performance out of the same number of
+transistors and/or watts, we are going to need to get closer to the metal, and
+the metal is going to have to become more and more specialized, or at the very
+least, the metal has to stop looking like monolithic CPUs with a small number
+of cores.&lt;/p&gt;
+
+&lt;p&gt;GPUs by themselves, even if you only have OpenGL, are attractive because
+of the enormous amount of specialized computational power available. This power is what
+originally attracted people to General Purpose GPU
+&lt;a href=&quot;https://en.wikipedia.org/wiki/General-purpose_computing_on_graphics_processing_units&quot;&gt;GPGPU&lt;/a&gt;, which started as
+people transforming scientific computations into a graphical form to get them
+to run on a GPU. That work in turn drove the creation and adoption of general
+compute APIs like CUDA and then OpenCL, which expose the underlying compute
+units and specialized memory access features in a GPU.&lt;/p&gt;
+
+&lt;p&gt;Compute APIs are much closer to the metal, exposing the underlying power of
+the GPU without the intervening machinery and bugs of the OpenGL abstraction.
+The API surface of these compute APIs are much smaller, which should mean
+simpler and less buggy drivers. In addition the compute APIs are focused in
+part on scientific applications, so the results from using compute APIs should
+be much more repeatable. At the very least using compute APIs we are &lt;a href=&quot;https://www.khronos.org/registry/OpenCL/sdk/1.0/docs/man/xhtml/log.html&quot;&gt;in
+control of what performance/accuracy tradeoff to make&lt;/a&gt;. Compute APIs are also
+becoming more widely available, with every next generation API (Vulkan, DX12,
+and Metal) supporting a compute component.&lt;/p&gt;
+
+&lt;p&gt;One of the more surprising things I learned recently was exactly how sloppy
+OpenGL could be. For example, from the &lt;a href=&quot;https://www.khronos.org/registry/OpenCL/sdk/1.0/docs/man/xhtml/log.html&quot;&gt;documentation for the OpenCL log
+function&lt;/a&gt;,
+you can choose between the native hardware accelerated version
+of log, or use a log function that will return accurate results.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;native_log computes natural logarithm over an implementation-defined range. &lt;strong&gt;The maximum error is implementation-defined&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I think it’s time for me to find an OpenCL library for &lt;a href=&quot;https://golang.org&quot;&gt;Go&lt;/a&gt; and
+start exploring &lt;a href=&quot;https://cloud.google.com/gpu/&quot;&gt;GPU’s on Google Compute Engine&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">This article from Technology Review, How AI Can Keep Accelerating After Moore’s Law is a good follow-on from a previous article Moore’s Law Is Dead. Now What?.</summary></entry><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/north-carolina-urbanization">&lt;p&gt;
   The rural areas of North Carolina are emptying out.
 &lt;/p&gt;
 &lt;style&gt;
@@ -2367,10 +2416,4 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
     over a 50 year period from 1910 to 1960. In contrast, from &lt;a href=&quot;https://www.brookings.edu/blog/the-avenue/2016/03/15/voter-anger-explained-in-one-chart/&quot;&gt;Voter
       anger explained—in one chart&lt;/a&gt;, you can see that the U.S. economy
     also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry><entry><title type="html">This is voter suppression.</title><link href="https://bitworking.org/news/2016/11/suppression_2016" rel="alternate" type="text/html" title="This is voter suppression." /><published>2016-11-01T00:00:00-04:00</published><updated>2016-11-01T00:00:00-04:00</updated><id>https://bitworking.org/news/2016/11/suppression_2016</id><content type="html" xml:base="https://bitworking.org/news/2016/11/suppression_2016">&lt;p&gt;
-    To get an idea of voter suppression in action let&amp;#39;s
-    overlap the &lt;a href=&quot;http://demographics.coopercenter.org/DotMap/&quot;&gt;The
-      Racial Dot Map&lt;/a&gt; with &lt;a href=&quot;http://www.wakegov.com/elections/info/early/locations/Pages/default.aspx&quot;&gt;Wake
-    County&lt;/a&gt;&amp;#39;s early voting locations.
-  &lt;/p&gt;
-  &lt;img style=&quot;width: 40em;&quot; src=&quot;/images/suppression.png&quot; title=&quot;All of southeast Raleigh, a predominantly minority area, has no early voting locations.&quot;/&gt;</content><author><name></name></author><summary type="html">To get an idea of voter suppression in action let&amp;#39;s overlap the The Racial Dot Map with Wake County&amp;#39;s early voting locations.</summary></entry></feed>
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry></feed>
