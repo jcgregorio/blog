@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-19T10:46:13-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-06-21T00:57:39-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">North Carolina Urbanization and Rural Flight</title><link href="https://bitworking.org/news/2017/06/north-carolina-urbanization" rel="alternate" type="text/html" title="North Carolina Urbanization and Rural Flight" /><published>2017-06-18T00:00:00-04:00</published><updated>2017-06-18T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/north-carolina-urbanization</id><content type="html" xml:base="https://bitworking.org/news/2017/06/north-carolina-urbanization">&lt;p&gt;
   The rural areas of North Carolina are emptying out.
 &lt;/p&gt;
@@ -89,7 +89,6 @@
     width = 640 - margin.left - margin.right,
     height = 480 - margin.top - margin.bottom;
 
-  var mode = 0;
   var xlabels = [&quot;Density (people/mi^2)&quot;, &quot;Population per County (100000)&quot;];
 
   var x = d3.scalePow().exponent(1/10).range([0, width]);
@@ -105,6 +104,11 @@
   var tooltip = d3.select(&quot;#plot&quot;).append(&quot;div&quot;)
     .attr(&quot;class&quot;, &quot;tooltip&quot;)
     .style(&quot;opacity&quot;, 0);
+
+  var line = svg.append('line')
+    .attr('id', 'fit')
+    .attr('stroke-width', '2')
+    .attr('stroke', 'grey');
 
   var data = [
     // Name, % change, population, size
@@ -210,9 +214,21 @@
     [&quot;yancey&quot;,-1.1,17614, 313]
   ]
 
-  data.forEach(function(d) {
-    d[4] = d[2]/d[3];
-  });
+  var mode = 0;
+
+  function calcDerivedColumn() {
+    if (mode ==0) {
+      data.forEach(function(d) {
+        d[4] = d[2]/d[3];
+      });
+    } else {
+      data.forEach(function(d) {
+        d[4] = d[2]/100000;
+      });
+    }
+  }
+
+  calcDerivedColumn();
 
   svg.append('text')
     .attr('transform', 'rotate(-90)')
@@ -229,6 +245,33 @@
   x.domain(d3.extent(data, function(d) { return d[4]; }));
   y.domain(d3.extent(data, function(d) { return d[1]; }));
 
+  function plotLine() {
+    var xSeries=[];
+    var ySeries=[];
+    data.forEach(function(d) {
+      xSeries.push(Math.log10(d[4]));
+      ySeries.push(d[1]);
+    });
+
+    var ls = leastSquares(xSeries, ySeries);
+    console.log(ls);
+    xSeries.sort(function(a, b) {
+      return a - b;
+    });
+    var x1= xSeries[0];
+    var y1= ls.m * x1 + ls.b;
+    var x2= xSeries[xSeries.length-1];
+    var y2= ls.m * x2 + ls.b;
+    x1 = Math.pow(10, x1);
+    x2 = Math.pow(10, x2);
+    console.log(x1, y1, x2, y2);
+    svg.selectAll('#fit')
+      .attr('x1', x(x1))
+      .attr('y1', y(y1))
+      .attr('x2', x(x2))
+      .attr('y2', y(y2));
+  }
+  plotLine();
 
   // Enter the scatterplot.
   svg.selectAll(&quot;circle&quot;)
@@ -275,17 +318,10 @@
     svg.selectAll('#xlabel')
       .text(xlabels[mode]);
 
-    if (mode ==0) {
-      data.forEach(function(d) {
-        d[4] = d[2]/d[3];
-      });
-    } else {
-      data.forEach(function(d) {
-        d[4] = d[2]/100000;
-      });
-    }
+    calcDerivedColumn();
     x.domain(d3.extent(data, function(d) { return d[4]; }));
     y.domain(d3.extent(data, function(d) { return d[1]; }));
+    plotLine();
     svg.selectAll(&quot;circle&quot;)
       .data(data, function(d) { return d; })
       .transition(t)
@@ -293,6 +329,28 @@
 
     d3.selectAll(&quot;#xaxis&quot;)
       .call(d3.axisBottom(x));
+  }
+
+  function leastSquares(xSeries, ySeries) {
+    var reduceSumFunc = function(prev, cur) { return prev + cur; };
+
+    var xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+    var yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+
+    var ssXX = xSeries.map(function(d) { return (d-xBar)*(d-xBar); })
+      .reduce(reduceSumFunc);
+
+    var ssYY = ySeries.map(function(d) { return (d-yBar)*(d-yBar); })
+      .reduce(reduceSumFunc);
+
+    var ssXY = xSeries.map(function(d, i) { return (d - xBar) * (ySeries[i] - yBar); })
+      .reduce(reduceSumFunc);
+
+    var slope = ssXY / ssXX;
+    var intercept = yBar - (xBar * slope);
+    var r = ssXY / (Math.sqrt(ssXX) * Math.sqrt(ssYY));
+
+    return {m: slope, b: intercept, r: r};
   }
 
 })();
