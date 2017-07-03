@@ -1,5 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-02T20:58:48-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Compute and Moore’s Law</title><link href="https://bitworking.org/news/2017/06/compute-and-moores-law" rel="alternate" type="text/html" title="Compute and Moore's Law" /><published>2017-06-21T00:00:00-04:00</published><updated>2017-06-21T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/compute-and-moores-law</id><content type="html" xml:base="https://bitworking.org/news/2017/06/compute-and-moores-law">&lt;p&gt;This article from Technology Review,
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-03T00:34:04-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
+  &lt;a href=&quot;&quot;&gt;L-Systems&lt;/a&gt; are cool. The amount of complexity, and
+  naturalness of the forms you can get from such a tiny amount of code is
+  amazing.
+&lt;/p&gt;
+  &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+    canvas {
+    }
+  &lt;/style&gt;
+
+  &lt;canvas id=canvas width=400 height=600&gt;&lt;/canvas&gt;
+  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = document.getElementById('canvas');
+      var c = a.getContext(&quot;2d&quot;);
+      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
+      M = Math
+      r = M.random
+      rules = {
+        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
+        F: &quot;FF&quot;,
+        &quot;+&quot;: &quot;+&quot;,
+        &quot;-&quot;: &quot;-&quot;,
+        &quot;[&quot;: &quot;[&quot;,
+        &quot;]&quot;: &quot;]&quot;,
+      }
+      L = E(E(E(E(E(&quot;X&quot;)))))
+      ys = []
+      function draw(x, y, len) {
+        p = { x: x, y: y, a: 3 }
+        st = []
+        c.beginPath()
+        c.moveTo(p.x, p.y)
+        L.split(&quot;&quot;).forEach(function(ch) {
+          if (ch == &quot;F&quot;) {
+            p.x += len*M.sin(p.a)
+            p.y += len*M.cos(p.a)
+            c.lineTo(p.x, p.y)
+            c.stroke()
+          } else if (ch == &quot;-&quot;) {
+            p.a += r()/2
+          } else if (ch == &quot;+&quot;) {
+            p.a -= r()/2
+          } else if (ch == &quot;[&quot;) {
+            st.push(JSON.parse(JSON.stringify(p)))
+          } else if (ch == &quot;]&quot;) {
+            p = st.pop()
+            c.beginPath()
+            c.moveTo(p.x, p.y)
+          }
+        })
+      }
+      for (i = 0; i &lt; a.height/2; i++) {
+        ys.push(1-Math.sin(r()*Math.PI/2));
+      }
+      ys.sort(function(a, b) {return a-b});
+      oneStep = function() {
+        var v = ys.shift();
+        if (v) {
+          cl = 0|(1-v)*255
+          c.strokeStyle = &quot;rgb(&quot;+[cl,cl,cl]+&quot;)&quot;
+          draw(r()*(a.width+100)-50, v*(a.height+100), v*3+0.1)
+        }
+        window.setTimeout(oneStep, 1);
+      }
+      window.setTimeout(oneStep, 1);
+    })();
+  &lt;/script&gt;
+  &lt;p&gt;
+    The code is intentionally compact as I was intending to submit someething
+    along these lines to a &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Code_golf&quot;&gt;code golf&lt;/a&gt;
+    competition, but then got distracted.
+  &lt;/p&gt;
+  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    document.getElementById('code').textContent = document.getElementById('src').textContent;
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">L-Systems are cool. The amount of complexity, and naturalness of the forms you can get from such a tiny amount of code is amazing.</summary></entry><entry><title type="html">Compute and Moore’s Law</title><link href="https://bitworking.org/news/2017/06/compute-and-moores-law" rel="alternate" type="text/html" title="Compute and Moore's Law" /><published>2017-06-21T00:00:00-04:00</published><updated>2017-06-21T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/compute-and-moores-law</id><content type="html" xml:base="https://bitworking.org/news/2017/06/compute-and-moores-law">&lt;p&gt;This article from Technology Review,
 &lt;a href=&quot;https://www.technologyreview.com/s/607917/how-ai-can-keep-accelerating-after-moores-law/&quot;&gt;How AI Can Keep Accelerating After Moore’s Law&lt;/a&gt;
 is a good follow-on from a previous article
 &lt;a href=&quot;https://www.technologyreview.com/s/601441/moores-law-is-dead-now-what/&quot;&gt;Moore’s Law Is Dead. Now What?&lt;/a&gt;.&lt;/p&gt;
@@ -2403,17 +2480,4 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
       patterns are all there, the roots of the problem can be clearly mapped
       out, and while there&amp;#39;s no guaranteed way to avoid the coming
       disintegration, maybe we should at least try&lt;/a&gt;.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry><entry><title type="html">Surely we’ve seen this before. Not.</title><link href="https://bitworking.org/news/2016/11/seen_this_before" rel="alternate" type="text/html" title="Surely we've seen this before. Not." /><published>2016-11-19T00:00:00-05:00</published><updated>2016-11-19T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/11/seen_this_before</id><content type="html" xml:base="https://bitworking.org/news/2016/11/seen_this_before">&lt;p&gt;You might think that as the U.S. moves from an industrial and
-    manufacturing based economy to a knowledge based economy that we surely
-    have weathered similar tranistions. For example, as we moved from an
-    agricultural economy to a manufacturing based one. While we did indeed
-    weather the same changes, the vital difference is the timescale over which
-    those changes took place.
-  &lt;/p&gt;
-  &lt;p&gt;As you can see from this data on
-    &lt;a href=&quot;https://ourworldindata.org/agricultural-employment/&quot;&gt;agricultural
-      employment&lt;/a&gt;, we did experience a loss of 6 million agricultural jobs
-    over a 50 year period from 1910 to 1960. In contrast, from &lt;a href=&quot;https://www.brookings.edu/blog/the-avenue/2016/03/15/voter-anger-explained-in-one-chart/&quot;&gt;Voter
-      anger explained—in one chart&lt;/a&gt;, you can see that the U.S. economy
-    also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">You might think that as the U.S. moves from an industrial and manufacturing based economy to a knowledge based economy that we surely have weathered similar tranistions. For example, as we moved from an agricultural economy to a manufacturing based one. While we did indeed weather the same changes, the vital difference is the timescale over which those changes took place. As you can see from this data on agricultural employment, we did experience a loss of 6 million agricultural jobs over a 50 year period from 1910 to 1960. In contrast, from Voter anger explained—in one chart, you can see that the U.S. economy also lost 6 million manufacturing jobs, but this time in just 10 years, from 2000 to 2010.</summary></entry></feed>
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry></feed>
