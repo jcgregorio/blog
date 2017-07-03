@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-03T00:41:47-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-03T09:42:27-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
   &lt;a href=&quot;https://en.wikipedia.org/wiki/L-system&quot;&gt;L-Systems&lt;/a&gt; are cool. The amount of complexity, and
   naturalness of the forms you can get from such a tiny amount of code is
@@ -68,7 +68,7 @@
     })();
   &lt;/script&gt;
   &lt;p&gt;
-    The code is intentionally compact as I was intending to submit someething
+    The code is intentionally compact as I was intending to submit something
     along these lines to a &lt;a
       href=&quot;https://en.wikipedia.org/wiki/Code_golf&quot;&gt;code golf&lt;/a&gt;
     competition, but then got distracted.
