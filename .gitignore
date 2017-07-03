@@ -8,3 +8,4 @@ out/
 letsencrypt.cache
 Gemfile.lock
 .sass-cache
+.jekyll-metadata
