@@ -2,6 +2,7 @@
 
   <div class="wrapper">
 
+    {% if page.previous.url or page.next.url %}
     <div class="PageNavigation">
       {% if page.previous.url %}
       <a class="prev" href="{{page.previous.url}}">&laquo;
@@ -12,6 +13,7 @@
         href="{{page.next.url}}">{{page.next.title}} &raquo;</a>
       {% endif %}
     </div>
+    {% endif %}
 
     <h2 class="footer-heading">{{ site.title | escape }}</h2>
 
