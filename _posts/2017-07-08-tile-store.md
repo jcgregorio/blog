@@ -96,7 +96,7 @@ one that's used, so duplicate data may exist in the trace:
 This can happen if a test is re-run, we always use the latter value, so the
 value at index 2 of this trace will be 5.50, not 5.67.
 
-You can check out the [code and documentation](https://cloud.google.com/bigquery/) if you are interested in the
+You can check out the [code and documentation](https://godoc.org/go.skia.org/infra/perf/go/ptracestore) if you are interested in the
 details of the how the tiles are structured.
 
 I wrote this up mostly as a historical marker, since by next year we might be
