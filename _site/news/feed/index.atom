@@ -1,5 +1,117 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-03T09:42:27-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-08T10:10:09-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Tile Store</title><link href="https://bitworking.org/news/2017/07/tile-store" rel="alternate" type="text/html" title="Tile Store" /><published>2017-07-08T00:00:00-04:00</published><updated>2017-07-08T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/tile-store</id><content type="html" xml:base="https://bitworking.org/news/2017/07/tile-store">&lt;p&gt;My team at Google is the infrastructure team for &lt;a href=&quot;https://skia.org&quot;&gt;Skia&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Skia is an open source 2D graphics library which provides common APIs that work
+across a variety of hardware and software platforms. It serves as the graphics
+engine for Google Chrome and Chrome OS, Android, Mozilla Firefox and Firefox
+OS, and many other products.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Skia, being a graphics library, needs to be tested for both performance and
+correctness, and being cross-platform, it needs to be tested across a wide
+variety of platforms and under different configurations. Skia has a variety of
+backends, i.e. the same drawing commands can be directed to be rendered via:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Raster - Using the CPU-only.&lt;/li&gt;
+  &lt;li&gt;Ganesh - Skia’s GPU-accelerated backend.&lt;/li&gt;
+  &lt;li&gt;PDF - PDF document creation.&lt;/li&gt;
+  &lt;li&gt;SVG - An experimental SVG renderer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All of those backends need to be tested across different platforms (Windows,
+Android, Linux, Max, iOS), different architectures (x86_64, Arm64, Arm7), and a
+wide range of other options that can be selected on how Skia renders. Testing a
+wide range of GPUs is required because different GPUs have different behaviors,
+including some very buggy but widely deployed versions of OpenGL, so we current
+test against a large number of both desktop and mobile GPUs. All of this
+variety creates a combinatorial explosion in test data. For every commit to
+Skia the tests result in roughly 800,000 performance metrics and one million
+images being rendered. There are about 30 commits a day to the Skia repo, so
+that ends up being a lot of data. Sure, not a lot compared to other projects in
+Google, but Skia is open source, and we prefer to build all of our tooling also
+as open source, and we needed to build tools to analyze and monitor all those
+performance metrics and correctness images, and so we needed data storage with
+the following requirements:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Not an SQL database.&lt;/li&gt;
+  &lt;li&gt;Very fast access for recent data to allow ad-hoc analysis.&lt;/li&gt;
+  &lt;li&gt;Reasonable access for older data.&lt;/li&gt;
+  &lt;li&gt;Commit based organization.&lt;/li&gt;
+  &lt;li&gt;Robust, i.e. we can’t lose data.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The requirement that it not be an SQL database is a personal preference, I’m
+sure there are a large contingent of people that will tell me that Postgres is
+the perfect solution, but apparently I’m not smart enough to run/use/tune an
+SQL database, particularly for large amounts of data. I might give &lt;a href=&quot;https://cloud.google.com/spanner/&quot;&gt;Spanner&lt;/a&gt; a
+chance  in the future, and if so I will certainly give an update. &lt;a href=&quot;https://cloud.google.com/bigquery/&quot;&gt;BigQuery&lt;/a&gt;
+might also work. Regardless, we built these apps a long time before either
+Spanner or BigQuery were available, so they weren’t viable options at the time.&lt;/p&gt;
+
+&lt;p&gt;One of the other odd requirements is the commit based organization of the data.
+This is obviously because the data needs to align with the commits to Skia, but
+it isn’t that straightforward because tests on different machines take
+different amounts of time, and we also continually backfill tests when we have
+spare capacity, so test results almost never arrive in order.&lt;/p&gt;
+
+&lt;p&gt;Since there wasn’t a single system that could meet all these requirements we
+split the problem into two systems, one for robust storage, and a second system
+for fast access for real time analysis.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Robust storage (GCS) - The ‘source of truth’ documents are stored in Google Cloud Storage.&lt;/li&gt;
+  &lt;li&gt;Fast Access (Tile Store) - An intermediate form, built on key-value stores, such as BoltDB, organized into chunks of commits called tiles.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Storing the source of truth documents on Google Cloud Storage takes care of the
+robustness. The data files are all JSON and PNG images, which is what is
+emitted by the tools that do the performance and correctness testing. The JSON
+files are written out to a unique name which include year/month/day/hour in the
+path. This allows for easy rebuilding of the Tile Store, just scan for all the
+files based on the year/month/day/hour over your desired time range and ingest
+them into the Tile Store. And given that the Tile Store can be rebuilt easily
+from the ‘source of truth’ documents, we don’t need to back them up.&lt;/p&gt;
+
+&lt;p&gt;The Tile Store is optimized for very fast writes and fast querying.
+Additionally, we run on machines large enough to keep all the data for the last
+100 commits in memory for very fast access, refreshed from the tiles
+periodically.&lt;/p&gt;
+
+&lt;p&gt;For trace data we store each point as a pair, the index of the point and then
+the value of the trace at that point. That is, if the tile size is 50 then each
+point in a trace is at an index in [0, 49]. So the values stored for a trace
+might look like:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0, 1.23], [1, 3.21], [2, 5.67], ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Note that the points may not arrive in order, so they could actually be stored
+as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2, 5.67], [0, 1.23], [1, 3.21], ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Also note that points are only appended, and the last value for a point is the
+one that’s used, so duplicate data may exist in the trace:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2, 5.67], [0, 1.23], [1, 3.21], [2, 5.50], ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This can happen if a test is re-run, we always use the latter value, so the
+value at index 2 of this trace will be 5.50, not 5.67.&lt;/p&gt;
+
+&lt;p&gt;You can check out the &lt;a href=&quot;https://cloud.google.com/bigquery/&quot;&gt;code and documentation&lt;/a&gt; if you are interested in the
+details of the how the tiles are structured.&lt;/p&gt;
+
+&lt;p&gt;I wrote this up mostly as a historical marker, since by next year we might be
+fully on Spanner or some other storage technology, and also to find out how
+other people have solved similar problems.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
   &lt;a href=&quot;https://en.wikipedia.org/wiki/L-system&quot;&gt;L-Systems&lt;/a&gt; are cool. The amount of complexity, and
   naturalness of the forms you can get from such a tiny amount of code is
   amazing.
@@ -2415,69 +2527,4 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
   &lt;ul&gt;
     &lt;li&gt;&lt;a href=&quot;http://www.jaapsuter.com/geometric-algebra/&quot;&gt;Geometric Algebra Primer&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href=&quot;http://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=7943&amp;context=etd_theses&quot;&gt;Geometric Algebra: An Introduction with Applications in Euclidean and Conformal Geometry&lt;/a&gt;&lt;/li&gt;
-  &lt;/ul&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">Pat McCrory in the context of elite overproduction.</title><link href="https://bitworking.org/news/2016/12/mccrory_in_context" rel="alternate" type="text/html" title="Pat McCrory in the context of elite overproduction." /><published>2016-12-05T00:00:00-05:00</published><updated>2016-12-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2016/12/mccrory_in_context</id><content type="html" xml:base="https://bitworking.org/news/2016/12/mccrory_in_context">&lt;p&gt;
-    As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in
-    the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile
-    behavior in a larger context. While it would be tempting to try to
-    psychoanalyze his continued intransigence as yet another man-child temper
-    tantrum, there are larger forces at work, of which McCrory is just one
-    sad symptom.
-  &lt;/p&gt;
-  &lt;p&gt;
-    The root of the problem stems from the ever widening wealth gap and
-    subsequent &lt;a href=&quot;https://www.bloomberg.com/view/articles/2013-11-20/blame-rich-overeducated-elites-as-our-society-frays&quot;&gt;elite
-      overproduction&lt;/a&gt;. As more and more millionaires and billionaires are
-    minted they seek to convert their newfound wealth into political power.
-    But the levers of power are limited, there&amp;#39;s a finite number of House and
-    Senate seats, there are only 50 governors, and only one President. No
-    new power levers are being created, yet there are more and more people
-    scrambling for them. More and more millionaires think they should be on
-    the city council or run for their state legislature, while more
-    billionaires think they too should be President. In a simple example of
-    the law of supply and demand, you can see the price of running for office
-    rising steeply over the last 40 years, &lt;a href=&quot;http://www.bbc.com/news/the-reporters-35365848&quot;&gt;with the cost of
-      running for President exceeding $2 billion in 2012&lt;/a&gt;.
-  &lt;/p&gt;
-  &lt;p&gt;
-    But what happens when the demand outstrips the supply so that no manner
-    of money can buy you that cherished lever of power? When there are
-    multiple millionaires, each backed by a group of billionaires, all vying
-    for power? What do you pay then? You pay in social norms. Common decency. The
-    destruction of these are the price you pay. Pat McCrory, in a desperate
-    bid to retain his power, is willing to violate every norm of U.S.
-    democracy and attempt to destroy all faith in the election process, the
-    same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be
-    governor, well then, he might as well burn down the entire edifice so no
-    one else can be either.
-  &lt;/p&gt;
-  &lt;p&gt;
-    You can also see this playing out on the national stage, with Donald Trump
-    willing to violate every norm, digging deep into the veins of xenophobia,
-    racism, and bigotry to propel himself into office. Under normal
-    circumstances no politician would openly court the worse side of the human
-    tribal instinct, the horrors from the last rise of fascism leading up to
-    WWII have been too close and too fresh in memory. But time has passed, the
-    last survivors of WWII are dying out, the reality of tens of millions of
-    people dying in wars, revolutions, and pogroms are just dry history
-    lessons now, not to be considered in the raw and ugly scramble for power.
-  &lt;/p&gt;
-  &lt;p&gt;
-    So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior
-    has become, he is just a symptom of a much larger breakdown in political
-    norms, and these are just a couple steps along a longer arc of societal
-    disintegration. We&amp;#39;re already seeing the normal U.S. two-party system
-    fragment into five distinct parties; the neo-liberal wing of the
-    Democratic party as exemplified by Hillary Clinton, the populist wing of
-    Bernie Sanders followers, the traditional big business GOP, the Tea Party
-    republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the
-    disruption, merely the beginning. Layer on global warming, the continued
-    disruption of technology, and the world wide migration of people from
-    rural areas into cities and we have all the ingredients for massive
-    upheaval. Will we descend into our own Cultural Revolution, shatter the
-    country in another Civil War, or will the similar rise of fascism across
-    Europe lead to another world engulfing spasm of death and desctruction?
-    &lt;a href=&quot;http://www.salon.com/2016/10/01/breaking-point-america-approaching-a-period-of-disintegration-argues-anthropologist-peter-turchin/&quot;&gt;The
-      patterns are all there, the roots of the problem can be clearly mapped
-      out, and while there&amp;#39;s no guaranteed way to avoid the coming
-      disintegration, maybe we should at least try&lt;/a&gt;.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">As we head into the fourth week of Pat McCrory&amp;#39;s failure to conceeed in the NC gubernatorial race, it&amp;#39;s important to look at McCrory&amp;#39;s infantile behavior in a larger context. While it would be tempting to try to psychoanalyze his continued intransigence as yet another man-child temper tantrum, there are larger forces at work, of which McCrory is just one sad symptom. The root of the problem stems from the ever widening wealth gap and subsequent elite overproduction. As more and more millionaires and billionaires are minted they seek to convert their newfound wealth into political power. But the levers of power are limited, there&amp;#39;s a finite number of House and Senate seats, there are only 50 governors, and only one President. No new power levers are being created, yet there are more and more people scrambling for them. More and more millionaires think they should be on the city council or run for their state legislature, while more billionaires think they too should be President. In a simple example of the law of supply and demand, you can see the price of running for office rising steeply over the last 40 years, with the cost of running for President exceeding $2 billion in 2012. But what happens when the demand outstrips the supply so that no manner of money can buy you that cherished lever of power? When there are multiple millionaires, each backed by a group of billionaires, all vying for power? What do you pay then? You pay in social norms. Common decency. The destruction of these are the price you pay. Pat McCrory, in a desperate bid to retain his power, is willing to violate every norm of U.S. democracy and attempt to destroy all faith in the election process, the same process that put him in power four years ago. If Pat McCrory can&amp;#39;t be governor, well then, he might as well burn down the entire edifice so no one else can be either. You can also see this playing out on the national stage, with Donald Trump willing to violate every norm, digging deep into the veins of xenophobia, racism, and bigotry to propel himself into office. Under normal circumstances no politician would openly court the worse side of the human tribal instinct, the horrors from the last rise of fascism leading up to WWII have been too close and too fresh in memory. But time has passed, the last survivors of WWII are dying out, the reality of tens of millions of people dying in wars, revolutions, and pogroms are just dry history lessons now, not to be considered in the raw and ugly scramble for power. So don&amp;#39;t blame Pat McCrory, as infantile and destructive as his behavior has become, he is just a symptom of a much larger breakdown in political norms, and these are just a couple steps along a longer arc of societal disintegration. We&amp;#39;re already seeing the normal U.S. two-party system fragment into five distinct parties; the neo-liberal wing of the Democratic party as exemplified by Hillary Clinton, the populist wing of Bernie Sanders followers, the traditional big business GOP, the Tea Party republicans, and finally the Trumpers. And this isn&amp;#39;t the end of the disruption, merely the beginning. Layer on global warming, the continued disruption of technology, and the world wide migration of people from rural areas into cities and we have all the ingredients for massive upheaval. Will we descend into our own Cultural Revolution, shatter the country in another Civil War, or will the similar rise of fascism across Europe lead to another world engulfing spasm of death and desctruction? The patterns are all there, the roots of the problem can be clearly mapped out, and while there&amp;#39;s no guaranteed way to avoid the coming disintegration, maybe we should at least try.</summary></entry></feed>
+  &lt;/ul&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry></feed>
