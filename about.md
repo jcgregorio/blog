@@ -2,6 +2,7 @@
 layout: page
 title: About
 permalink: /about/
+redirect_from: /news/bio
 ---
 
 My name is Joe Gregorio and I am the father of three boys and one girl and a

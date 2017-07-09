@@ -33,6 +33,7 @@ markdown: kramdown
 theme: minima
 gems:
   - jekyll-feed
+  - jekyll-redirect-from
 feed:
   path: /news/feed/index.atom
 exclude:
