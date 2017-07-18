@@ -102,3 +102,9 @@ details of the how the tiles are structured.
 I wrote this up mostly as a historical marker, since by next year we might be
 fully on Spanner or some other storage technology, and also to find out how
 other people have solved similar problems.
+
+**Update**: I just recently came across this talk
+[Turning the database inside-out with Apache Samza](https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/),
+and realized this is very similar, i.e. we use Google Cloud Storage as our
+streaming log, and the Tile Store is our Materialized View.
+

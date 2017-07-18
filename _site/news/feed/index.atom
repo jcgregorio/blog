@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-16T09:18:18-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-17T20:28:13-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">Data binding and JS frameworks</title><link href="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks" rel="alternate" type="text/html" title="Data binding and JS frameworks" /><published>2017-07-16T00:00:00-04:00</published><updated>2017-07-16T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/data-binding-and-js-frameworks</id><content type="html" xml:base="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks">&lt;p&gt;It was over three years ago that I wrote
 &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;, at which time
 I was roundly criticized for not understanding that data binding could only be
@@ -134,7 +134,12 @@ details of the how the tiles are structured.&lt;/p&gt;
 
 &lt;p&gt;I wrote this up mostly as a historical marker, since by next year we might be
 fully on Spanner or some other storage technology, and also to find out how
-other people have solved similar problems.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
+other people have solved similar problems.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: I just recently came across this talk
+&lt;a href=&quot;https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/&quot;&gt;Turning the database inside-out with Apache Samza&lt;/a&gt;,
+and realized this is very similar, i.e. we use Google Cloud Storage as our
+streaming log, and the Tile Store is our Materialized View.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
   &lt;a href=&quot;https://en.wikipedia.org/wiki/L-system&quot;&gt;L-Systems&lt;/a&gt; are cool. The amount of complexity, and
   naturalness of the forms you can get from such a tiny amount of code is
   amazing.
