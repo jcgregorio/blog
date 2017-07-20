@@ -1,5 +1,125 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-17T20:28:13-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Data binding and JS frameworks</title><link href="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks" rel="alternate" type="text/html" title="Data binding and JS frameworks" /><published>2017-07-16T00:00:00-04:00</published><updated>2017-07-16T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/data-binding-and-js-frameworks</id><content type="html" xml:base="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks">&lt;p&gt;It was over three years ago that I wrote
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-20T08:40:01-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">D3 and L-Systems</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems" rel="alternate" type="text/html" title="D3 and L-Systems" /><published>2017-07-20T00:00:00-04:00</published><updated>2017-07-20T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems">&lt;p&gt;
+  So we know &lt;a
+    href=&quot;https://bitworking.org/news/2017/07/l-systems&quot;&gt;L-Systems&lt;/a&gt; are
+  fun. What if we let &lt;a href=&quot;https://github.com/d3/d3-force&quot;&gt;d3-force&lt;/a&gt;
+  layout the nodes of the L-System?
+&lt;/p&gt;
+
+  &lt;canvas width=&quot;600&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;
+  &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
+      rules = {
+        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
+        F: &quot;FF&quot;,
+        &quot;+&quot;: &quot;+&quot;,
+        &quot;-&quot;: &quot;-&quot;,
+        &quot;[&quot;: &quot;[&quot;,
+        &quot;]&quot;: &quot;]&quot;,
+      }
+      var start = {id: &quot;0&quot;};
+      var graph = {
+        &quot;nodes&quot;: [start],
+        &quot;links&quot;: [],
+      };
+      var n = 0;
+      var st = [start];
+      L = E(E(E(E(E(&quot;X&quot;))))).split('').forEach(function(ch) {
+        if (ch == &quot;[&quot;) {
+          n += 1;
+          var node = {id: &quot;&quot;+n};
+          st.push(node);
+          graph.nodes.push(node);
+          graph.links.push(
+            {
+              source: st[st.length-1].id,
+              target: st[st.length-2].id,
+            },
+          );
+        } else if (ch == &quot;]&quot;) {
+          st.pop()
+        }
+      });
+
+      var canvas = document.querySelector(&quot;canvas&quot;),
+            context = canvas.getContext(&quot;2d&quot;),
+            width = canvas.width,
+            height = canvas.height;
+
+      var simulation = d3.forceSimulation()
+          .force(&quot;link&quot;, d3.forceLink().distance(3).strength(0.5).iterations(2).id(function(d) { return d.id; }))
+          .force(&quot;charge&quot;, d3.forceManyBody().strength(-1))
+          .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2));
+
+      simulation
+        .nodes(graph.nodes)
+        .on(&quot;tick&quot;, ticked);
+
+      simulation.force(&quot;link&quot;)
+        .links(graph.links);
+
+      d3.select(canvas)
+        .call(d3.drag()
+          .container(canvas)
+            .subject(dragsubject)
+            .on(&quot;start&quot;, dragstarted)
+            .on(&quot;drag&quot;, dragged)
+            .on(&quot;end&quot;, dragended));
+
+      function ticked() {
+        context.clearRect(0, 0, width, height);
+
+        context.beginPath();
+        graph.links.forEach(drawLink);
+        context.strokeStyle = &quot;#343&quot;;
+        context.fillStyle = &quot;#363&quot;;
+        context.stroke();
+
+        context.beginPath();
+        graph.nodes.forEach(drawNode);
+        context.fill();
+      }
+
+      function dragsubject() {
+        return simulation.find(d3.event.x, d3.event.y);
+      }
+
+      function dragstarted() {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d3.event.subject.fx = d3.event.subject.x;
+          d3.event.subject.fy = d3.event.subject.y;
+      }
+
+      function dragged() {
+          d3.event.subject.fx = d3.event.x;
+          d3.event.subject.fy = d3.event.y;
+      }
+
+      function dragended() {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d3.event.subject.fx = null;
+          d3.event.subject.fy = null;
+      }
+
+      function drawLink(d) {
+          context.moveTo(d.source.x, d.source.y);
+          context.lineTo(d.target.x, d.target.y);
+      }
+
+      function drawNode(d) {
+          context.moveTo(d.x + 3, d.y);
+          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
+      }
+
+    })();
+  &lt;/script&gt;
+
+  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    document.getElementById('code').textContent = document.getElementById('src').textContent;
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">So we know L-Systems are fun. What if we let d3-force layout the nodes of the L-System?</summary></entry><entry><title type="html">Data binding and JS frameworks</title><link href="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks" rel="alternate" type="text/html" title="Data binding and JS frameworks" /><published>2017-07-16T00:00:00-04:00</published><updated>2017-07-16T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/data-binding-and-js-frameworks</id><content type="html" xml:base="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks">&lt;p&gt;It was over three years ago that I wrote
 &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;, at which time
 I was roundly criticized for not understanding that data binding could only be
 done via JS framework, the two were inextricably linked, and only 2-way data
@@ -782,362 +902,4 @@ made that way too easy.&lt;/p&gt;</content><author><name></name></author><summar
     InfluxDB defaults to storing all data forever, and if you don&amp;#39;t want to
     store all data forever you need to construct an SQL command to send to the
     server to control how data is retained.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">We just finished migrating all of our monitoring from InfluxDB to Prometheus and I thought I&amp;#39;d write up our reasons for the change. Please note that these are my own personal observations and relate to a specific project, these issue may not apply to you and you should evaluate each product for your own uses. Update: To clarify, the versions of InfluxDB and Prometheus that I am talking about are InfluxDB 1.1.1 and Prometheus 1.5.2.</summary></entry><entry><title type="html">Geometric Algebra applied to Physics</title><link href="https://bitworking.org/news/ga/physics.html" rel="alternate" type="text/html" title="Geometric Algebra applied to Physics" /><published>2017-01-01T00:00:00-05:00</published><updated>2017-01-01T00:00:00-05:00</updated><id>https://bitworking.org/news/ga/physics</id><content type="html" xml:base="https://bitworking.org/news/ga/physics.html">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
-    img {
-      vertical-align: baseline;
-    }
-
-    th {
-      background: #fff;
-    }
-  &lt;/style&gt;
-  &lt;script src=&quot;/js/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-  &lt;script src=&quot;/js/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-  &lt;p&gt;
-    Geometric Algebra can be applied to Physics, and many of the introductions
-    to GA online cover this, but they immediately jump to electromagnetic
-    fields or quantum mechanics, which is unfortunate since GA can also
-    greatly simplify 2D kinematics. One such example is uniform circular
-    motion.
-  &lt;/p&gt;
-
-  &lt;p class=aside&gt;
-    You should be familiar with all the concepts presented in &lt;a
-      href=&quot;https://bitworking.org/news/ga/2d&quot;&gt;An Introduction to Geometric
-      Algebra over R^2&lt;/a&gt; before proceeding.
-  &lt;/p&gt;
-
-  &lt;p&gt;
-    If we have a vector &lt;b&gt;p&lt;/b&gt; that moves at a constant rate of &amp;omega;
-    rad/s and has a starting position &lt;b&gt;p&lt;sub&gt;0&lt;/sub&gt;&lt;/b&gt;, then we can
-    describe the vector &lt;b&gt;p&lt;/b&gt; very easily:
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;$$\boldsymbol{p} = \boldsymbol{p_0} e^{\omega t \boldsymbol{I}}$$&lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;button id=rotor_toggle&gt;Start/Stop&lt;/button&gt;
-  &lt;canvas id=rotor width=300 height=300&gt;&lt;/canvas&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var button = document.getElementById('rotor_toggle');
-      var running = false;
-      var omega = 0.5;
-      var start = Date.now();
-      var p0 = ga2d.vec(0, -1);
-      var f = new draw_ga2d.Frame(document.getElementById('rotor'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var p = ga2d.mul(p0, rotor);
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vec(p, &quot;p&quot;);
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  &lt;/script&gt;
-
-  &lt;p&gt;
-    Let's figure out what the derivative of a Rotor looks like, by
-    first recalling its definition:
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;$$ e^{\theta \boldsymbol{I}} := \cos(\theta) + \sin(\theta)\boldsymbol{I}$$&lt;/dd&gt;
-  &lt;/dl&gt;
-  &lt;p&gt;
-    We take the derivative with respect to &amp;theta;:
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;
-      $$
-        \begin{align*}
-          \frac{d}{d \theta} e^{\theta \boldsymbol{I}} &amp;=  \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\boldsymbol{I}) \\
-            &amp;=  -\sin(\theta) + \cos(\theta)\boldsymbol{I} \\
-        \end{align*}
-      $$
-    &lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;
-    At this point observe that &lt;em&gt;cos&lt;/em&gt; and &lt;em&gt;sin&lt;/em&gt; just changed
-    places, along with a sign change, but we know of another operation that does
-    the same thing, which is multiplication by &lt;b&gt;I&lt;/b&gt;, so we get:
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;
-      $$
-        \begin{align*}
-          \frac{d}{d \theta} e^{\theta \boldsymbol{I}} &amp;= \frac{d}{d \theta} (\cos(\theta) + \sin(\theta)\boldsymbol{I}) \\
-            &amp;= -\sin(\theta) + \cos(\theta)\boldsymbol{I}          \\
-            &amp;= \boldsymbol{I} (\cos(\theta) + \sin(\theta)\boldsymbol{I})  \\
-            &amp;= \boldsymbol{I} e^{\theta \boldsymbol{I}}                    \\
-        \end{align*}
-      $$
-    &lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;
-    Not only does the derivative have a nice neat expression, we can read off
-    from the formula what is happening, which is that the derivative is a vector
-    that is rotated 90 degrees from the original vector. Also note that
-    normally the geometric product ins't commutative, but in this case both
-    parts are rotors, so the order doesn't matter.
-  &lt;/p&gt;
-
-  &lt;p&gt;
-    We can go through the same process to show what happens if &amp;theta; has
-    a constant multiplier &lt;em&gt;k&lt;/em&gt;:
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;
-      $$
-        \begin{align*}
-          \frac{d}{d \theta} e^{k \theta \boldsymbol{I}} &amp;= \frac{d}{d \theta} (\cos(k \theta) + \sin(k \theta)\boldsymbol{I}) \\
-            &amp;= k \boldsymbol{I} e^{k \theta \boldsymbol{I}} \\
-        \end{align*}
-      $$
-    &lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;
-    With our new derivative in hand we can now find the velocity vector
-    for our position vector &lt;b&gt;p&lt;/b&gt;, since velocity is just the derivative
-    of position with respect to time.
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;
-      $$
-        \begin{align*}
-        \boldsymbol{v}  &amp;= \frac{d}{dt} \boldsymbol{p} \\
-                &amp;= \frac{d}{dt} \boldsymbol{p_0} e^{\omega t \boldsymbol{I}} \\
-                &amp;= \boldsymbol{p_0} \omega \boldsymbol{I}  e^{\omega t \boldsymbol{I}} \\
-                &amp;= \omega \boldsymbol{p_0} \boldsymbol{I} e^{\omega t \boldsymbol{I}} \\
-        \end{align*}
-      $$
-    &lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;
-    Again, because we using Geometric Algebra, we can read off
-    what is going on geometrically from the formula, that is,
-    the derivative is a vector orthogonal to the position vector
-    that is scaled by &amp;omega;.
-  &lt;/p&gt;
-
-  &lt;button id=velocity_toggle&gt;Start/Stop&lt;/button&gt;
-  &lt;canvas id=velocity width=300 height=300&gt;&lt;/canvas&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var button = document.getElementById('velocity_toggle');
-      var running = false;
-      var omega = 0.5;
-      var omegaScalar = ga2d.scalar(omega);
-      var I = [0, 0, 0, 1];
-      var start = Date.now();
-      var p0 = ga2d.vec(0, -1);
-      var f = new draw_ga2d.Frame(document.getElementById('velocity'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var p = ga2d.mul(p0, rotor);
-        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vec(p, &quot;p&quot;);
-        f.vecFrom(v, p, &quot;v&quot;);
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  &lt;/script&gt;
-
-  &lt;p&gt;
-    Note that we've drawn the vector as starting from the position,
-    but that's not required.
-  &lt;/p&gt;
-
-  &lt;button id=sep_velocity_toggle&gt;Start/Stop&lt;/button&gt;
-  &lt;canvas id=sep_velocity width=300 height=300&gt;&lt;/canvas&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var button = document.getElementById('sep_velocity_toggle');
-      var running = false;
-      var omega = 0.5;
-      var omegaScalar = ga2d.scalar(omega);
-      var I = [0, 0, 0, 1];
-      var start = Date.now();
-      var p0 = ga2d.vec(0, -1);
-      var f = new draw_ga2d.Frame(document.getElementById('sep_velocity'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var p = ga2d.mul(p0, rotor);
-        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vec(p, &quot;p&quot;);
-        f.vec(v, &quot;v&quot;);
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  &lt;/script&gt;
-
-  &lt;p&gt;
-    We get the acceleration vector in the same manner, by taking
-    the derivative of the velocity vector with respect to time.
-  &lt;/p&gt;
-
-  &lt;dl&gt;
-    &lt;dd&gt;
-      $$
-        \begin{align*}
-        \boldsymbol{a}  &amp;= \frac{d}{dt} \boldsymbol{v}                                      \\
-                &amp;= \frac{d}{dt} \omega \boldsymbol{p_0} \boldsymbol{I} e^{\omega t \boldsymbol{I}}  \\
-                &amp;= \omega \boldsymbol{p_0} \boldsymbol{I} \omega \boldsymbol{I} e^{\omega t \boldsymbol{I}} \\
-                &amp;= \omega^2 \boldsymbol{p_0} \boldsymbol{I} \boldsymbol{I} e^{\omega t \boldsymbol{I}}      \\
-                &amp;= - \omega^2 \boldsymbol{p_0} e^{\omega t \boldsymbol{I}}
-        \end{align*}
-      $$
-    &lt;/dd&gt;
-  &lt;/dl&gt;
-
-  &lt;p&gt;
-    And again we can just read off from the formula what is going on
-    geometrically, which is that we end up with a vector that is rotated
-    180 degrees from the position vector, and scaled by &amp;omega;&lt;sup&gt;2&lt;/sup&gt;.
-  &lt;/p&gt;
-
-  &lt;button id=accel_toggle&gt;Start/Stop&lt;/button&gt;
-  &lt;canvas id=accel width=300 height=300&gt;&lt;/canvas&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var button = document.getElementById('accel_toggle');
-      var running = false;
-      var omega = 0.5;
-      var omegaScalar = ga2d.scalar(omega);
-      var I = [0, 0, 0, 1];
-      var start = Date.now();
-      var p0 = ga2d.vec(0, -1);
-      var f = new draw_ga2d.Frame(document.getElementById('accel'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var p = ga2d.mul(p0, rotor);
-        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
-        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vec(p, &quot;p&quot;);
-        f.vec(v, &quot;v&quot;);
-        f.vec(a, &quot;a&quot;);
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  &lt;/script&gt;
-
-  &lt;p&gt;
-    We can place the acceleration and velocity vectors as starting
-    from the positition vector, and that looks like:
-  &lt;/p&gt;
-
-  &lt;button id=accel_from_toggle&gt;Start/Stop&lt;/button&gt;
-  &lt;canvas id=accel_from width=300 height=300&gt;&lt;/canvas&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var button = document.getElementById('accel_from_toggle');
-      var running = false;
-      var omega = 0.5;
-      var omegaScalar = ga2d.scalar(omega);
-      var I = [0, 0, 0, 1];
-      var start = Date.now();
-      var p0 = ga2d.vec(0, -1);
-      var f = new draw_ga2d.Frame(document.getElementById('accel_from'));
-      var step = function() {
-        var rotor = ga2d.e(omega * (Date.now() - start)/1000);
-        var p = ga2d.mul(p0, rotor);
-        var v = ga2d.mul(omegaScalar, ga2d.mul(p0, ga2d.mul(I, rotor)));
-        var a = ga2d.mul(omegaScalar, ga2d.mul(v, I));
-        f.clear();
-        f.expandTo([0, 1, 1, 0]);
-        f.expandTo([0, -1, -1, 0]);
-        f.vecFrom(v, p, &quot;v&quot;);
-        f.vecFrom(a, p, &quot;a&quot;);
-        f.draw();
-        if (running) {
-          window.requestAnimationFrame(step);
-        }
-      };
-
-      button.addEventListener('click', function() {
-        running = !running;
-        if (running) {
-          start = Date.now();
-          window.requestAnimationFrame(step);
-        }
-      });
-      step();
-    })();
-  &lt;/script&gt;
-
-  &lt;p&gt;
-    Note how simple this was to derive and that the geometric interpretation
-    could be read off of the resulting formulas. We didn't need to leave the
-    2D plane, that is, all of these calculations took place in 𝔾&lt;sup&gt;2&lt;/sup&gt;.
-    The more classical derivations for uniform circular motion rely on the
-    cross-product which takes you out of ℝ&lt;sup&gt;2&lt;/sup&gt; into ℝ&lt;sup&gt;3&lt;/sup&gt; and
-    which doesn't work in higher level dimensions.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry></feed>
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">We just finished migrating all of our monitoring from InfluxDB to Prometheus and I thought I&amp;#39;d write up our reasons for the change. Please note that these are my own personal observations and relate to a specific project, these issue may not apply to you and you should evaluate each product for your own uses. Update: To clarify, the versions of InfluxDB and Prometheus that I am talking about are InfluxDB 1.1.1 and Prometheus 1.5.2.</summary></entry></feed>
