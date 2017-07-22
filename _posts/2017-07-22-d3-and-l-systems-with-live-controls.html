@@ -1,0 +1,172 @@
+---
+layout: post
+title: D3 and L-Systems with live controls
+---
+<p>
+  An <a href="/news/2017/07/d3-and-l-systems">L-System fed into d3-force</a>, but now with controls that allow you to
+  change some of the simulation parameters.
+</p>
+
+  <label for="linkDistance">Link Distance:</label>
+  <input type="range" name="linkDistance" id="linkDistance" min=1 max=10 value="3" />
+  <span style="padding: 0 10px;" id=linkDistanceDisplay></span>
+  <br>
+  <label for="linkStrength">Link Strength:</label>
+  <input type="range" name="linkStrength" id="linkStrength" value="0.5" min=0.01 max=4 step="0.01" />
+  <span style="padding: 0 10px;" id=linkStrengthDisplay></span>
+  <br>
+  <label for="chargeStrength">Charge Strength:</label>
+  <input type="range" name="chargeStrength" id="chargeStrength" value="-1" min="-10" max="-0.01" step="0.01" />
+  <span style="padding: 0 10px;" id=chargeStrengthDisplay></span>
+  <br>
+  <canvas width="600" height="600"></canvas>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script id=src type="text/javascript" charset="utf-8">
+    (function () {
+      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : "" }
+      rules = {
+        X: "F-[[X]+X]+F[+FX]-X",
+        F: "FF",
+        "+": "+",
+        "-": "-",
+        "[": "[",
+        "]": "]",
+      }
+      var start = {id: "0"};
+      var graph = {
+        "nodes": [start],
+        "links": [],
+      };
+      var n = 0;
+      var st = [start];
+      L = E(E(E(E(E("X"))))).split('').forEach(function(ch) {
+        if (ch == "[") {
+          n += 1;
+          var node = {id: ""+n};
+          st.push(node);
+          graph.nodes.push(node);
+          graph.links.push(
+            {
+              source: st[st.length-1].id,
+              target: st[st.length-2].id,
+            },
+          );
+        } else if (ch == "]") {
+          st.pop()
+        }
+      });
+
+      var canvas = document.querySelector("canvas"),
+            context = canvas.getContext("2d"),
+            width = canvas.width,
+            height = canvas.height;
+
+      var linkDistance = 3;
+      var linkStrength = 0.5;
+      var linkForce = d3.forceLink().distance(linkDistance).strength(linkStrength).iterations(5).id(function(d) { return d.id; });
+      var chargeStrength = -1;
+      var charge = d3.forceManyBody().strength(chargeStrength);
+      simulation = d3.forceSimulation()
+          .force("link", linkForce)
+          .force("charge", charge)
+          .force("center", d3.forceCenter(width / 2, height / 2))
+
+      function updateSimulation() {
+        linkForce.distance(linkDistance).strength(linkStrength);
+        charge.strength(chargeStrength);
+        simulation.alphaTarget(0.1).restart();
+      }
+
+      simulation
+        .nodes(graph.nodes)
+        .on("tick", ticked);
+
+      simulation.force("link")
+        .links(graph.links);
+
+      d3.select(canvas)
+        .call(d3.drag()
+          .container(canvas)
+            .subject(dragsubject)
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+      function ticked() {
+        context.clearRect(0, 0, width, height);
+
+        context.beginPath();
+        graph.links.forEach(drawLink);
+        context.strokeStyle = "#343";
+        context.fillStyle = "#363";
+        context.stroke();
+
+        context.beginPath();
+        graph.nodes.forEach(drawNode);
+        context.fill();
+      }
+
+      function dragsubject() {
+        return simulation.find(d3.event.x, d3.event.y);
+      }
+
+      function dragstarted() {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d3.event.subject.fx = d3.event.subject.x;
+          d3.event.subject.fy = d3.event.subject.y;
+      }
+
+      function dragged() {
+          d3.event.subject.fx = d3.event.x;
+          d3.event.subject.fy = d3.event.y;
+      }
+
+      function dragended() {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d3.event.subject.fx = null;
+          d3.event.subject.fy = null;
+      }
+
+      function drawLink(d) {
+          context.moveTo(d.source.x, d.source.y);
+          context.lineTo(d.target.x, d.target.y);
+      }
+
+      function drawNode(d) {
+          context.moveTo(d.x + 3, d.y);
+          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
+      }
+
+      document.getElementById('linkDistance').addEventListener('input', function(e) {
+        linkDistance = +e.target.value;
+        document.getElementById('linkDistanceDisplay').innerText = linkDistance;
+        updateSimulation();
+      });
+
+      document.getElementById('linkStrength').addEventListener('input', function(e) {
+        linkStrength = +e.target.value;
+        if (linkStrength < 0) {
+          linkStrength = -linkStrength;
+          e.target.value = linkStrength;
+        }
+        document.getElementById('linkStrengthDisplay').innerText = linkStrength;
+        updateSimulation();
+      });
+
+      document.getElementById('chargeStrength').addEventListener('input', function(e) {
+        chargeStrength = +e.target.value;
+        if (chargeStrength > 0) {
+          chargeStrength = -chargeStrength;
+          e.target.value = chargeStrength;
+        }
+        document.getElementById('chargeStrengthDisplay').innerText = chargeStrength;
+        updateSimulation();
+      });
+
+    })();
+  </script>
+
+  <pre><code id=code></code></pre>
+  <script type="text/javascript" charset="utf-8">
+    document.getElementById('code').textContent = document.getElementById('src').textContent;
+  </script>
