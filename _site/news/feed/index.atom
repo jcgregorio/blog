@@ -1,5 +1,204 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-22T10:19:54-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">D3 and L-Systems with live controls</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls" rel="alternate" type="text/html" title="D3 and L-Systems with live controls" /><published>2017-07-22T00:00:00-04:00</published><updated>2017-07-22T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-23T16:48:55-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">D3 and L-Systems with live controls and Redux</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux" rel="alternate" type="text/html" title="D3 and L-Systems with live controls and Redux" /><published>2017-07-23T00:00:00-04:00</published><updated>2017-07-23T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">&lt;p&gt;
+  This is just &lt;a href=&quot;news/2017/07/d3-and-l-systems-with-live-controls&quot;&gt;D3
+    and L-Systems with live controls&lt;/a&gt;, but now state is managed by &lt;a
+    href=&quot;http://redux.js.org/&quot;&gt;Redux&lt;/a&gt;. Oh, and also arrow functions,
+  because &lt;a href=&quot;https://caniuse.com/#feat=arrow-functions&quot;&gt;they're
+    available everywhere I care about&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+  I've been reading about Redux and wanted to try it out. It seems
+  nice, as it forced me to consolidate everything about page state, which
+  caused me to clean up the code quite a bit. I like that in a tool. It's
+  also the reason I like Go and way it handles 'error', it forces me to think
+  about the not-happy-path as opposed to the happy-path, which always makes
+  my code better.
+&lt;/p&gt;
+&lt;p&gt;
+  I think it's interesting that there isn't a library to map the state into
+  the URL, at least I couldn't find anything that wasn't either a React based
+  solution or a full blown routing package. I've got some &lt;a
+    href=&quot;https://github.com/google/skia-buildbot/blob/32ea496dbdc5865230d25073ac44f27ce16bb735/res/js/common.js#L720&quot;&gt;code that already
+    does that&lt;/a&gt;, I wonder if it would be useful to break that out as its own
+  library.
+&lt;/p&gt;
+
+  &lt;label for=&quot;linkDistance&quot;&gt;Link Distance:&lt;/label&gt;
+  &lt;input type=&quot;range&quot; name=&quot;linkDistance&quot; id=&quot;linkDistance&quot; min=1 max=10 /&gt;
+  &lt;span style=&quot;padding: 0 10px;&quot; id=linkDistanceDisplay&gt;&lt;/span&gt;
+  &lt;br&gt;
+  &lt;label for=&quot;linkStrength&quot;&gt;Link Strength:&lt;/label&gt;
+  &lt;input type=&quot;range&quot; name=&quot;linkStrength&quot; id=&quot;linkStrength&quot; min=0.01 max=4 step=&quot;0.01&quot; /&gt;
+  &lt;span style=&quot;padding: 0 10px;&quot; id=linkStrengthDisplay&gt;&lt;/span&gt;
+  &lt;br&gt;
+  &lt;label for=&quot;chargeStrength&quot;&gt;Charge Strength:&lt;/label&gt;
+  &lt;input type=&quot;range&quot; name=&quot;chargeStrength&quot; id=&quot;chargeStrength&quot; min=&quot;-10&quot; max=&quot;-0.01&quot; step=&quot;0.01&quot; /&gt;
+  &lt;span style=&quot;padding: 0 10px;&quot; id=chargeStrengthDisplay&gt;&lt;/span&gt;
+  &lt;br&gt;
+  &lt;canvas width=&quot;600&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;
+  &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
+      rules = {
+        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
+        F: &quot;FF&quot;,
+        &quot;+&quot;: &quot;+&quot;,
+        &quot;-&quot;: &quot;-&quot;,
+        &quot;[&quot;: &quot;[&quot;,
+        &quot;]&quot;: &quot;]&quot;,
+      }
+      var start = {id: &quot;0&quot;};
+      var graph = {
+        &quot;nodes&quot;: [start],
+        &quot;links&quot;: [],
+      };
+      var n = 0;
+      var st = [start];
+      L = E(E(E(E(E(&quot;X&quot;))))).split('').forEach(function(ch) {
+        if (ch == &quot;[&quot;) {
+          n += 1;
+          var node = {id: &quot;&quot;+n};
+          st.push(node);
+          graph.nodes.push(node);
+          graph.links.push(
+            {
+              source: st[st.length-1].id,
+              target: st[st.length-2].id,
+            },
+          );
+        } else if (ch == &quot;]&quot;) {
+          st.pop()
+        }
+      });
+
+      var canvas = document.querySelector(&quot;canvas&quot;),
+            context = canvas.getContext(&quot;2d&quot;),
+            width = canvas.width,
+            height = canvas.height;
+
+      var dup = (o) =&gt; JSON.parse(JSON.stringify(o));
+      var $ = (id) =&gt; document.getElementById(id);
+
+      var defaultState = {
+        linkStrength: 0.5,
+        linkDistance: 3,
+        chargeStrength: -1,
+      };
+
+      var linkForce = d3.forceLink().iterations(5).id(function(d) { return d.id; });
+      var charge = d3.forceManyBody();
+      var simulation = d3.forceSimulation()
+          .force(&quot;link&quot;, linkForce)
+          .force(&quot;charge&quot;, charge)
+          .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2));
+
+      var updateState = (state = defaultState, action) =&gt; {
+        state = dup(state);
+        state[action.type] = action.value;
+        return state;
+      }
+
+      var store = Redux.createStore(updateState);
+
+      function render() {
+        var state = store.getState();
+        $('linkStrength').value = state.linkStrength;
+        $('linkDistance').value = state.linkDistance;
+        $('chargeStrength').value = state.chargeStrength;
+        $('linkStrengthDisplay').innerText = state.linkStrength;
+        $('linkDistanceDisplay').innerText = state.linkDistance;
+        $('chargeStrengthDisplay').innerText = state.chargeStrength;
+        linkForce.distance(state.linkDistance).strength(state.linkStrength);
+        charge.strength(state.chargeStrength);
+        simulation.alphaTarget(0.1).restart();
+      }
+
+      store.subscribe(render);
+      render();
+
+      simulation
+        .nodes(graph.nodes)
+        .on(&quot;tick&quot;, ticked);
+
+      simulation.force(&quot;link&quot;)
+        .links(graph.links);
+
+      d3.select(canvas)
+        .call(d3.drag()
+          .container(canvas)
+            .subject(dragsubject)
+            .on(&quot;start&quot;, dragstarted)
+            .on(&quot;drag&quot;, dragged)
+            .on(&quot;end&quot;, dragended));
+
+      function ticked() {
+        context.clearRect(0, 0, width, height);
+
+        context.beginPath();
+        graph.links.forEach(drawLink);
+        context.strokeStyle = &quot;#343&quot;;
+        context.fillStyle = &quot;#363&quot;;
+        context.stroke();
+
+        context.beginPath();
+        graph.nodes.forEach(drawNode);
+        context.fill();
+      }
+
+      function dragsubject() {
+        return simulation.find(d3.event.x, d3.event.y);
+      }
+
+      function dragstarted() {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d3.event.subject.fx = d3.event.subject.x;
+          d3.event.subject.fy = d3.event.subject.y;
+      }
+
+      function dragged() {
+          d3.event.subject.fx = d3.event.x;
+          d3.event.subject.fy = d3.event.y;
+      }
+
+      function dragended() {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d3.event.subject.fx = null;
+          d3.event.subject.fy = null;
+      }
+
+      function drawLink(d) {
+          context.moveTo(d.source.x, d.source.y);
+          context.lineTo(d.target.x, d.target.y);
+      }
+
+      function drawNode(d) {
+          context.moveTo(d.x + 3, d.y);
+          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
+      }
+
+      function dispatchFromEvent(id, event, xform) {
+        $(id).addEventListener(event, function(e) {
+          store.dispatch({
+            type: e.target.id,
+            value: xform(e),
+          });
+        });
+      }
+
+      dispatchFromEvent('linkDistance', 'input', (e) =&gt; +e.target.value);
+      dispatchFromEvent('linkStrength', 'input', (e) =&gt; Math.abs(+e.target.value));
+      dispatchFromEvent('chargeStrength', 'input', (e) =&gt; -Math.abs(+e.target.value));
+
+    })();
+  &lt;/script&gt;
+
+  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    document.getElementById('code').textContent = document.getElementById('src').textContent;
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">This is just D3 and L-Systems with live controls, but now state is managed by Redux. Oh, and also arrow functions, because they're available everywhere I care about.</summary></entry><entry><title type="html">D3 and L-Systems with live controls</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls" rel="alternate" type="text/html" title="D3 and L-Systems with live controls" /><published>2017-07-22T00:00:00-04:00</published><updated>2017-07-22T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls">&lt;p&gt;
   An &lt;a href=&quot;/news/2017/07/d3-and-l-systems&quot;&gt;L-System fed into d3-force&lt;/a&gt;, but now with controls that allow you to
   change some of the simulation parameters.
 &lt;/p&gt;
@@ -935,25 +1134,4 @@ next to my writing. Call me old fashioned.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Update&lt;/em&gt;: And comments are now enabled, the &lt;a href=&quot;https://github.com/jekyll/minima&quot;&gt;Jekyll Minima
 theme&lt;/a&gt; and &lt;a href=&quot;https://disqus.com/&quot;&gt;Disqus&lt;/a&gt;
-made that way too easy.&lt;/p&gt;</content><author><name></name></author><summary type="html">I am in the process of moving this blog over to Jekyll, while at the same time admitting that I’m never going to finish writing my own blogging software, and that I really should concentrate on the writing, and not the underlying software.</summary></entry><entry><title type="html">Tech Driven Deflation</title><link href="https://bitworking.org/news/2017/04/tech-driven-deflation" rel="alternate" type="text/html" title="Tech Driven Deflation" /><published>2017-04-19T00:00:00-04:00</published><updated>2017-04-19T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/04/tech-driven-deflation</id><content type="html" xml:base="https://bitworking.org/news/2017/04/tech-driven-deflation">&lt;p&gt;
-    The article &lt;a href=&quot;https://singularityhub.com/2017/04/14/will-tech-driven-deflation-export-japans-economic-woes-to-the-world/&quot;&gt;Will Tech-Driven Deflation Export Japan’s Economic Woes to the World?&lt;/a&gt;
-    reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;:
-  &lt;/p&gt;
-  &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/uGI00HV7Cfw?rel=0&quot; frameborder=&quot;0&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-  &lt;p&gt;
-    The origin for the above video is &lt;a href=&quot;http://bestreviews.com/electronics#evolution-of-the-desk&quot;&gt;http://bestreviews.com/electronics#evolution-of-the-desk&lt;/a&gt;.
-  &lt;/p&gt;
-
-  &lt;p&gt;
-    Each time an object gets digitized that&amp;#39;s one less object to
-    manufacture, one less object to ship, one less object consuming
-    raw materials. It&amp;#39;s actually more surprising that this hasn&amp;#39;t had
-    an even larger impact on the U.S. economy.
-  &lt;/p&gt;
-
-  &lt;p&gt;
-    &lt;b&gt;Update:&lt;/b&gt; A &lt;a href=&quot;https://www.brookings.edu/wp-content/uploads/2016/08/varian.pdf&quot;&gt;great
-      slide deck from Hal Varian&lt;/a&gt; covers the same ground with a slightly different take, pointing
-    out that much of this progress not only doesn't increase GDP, it actually
-    reduces it, which is a problem of using GDP as a metric.
-  &lt;/p&gt;</content><author><name></name></author><summary type="html">The article Will Tech-Driven Deflation Export Japan’s Economic Woes to the World? reminded me of this video, &amp;#34;Evolution of the Desk&amp;#34;: The origin for the above video is http://bestreviews.com/electronics#evolution-of-the-desk.</summary></entry></feed>
+made that way too easy.&lt;/p&gt;</content><author><name></name></author><summary type="html">I am in the process of moving this blog over to Jekyll, while at the same time admitting that I’m never going to finish writing my own blogging software, and that I really should concentrate on the writing, and not the underlying software.</summary></entry></feed>
