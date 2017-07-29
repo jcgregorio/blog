@@ -1,5 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-23T16:52:12-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">D3 and L-Systems with live controls and Redux</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux" rel="alternate" type="text/html" title="D3 and L-Systems with live controls and Redux" /><published>2017-07-23T00:00:00-04:00</published><updated>2017-07-23T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-07-29T10:34:04-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">What a bold platform really looks like.</title><link href="https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like" rel="alternate" type="text/html" title="What a bold platform really looks like." /><published>2017-07-29T00:00:00-04:00</published><updated>2017-07-29T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like</id><content type="html" xml:base="https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like">&lt;p&gt;&lt;a href=&quot;http://www.huffingtonpost.com/entry/chuck-schumer-single-payer_us_5974b05be4b00e4363e0164e&quot;&gt;Chuck Schumer Says Senate Democrats Are Open To Single-Payer Health Care&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“We’re going to look at broader things [for health care],” he said.
+“Single-payer is one of them.. Many things are on the table. Medicare for
+people above 55 is on the table. A buy-in to Medicare is on the table.
+Buy-in to Medicaid is on the table.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Yeah, &lt;strong&gt;bold&lt;/strong&gt; leadership always comes from phrases like “on the table”. Don’t
+you remember &lt;a href=&quot;http://www.telegraph.co.uk/news/winston-churchill/11366880/Winston-Churchills-10-most-important-speeches.html&quot;&gt;Churchill’s famous
+speech&lt;/a&gt;?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Going to the end is on the table. Fighting in France is on the table, fighting on the
+seas and oceans is a possibility, fighting with growing confidence and growing strength
+in the air is something we’re certainly willing to talk about.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The leadership on display here is just pathetic.&lt;/p&gt;
+
+&lt;p&gt;A simple bold platform is very easy to state, and also one that’s easy to
+support. Additionally, if you keep it direct you can more easily construct
+radical arguments to move the &lt;a href=&quot;https://en.wikipedia.org/wiki/Overton_window&quot;&gt;Overton&lt;/a&gt; window.
+For example, on just three issues, the platform could be boldly and simply
+stated, and the Overton postions below are the ones you get some people to
+state, so that the platform position looks like a reasonable compromise.&lt;/p&gt;
+
+&lt;h2 id=&quot;healthcare&quot;&gt;Healthcare&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Medicare for all.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: Let’s nationalize hospitals and shut down the health insurance industry.&lt;/p&gt;
+
+&lt;h2 id=&quot;education&quot;&gt;Education&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Free college education (up to a bachelor’s degree).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: Let’s nationalize the education system and extend mandatory education from a high school diploma to a bachelor’s degree.&lt;/p&gt;
+
+&lt;h2 id=&quot;taxes&quot;&gt;Taxes&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Return to a progressive tax system where the wealthy pay their
+fair share and loopholes are closed.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: A top marginal income tax rate of 90%.&lt;/p&gt;
+
+&lt;p&gt;Now aren’t those a lot more appealing than the mealy mouthed alternatives?&lt;/p&gt;</content><author><name></name></author><summary type="html">Chuck Schumer Says Senate Democrats Are Open To Single-Payer Health Care</summary></entry><entry><title type="html">D3 and L-Systems with live controls and Redux</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux" rel="alternate" type="text/html" title="D3 and L-Systems with live controls and Redux" /><published>2017-07-23T00:00:00-04:00</published><updated>2017-07-23T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">&lt;p&gt;
   This is just &lt;a href=&quot;/news/2017/07/d3-and-l-systems-with-live-controls&quot;&gt;D3
     and L-Systems with live controls&lt;/a&gt;, but now state is managed by &lt;a
     href=&quot;http://redux.js.org/&quot;&gt;Redux&lt;/a&gt;. Oh, and also arrow functions,
@@ -1118,20 +1165,4 @@ start exploring &lt;a href=&quot;https://cloud.google.com/gpu/&quot;&gt;GPU’s 
 
 &lt;p&gt;BTW,
 &lt;a href=&quot;https://play.google.com/store/apps/details?id=com.google.android.apps.forscience.whistlepunk&amp;amp;hl=en&quot;&gt;Google Science Journal&lt;/a&gt;
-is awesome.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why yes, the frogs in the pond across the road are rather loud.</summary></entry><entry><title type="html">Moving to Jekyll</title><link href="https://bitworking.org/news/2017/06/moving-to-jekyll" rel="alternate" type="text/html" title="Moving to Jekyll" /><published>2017-06-15T00:00:00-04:00</published><updated>2017-06-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/06/moving-to-jekyll</id><content type="html" xml:base="https://bitworking.org/news/2017/06/moving-to-jekyll">&lt;p&gt;I am in the process of moving this blog over to
-&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, while at the same time admitting that I’m
-never going to finish writing my own blogging software, and that I really
-should concentrate on the writing, and not the underlying software.&lt;/p&gt;
-
-&lt;p&gt;This is also an admission that for a while there may be general brokenness
-such as broken links and some horribly formatted posts.&lt;/p&gt;
-
-&lt;p&gt;Also, I will be turning on comments, which is a longer post in itself, but
-let’s just say that after years of watching abuse and generally uncivil
-behavior on all the social networks I’ve decided to revert to old technology
-from a simpler time, where I get to have absolute control over what appears
-next to my writing. Call me old fashioned.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Update&lt;/em&gt;: And comments are now enabled, the &lt;a href=&quot;https://github.com/jekyll/minima&quot;&gt;Jekyll Minima
-theme&lt;/a&gt; and &lt;a href=&quot;https://disqus.com/&quot;&gt;Disqus&lt;/a&gt;
-made that way too easy.&lt;/p&gt;</content><author><name></name></author><summary type="html">I am in the process of moving this blog over to Jekyll, while at the same time admitting that I’m never going to finish writing my own blogging software, and that I really should concentrate on the writing, and not the underlying software.</summary></entry></feed>
+is awesome.&lt;/p&gt;</content><author><name></name></author><summary type="html">Why yes, the frogs in the pond across the road are rather loud.</summary></entry></feed>
