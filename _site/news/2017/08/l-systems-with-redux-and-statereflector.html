@@ -322,7 +322,7 @@ this.StateReflector = this.StateReflector || {};
 
 <script id=src type="text/javascript" charset="utf-8">
   (function () {
-    var dup = (o) => Object.assign({}, o);
+    var dup = (o) => JSON.parse(JSON.stringify(o));
     var $ = (id) => document.getElementById(id);
 
     var canvas = document.querySelector("canvas"),
