@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>D3 and L-Systems with Redux and StateReflector</title>
-  <meta name="description" content="This is D3 and L-Systems with live controls and Redux, but now state is reflected into the URL Fragment.">
+  <title>L-Systems with Redux and StateReflector</title>
+  <meta name="description" content="This is D3 and L-Systems with Redux and StateReflector, but now w/o the D3.js.">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2017/08/d3-and-l-systems-with-redux-and-statereflector">
+  <link rel="canonical" href="https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
@@ -89,46 +89,40 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">D3 and L-Systems with Redux and StateReflector</h1>
+    <h1 class="post-title" itemprop="name headline">L-Systems with Redux and StateReflector</h1>
     <p class="post-meta">
-      <time datetime="2017-08-05T00:00:00-04:00" itemprop="datePublished">
+      <time datetime="2017-08-06T00:00:00-04:00" itemprop="datePublished">
         
-        Aug 5, 2017
+        Aug 6, 2017
       </time>
       </p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
     <p>
-  This is <a href="/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">D3
-    and L-Systems with live controls and Redux</a>, but now state is reflected
-  into the <a href="https://tools.ietf.org/html/rfc3986#section-3.5">URL
-    Fragment</a>.
+  This is <a
+    href="/news/2017/08/d3-and-l-systems-with-redux-and-statereflector/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">D3
+    and L-Systems with Redux and StateReflector</a>, but now w/o the D3.js.
 </p>
 
 <p>
-  The syncing is two way, that is, changes to the state of the controls are
-  reflected into the URL Fragment, and changes to the fragment are reflected
-  into the state of the controls, so every change give you a permalink to
-  that state, and browser history navigation works.
+  While <a href="https://d3js.org/">D3.js</a> is fun, at this point it is a
+  bit distracting, I'm more interested in Redux and data binding, so time to
+  move back to just drawing static images on canvas.
 </p>
 
-  <label for="linkDistance">Link Distance:</label>
-  <input type="range" name="linkDistance" id="linkDistance" min=1 max=10 />
-  <span style="padding: 0 10px;" id=linkDistanceDisplay></span>
-  <br>
-  <label for="linkStrength">Link Strength:</label>
-  <input type="range" name="linkStrength" id="linkStrength" min=0.01 max=4 step="0.01" />
-  <span style="padding: 0 10px;" id=linkStrengthDisplay></span>
-  <br>
-  <label for="chargeStrength">Charge Strength:</label>
-  <input type="range" name="chargeStrength" id="chargeStrength" min="-10" max="-0.01" step="0.01" />
-  <span style="padding: 0 10px;" id=chargeStrengthDisplay></span>
-  <br>
-  <canvas width="600" height="600"></canvas>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
+<label for=length>Length:</label>
+<input type=range name=length id=length min=1 max=10 />
+<span style="padding: 0 10px;" id=lengthDisplay></span>
+<br>
+<label for=angle>Angle:</label>
+<input type=range name=angle id=angle min=0.01 max=1 step=0.01 />
+<span style="padding: 0 10px;" id=angleDisplay></span>
+<br>
+<canvas width=600 height=600></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
 this.StateReflector = this.StateReflector || {};
 
 (function(sr) {
@@ -325,209 +319,101 @@ this.StateReflector = this.StateReflector || {};
 
 })(this.StateReflector);
   </script>
-  <script id=src type="text/javascript" charset="utf-8">
-    (function () {
-      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : "" }
-      rules = {
-        X: "F-[[X]+X]+F[+FX]-X",
-        F: "FF",
-        "+": "+",
-        "-": "-",
-        "[": "[",
-        "]": "]",
-      }
-      var start = {id: "0"};
-      var graph = {
-        "nodes": [start],
-        "links": [],
-      };
-      var n = 0;
-      var st = [start];
-      L = E(E(E(E(E("X"))))).split('').forEach(function(ch) {
-        if (ch == "[") {
-          n += 1;
-          var node = {id: ""+n};
-          st.push(node);
-          graph.nodes.push(node);
-          graph.links.push(
-            {
-              source: st[st.length-1].id,
-              target: st[st.length-2].id,
-            },
-          );
+
+<script id=src type="text/javascript" charset="utf-8">
+  (function () {
+    var dup = (o) => Object.assign({}, o);
+    var $ = (id) => document.getElementById(id);
+
+    var canvas = document.querySelector("canvas"),
+      ctx = canvas.getContext("2d"),
+      width = canvas.width,
+      height = canvas.height;
+
+    var rules = {
+      "X": "F-[[X]+X]+F[+FX]-X",
+      "F": "FF",
+      "+": "+",
+      "-": "-",
+      "[": "[",
+      "]": "]",
+    }
+    var E = (s) => s ? (rules[s[0]] + E(s.substr(1))) : "";
+    var L = E(E(E(E(E("X")))));
+
+    function draw(x, y, len, angle) {
+      var p = { x: x, y: y, a: 3 };
+      var stack = [];
+      ctx.beginPath()
+      ctx.moveTo(p.x, p.y)
+      L.split("").forEach(function(ch) {
+        if (ch == "F") {
+          p.x += len*Math.sin(p.a);
+          p.y += len*Math.cos(p.a);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        } else if (ch == "-") {
+          p.a += angle;
+        } else if (ch == "+") {
+          p.a -= angle;
+        } else if (ch == "[") {
+          stack.push(dup(p));
         } else if (ch == "]") {
-          st.pop()
+          p = stack.pop();
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
         }
-      });
+      })
+    }
 
-      var canvas = document.querySelector("canvas"),
-            context = canvas.getContext("2d"),
-            width = canvas.width,
-            height = canvas.height;
+    var defaultState = {
+      length: 7,
+      angle: 0.4,
+    };
 
-      var dup = (o) => JSON.parse(JSON.stringify(o));
-      var $ = (id) => document.getElementById(id);
-
-      var defaultState = {
-        linkStrength: 0.5,
-        linkDistance: 3,
-        chargeStrength: -1,
-      };
-
-      var linkForce = d3.forceLink().iterations(5).id(function(d) { return d.id; });
-      var charge = d3.forceManyBody();
-      var simulation = d3.forceSimulation()
-          .force("link", linkForce)
-          .force("charge", charge)
-          .force("center", d3.forceCenter(width / 2, height / 2));
-
-      var updateState = (state = defaultState, action) => {
-        if (action.type == "@@redux/INIT") {
-        } else if (action.type == "REPLACE_ALL") { // This is new.
-          state = dup(action.value);
-        } else {
-            state = dup(state);
-          state[action.type] = action.value;
-        }
-        return state;
+    var updateState = (state = defaultState, action) => {
+      if (action.type == "@@redux/INIT") {
+      } else if (action.type == "REPLACE_ALL") {
+        state = dup(action.value);
+      } else {
+        state = dup(state);
+        state[action.type] = action.value;
       }
+      return state;
+    };
 
-      var store = Redux.createStore(updateState);
+    var store = Redux.createStore(updateState);
 
-      function render() {
-        var state = store.getState();
-        $('linkStrength').value = state.linkStrength;
-        $('linkDistance').value = state.linkDistance;
-        $('chargeStrength').value = state.chargeStrength;
-        $('linkStrengthDisplay').innerText = state.linkStrength;
-        $('linkDistanceDisplay').innerText = state.linkDistance;
-        $('chargeStrengthDisplay').innerText = state.chargeStrength;
-        linkForce.distance(state.linkDistance).strength(state.linkStrength);
-        charge.strength(state.chargeStrength);
-        simulation.alphaTarget(0.1).restart();
-      }
+    function render() {
+      var state = store.getState();
+      $('length').value = state.length;
+      $('angle').value = state.angle;
+      $('lengthDisplay').innerText = state.length;
+      $('angleDisplay').innerText = state.angle;
+      ctx.clearRect(0, 0, width, height);
+      draw(width/2, height, state.length, state.angle);
+    }
 
-      store.subscribe(render);
+    store.subscribe(render);
 
-      // This is new.
-      StateReflector.stateReflector(store, function(state) {
-        return {type: "REPLACE_ALL", value: state};
-      });
-      render();
+    StateReflector.stateReflector(store, function(state) {
+      return {type: "REPLACE_ALL", value: state};
+    });
 
-      simulation
-        .nodes(graph.nodes)
-        .on("tick", ticked);
-
-      simulation.force("link")
-        .links(graph.links);
-
-      d3.select(canvas)
-        .call(d3.drag()
-          .container(canvas)
-            .subject(dragsubject)
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
-
-      function ticked() {
-        context.clearRect(0, 0, width, height);
-
-        context.beginPath();
-        graph.links.forEach(drawLink);
-        context.strokeStyle = "#343";
-        context.fillStyle = "#363";
-        context.stroke();
-
-        context.beginPath();
-        graph.nodes.forEach(drawNode);
-        context.fill();
-      }
-
-      function dragsubject() {
-        return simulation.find(d3.event.x, d3.event.y);
-      }
-
-      function dragstarted() {
-          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-          d3.event.subject.fx = d3.event.subject.x;
-          d3.event.subject.fy = d3.event.subject.y;
-      }
-
-      function dragged() {
-          d3.event.subject.fx = d3.event.x;
-          d3.event.subject.fy = d3.event.y;
-      }
-
-      function dragended() {
-          if (!d3.event.active) simulation.alphaTarget(0);
-          d3.event.subject.fx = null;
-          d3.event.subject.fy = null;
-      }
-
-      function drawLink(d) {
-          context.moveTo(d.source.x, d.source.y);
-          context.lineTo(d.target.x, d.target.y);
-      }
-
-      function drawNode(d) {
-          context.moveTo(d.x + 3, d.y);
-          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
-      }
-
-      function dispatchFromEvent(id, event, xform) {
-        $(id).addEventListener(event, function(e) {
-          store.dispatch({
-            type: e.target.id,
-            value: xform(e),
-          });
+    function dispatchFromEvent(id, event, xform) {
+      $(id).addEventListener(event, function(e) {
+        store.dispatch({
+          type: e.target.id,
+          value: xform(e),
         });
-      }
+      });
+    }
 
-      dispatchFromEvent('linkDistance', 'input', (e) => +e.target.value);
-      dispatchFromEvent('linkStrength', 'input', (e) => Math.abs(+e.target.value));
-      dispatchFromEvent('chargeStrength', 'input', (e) => -Math.abs(+e.target.value));
-
-    })();
-  </script>
-
-  <p>
-    There are only two small changes from the previous code, the addition of a
-    <a
-      href="https://gist.github.com/jcgregorio/d3fae4dd7ebc3617cd669a855ae4ad9a#file-l-system-js-L58">
-      new action "REPLACE_ALL" that the store understands</a>, and then 
-    <a
-      href="https://gist.github.com/jcgregorio/d3fae4dd7ebc3617cd669a855ae4ad9a#file-l-system-js-L84">the call
-      to initialize StateReflector</a>.
-  </p>
-
-  <p>
-    The StateReflector is extraced from <a
-      href="https://github.com/google/skia-buildbot/blob/32ea496dbdc5865230d25073ac44f27ce16bb735/res/js/common.js#L709">this
-      code</a> from the <a href="https://skia.org">Skia</a> Infrastructure codebase. The URL Fragment will
-    only contain information that's required, this is, if a value in the state
-    is unchanged from the default or initial value, then that value won't
-    appear in the URL Fragment.
-  </p>
-  <p>
-    The pairing with Redux makes this much nicer. In all of our (Skia Infra) current code
-    we don't use Redux, and so for StateReflector to work it needs to monitor
-    the internal state of the page which is does using a 100ms timer.
-    While the overhead is very low, having a non-polling solution is
-    obviously better.
-  </p>
-  <p>
-    The StateReflector code is also modified from the original so that it
-    store the state in the URL Fragment, while the original code stores the
-    state in the URL Query. It's probably worth making that a configuration
-    option to stateReflector.
-  </p>
-  <p>
-    If StateReflector looks useful to anyone let me know in the comments
-    and I'll stand up a repo and port the tests over too.
-  </p>
-  <script
-    src="https://gist.github.com/jcgregorio/d3fae4dd7ebc3617cd669a855ae4ad9a.js"></script>
+    dispatchFromEvent('length', 'input', (e) => +e.target.value);
+    dispatchFromEvent('angle', 'input', (e) => +e.target.value);
+  })();
+</script>
+<script src="https://gist.github.com/jcgregorio/7d83bcd9670575ec6c1f9bd682f7b24a.js"></script>
 
   </div>
 
@@ -537,8 +423,8 @@ this.StateReflector = this.StateReflector || {};
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2017/08/d3-and-l-systems-with-redux-and-statereflector';
-      this.page.identifier = 'https://bitworking.org/news/2017/08/d3-and-l-systems-with-redux-and-statereflector';
+      this.page.url = 'https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector';
+      this.page.identifier = 'https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector';
     };
 
     (function() {
@@ -566,12 +452,9 @@ this.StateReflector = this.StateReflector || {};
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2017/07/what-a-bold-platform-really-looks-like">&laquo;
-        What a bold platform really looks like.</a>
+      <a class="prev" href="/news/2017/08/d3-and-l-systems-with-redux-and-statereflector">&laquo;
+        D3 and L-Systems with Redux and StateReflector</a>
       
-      
-      <a class="next"
-        href="/news/2017/08/l-systems-with-redux-and-statereflector">L-Systems with Redux and StateReflector &raquo;</a>
       
     </div>
     
