@@ -367,7 +367,6 @@ this.StateTools = this.StateTools || {};
 <script id=src type="text/javascript" charset="utf-8">
   StateTools.DomReady.then(function () {
     var dup = (o) => JSON.parse(JSON.stringify(o));
-    var $ = (id) => document.getElementById(id);
 
     var canvas = document.querySelector("canvas"),
       ctx = canvas.getContext("2d"),
@@ -415,12 +414,12 @@ this.StateTools = this.StateTools || {};
       draw(width/2, height, state.length, state.angle);
     }
 
+    // Setup the Redux state store.
     var defaultState = {
       length: 7,
       angle: 0.4,
     };
 
-    // Setup the Redux state store.
     var updateState = (state = defaultState, action) => {
       if (action.type == "REPLACE_ALL") {
         state = dup(action.value);
@@ -428,8 +427,8 @@ this.StateTools = this.StateTools || {};
       return state;
     };
     var store = Redux.createStore(updateState);
-
     var dispatch = state => store.dispatch({type: "REPLACE_ALL", value: state});
+
     // Bind state to controls.
     let binder = new StateTools.Binder(store, dispatch);
     binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
