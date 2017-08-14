@@ -1,0 +1,12 @@
+#!/bin/bash
+
+filename=./_posts/$(date +%Y-%m-%d)-`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`.html
+cat >$filename <<EOL
+---
+layout: post
+title: $@
+---
+
+EOL
+
+vim $filename
