@@ -219,7 +219,8 @@ this.StateTools = this.StateTools || {};
   //
   // stateFromURL - This function is returned by urlReflector
   //        and should be called on 'popstate' and 'DOMContentLoaded' events.
-  sr.urlReflector = function(store) {
+  // dispatch - A function called to update the state in store.
+  sr.urlReflector = function(store, dispatch) {
     var defaultState = store.getState();
     var lastState = store.getState();
     store.subscribe(function() {
@@ -231,21 +232,20 @@ this.StateTools = this.StateTools || {};
       }
     });
 
-    // stateFromURL should be called when the URL has changed, it updates the state.
-    var stateFromURL = function() {
+    // stateChangeFromURL should be called when DOMContentLoaded.
+    var stateChangeFromURL = function() {
       var delta = sr.query.toObject(window.location.hash.slice(1), defaultState);
       lastState = sr.object.applyDelta(delta, defaultState);
-      return lastState
+      dispatch(lastState);
     }
-    return stateFromURL;
+    window.addEventListener('popstate', stateChangeFromURL);
+    return stateChangeFromURL;
   }
 
   var dup = (o) => JSON.parse(JSON.stringify(o));
 
   // Binder makes it easy to setup bindings between data stored in a Redux
   // store and HTML elements.
-  //
-  // Presume store understands "REPLACE_ALL". Should be a func passed in.
   class Binder {
 
     // store - A Reduc store.
@@ -279,6 +279,7 @@ this.StateTools = this.StateTools || {};
     //
     //  statePath - A "." separated path into the state object. Ex:
     //        The statePath "a.b" selects 2 in the object {a: { b: 2, c: 3}}.
+    //        The empty statePath, "", selects any change to the state.
     //  query - A CSS selector that determines which element(s) are being bound.
     //          The selector will be run from the 'ele' passed into the
     //          constructor. Ex: "div > li", "length".
@@ -364,7 +365,7 @@ this.StateTools = this.StateTools || {};
   </script>
 
 <script id=src type="text/javascript" charset="utf-8">
-  (function () {
+  StateTools.DomReady.then(function () {
     var dup = (o) => JSON.parse(JSON.stringify(o));
     var $ = (id) => document.getElementById(id);
 
@@ -409,8 +410,7 @@ this.StateTools = this.StateTools || {};
       })
     }
 
-    function render() {
-      var state = store.getState();
+    function render(state) {
       ctx.clearRect(0, 0, width, height);
       draw(width/2, height, state.length, state.angle);
     }
@@ -429,23 +429,17 @@ this.StateTools = this.StateTools || {};
     };
     var store = Redux.createStore(updateState);
 
+    var dispatch = state => store.dispatch({type: "REPLACE_ALL", value: state});
     // Bind state to controls.
-    let binder = new StateTools.Binder(store, state => store.dispatch({type: "REPLACE_ALL", value: state}));
+    let binder = new StateTools.Binder(store, dispatch);
     binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("length", "#lengthDisplay", {attr: "innerText"});
     binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
     binder.add("",       "canvas",         render);
 
-    var stateFromURL = StateTools.urlReflector(store);
-    var stateChangeFromURLChange = function() {
-      store.dispatch({
-        type: "REPLACE_ALL",
-        value: stateFromURL()
-      });
-    }
-
-    StateTools.DomReady.then(stateChangeFromURLChange);
-    window.addEventListener('popstate', stateChangeFromURLChange);
-  })();
+    // Hook up urlReflector.
+    var stateChangeFromURL = StateTools.urlReflector(store, dispatch);
+    stateChangeFromURL(); // Call here since DomReady has resolved.
+  });
 </script>
