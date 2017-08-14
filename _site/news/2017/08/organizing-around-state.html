@@ -362,7 +362,6 @@ this.StateTools = this.StateTools || {};
       });
     }
 
-
     /*
         to = {query: "#length", attr: "input"};
         to = {query: "div > li", attr: "aria-hidden", content: true};
@@ -381,7 +380,7 @@ this.StateTools = this.StateTools || {};
       let finalPathSegment = pathLeadSegments.pop();
 
       let elements = [].slice.call(this.ele.querySelectorAll(query));
-      let toFunc = () => {};
+      let toFunc = undefined;
       if (typeof to === "object") {
         if (to.content) {
           toFunc = state => elements.forEach(ele => ele.setAttribute(to.attr, state));
@@ -476,8 +475,7 @@ this.StateTools = this.StateTools || {};
     };
 
     var updateState = (state = defaultState, action) => {
-      if (action.type == "@@redux/INIT") {
-      } else if (action.type == "REPLACE_ALL") {
+      if (action.type == "REPLACE_ALL") {
         state = dup(action.value);
       }
       return state;
