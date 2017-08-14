@@ -338,20 +338,27 @@ this.StateTools = this.StateTools || {};
 
   var dup = (o) => JSON.parse(JSON.stringify(o));
 
+  // Binder makes it easy to setup bindings between data stored in a Redux
+  // store and HTML elements.
+  //
+  // Presume store understands "REPLACE_ALL". Should be a func passed in.
   class Binder {
+
+    // store - A Reduc store.
+    // ele - The root element where all element searches begin from, i.e.
+    //     querySelectorAll is run on this element. Defaults to document.
     constructor(store, ele = document) {
       this.to = [];
       this.store = store;
-      this.oldState = {}; // So filling in the default value triggers writes to the elements.
+      this.oldState = {}; // Empty object so that filling in the default value triggers writes to the elements.
       this.ele = ele;
-      this.store.subscribe(this.newState.bind(this));
+      this.store.subscribe(this._newState.bind(this));
     }
 
-    newState() {
+    _newState() {
       let delta = sr.object.getDelta(this.store.getState(), this.oldState);
       this.to.forEach(item => {
         let value = delta;
-        // try..except this.
         for (var i = 0; i < item.parsedPath.length; i++) {
           value = value[item.parsedPath[i]];
           if (value === undefined) {
@@ -362,23 +369,50 @@ this.StateTools = this.StateTools || {};
       });
     }
 
-    /*
-        to = {query: "#length", attr: "input"};
-        to = {query: "div > li", attr: "aria-hidden", content: true};
-
-        from = {query: "div > li", event: "click", proc: e => e.target.dataset.foo, filter: e => e.target.tagName == "LI"}
-        from = {query: "#length", event: "length", proc: e => +e.target.value}
-
-        add("length", "#length", {attr: "input"}, {event: "input", proc: e => +e.target.value}
-        add("opts", "#select", state => tpl.stamp(state) , {event: "change", proc: e => e.target.value}
-        add("alerts", "#alerts", state => tpl.stamp(state) , {event: "change", listener: function() { ..Do the index mapping to the Array in the state.. }}
-        );
-     */
+    // add - Add a binding between some part of the state and an element.
+    //
+    //  statePath - A "." separated path into the state object. Ex:
+    //        The statePath "a.b" selects 2 in the object {a: { b: 2, c: 3}}.
+    //  query - A CSS selector that determines which element(s) are being bound.
+    //          The selector will be run from the 'ele' passed into the
+    //          constructor. Ex: "div > li", "length".
+    //  to - Defines how the state maps to the element. Can be an object of the form:
+    //
+    //    {
+    //      attr: "input",
+    //      content: false,
+    //    };
+    //
+    //    Where 'attr' is the name of the DOM attribute to set.
+    //    If content is true then the attribute is treated as a Content attribute.
+    //    Not specifying 'content' is the same as specifying content: false.
+    //
+    //    The value of 'to' can also be a function that takes a single argument of the state
+    //    value at the given statePath. The function will be called every time
+    //    value at the given statePath changes. This can be used, for example, to expand
+    //    templates based on the updated state.
+    //
+    //  from - [Optional] Defines how the elements value maps to the state. Can be an object of the form:
+    //
+    //    {
+    //      event: "click",
+    //      proc: e => e.target.dataset.foo,
+    //      filter: e => e.target.tagName == "LI",
+    //    }
+    //
+    //    Where 'event' is the name of the event to register for. When the
+    //    event is fired 'proc' will extract the value to store in the state
+    //    at statePath. The 'filter' is optional and can be used to filter out
+    //    unwanted events.
+    //
+    //    If the 'listener' is set on the object then its value, which should
+    //    be a function, is added as an event handler to the selected
+    //    elements. The function should update the store's state when called.
+    //
     add(statePath, query, to, from) {
       let parsedPath = statePath.split(".");
       let pathLeadSegments = statePath.split(".");
       let finalPathSegment = pathLeadSegments.pop();
-
       let elements = [].slice.call(this.ele.querySelectorAll(query));
       let toFunc = undefined;
       if (typeof to === "object") {
@@ -484,8 +518,8 @@ this.StateTools = this.StateTools || {};
     var store = Redux.createStore(updateState);
 
     let binder = new StateTools.Binder(store);
-    binder.add("length", "#length",        {attr: "input"},    {event: "input", proc: e => +e.target.value});
-    binder.add("angle",  "#angle",         {attr: "input"},    {event: "input", proc: e => +e.target.value});
+    binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
+    binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("length", "#lengthDisplay", {attr: "innerText"});
     binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
 
