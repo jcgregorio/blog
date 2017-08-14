@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>L-Systems with Redux and StateReflector</title>
-  <meta name="description" content="This is D3 and L-Systems with Redux and StateReflector, but now w/o the D3.js.">
+  <title>Organizing around State</title>
+  <meta name="description" content="This is D3 and L-Systems with Redux and StateReflector, but now with more organization around updating the state and around efficiently updating the DOM to c...">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector">
+  <link rel="canonical" href="https://bitworking.org/news/2017/08/organizing-around-state">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
@@ -89,11 +89,11 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">L-Systems with Redux and StateReflector</h1>
+    <h1 class="post-title" itemprop="name headline">Organizing around State</h1>
     <p class="post-meta">
-      <time datetime="2017-08-06T00:00:00-04:00" itemprop="datePublished">
+      <time datetime="2017-08-13T00:00:00-04:00" itemprop="datePublished">
         
-        Aug 6, 2017
+        Aug 13, 2017
       </time>
       </p>
   </header>
@@ -102,13 +102,38 @@
     <p>
   This is <a
     href="/news/2017/08/d3-and-l-systems-with-redux-and-statereflector/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">D3
-    and L-Systems with Redux and StateReflector</a>, but now w/o the D3.js.
+    and L-Systems with Redux and StateReflector</a>, but now with more
+  organization around updating the state and around efficiently updating
+  the DOM to changes in the state.
 </p>
 
 <p>
-  While <a href="https://d3js.org/">D3.js</a> is fun, at this point it is a
-  bit distracting, I'm more interested in Redux and data binding, so time to
-  move back to just drawing static images on canvas.
+  You can see that the render() function is inefficent in that every time
+  'state' changes all the elements are updated, even if the new value
+  isn't different from the old value.
+</p>
+
+<pre><code>
+    function render() {
+      var state = store.getState();
+      $('length').value = state.length;
+      $('angle').value = state.angle;
+      $('lengthDisplay').innerText = state.length;
+      $('angleDisplay').innerText = state.angle;
+      ctx.clearRect(0, 0, width, height);
+      draw(width/2, height, state.length, state.angle);
+    }</code></pre>
+
+<p>
+  To make this more efficient we can leverage (the newly renamed
+  StateReflector to StateTools) StateTools.getDelta(),
+  which returns the differences between the old state and the new state, so
+  we only have to update elements that have changed.
+</p>
+
+<p>
+  Similarly on the side of updating the state, we can consolidate some code
+  around responding to events.
 </p>
 
 <label for=length>Length:</label>
@@ -123,7 +148,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
-this.StateReflector = this.StateReflector || {};
+this.StateTools = this.StateTools || {};
 
 (function(sr) {
   "use strict";
@@ -288,10 +313,9 @@ this.StateReflector = this.StateReflector || {};
   //        must be Number, String, Boolean, Object, or Array of String.
   //        Doesn't handle NaN, null, or undefined.
   //
-  // stateChange - A callback of the form function(state) that is called when
-  //        state has been changed by a change in the URL, the return value
-  //        should be appropriate for passing into store.dispatch();
-  sr.stateReflector = function(store, stateChange) {
+  // stateFromURL - This function is returned by urlReflector
+  //        and should be called on 'popstate' and 'DOMContentLoaded' events.
+  sr.urlReflector = function(store) {
     var defaultState = store.getState();
     var lastState = store.getState();
     store.subscribe(function() {
@@ -306,18 +330,98 @@ this.StateReflector = this.StateReflector || {};
     // stateFromURL should be called when the URL has changed, it updates the state.
     var stateFromURL = function() {
       var delta = sr.query.toObject(window.location.hash.slice(1), defaultState);
-
       lastState = sr.object.applyDelta(delta, defaultState);
-      store.dispatch(stateChange(lastState));
+      return lastState
     }
-
-    sr.DomReady.then(stateFromURL);
-
-    // Every popstate event should also update the state.
-    window.addEventListener('popstate', stateFromURL);
+    return stateFromURL;
   }
 
-})(this.StateReflector);
+  var dup = (o) => JSON.parse(JSON.stringify(o));
+
+  class Binder {
+    constructor(store, ele = document) {
+      this.to = [];
+      this.store = store;
+      this.oldState = {}; // So filling in the default value triggers writes to the elements.
+      this.ele = ele;
+      this.store.subscribe(this.newState.bind(this));
+    }
+
+    newState() {
+      let delta = sr.object.getDelta(this.store.getState(), this.oldState);
+      this.to.forEach(item => {
+        let value = delta;
+        // try..except this.
+        for (var i = 0; i < item.parsedPath.length; i++) {
+          value = value[item.parsedPath[i]];
+          if (value === undefined) {
+            return
+          }
+        }
+        item.func(value);
+      });
+    }
+
+
+    /*
+        to = {query: "#length", attr: "input"};
+        to = {query: "div > li", attr: "aria-hidden", content: true};
+
+        from = {query: "div > li", event: "click", proc: e => e.target.dataset.foo, filter: e => e.target.tagName == "LI"}
+        from = {query: "#length", event: "length", proc: e => +e.target.value}
+
+        add("length", "#length", {attr: "input"}, {event: "input", proc: e => +e.target.value}
+        add("opts", "#select", state => tpl.stamp(state) , {event: "change", proc: e => e.target.value}
+        add("alerts", "#alerts", state => tpl.stamp(state) , {event: "change", listener: function() { ..Do the index mapping to the Array in the state.. }}
+        );
+     */
+    add(statePath, query, to, from) {
+      let parsedPath = statePath.split(".");
+      let pathLeadSegments = statePath.split(".");
+      let finalPathSegment = pathLeadSegments.pop();
+
+      let elements = [].slice.call(this.ele.querySelectorAll(query));
+      let toFunc = () => {};
+      if (typeof to === "object") {
+        if (to.content) {
+          toFunc = state => elements.forEach(ele => ele.setAttribute(to.attr, state));
+        } else {
+          toFunc = state => elements.forEach(ele => ele[to.attr] = state);
+        }
+      } else {
+        toFunc = to;
+      }
+      this.to.push({
+        func: toFunc,
+        parsedPath: parsedPath,
+      });
+
+      if (!from) {
+        return
+      }
+
+      if (from.proc) {
+        elements.forEach(ele => ele.addEventListener(from.event, e => {
+          if (from.filter && !from.filter(e)) {
+            return
+          }
+          let state = dup(this.store.getState());
+          pathLeadSegments.forEach(segment => { state = state[segment]; });
+          state[finalPathSegment] = from.proc(e);
+          this.store.dispatch({
+            type: "REPLACE_ALL",
+            value: state,
+          });
+        }));
+      } else if (from.listener) {
+        elements.forEach(ele => ele.addEventListener(from.event, from.listener));
+      }
+    }
+  }
+
+  sr.Binder = Binder;
+
+})(this.StateTools);
   </script>
 
 <script id=src type="text/javascript" charset="utf-8">
@@ -375,42 +479,36 @@ this.StateReflector = this.StateReflector || {};
       if (action.type == "@@redux/INIT") {
       } else if (action.type == "REPLACE_ALL") {
         state = dup(action.value);
-      } else {
-        state = dup(state);
-        state[action.type] = action.value;
       }
       return state;
     };
 
     var store = Redux.createStore(updateState);
 
+    let binder = new StateTools.Binder(store);
+    binder.add("length", "#length",        {attr: "input"},    {event: "input", proc: e => +e.target.value});
+    binder.add("angle",  "#angle",         {attr: "input"},    {event: "input", proc: e => +e.target.value});
+    binder.add("length", "#lengthDisplay", {attr: "innerText"});
+    binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
+
     function render() {
       var state = store.getState();
-      $('length').value = state.length;
-      $('angle').value = state.angle;
-      $('lengthDisplay').innerText = state.length;
-      $('angleDisplay').innerText = state.angle;
       ctx.clearRect(0, 0, width, height);
       draw(width/2, height, state.length, state.angle);
     }
 
     store.subscribe(render);
 
-    StateReflector.stateReflector(store, function(state) {
-      return {type: "REPLACE_ALL", value: state};
-    });
-
-    function dispatchFromEvent(id, event, xform) {
-      $(id).addEventListener(event, function(e) {
-        store.dispatch({
-          type: e.target.id,
-          value: xform(e),
-        });
+    var stateFromURL = StateTools.urlReflector(store);
+    var stateChangeFromURLChange = function() {
+      store.dispatch({
+        type: "REPLACE_ALL",
+        value: stateFromURL()
       });
     }
 
-    dispatchFromEvent('length', 'input', (e) => +e.target.value);
-    dispatchFromEvent('angle', 'input', (e) => +e.target.value);
+    StateTools.DomReady.then(stateChangeFromURLChange);
+    window.addEventListener('popstate', stateChangeFromURLChange);
   })();
 </script>
 <script src="https://gist.github.com/jcgregorio/7d83bcd9670575ec6c1f9bd682f7b24a.js"></script>
@@ -423,8 +521,8 @@ this.StateReflector = this.StateReflector || {};
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector';
-      this.page.identifier = 'https://bitworking.org/news/2017/08/l-systems-with-redux-and-statereflector';
+      this.page.url = 'https://bitworking.org/news/2017/08/organizing-around-state';
+      this.page.identifier = 'https://bitworking.org/news/2017/08/organizing-around-state';
     };
 
     (function() {
@@ -452,9 +550,9 @@ this.StateReflector = this.StateReflector || {};
     
     <div class="PageNavigation">
       
+      <a class="prev" href="/news/2017/08/l-systems-with-redux-and-statereflector">&laquo;
+        L-Systems with Redux and StateReflector</a>
       
-      <a class="next"
-        href="/news/2017/08/organizing-around-state">Organizing around State &raquo;</a>
       
     </div>
     

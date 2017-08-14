@@ -17,7 +17,7 @@ title: Organizing around State
   isn't different from the old value.
 </p>
 
-<code>
+<pre><code>
     function render() {
       var state = store.getState();
       $('length').value = state.length;
@@ -26,8 +26,7 @@ title: Organizing around State
       $('angleDisplay').innerText = state.angle;
       ctx.clearRect(0, 0, width, height);
       draw(width/2, height, state.length, state.angle);
-    }
-</code>
+    }</code></pre>
 
 <p>
   To make this more efficient we can leverage (the newly renamed
@@ -241,6 +240,91 @@ this.StateTools = this.StateTools || {};
     return stateFromURL;
   }
 
+  var dup = (o) => JSON.parse(JSON.stringify(o));
+
+  class Binder {
+    constructor(store, ele = document) {
+      this.to = [];
+      this.store = store;
+      this.oldState = {}; // So filling in the default value triggers writes to the elements.
+      this.ele = ele;
+      this.store.subscribe(this.newState.bind(this));
+    }
+
+    newState() {
+      let delta = sr.object.getDelta(this.store.getState(), this.oldState);
+      this.to.forEach(item => {
+        let value = delta;
+        // try..except this.
+        for (var i = 0; i < item.parsedPath.length; i++) {
+          value = value[item.parsedPath[i]];
+          if (value === undefined) {
+            return
+          }
+        }
+        item.func(value);
+      });
+    }
+
+
+    /*
+        to = {query: "#length", attr: "input"};
+        to = {query: "div > li", attr: "aria-hidden", content: true};
+
+        from = {query: "div > li", event: "click", proc: e => e.target.dataset.foo, filter: e => e.target.tagName == "LI"}
+        from = {query: "#length", event: "length", proc: e => +e.target.value}
+
+        add("length", "#length", {attr: "input"}, {event: "input", proc: e => +e.target.value}
+        add("opts", "#select", state => tpl.stamp(state) , {event: "change", proc: e => e.target.value}
+        add("alerts", "#alerts", state => tpl.stamp(state) , {event: "change", listener: function() { ..Do the index mapping to the Array in the state.. }}
+        );
+     */
+    add(statePath, query, to, from) {
+      let parsedPath = statePath.split(".");
+      let pathLeadSegments = statePath.split(".");
+      let finalPathSegment = pathLeadSegments.pop();
+
+      let elements = [].slice.call(this.ele.querySelectorAll(query));
+      let toFunc = () => {};
+      if (typeof to === "object") {
+        if (to.content) {
+          toFunc = state => elements.forEach(ele => ele.setAttribute(to.attr, state));
+        } else {
+          toFunc = state => elements.forEach(ele => ele[to.attr] = state);
+        }
+      } else {
+        toFunc = to;
+      }
+      this.to.push({
+        func: toFunc,
+        parsedPath: parsedPath,
+      });
+
+      if (!from) {
+        return
+      }
+
+      if (from.proc) {
+        elements.forEach(ele => ele.addEventListener(from.event, e => {
+          if (from.filter && !from.filter(e)) {
+            return
+          }
+          let state = dup(this.store.getState());
+          pathLeadSegments.forEach(segment => { state = state[segment]; });
+          state[finalPathSegment] = from.proc(e);
+          this.store.dispatch({
+            type: "REPLACE_ALL",
+            value: state,
+          });
+        }));
+      } else if (from.listener) {
+        elements.forEach(ele => ele.addEventListener(from.event, from.listener));
+      }
+    }
+  }
+
+  sr.Binder = Binder;
+
 })(this.StateTools);
   </script>
 
@@ -305,77 +389,7 @@ this.StateTools = this.StateTools || {};
 
     var store = Redux.createStore(updateState);
 
-    class Binder {
-      constructor(store, ele = document) {
-        this.to = [];
-        this.store = store;
-        this.oldState = {}; // So filling in the default value triggers writes to the elements.
-        this.ele = ele;
-        this.store.subscribe(this.newState);
-      }
-
-      newState() {
-        let delta = StateTools.getDelta(this.store.getState(), this.oldState);
-        this.to.forEach(item => {
-          let value = delta;
-          // try..except this.
-          for (var i = 0; i < item.parsedPath.length; i++) {
-            value = value[segment];
-            if (value === undefined) {
-              return
-            }
-          }
-          item.toFunc(value);
-        });
-      }
-
-      /*
-        to = {query: "#length", attr: "input"};
-        to = {query: "div > li", attr: "aria-hidden", content: true};
-
-        from = {query: "div > li", event: "click", proc: e => e.target.dataset.foo, filter: e => e.target.tagName == "LI"}
-        from = {query: "#length", event: "length", proc: e => +e.target.value}
-
-        add("length", "#length", {attr: "input"}, {event: "input", proc: e => +e.target.value}
-        );
-      */
-      add(statePath, query, to, from) {
-        let parsedPath = statePath.split(".");
-        let pathLeadSegments = statePath.split(".");
-        let finalPathSegment = pathLeadSegments.pop();
-
-        let elements = [].slice.call(this.ele.querySelectorAll(query));
-        let toFunc = undefined;
-        if (typeof to === "object") {
-          if (to.content) {
-            toFunc = state => elements.forEach(ele, ele => ele.setAttribute(to.attr, state));
-          } else {
-            toFunc = state => elements.forEach(ele, ele => ele[to.attr] = state);
-          }
-        } else {
-          toFunc = to;
-        }
-        this.to.push({
-          func: toFunc,
-          parsedPath: parsedPath,
-        });
-
-        elements.forEach(ele => ele.addEventListener(from.event, e => {
-          if (from.filter && !from.filter(e)) {
-            return
-          }
-          let state = dup(this.store.getState());
-          pathLeadSegments.forEach(segment => { state = state[segment]; });
-          state[finalPathSegment] = from.proc(e);
-          this.store.dispatch({
-            type: "REPLACE_ALL",
-            value: state,
-          });
-        }));
-      }
-    }
-
-    let binder = Binder(store);
+    let binder = new StateTools.Binder(store);
     binder.add("length", "#length",        {attr: "input"},    {event: "input", proc: e => +e.target.value});
     binder.add("angle",  "#angle",         {attr: "input"},    {event: "input", proc: e => +e.target.value});
     binder.add("length", "#lengthDisplay", {attr: "innerText"});
