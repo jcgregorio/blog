@@ -249,13 +249,15 @@ this.StateTools = this.StateTools || {};
   class Binder {
 
     // store - A Reduc store.
+    // dispatch - A function called to update the state in store.
     // ele - The root element where all element searches begin from, i.e.
     //     querySelectorAll is run on this element. Defaults to document.
-    constructor(store, ele = document) {
+    constructor(store, dispatch, ele = document) {
       this.to = [];
       this.store = store;
       this.oldState = {}; // Empty object so that filling in the default value triggers writes to the elements.
       this.ele = ele;
+      this.dispatch = dispatch;
       this.store.subscribe(this._newState.bind(this));
     }
 
@@ -345,10 +347,7 @@ this.StateTools = this.StateTools || {};
           let state = dup(this.store.getState());
           pathLeadSegments.forEach(segment => { state = state[segment]; });
           state[finalPathSegment] = from.proc(e);
-          this.store.dispatch({
-            type: "REPLACE_ALL",
-            value: state,
-          });
+          this.dispatch(state);
         }));
       } else if (from.listener) {
         elements.forEach(ele => ele.addEventListener(from.event, from.listener));
@@ -421,7 +420,7 @@ this.StateTools = this.StateTools || {};
 
     var store = Redux.createStore(updateState);
 
-    let binder = new StateTools.Binder(store);
+    let binder = new StateTools.Binder(store, state => store.dispatch({type: "REPLACE_ALL", value: state}));
     binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("length", "#lengthDisplay", {attr: "innerText"});
