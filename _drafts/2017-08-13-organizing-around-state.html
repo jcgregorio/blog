@@ -317,6 +317,9 @@ this.StateTools = this.StateTools || {};
     //
     add(statePath, query, to, from) {
       let parsedPath = statePath.split(".");
+      if (statePath === "") {
+        parsedPath = [];
+      }
       let pathLeadSegments = statePath.split(".");
       let finalPathSegment = pathLeadSegments.pop();
       let elements = [].slice.call(this.ele.querySelectorAll(query));
@@ -406,33 +409,33 @@ this.StateTools = this.StateTools || {};
       })
     }
 
-    var defaultState = {
-      length: 7,
-      angle: 0.4,
-    };
-
-    var updateState = (state = defaultState, action) => {
-      if (action.type == "REPLACE_ALL") {
-        state = dup(action.value);
-      }
-      return state;
-    };
-
-    var store = Redux.createStore(updateState);
-
-    let binder = new StateTools.Binder(store, state => store.dispatch({type: "REPLACE_ALL", value: state}));
-    binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
-    binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
-    binder.add("length", "#lengthDisplay", {attr: "innerText"});
-    binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
-
     function render() {
       var state = store.getState();
       ctx.clearRect(0, 0, width, height);
       draw(width/2, height, state.length, state.angle);
     }
 
-    store.subscribe(render);
+    var defaultState = {
+      length: 7,
+      angle: 0.4,
+    };
+
+    // Setup the Redux state store.
+    var updateState = (state = defaultState, action) => {
+      if (action.type == "REPLACE_ALL") {
+        state = dup(action.value);
+      }
+      return state;
+    };
+    var store = Redux.createStore(updateState);
+
+    // Bind state to controls.
+    let binder = new StateTools.Binder(store, state => store.dispatch({type: "REPLACE_ALL", value: state}));
+    binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
+    binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
+    binder.add("length", "#lengthDisplay", {attr: "innerText"});
+    binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
+    binder.add("",       "canvas",         render);
 
     var stateFromURL = StateTools.urlReflector(store);
     var stateChangeFromURLChange = function() {
@@ -446,4 +449,3 @@ this.StateTools = this.StateTools || {};
     window.addEventListener('popstate', stateChangeFromURLChange);
   })();
 </script>
-<script src="https://gist.github.com/jcgregorio/7d83bcd9670575ec6c1f9bd682f7b24a.js"></script>
