@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>A million little lines</title>
+  <meta name="description" content="Cliff Click, chief JVM architect at Azul Systems as quoted in InfoWorld: As your program grows in size, the lack of strong typing basically kills your abilit...">
+  <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2008/04/A-million-little-lines">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <link rel="author" href="/about/">
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1974123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">A million little lines</h1>
+    <p class="post-meta">
+      <time datetime="2008-04-01T00:00:00-04:00" itemprop="datePublished">
+        
+        Apr 1, 2008
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+      <p><a href="http://www.infoworld.com/article/08/03/26/java-speed_1.html">Cliff Click, chief JVM architect at Azul Systems as quoted in InfoWorld</a>:</p> <blockquote> <p><span class="artText">As your program grows in size, the lack of strong typing basically kills your ability to handle a very large program and so you don't find the million-line Perl program</span></p></blockquote> <p>That line in particular has elicited some <a href="http://www.cincomsmalltalk.com/blog/blogView?showComments=true&amp;printTitle=Earth_to_Sun&amp;entry=3384074930">reactions</a>, including this from <a href="http://www.oreillynet.com/onlamp/blog/2008/03/mistaking_cons_for_pros.html?CMP=OTC-6YE827253101&amp;ATT=Mistaking+Cons+for+Pros">chromatic</a>:</p> <blockquote> <p>Second, the reason that there aren’t many million-line Perl programs is that the people who are <em>capable</em> of writing and managing million-line Perl programs have better ways to organize their projects than glomming a million lines of Java into a single shared-everything instance. That’s setting aside the qualities of encapsulation and abstraction that Java-the-language doesn’t have, preferring instead to push that problem to tool vendors and AbstractFactoryFactoryInjectors which consume vast swaths of XML to get around Java’s static code fetish. I can only imagine how much larger the Java code would be <em>without</em> all of those XML files.</p></blockquote> <p>I was always baffled with Java folks love affair with XML until I realized it was just a crutch to make up for a lack of map and array literals in the language.</p> <p>Another quote from the InfoWorld article:</p> <blockquote> <p>Java is not the slowpoke of old days and performance now matches or exceeds applications developed in C</p></blockquote> <p>I found that interesting that only 13 years after being released Java is finally on par with C performance, particularly given that <a href="http://www.digitalmars.com/d/2.0/garbage.html">some people believe that a garbage collected language should be faster than a non-garbage collected language</a>.</p>
+  <div class="commentContent" id="X1">
+    The advantage of a statically typed language with a simple grammar (Java yes, C++ no) is that there are many development tools available for:
+
+<ul>
+<li>refactoring</li>
+<li>detecting possible bugs or problems</li>
+<li>code style checks</li>
+</ul>
+
+
+Good examples for Java are Eclipse, FindBugs and CheckStyle. This is helpful especially for the larger projects mentioned above with many developers working on it.
+    <p class="commentByLine">Posted by
+       <a href="http://weblogs.goshaky.com/weblogs/alexkli/">Alexander Klimetschek</a> on <a href="#X1" title="2008-04-01T11:21:03.591082">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Alexander,<br />
+<p>Sorry, static typing isn't required for any of those things. You seem unaware that the capabilities in Eclipse not only appeared first for <b>non</b>-statically typed languages such as VB and Smalltalk, but also unaware that Eclipse was written by former Smalltalk developers.</p>
+<blockquote><p>This is helpful especially for the larger projects mentioned above with many developers working on it.</p></blockquote>
+<p>That so totally misses the point.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2008-04-01T11:39:59.573706">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I'd love to hear why Cliff believes a long program is a sign of a good language.  I was taught that long sections of code was a bad code smell.  I'm unsure why it's something to be bragged about.</p>
+<p>BTW, I'm not sure if your last sentence is sarcasm or not (my sarcasm parser is throwing warnings, but I'm ignoring them).</p>
+    <p class="commentByLine">Posted by
+       <a href="http://blog.josh-peters.name/">Josh Peters</a> on <a href="#X3" title="2008-04-01T12:32:39.326372">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Arguing over whether Java or Perl is better is like getting in a debate over whether it's better to eat dog or cat feces. Even worse is trying to debate about static vs. dynamic typing using what are possibly the worst examples of both (ok, C++ vs. PHP would be worse, but not much). You shouldn't be allowed to say the word "type" in public until you've learned a language with decent type inference (ML, Haskell) and a strongly, dynamically typed language (Smalltalk, Lisp).
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X4" title="2008-04-01T12:33:27.708937">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Joe,
+
+<blockquote><p>Sorry, static typing isn't required for any of those things.</p></blockquote>
+
+Then tell me tools for Ruby and co. that provide those features. Sure, things can be much quicker during development with a scripting language, but there are certain kinds of problems arising in larger systems that are almost a non-issue with Java but get really ugly with dynamic languages.
+
+<blockquote><p>That so totally misses the point.</p></blockquote>
+
+How? Growing complexity needs systematic approaches (to be very abstract).
+
+I do like scripting languages for small things (eg. cli tools or templating languages) because that is where they really shine. But a fully dynamic language is much harder to handle in a larger project. See the prototype javascript library for example, which is cool and short in the first place but really messes things up with Javascript's core objects and because of that often does not work with other Javascript libraries.
+
+Furthermore I think people using lots of XML for configuration and component wiring in their Java frameworks do it the wrong way. Which is not due to the Java language, but due to the simple fact, that out of thousand developers there is only a handful with excellence. And you see even more of the other 900+ guys in an industry-standard language, cause they tend to work for the big companies, whereas the bleeding edge front has way more smart guys.
+
+<blockquote><p>I found that interesting that only 13 years after being released Java is finally on par with C performance</p></blockquote>
+
+It was faster before you heard about it (or even before you wrote about that you heard it in your blog). Java is fast since version 1.3, which was released in 2000 (ca. 5 years after 1.0). And since 1.4 it's even better (2002 = 7 years). Ruby is as old as Java, but still is slow. The new YARV virtual machine introduced in Ruby 1.9 tries, but still fails (up to 15% faster does not match Java's speed in comparison). Don't know about Perl and Python, but I am personally not a fan of them...
+    <p class="commentByLine">Posted by
+       <a href="http://weblogs.goshaky.com/weblogs/alexkli/">Alexander Klimetschek</a> on <a href="#X5" title="2008-04-01T12:51:44.872922">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Jeff,
+
+<blockquote><p>You shouldn't be allowed to say the word "type" in public until you've learned a language with decent type inference (ML, Haskell) and a strongly, dynamically typed language (Smalltalk, Lisp).</p></blockquote>
+
+It's true that those languages are great. And maybe a lot better than Java. But there is also the fact that not-so-smart people have to be able to use them. Smalltalk is cool, but it is simply to complicated for most developers (not talking about Lisp or Haskell here...). That's why it didn't become as popular.
+    <p class="commentByLine">Posted by
+       <a href="http://weblogs.goshaky.com/weblogs/alexkli/">Alexander Klimetschek</a> on <a href="#X6" title="2008-04-01T12:57:33.943108">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Ah, yes, I had almost forgotten that there are stupid programmers (despite me spending pretty much every workday of my life cleaning up after them). I guess there is a purpose for Java, after all.</p>
+<p>In other news, the price of tea in China remains stable.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X7" title="2008-04-01T13:15:38.341413">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    You have obviously not faced problems where a GOFFowlerUOWPaginatorGobbledyGookFactoryProcessor was passed instead of the GOFFowlerUOWPaginatorGoddledyGookFactoryProcessor object and isBSCode() method was missing. These are very hard to catch in 10 million line code bases that parse HTTP.
+    <p class="commentByLine">Posted by
+       <a href="http://contekst.org">Sai</a> on <a href="#X8" title="2008-04-01T13:59:15.381051">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Alexander,<br />
+<blockquote><p>Then tell me tools for Ruby and co. that provide those features.</p></blockquote>
+<p>No, I told you of tools that provided these features for Smalltalk and VB. You don't get to pick the language in an existence proof.</p>
+<blockquote><p>How? Growing complexity needs systematic approaches (to be very abstract).</p></blockquote>
+<p>
+   Strong typing is not the one and only systematic approach to dealing 
+   with complexity. Strong typing doesn't even rise to the level of 
+   "systematic", it's a tactic.
+</p>
+<blockquote><p>Furthermore I think people using lots of XML for configuration and component wiring in their Java frameworks do it the wrong way.</p></blockquote>
+<p>This is like socialists claiming that the Soviet Union would have worked, but it wasn't a <i>pure enough socialist state</i>, or the Ron Paul supporters that declare that free markets will solve any problem, but they haven't so far because the United States isn't a <i>pure enough free market</i>.
+</p>
+<blockquote><p>It was faster before you heard about it (or even before you wrote about that you heard it in your blog). Java is fast since version 1.3, which was released in 2000...
+</p></blockquote>
+<p> While it's good to always take benchmarks with a
+grain of salt, 
+<a href="http://shootout.alioth.debian.org/gp4/benchmark.php?test=all&amp;lang=all&amp;xfullcpu=1&amp;xmem=1&amp;xloc=1&amp;binarytrees=1&amp;chameneosredux=1&amp;fannkuch=1&amp;fasta=1&amp;knucleotide=1&amp;mandelbrot=1&amp;meteor=1&amp;nbody=1&amp;nsieve=1&amp;nsievebits=1&amp;partialsums=1&amp;pidigits=1&amp;recursive=1&amp;regexdna=1&amp;revcomp=1&amp;spectralnorm=1&amp;hello=1&amp;sumcol=1&amp;threadring=1&amp;calc=Calculate">
+I don't see Java being 
+<b>faster</b> than C</a> in the year 2008, 8 years later. On the other
+hand, D is garbage collected and seems to be holding it's own speed wise.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X9" title="2008-04-01T14:10:09.710184">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Joe,
+
+<blockquote><p>Strong typing is not the one and only systematic approach to dealing with complexity.</p></blockquote>
+
+True, design of the system's architecture plays another big role. That's why I said it is <i>helpful</i> for larger projects. I didn't say it's the one and only way to go.
+
+<blockquote><p>This is like socialists claiming that the Soviet Union would have worked, but it wasn't a pure enough socialist state.</p></blockquote>
+
+That analogy is quite flawed: I didn't state that <i>one should use even more XML in Java, then it would all work out great</i>.
+
+<br />
+<br />
+
+Sorry, Joe, I really liked reading your blog, mainly about REST things, but I didn't know that you like to create a religious war against Java. Now I am thinking about taking your blog out of my reading list.
+    <p class="commentByLine">Posted by
+       <a href="http://weblogs.goshaky.com/weblogs/alexkli/">Alexander Klimetschek</a> on <a href="#X10" title="2008-04-01T16:51:04.085098">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Fuel to your fire:
+<p></p>
+<ul>
+<li><a href="http://beust.com/weblog/archives/000462.html">http://beust.com/weblog/archives/000462.html</a></li>
+<li><a href="http://beust.com/weblog/archives/000414.html">http://beust.com/weblog/archives/000414.html</a></li>
+<li><a href="http://beust.com/weblog/archives/000454.html">http://beust.com/weblog/archives/000454.html</a></li>
+<li><a href="http://crazybob.org/2008/03/statically-typed-foreword.html">http://crazybob.org/2008/03/statically-typed-foreword.html</a></li>
+<li><a href="http://crazybob.org/2007/09/gavin-king-on-activerecord.html">http://crazybob.org/2007/09/gavin-king-on-activerecord.html</a></li>
+<li><a href="http://stephan.reposita.org/archives/2007/06/21/ruby-complexity-cannot-be-reduced/">http://stephan.reposita.org/archives/2007/06/21/ruby-complexity-cannot-be-reduced/</a></li>
+</ul>
+<p></p>
+and my current favourite:
+<p></p>
+<a href="http://cdsmith.twu.net/types.html">http://cdsmith.twu.net/types.html</a>
+<p></p>
+Fwiw, I think this argument is ultimately about maintenance and type systems just aren't a first order effect on maintenance in the real world systems I've seen.  Over the last couple of years, I've found Scala/Zope3/Cobra/ECMAScript to be informative. I can now imagine a usable Python that allowed method arguments to be type declared. I can see a usable Java that inferred declaration and return types. 
+<p></p>
+"I was always baffled with Java folks love affair with XML until I realized it was just a crutch to make up for a lack of map and array literals in the language."
+<p></p>
+So I think it's fair to say that Java wiring and configuration via XML are dead ends. They'll be replaced by annotations and scripts respectively. When I say dead ends  I mean it in the same way eggs are a dead end for Python.
+    <p class="commentByLine">Posted by
+       <a href="http://dehora.net/journal">Bill de hOra</a> on <a href="#X11" title="2008-04-01T17:54:48.997697">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <blockquote><p>glomming a million lines of Java into a single shared-everything instance.</p></blockquote>
+<p>For those of you who missed it, this is the key phrase. If your language/tools/methodology/whatever ends up with you compiling more than 1,000,000 lines of code into a single shared-everything instance then you have to seriously step back and question your language/tools/methodology/whatever. Yes, static typing probably makes a huge difference when dealing with 1,000,000 lines of code. Why aren't you questioning the underlying problem that requires you to manage 1,000,000 lines of code? And why are you still living in an 
+<a href="http://bitworking.org/news/218/N-1">N=1 world</a>?
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X12" title="2008-04-01T18:58:04.328571">2008-04-01</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <p>I'll answer your challenge; Ruby has refactoring support in RadRails/Aptana and Python has it in PyDev.  Both also have syntax checking, unit test support, and warnings of various sorts.  Of course Python has code style checks in the language definition, but any regex will give you those.  </p>
+<p>Adding to the chorus though, refactoring is not the answer, it's not even the question.  I rarely do a straight extract method/inline method refactor in Python just because when I extract a method I'm probably doing more at the same time, like switching to generating that function and 15 others like it in a for loop inside the constructor.  Steve Yegge has <a href="http://steve-yegge.blogspot.com/2007/12/codes-worst-enemy.html">a post</a> where he likens refactoring to pushing dirt around a construction site.  "Many companies are faced with multiple million lines of code, and they view it as a simple tools issue, nothing more: lots of dirt that needs to be moved around occasionally."  Automated refactoring only pushes dirt around, eliminating real duplicated code is manual, in Java refactor once, search/replace to get rid of the duplicate calls the refactor couldn't be sure of.  Properly used features like maps, arrays, duck typing, multiple inheritance, and functions as first class objects mean there's less dirt to push around and developers can spend their time on the productive refactoring which can't be automated anyway.</p>
+<p>BTW and for the record:  Improperly using those tools will put you in a world of pain.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://channel3b.wordpress.com">Andy</a> on <a href="#X13" title="2008-04-02T00:39:32.507977">2008-04-02</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    <p>Joe: it's true that those refactoring features first appeared in Smalltalk IDEs, but what you get in Eclipse today is on a totally different level than what you have in typical Smalltalks (at least the ones I've seen).</p>
+<p>Such tools are easier to build and easier to build correct in a statically typed language, nothing to argue about there, no? I mean, rename method is great, but not if I have to manually check each occurrence of the method's name...</p>
+<p>And his point about the 1 million SLOC Java app still needs to be invalidated. There are indeed real world problems of such a complexity, that they might end up with 1 million SLOC in any programming language. Even if you discard that all as Java noise - if the equivalently complex Perl program was, say, 300,000 SLOC - where is it?</p>
+<p>I think in many applications such 1 million SLOC monsters are broken into parts (rightfully!) which communicate via documents, text files, database entries, etc. But lo and behold, one could argue that those are indeed statically typed messages sent between application parts.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://www.martin-probst.com">Martin Probst</a> on <a href="#X14" title="2008-04-02T01:52:19.268614">2008-04-02</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    "If your language/tools/methodology/whatever ends up with you compiling more than 1,000,000 lines of code into a single shared-everything instance then you have to seriously step back and question your language/tools/methodology/whatever."
+<p>
+No argument there. I said as much here:
+</p><p>
+<a href="http://beust.com/weblog/archives/000462.html">http://beust.com/weblog/archives/000462.html</a>
+</p><p>
+but it got lost. Thankfully Reg quoted it:
+</p><p>
+<a href="http://weblog.raganwald.com/2007/09/java-is-right-answer-to-wrong-question.html">http://weblog.raganwald.com/2007/09/java-is-right-answer-to-wrong-question.html</a>
+</p><p>
+I like what Stevey Yegge had to say on sheer size:
+</p><p>
+<a href="http://steve-yegge.blogspot.com/2007/12/codes-worst-enemy.html">http://steve-yegge.blogspot.com/2007/12/codes-worst-enemy.html</a>
+</p><p>
+IMO, really big codebases need structural support that doesn't exist in programming languages:
+</p><p>
+<a href="http://dirtsimple.org/2007/01/where-zope-leads-python-follows.html">http://dirtsimple.org/2007/01/where-zope-leads-python-follows.html</a>
+</p><p>
+as I said, this hasn't got much to do with type systems.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://dehora.net/journal">Bill de hOra</a> on <a href="#X15" title="2008-04-03T19:41:41.424212">2008-04-03</a>
+    </p>
+</div>
+  
+
+  </div>
+
+  
+    
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2008/04/A-million-little-lines';
+      this.page.identifier = 'https://bitworking.org/news/2008/04/A-million-little-lines';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    
+    <div class="PageNavigation">
+      
+      <a class="prev" href="/news/2008/03/The-psychology-of-a-failed-president">&laquo;
+        The psychology of a failed president</a>
+      
+      
+      <a class="next"
+        href="/news/2008/04/Google-Data-APIs-Patent-License">Google Data APIs Patent License &raquo;</a>
+      
+    </div>
+    
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

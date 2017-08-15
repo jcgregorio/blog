@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Google App Engine</title>
+  <meta name="description" content="I&#39;ve just started as a Developer Advocate for Google App Engine and there&#39;s been a lot of talk of &quot;lock-in&quot; recently. Google will have more to say officially...">
+  <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2008/11/google-app-engine">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <link rel="author" href="/about/">
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1974123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Google App Engine</h1>
+    <p class="post-meta">
+      <time datetime="2008-11-06T00:00:00-05:00" itemprop="datePublished">
+        
+        Nov 6, 2008
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+      <p>I've just started as a Developer Advocate for Google App Engine and 
+    there's been a lot of talk of "lock-in" recently. Google will have more
+    to say officially in the future, as obviously my blog isn't the place to 
+    read about Google's official position, but I would like to point out the following
+    things that have come up in conversation that people didn't know:
+    </p>
+<ol>
+<li>The development kit is <a href="http://code.google.com/p/googleappengine/">open sourced</a>.</li>
+<li>All of the <a href="http://code.google.com/appengine/docs/">documentation for App Engine</a> is CC licensed.</li>
+<li>Much of the underlying technology has been described in <a href="http://research.google.com/pubs/papers.html">academic publications</a>.</li>
+<li>Some of that underlying technology has been open sourced, such as <a href="http://code.google.com/p/protobuf/">protocol buffers</a>.</li>
+</ol>
+<p>
+      Also, you can see that other issues are on the <a href="http://code.google.com/appengine/docs/roadmap.html">roadmap</a> 
+      to be addressed, such as bulk upload and download.
+    </p>
+  <div class="commentContent" id="X1">
+    I've played around with App Engine and have an app that I use for tracking my time.  You are correct that you aren't technically locked in, but from a practical point of view, you are.  
+
+For example, GFS and BigTable are well described and even have some open source implementations.  But it would take a lot of effort for the average development shop to replicate those technologies.
+
+So if your application really was getting a high volume of usage it would be a lot of effort to port it to using a "more standard" backend like Oracle or Mysql.
+    <p class="commentByLine">Posted by
+       <a href="http://sttysane.blogspot.com">Dave Tauzell</a> on <a href="#X1" title="2008-11-06T11:59:29.799637">2008-11-06</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    It would certainly suit Google to have available a version of dev_appserver that could conceivably be used for production — pointing to the <a href="http://appdrop.com">"ported to EC2"</a> nonsense (as I've had Googlers on the AppEngine team do) just seems disingenuous.
+<br /><br />
+You could let someone else do it, but that doesn't inspire anywhere near the same confidence that a Google-maintained project would. It would be quite helpful for testing — because of the lack of concurrency some types of applications are simply unusable on dev_appserver. A hypothetical prod_appserver would have to include:<ul><li>A superficial clone of "Google Frontend", reverse-proxying a maintained pool of wsgi servers</li><li>A datastore clone that would allow some concurrent access: it doesn't have to be fast (it'd be best if it performed with the same pokey profile as the real one). Network transparency would be nice but not urgently needed.</li><li>The ability to connect to a native memcached server</li><li>A realistic replacement for the Users API, preferably OpenID-based (it'd be nice to not have to make a bunch of Google Accounts for testing)</li></ul>It wouldn't have to be anywhere near as polished or 'scalable' as the real AppEngine: just close enough for real testing, just scalable enough to be respond to simultaneous requests, just supported closely enough to appear sincere.
+    <p class="commentByLine">Posted by
+       <a href="mailto:blasdelf@gmail.com">Fred Blasdel</a> on <a href="#X2" title="2008-11-06T15:21:15.997237">2008-11-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>If the App Engine team really can't see how incredibly proprietary App Engine appears to outsiders, y'all have a big problem. I've had a couple of discussions about this with folks at Google, and I'm pretty disappointed at the disingenuous tone about lock-in I've gotten so far. The general answer seems to be "There's no lock-in: it's <small>almost</small> all Open Source!"</p>
+<p>Unfortunately, the "lock-in" problem has less to do with open source than it does with the simple fact that App Engine is drastically <em>different</em> from any other sort of application hosting available anywhere.</p>
+<p>It's not that it's hard to take an application written against App Engine elsewhere; it's literally impossible:</p>
+<ul>
+<li>Nothing else on the planet (well, nothing approaching production quality) will start WSGI servers given <code>app.yaml</code>, nor is the a spec or a schema describing how some hypothetical <code>app.yaml</code> server would work.</li>
+<li>The datastore API runs against something (BigTable) that I can't buy at any price from anywhere but Google.</li>
+<li>Worse, the non-relational-database world is even more proprietary and incompatible than the relational world. If I decide to ditch Oracle I've got to rewrite a bunch of SQL queries... but at least both use SQL! I literally would have to rewrite my application from scratch if I wanted to replace App Engine's datastore with, say, CouchDB.</li>
+<li>Worse still, bulk data export only starts to solve the problem. In practice I've had to tweak my model design significantly to make it perform well on App Engine; this means that my very schema is tied to App Engine's behavior in uncomfortable ways. I suspect this is another shakeout of the complete lack of standardization in the non-relational database world.</li>
+<li>The authentication API only works with Google accounts, and it seems to access them using some "shared knowledge" that I can't duplicate outside of App Engine.</li>
+<li>I can't use <code>urllib</code> or anything else that talks to sockets (<code>httplib2</code>!); I have to use <code>urlfetch</code>. Yes, <code>urlfetch</code> is open source... but am I really going to write code against that API <em>not</em> intended for App Engine?</li>
+</ul>
+<p>So look. I obviously have a horse in this race and want App Engine to do well. More than that, it's damned cool tech and I want to be able to use it. I very well might be able to ignore the lock-in stuff given how nice App Engine promises to be. But the first step needs to be some real honesty about the unprecedented levels of lock-in App Engine represents.</p>
+<p>On preview: this comes across as pretty harsh, and I'm sorry for that. I really want to like App Engine, but I'm just very frustrated that an honest discussion about lock-in really isn't happening. With luck this blog post will be the beginnings of that discussion!</p>
+    <p class="commentByLine">Posted by
+       <a href="http://jacobian.org">Jacob Kaplan-Moss</a> on <a href="#X3" title="2008-11-06T16:11:31.689781">2008-11-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Jacob, I don't think your comment is entirely straightforward either — the whole point of using a non-relational database is that it <b>does not</b> pretend to be general purpose, that it applies hard constraints to provide an abstraction specific to your usage. Of course each non-relational database is going to be a <i>special snowflake</i> — that's why we're using them! A good chunk of Django's charm stems from its ORM, but it's so obviated on AppEngine — and I think that's a good thing overall.
+<p>
+I don't agree with you about the Users API, especially when Google has just committed to providing OpenIDv2 authentication for Google Accounts — the only thing that is not straightforwardly replicable is the full functionality of the <code>nickname()</code> instance method on User objects.
+</p><p>
+I also don't begrudge the need for <code>urlfetch</code>, as the design of AppEngine totally precludes the availability of vanilla sockets. Their intention is for all traffic to be via HTTP: buffered, proxied, and accounted for via Google Frontend. If they let you at raw sockets, you could get up to all sorts of trouble! Their <code>urlfetch</code> is certainly not a perfect solution (no way to set a timeout), but it is not awful. Anything you could do with sockets but not with urlfetch is disallowed for a reason.
+</p><p>
+A large part of why progress on AppEngine is so slow-going is because the group working on it is kept small, yet I wouldn't really have it any other way — it's certainly preferable to the confused mess of marketing materials that is <i>Windows Azure</i>!</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:blasdelf@gmail.com">Fred Blasdel</a> on <a href="#X4" title="2008-11-06T21:15:29.113139">2008-11-06</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    I agree with the tone of Jacob;
+<br /><br />
+There are projects for small non-profits, et al that I would love to host on GAE due to the great availability, cost, and performance factors it can bring them.
+<br /><br />
+However after having taken a harder look at GAE I have severe reservations. Overall it really feels incomplete and that in of itself gives me a lot of insight on the App Engine team's culture. The attitude impressed upon me is one of "Do it our way.. the google way.. the only way". It's also pretty clear that nobody with an outside perspective was asked for feedback.
+<br /><br />
+Honestly Joe while I appreciate your sentiment which I believe is genuine; I gotta be honest that I chuckled at these two points:
+<br /><br />
+<ul><li>Much of the underlying technology has been described in academic publications.</li>
+<li>Some of that underlying technology has been open sourced, such as protocol buffers.</li></ul>
+<br /><br />
+Seriously? That just amplifies the concerns as far as I'm concerned. "Some is open source" and "much is in academic publications". Wow! I'm the first to say I'm no academic but the majority of technical academic publications I've read are pretty vague to the point that duplicating their efforts without cooperation would take significant effort - certainly beyond the scope of what the typical developer can do. So really? This is supposed to salve concerns?
+<br /><br />
+Which brings me to another point - what is the target audience of Google App Engine? Cute django apps? It's way too proprietary for me to recommend it to anyone except for the most fickle and transient web applications.
+<br /><br />
+I guess what it really comes down to for me is frankly the sheer arrogance of it. Not the individual persons who I am certain are well-intentioned and believe in their projects - but the notion that we are all supposed to just trust Google and build infrastructure on systems with no migration path off whatsoever.
+<br /><br />
+I'm happy to use GMail to host my private domains; it works great because it has high availability, a great UI, and lets me connect to it in all sorts of ways! Blackberry, Web, IMAP, et al. Supports all the stuff I want like SSL, etc. These were bigger factors in my decision to use it than cost. It also has great anti-spam filters, et al. Best of all if I choose in the future to migrate away I can change a few MX records; dump all of my email off via IMAP/POP/etc and be done with it.
+<br /><br />
+In this way App Engine is a big contrast and a huge step backwards towards obfuscated proprietary systems and massive massive vendor lock-in.
+<br /><br />
+- bri
+    <p class="commentByLine">Posted by
+       <a href="mailto:brian@beruna.org">brian</a> on <a href="#X5" title="2008-11-08T22:49:34.076570">2008-11-08</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Until there’s another provider and some people have successfully migrated their App Engine apps to that other service, there’s lock-in for practical purposes.</p>
+<p>That said, the <a href="http://html5.validator.nu/">app I’m developing</a> has neither a database nor user logins, so it is not as lock-in prone as many other apps. However, it’s written in Java… (Yes, I realize that offering the full JVM functionality on App Engine would be very problematic and limiting the functionality would be problematic, too, when existing code expects to be able to do stuff.)</p>
+    <p class="commentByLine">Posted by
+       <a href="http://hsivonen.iki.fi/">Henri Sivonen</a> on <a href="#X6" title="2008-11-09T03:27:26.902818">2008-11-09</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Jacob,<br />
+<p>
+I understand your frustration. I do want this to begin the conversation, and I hope to have some more news to share in the coming days.
+</p>
+<blockquote><p>
+    Nothing else on the planet (well, nothing approaching production quality) will start WSGI servers given app.yaml, nor is the a spec or a schema describing how some hypothetical app.yaml server would work.
+</p></blockquote>
+<p><a href="http://code.google.com/appengine/docs/configuringanapp.html">Here is the documentation for app.yaml</a>, though I'm not sure
+that addresses your concern completely.
+</p>
+<blockquote><p>
+    The datastore API runs against something (BigTable) that I can't buy at any price from anywhere but Google.    
+</p></blockquote>
+<p><a href="http://hadoop.apache.org/hbase/">Not quite true</a>.</p>
+<blockquote>
+<p>
+    Worse, the non-relational-database world is even more proprietary and 
+     incompatible than the relational world. If I decide to ditch Oracle I've 
+     got to rewrite a bunch of SQL queries... but at least both use SQL! I literally 
+     would have to rewrite my application from scratch if I wanted to replace App Engine's 
+     datastore with, say, CouchDB.
+</p>
+</blockquote>
+<p>
+This is something (<a href="http://bitworking.org/news/158/ETech-07-Summary-Part-2-MegaData">MegaData</a>) 
+that I've been talking about for a while now, and it's one
+of the reasons that I was drawn to App Engine. The point I've been making 
+is that datastores built to manage huge amounts of data work differently
+from a traditional RDBMS. The general-purpose-RDBMS-all-your-data-in-fourth-normal-form does not scale.
+The reality is that there is no one-right-way to handle large amounts of
+data today; Google has BigTable and that's the model exposed in App Engine, 
+Amazon has exposed their model with S3, are there are plenty of other competing ideas in this space, such as CouchDB, 
+the streaming database Michael Stonebraker talks about in his paper, 
+"<a href="http://scholar.google.com/scholar?hl=en&amp;q=%27One%20size%20fits%20all%27%3A%20an%20idea%20whose%20time%20has%20come%20and%20gone&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=ws">'One size fits all': an idea whose time has come and gone</a>", and 
+who-knows-what is ultimately going to be built with Drizzle. 
+</p>
+<p>
+While all of them are different, there are some underlying commonalities
+that will be surprising and uncomfortable if you are coming from
+a relational background, such as a restricted scope for transactions,
+a lack of joins, and the accompanying denormalization of data. That's because 
+you can't do those things efficiently in a general way across a large 
+number of machines. Given that, are there idioms and best practices that are common 
+across all these systems? Could you build an abstraction layer that worked
+across all of them? I don't know the answers to those questions. I do know it's different,
+I do know it can be frustrating, and I do want to work on bridging that gap
+between RDBMS's and MegaData datastores.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X7" title="2008-11-10T09:56:48.740710">2008-11-10</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <blockquote>I do want this to begin the conversation, and I hope to have some more news to share in the coming days.</blockquote>
+<p>Extremely good news! As far as I'm concerned, as long as there's an open conversation about the issues (and benefits) that's a real win even if there's stuff that still needs to be private. I <em>do</em> prefer the "don't announce until it works" approach over the hype and vaporware that dominates so much of the industry. But when "don't hype" becomes an excuse to not discuss shortcomings (*looks at Apple*)... that's bad.</p>
+<p>I'm very much looking forward to seeing what's next... these are certainly interesting times to be a web developer.</p>
+<blockquote>Could you build an abstraction layer that worked across all of [the non-relational databases]?</blockquote>
+<p>I think you can*. If you look at the internals of relational databases, you'll notice that they by no means work the same way. Even databases that implement common patterns (e.g. MVCC) do so in radically different ways. However, they <em>do</em> expose a (mostly) common interface in the form of SQL.</p>
+<p>Now, anyone who's worked with relational database for some time knows that even if you ignore the different SQL dialects there's dramatic differences in performance and semantics across different engines. Even something seemingly simple like <code>SELECT COUNT(*)</code> has radically different characteristics in different databases. Like all abstractions, SQL leaks.</p>
+<p>But this isn't a problem -- or, more accurately, the benefits of a common interface outweigh the drawbacks. You write your SQL against the idealized abstract interface, and then when it starts hurting you dive in and optomize for your specific situation.</p>
+<p>I see no reason why we can't treat MegaData stores (nice term, BTW) in a similar manner. Expose a common interface that works "most of the time," and then just dive down and work at a lower level when the abstraction leaks.</p>
+<p><small>* At least, I'm giving it a shot in Django. We'll see where it goes.</small></p>
+    <p class="commentByLine">Posted by
+       <a href="http://jacobian.org">Jacob Kaplan-Moss</a> on <a href="#X8" title="2008-11-11T15:47:56.119510">2008-11-11</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Jabob,<br />
+<p>Here's one of bits of news to share that I alluded to earlier:
+  <a href="http://bitworking.org/news/386/gae-sqlite">gae-sqlite</a>.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X9" title="2008-11-12T12:28:05.010969">2008-11-12</a>
+    </p>
+</div>
+  
+
+  </div>
+
+  
+    
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2008/11/google-app-engine';
+      this.page.identifier = 'https://bitworking.org/news/2008/11/google-app-engine';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    
+    <div class="PageNavigation">
+      
+      <a class="prev" href="/news/2008/11/Firsts">&laquo;
+        Firsts</a>
+      
+      
+      <a class="next"
+        href="/news/2008/11/ann-arbor-hackathon">Ann Arbor App Engine Hackathon &raquo;</a>
+      
+    </div>
+    
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

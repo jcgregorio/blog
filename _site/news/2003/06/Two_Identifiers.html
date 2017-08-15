@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Two Identifiers</title>
+  <meta name="description" content="Every Echo entry needs two identifiers, which we&#39;ll call, for lack of better names &#39;post-id&#39; and &#39;perma-link&#39;. They need to be separate, and they need to be ...">
+  <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2003/06/Two_Identifiers">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <link rel="author" href="/about/">
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1974123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+  
+
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">BitWorking</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Two Identifiers</h1>
+    <p class="post-meta">
+      <time datetime="2003-06-26T00:00:00-04:00" itemprop="datePublished">
+        
+        Jun 26, 2003
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <p>Every Echo entry needs two identifiers, which we'll call, for lack of better names 'post-id' and 'perma-link'. 
+They need to be separate, and they need to be required. </p>
+
+  
+<p>There is still a pretty heavy debate going on in the <a href="http://www.intertwingly.net/wiki/pie/PostIdSpec">wiki</a> and 
+  in <a href="http://www.intertwingly.net/blog/1492.html">Sam's blog</a> about perma-link versus post-id. 
+  Now, I initially was for a single <acronym title="Universal Resource Identifier">URI</acronym> that 
+  operated as both a perma-link and as a unique id. I have since changed and I'm outlining here the compelling reasons for my change of heart.
+  Also realize that this discussion is in the context of Echo as a <em>syndication</em> format. Echo will also be used
+  as a publishing and possibly a commenting format and the <em>required-ness</em> of these identifiers may be different
+  in those contexts.</p>
+<p>Before we start justifying we need some definitions:</p>
+<dl>
+<dt>perma-link</dt>
+<dd>A URI that points to the post on the web. Now that needs some clarification, first <a href="http://www.apache.org/~fielding/uri/rev-2002/rfc2396bis.html#regexp">URI</a> 
+    is a big concept,
+    and subsumes many other things, for example all URLs are URIs, which means links of the form <code>http:</code>, <code>ftp:</code>,
+    <code>mailto:</code>, and <code>freenet:</code> are all URIs. Also, <a href="http://www.ietf.org/rfc/rfc2141.txt">URN</a>s are also URIs.
+    Secondly, the perma-link should point to the story, not the source. For example, if you write
+    a weblog entry about a story in the NYTimes, the perma-link needs to point to that entry on your weblog and <strong>not</strong>
+    the story in the NYTimes. The perma-link <strong>should</strong> be resolvable, for example, <code>http:</code>, but <strong>may</strong>
+    be non-resolvable, though that is <strong>strongly discouraged</strong>.
+  </dd>
+<dt>post-id</dt>
+<dd>An identifier that uniquely identifies the post on the web. Again, that needs some clarification. If you write
+     a weblog entry about a story in the NYTimes, and post it to your weblog under two categories, the post-id will
+     be the same regardless of which category it is published in. Also, the post-id is unique among all the Echo entries
+     ever published, by anyone on the web, for all time. Once an item is published, it's post-id never changes. 
+     If you edit your entry, the post-id does not change. If you re-categorize your post, it does not change. Unique across 
+     space and time. What if you want to include some link to the source material? That is another Echo tag, possibly 
+     in another Echo optional module, that allows for citing multiple sources.</dd>
+</dl>
+<h3>A required perma-link</h3>
+<p>Perma-link should be required. This is a synidcation format, and the perma-link points back to the thing you 
+  are really interested in. The only excuse for not being able to supply a perma-link is that the resource
+  you are describing is not on the web. That's a pretty thin excuse, but for those extremely rare cases, you
+  can stuff a URN or some other non-resolvable URI in this field. But really, if you can generate an XML
+  Echo file that lives on the web that describes your resource, do you really have any excuse for not 
+  providing an HTML view of that same data?</p>
+<h3>A required post-id</h3>
+<p>Now that you have a required perma-link, do you really need a post-id? This is where I need to show three things.</p>
+<ol>
+<li>While a perma-link is a URI, it may not uniquely identify a weblog entry.</li>
+<li>A method to uniquely identify a weblog entry is necessary.</li>
+<li>Post-id must be required.</li>
+</ol>
+<p><strong>1. Perma-links aren't unique</strong> The first one is easy if you consider categories. For example, I subscribe to the NYTimes RSS feeds, both the science
+   and the technology feeds. There is overlap, and some stories appear in both the science and the technology feeds. 
+   Which means that they show up twice in my aggregator. Similarly <acronym title="MovableType">MT</acronym> users
+   can turn on <a href="http://www.intertwingly.net/blog/1492.html#c1056483350">multiple archiving methods</a>, which means
+   that the same story can have mutliple URIs. For each archiving method, the story is the same but sits in a different context.
+   In can sit in a weekly archive, a monthly archive, or in multiple category archives.  </p>
+<p>But if they are the same story, won't they have the same perma-link? No, the perma-link may point back to 
+  the story based on the context. For example, if you are subscribed to an Echo feed that contains just posts
+  from a certain category, the perma-link could bring you to a page that contained just post's from that category, and that's 
+  what you want to happen. So it is possible that the same story could have multiple perma-links and that those perma-links show
+  up in different Echo feeds.</p>
+<p><strong>2. Uniqueness is required</strong> Which brings up to the second question, do you really need a unique identifier? Yes, because this will allow 
+  the aggregator builders to track posts and allow the end-user to control whether they see the same item
+  if it appears in multiple contexts. Also, it will allow aggregators to more easily and consistently implement new
+  functionality. For example, with a guaranteed unique id I can  track changes to an entry, possibly
+  higlighting differences in versions. I can also more easily and consistenly do threading if each entry has a unique id. 
+  I can group Echo entries that are all about the same thing.</p>
+<p>On the CMS vendor side, some need a unique id
+  to track items, and the post-id, particulary in the form of a URN, gives them a place to store that information
+  in an <a href="http://bitworking.org/news/The_URI_of_a_Weblog_Entry">easy to parse</a> format.</p>
+<p><strong>3. Benfits of being required</strong> For the third case, a required element gives a couple of advantages. It makes the specification for Echo
+  easier to write. There are two elements. They are both required. End of story. You don't have to worry about
+  precedence or dis-ambiguation, and it makes for a really simple case for simpler CMS's, just make the two elements the same,
+  and since you are already generating a required perma-link, spitting out the same value in a different element is 
+  not a big hurdle to implementation.
+</p>
+<p>Also, if post-id and perma-link are both required this helps support a "view-source" paradigm. If you see both tags in <em>every</em> Echo feed then you can be sure you'll include them in your own feed. If they're optional you might not see a feed with both and subsequently miss out on the advantages.</p>
+<h3>Summary</h3>
+<p>Echo needs both a required perma-link and a required post-id. Since both are URIs, if the posts from your CMS
+   only have one URL then just set post-id = perma-link. Sure it's a little redundant, but it's easy to implement. If you have 
+   content that isn't on the web, then use a URN for perma-link, but think long and hard about justifying
+   what should be an extremely rare situation. Both supply potentially unique information, with the perma-link
+   preserving the context of the weblog entry while the post-id is the same regardless of the context.</p>
+
+  <div class="commentContent" id="X1">
+    <p>I can't help but think that it would be interesting if Echo entries could reference unique ids of other entries with some relationship to them.</p>
+<p>For example, if I was to write an entry about Joe's entry, I could say "Joe's entry has the relationship 'linked to' from this entry."</p>
+<p>If my software has that entry on record, it could then provide me with some link between the two.</p>
+<p>However, this assumes my software sees both entries. Being able to reference the Echo version of an entry from an Echo entry would be interesting, but I suspect unimplementable since it would require everyone to keep Echo entries for all of their entries perpetually.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:mart@livejournal.com">Martin Atkins</a> on <a href="#X1" title="2003-06-26T10:05:36">2003-06-26</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>I strongly feel that the redundancy should be handled by the aggregator rather than the CMS. I do not currently use a CMS on my weblog so I have a vested interest in keeping the Echo specification as simple as possible.</p>
+<p>You say yourself that all that needs to happen if there is no defined post-id is to set its value to equal the permalink. Why then force a requirement onto producers of the echo feed? If someone is posting across multiple categories then they should include the post-id, you could even specify "must". However  if a person is not posting across multiple categories why require them to include redundant information when that information can easily be generated by the aggregator?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.benmeadowcroft.com/">Ben Meadowcroft</a> on <a href="#X2" title="2003-06-26T10:59:05">2003-06-26</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>Ben,<br />
+  "Why then force a requirement onto producers of the echo feed?"</p>
+<p>1. Because it makes the spec that much simpler. There are two elements. They're both required. End of story. No precedence, no dis-ambiguation, and a really simple case for simple CMS's: make them the same.</p>
+<p>2. It is not an onerous hurdle. Really, we're talking about just one possibly redundant printf in your code. That's it. This will not melt the internet.</p>
+<p>3. It supports the "view-source" paradigm. If you see both tags in <b>every</b> Echo feed then you can be sure you'll include them in your own feed. If they're optional you might not see a feed with both in there and miss out on the advantages.</p>
+<p>Thanks for the questions, they have helped and I'm going to fold the above answers back into my post.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2003-06-26T11:39:59">2003-06-26</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Joe, did you get a chance to review the following page, does it affect the arguments you make?</p>
+<p><a href="http://www.intertwingly.net/wiki/pie/EntryIdentifier">http://www.intertwingly.net/wiki/pie/EntryIdentifier</a></p>
+<p><b>Update:</b> In particular the definition of echo-identifier, which is comparible to permalink, but I believe addresses the issues of multiple references.  One could adopt the definition of echo-identifier, and call it "permalink" (which is part of the point I make).  For multiple references, there can be "also-at" and "mirrored-at".  Make sure to catch "Definitions -- Part Deux", which adapts the definitions to the existing terms "permalink" and "publisher-id" (or post-id).</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X4" title="2003-06-26T17:36:26">2003-06-26</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Although I can see the merit of perma-link and post-id, if your trying for simplicity then duplicating redundant data seems like the least simple and sensible thing to do.  If I look at my existing RSS 2.0 feed, the permalink URI is 15% of the total item data (135 of 864 bytes).  Adding a 15% overhead to my feed just to satisfy your notion of simplicity if hardly going to be a good thing for the internet.</p>
+<p>Also, the term 'post-id' is way too blog-centric for something that is touted as some sort of open standard.  Or don't you want someone to re-use your constructs?</p>
+<p>The fact that people have to discuss and rationalise the existense of a tag in the way that perma-link and post-id have been over the last few days ought to tell you that you've not yet identified the 'simple' solution</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.orificeworld.com">Dave Meehan</a> on <a href="#X5" title="2003-06-27T03:57:34">2003-06-27</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Dave,<br />
+  Sorry, but one more tag in an Echo feed will not melt the internet.</p>
+<p>  As for names, 'post-id' and 'perma-link' are the current "concept" names off the wiki. Final tag names are still to be decided.</p>
+<p>And they aren't <b>my</b> constructs, this is all a community effort on the wiki. </p>
+<p>"The fact that people have to discuss and rationalise the existense of a tag in the way that perma-link and post-id have been over the last few days ought to tell you that you've not yet identified the 'simple' solution"</p>
+<p>The fact that people are openly discussing and recording the merits of various alternatives is how concensus is reached. The <b>only</b> other alternative is specification via benevolent dictator, we've tried that, it failed, that's why we're here today.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2003-06-27T08:18:37">2003-06-27</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    I don't know if I agree one way or another about the use of two identifiers.  However, in the case of perma-link, wouldn't a URI that changes based on assigned "categories" be going against the RESTful "opaque URIs" practice?  There is no good reason for a perma-link to have categorization embeded in it, but I can think of at least one reason not to encourage this practice:  the discussion of whether we should have a single identifier or not.
+    <p class="commentByLine">Posted by
+       <a href="http://www.seairth.com">Seairth</a> on <a href="#X7" title="2003-06-30T10:58:36">2003-06-30</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Seairth,<br />
+  A single resource can have multiple URIs and that really doesn't affect opaqueness. Opaque has a very narrow meaning, that is when you break up a URI into it's component parts: scheme, authority, path, query and fragment, that the client doesn't peek into the wrong parts to determine how to display the resource representation, or how to retrieve the resource representation. For example, if I server up a file 'fred.svg' the client shouldn't use the 'path' to determine the mime-type. That is, it shouldn't look at the 'svg' extension and try to display it as an SVG file, the client needs to look at the content-type returned in the HTTP headers.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X8" title="2003-06-30T13:48:28">2003-06-30</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>When a webpage(log) is HTML wise correctly written and proper use is made of the identification of the "news-entry" in the weblog (&lt;div id="a559&gt;...), then one could use at least three links in the RSS file.</p>
+<p>As a child of the CHANNEL element the LINK element with a uri to the webpage(log) itself (http://www.mydomain/blog/blogindex.htm).</p>
+<p>As a child element of the ITEM element the LINK element with a uri to the on the webpage living blog-entry (ID of the entries container DIV or Table or..) (http://www.mydomain/blog/blogindex.htm#a659)<br />
+As a child element of the ITEM element the GUID element with a uri to the blog-entries archived version(http://www.mydomain/blog/archives/20030703.htm#a659)<br />
+(It should be noted that when the weblog is refreshed and the RSS file is reflecting that refresh, neither a LINK of a GUID to the (a659) blog-entry is available unless the user/reader saved the older RSS feed. One can dispute that while the blogentry is on the weblog's page what the vaule is of having both a link to the weblog entry and the archived-entry)</p>
+<p>If the RSS file is accumulating the blogentries over a longer time then the blogentries lifetime on the weblog then a guid(permalink) is usefull).</p>
+<p>Cybarber</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://cybarber.ath.cx/RSSCybarber.xml">cybarber</a> on <a href="#X9" title="2003-07-02T11:31:47">2003-07-02</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>It's surprising to me that there is even any debate about the need for a PostID or an ItemID that is separate from a permalink. Or that making them both required is a good thing. One is the address and one is the identifier. It is good hygiene to keep these things separate.</p>
+<p>It most definitely keeps things more simple despite the protests of people who want to have the permalink be the postid in the absence of a separate postid. That's not simple. That's a pain in the ass!</p>
+<p>A post id is just like a message id in a mail message or a news posting. </p>
+<p>Where I think the debate should happen is over the format of the ID. It strikes me as inevitable that some bright bulb will decided that an Echo ID should be akin to an XML ID and thus won't be able to start with a number. Gah! Numbers make creating truly meaningless identifiers very easy and we want the identifiers to be meaningless as that provide maximum flexibility.</p>
+<p>See this</p>
+<p> <a href="http://home.att.net/~Flexibility/Identifiers/Part1.htm">http://home.att.net/~Flexibility/Identifiers/Part1.htm</a></p>
+<p>for some info on persistent unique identifiers.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.burningchrome.com:8000/~cdent/mt/">Chris Dent</a> on <a href="#X10" title="2003-07-07T13:50:24">2003-07-07</a>
+    </p>
+</div>
+  
+
+  </div>
+
+  
+    
+
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2003/06/Two_Identifiers';
+      this.page.identifier = 'https://bitworking.org/news/2003/06/Two_Identifiers';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    
+    <div class="PageNavigation">
+      
+      <a class="prev" href="/news/2003/06/For_Posterity">&laquo;
+        For Posterity</a>
+      
+      
+      <a class="next"
+        href="/news/2003/06/Forward_Motion">Forward Motion &raquo;</a>
+      
+    </div>
+    
+
+    <h2 class="footer-heading">BitWorking</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>
