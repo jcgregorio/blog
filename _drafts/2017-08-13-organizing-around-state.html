@@ -217,8 +217,6 @@ this.StateTools = this.StateTools || {};
   //        must be Number, String, Boolean, Object, or Array of String.
   //        Doesn't handle NaN, null, or undefined.
   //
-  // stateFromURL - This function is returned by urlReflector
-  //        and should be called on 'popstate' and 'DOMContentLoaded' events.
   // dispatch - A function called to update the state in store.
   sr.urlReflector = function(store, dispatch) {
     var defaultState = store.getState();
@@ -239,7 +237,7 @@ this.StateTools = this.StateTools || {};
       dispatch(lastState);
     }
     window.addEventListener('popstate', stateChangeFromURL);
-    return stateChangeFromURL;
+    StateTools.DomReady.then(stateChangeFromURL);
   }
 
   var dup = (o) => JSON.parse(JSON.stringify(o));
@@ -362,18 +360,18 @@ this.StateTools = this.StateTools || {};
   sr.Binder = Binder;
 
 })(this.StateTools);
-  </script>
+</script>
 
 <script id=src type="text/javascript" charset="utf-8">
-  StateTools.DomReady.then(function () {
-    var dup = (o) => JSON.parse(JSON.stringify(o));
+  (function () {
+    let dup = (o) => JSON.parse(JSON.stringify(o));
 
-    var canvas = document.querySelector("canvas"),
+    let canvas = document.querySelector("canvas"),
       ctx = canvas.getContext("2d"),
       width = canvas.width,
       height = canvas.height;
 
-    var rules = {
+    let rules = {
       "X": "F-[[X]+X]+F[+FX]-X",
       "F": "FF",
       "+": "+",
@@ -381,12 +379,12 @@ this.StateTools = this.StateTools || {};
       "[": "[",
       "]": "]",
     }
-    var E = (s) => s ? (rules[s[0]] + E(s.substr(1))) : "";
-    var L = E(E(E(E(E("X")))));
+    let E = (s) => s ? (rules[s[0]] + E(s.substr(1))) : "";
+    let L = E(E(E(E(E("X")))));
 
     function draw(x, y, len, angle) {
-      var p = { x: x, y: y, a: 3 };
-      var stack = [];
+      let p = { x: x, y: y, a: 3 };
+      let stack = [];
       ctx.beginPath()
       ctx.moveTo(p.x, p.y)
       L.split("").forEach(function(ch) {
@@ -415,21 +413,21 @@ this.StateTools = this.StateTools || {};
     }
 
     // Setup the Redux state store.
-    var defaultState = {
+    let defaultState = {
       length: 7,
       angle: 0.4,
     };
 
-    var updateState = (state = defaultState, action) => {
+    let updateState = (state = defaultState, action) => {
       if (action.type == "REPLACE_ALL") {
         state = dup(action.value);
       }
       return state;
     };
-    var store = Redux.createStore(updateState);
-    var dispatch = state => store.dispatch({type: "REPLACE_ALL", value: state});
+    let store = Redux.createStore(updateState);
+    let dispatch = state => store.dispatch({type: "REPLACE_ALL", value: state});
 
-    // Bind state to controls.
+    // Bind state to elements.
     let binder = new StateTools.Binder(store, dispatch);
     binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
     binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
@@ -438,7 +436,6 @@ this.StateTools = this.StateTools || {};
     binder.add("",       "canvas",         render);
 
     // Hook up urlReflector.
-    var stateChangeFromURL = StateTools.urlReflector(store, dispatch);
-    stateChangeFromURL(); // Call here since DomReady has resolved.
-  });
+    StateTools.urlReflector(store, dispatch);
+  })();
 </script>
