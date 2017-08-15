@@ -108,15 +108,26 @@
   L-Systems, where making changes to the parameters (Length, Angle) is stored
   in the URL fragment identifier, thus creating a permalink for any
   selections a user makes. The state of the page is kept in a Redux state
-  store and we use StateTools.urlReflector to store that changing state in
-  the URL fragment, and also pull the state out of the URL and push it into
-  the state when the URL changes.
+  store and we use <a
+    href="https://gist.github.com/jcgregorio/fee80c6484d718f7e037916ba323abf6#file-urlreflector-js-L130">StateTools.getDelta()</a>
+  to store that changing state in the URL fragment, and also pull the state
+  out of the URL and push it into the state when the URL changes.
 </p>
+
+<label for=length>Length:</label>
+<input type=range name=length id=length min=1 max=10 />
+<span style="padding: 0 10px;" id=lengthDisplay></span>
+<br>
+<label for=angle>Angle:</label>
+<input type=range name=angle id=angle min=0.01 max=1 step=0.01 />
+<span style="padding: 0 10px;" id=angleDisplay></span>
+<br>
+<canvas width=600 height=600></canvas>
 
 <p>
   The old render() function in our <a
     href="/news/2017/08/l-systems-with-redux-and-statereflector">previous
-    iteration</a> was inefficent, every time 'state' changes all the elements
+    iteration</a> was inefficent, every time 'state' changed all the elements
   were updated, even if the new value wasn't different from the old value.
 </p>
 
@@ -129,16 +140,6 @@
   updating the state, we can consolidate some code around responding to
   events.
 </p>
-
-<label for=length>Length:</label>
-<input type=range name=length id=length min=1 max=10 />
-<span style="padding: 0 10px;" id=lengthDisplay></span>
-<br>
-<label for=angle>Angle:</label>
-<input type=range name=angle id=angle min=0.01 max=1 step=0.01 />
-<span style="padding: 0 10px;" id=angleDisplay></span>
-<br>
-<canvas width=600 height=600></canvas>
 
 <p>The markup for the page is straightforward:</p>
 
@@ -180,8 +181,10 @@
     target="_blank">StateTools.getDelta</a>' algorithm is crude we can't
   really handle complex state objects, but there are plenty of other opensouce
   object diffing libraries that can be used to replace the simple version used
-  here. OTOH, there is enough code there to prove out the idea of building
-  these one and two way bindings using state objects.
+  here. OTOH, there is enough code there to prove out the idea, that building
+  these one and two way bindings using state objects is not only feasible, but
+  it dramatically improves the code and makes it easier to reason about the
+  behavior of the system.
 </p>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
