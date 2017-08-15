@@ -5,39 +5,33 @@ title: Organizing around State
 
 <p>
   This is <a
-    href="/news/2017/08/d3-and-l-systems-with-redux-and-statereflector/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">D3
-    and L-Systems with Redux and StateReflector</a>, but now with more
+    href="/news/2017/08/l-systems-with-redux-and-statereflector">
+    L-Systems with Redux and StateReflector</a>, but now with more
   organization around updating the state and around efficiently updating
-  the DOM to changes in the state.
+  the DOM to changes in the state. That is, a simple app for drawing
+  L-Systems, where making changes to the parameters (Length, Angle) is stored
+  in the URL fragment identifier, thus creating a permalink for any
+  selections a user makes. The state of the page is kept in a Redux state
+  store and we use StateTools.urlReflector to store that changing state in
+  the URL fragment, and also pull the state out of the URL and push it into
+  the state when the URL changes.
 </p>
 
 <p>
-  You can see that the render() function is inefficent in that every time
-  'state' changes all the elements are updated, even if the new value
-  isn't different from the old value.
+  The old render() function in our <a
+    href="/news/2017/08/l-systems-with-redux-and-statereflector">previous
+    iteration</a> was inefficent, every time 'state' changes all the elements
+  were updated, even if the new value wasn't different from the old value.
 </p>
-
-<pre><code>
-    function render() {
-      var state = store.getState();
-      $('length').value = state.length;
-      $('angle').value = state.angle;
-      $('lengthDisplay').innerText = state.length;
-      $('angleDisplay').innerText = state.angle;
-      ctx.clearRect(0, 0, width, height);
-      draw(width/2, height, state.length, state.angle);
-    }</code></pre>
 
 <p>
   To make this more efficient we can leverage (the newly renamed
-  StateReflector to StateTools) StateTools.getDelta(),
-  which returns the differences between the old state and the new state, so
-  we only have to update elements that have changed.
-</p>
-
-<p>
-  Similarly on the side of updating the state, we can consolidate some code
-  around responding to events.
+  StateReflector to StateTools) <a
+    href="https://gist.github.com/jcgregorio/fee80c6484d718f7e037916ba323abf6#file-urlreflector-js-L130">StateTools.getDelta()</a>,
+  which returns the differences between the old state and the new state, so we
+  only have to update elements that have changed.  Similarly on the side of
+  updating the state, we can consolidate some code around responding to
+  events.
 </p>
 
 <label for=length>Length:</label>
@@ -49,6 +43,51 @@ title: Organizing around State
 <span style="padding: 0 10px;" id=angleDisplay></span>
 <br>
 <canvas width=600 height=600></canvas>
+
+<p>The markup for the page is straightforward:</p>
+
+<script src="https://gist.github.com/jcgregorio/38ca7d599395902f2ad2765fc7853b5d.js"></script>
+
+<p>And the JS is now much more compact also, coming in at just 73 lines of code:</p>
+
+<script src="https://gist.github.com/jcgregorio/523da36281c6fb7d97890596e5304569.js"></script>
+
+<p>
+  What makes the main code so compact is the use of Redux for state
+  management, and Binder, which is a small class for mapping state changes
+  to and from HTML elements:
+</p>
+
+<script src="https://gist.github.com/jcgregorio/482c5b6b7ee4e2c78004a5df7fe48461.js"></script>
+
+<p>
+  Binder is able to work because of some of the uniformity in how native HTML
+  elements work, in particular that events are only generated via external
+  stimuli. That is, merely changing the state of an element doesn't generate
+  an event, for example, changing the checked value of a checkbox via the DOM
+  does not generate an 'input' or 'changed' event.
+</p>
+<p>
+  This means that we should never encounter an infinite cascade of events. If
+  an element generates an event and that changes the state, the new state will
+  then be reflected in the elements, but since no new events are generted then
+  the update cycle stops there. The general principles of not generating
+  events on DOM changes, and announcing changes in state via events, are ones
+  that should carry over when creating our own Custom Elements, which we'll
+  get to in a later installment.
+</p>
+
+<p>
+  In general the code is fairly simplistic, I've only coded the happy-path,
+  and since our '<a
+    href="https://gist.github.com/jcgregorio/fee80c6484d718f7e037916ba323abf6#file-urlreflector-js-L130"
+    target="_blank">StateTools.getDelta</a>' algorithm is crude we can't
+  really handle complex state objects, but there are plenty of other opensouce
+  object diffing libraries that can be used to replace the simple version used
+  here. OTOH, there is enough code there to prove out the idea of building
+  these one and two way bindings using state objects.
+</p>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -246,7 +285,7 @@ this.StateTools = this.StateTools || {};
   // store and HTML elements.
   class Binder {
 
-    // store - A Reduc store.
+    // store - A Redux store.
     // dispatch - A function called to update the state in store.
     // ele - The root element where all element searches begin from, i.e.
     //     querySelectorAll is run on this element. Defaults to document.
@@ -429,8 +468,8 @@ this.StateTools = this.StateTools || {};
 
     // Bind state to elements.
     let binder = new StateTools.Binder(store, dispatch);
-    binder.add("length", "#length",        {attr: "value"},    {event: "input", proc: e => +e.target.value});
-    binder.add("angle",  "#angle",         {attr: "value"},    {event: "input", proc: e => +e.target.value});
+    binder.add("length", "#length",        {attr: "value"},      {event: "input", proc: e => +e.target.value});
+    binder.add("angle",  "#angle",         {attr: "value"},      {event: "input", proc: e => +e.target.value});
     binder.add("length", "#lengthDisplay", {attr: "innerText"});
     binder.add("angle",  "#angleDisplay",  {attr: "innerText"});
     binder.add("",       "canvas",         render);
