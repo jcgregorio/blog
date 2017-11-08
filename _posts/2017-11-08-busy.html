@@ -1,0 +1,73 @@
+---
+layout: post
+title: Custom Element Spinner
+---
+
+<p>
+  Now that Custom Elements has reached v1 and is starting to appear in
+  browsers, let's make some elements. We'll start with one of the simplest
+  elements possible, a busy spinner, or activity indicator.
+</p>
+<p>
+  <b>Caveats:</b> No accessibility.
+</p>
+
+<script src="webcomponents-sd-ce.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css" media="screen">
+  spinner-bw {
+    display: none;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    border: 0.4em solid #A6CEE3;
+    border-left: 0.4em solid #1F78B4;
+    animation: spinner-bw-spin 1.5s infinite linear;
+  }
+
+  spinner-bw[active] {
+    display: inline-block;
+  }
+
+  @keyframes spinner-bw-spin {
+    0% {
+      transform:
+      rotate(0deg);
+    }
+    100% {
+      transform:
+      rotate(360deg);
+    }
+  }
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  window.customElements.define('spinner-bw', class extends HTMLElement {
+      get active() { return this.hasAttribute('active'); }
+      set active(val) {
+        if (val) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+      }
+    });
+</script>
+
+<p>
+  <button id=toggle>Toggle</button>
+</p>
+
+<p>
+  <spinner-bw id=spinner active></spinner-bw>
+</p>
+
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var spinner = document.getElementById('spinner');
+    document.getElementById('toggle').addEventListener('click', function() {
+      spinner.active = !spinner.active;
+    });
+  })();
+</script>
+
+<script src="https://gist.github.com/jcgregorio/67a367a2dd452475945817ebba2f836f.js"></script>

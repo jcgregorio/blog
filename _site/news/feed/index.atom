@@ -1,5 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-08-15T06:29:40-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Organizing around State</title><link href="https://bitworking.org/news/2017/08/organizing-around-state" rel="alternate" type="text/html" title="Organizing around State" /><published>2017-08-15T00:00:00-04:00</published><updated>2017-08-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/08/organizing-around-state</id><content type="html" xml:base="https://bitworking.org/news/2017/08/organizing-around-state">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-08T17:10:29-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Custom Element Spinner</title><link href="https://bitworking.org/news/2017/11/busy" rel="alternate" type="text/html" title="Custom Element Spinner" /><published>2017-11-08T00:00:00-05:00</published><updated>2017-11-08T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/busy</id><content type="html" xml:base="https://bitworking.org/news/2017/11/busy">&lt;p&gt;
+  Now that Custom Elements has reached v1 and is starting to appear in
+  browsers, let's make some elements. We'll start with one of the simplest
+  elements possible, a busy spinner, or activity indicator.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;b&gt;Caveats:&lt;/b&gt; No accessibility.
+&lt;/p&gt;
+
+&lt;script src=&quot;webcomponents-sd-ce.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+  spinner-bw {
+    display: none;
+    border-radius: 50%;
+    width: 2em;
+    height: 2em;
+    border: 0.4em solid #A6CEE3;
+    border-left: 0.4em solid #1F78B4;
+    animation: spinner-bw-spin 1.5s infinite linear;
+  }
+
+  spinner-bw[active] {
+    display: inline-block;
+  }
+
+  @keyframes spinner-bw-spin {
+    0% {
+      transform:
+      rotate(0deg);
+    }
+    100% {
+      transform:
+      rotate(360deg);
+    }
+  }
+&lt;/style&gt;
+
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+  window.customElements.define('spinner-bw', class extends HTMLElement {
+      get active() { return this.hasAttribute('active'); }
+      set active(val) {
+        if (val) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+      }
+    });
+&lt;/script&gt;
+
+&lt;p&gt;
+  &lt;button id=toggle&gt;Toggle&lt;/button&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+  &lt;spinner-bw id=spinner active&gt;&lt;/spinner-bw&gt;
+&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+  (function () {
+    var spinner = document.getElementById('spinner');
+    document.getElementById('toggle').addEventListener('click', function() {
+      spinner.active = !spinner.active;
+    });
+  })();
+&lt;/script&gt;
+
+&lt;script src=&quot;https://gist.github.com/jcgregorio/67a367a2dd452475945817ebba2f836f.js&quot;&gt;&lt;/script&gt;</content><author><name></name></author><summary type="html">Now that Custom Elements has reached v1 and is starting to appear in browsers, let's make some elements. We'll start with one of the simplest elements possible, a busy spinner, or activity indicator. Caveats: No accessibility.</summary></entry><entry><title type="html">Organizing around State</title><link href="https://bitworking.org/news/2017/08/organizing-around-state" rel="alternate" type="text/html" title="Organizing around State" /><published>2017-08-15T00:00:00-04:00</published><updated>2017-08-15T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/08/organizing-around-state</id><content type="html" xml:base="https://bitworking.org/news/2017/08/organizing-around-state">&lt;p&gt;
   This is &lt;a
     href=&quot;/news/2017/08/l-systems-with-redux-and-statereflector&quot;&gt;
     L-Systems with Redux and StateReflector&lt;/a&gt;, but now with more
@@ -1891,81 +1958,4 @@ other people have solved similar problems.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: I just recently came across this talk
 &lt;a href=&quot;https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/&quot;&gt;Turning the database inside-out with Apache Samza&lt;/a&gt;,
 and realized this is very similar, i.e. we use Google Cloud Storage as our
-streaming log, and the Tile Store is our Materialized View.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry><entry><title type="html">L-Systems</title><link href="https://bitworking.org/news/2017/07/l-systems" rel="alternate" type="text/html" title="L-Systems" /><published>2017-07-02T00:00:00-04:00</published><updated>2017-07-02T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/l-systems">&lt;p&gt;
-  &lt;a href=&quot;https://en.wikipedia.org/wiki/L-system&quot;&gt;L-Systems&lt;/a&gt; are cool. The amount of complexity, and
-  naturalness of the forms you can get from such a tiny amount of code is
-  amazing.
-&lt;/p&gt;
-  &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
-    canvas {
-    }
-  &lt;/style&gt;
-
-  &lt;canvas id=canvas width=400 height=600&gt;&lt;/canvas&gt;
-  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      var a = document.getElementById('canvas');
-      var c = a.getContext(&quot;2d&quot;);
-      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
-      M = Math
-      r = M.random
-      rules = {
-        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
-        F: &quot;FF&quot;,
-        &quot;+&quot;: &quot;+&quot;,
-        &quot;-&quot;: &quot;-&quot;,
-        &quot;[&quot;: &quot;[&quot;,
-        &quot;]&quot;: &quot;]&quot;,
-      }
-      L = E(E(E(E(E(&quot;X&quot;)))))
-      ys = []
-      function draw(x, y, len) {
-        p = { x: x, y: y, a: 3 }
-        st = []
-        c.beginPath()
-        c.moveTo(p.x, p.y)
-        L.split(&quot;&quot;).forEach(function(ch) {
-          if (ch == &quot;F&quot;) {
-            p.x += len*M.sin(p.a)
-            p.y += len*M.cos(p.a)
-            c.lineTo(p.x, p.y)
-            c.stroke()
-          } else if (ch == &quot;-&quot;) {
-            p.a += r()/2
-          } else if (ch == &quot;+&quot;) {
-            p.a -= r()/2
-          } else if (ch == &quot;[&quot;) {
-            st.push(JSON.parse(JSON.stringify(p)))
-          } else if (ch == &quot;]&quot;) {
-            p = st.pop()
-            c.beginPath()
-            c.moveTo(p.x, p.y)
-          }
-        })
-      }
-      for (i = 0; i &lt; a.height/2; i++) {
-        ys.push(1-Math.sin(r()*Math.PI/2));
-      }
-      ys.sort(function(a, b) {return a-b});
-      oneStep = function() {
-        var v = ys.shift();
-        if (v) {
-          cl = 0|(1-v)*255
-          c.strokeStyle = &quot;rgb(&quot;+[cl,cl,cl]+&quot;)&quot;
-          draw(r()*(a.width+100)-50, v*(a.height+100), v*3+0.1)
-        }
-        window.setTimeout(oneStep, 1);
-      }
-      window.setTimeout(oneStep, 1);
-    })();
-  &lt;/script&gt;
-  &lt;p&gt;
-    The code is intentionally compact as I was intending to submit something
-    along these lines to a &lt;a
-      href=&quot;https://en.wikipedia.org/wiki/Code_golf&quot;&gt;code golf&lt;/a&gt;
-    competition, but then got distracted.
-  &lt;/p&gt;
-  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">L-Systems are cool. The amount of complexity, and naturalness of the forms you can get from such a tiny amount of code is amazing.</summary></entry></feed>
+streaming log, and the Tile Store is our Materialized View.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry></feed>
