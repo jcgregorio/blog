@@ -1,5 +1,264 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-08T17:10:29-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Custom Element Spinner</title><link href="https://bitworking.org/news/2017/11/busy" rel="alternate" type="text/html" title="Custom Element Spinner" /><published>2017-11-08T00:00:00-05:00</published><updated>2017-11-08T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/busy</id><content type="html" xml:base="https://bitworking.org/news/2017/11/busy">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-12T11:40:10-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">The Shoelace Formula via Geometric Algebra</title><link href="https://bitworking.org/news/ga/area.html" rel="alternate" type="text/html" title="The Shoelace Formula via Geometric Algebra" /><published>2017-11-12T00:00:00-05:00</published><updated>2017-11-12T00:00:00-05:00</updated><id>https://bitworking.org/news/ga/area</id><content type="html" xml:base="https://bitworking.org/news/ga/area.html">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+    img {
+      vertical-align: baseline;
+    }
+
+    th {
+      background: #fff;
+    }
+
+    body {counter-reset: h3}
+    h3 {counter-reset: h4}
+    h4 {counter-reset: h5}
+    h5 {counter-reset: h6}
+
+    h3:before {counter-increment: h3; content: counter(h3) &quot;. &quot;}
+    h4:before {counter-increment: h4; content: counter(h3) &quot;.&quot; counter(h4) &quot;. &quot;}
+    h5:before {counter-increment: h5; content: counter(h3) &quot;.&quot; counter(h4) &quot;.&quot; counter(h5) &quot;. &quot;}
+    h6:before {counter-increment: h6; content: counter(h3) &quot;.&quot; counter(h4) &quot;.&quot; counter(h5) &quot;.&quot; counter(h6) &quot;. &quot;}
+
+  &lt;/style&gt;
+  &lt;script src=&quot;/js/ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/js/draw_ga2d.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+  &lt;p&gt;
+    Continuing our exploration of Geometric Algebra, let's look at calculating
+    area. GA might have some advantages here since the exterior product of two
+    vectors is the area of the parallelogram they define.
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;$$ \boldsymbol{a} \wedge \boldsymbol{b} $$&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;canvas id=parallelogram width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('parallelogram'));
+      f.vec(a, &quot;a&quot;);
+      f.vecFrom(b, a, &quot;b&quot;);
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    We are being a little sloppy here as the exterior product really gives
+    you a scalar times &lt;b&gt;e&lt;sub&gt;12&lt;/sub&gt;&lt;/b&gt;, but we'll ignore that for the
+    rest of this article, presuming we'll just read off the scalar as the
+    oriented area.
+  &lt;/p&gt;
+
+  &lt;p&gt;The oriented area of the triangle defined by the two vectors
+    and the origin is half of the exterior product:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;$$\frac{1}{2} \boldsymbol{a} \wedge \boldsymbol{b}$$&lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;canvas id=area width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('area'));
+      f.vec(a, &quot;a&quot;);
+      f.vecFrom(b, a, &quot;b&quot;);
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    Before going any further we need to pause for some nomenclature.  Up until
+    this point we've only spoken of vectors. If we start talking about
+    geometric shapes in ℝ&lt;sup&gt;2&lt;/sup&gt; we are going to need to talk about
+    points, which we will also represent as vectors with the implicit
+    understanding that a point is a vector rooted at the origin,
+    and that the difference of two points is just a vector.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    So let's look at determining the area of a triangle defined by any three
+    points. One way would be to take the differences of pairs of points on
+    the triange to construct vectors that represent two sides of the triange.
+    Note that we are also picking an orientation, so we will work in a
+    clockwise manner.
+ &lt;/p&gt;
+
+  &lt;canvas id=triangle width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var c = [0,0,0,0];
+      var f = new draw_ga2d.Frame(document.getElementById('triangle'));
+      f.vecFrom(ga2d.sub(a, c), c, &quot;a&quot;);
+      f.vecFrom(ga2d.sub(b, a), a, &quot;b&quot;);
+      f.vecFrom(ga2d.sub(c, b), b, &quot;c&quot;);
+      f.region([
+        c,
+        a,
+        b,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    To calculate A, the area of the triangle, we take the exterior product
+    of those two vectors. First we calculate 2A:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      $$
+        \begin{align*}
+        2 A &amp;= (\boldsymbol{b} - \boldsymbol{a}) \wedge (\boldsymbol{c} - \boldsymbol{b}) \\
+        &amp;= \boldsymbol{b} \wedge (\boldsymbol{c} - \boldsymbol{b}) - \boldsymbol{a} \wedge (\boldsymbol{c} - \boldsymbol{b}) \\
+        &amp;= \boldsymbol{b} \wedge \boldsymbol{c} - \boldsymbol{b} \wedge \boldsymbol{b}  - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &amp;= \boldsymbol{b} \wedge \boldsymbol{c} - 0 - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &amp;= \boldsymbol{b} \wedge \boldsymbol{c} - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &amp;= \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &amp;= \boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a}
+        \end{align*}
+      $$
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;Which gives us:&lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      $$
+        \begin{align*}
+        A = \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a})
+        \end{align*}
+      $$
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+  &lt;p&gt;
+    So the oriented area of the triange is just half the exterior product of all
+    the pairs of vectors as you progress clockwise around the triange.
+  &lt;/p&gt;
+  &lt;p&gt;
+    Note that if you have a rectangle:
+  &lt;/p&gt;
+
+  &lt;canvas id=rect width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(0, 0);
+      var b = ga2d.vec(0, 2);
+      var c = ga2d.vec(1, 2);
+      var d = ga2d.vec(1, 0);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('rect'));
+      f.vecFrom(ga2d.sub(b, a), a, &quot;b&quot;);
+      f.vecFrom(ga2d.sub(c, b), b, &quot;c&quot;);
+      f.vecFrom(ga2d.sub(d, c), c, &quot;d&quot;);
+      f.vecFrom(ga2d.sub(a, d), d, &quot;a&quot;);
+      /*
+      f.vec(c, &quot;c&quot;);
+      */
+      f.region([
+        a,
+        b,
+        c,
+        d
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    You can triangulate it:
+  &lt;/p&gt;
+
+  &lt;canvas id=triangulate width=300 height=300&gt;&lt;/canvas&gt;
+  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+    (function () {
+      var a = ga2d.vec(0, 0);
+      var b = ga2d.vec(0, 2);
+      var c = ga2d.vec(1, 2);
+      var d = ga2d.vec(1, 0);
+
+      var delta = ga2d.vec(1, 0);
+      var a_d = ga2d.add(a, delta);
+      var b_d = ga2d.add(b, delta);
+      var c_d = ga2d.add(c, delta);
+      var d_d = ga2d.add(d, delta);
+
+      var f = new draw_ga2d.Frame(document.getElementById('triangulate'));
+      f.vecFrom(ga2d.sub(b, a), a, &quot;b&quot;);
+      f.vecFrom(ga2d.sub(c, b), b, &quot;c&quot;);
+      f.vecFrom(ga2d.sub(a, c), c, &quot;a&quot;);
+
+      f.vecFrom(ga2d.sub(d_d, c_d), c_d, &quot;d&quot;);
+      f.vecFrom(ga2d.sub(a_d, d_d), d_d, &quot;a&quot;);
+      f.vecFrom(ga2d.sub(c_d, a_d), a_d, &quot;c&quot;);
+      /*
+      f.vec(c, &quot;c&quot;);
+      */
+      f.region([
+        a,
+        b,
+        c,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.region([
+        a_d,
+        c_d,
+        d_d,
+      ], &quot;&quot;, &quot;rgba(100, 0, 255, 0.2)&quot;);
+      f.draw();
+    })();
+  &lt;/script&gt;
+
+  &lt;p&gt;
+    And now we see that we can calculate the volume of the rectangle as
+    the sum of the area of the two triangles:
+  &lt;/p&gt;
+
+  &lt;dl&gt;
+    &lt;dd&gt;
+      $$
+        \begin{align*}
+        A &amp;= 
+        \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a})
+        +
+        \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &amp;= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &amp;= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} - \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &amp;= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + 0 + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &amp;= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        \end{align*}
+      $$
+    &lt;/dd&gt;
+  &lt;/dl&gt;
+
+  &lt;p&gt;
+    Again we can see that to calculate the area we just take 1/2 the exterior product of pairs of points
+    as you progress around the perimenter of the shape, and this can be
+    applied to any simple polygon. You might recongize this as the &lt;a
+      href=&quot;https://en.wikipedia.org/wiki/Shoelace_formula&quot;&gt;Shoelace
+      Formula&lt;/a&gt;, and comparing the above proof to the explanations in the
+    Wikipedia article really drives home the succinct and expressive power
+    of GA.
+  &lt;/p&gt;</content><author><name></name></author><summary type="html">img { vertical-align: baseline; }</summary></entry><entry><title type="html">Custom Element Spinner</title><link href="https://bitworking.org/news/2017/11/busy" rel="alternate" type="text/html" title="Custom Element Spinner" /><published>2017-11-08T00:00:00-05:00</published><updated>2017-11-08T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/busy</id><content type="html" xml:base="https://bitworking.org/news/2017/11/busy">&lt;p&gt;
   Now that Custom Elements has reached v1 and is starting to appear in
   browsers, let's make some elements. We'll start with one of the simplest
   elements possible, a busy spinner, or activity indicator.
@@ -1841,121 +2100,4 @@ because &lt;a href=&quot;https://issues.apache.org/jira/browse/LEGAL-303&quot;&g
 
 &lt;p&gt;My only concern is that I believe I too work in the industry and I’ve spent
 the last three years delivering applications using
-&lt;a href=&quot;https://www.polymer-project.org/&quot;&gt;Polymer&lt;/a&gt;, so I guess I’m not “settled”?&lt;/p&gt;</content><author><name></name></author><summary type="html">It was over three years ago that I wrote No more JS frameworks, at which time I was roundly criticized for not understanding that data binding could only be done via JS framework, the two were inextricably linked, and only 2-way data binding would do, as one way data binding was for weak-minded fools who weren’t building real applications. You can find the comments on HN yourself, I don’t link to that cesspool.</summary></entry><entry><title type="html">Tile Store</title><link href="https://bitworking.org/news/2017/07/tile-store" rel="alternate" type="text/html" title="Tile Store" /><published>2017-07-08T00:00:00-04:00</published><updated>2017-07-08T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/tile-store</id><content type="html" xml:base="https://bitworking.org/news/2017/07/tile-store">&lt;p&gt;My team at Google is the infrastructure team for &lt;a href=&quot;https://skia.org&quot;&gt;Skia&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Skia is an open source 2D graphics library which provides common APIs that work
-across a variety of hardware and software platforms. It serves as the graphics
-engine for Google Chrome and Chrome OS, Android, Mozilla Firefox and Firefox
-OS, and many other products.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Skia, being a graphics library, needs to be tested for both performance and
-correctness, and being cross-platform, it needs to be tested across a wide
-variety of platforms and under different configurations. Skia has a variety of
-backends, i.e. the same drawing commands can be directed to be rendered via:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Raster - Using the CPU-only.&lt;/li&gt;
-  &lt;li&gt;Ganesh - Skia’s GPU-accelerated backend.&lt;/li&gt;
-  &lt;li&gt;PDF - PDF document creation.&lt;/li&gt;
-  &lt;li&gt;SVG - An experimental SVG renderer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;All of those backends need to be tested across different platforms (Windows,
-Android, Linux, Max, iOS), different architectures (x86_64, Arm64, Arm7), and a
-wide range of other options that can be selected on how Skia renders. Testing a
-wide range of GPUs is required because different GPUs have different behaviors,
-including some very buggy but widely deployed versions of OpenGL, so we current
-test against a large number of both desktop and mobile GPUs. All of this
-variety creates a combinatorial explosion in test data. For every commit to
-Skia the tests result in roughly 800,000 performance metrics and one million
-images being rendered. There are about 30 commits a day to the Skia repo, so
-that ends up being a lot of data. Sure, not a lot compared to other projects in
-Google, but Skia is open source, and we prefer to build all of our tooling also
-as open source, and we needed to build tools to analyze and monitor all those
-performance metrics and correctness images, and so we needed data storage with
-the following requirements:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Not an SQL database.&lt;/li&gt;
-  &lt;li&gt;Very fast access for recent data to allow ad-hoc analysis.&lt;/li&gt;
-  &lt;li&gt;Reasonable access for older data.&lt;/li&gt;
-  &lt;li&gt;Commit based organization.&lt;/li&gt;
-  &lt;li&gt;Robust, i.e. we can’t lose data.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The requirement that it not be an SQL database is a personal preference, I’m
-sure there are a large contingent of people that will tell me that Postgres is
-the perfect solution, but apparently I’m not smart enough to run/use/tune an
-SQL database, particularly for large amounts of data. I might give &lt;a href=&quot;https://cloud.google.com/spanner/&quot;&gt;Spanner&lt;/a&gt; a
-chance  in the future, and if so I will certainly give an update. &lt;a href=&quot;https://cloud.google.com/bigquery/&quot;&gt;BigQuery&lt;/a&gt;
-might also work. Regardless, we built these apps a long time before either
-Spanner or BigQuery were available, so they weren’t viable options at the time.&lt;/p&gt;
-
-&lt;p&gt;One of the other odd requirements is the commit based organization of the data.
-This is obviously because the data needs to align with the commits to Skia, but
-it isn’t that straightforward because tests on different machines take
-different amounts of time, and we also continually backfill tests when we have
-spare capacity, so test results almost never arrive in order.&lt;/p&gt;
-
-&lt;p&gt;Since there wasn’t a single system that could meet all these requirements we
-split the problem into two systems, one for robust storage, and a second system
-for fast access for real time analysis.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Robust storage (GCS) - The ‘source of truth’ documents are stored in Google Cloud Storage.&lt;/li&gt;
-  &lt;li&gt;Fast Access (Tile Store) - An intermediate form, built on key-value stores, such as BoltDB, organized into chunks of commits called tiles.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Storing the source of truth documents on Google Cloud Storage takes care of the
-robustness. The data files are all JSON and PNG images, which is what is
-emitted by the tools that do the performance and correctness testing. The JSON
-files are written out to a unique name which include year/month/day/hour in the
-path. This allows for easy rebuilding of the Tile Store, just scan for all the
-files based on the year/month/day/hour over your desired time range and ingest
-them into the Tile Store. And given that the Tile Store can be rebuilt easily
-from the ‘source of truth’ documents, we don’t need to back them up.&lt;/p&gt;
-
-&lt;p&gt;The Tile Store is optimized for very fast writes and fast querying.
-Additionally, we run on machines large enough to keep all the data for the last
-100 commits in memory for very fast access, refreshed from the tiles
-periodically.&lt;/p&gt;
-
-&lt;p&gt;For trace data we store each point as a pair, the index of the point and then
-the value of the trace at that point. That is, if the tile size is 50 then each
-point in a trace is at an index in [0, 49]. So the values stored for a trace
-might look like:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[0, 1.23], [1, 3.21], [2, 5.67], ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Note that the points may not arrive in order, so they could actually be stored
-as:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2, 5.67], [0, 1.23], [1, 3.21], ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Also note that points are only appended, and the last value for a point is the
-one that’s used, so duplicate data may exist in the trace:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2, 5.67], [0, 1.23], [1, 3.21], [2, 5.50], ...
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This can happen if a test is re-run, we always use the latter value, so the
-value at index 2 of this trace will be 5.50, not 5.67.&lt;/p&gt;
-
-&lt;p&gt;You can check out the &lt;a href=&quot;https://godoc.org/go.skia.org/infra/perf/go/ptracestore&quot;&gt;code and documentation&lt;/a&gt; if you are interested in the
-details of the how the tiles are structured.&lt;/p&gt;
-
-&lt;p&gt;I wrote this up mostly as a historical marker, since by next year we might be
-fully on Spanner or some other storage technology, and also to find out how
-other people have solved similar problems.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;: I just recently came across this talk
-&lt;a href=&quot;https://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/&quot;&gt;Turning the database inside-out with Apache Samza&lt;/a&gt;,
-and realized this is very similar, i.e. we use Google Cloud Storage as our
-streaming log, and the Tile Store is our Materialized View.&lt;/p&gt;</content><author><name></name></author><summary type="html">My team at Google is the infrastructure team for Skia:</summary></entry></feed>
+&lt;a href=&quot;https://www.polymer-project.org/&quot;&gt;Polymer&lt;/a&gt;, so I guess I’m not “settled”?&lt;/p&gt;</content><author><name></name></author><summary type="html">It was over three years ago that I wrote No more JS frameworks, at which time I was roundly criticized for not understanding that data binding could only be done via JS framework, the two were inextricably linked, and only 2-way data binding would do, as one way data binding was for weak-minded fools who weren’t building real applications. You can find the comments on HN yourself, I don’t link to that cesspool.</summary></entry></feed>
