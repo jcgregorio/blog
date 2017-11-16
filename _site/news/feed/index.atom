@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-14T16:37:00-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">The Shoelace Formula via Geometric Algebra</title><link href="https://bitworking.org/news/ga/area.html" rel="alternate" type="text/html" title="The Shoelace Formula via Geometric Algebra" /><published>2017-11-12T00:00:00-05:00</published><updated>2017-11-12T00:00:00-05:00</updated><id>https://bitworking.org/news/ga/area</id><content type="html" xml:base="https://bitworking.org/news/ga/area.html">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-16T08:48:54-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Geometric Algebra</title><link href="https://bitworking.org/news/2017/11/ga" rel="alternate" type="text/html" title="Geometric Algebra" /><published>2017-11-16T00:00:00-05:00</published><updated>2017-11-16T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/ga</id><content type="html" xml:base="https://bitworking.org/news/2017/11/ga">&lt;h1 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;/news/ga/2d&quot;&gt;An Introduction to Geometric Algebra over R^2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/news/ga/physics&quot;&gt;Geometric Algebra applied to Physics&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/news/ga/area&quot;&gt;The Shoelace Formula via Geometric Algebra&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html">Table of contents</summary></entry><entry><title type="html">The Shoelace Formula via Geometric Algebra</title><link href="https://bitworking.org/news/ga/area" rel="alternate" type="text/html" title="The Shoelace Formula via Geometric Algebra" /><published>2017-11-12T00:00:00-05:00</published><updated>2017-11-12T00:00:00-05:00</updated><id>https://bitworking.org/news/ga/area</id><content type="html" xml:base="https://bitworking.org/news/ga/area">&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
     img {
       vertical-align: baseline;
     }
@@ -2083,27 +2089,4 @@ fair share and loopholes are closed.&lt;/p&gt;
   &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
   &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
     document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">So we know L-Systems are fun. What if we let d3-force layout the nodes of the L-System?</summary></entry><entry><title type="html">Data binding and JS frameworks</title><link href="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks" rel="alternate" type="text/html" title="Data binding and JS frameworks" /><published>2017-07-16T00:00:00-04:00</published><updated>2017-07-16T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/data-binding-and-js-frameworks</id><content type="html" xml:base="https://bitworking.org/news/2017/07/data-binding-and-js-frameworks">&lt;p&gt;It was over three years ago that I wrote
-&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;, at which time
-I was roundly criticized for not understanding that data binding could only be
-done via JS framework, the two were inextricably linked, and only 2-way data
-binding would do, as one way data binding was for weak-minded fools who
-weren’t building real applications. You can find the comments on HN yourself,
-I don’t link to that cesspool.&lt;/p&gt;
-
-&lt;p&gt;So, in that context, it was funny to read
-&lt;a href=&quot;https://medium.com/@chriscordle/why-angular-2-4-is-too-little-too-late-ea86d7fa0bae&quot;&gt;Why Angular 2/4 Is Too Little, Too Late&lt;/a&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Two way data-binding was a feature in 2013 and Facebook said it was a &lt;strong&gt;bug&lt;/strong&gt;.
-It turns out they were &lt;em&gt;right&lt;/em&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The post goes on to explain how the “industry settled on
-&lt;a href=&quot;http://redux.js.org/&quot;&gt;Redux&lt;/a&gt;”, which is nice to see that the functionality
-is delivered as a standalone library, and &lt;a href=&quot;https://github.com/reactjs/redux/blob/master/LICENSE.md&quot;&gt;MIT Licensed&lt;/a&gt;,
-because &lt;a href=&quot;https://issues.apache.org/jira/browse/LEGAL-303&quot;&gt;licenses matter&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;My only concern is that I believe I too work in the industry and I’ve spent
-the last three years delivering applications using
-&lt;a href=&quot;https://www.polymer-project.org/&quot;&gt;Polymer&lt;/a&gt;, so I guess I’m not “settled”?&lt;/p&gt;</content><author><name></name></author><summary type="html">It was over three years ago that I wrote No more JS frameworks, at which time I was roundly criticized for not understanding that data binding could only be done via JS framework, the two were inextricably linked, and only 2-way data binding would do, as one way data binding was for weak-minded fools who weren’t building real applications. You can find the comments on HN yourself, I don’t link to that cesspool.</summary></entry></feed>
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">So we know L-Systems are fun. What if we let d3-force layout the nodes of the L-System?</summary></entry></feed>

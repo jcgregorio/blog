@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Custom Element Spinner</title>
-  <meta name="description" content="Now that Custom Elements has reached v1 and is starting to appear in browsers, let&#39;s make some elements. We&#39;ll start with one of the simplest elements possib...">
+  <title>Geometric Algebra</title>
+  <meta name="description" content="Table of contents">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2017/11/busy">
+  <link rel="canonical" href="https://bitworking.org/news/2017/11/ga">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
@@ -89,84 +89,24 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Custom Element Spinner</h1>
+    <h1 class="post-title" itemprop="name headline">Geometric Algebra</h1>
     <p class="post-meta">
-      <time datetime="2017-11-08T00:00:00-05:00" itemprop="datePublished">
+      <time datetime="2017-11-16T00:00:00-05:00" itemprop="datePublished">
         
-        Nov 8, 2017
+        Nov 16, 2017
       </time>
       </p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>
-  Now that Custom Elements has reached v1 and is starting to appear in
-  browsers, let's make some elements. We'll start with one of the simplest
-  elements possible, a busy spinner, or activity indicator.
-</p>
-<p>
-  <b>Caveats:</b> No accessibility.
-</p>
+    <h1 id="table-of-contents">Table of contents</h1>
 
-<script src="webcomponents-sd-ce.js" type="text/javascript" charset="utf-8"></script>
-<style type="text/css" media="screen">
-  spinner-bw {
-    display: none;
-    border-radius: 50%;
-    width: 2em;
-    height: 2em;
-    border: 0.4em solid #A6CEE3;
-    border-left: 0.4em solid #1F78B4;
-    animation: spinner-bw-spin 1.5s infinite linear;
-  }
+<ol>
+  <li><a href="/news/ga/2d">An Introduction to Geometric Algebra over R^2</a></li>
+  <li><a href="/news/ga/physics">Geometric Algebra applied to Physics</a></li>
+  <li><a href="/news/ga/area">The Shoelace Formula via Geometric Algebra</a></li>
+</ol>
 
-  spinner-bw[active] {
-    display: inline-block;
-  }
-
-  @keyframes spinner-bw-spin {
-    0% {
-      transform:
-      rotate(0deg);
-    }
-    100% {
-      transform:
-      rotate(360deg);
-    }
-  }
-</style>
-
-<script type="text/javascript" charset="utf-8">
-  window.customElements.define('spinner-bw', class extends HTMLElement {
-      get active() { return this.hasAttribute('active'); }
-      set active(val) {
-        if (val) {
-          this.setAttribute('active', '');
-        } else {
-          this.removeAttribute('active');
-        }
-      }
-    });
-</script>
-
-<p>
-  <button id=toggle>Toggle</button>
-</p>
-
-<p>
-  <spinner-bw id=spinner active></spinner-bw>
-</p>
-
-<script type="text/javascript" charset="utf-8">
-  (function () {
-    var spinner = document.getElementById('spinner');
-    document.getElementById('toggle').addEventListener('click', function() {
-      spinner.active = !spinner.active;
-    });
-  })();
-</script>
-
-<script src="https://gist.github.com/jcgregorio/67a367a2dd452475945817ebba2f836f.js"></script>
 
   </div>
 
@@ -176,8 +116,8 @@
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2017/11/busy';
-      this.page.identifier = 'https://bitworking.org/news/2017/11/busy';
+      this.page.url = 'https://bitworking.org/news/2017/11/ga';
+      this.page.identifier = 'https://bitworking.org/news/2017/11/ga';
     };
 
     (function() {
@@ -205,12 +145,9 @@
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2017/08/organizing-around-state">&laquo;
-        Organizing around State</a>
+      <a class="prev" href="/news/ga/area">&laquo;
+        The Shoelace Formula via Geometric Algebra</a>
       
-      
-      <a class="next"
-        href="/news/ga/area">The Shoelace Formula via Geometric Algebra &raquo;</a>
       
     </div>
     
