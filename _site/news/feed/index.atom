@@ -1,5 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-11-16T08:48:54-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Geometric Algebra</title><link href="https://bitworking.org/news/2017/11/ga" rel="alternate" type="text/html" title="Geometric Algebra" /><published>2017-11-16T00:00:00-05:00</published><updated>2017-11-16T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/ga</id><content type="html" xml:base="https://bitworking.org/news/2017/11/ga">&lt;h1 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-12-03T09:36:48-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Things to watch for.</title><link href="https://bitworking.org/news/2017/12/things-to-watch-for" rel="alternate" type="text/html" title="Things to watch for." /><published>2017-12-03T00:00:00-05:00</published><updated>2017-12-03T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/12/things-to-watch-for</id><content type="html" xml:base="https://bitworking.org/news/2017/12/things-to-watch-for">&lt;p&gt;As the current political situation unwinds there are things to watch for:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Now that the GOP mega-donors have their tax cut, do Republicans become
+more open to impeaching Trump? He is a huge liability for the 2018
+mid-terms and impeachment might improve their odds as a way of distancing
+themselves from him.&lt;/li&gt;
+  &lt;li&gt;As impeachment for Trump looks more and more likely, look for WikiLeaks to
+start dumping compromising information on Trump. If Putin can’t have a
+compromised politician in the White House then he can at least maximize
+the chaos. Also, WikiLeaks will point to such a dump of information
+and try to claim that they are unbiased.&lt;/li&gt;
+  &lt;li&gt;Once impeachment proceedings start, look for Russia to make further inroads
+into Ukraine.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html">As the current political situation unwinds there are things to watch for:</summary></entry><entry><title type="html">Geometric Algebra</title><link href="https://bitworking.org/news/2017/11/ga" rel="alternate" type="text/html" title="Geometric Algebra" /><published>2017-11-16T00:00:00-05:00</published><updated>2017-11-16T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/11/ga</id><content type="html" xml:base="https://bitworking.org/news/2017/11/ga">&lt;h1 id=&quot;table-of-contents&quot;&gt;Table of contents&lt;/h1&gt;
 
 &lt;ol&gt;
   &lt;li&gt;&lt;a href=&quot;/news/ga/2d&quot;&gt;An Introduction to Geometric Algebra over R^2&lt;/a&gt;&lt;/li&gt;
@@ -1969,124 +1983,4 @@ fair share and loopholes are closed.&lt;/p&gt;
   &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
   &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
     document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">An L-System fed into d3-force, but now with controls that allow you to change some of the simulation parameters.</summary></entry><entry><title type="html">D3 and L-Systems</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems" rel="alternate" type="text/html" title="D3 and L-Systems" /><published>2017-07-20T00:00:00-04:00</published><updated>2017-07-20T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems">&lt;p&gt;
-  So we know &lt;a
-    href=&quot;https://bitworking.org/news/2017/07/l-systems&quot;&gt;L-Systems&lt;/a&gt; are
-  fun. What if we let &lt;a href=&quot;https://github.com/d3/d3-force&quot;&gt;d3-force&lt;/a&gt;
-  layout the nodes of the L-System?
-&lt;/p&gt;
-
-  &lt;canvas width=&quot;600&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;
-  &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
-      rules = {
-        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
-        F: &quot;FF&quot;,
-        &quot;+&quot;: &quot;+&quot;,
-        &quot;-&quot;: &quot;-&quot;,
-        &quot;[&quot;: &quot;[&quot;,
-        &quot;]&quot;: &quot;]&quot;,
-      }
-      var start = {id: &quot;0&quot;};
-      var graph = {
-        &quot;nodes&quot;: [start],
-        &quot;links&quot;: [],
-      };
-      var n = 0;
-      var st = [start];
-      L = E(E(E(E(E(&quot;X&quot;))))).split('').forEach(function(ch) {
-        if (ch == &quot;[&quot;) {
-          n += 1;
-          var node = {id: &quot;&quot;+n};
-          st.push(node);
-          graph.nodes.push(node);
-          graph.links.push(
-            {
-              source: st[st.length-1].id,
-              target: st[st.length-2].id,
-            },
-          );
-        } else if (ch == &quot;]&quot;) {
-          st.pop()
-        }
-      });
-
-      var canvas = document.querySelector(&quot;canvas&quot;),
-            context = canvas.getContext(&quot;2d&quot;),
-            width = canvas.width,
-            height = canvas.height;
-
-      var simulation = d3.forceSimulation()
-          .force(&quot;link&quot;, d3.forceLink().distance(3).strength(0.5).iterations(2).id(function(d) { return d.id; }))
-          .force(&quot;charge&quot;, d3.forceManyBody().strength(-1))
-          .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2));
-
-      simulation
-        .nodes(graph.nodes)
-        .on(&quot;tick&quot;, ticked);
-
-      simulation.force(&quot;link&quot;)
-        .links(graph.links);
-
-      d3.select(canvas)
-        .call(d3.drag()
-          .container(canvas)
-            .subject(dragsubject)
-            .on(&quot;start&quot;, dragstarted)
-            .on(&quot;drag&quot;, dragged)
-            .on(&quot;end&quot;, dragended));
-
-      function ticked() {
-        context.clearRect(0, 0, width, height);
-
-        context.beginPath();
-        graph.links.forEach(drawLink);
-        context.strokeStyle = &quot;#343&quot;;
-        context.fillStyle = &quot;#363&quot;;
-        context.stroke();
-
-        context.beginPath();
-        graph.nodes.forEach(drawNode);
-        context.fill();
-      }
-
-      function dragsubject() {
-        return simulation.find(d3.event.x, d3.event.y);
-      }
-
-      function dragstarted() {
-          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-          d3.event.subject.fx = d3.event.subject.x;
-          d3.event.subject.fy = d3.event.subject.y;
-      }
-
-      function dragged() {
-          d3.event.subject.fx = d3.event.x;
-          d3.event.subject.fy = d3.event.y;
-      }
-
-      function dragended() {
-          if (!d3.event.active) simulation.alphaTarget(0);
-          d3.event.subject.fx = null;
-          d3.event.subject.fy = null;
-      }
-
-      function drawLink(d) {
-          context.moveTo(d.source.x, d.source.y);
-          context.lineTo(d.target.x, d.target.y);
-      }
-
-      function drawNode(d) {
-          context.moveTo(d.x + 3, d.y);
-          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
-      }
-
-    })();
-  &lt;/script&gt;
-
-  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">So we know L-Systems are fun. What if we let d3-force layout the nodes of the L-System?</summary></entry></feed>
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">An L-System fed into d3-force, but now with controls that allow you to change some of the simulation parameters.</summary></entry></feed>
