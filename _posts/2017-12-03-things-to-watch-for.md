@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Things to watch for.
+title: Things to watch for
 ---
 
 As the current political situation unwinds there are things to watch for:
