@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Things to watch for</title>
-  <meta name="description" content="As the current political situation unwinds there are things to watch for:">
+  <title>Vanilla JS Sample Apps</title>
+  <meta name="description" content="I spent some time over the holidays porting web framework sample apps over to vanilla JS.">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2017/12/things-to-watch-for">
+  <link rel="canonical" href="https://bitworking.org/news/2018/01/vanilla-js-sample-apps">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
@@ -89,30 +89,46 @@
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Things to watch for</h1>
+    <h1 class="post-title" itemprop="name headline">Vanilla JS Sample Apps</h1>
     <p class="post-meta">
-      <time datetime="2017-12-03T00:00:00-05:00" itemprop="datePublished">
+      <time datetime="2018-01-02T00:00:00-05:00" itemprop="datePublished">
         
-        Dec 3, 2017
+        Jan 2, 2018
       </time>
       </p>
   </header>
 
   <div class="post-content" itemprop="articleBody">
-    <p>As the current political situation unwinds there are things to watch for:</p>
+    <p>I spent some time over the holidays porting <a href="https://github.com/jcgregorio/vanillajs">web framework sample apps
+over to vanilla JS</a>.</p>
+
+<p>I’ll add the same caveat here that I also included in the code:</p>
+
+<blockquote>
+  <p>The code works w/o polyfils in Chrome. To get it to run in a wider range of
+browsers you will need to add polyfills and, depending on the target browser
+version, compile the JS back to an older version of ES, and run a prefixer
+on the CSS. The wider the target set of browsers and the older the versions
+you are targeting the more processing you will need to do via webpack, but
+since the original code doesn’t need to change, those extra processing steps
+are out of scope for these examples.</p>
+</blockquote>
+
+<p>The samples are all built using <a href="https://yarnpkg.com/">Yarn</a> and <a href="https://webpack.js.org/">WebPack
+3</a>, both of which I really enjoyed working with.</p>
+
+<p>In all cases, I tried to change as little of the original code as possible,
+keeping the same CSS if possible, and the same breakdown in app struture, so
+the apps should look and operate identically to the original samples.</p>
+
+<p>Related reading:</p>
 
 <ol>
-  <li>Now that the GOP mega-donors have their tax cut, do Republicans become
-more open to impeaching Trump? He is a huge liability for the 2018
-mid-terms and impeachment might improve their odds as a way of distancing
-themselves from him.</li>
-  <li>As impeachment for Trump looks more and more likely, look for WikiLeaks to
-start dumping compromising information on Trump. If Putin can’t have a
-compromised politician in the White House then he can at least maximize
-the chaos. Also, WikiLeaks will point to such a dump of information
-and try to claim that they are unbiased.</li>
-  <li>Once impeachment proceedings start, look for Russia to make further inroads
-into Ukraine.</li>
+  <li><a href="https://bitworking.org/news/2014/05/zero_framework_manifesto">No more JS frameworks</a>.</li>
+  <li><a href="https://bitworking.org/news/2015/03/Six_Places">Six Places</a>, guidance on
+how to stich together web applications using custom elements.</li>
+  <li><a href="https://developers.google.com/web/fundamentals/web-components/customelements">Custom Elements v1: Reusable Web Components</a>,
+a great intro, in particular check out the “Best Practices” section.</li>
 </ol>
 
   </div>
@@ -123,8 +139,8 @@ into Ukraine.</li>
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2017/12/things-to-watch-for';
-      this.page.identifier = 'https://bitworking.org/news/2017/12/things-to-watch-for';
+      this.page.url = 'https://bitworking.org/news/2018/01/vanilla-js-sample-apps';
+      this.page.identifier = 'https://bitworking.org/news/2018/01/vanilla-js-sample-apps';
     };
 
     (function() {
@@ -152,12 +168,9 @@ into Ukraine.</li>
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2017/11/ga">&laquo;
-        Geometric Algebra</a>
+      <a class="prev" href="/news/2017/12/things-to-watch-for">&laquo;
+        Things to watch for</a>
       
-      
-      <a class="next"
-        href="/news/2018/01/vanilla-js-sample-apps">Vanilla JS Sample Apps &raquo;</a>
       
     </div>
     

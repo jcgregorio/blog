@@ -1,5 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2017-12-03T09:37:49-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Things to watch for</title><link href="https://bitworking.org/news/2017/12/things-to-watch-for" rel="alternate" type="text/html" title="Things to watch for" /><published>2017-12-03T00:00:00-05:00</published><updated>2017-12-03T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/12/things-to-watch-for</id><content type="html" xml:base="https://bitworking.org/news/2017/12/things-to-watch-for">&lt;p&gt;As the current political situation unwinds there are things to watch for:&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-02T10:59:14-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Vanilla JS Sample Apps</title><link href="https://bitworking.org/news/2018/01/vanilla-js-sample-apps" rel="alternate" type="text/html" title="Vanilla JS Sample Apps" /><published>2018-01-02T00:00:00-05:00</published><updated>2018-01-02T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/vanilla-js-sample-apps</id><content type="html" xml:base="https://bitworking.org/news/2018/01/vanilla-js-sample-apps">&lt;p&gt;I spent some time over the holidays porting &lt;a href=&quot;https://github.com/jcgregorio/vanillajs&quot;&gt;web framework sample apps
+over to vanilla JS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I’ll add the same caveat here that I also included in the code:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The code works w/o polyfils in Chrome. To get it to run in a wider range of
+browsers you will need to add polyfills and, depending on the target browser
+version, compile the JS back to an older version of ES, and run a prefixer
+on the CSS. The wider the target set of browsers and the older the versions
+you are targeting the more processing you will need to do via webpack, but
+since the original code doesn’t need to change, those extra processing steps
+are out of scope for these examples.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The samples are all built using &lt;a href=&quot;https://yarnpkg.com/&quot;&gt;Yarn&lt;/a&gt; and &lt;a href=&quot;https://webpack.js.org/&quot;&gt;WebPack
+3&lt;/a&gt;, both of which I really enjoyed working with.&lt;/p&gt;
+
+&lt;p&gt;In all cases, I tried to change as little of the original code as possible,
+keeping the same CSS if possible, and the same breakdown in app struture, so
+the apps should look and operate identically to the original samples.&lt;/p&gt;
+
+&lt;p&gt;Related reading:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://bitworking.org/news/2015/03/Six_Places&quot;&gt;Six Places&lt;/a&gt;, guidance on
+how to stich together web applications using custom elements.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/customelements&quot;&gt;Custom Elements v1: Reusable Web Components&lt;/a&gt;,
+a great intro, in particular check out the “Best Practices” section.&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><summary type="html">I spent some time over the holidays porting web framework sample apps over to vanilla JS.</summary></entry><entry><title type="html">Things to watch for</title><link href="https://bitworking.org/news/2017/12/things-to-watch-for" rel="alternate" type="text/html" title="Things to watch for" /><published>2017-12-03T00:00:00-05:00</published><updated>2017-12-03T00:00:00-05:00</updated><id>https://bitworking.org/news/2017/12/things-to-watch-for</id><content type="html" xml:base="https://bitworking.org/news/2017/12/things-to-watch-for">&lt;p&gt;As the current political situation unwinds there are things to watch for:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;Now that the GOP mega-donors have their tax cut, do Republicans become
@@ -1816,171 +1846,4 @@ fair share and loopholes are closed.&lt;/p&gt;
   &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
   &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
     document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">This is just D3 and L-Systems with live controls, but now state is managed by Redux. Oh, and also arrow functions, because they're available everywhere I care about.</summary></entry><entry><title type="html">D3 and L-Systems with live controls</title><link href="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls" rel="alternate" type="text/html" title="D3 and L-Systems with live controls" /><published>2017-07-22T00:00:00-04:00</published><updated>2017-07-22T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls</id><content type="html" xml:base="https://bitworking.org/news/2017/07/d3-and-l-systems-with-live-controls">&lt;p&gt;
-  An &lt;a href=&quot;/news/2017/07/d3-and-l-systems&quot;&gt;L-System fed into d3-force&lt;/a&gt;, but now with controls that allow you to
-  change some of the simulation parameters.
-&lt;/p&gt;
-
-  &lt;label for=&quot;linkDistance&quot;&gt;Link Distance:&lt;/label&gt;
-  &lt;input type=&quot;range&quot; name=&quot;linkDistance&quot; id=&quot;linkDistance&quot; min=1 max=10 value=&quot;3&quot; /&gt;
-  &lt;span style=&quot;padding: 0 10px;&quot; id=linkDistanceDisplay&gt;&lt;/span&gt;
-  &lt;br&gt;
-  &lt;label for=&quot;linkStrength&quot;&gt;Link Strength:&lt;/label&gt;
-  &lt;input type=&quot;range&quot; name=&quot;linkStrength&quot; id=&quot;linkStrength&quot; value=&quot;0.5&quot; min=0.01 max=4 step=&quot;0.01&quot; /&gt;
-  &lt;span style=&quot;padding: 0 10px;&quot; id=linkStrengthDisplay&gt;&lt;/span&gt;
-  &lt;br&gt;
-  &lt;label for=&quot;chargeStrength&quot;&gt;Charge Strength:&lt;/label&gt;
-  &lt;input type=&quot;range&quot; name=&quot;chargeStrength&quot; id=&quot;chargeStrength&quot; value=&quot;-1&quot; min=&quot;-10&quot; max=&quot;-0.01&quot; step=&quot;0.01&quot; /&gt;
-  &lt;span style=&quot;padding: 0 10px;&quot; id=chargeStrengthDisplay&gt;&lt;/span&gt;
-  &lt;br&gt;
-  &lt;canvas width=&quot;600&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;
-  &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script id=src type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    (function () {
-      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : &quot;&quot; }
-      rules = {
-        X: &quot;F-[[X]+X]+F[+FX]-X&quot;,
-        F: &quot;FF&quot;,
-        &quot;+&quot;: &quot;+&quot;,
-        &quot;-&quot;: &quot;-&quot;,
-        &quot;[&quot;: &quot;[&quot;,
-        &quot;]&quot;: &quot;]&quot;,
-      }
-      var start = {id: &quot;0&quot;};
-      var graph = {
-        &quot;nodes&quot;: [start],
-        &quot;links&quot;: [],
-      };
-      var n = 0;
-      var st = [start];
-      L = E(E(E(E(E(&quot;X&quot;))))).split('').forEach(function(ch) {
-        if (ch == &quot;[&quot;) {
-          n += 1;
-          var node = {id: &quot;&quot;+n};
-          st.push(node);
-          graph.nodes.push(node);
-          graph.links.push(
-            {
-              source: st[st.length-1].id,
-              target: st[st.length-2].id,
-            },
-          );
-        } else if (ch == &quot;]&quot;) {
-          st.pop()
-        }
-      });
-
-      var canvas = document.querySelector(&quot;canvas&quot;),
-            context = canvas.getContext(&quot;2d&quot;),
-            width = canvas.width,
-            height = canvas.height;
-
-      var linkDistance = 3;
-      var linkStrength = 0.5;
-      var linkForce = d3.forceLink().distance(linkDistance).strength(linkStrength).iterations(5).id(function(d) { return d.id; });
-      var chargeStrength = -1;
-      var charge = d3.forceManyBody().strength(chargeStrength);
-      simulation = d3.forceSimulation()
-          .force(&quot;link&quot;, linkForce)
-          .force(&quot;charge&quot;, charge)
-          .force(&quot;center&quot;, d3.forceCenter(width / 2, height / 2))
-
-      function updateSimulation() {
-        linkForce.distance(linkDistance).strength(linkStrength);
-        charge.strength(chargeStrength);
-        simulation.alphaTarget(0.1).restart();
-      }
-
-      simulation
-        .nodes(graph.nodes)
-        .on(&quot;tick&quot;, ticked);
-
-      simulation.force(&quot;link&quot;)
-        .links(graph.links);
-
-      d3.select(canvas)
-        .call(d3.drag()
-          .container(canvas)
-            .subject(dragsubject)
-            .on(&quot;start&quot;, dragstarted)
-            .on(&quot;drag&quot;, dragged)
-            .on(&quot;end&quot;, dragended));
-
-      function ticked() {
-        context.clearRect(0, 0, width, height);
-
-        context.beginPath();
-        graph.links.forEach(drawLink);
-        context.strokeStyle = &quot;#343&quot;;
-        context.fillStyle = &quot;#363&quot;;
-        context.stroke();
-
-        context.beginPath();
-        graph.nodes.forEach(drawNode);
-        context.fill();
-      }
-
-      function dragsubject() {
-        return simulation.find(d3.event.x, d3.event.y);
-      }
-
-      function dragstarted() {
-          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-          d3.event.subject.fx = d3.event.subject.x;
-          d3.event.subject.fy = d3.event.subject.y;
-      }
-
-      function dragged() {
-          d3.event.subject.fx = d3.event.x;
-          d3.event.subject.fy = d3.event.y;
-      }
-
-      function dragended() {
-          if (!d3.event.active) simulation.alphaTarget(0);
-          d3.event.subject.fx = null;
-          d3.event.subject.fy = null;
-      }
-
-      function drawLink(d) {
-          context.moveTo(d.source.x, d.source.y);
-          context.lineTo(d.target.x, d.target.y);
-      }
-
-      function drawNode(d) {
-          context.moveTo(d.x + 3, d.y);
-          context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
-      }
-
-      document.getElementById('linkDistance').addEventListener('input', function(e) {
-        linkDistance = +e.target.value;
-        document.getElementById('linkDistanceDisplay').innerText = linkDistance;
-        updateSimulation();
-      });
-
-      document.getElementById('linkStrength').addEventListener('input', function(e) {
-        linkStrength = +e.target.value;
-        if (linkStrength &lt; 0) {
-          linkStrength = -linkStrength;
-          e.target.value = linkStrength;
-        }
-        document.getElementById('linkStrengthDisplay').innerText = linkStrength;
-        updateSimulation();
-      });
-
-      document.getElementById('chargeStrength').addEventListener('input', function(e) {
-        chargeStrength = +e.target.value;
-        if (chargeStrength &gt; 0) {
-          chargeStrength = -chargeStrength;
-          e.target.value = chargeStrength;
-        }
-        document.getElementById('chargeStrengthDisplay').innerText = chargeStrength;
-        updateSimulation();
-      });
-
-    })();
-  &lt;/script&gt;
-
-  &lt;pre&gt;&lt;code id=code&gt;&lt;/code&gt;&lt;/pre&gt;
-  &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
-    document.getElementById('code').textContent = document.getElementById('src').textContent;
-  &lt;/script&gt;</content><author><name></name></author><summary type="html">An L-System fed into d3-force, but now with controls that allow you to change some of the simulation parameters.</summary></entry></feed>
+  &lt;/script&gt;</content><author><name></name></author><summary type="html">This is just D3 and L-Systems with live controls, but now state is managed by Redux. Oh, and also arrow functions, because they're available everywhere I care about.</summary></entry></feed>
