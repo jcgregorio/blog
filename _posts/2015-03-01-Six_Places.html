@@ -3,6 +3,10 @@ layout: post
 title: Six Places
 
 ---
+  <p><b>Note:</b> This post was updated in Jan 2017 to use the <a
+    href="https://developers.google.com/web/fundamentals/web-components/customelements">Custom Elements
+    V1 spec</a>.
+  </p>
 
   <p>
     One of the questions that comes up regularly when talking about <a href="http://bitworking.org/news/2014/05/zero_framework_manifesto">zero frameworks</a>
@@ -130,86 +134,13 @@ this.dispatchEvent(e);</code></pre>
     Here is the definition of the &#39;sort-stuff&#39; element:
   </p>
 
-  <pre><code>    function Q(query) {
-      return Array.prototype.map.call(
-        document.querySelectorAll(query),
-          function(e) { return e; });
-    }
-
-    var SortStuffProto = Object.create(HTMLElement.prototype);
-
-    SortStuffProto.createdCallback = function() {
-      Q(&#39;[data-key]&#39;).forEach(function(ele) {
-        ele.addEventListener(&#39;click&#39;, this.clickHandler.bind(this));
-      }.bind(this));
-    };
-
-    SortStuffProto.clickHandler = function(e) {
-      var target = Q(this.getAttribute(&#39;target&#39;))[0];
-      var elements = [];
-      var children = target.children;
-      for (var i=0; i&lt;children.length; i++) {
-        var ele = children[i];
-        var value = ele.dataset[e.target.dataset.key];
-        elements.push({
-          value: value,
-          node: ele
-        });
-      }
-      elements.sort(function(x, y) {
-        return (x.value == y.value ? 0 : (x.value &gt; y.value ? 1 : -1));
-      });
-      elements.forEach(function(i) {
-        target.appendChild(i.node);
-      });
-    };
-
-    document.registerElement(&#39;sort-stuff&#39;, {prototype: SortStuffProto});
-</code></pre>
+  <pre><code id=viewcode>
+  </code></pre>
 
 
   <p>
     And here is a running example of the code above:
   </p>
-
-  <script src="/js/webcomponents_0.5.5.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript" charset="utf-8">
-    (function() {
-      function Q(query) {
-        return Array.prototype.map.call(document.querySelectorAll(query), function(e) { return e; });
-      }
-
-      var SortStuffProto = Object.create(HTMLElement.prototype);
-
-      SortStuffProto.createdCallback = function() {
-        Q('[data-key]').forEach(function(ele) {
-          ele.addEventListener('click', this.clickHandler.bind(this));
-        }.bind(this));
-      };
-
-      SortStuffProto.clickHandler = function(e) {
-        var target = Q(this.getAttribute('target'))[0];
-        var elements = [];
-        var children = target.children;
-        for (var i=0; i<children.length; i++) {
-          var ele = children[i];
-          var value = ele.dataset[e.target.dataset.key];
-          elements.push({
-            value: value,
-            node: ele
-          });
-        }
-        elements.sort(function(x, y) {
-          return (x.value == y.value ? 0 : (x.value > y.value ? 1 : -1));
-        });
-        elements.forEach(function(i) {
-          target.appendChild(i.node);
-        });
-      };
-
-      document.registerElement('sort-stuff', {prototype: SortStuffProto});
-    })();
-  </script>
 
   <style type="text/css" media="screen">
     sort-stuff button {
@@ -217,7 +148,7 @@ this.dispatchEvent(e);</code></pre>
     }
   </style>
 
-  <sort-stuff target="#sortable">
+  <sort-stuff target="sortable">
     <button data-key="one">Sort on One</button>
     <button data-key="two">Sort on Two</button>
   </sort-stuff>
@@ -228,6 +159,37 @@ this.dispatchEvent(e);</code></pre>
     <li data-one="b" data-two="y">Item 2</li>
     <li data-one="e" data-two="v">Item 5</li>
   </ul>
+
+  <script src="/js/custom-elements.min.js" type="text/javascript" charset="utf-8"></script>
+  <script id=code type="text/javascript" charset="utf-8">
+    window.customElements.define('sort-stuff', class extends HTMLElement {
+      connectedCallback() {
+        Array.from(this.querySelectorAll('[data-key]')).forEach(
+          ele => ele.addEventListener('click', this)
+        );
+      }
+
+      handleEvent(e) {
+        let target = document.getElementById(this.getAttribute('target'));
+        let elements = [];
+        let children = target.children;
+        for (let i=0; i<children.length; i++) {
+          elements.push({
+            value: children[i].dataset[e.target.dataset.key],
+            node: children[i],
+          });
+        }
+        elements.sort((x, y) => (x.value == y.value ? 0 : (x.value > y.value ? 1 : -1)));
+        elements.forEach(function(i) {
+          target.appendChild(i.node);
+        });
+      }
+    });
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+    document.getElementById('viewcode').textContent = document.getElementById('code').textContent;
+  </script>
 
   <p>
     Note the surfaces that were used in constructing this functionality:
