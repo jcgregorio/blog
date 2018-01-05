@@ -1,5 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-05T16:25:41-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Own your content</title><link href="https://bitworking.org/news/2018/01/own-your-content" rel="alternate" type="text/html" title="Own your content" /><published>2018-01-05T00:00:00-05:00</published><updated>2018-01-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/own-your-content</id><content type="html" xml:base="https://bitworking.org/news/2018/01/own-your-content">&lt;p&gt;&lt;a href=&quot;http://inessential.com/2018/01/03/2018_some_hope&quot;&gt;2018: Some Hope&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-05T16:29:33-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Real World</title><link href="https://bitworking.org/news/2018/01/real-world" rel="alternate" type="text/html" title="Real World" /><published>2018-01-05T00:00:00-05:00</published><updated>2018-01-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/real-world</id><content type="html" xml:base="https://bitworking.org/news/2018/01/real-world">&lt;p&gt;&lt;a href=&quot;https://github.com/gothinkster/realworld&quot;&gt;RealWorld example apps&lt;/a&gt; is
+a great idea:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;See how the exact same Medium.com clone (called Conduit) is built using any
+ of our supported frontends and backends. Yes, you can mix and match them,
+ because they all adhere to the same API spec&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And it looks like porting the app over to Vanilla JS
+&lt;a href=&quot;https://github.com/gothinkster/realworld/issues/111&quot;&gt;is already underway&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html">RealWorld example apps is a great idea:</summary></entry><entry><title type="html">Own your content</title><link href="https://bitworking.org/news/2018/01/own-your-content" rel="alternate" type="text/html" title="Own your content" /><published>2018-01-05T00:00:00-05:00</published><updated>2018-01-05T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/own-your-content</id><content type="html" xml:base="https://bitworking.org/news/2018/01/own-your-content">&lt;p&gt;&lt;a href=&quot;http://inessential.com/2018/01/03/2018_some_hope&quot;&gt;2018: Some Hope&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Great post from Brent Simmons on getting off the Twitter/Facebook train.&lt;/p&gt;
 
@@ -1604,51 +1614,4 @@ this.StateReflector = this.StateReflector || {};
     and I'll stand up a repo and port the tests over too.
   &lt;/p&gt;
   &lt;script
-    src=&quot;https://gist.github.com/jcgregorio/d3fae4dd7ebc3617cd669a855ae4ad9a.js&quot;&gt;&lt;/script&gt;</content><author><name></name></author><summary type="html">This is D3 and L-Systems with live controls and Redux, but now state is reflected into the URL Fragment.</summary></entry><entry><title type="html">What a bold platform really looks like.</title><link href="https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like" rel="alternate" type="text/html" title="What a bold platform really looks like." /><published>2017-07-29T00:00:00-04:00</published><updated>2017-07-29T00:00:00-04:00</updated><id>https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like</id><content type="html" xml:base="https://bitworking.org/news/2017/07/what-a-bold-platform-really-looks-like">&lt;p&gt;&lt;a href=&quot;http://www.huffingtonpost.com/entry/chuck-schumer-single-payer_us_5974b05be4b00e4363e0164e&quot;&gt;Chuck Schumer Says Senate Democrats Are Open To Single-Payer Health Care&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“We’re going to look at broader things [for health care],” he said.
-“Single-payer is one of them.. Many things are on the table. Medicare for
-people above 55 is on the table. A buy-in to Medicare is on the table.
-Buy-in to Medicaid is on the table.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Yeah, &lt;strong&gt;bold&lt;/strong&gt; leadership always comes from phrases like “on the table”. Don’t
-you remember &lt;a href=&quot;http://www.telegraph.co.uk/news/winston-churchill/11366880/Winston-Churchills-10-most-important-speeches.html&quot;&gt;Churchill’s famous
-speech&lt;/a&gt;?&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Going to the end is on the table. Fighting in France is on the table, fighting on the
-seas and oceans is a possibility, fighting with growing confidence and growing strength
-in the air is something we’re certainly willing to talk about.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The leadership on display here is just pathetic.&lt;/p&gt;
-
-&lt;p&gt;A simple bold platform is very easy to state, and also one that’s easy to
-support. Additionally, if you keep it direct you can more easily construct
-radical arguments to move the &lt;a href=&quot;https://en.wikipedia.org/wiki/Overton_window&quot;&gt;Overton&lt;/a&gt; window.
-For example, on just three issues, the platform could be boldly and simply
-stated, and the Overton postions below are the ones you get some people to
-state, so that the platform position looks like a reasonable compromise.&lt;/p&gt;
-
-&lt;h2 id=&quot;healthcare&quot;&gt;Healthcare&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Medicare for all.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: Let’s nationalize hospitals and shut down the health insurance industry.&lt;/p&gt;
-
-&lt;h2 id=&quot;education&quot;&gt;Education&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Free college education (up to a bachelor’s degree).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: Let’s nationalize the education system and extend mandatory education from a high school diploma to a bachelor’s degree.&lt;/p&gt;
-
-&lt;h2 id=&quot;taxes&quot;&gt;Taxes&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Platform&lt;/strong&gt;: Return to a progressive tax system where the wealthy pay their
-fair share and loopholes are closed.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Overton&lt;/strong&gt;: A top marginal income tax rate of 90%.&lt;/p&gt;
-
-&lt;p&gt;Now aren’t those a lot more appealing than the mealy mouthed alternatives?&lt;/p&gt;</content><author><name></name></author><summary type="html">Chuck Schumer Says Senate Democrats Are Open To Single-Payer Health Care</summary></entry></feed>
+    src=&quot;https://gist.github.com/jcgregorio/d3fae4dd7ebc3617cd669a855ae4ad9a.js&quot;&gt;&lt;/script&gt;</content><author><name></name></author><summary type="html">This is D3 and L-Systems with live controls and Redux, but now state is reflected into the URL Fragment.</summary></entry></feed>
