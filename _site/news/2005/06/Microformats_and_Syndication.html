@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Microformats and Syndication</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Microformats and Syndication</h1>
     <p class="post-meta">
-      <time datetime="2005-06-22T00:00:00-04:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2005-06-22T00:00:00-04:00" itemprop="datePublished">
         
         Jun 22, 2005
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p><a href="http://epeus.blogspot.com/2005_06_01_epeus_archive.html#111929498572588813">Kevin Marks</a>, among others, has announced the launch of <a href="http://microformats.org">microformats.org</a>. One question this raises is how does this markup survive a trip through an aggregator? I have done a little testing and found that <a href="http://bloglines.com">Bloglines</a> keeps class attributes intact. Are there exceptions? Do 'rel's pass through unmolested? What do other aggregators do? </p>
 <p>You might claim that it doesn't matter since all this stuff is just supposed to be in a web page, but I disagree. The value starts to really add up if these microformats can survive a trip through an aggregator.  Imagine if my aggregator can pick up hCards and keep track of them for me (along with a link back to the entry where they were found). Even if the aggregator clients don't start adding these features, web based aggregators could still be enhanced by adding microformat processing capabilities via Greasemonkey scripts.</p>
 <div style="float:right">Tags: <a href="http://technorati.com/tag/microformat" rel="tag" class="tag">microformat</a> <a href="http://technorati.com/tag/syndication" rel="tag" class="tag">syndication</a></div>

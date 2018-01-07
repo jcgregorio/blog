@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">draft-gregorio-uritemplate-02.txt</h1>
+    <h1 class="post-title p-name" itemprop="name headline">draft-gregorio-uritemplate-02.txt</h1>
     <p class="post-meta">
-      <time datetime="2007-11-26T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2007-11-26T00:00:00-05:00" itemprop="datePublished">
         
         Nov 26, 2007
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>I've submitted the next version of the URI Templating specification, draft-gregorio-uritemplate-02.txt, but it won't be officially published until Dec 3rd because of the upcoming IETF meeting. I've gone ahead and released the HTML and TXT versions of the draft and will update the pointer to the TXT version once it is published as an internet-draft. As usual, the draft can be found here:<br /><br /> <a href="http://bitworking.org/projects/URI-Templates/">http://bitworking.org/projects/URI-Templates/</a><br /><br />This version adds the '-cmd' commands we've been talking about, w/o the '-sub' command. I've also added an examples section and some example code in an Appendix to demonstrate how easy the parsing can be.<br /><br />I've also written a parser that extracts the example templates and variable definitions from the final .TXT version of the specification and runs them through the template-expansion code to check them against the supplied expansions. Finally, the URI Template explainer web service has been updated to conform to this draft. I'm actually running off of two different subversion repositories, one for the code, and another for the specification text. I'll be consolidating them into one repository in the future.</p>
   <div class="commentContent" id="X1">
     Hi Joe -- I think the link is missing a t in projects.  Thanks, Nell

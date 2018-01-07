@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Stonebraker on MapReduce</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Stonebraker on MapReduce</h1>
     <p class="post-meta">
-      <time datetime="2008-01-19T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2008-01-19T00:00:00-05:00" itemprop="datePublished">
         
         Jan 19, 2008
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>I normally point to Michael Stonebraker as a source of information on what comes next after the RDBMS, but after reading <a href="http://www.databasecolumn.com/2008/01/mapreduce-a-major-step-back.html">this article on MapReduce</a> I may have to rethink that. The very premise of the article is flawed: comparing MapReduce to a database is a category error, and the rest of the article goes down hill from there. I don't need to say much more than that as the article is pretty heavily panned in the comments. See also: <a href="http://typicalprogrammer.com/programming/mapreduce/">Relational Database Experts Jump The MapReduce Shark</a></p>
   <div class="commentContent" id="X1">
     I think what they're comparing is building algorithms parallelize work and then collect the result, using either map/reduce or by feeding everything from the database server.  You can write a Web crawler either way.

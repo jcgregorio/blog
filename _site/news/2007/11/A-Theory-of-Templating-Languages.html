@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">A Theory of Templating Languages</h1>
+    <h1 class="post-title p-name" itemprop="name headline">A Theory of Templating Languages</h1>
     <p class="post-meta">
-      <time datetime="2007-11-28T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2007-11-28T00:00:00-05:00" itemprop="datePublished">
         
         Nov 28, 2007
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>Working on the URI Templating specification has made me realize that there is a pretty substantial hole in computer science theory: a lack of a theory of templating languages. For example, the current version of URI Templates is not Turing-complete, which excludes a whole bunch of possible attacks. In the specification <a href="http://bitworking.org/projects/URI-Templates/draft-gregorio-uritemplate-02.html#rfc.section.1.2">I state</a>:</p> <blockquote> <p>On the balance, the template processing is not Turing complete, thus avoiding a number of security issues, ala the billion-laughs attack of XML DTDs.</p></blockquote> <p>I was rightly called out on this on the W3C URI mailing list:</p> <blockquote> <p>This reads a little odd, as not being <span class="nfakPe">Turing</span>-complete is not sufficient<br />to avoid the attack.  (And DTDs are not <span class="nfakPe">Turing</span>-complete either.)</p></blockquote> <p>The criticism is correct. The problem is that I don't know of any finer grained levels of classifications of templating languages than Turing/non-Turing, and not only for security reasons, but for general capabilities. </p> <p>For example, if there were classes of templating languages, I could say that URI Templates fell into 'class X', and if that class had a known set of limitations and capabilities then I could say that URI Templates thus had those limitations and capabilities. The weakness to the <a href="http://www.ibm.com/developerworks/xml/library/x-tipcfsx.html">billion laughs attack</a> comes from two facets of DTD usage, the first being that templates can be defined in terms of other templates, and the second is that the depth of template definition, in terms of other templates, isn't limited. But the converse isn't true, that is, I don't have a general theory of templating to lean on that says since URI Template expansions are never defined in terms of other expansions then URI Templates are immune to such resource exhaustion attacks.</p> <p>I did find one paper that makes a start at such work, "<a href="http://www.cs.usfca.edu/~parrt/papers/mvc.templates.pdf">Enforcing Strict Model-View Separation in Template Engines</a>" (pdf), but the theory is a little weak and it focuses on the nebulous idea of separation of model and view, as opposed to a classification of capabilities and limitations. I'd love to be proven wrong and find that there's a rich theory that I'm over-looking, if so let me know in the comments.</p>
   <div class="commentContent" id="X1">
     hello,

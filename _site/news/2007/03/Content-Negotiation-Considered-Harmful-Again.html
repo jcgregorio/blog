@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Content Negotiation Considered Harmful, Again</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Content Negotiation Considered Harmful, Again</h1>
     <p class="post-meta">
-      <time datetime="2007-03-08T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2007-03-08T00:00:00-05:00" itemprop="datePublished">
         
         Mar 8, 2007
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p><a href="http://cafe.elharo.com/web/google-and-xhtml/">Elliotte Rusty Harold</a></p>
 <blockquote><p>Apparently Google does not recognize XHTML, at least not when served as application/xhtml+xml. Try <a href="http://www.google.com/search?hl=en&amp;client=firefox-a&amp;rls=org.mozilla%3Aen-US%3Aofficial&amp;hs=WAc&amp;q=%22XOM+1.1+supports+XPath+1.0+reasonably%22&amp;btnG=Search">this search</a> which should return exactly one hit pointing to an XHTML document. Notice that the file format is “unrecognized” and they offer to let you “View it as HTML”.</p></blockquote>
 <p>Ouch. I appear to be suffering from the same fate. Oddly enough, <a href="http://www.intertwingly.net/blog/2007/03/08/Seven-Years-Should-Be-Enough">Sam</a> doesn't seem to have that problem. The difference between us may be in content negotiation. Here is my code for determining when to use <code>application/xhml+xml</code> or <code>text/html</code>:

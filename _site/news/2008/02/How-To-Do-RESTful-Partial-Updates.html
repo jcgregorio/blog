@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">How To Do RESTful Partial Updates</h1>
+    <h1 class="post-title p-name" itemprop="name headline">How To Do RESTful Partial Updates</h1>
     <p class="post-meta">
-      <time datetime="2008-02-14T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2008-02-14T00:00:00-05:00" itemprop="datePublished">
         
         Feb 14, 2008
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p><b>Update 1:</b> Wow, apparently using Atom as an example was a bad idea given the number of people  with their <a href="http://intertwingly.net/blog/2008/02/15/Embrace-Extend-then-Innovate">knickers</a> <a href="http://www.snellspace.com/wp/?p=889">in a twist</a>. </p> <p><b>Update 2:</b> Fixed the URI Template to accomodate    <a href="http://intertwingly.net/blog/2008/02/15/Embrace-Extend-then-Innovate">Sam's nose</a>. </p> <p><b>Update 3:</b> Good feedback from <a href="http://www.tbray.org/ongoing/When/200x/2008/02/16/HTTP-Sweet-Spot">Tim Bray</a>, <a href="http://www.mnot.net/blog/2008/02/17/post_patch">Mark Nottingham</a>, and <a href="http://blog.mozilla.com/rob-sayre/2008/02/15/restful-partial-updates/">Rob Sayre</a>. </p> <p>There are times when you have a large representation of a resource and only want to edit a small part of that resource. Wikipedia is a good example, where many entries in the encyclopedia are very long and you don't want to wade through all that wiki markup to correct a typo in one sub-section. To make it easier MediaWiki offers an edit link on each sub-section that allows you to edit just that sub-section. This same problem comes up in many other contexts, for example, editing a large Atom Entry via AtomPub, or working over a slow connections, ala a mobile device.</p><img class="unframed" src="http://bitworking.org/images/2008/02/mediawiki-edit.jpg" style="margin: 1em;" /> <p>Just like the MediaWiki example, this can be done RESTfully and we'll construct just such a mechanism for AtomPub, and it should be obvious by the time we're done on how you can also do this for JSON. </p> <p>So here's the goal: to be able to update and/or delete multiple sub-sections of a resource with a single request. </p> <p>Starting from the MediaWiki example the easiest thing to do is define a URI for each sub-section we want to be updated. That gets us most of the way there, but only allows one sub-section to be updated at a time, and doesn't allow more than one sub-section to be updated in the same request.  So instead of having a single URI for each sub-section, we'll construct a URI that represents the set of sub-sections we want to update. And how shall we construct a URI? With <a href="http://bitworking.org/projects/URI-Templates">URI Templates</a> of course.</p> <p>Here's a concrete example, an Atom Entry from an AtomPub Collection that lives at the URI <code>http://example.org/edit/first-post.atom</code> and has the following representation:</p><pre><code>&lt;?xml version="1.0"?&gt;
 &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;
     &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;

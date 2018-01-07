@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">AppClientTest Update</h1>
+    <h1 class="post-title p-name" itemprop="name headline">AppClientTest Update</h1>
     <p class="post-meta">
-      <time datetime="2008-02-29T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2008-02-29T00:00:00-05:00" itemprop="datePublished">
         
         Feb 29, 2008
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>I've just checked in an updated version of the AppClientTest, a program for testing your AtomPub service. It has been updated to use the <a href="http://bitworking.org/news/285/atompubbase-An-AtomPub-Python-Client-Library">atompubbase</a> module and also sports HTML output as an option. To make it easier to develop I've transcluded via svn:externals all the libraries you will need as long as you are running Python 2.5. You will need to install elementtree if you are on something older than 2.5. The transcluding means it is this easy to get up and <a href="http://intertwingly.net/blog/2008/02/28/Migratory-Ape">running from svn</a>:</p><pre><code>
 $ svn co http://feedvalidator.googlecode.com/svn/trunk/apptestsuite/client/validator/ validator
 $ python validator/appclienttest.py --output=results.html "http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document" 

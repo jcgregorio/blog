@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">The D Language and Server Logs</h1>
+    <h1 class="post-title p-name" itemprop="name headline">The D Language and Server Logs</h1>
     <p class="post-meta">
-      <time datetime="2007-11-27T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2007-11-27T00:00:00-05:00" itemprop="datePublished">
         
         Nov 27, 2007
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>So as a practical use of D I tried re-writing my Python program I use to process my referrer logs in D. My first pass was pretty sloppy and I end up touching every character in the file at least twice and in some cases three times. I thought I'd definitely be in need of a re-write, but the version I got working can rip through a 6MB file in 0.25 seconds, and that includes generating the HTML output.</p> <p>I believe part of the speed comes from the use of 'invariant', which is like const in C and C++, but much stricter, that is, while const says a variable may not change, invariant says the underlying data will never change, and could, for example, be embedded in ROM. The other source of speed is probably D's use of non-null terminated strings. The other nice part of the code is that with bit of type inference that the D compiler does and useful expressions like 'foreach', the code was fairly easy to port from Python.</p> <p><a href="http://bitworking.org/projects/pastebin/main.cgi/bin/19">The code is here</a>.</p>
   <div class="commentContent" id="X1">
     I wonder if someone has written an article about how much the use of inefficient languages contributes to the greenhouse effect and climate change. I bet you could get a very decent flamewar on with something like that.

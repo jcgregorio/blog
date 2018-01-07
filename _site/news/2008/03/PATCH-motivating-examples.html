@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">PATCH motivating examples</h1>
+    <h1 class="post-title p-name" itemprop="name headline">PATCH motivating examples</h1>
     <p class="post-meta">
-      <time datetime="2008-03-04T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2008-03-04T00:00:00-05:00" itemprop="datePublished">
         
         Mar 4, 2008
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p><a href="http://intertwingly.net/blog/2008/02/21/APP-Level-Patch">Sam Ruby</a>:</p> <blockquote> <p>Spend some time up front specifying the behaviors that you want to address.  In the case of Atom, adding an entry, deleting an entry, adding a category to an entry, fixing a typo in the content are examples of common scenarios.  Feel free to use the Atom wiki for this purpose. </p></blockquote> <p> <br />To move the discussion of PATCH forward <a href="http://www.intertwingly.net/wiki/pie/PatchMotivatingExamples">I've posted some examples on the Atom Wiki</a>. They're good examples because the highlight the problem with coming up with a PATCH format for Atom. The largest of those problems is ordering in Atom. That is:</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;<br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;<br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;<br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;<br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;<br />       &lt;summary&gt;Some text.&lt;/summary&gt;<br />    &lt;/entry&gt;</code></pre>
 <p>and</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;<br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;<br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;<br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;<br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;<br />       &lt;summary&gt;Some text.&lt;/summary&gt;<br />    &lt;/entry&gt;</code></pre>
 <p>are the same even though the &lt;updated&gt; element has moved. You can create a patch format that required the server to always serialize elements the same order. For example, in the first example we could order our elements:</p><pre><code>   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;  <b>              #1</b><br />       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;   <b>         #2</b><br />       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;  <b>  #3 </b><br />       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt; <b>#4</b><br />       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;  <b>              #5</b><br />       &lt;summary&gt;Some text.&lt;/summary&gt;            <b>              #6</b><br />    &lt;/entry&gt;</code></pre>

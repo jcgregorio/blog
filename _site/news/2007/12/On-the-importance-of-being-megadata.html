@@ -86,19 +86,19 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">On the importance of being megadata</h1>
+    <h1 class="post-title p-name" itemprop="name headline">On the importance of being megadata</h1>
     <p class="post-meta">
-      <time datetime="2007-12-14T00:00:00-05:00" itemprop="datePublished">
+      <time class="dt-published" datetime="2007-12-14T00:00:00-05:00" itemprop="datePublished">
         
         Dec 14, 2007
       </time>
       </p>
   </header>
 
-  <div class="post-content" itemprop="articleBody">
+  <div class="post-content e-content" itemprop="articleBody">
       <p>Amazon has opened <a href="http://www.amazon.com/gp/browse.html?node=342335011">SimpleDB</a> for beta testers. As you would expect the system is designed to scale and as such has dropped generic relational operations such as joins and transactions. What we're looking at here is another instantiation of <a href="http://bitworking.org/news/158/ETech-07-Summary-Part-2-MegaData">megadata</a>.</p> <p>And before you start beating your chest and exclaiming how "real" applications need joins and transactions please read "<a href="http://www.mit.edu/~dna/vldb07hstore.pdf">The End of an Architectural Era (It's Time for a Complete Rewrite)</a>" (pdf).</p> <blockquote> <p>This paper builds on [SBC+07] by presenting evidence that the current architecture of RDBMSs is not even appropriate for business data processing.</p></blockquote>
   <div class="commentContent" id="X1">
     Thanks, It's good to see sometimes that there is something beyond the OLTP dialog that dominates the literature on 'databases', apart from usually limited presentations on [so called] 'unstructured' or 'semi-structured' data that usually turns up in the texts.
