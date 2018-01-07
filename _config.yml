@@ -46,3 +46,4 @@ defaults:
       type: "posts"
     values:
       categories: "news"
+      author: "Joe Gregorio"
