@@ -300,7 +300,7 @@ as I said, this hasn't got much to do with type systems.</p>
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
       resp.text().then(function(text) {
-        document.getElementById('mentions').innerHTML = resp;
+        document.getElementById('mentions').innerHTML = text;
       });
     });
   </script>

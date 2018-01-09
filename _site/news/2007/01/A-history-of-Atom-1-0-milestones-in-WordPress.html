@@ -194,7 +194,7 @@ Atom API support is already in trunk (added the day after 2.1 was released) and 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
       resp.text().then(function(text) {
-        document.getElementById('mentions').innerHTML = resp;
+        document.getElementById('mentions').innerHTML = text;
       });
     });
   </script>

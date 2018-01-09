@@ -231,7 +231,7 @@ Authorization: Basic Yml0d29ya2luZy5vcmc6NzM0OTgxNzMyOTg3Mzc0OTQw</p>
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
       resp.text().then(function(text) {
-        document.getElementById('mentions').innerHTML = resp;
+        document.getElementById('mentions').innerHTML = text;
       });
     });
   </script>

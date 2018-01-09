@@ -401,7 +401,7 @@ If you want to talk about how to actually solve the real issues, like shared hos
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
       resp.text().then(function(text) {
-        document.getElementById('mentions').innerHTML = resp;
+        document.getElementById('mentions').innerHTML = text;
       });
     });
   </script>
