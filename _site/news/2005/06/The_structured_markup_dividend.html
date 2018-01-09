@@ -175,6 +175,16 @@ e.g. window.onload = setup; or window.onload = new Function("setup();"); or wind
 
   </div>
 
+  <script type="text/javascript" charset="utf-8">
+    fetch('/u/mentions').then(function(resp) {
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = resp;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
   
     
 

@@ -165,6 +165,16 @@ As far as the <title> vs <author>, my implementation is trailing the specificati
 
   </div>
 
+  <script type="text/javascript" charset="utf-8">
+    fetch('/u/mentions').then(function(resp) {
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = resp;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
   
     
 

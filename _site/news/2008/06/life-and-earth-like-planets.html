@@ -156,6 +156,16 @@ At the very least, this suggests that quite a bit of the earth's crust at least 
 
   </div>
 
+  <script type="text/javascript" charset="utf-8">
+    fetch('/u/mentions').then(function(resp) {
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = resp;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
   
     
 

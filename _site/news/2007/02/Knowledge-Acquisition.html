@@ -172,6 +172,16 @@ And, don't let anybody tell you it is for those who are learning. No! Learning n
 
   </div>
 
+  <script type="text/javascript" charset="utf-8">
+    fetch('/u/mentions').then(function(resp) {
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = resp;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
   
     
 

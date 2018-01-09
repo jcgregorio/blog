@@ -112,6 +112,16 @@ handling originally outlined in <a href="http://www.intertwingly.net/wiki/pie/Di
 
   </div>
 
+  <script type="text/javascript" charset="utf-8">
+    fetch('/u/mentions').then(function(resp) {
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = resp;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
   
     
 
