@@ -115,6 +115,9 @@ they carry it at the local borders. [via <a href="http://www.williamgibsonbooks.
 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

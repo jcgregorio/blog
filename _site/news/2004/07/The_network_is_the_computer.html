@@ -135,6 +135,9 @@ Sunrise 6:03am (Eastern Daylight Time), sunset 8:29pm (Eastern Daylight Time) at
 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

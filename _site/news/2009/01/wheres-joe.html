@@ -183,6 +183,9 @@ Being Irish, all I can say is may all of the bad in 2008 turn to the good, and m
 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

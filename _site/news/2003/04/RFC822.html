@@ -259,6 +259,9 @@ date: 2003-04-17
 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

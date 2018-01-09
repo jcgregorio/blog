@@ -148,6 +148,9 @@ Using the Name field as a spam check is a great idea; hope you don't mind if I e
 
   <script type="text/javascript" charset="utf-8">
     fetch('/u/mentions').then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });
