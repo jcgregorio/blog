@@ -1,10 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-13T16:54:00-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">WebMention Only</title><link href="https://bitworking.org/news/2018/01/webmention-only" rel="alternate" type="text/html" title="WebMention Only" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/webmention-only</id><content type="html" xml:base="https://bitworking.org/news/2018/01/webmention-only">&lt;p&gt;[Drew McLellan has gone WebMention-only.][(https://allinthehead.com/retro/378/implementing-webmentions)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-13T16:59:05-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">WebMention Only</title><link href="https://bitworking.org/news/2018/01/webmention-only" rel="alternate" type="text/html" title="WebMention Only" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/webmention-only</id><content type="html" xml:base="https://bitworking.org/news/2018/01/webmention-only">&lt;p&gt;&lt;a href=&quot;https://allinthehead.com/retro/378/implementing-webmentions&quot;&gt;Drew McLellan has gone WebMention-only.&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s an interesting idea, though I will still probably build a comment system
-for this blog and replace Disqus.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">[Drew McLellan has gone WebMention-only.][(https://allinthehead.com/retro/378/implementing-webmentions)</summary></entry><entry><title type="html">Testing sending webmentions</title><link href="https://bitworking.org/news/2018/01/testing-sending-webmentions" rel="alternate" type="text/html" title="Testing sending webmentions" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/testing-sending-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/testing-sending-webmentions">&lt;p&gt;Feel free to ignore, just testing &lt;a href=&quot;https://webmention.rocks/update/1&quot;&gt;WebMentions&lt;/a&gt;.&lt;/p&gt;
+for this blog and replace Disqus.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Drew McLellan has gone WebMention-only.</summary></entry><entry><title type="html">Testing sending webmentions</title><link href="https://bitworking.org/news/2018/01/testing-sending-webmentions" rel="alternate" type="text/html" title="Testing sending webmentions" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/testing-sending-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/testing-sending-webmentions">&lt;p&gt;Feel free to ignore, just testing &lt;a href=&quot;https://webmention.rocks/update/1&quot;&gt;WebMentions&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;This is an updated content with a link to &lt;a href=&quot;https://webmention.rocks/update/1/part/2&quot;&gt;a different target&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Feel free to ignore, just testing WebMentions.</summary></entry><entry><title type="html">Facebook pivoting away from engagement</title><link href="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement" rel="alternate" type="text/html" title="Facebook pivoting away from engagement" /><published>2018-01-12T00:00:00-05:00</published><updated>2018-01-12T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement</id><content type="html" xml:base="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement">&lt;p&gt;Via &lt;a href=&quot;https://www.joelonsoftware.com/2018/01/12/birdcage-liners/&quot;&gt;Joel
+&lt;p&gt;This is an updated content with a link to &lt;a href=&quot;https://webmention.rocks/update/1/part/2&quot;&gt;a different target&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Feel free to ignore, just testing WebMentions.</summary></entry><entry><title type="html">More WebMention Testing</title><link href="https://bitworking.org/news/2018/01/more-webmention-testing" rel="alternate" type="text/html" title="More WebMention Testing" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/more-webmention-testing</id><content type="html" xml:base="https://bitworking.org/news/2018/01/more-webmention-testing">&lt;p&gt;https://webmention.rocks/test/1
+https://webmention.rocks/test/2
+https://webmention.rocks/test/3
+https://webmention.rocks/test/4
+https://webmention.rocks/test/5
+https://webmention.rocks/test/6
+https://webmention.rocks/test/7
+https://webmention.rocks/test/8
+https://webmention.rocks/test/9
+https://webmention.rocks/test/10
+https://webmention.rocks/test/11
+https://webmention.rocks/test/12
+https://webmention.rocks/test/13
+https://webmention.rocks/test/14
+https://webmention.rocks/test/15
+https://webmention.rocks/test/16
+https://webmention.rocks/test/17
+https://webmention.rocks/test/18
+https://webmention.rocks/test/19
+https://webmention.rocks/test/20
+https://webmention.rocks/test/21
+https://webmention.rocks/test/22
+https://webmention.rocks/test/23/page&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">https://webmention.rocks/test/1 https://webmention.rocks/test/2 https://webmention.rocks/test/3 https://webmention.rocks/test/4 https://webmention.rocks/test/5 https://webmention.rocks/test/6 https://webmention.rocks/test/7 https://webmention.rocks/test/8 https://webmention.rocks/test/9 https://webmention.rocks/test/10 https://webmention.rocks/test/11 https://webmention.rocks/test/12 https://webmention.rocks/test/13 https://webmention.rocks/test/14 https://webmention.rocks/test/15 https://webmention.rocks/test/16 https://webmention.rocks/test/17 https://webmention.rocks/test/18 https://webmention.rocks/test/19 https://webmention.rocks/test/20 https://webmention.rocks/test/21 https://webmention.rocks/test/22 https://webmention.rocks/test/23/page</summary></entry><entry><title type="html">Facebook pivoting away from engagement</title><link href="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement" rel="alternate" type="text/html" title="Facebook pivoting away from engagement" /><published>2018-01-12T00:00:00-05:00</published><updated>2018-01-12T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement</id><content type="html" xml:base="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement">&lt;p&gt;Via &lt;a href=&quot;https://www.joelonsoftware.com/2018/01/12/birdcage-liners/&quot;&gt;Joel
 Spolsky&lt;/a&gt;, I
 learned that &lt;a href=&quot;https://www.facebook.com/zuck/posts/10104413015393571&quot;&gt;Facebook was pivoting away from
 engagement&lt;/a&gt;.&lt;/p&gt;
@@ -79,34 +101,4 @@ a great idea:&lt;/p&gt;
 
 &lt;p&gt;Great post from Brent Simmons on getting off the Twitter/Facebook train.&lt;/p&gt;
 
-&lt;p&gt;A little Apple-centric, but you get the idea.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">2018: Some Hope</summary></entry><entry><title type="html">Vanilla JS Sample Apps</title><link href="https://bitworking.org/news/2018/01/vanilla-js-sample-apps" rel="alternate" type="text/html" title="Vanilla JS Sample Apps" /><published>2018-01-02T00:00:00-05:00</published><updated>2018-01-02T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/vanilla-js-sample-apps</id><content type="html" xml:base="https://bitworking.org/news/2018/01/vanilla-js-sample-apps">&lt;p&gt;I spent some time over the holidays porting &lt;a href=&quot;https://github.com/jcgregorio/vanillajs&quot;&gt;web framework sample apps
-over to vanilla JS&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I’ll add the same caveat here that I also included in the code:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The code works w/o polyfils in Chrome. To get it to run in a wider range of
-browsers you will need to add polyfills and, depending on the target browser
-version, compile the JS back to an older version of ES, and run a prefixer
-on the CSS. The wider the target set of browsers and the older the versions
-you are targeting the more processing you will need to do via webpack, but
-since the original code doesn’t need to change, those extra processing steps
-are out of scope for these examples.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The samples are all built using &lt;a href=&quot;https://yarnpkg.com/&quot;&gt;Yarn&lt;/a&gt; and &lt;a href=&quot;https://webpack.js.org/&quot;&gt;WebPack
-3&lt;/a&gt;, both of which I really enjoyed working with.&lt;/p&gt;
-
-&lt;p&gt;In all cases, I tried to change as little of the original code as possible,
-keeping the same CSS if possible, and the same breakdown in app struture, so
-the apps should look and operate identically to the original samples.&lt;/p&gt;
-
-&lt;p&gt;Related reading:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://bitworking.org/news/2015/03/Six_Places&quot;&gt;Six Places&lt;/a&gt;, guidance on
-how to stich together web applications using custom elements.&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/customelements&quot;&gt;Custom Elements v1: Reusable Web Components&lt;/a&gt;,
-a great intro, in particular check out the “Best Practices” section.&lt;/li&gt;
-&lt;/ol&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I spent some time over the holidays porting web framework sample apps over to vanilla JS.</summary></entry></feed>
+&lt;p&gt;A little Apple-centric, but you get the idea.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">2018: Some Hope</summary></entry></feed>
