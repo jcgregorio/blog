@@ -1,32 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-13T16:59:05-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">WebMention Only</title><link href="https://bitworking.org/news/2018/01/webmention-only" rel="alternate" type="text/html" title="WebMention Only" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/webmention-only</id><content type="html" xml:base="https://bitworking.org/news/2018/01/webmention-only">&lt;p&gt;&lt;a href=&quot;https://allinthehead.com/retro/378/implementing-webmentions&quot;&gt;Drew McLellan has gone WebMention-only.&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-13T17:06:54-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">WebMention Only</title><link href="https://bitworking.org/news/2018/01/webmention-only-no-comments" rel="alternate" type="text/html" title="WebMention Only" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/webmention-only-no-comments</id><content type="html" xml:base="https://bitworking.org/news/2018/01/webmention-only-no-comments">&lt;p&gt;&lt;a href=&quot;https://allinthehead.com/retro/378/implementing-webmentions&quot;&gt;Drew McLellan has gone WebMention-only.&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;It’s an interesting idea, though I will still probably build a comment system
 for this blog and replace Disqus.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Drew McLellan has gone WebMention-only.</summary></entry><entry><title type="html">Testing sending webmentions</title><link href="https://bitworking.org/news/2018/01/testing-sending-webmentions" rel="alternate" type="text/html" title="Testing sending webmentions" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/testing-sending-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/testing-sending-webmentions">&lt;p&gt;Feel free to ignore, just testing &lt;a href=&quot;https://webmention.rocks/update/1&quot;&gt;WebMentions&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;This is an updated content with a link to &lt;a href=&quot;https://webmention.rocks/update/1/part/2&quot;&gt;a different target&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Feel free to ignore, just testing WebMentions.</summary></entry><entry><title type="html">More WebMention Testing</title><link href="https://bitworking.org/news/2018/01/more-webmention-testing" rel="alternate" type="text/html" title="More WebMention Testing" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/more-webmention-testing</id><content type="html" xml:base="https://bitworking.org/news/2018/01/more-webmention-testing">&lt;p&gt;https://webmention.rocks/test/1
-https://webmention.rocks/test/2
-https://webmention.rocks/test/3
-https://webmention.rocks/test/4
-https://webmention.rocks/test/5
-https://webmention.rocks/test/6
-https://webmention.rocks/test/7
-https://webmention.rocks/test/8
-https://webmention.rocks/test/9
-https://webmention.rocks/test/10
-https://webmention.rocks/test/11
-https://webmention.rocks/test/12
-https://webmention.rocks/test/13
-https://webmention.rocks/test/14
-https://webmention.rocks/test/15
-https://webmention.rocks/test/16
-https://webmention.rocks/test/17
-https://webmention.rocks/test/18
-https://webmention.rocks/test/19
-https://webmention.rocks/test/20
-https://webmention.rocks/test/21
-https://webmention.rocks/test/22
-https://webmention.rocks/test/23/page&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">https://webmention.rocks/test/1 https://webmention.rocks/test/2 https://webmention.rocks/test/3 https://webmention.rocks/test/4 https://webmention.rocks/test/5 https://webmention.rocks/test/6 https://webmention.rocks/test/7 https://webmention.rocks/test/8 https://webmention.rocks/test/9 https://webmention.rocks/test/10 https://webmention.rocks/test/11 https://webmention.rocks/test/12 https://webmention.rocks/test/13 https://webmention.rocks/test/14 https://webmention.rocks/test/15 https://webmention.rocks/test/16 https://webmention.rocks/test/17 https://webmention.rocks/test/18 https://webmention.rocks/test/19 https://webmention.rocks/test/20 https://webmention.rocks/test/21 https://webmention.rocks/test/22 https://webmention.rocks/test/23/page</summary></entry><entry><title type="html">Facebook pivoting away from engagement</title><link href="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement" rel="alternate" type="text/html" title="Facebook pivoting away from engagement" /><published>2018-01-12T00:00:00-05:00</published><updated>2018-01-12T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement</id><content type="html" xml:base="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement">&lt;p&gt;Via &lt;a href=&quot;https://www.joelonsoftware.com/2018/01/12/birdcage-liners/&quot;&gt;Joel
+&lt;p&gt;This is an updated content with a link to &lt;a href=&quot;https://webmention.rocks/update/1/part/2&quot;&gt;a different target&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Feel free to ignore, just testing WebMentions.</summary></entry><entry><title type="html">Another WebMention Test</title><link href="https://bitworking.org/news/2018/01/another-webmention-test" rel="alternate" type="text/html" title="Another WebMention Test" /><published>2018-01-13T00:00:00-05:00</published><updated>2018-01-13T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/another-webmention-test</id><content type="html" xml:base="https://bitworking.org/news/2018/01/another-webmention-test">&lt;p&gt;&lt;a href=&quot;https://webmention.rocks/test/1&quot;&gt;Test 1&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/2&quot;&gt;Test 2&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/3&quot;&gt;Test 3&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/4&quot;&gt;Test 4&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/5&quot;&gt;Test 5&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/6&quot;&gt;Test 6&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/7&quot;&gt;Test 7&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/8&quot;&gt;Test 8&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/9&quot;&gt;Test 9&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/10&quot;&gt;Test 10&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/11&quot;&gt;Test 11&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/12&quot;&gt;Test 12&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/13&quot;&gt;Test 13&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/14&quot;&gt;Test 14&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/15&quot;&gt;Test 15&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/16&quot;&gt;Test 16&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/17&quot;&gt;Test 17&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/18&quot;&gt;Test 18&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/19&quot;&gt;Test 19&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/20&quot;&gt;Test 20&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/21&quot;&gt;Test 21&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/22&quot;&gt;Test 22&lt;/a&gt;
+&lt;a href=&quot;https://webmention.rocks/test/23/page&quot;&gt;Test 23&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Test 1 Test 2 Test 3 Test 4 Test 5 Test 6 Test 7 Test 8 Test 9 Test 10 Test 11 Test 12 Test 13 Test 14 Test 15 Test 16 Test 17 Test 18 Test 19 Test 20 Test 21 Test 22 Test 23</summary></entry><entry><title type="html">Facebook pivoting away from engagement</title><link href="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement" rel="alternate" type="text/html" title="Facebook pivoting away from engagement" /><published>2018-01-12T00:00:00-05:00</published><updated>2018-01-12T00:00:00-05:00</updated><id>https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement</id><content type="html" xml:base="https://bitworking.org/news/2018/01/facebook-pivoting-away-from-engagement">&lt;p&gt;Via &lt;a href=&quot;https://www.joelonsoftware.com/2018/01/12/birdcage-liners/&quot;&gt;Joel
 Spolsky&lt;/a&gt;, I
 learned that &lt;a href=&quot;https://www.facebook.com/zuck/posts/10104413015393571&quot;&gt;Facebook was pivoting away from
 engagement&lt;/a&gt;.&lt;/p&gt;
