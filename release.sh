@@ -64,12 +64,6 @@ mkdir -p /tmp/userve
 ROOT=/tmp/userve
 OUT=/tmp/userve
 
-if [ "$#" -ne 1 ]
-then
-    echo "Usage: You must supply a message when building a release package."
-    exit 1
-fi
-
 if [ ! -v FORCE_ARCH ]
 then
   # Get the current architecture.
@@ -156,12 +150,4 @@ chmod 755 ${ROOT}/DEBIAN/postinst
 
 copy_release_files
 
-if [ ! -v BYPASS_GENERATION ]
-then
-  # Build the debian package.
-  fakeroot dpkg-deb --build ${ROOT} ${OUT}/${APPNAME}.deb
-else
-  # Just use the debian package that copy_release_files
-  # placed in ${ROOT}/{APPNAME}.deb.
-  OUT=${ROOT}
-fi
+fakeroot dpkg-deb --build ${ROOT} ${OUT}/${APPNAME}.deb

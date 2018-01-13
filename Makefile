@@ -11,4 +11,5 @@ server:
 	go install github.com/jcgregorio/userve/go/userve
 	BYPASS_UPLOAD=1 ./build_release buildit
 	gcloud compute scp /tmp/userve/userve.deb default@bitworking2:/home/default/userve.deb --zone=us-central1-b
+	gcloud compute ssh default@bitworking2 --zone=us-central1-b -- sudo dpkg -i userve.deb
 
