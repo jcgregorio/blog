@@ -5,7 +5,7 @@ Wants=network-online.target
 [Service]
 ExecStart=/usr/local/bin/userve \
     --source=/home/jcgregorio/blog/_site \
-    --redirects=/home/jcgregorio/blog/_site/redirects.txt \
+    --redirect_file=/home/jcgregorio/blog/_site/redirects.txt \
     --alsologtostderr
 
 Restart=always
