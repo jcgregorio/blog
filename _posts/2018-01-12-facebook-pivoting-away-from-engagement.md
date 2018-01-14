@@ -4,8 +4,7 @@ title: Facebook pivoting away from engagement
 ---
 
 
-Via [Joel
-Spolsky](https://www.joelonsoftware.com/2018/01/12/birdcage-liners/), I
+Via [Joel Spolsky](https://www.joelonsoftware.com/2018/01/12/birdcage-liners/), I
 learned that [Facebook was pivoting away from
 engagement](https://www.facebook.com/zuck/posts/10104413015393571).
 
