@@ -34,6 +34,7 @@ theme: minima
 gems:
   - jekyll-feed
   - jekyll-redirect-from
+  - jekyll-last-modified-at
 feed:
   path: /news/feed/index.atom
 exclude:
