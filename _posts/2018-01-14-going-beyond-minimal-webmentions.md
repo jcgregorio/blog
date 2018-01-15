@@ -14,5 +14,5 @@ Indeed, my current implementation just shows the validated Webmention
 links, and my plan is to slowly enhance them over time. I think, just like
 in the [case of the basic Webmention support](https://willnorris.com/go/webmention), [Will
 Norris](https://willnorris.com) may have my back again and have already done
-the heavy lifting for [Microformats and Go](https://godoc.org/willnorris.com/go/microformats).
+the heavy lifting for [Microformats and Go](https://willnorris.com/go/microformats).
 
