@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-15T00:02:59-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Going beyond minimal Webmentions</title><link href="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions" rel="alternate" type="text/html" title="Going beyond minimal Webmentions" /><published>2018-01-14T00:00:00-05:00</published><updated>2018-01-15T00:00:37-05:00</updated><id>https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions">&lt;p&gt;&lt;a href=&quot;http://stream.boffosocko.com/2018/i-suspect-that-next-with-a-tad-bit-of-parsing&quot;&gt;Chris Aldrich&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-15T21:58:27-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Another addition to the IndieWeb</title><link href="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb" rel="alternate" type="text/html" title="Another addition to the IndieWeb" /><published>2018-01-15T00:00:00-05:00</published><updated>2018-01-15T21:58:24-05:00</updated><id>https://bitworking.org/news/2018/01/another-addition-to-the-indieweb</id><content type="html" xml:base="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb">&lt;p&gt;&lt;a href=&quot;https://singletary.io/2018/so-indieweb-giving-this-a-try-thanks-to-indirect-suggestions&quot;&gt;Michael Singletary&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Hoping this post, syndication, and backfeeding works as expected!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Welcome!&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Michael Singletary</summary></entry><entry><title type="html">Going beyond minimal Webmentions</title><link href="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions" rel="alternate" type="text/html" title="Going beyond minimal Webmentions" /><published>2018-01-14T00:00:00-05:00</published><updated>2018-01-15T00:03:24-05:00</updated><id>https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions">&lt;p&gt;&lt;a href=&quot;http://stream.boffosocko.com/2018/i-suspect-that-next-with-a-tad-bit-of-parsing&quot;&gt;Chris Aldrich&lt;/a&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;I suspect that next, with a tad bit of parsing using microformats, you can
@@ -90,16 +96,4 @@ work, and mentioning you.&lt;/p&gt;
 
 &lt;p&gt;Doesn’t &lt;a href=&quot;http://superfeedr.com/&quot;&gt;Superfeedr&lt;/a&gt; fit that bill today?&lt;/p&gt;
 
-&lt;p&gt;Also, I miss referer logs.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brent Simmons asks</summary></entry><entry><title type="html">McSweeney’s Updated Rules for Settlers of Catan</title><link href="https://bitworking.org/news/2018/01/mcsweeneys-updated-rules-for-settlers-of-catan" rel="alternate" type="text/html" title="McSweeney's Updated Rules for Settlers of Catan" /><published>2018-01-07T00:00:00-05:00</published><updated>2018-01-07T19:01:18-05:00</updated><id>https://bitworking.org/news/2018/01/mcsweeneys-updated-rules-for-settlers-of-catan</id><content type="html" xml:base="https://bitworking.org/news/2018/01/mcsweeneys-updated-rules-for-settlers-of-catan">&lt;p&gt;&lt;a href=&quot;https://www.mcsweeneys.net/articles/updated-rules-for-settlers-of-catan&quot;&gt;Updated Rules for Settlers of Catan&lt;/a&gt;.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;ol&gt;
-    &lt;li&gt;The card for Longest Road has been discontinued. Instead, Largest
-Settlement will be declared a player and may take a turn and collect
-resource cards on behalf of its builder. This rule, Catanians United,
-gives official personhood status to settlements and classifies rolls as
-speech.&lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The whole list is great.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Updated Rules for Settlers of Catan.</summary></entry></feed>
+&lt;p&gt;Also, I miss referer logs.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brent Simmons asks</summary></entry></feed>
