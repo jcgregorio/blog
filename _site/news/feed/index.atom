@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-16T23:07:41-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Another addition to the IndieWeb</title><link href="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb" rel="alternate" type="text/html" title="Another addition to the IndieWeb" /><published>2018-01-15T00:00:00-05:00</published><updated>2018-01-15T21:58:51-05:00</updated><id>https://bitworking.org/news/2018/01/another-addition-to-the-indieweb</id><content type="html" xml:base="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb">&lt;p&gt;&lt;a href=&quot;https://singletary.io/2018/so-indieweb-giving-this-a-try-thanks-to-indirect-suggestions&quot;&gt;Michael Singletary&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-16T23:26:07-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">2018 Predictions</title><link href="https://bitworking.org/news/2018/01/2018-predictions" rel="alternate" type="text/html" title="2018 Predictions" /><published>2018-01-16T00:00:00-05:00</published><updated>2018-01-16T23:26:03-05:00</updated><id>https://bitworking.org/news/2018/01/2018-predictions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/2018-predictions">&lt;p&gt;With Russian bots on Twitter,
+&lt;a href=&quot;https://qz.com/1160551/the-rotten-tomatoes-score-for-the-last-jedi-may-be-rigged/&quot;&gt;the attack on Rotten Tomatoes scores&lt;/a&gt;,
+&lt;a href=&quot;https://www.reuters.com/article/us-usa-internet-pew/over-half-of-public-comments-to-fcc-on-net-neutrality-appear-fake-study-idUSKBN1DT297&quot;&gt;the deluge of fake comments sent to the FCC&lt;/a&gt;
+&lt;a href=&quot;https://www.wired.com/2015/02/how-a-lone-hacker-shredded-the-myth-of-crowdsourcing/&quot;&gt;and even attacks on a DARPA Network Challenge&lt;/a&gt;, I think 2018
+is the beginning of the end for crowdsourcing, at least until identity on the web is solved.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">With Russian bots on Twitter, the attack on Rotten Tomatoes scores, the deluge of fake comments sent to the FCC and even attacks on a DARPA Network Challenge, I think 2018 is the beginning of the end for crowdsourcing, at least until identity on the web is solved.</summary></entry><entry><title type="html">Another addition to the IndieWeb</title><link href="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb" rel="alternate" type="text/html" title="Another addition to the IndieWeb" /><published>2018-01-15T00:00:00-05:00</published><updated>2018-01-16T23:08:04-05:00</updated><id>https://bitworking.org/news/2018/01/another-addition-to-the-indieweb</id><content type="html" xml:base="https://bitworking.org/news/2018/01/another-addition-to-the-indieweb">&lt;p&gt;&lt;a href=&quot;https://singletary.io/2018/so-indieweb-giving-this-a-try-thanks-to-indirect-suggestions&quot;&gt;Michael Singletary&lt;/a&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Hoping this post, syndication, and backfeeding works as expected!&lt;/p&gt;
@@ -76,24 +80,4 @@ it gets more traction.&lt;/p&gt;
   &lt;p&gt;I miss Google Reader every day. FriendFeed too.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Same.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In A Decade of Silos Has Throttled Open Content Distribution Louis Gray says:</summary></entry><entry><title type="html">Mentions</title><link href="https://bitworking.org/news/2018/01/mentions" rel="alternate" type="text/html" title="Mentions" /><published>2018-01-10T00:00:00-05:00</published><updated>2018-01-10T10:29:45-05:00</updated><id>https://bitworking.org/news/2018/01/mentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/mentions">&lt;p&gt;&lt;a href=&quot;http://inessential.com/2018/01/09/app_idea_mentions&quot;&gt;Brent Simmons asks&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Ten years ago or more we had several blog-specific search engines and
-services: Technorati, BlogBridge, and others.&lt;/p&gt;
-
-  &lt;p&gt;One of the great things about these services was not just being able to
-search for something but being able to set up persistent searches: that is,
-you’d get a search as an RSS feed, and in your feed reader you’d get results
-from all over the place on the thing you’re searching for.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In the obvious and common cases, you’d set up searches for people linking to
-your blog, writing about the apps you work on, mentioning the place where you
-work, and mentioning you.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Doesn’t &lt;a href=&quot;http://superfeedr.com/&quot;&gt;Superfeedr&lt;/a&gt; fit that bill today?&lt;/p&gt;
-
-&lt;p&gt;Also, I miss referer logs.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brent Simmons asks</summary></entry></feed>
+&lt;p&gt;Same.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In A Decade of Silos Has Throttled Open Content Distribution Louis Gray says:</summary></entry></feed>
