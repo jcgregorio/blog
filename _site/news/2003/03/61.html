@@ -16,6 +16,30 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Comments via the CommentAPI">
+  <meta name="twitter:description" content="  <p>Phil has pointed out that the <a href="http://wellformedweb.org/story/9">CommentAPI</a>
+   details how pingbacks and trackbacks are mapped to the RSS 'item' element but it does not
+   detail how a comment is mapped. I have been using a mapping on my implementation 
+   of the CommentAPI but haven't documented it. Here is the current mapping:
+</p>
+<pre class="example"><code>&lt;item&gt;
+  &lt;title&gt;Joe&lt;/title&gt;  
+  &lt;link&gt;http://bitworking.org&lt;/link&gt;  
+  &lt;description&gt;The actual text of the comment goes here.&lt;/description&gt;
+&lt;/item&gt;</code></pre>
+<p>I.e. the 'title' is the comment authors name and the 'description' is the 
+   comment content. Note that the 'link' element is either a link or could also contain an e-mail address.</p>
+<p><a href="http://bitworking.org/news/52#X21">Phil</a> has suggested that the 'title' element
+   should not be used for the authors name but instead used for the title of the comment
+   and instead 'dc:creator' should be used for the comment authors name. What do you think?</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

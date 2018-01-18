@@ -16,6 +16,79 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="wsgicollection">
+  <meta name="twitter:description" content="<p>
+  The idea of RESTful "Collections", i.e. doing CRUD over HTTP correctly,
+  has been percolating for years now.
+  A Collection is nothing more than a list, a container for resources.
+  While the APP defines a Collection in terms of Atom Feed and Entry documents
+  we don't have to be limited to that. 
+  It's time to complete a virtuous circle;
+  <a href="http://bitworking.org/news/RESTLog_Specification">RESTLog</a> 
+  inspired the <a href="http://bitworking.org/projects/atom/">Atom Publishing Protocol</a> which 
+  inspired <a href="http://www.loudthinking.com/arc/000593.html">David Heinemeier Hansson's</a>
+<a href="http://www.loudthinking.com/lt-files/worldofresources.pdf">World of Resources</a> (pdf) 
+  and now it's time to come full circle and get that 
+  world of resources in Python.
+  </p>
+<p>
+  In particular look at page 18 of that slide deck, where
+  dispatching to a collection of people, the following URIs
+  are to be handled:
+  </p>
+<pre><code>  GET    /people         
+  POST   /people
+  GET    /people/1
+  PUT    /people/1
+  DELETE /people/1
+  GET    /people;new
+  GET    /people/1;edit</code></pre>
+<p>
+  Now the 'new' and 'edit' URIs can be a bit ambiguous, only in the sense
+  that you might not guess right away that they are nouns, and remember,
+  URIs always identify nouns.
+  I prefer to make the noun-ishness of them more apparent.
+  </p>
+<pre><code>  GET    /people;create_form
+  GET    /people/1;edit_form</code></pre>
+<p>
+  In general, using the notation of <a href="http://lukearno.com/projects/selector/">Selector</a>, we are looking at URIs 
+  of the form:
+  </p>
+<pre><code> /...people/[{id}][;{noun}] </code></pre>
+<p>
+  And dispatching requests to URIs of that form to functions with nice names:
+  </p>
+<pre><code>  GET    /people               list()
+  POST   /people               create()
+  GET    /people/1             retrieve()
+  PUT    /people/1             update()
+  DELETE /people/1             delete()
+  GET    /people;create_form   get_create_form()
+  GET    /people/1;edit_form   get_edit_form()
+  </code></pre>
+<p>
+  Introducing <a href="http://bitworking.org/projects/wsgicollection/">wsgicollection</a>, a Python library that 
+  does just that, simplifying 
+  implementing such a Collection under WSGI.
+  </p>
+<p>
+  Wsgicollection uses <a href="http://lukearno.com/projects/selector/">Selector</a> indirectly, relying on it to parse the URIs
+  for {id} and {noun}. In theory it will work with any WSGI middleware that
+  sets values for 'id' and 'noun' in 
+  
+ <del><code>environ['selector.vars']</code></del> <a href="http://bitworking.org/news/routing_args"><code>environ['wsgiorg.routing_args']</code></a>.
+  Here is how you would define a WSGI application that implements a collection:
+  </p>
+<pre><code><span class="PreProc">from</span> wsgicollection <span class="PreProc">import</span> Collection
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

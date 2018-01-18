@@ -16,6 +16,51 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Robaccia on App Engine">
+  <meta name="twitter:description" content="  <p>
+    When trying to port <a href="http://bitworking.org/news/Why_so_many_Python_web_frameworks">Robaccia</a> to App Engine the hard part 
+    has been finding anything to do. If you remember from my previous
+    write-up I started with choosing the components to build on, but
+    in the case of App Engine the model classes are already provided
+    and the development kit already provides Django templates, which have
+    become a favorite of mine, so there's little to choose except for
+    a library to dispatch incoming requests. In the intervening
+    years since I first wrote about Robaccia I've written my own library 
+    to do URL dispatching (<a href="http://bitworking.org/news/163/WSGIDispatcher">WSGIDispatcher</a>) and I'll use that.
+  </p>
+<p>
+    There are other pieces we don't need to construct, for example, the
+    SDK comes with a development server so we don't need to write
+    that ourselves. We don't need <code>dbconfig.py</code> either.   
+  </p>
+<p>
+    There were two bits of functionality in <code>manage.py</code>, the first was
+    to create the tables in the database and the second was to run
+    a development server, but neither of those are needed if we
+    are running under App Engine; the datastore doesn't require you to
+    create tables before operating, and the SDK has it's own development
+    server.
+  </p>
+<p>
+    That doesn't leave us with a lot.
+    We have our convention of models in <code>model.py</code>, views in <code>view.py</code>,
+    url dispatching via WSGIDispatcher in <code>urls.py</code>, and finally all of the
+    templates in a <code>templates</code> subdirectory.
+    The little bit of glue we need to add is the same as in 
+    the original Robaccia which is <code>render()</code>, a convenience
+    function for rendering templates.
+  </p>
+<pre class="prettyprint">import os
+import mimetypes
+from google.appengine.ext.webapp import template
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

@@ -16,6 +16,39 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Snaplines in OpenOffice Impress">
+  <meta name="twitter:description" content="        <p>I give a lot of presentations and <a href=http://www.amazon.com/dp/0596522347>Slide:ology</a>
+        is one of the best books I've read on the subject. One of the things that I learned was
+        setting up a grid system in your presentation software using snap lines, which not only gives you a much cleaner
+        layout on the page but it also ensures that the elements you place on the 
+        slides are consistent from page to page, which is less distracting for the audience.
+        Slide:ology covers two variations on such grids, the simple rectangle and a Fibonacci
+        based grid.
+        </p>
+        <p>And now we run headlong into the software problem; my presentation software of choice, OpenOffice,
+        has made the decision to store snapline information with each individual presentation. Not only that
+        but there is no way to import or export a snapline configuration. Which means that adding snaplines
+        to an already built presentation, or changing the grid layout on a presentation, requires manually 
+        placing each snapline, along with using a calculator to determine positions, which is incredibly 
+        tedious. Until today.
+        </p>
+        <p><a href=http://www.c2.com/cgi/wiki?LazinessImpatienceHubris>Laziness,
+            impatient and hubris</a> are the three great virtues of a
+        programmer, and I'm way too lazy and impatient to fiddle with 
+        snaplines more than a couple times, so I wrote a Python script (grid.py)
+        to add snaplines to an OpenOffice Impress presentation.
+        The source is located <a href=http://code.google.com/p/jcgregorio/source/browse/grid.py>here on Google code hosting</a>.
+        </p>
+        <pre class=prettyprint>$ python grid.py --help
+Usage: grid.py [options] <presentation file="" name="">
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

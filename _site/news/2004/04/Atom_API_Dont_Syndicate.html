@@ -16,6 +16,36 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Atom API Dont Syndicate">
+  <meta name="twitter:description" content="  <p>Tim Bray has posted <a href="http://www.intertwingly.net/wiki/pie/PaceDontSyndicate">
+  a proposal</a> on the Atom wiki for a method of tagging 
+  an entry as 'not for syndication'. As Tim explains in his 
+  <a href="http://www.tbray.org/ongoing/When/200x/2004/04/16/HowToPost">
+  entry on ongoing</a>, his motivation is for pictures, and to nix
+  multipart/alternative:
+</p>
+<blockquote><p>The motivation for doing this was to get rid of the type="multipart/alternative"feature in the current Atom drafts, which strikes me as a "wouldn't-this-be-nice" kind of thing that doesn't do a good job on the most common use-cases. But I think this syndicate="false" idea ends up generally increasing the usability of the whole Atom protocol.</p></blockquote>
+<p>This is good. First I have my doubts about 'multipart/alternative'.
+  Second this broaches the issue of the 'state' of an entry. While 'syndicate' is 
+  one such state surely there are others. How about 'draft', which would imply 
+  that the content should not be published. And what if you have email subscribers
+  that get notified when a new entry is published, could that also be rolled into 
+  the 'state' of an entry?</p>
+<p> Now there are two basic ways to go with how to 
+   implement this. One is to create a series of <code>'true' | 'false'</code> valued
+  attributes to an entry, such as <code>draft="true"</code> or <code>email="false"</code>.
+  An alternative is to add a single 'state' element to entry that contains different
+  values, for example <code>&lt;state&gt;draft&lt;/state&gt;</code>. I have no
+  preference for either solution, but I would like to see <em>something</em>
+  added to track entry state. </p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

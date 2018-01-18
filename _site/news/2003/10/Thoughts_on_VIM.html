@@ -16,6 +16,69 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Thoughts on VIM">
+  <meta name="twitter:description" content="  <p>I said I was <a href="http://bitworking.org/news/Leaving_Emacs">leaving emacs</a>, 
+and I have. I am now in the process of learning vi, or more precisely <a href="http://www.vim.org/">VIM</a>.</p>
+  <p>VIM is a quite mature and capable platform, not the same
+  vi I used years ago on Sun stations. It is a rewrite
+  of the vi editor, with Bram Moolenaar as the main author
+  and maintainer. It has all the major features you'd expect from 
+  a modern text editor such as syntax highlighting and scriptability.</p>
+<p>Learning it has been quite fun and the transition from
+ emacs to VIM has been quite enlightening. Here are some of my 
+ observations as I move from one to the other.</p>
+<dl>
+<dt>Scripting</dt>
+<dd>This honestly is the hook that got me to try VIM in the first place,
+     the <a href="http://bitworking.org/news/Leaving_Emacs#X7">comment</a> 
+     that VIM could be scripted with Python. I've got my weak spots,
+     and that hit it. I have never fully wrapped my head around emacs lisp,
+     and never thought that it was an appropriate scripting language 
+     for an editor. VIM has it's own language plus allows you to script
+     in other languages. Talk about pushing my buttons.
+  </dd>
+<dt>Language</dt>
+<dd>Emacs is driven by Control and Meta key combinations. They're nice and short
+     but not very mnemonic. VIM on the other hand uses words, honest to goodness
+     words to perform actions. Part of this difference is modalness, which I will
+     talk about next. Want to create a new buffer? That's :new. How about
+     editing a file? That's :edit. All of the commands have shorter versions
+     that are accepted, for example :e for :edit. The neat thing is that
+     you can type in a partial command then press the tab key to cycle through
+     all the possible completions. That's the power of language. </dd>
+<dt>Modality</dt>
+<dd>VIM has a modal interface, that is, you can be in one of several
+    different modes at any one time. For example when you first start
+    editing a file you are 'Normal' mode, press <code>i</code> or <code>a</code>
+    and you are in 'Insert' mode, a mode that allows new text
+    to be inserted. It's interesting that 'modal' interfaces
+    today are generally eschewed, being considered too difficult to learn
+    and too mistake prone. I thought this too until my switch to VIM.
+    Interesting also that I just saw a small bit of an interview with 
+    <a href="http://bootstrap.org/">Dr. Douglas C. Engelbart</a>, who for just one
+    of his accomplishments invented the mouse. 
+    He talked about the current user interfaces to 
+    applications as being mouse driven and very easy to learn, but in the long
+    run that same mode of interaction made the programs less productive
+    than it could be. Using the mouse, Ctrl keys, and Meta keys allows you 
+    to avoid creating a program with a modal interface, but at what cost? 
+    Drop language as a primary interface mechanism and you can create a non-modal 
+    interface, but in the process are you losing too powerful a tool? It does
+    make me wonder if modality and language are the key to the popularity 
+    of certain programs, for example <a href="http://pr.linuxjournal.com/article.php?sid=785">
+    for the third year in a row Vim was voted favorite editor</a>.
+    Similarly there is the fanatical following of 
+    <a href="http://www.escape.com/~yesss/_xywhat.htm">xyWrite</a>.
+   </dd>
+</dl>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

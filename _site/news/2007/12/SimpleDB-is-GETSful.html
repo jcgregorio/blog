@@ -16,6 +16,48 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="SimpleDB is GETSful">
+  <meta name="twitter:description" content="  <p>Upon closer inspection it appears that <a href="http://www.amazon.com/gp/browse.html?node=342335011">SimpleDB</a> is <a href="http://bitworking.org/news/GETSful">GETSful</a>.</p>
+  <div class="commentContent" id="X1">
+    <p>
+Indeed.  It's even stranger because they make it look like it's ReSTful.
+</p><p>
+The front page docs have bits like "GET, PUT or DELETE" in addition to claiming to be a REST interface.  Which all looks fine until you realize that "Amazon SimpleDB REST calls are made using HTTP GET requests" and the URIs look like this:
+</p><p>
+<code>
+https://sdb.amazonaws.com/?Action=PutAttributes
+</code>
+</p><p>
+It's too bad.  I really thought for a minute that they guys building this really Got It.</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:justin@iago.org">Justin Sheehy</a> on <a href="#X1" title="2007-12-16T22:25:46.931739">2007-12-16</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Indeed. For those that prefer RESTful, I say take CouchDB and run it on an EC2 cluster.
+    <p class="commentByLine">Posted by
+       <a href="http://sethop.com">Seth Wagoner</a> on <a href="#X2" title="2007-12-17T03:21:30.760978">2007-12-17</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Apart from the desire to call a spade a spade and SimpleDB a crowbar in order to promote real standards - does that really matter technically in this case when for the most part intermediaries will be Amazon themselves?
+Have I got this correct in that the real benefits of ReST are architecturally between ends affording intermediaries of the likes of proxies? Not just the nice CRUD-like resource interface pattern that gets all the lime-light?
+    <p class="commentByLine">Posted by
+       <a href="http://craigoverend.com/">Craig Overend</a> on <a href="#X3" title="2007-12-17T05:53:51.950930">2007-12-17</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Craig: intermediaries are far from the only reason to do REST. Roy explicitly took them into account in constructing the style, but accommodation of intermediaries wasn’t the only desirable property that the REST style was designed to induce in systems.</p>
+<p>The problem with GETSful interfaces specifically is that GET is supposed to be safe: while the server may (as always) do anything it wants in response to the request, the client bears no responsibility for any of it, be it desired or a catastrophe. For a demonstration of what happens when you ignore this expectation that GET requests never change resource state on the server, just look back at the Google Web Accelerator fiasco.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X4" title="2007-12-17T12:28:54.572696">2007-12-17</a>
+    </p>
+</div>
+  
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

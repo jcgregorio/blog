@@ -16,6 +16,105 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="The Atom Publishing Protocol is a failure">
+  <meta name="twitter:description" content="  <p>
+The Atom Publishing Protocol is a failure. Now that I've met by blogging-hyperbole-quotient
+for the day let's talk about standards, protocols, and technology.
+</p>
+<p class="aside">
+This is all the fodder I was going to throw together for a
+presentation I proposed for OSCon. Since that proposal got rejected
+I'm going to post it here. On the other hand, my App Engine tutorial 
+got accepted, so I'll still see you at the conference.
+</p>
+<p>
+So AtomPub isn't a failure, but it
+hasn't seen the level of adoption I had hoped to see at this point in its life.
+There are still plenty of new protocols being developed on a seemingly 
+daily basis, many of which could have used AtomPub, but don't.
+Also, there is a large amount of AtomPub being adopted in other areas, but
+that doesn't seem to be getting that much press, ala, 
+I don't see any <a href="http://www.tbray.org/ongoing/When/200x/2007/03/22/Atom">Atom-Powered
+    Logo on my phones like Tim Bray suggested</a>.  </p>
+<p>
+So why hasn't AtomPub stormed the world to become the one true protocol?
+Well, there are three answers:
+</p>
+<ul>
+<li>Browsers</li>
+<li>Browsers</li>
+<li>Browsers</li>
+</ul>
+<p>
+The world is a different place then it was when Atom and AtomPub started 
+back in 2002, browsers are much more powerful, Javascript compatibility
+is increasing among them, there are more libraries to smooth over the 
+differences, and connectivity is on the rise. So in the face of all those changes let's 
+see how the some of the original motivations behind AtomPub are holding up.
+</p>
+<p class="aside">
+I am so looking for an excuse to
+fly from NYC to SFO so I can use the in-air wifi on Virgin America,
+but I digress. 
+</p>
+<p>
+Thick clients, RIAs,  were 
+supposed to be a much larger component of your online life.
+The cliche at the time was, "you can't run Word in a browser". 
+Well, we know how well that's held up.  I expect a similar lifetime for today's equivalent cliche, "you can't
+do photo editing in a browser". The reality is that more and more functionality
+is moving into the browser and that takes away one of the driving forces for an editing protocol.
+</p>
+<p>
+Another motivation was the "Editing on the airplane" scenario. The idea was that
+you wouldn't always be online and when you were offline you couldn't use your browser.
+The part of this cliche that wasn't put down by Virgin Atlantic and Edge cards
+was finished off by Gears and DVCS's. 
+</p>
+<p class="aside">I'm seeing a rise in DVCS based blogging
+platforms, could that trend extend beyond the highly technical crowd, could
+'hg push' be the next big thing in publishing protocols? I digress again.
+</p>
+<p>
+The last motivation was for a common interchange format. The idea was that with 
+a common format you could build up libraries and make it easy to move 
+information around. The 'problem' in this case is that a better format
+came along in the interim: JSON. JSON, born of Javascript, born of the browser, 
+is the perfect 'data' interchange format, and
+here I am distinguishing between 'data' interchange and 'document' interchange.
+If all you want to do is get data from point A to B then JSON is a much easier
+format to generate and consume as it maps directly into data structures, as opposed
+to a document oriented format like Atom, which has to be mapped manually into 
+data structures and that mapping will be different from library to library.
+The other aspect is that plain old HTML has become a lot more consumable
+in recent years thanks to the work on HTML5. If you need a hypertext document
+format you can reach for HTML these days and don't have to resort to XML based
+formats. The latter is huge shift in thinking for me personally; if you remember
+I own the domain "wellformedweb.org", so obviously I didn't think things would
+turn out this way.
+</p>
+<p>
+All of the advances in browsers and connectivity have conspired to keep AtomPub from
+reaching the widespread adoption that I had envisioned when work started on the
+protocol, but that doesn't mean it's a failure. There is still plenty of uses for AtomPub
+and it has quietly appeared in many places. Other use cases are still holding up 
+over time, such as migrating data from one platform to another. Probably the biggest supplier of 
+AtomPub based services is Google with the <a href="http://code.google.com/apis/gdata/">Google Data APIs</a>, but
+it also has support from other services; just recently I noticed that flickr offers
+AtomPub as a method to post images to your blog. So it's not a failure, but
+certainly the advancing browser platform has obviated many of the motivations 
+behind its creation.
+</p>
+  <div class="commentContent" id="X1">
+    <blockquote>The reality is that more and more functionality is moving into the browser and that takes away one of the driving forces for an editing protocol. </blockquote>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

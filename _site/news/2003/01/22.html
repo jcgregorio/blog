@@ -16,6 +16,71 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="DOM (Drudgery Object Model)">
+  <meta name="twitter:description" content="  <p>I have been doing a lot of XML manipulation
+in the implementation of <a href="http://wellformedweb.org">RESTLog</a> 
+recently and come to really despise the DOM. In the best of situations
+it leads to akward and verbose code, in the worst of times.. well 
+we won't use those words in a public place...</p>
+<p>A pretty good clue that an API is fundamentally broken is you keep
+re-creating the missing pieces or obvious patches from platform
+to platform. This I have already done in C# and I am now finding myself
+doing it again in Python. A function to get the raw text of an element as a single
+string, function to set the raw text of an element, function to robustly
+add a namespaced element and it's value to a document overwriting an 
+existing element if it is already there, etc. The list could go on
+but you get the idea. It stinks and I need something better. </p>
+<p>For example, what is the shortest piece of code you can write
+to add a namespaced element to a document through a DOM API? To
+be even more specific, how much code does it take to add the element:</p>
+<pre class="example"><code>&lt;dc:date&gt;2003-01-27T22:52:04-05:00&lt;/dc:date&gt;</code></pre>
+<p>as a child element to 'item' in this document, <ins title="Added after Dare posted his
+example and I realized my explaination was weak." datetime="2003-01-28T13:56:00-05:00">
+but avoid adding a duplicate dc:date if one already exists, instead replacing the 'dc:date'
+elements contents with the new value.</ins></p>
+<pre class="example"><code>&lt;item&gt;
+   &lt;title&gt;A sunny day&lt;/title&gt;
+   &lt;link&gt;http://example.com&lt;/link&gt;
+   &lt;description&gt;Insert witty prose here.&lt;/description&gt;
+&lt;/item&gt;</code></pre>
+<p>What I want is an API that would make it easy, for example:</p>
+<pre class="example"><code>insertElement(
+  namespaces={"dc" : "http://purl.org/dc/elements/1.1/"}, 
+  path="item/dc:date", 
+  value="2003-01-27T22:52:04-05:00", 
+  unique=True)</code></pre>
+<p><strong>Update:</strong></p>
+<p><a href="http://tima.mplode.com">Timothy Appnel</a> sent me a link to
+   Paul Prescod's <a href="http://www.prescod.net/python/pulldom.html">
+   explaination of PullDOM</a> as implemented in Python, which is cool.
+   I like pull based parsers for reading XML, in fact I use the pull based
+   parser in the .Net Framework when building the RSS parser for Aggie.</p>
+<p>Erick Herring sent me a link to <a href="http://www.cafeconleche.org">Elliotte Rusty Harold's</a>
+<a href="http://www.cafeconleche.org/XOM/">XOM</a>. In the documentation for this
+   API is also a presentation entitled, <a href="http://www.cafeconleche.org/XOM/whatswrong/">"What's Wrong with XML APIs (and how to fix them)"</a>.
+   It is a good overview of the different APIs available and their strengths and weaknesses.</p>
+<p><strong>Second Update:</strong></p>
+<p><a href="http://www.kuro5hin.org/story/2003/1/28/125859/197">Dare Obasanjo</a> 
+  has kindly offered up a two line solution
+  in C#. There are however two problems. The first is my fault since I wasn't very clear
+  about the behaviour I wanted if a 'dc:date' element was already present. I have added
+  more verbage to the description to clarify that if 'dc:date' already exists
+  then the item's content should be replaced with the new content.</p>
+<p>The second problem with Dare's example is that it's not valid DOM. The
+  InnerXml property isn't a part of the DOM. Even if you were to use the
+  DOM attribute 'nodeValue' the DOM doesn't allow you
+  to set 'nodeValue' when node is of type Element. I think it's great that 
+  Microsoft has added useful extensions to the DOM. My point is that they
+  <strong>had</strong> to add them to make working with XML tolerable.</p>
+  
+  
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

@@ -14,6 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: BitWorking
+title_image: https://bitworking.org/images/newlogo.png
 email: joe@bitworking.org
 description: > # this means to ignore newlines until "baseurl:"
   Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.

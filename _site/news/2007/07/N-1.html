@@ -16,6 +16,32 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="N > 1">
+  <meta name="twitter:description" content="  <p>The underlying assumption, which I whole heartedly agree with, of 
+<a href="http://armstrongonsoftware.blogspot.com/2007/07/scalable-fault-tolerant-upgradable.html">
+Joe Armstrong's algorithms</a> is that any system that is scalable, 
+fault-tolerant, and upgradable is composed of <code>N</code> nodes, where <code>N &gt; 1</code>.</p>
+<p>The problem with current data storage systems, with 
+<a href="http://en.wikipedia.org/wiki/BigTable">rare exception</a>, is that
+they are all "one box native" applications, i.e. from a world
+where <code>N = 1</code>.  From Berkeley DB to MySQL, they were all designed 
+initially to sit on one box. Even after several years of dealing
+with <a href="http://bitworking.org/news/158/ETech-07-Summary-Part-2-MegaData">MegaData</a> you still see painful stories like <a href="http://kylecordes.com/2007/07/12/youtube-scalability/">what the YouTube guys went through as they scaled up</a>. All of this stems from 
+an <code>N = 1</code> mentality.
+</p>
+<p>So <a href="http://intertwingly.net/blog/2007/07/20/Information-Access-Patterns">when Sam</a> answers <a href="http://jhingran.typepad.com/anant_jhingrans_musings/2007/07/web-20-informat.html">Anant's calls</a> for patterns of information needs of Web 2.0 applications,
+I would add <code>N &gt; 1</code> as a prerequisite, regardless of 
+<a href="http://www.cs.brown.edu/~ugur/fits_all.pdf">which 'size' of database</a> you choose</p>.
+  <div class="commentContent" id="X1">
+    Definitely in general agreement with you. The place where N &gt; 1 is very hard, though, is when you have data you need to write with transactional guarantees. The reality is SQL databases make this way easier than any other production quality option, so sometimes you really do need a big N=1 box. Partitioning the database, read-only replicas, etc all can help manage this, but sometimes the truth is you need a big single threaded thing.
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

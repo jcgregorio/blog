@@ -16,6 +16,138 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="RESTful JSON">
+  <meta name="twitter:description" content="  <p><a href="http://twitter.com/dewitt/statuses/890315871">DeWitt</a>:</p>
+<blockquote><p>@dehora Sorry, that should read: We haven't created an AtomPub *for* RPC yet. IMHO, that's the biggest gap today.
+</p></blockquote>
+<p>What we seem to need is a data-oriented REST protocol. 
+  We already have document-oriented REST protocols covered
+  with the Atom Publishing Protocol, but what if
+  the information you want to convey is data, i.e. doesn't
+  have <a href="http://bitworking.org/projects/oscon2007/html/31.html">the minimum meta-data to qualify as a document</a>, such
+  as an author, title, published data, and id. If you're going to be slinging 
+data around these days the best thing is probably JSON, so what would RESTful JSON look like?
+</p>
+<p>
+The first thing it should have is a 'collection' idiom, like AtomPub, using the
+same RESTful mechanisms as AtomPub: POST to add to the collection, GET to retreive a collection
+representation, and each member of the collection has an "edit" URI that
+supports GET, PUT and DELETE for editing the individual member representation.
+What would be different from AtomPub, which mandates the
+format of the things in the collection, would be that this protocol should only require it to be a JSON object.
+One thing I would add to the normal 'collection' idiom is the ability to
+retrieve a 'prototype' object that could be added to the collection, as a
+way of indicating what the structure of the added JSON object should have.
+The second addition to the 'collection' idiom is a URI Template/OpenSearch based querying
+mechanism, which would allow standardizing on paged/range requests.
+The last addition above and beyond what AtomPub provides out of the box
+is "meta-collections", which seems to the name that's being adopted in the AtomPub world, which
+is a way of creating and destroying collections though a collection.
+</p>
+<p>The only restriction on the representation of a collection is that it 
+  should be an object. For example, let's look at some of the 
+  representations in the Open Social specification and imagine what they
+  would look like in such a RESTful JSON collection. Here is 
+  a <a href="http://code.google.com/apis/opensocial/docs/0.8/restfulspec.html">person representation</a>: 
+</p>
+<pre><code>
+{
+  "id" : "example.org:34KJDCSKJN2HHF0DW20394",
+  "name" : {"unstructured" : "Jane Doe"},
+  "gender" : {"displayvalue" : "女性", "key" : "FEMALE"}
+}
+</code></pre>
+<p>So what would a 'collection' of people look like?
+  My idea is that the full representation is put into the
+  collection and that other meta-data, such as the 'edit'
+  URI, etc. are stored outside of that representation.
+  For example, notice the first member of the collection
+  document is our person from above and is complete
+  under "entity". The "href" value is the (relative)
+  URI where you can edit that member, doing the usual
+  GET to get it, PUT to update, and DELETE to remove it.
+  Note that because the full representation is in the
+  collection we can also pass along the etag as meta-data
+  in the collection representation. We can now detect lost-updates
+  when we PUT an updated representation back to the edit URI
+  by including an "If-Match" header with the etag value
+  on our PUT request.
+</p>
+<pre><code>
+{
+  "members": [
+    {"href": "34KJDCSKJN2HHF0DW20394",
+     "etag":"0hf0239hf2hf9fds09sadfo90ua093j", 
+     "entity", {
+          "id" : "example.org:34KJDCSKJN2HHF0DW20394",
+          "name" : {"unstructured" : "Jane Doe"},
+          "gender" : {"displayvalue" : "女性", "key" : "FEMALE"}
+        } 
+    }, 
+    {"href": "aaaaaaaaaaa11111",
+     "etag":"alsjdfieflsajfajsfjadsljfalksjd", 
+     "entity", {
+          "id" : "example.org:aaaaaaaaaaa11111",
+          "name" : {"unstructured" : "Joe Gregorio"},
+          "gender" : {"displayvalue" : "Male", "key" : "MALE"}
+        } 
+    }, 
+    ...
+  ], 
+  "next": null
+}
+</code></pre>
+<p>One thing to think about would be to have the resources
+  described by the URI Template/OpenSearch URI be an editable resource, that is,
+  they could accept GET, PUT and DELETE. That would allow clients
+  to do batch updating, or batch removal of collection members.
+</p>
+<p>
+There are a couple other features I'd like to add above and beyond 'collections';
+there should be 'config' and 'process' resources.
+</p>
+<p>
+The 'config' resources support GET and PUT, and represent configuration options
+for the service. For example, ( actually this a bad example since you should use
+AtomPub for a blog, but for the sake of exposition let it slide ) 
+in a blog you would use a collection to manage the entries
+in the blog, one collection member per blog entry. A 'config' resource associated
+with that blog would contain options you could set, such as the users display name,
+their email address, background color, etc.
+</p>
+<p>
+The 'process' resource is just a resource that does some processing and
+returns; it only supports POST. For example, a language translation service
+that takes your text and returns it in German is an example of such a service.
+Could potentially be a JSON-RPC end-point, but I am a little afraid to
+do that since the usual use of a JSON-RPC end-point is to handle multiple
+kinds of requests differentiated by some verb in the body, which isn't 
+what this should be, there should be different 'process' URIs, one for
+each distinct type of processing.
+</p>
+<p>All of this could be tied together in a JSON service document that 
+described all the 'collection', 'config' and 'process' resources
+for a site.</p>
+<p>These are just some random thoughts that have been rattling around
+  as I've watched and helped people implement AtomPub across a wide
+  range of services. What are your thoughts, what would you like to
+  see in a RESTful JSON specification?
+</p>
+  <div class="commentContent" id="X1">
+    I've just started working on an application this could directly support. I'll work through some examples from that and provide feedback.
+    <p class="commentByLine">Posted by
+       <a href="http://patricklogan.blogspot.com">Patrick Logan</a> on <a href="#X1" title="2008-08-19T14:57:49.481949">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Progress at last. I've been pseudo-working on something like this to bridge the gap between REST and REST-RPC.
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

@@ -16,6 +16,76 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="RSS, Comments, and nested Items">
+  <meta name="twitter:description" content="  I recently implemented per-item RSS feeds for comments on BitWorking.org. In the process had to decide what the channel level <code>title</code>, <code>link</code> and <code>description</code> should be. I settled on making them the contents of the original item that the comments were on.
+   <p>The <a href="http://www.intertwingly.net/blog/1471.html">whole situation</a> does point to a striking symmetry in <span class="caps">RSS</span> that really isn’t supported by the current element naming conventions. That is, the major elements of channel (title, link, description) are the same as the major elements of item (title, link, description).</p>
+<p>Ok, here is the main <span class="caps">RSS</span> feed of intertwingly (with some content elided for clarity):</p>
+<p><pre class="example"><code>&lt;rss version="0.91"&gt;</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+      &lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+      &lt;/description&gt;
+<p>And here is the comment feed:</p>
+<p><pre class="example"><code>&lt;rss version="2.0"</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby: Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+    &lt;description&gt;Simon Willison: Parsing simple HTML with regular expressions is...
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+      &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+      &lt;/description&gt;
+    &lt;/item&gt;
+<p>What would a main feed look like that contained both stories <strong>and</strong> comments? How about nesting items?</p>
+<p><pre class="example"><code>&lt;rss version="0.91"&gt;</code></pre></p>
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+          &lt;item&gt;
+            &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+            &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+            &lt;description&gt;Agreed. I was in regex-hell this weekend trying to....
+            &lt;/description&gt;
+          &lt;/item&gt;
+        &lt;/item&gt;
+<p>Of course, if you are going to this, why bother with the ‘rss’ element and why not rename ‘channel’ to ‘item’ too:</p>
+<p><pre class="example"><code>  &lt;item&gt;</code></pre></p>
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+        &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+        &lt;item&gt;
+          &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+          &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+          &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+          &lt;/description&gt;
+        &lt;/item&gt;
+      &lt;/item&gt;
+<p>But now you‘re pretty far from what we call <span class="caps">RSS</span>…</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

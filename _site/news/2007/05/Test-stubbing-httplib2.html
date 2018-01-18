@@ -16,6 +16,46 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Test stubbing httplib2">
+  <meta name="twitter:description" content="  <p>I'm writing some HTTP client code that uses <a href="http://bitworking.org/projects/httplib2/">httplib2</a>,
+and the following code has allowed me to
+create unit tests without creating a bunch of resources
+on the web to test against. It's a stub of 
+<code>httlib2.Http</code> that reads its responses off the 
+disk. I <a href="http://en.wikipedia.org/wiki/Monkey_patch">monkey-patch</a> 
+it in place for unit tests, and
+restore the original after I'm done, so as not to
+interfere with other unit tests that might run
+and require the original class.
+</p>
+<p class="aside">
+As an aside I want to point out that this isn't particularly
+clever or unique, I'm writing this up just to have a nice place
+drop the code, and document its usage, to save time for anyone else
+building with httplib2.
+</p>
+<p>Here is the stub class and a <code>unittest.TestCase</code> that uses it.
+</p>
+<pre>
+<span class="PreProc">import</span> unittest
+<span class="PreProc">import</span> urlparse
+<span class="PreProc">import</span> httplib2
+<span class="PreProc">import</span> os
+<span class="PreProc">from</span> email <span class="PreProc">import</span> message_from_string, message_from_file
+HTTP_SRC_DIR = <span class="Normal">"</span><span class="Constant">./tests/model/</span><span class="Normal">"</span>
+<span class="Statement">class</span> <span class="Identifier">MyHttpReplacement</span>:
+    <span class="Normal">"""</span><span class="Constant">Build a stand-in for httplib2.Http that takes its</span>
+<span class="Constant">    response headers and bodies from files on disk</span><span class="Normal">"""</span>
+<span class="Statement">def</span> <span class="Identifier">__init__</span>(self, cache=None, timeout=None):
+        self.hit_counter = {}
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

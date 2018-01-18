@@ -16,6 +16,40 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="XmlToDictBySaxNS.py">
+  <meta name="twitter:description" content="  <p><a href="http://bitsko.slc.ut.us/blog">Ken MacLeod</a> has an <a href="http://bitsko.slc.ut.us/~ken/XmlToDictBySAXNS.py.txt">updated version of XmlToDictBySAX.py</a> that includes
+   a <a href="http://bitworking.org/news/57#X1">neat technique</a> for working with namespaces.
+   His code uses James Clark's <a href="http://www.jclark.com/xml/xmlns.htm">namespace notation</a> for referring to element names,
+   which is a lot more elegant and robust than my original implementation. 
+</p>
+<p>In Clark's notation the indirect reference to the namespace URI are <em>mapped</em> to a direct reference. For example:</p>
+<pre class="example"><code>&lt;cars:part xmlns:cars="http://www.cars.com/xml"/&gt;</code></pre>
+<p>maps to an element name of:</p>
+<pre class="example"><code>{http://www.cars.com/xml}part</code></pre>
+<p>The idea is to referer to the element by the name <code>{uri}name</code> which avoids
+   the problem of picking different prefixes for the same namespace. Ken also uses a neat
+   ability of Python, in which a class can define the function __getattr__(), which
+   is used to resolve object attibute references. If you try to access an attribute
+   on an object and it does not define that attribute, either in it's class or any parent 
+   class, then the __getattr__ function performs the lookup. Ken uses this trick to
+   define a Namespace class:</p>
+<pre class="example"><code> class Namespace:
+    def __init__(self, uri):
+        self.__uri = uri
+    def __getattr__(self, local_name):
+        return '{' + self.__uri + '}' + local_name
+    def __getitem__(self, local_name):
+        return '{' + self.__uri + '}' + local_name</code></pre>
+<p>which can them be used as such:</p>
+<pre class="example"><code>  DC = Namespace('http://purl.org/dc/elements/1.1/')
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

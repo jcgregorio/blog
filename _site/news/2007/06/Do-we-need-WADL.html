@@ -16,6 +16,63 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Do we need WADL?">
+  <meta name="twitter:description" content="  <p>Everybody's <a href="http://dictionary.reference.com/search?q=atwitter">atwitter</a> about WADL, a description file for REST services, and since
+it's supposed to be RESTful I regularly get questioned about it.
+For this post I'm going to experiment and adopt <a href="http://www.redmonk.com/sogrady/">Stephen O'Grady's 
+    Q&amp;A  style</a>.</p>
+<p>My thanks to <a href="http://www-03.ibm.com/developerworks/blogs/page/pmuellr">Patrick Mueller</a>
+ and <a href="http://rollerweblogger.org/roller/">Dave Johnson</a> for volunteering to be 
+ guinea pigs for my arguments,  and thanks to <a href="irc://irc.freenode.net/#redmonk">#redmonk</a> for the use of their channel where we initially held the discussion.
+</p>
+  <p><b>Q:</b> Does REST need a description document?  </p>
+<p><b>A:</b> No.</p>
+<p><b>Q:</b> You're new to this Q&amp;A format, aren't you? How about giving some more details. </p>
+<p><b>A:</b> There are, as always, two problems. Those two problems are
+  always the same: technical and cultural.
+  </p>
+<p>
+  The technical problems I will get back to later.
+  There are a number of cultural assumptions built into WADL, and those
+  cultural assumptions come from the WS-* arena. The first is that 
+  you want, and need, machine generated code. The idea that you could get 
+  anything useful from machine generated code is, to me, <i>interesting</i>. If I describe 
+  an Atom Syndication Feed in WADL, how close will the generated code
+  be to a feed reader like Bloglines? Or even to a library like Abdera? If I write a really good
+  WADL for (X)HTML how close will the generated code be to a web browser?
+  The point is that generated code stubs are so far from a completed consumer
+  of a web service that the utility seems questionable.
+  </p>
+<p>
+  The urge to code generate is particularly strong around XML Schema. 
+  You might believe  you can talk people out of using WADL that way, but I doubt it; people will 
+  see XML Schema and will automatically look
+  for the code generation button. That way of thinking is baked into the culture.
+  </p>
+<p>
+  The second cultural hurdle is the implicit assumption that all 
+  useful data will be in the form of XML, which ignores
+  the vast amount of non-XML content on the web today, which, outside
+  of RSS and Atom, is all of it (HTML, CSS, JavaScript, podcasts, videos, JSON, etc.).
+  Do I really need to bring up the painful memories of binary content and SOAP?
+  </p>
+<p><b>Q:</b> Ok, so WADL is doomed to repeat all the mistakes of WS-*, only this time with more
+  verbs, and that failure will be based on completely soft issues like 'culture'. 
+  That's boring. Can you go into the technical details now?
+  </p>
+<p><b>A:</b>  Sure.</p>
+<p>Here is the very first example in the WADL specification:</p>
+<pre class='prettyprint'>
+&lt;application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://research.sun.com/wadl/2006/10 wadl.xsd"
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

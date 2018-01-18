@@ -16,6 +16,55 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Pudge Mailing List">
+  <meta name="twitter:description" content="  <p><a href="http://bitworking.org/news/148/Five-things-I-hate-about-Python#X1">cavorite</a>:</p>
+<blockquote><p><a href="http://pudge.lesscode.org/">Pudge</a> is a documentation system for Python that generates documentation files from docstrings and uses Restructured Text syntax. You can see a running example in <a href="http://pythonpaste.org/">Python Paste</a>.
+Maybe you could give it a try.</p></blockquote>
+<p>Pudge does look promising. I was able to successfully pull the code from subversion, 
+  and after a small patch ;) to setup.py, I was able to install it:
+</p>
+<pre><code>Index: setup.py
+===================================================================
+--- setup.py    (revision 134)
++++ setup.py    (working copy)
+@@ -1,6 +1,5 @@
+ # bootstrap setuptools if necessary
+-from ez_setup import use_setuptools
+-use_setuptools()
++from distutils.core import setup
+ 
+ import os
+ import os.path
+@@ -38,7 +37,6 @@
+                ('licenses', )]:
+     package_data.extend(get_data_files(os.path.join(*subdir)))
+ 
+-from setuptools import setup
+ 
+ setup(
+     name=name,
+</code></pre>
+<p>I wanted to check the archives to see 
+  if there had been a discussion about the use
+  of setuptools, but it appears the 
+  <a href="http://lesscode.org/mailman/listinfo/pudge">mailing list</a>,
+  linked from the front page of the project, has gone 404.
+</p>
+  <div class="commentContent" id="X1">
+    It does look promising from a technological standpoint, but as far as I can tell the project is dead. No trac, no blog, no mailing list, and no public release.
+    <p class="commentByLine">Posted by
+       <a href="http://jeff.cutsinger.org">Jeff</a> on <a href="#X1" title="2007-03-23T11:40:21.100471">2007-03-23</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I think that pudge was originally written by Ryan Tomayko, who has since moved on to Rails and Ruby land.  The chances of him continuing the project are slim to none, which is a shame, since its a really nice project.  We are using it for <a href="http://elixir.ematia.de">the elixir website and documentation</a>, and are very pleased with it.
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

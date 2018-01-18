@@ -16,6 +16,108 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="No Fishing - or - Why 'robots.txt and 'favicon.ico' are bad ideas andshouldn't be emulated.">
+  <meta name="twitter:description" content="  <p>The idea of hard coding a URI, like is done for <code>robots.txt</code> is a bad idea. Let's 
+   not continue to make the same mistakes over and over again.</p>
+  <p><a href="http://www.robotstxt.org/wc/robots.html">Robots.txt</a>
+   is part of the Robot Exclusion Protocol. Part of the protocol
+   is a fixed URI at which a robot can find a <code>robots.txt</code>
+   file to parse.  The
+   traditional location of the <code>robots.txt</code> file has been at the root
+   of a domain, though it should be noted that the robot exclusion 
+   protocol also defines a <a href="http://www.robotstxt.org/wc/exclusion.html#meta">META tag 
+	   that allows HTML authors to indicate to visiting robots if a document 
+	   may be indexed, or used to harvest more links. </a> Now 
+   the location of the <code>robots.txt</code> file is in a fixed location.
+   The idea was that this would help web-crawlers find it easier, but giving it a 
+   fixed location with respect to the domain  is a bad idea and is rooted in a particularly naive view
+   of the web circa 1996.</p>
+<p>If the idea of using a fixed URI for the location of a special file
+   was restricted to just <code>robots.txt</code> then maybe things 
+   wouldn't be so bad. But Microsoft saw this 
+   bahavior and now use it with their <code>favicon.ico</code>, which
+      again is fixed at the root of the domain.</p>
+<p>And finally on October 13th Dave Winer if following in their 
+    footsteps and has proposed <a href="http://blogs.law.harvard.edu/tech/myPublicFeedsOpml">
+    yet another file at a fixed URL</a>.
+</p><p>Let's state it clearly now for the record. The idea of using a fixed location
+      is a dumb idea and should not be done. It was a not-so-good idea
+      when the robot exclusion protocol was rolled out and it's an even worse
+      idea today. Don't do it. Here's why:</p>
+<dl>
+<dt>Bandwidth</dt>
+<dd>I get over a hundreds hits a day on my robots.txt
+     file. Well, it would be a 100 hits a day except
+     <strong>I don't have robots.txt file</strong>, so over 100
+     times a day I return a 404. That's wasted bandwidth for
+     me and wasted time for the user agent. I pay for my bandwidth,
+     and now I get to pay for bandwidth on a protocol whether or not
+     I support it!</dd>
+<dt>Extensibility</dt>
+<dd> There
+   is no consistent framework for adding to the list of special files.
+   No central repository, no configuration file, no special file
+   that points to all the other special files. The current use is
+   define a name for your special file, then have everyone dump that file
+   at the root of their domain. That's not extensible, it's chaotic, and
+   it also intrudes on my control over my URI space.</dd>
+<dt>Semantics</dt>
+<dd>Well, this isn't really about semantics, but about the meaning of a phrase, "What
+   is a web-site"? This used to be a simple question with a simple
+   answer back in 1997. Each web-site was rooted as a single domain. In that era it might
+   have been acceptable to think that was how all web sites 
+   would be, one per domain, and thus forcing
+   a file at a specific location under a domain might be okay. Kinda. If you squint your eyes.
+   Today the world is a much richer and more varied place. We do not have a single domain
+   per website. Want an example? Just look at
+   all the web-sites that sit below the domain <code>radio.weblogs.com</code>.
+   Let's make this perfectly clear, Dave Winer is proposing a method
+   that will be unusable by his own customers. Users of Radio that
+   decide to let Userland host their content will be unable to use
+   the hardcoded URI to <code>myPublicFeeds.opml</code> because
+   there are multple sites hosted on radio.weblogs.com, each one under it's own directory,
+   <code>http://radio.weblogs.com/nnnnnnn</code> where 'nnnnnnn' is the users id number.
+   </dd>
+<dt>Discoverability</dt>
+<dd>There is no way to discover ahead of time if 
+   a <code>robots.txt</code> file is present. Similarly, if new
+   files, like <code>favicon.ico</code> or <code>/w3c/p3p.xml</code> come into 
+      common usage, how are user agents supposed to know
+      about them. How can anyone stumble across them and learn
+      what they do by, dare I say it, "view source". They can't. 
+      The web works because of links,
+      I go from here to there and there to here all the while following links. 
+      Links are what drive the web, links are the power behind google. 'Robots.txt'
+      and similar schemes break that model. Think of it this way, the links on the 
+      web work like paths. You follow those links and you stay to the path. Now what are you
+      doing when you go poking around for a file that may or may not be there?
+      You're going fishing. You've left the path and are now angling in my pond.</dd>
+</dl>
+<p>This isn't a passing issue or an edge case. This is actually an 
+   <a href="http://www.w3.org/2001/tag/ilist#siteData-36">issue</a>
+   in front of the <a href="http://www.w3.org/2001/tag/" title="Technical Architecture Group">W3C TAG</a> today.
+   <a href="http://lists.w3.org/Archives/Public/www-tag/2003Feb/0093.html">
+    Tim Berners-Lee initially raised this issue</a> and <a href="http://tbray.org/ongoing/">Tim Bray</a> 
+   followed-up with a <a href="http://lists.w3.org/Archives/Public/www-tag/2003Feb/0297.html">strawman solution</a>
+   which works from the basis of trying to answer the question "What is a web-site?".
+   </p>
+<p>Schemes that used fixed URIs are doing nothing more than fishing for information. Consider my site to now have
+   a "No Fishing" sign posted. Now it's obviously too late for <code>favicon.ico</code>
+   and <code>robots.txt</code>, but it's not too late to nip this in the bud for any further
+   uses. Please do not implement Dave Winers fixed URI scheme for <code>myPublicFeeds.opml</code>.
+   If it does get implemented and deployed I will auto-ban any IP that requests that file. I will
+   also auto-ban any user-agent that also requests that file. I encourage you to do the same.</p>
+<p><strong style="font-size:2em">No Fishing!</strong></p>
+<p><strong>Update:</strong> Sam Ruby has <a href="http://www.intertwingly.net/blog/1611.html">
+   opened up a discussion for an alternate mechanism</a>.</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

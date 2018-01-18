@@ -16,6 +16,17 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="AppClientTest - now with unit testing goodness">
+  <meta name="twitter:description" content="  <p>I just checked in the last of some changes I've made to <a href="http://code.google.com/p/feedvalidator/wiki/AppClientTest">appclienttest</a> to support testing. Yes, that's right, tests for appclienttest itself. This actually required a bunch of small changes through a lot of different code, but in the end I think it's a general solution that will be useful. </p> <p>The big problem with testing appclienttest is that it runs through a lot of different steps as it puts an AtomPub service through its paces. Instead of it being like a series of function calls it's more like a little play, a drama in HTTP, where each scene relies on the last scene completing successfully. </p> <p>Now I already had MockHttp in <a href="http://code.google.com/p/feedvalidator/wiki/AtomPubBase">atompubbase</a> which reads files out of a directory to emulate the behavior of httplib2.Http, but creating a directory structure populated with all the files needed for a run of appclienttest was going to be tedious, so I added <a href="http://code.google.com/p/feedvalidator/source/browse/trunk/apptestsuite/client/atompubbase/mockhttp.py">mockhttp.MockRecorder</a>. This class is another mock for httplib2.Http, (probably not really a mock, but more a wrapper) that wraps httplib2.Http and records every response it receives into a directory structure. It's the mirror image functionality of MockHttp. </p> <p>With those in place I was now able to add the 'record' and 'playback' command-line options to appclienttest:</p><pre><code>$ python validator/appclienttest.py --help
+usage: appclienttest.py [options]
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

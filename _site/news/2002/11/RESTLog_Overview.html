@@ -16,6 +16,68 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="RESTLog Overview">
+  <meta name="twitter:description" content="  <p>RESTLog is the name of the application that runs this site.
+RESTLog is a weblog application that tries to follow the REST architectural
+style. The RESTLog application has a client and a server side. The client
+side is a .NET application written in C#, while the server side application
+is written in Python. Note that the this application isn't tied
+to either of these programming environments. Either side could be 
+replaced with a component written in another language and the system
+would work just fine. That's because the application is completely defined
+by its interface and that interface in turn is completely described by
+HTTP transactions, the defined set of URLs, and the format of the XML files
+that are transferred, but well see more of those details a little later.
+</p>
+<h3>The Specification</h3>
+<p>If you are curious you can dive right into the specification for the <a href="http://bitworking.org/news/RESTLog_Specification">RESTLog Interface</a>.
+ The remainder of this document gives an overview of how I chose
+to implement that specification. This is just one possible implementation.
+You could build a system that conformed to the RESTLog API and instead of using
+flat files like I did you could store all the information in an SQL database. Or this
+interface could be added to current weblog applications such as MovableType, Bloxsom, Radio, etc.
+</p>
+<h3>What is REST</h3>
+<p>
+For more details on REST see the <a href="http://internet.conveyor.com/RESTwiki/moin.cgi/FrontPage">REST Wiki</a>.
+In particular you should look at the section on <a href="http://internet.conveyor.com/RESTwiki/moin.cgi/RestifyingBlogger">RestifyingBlogger</a> since
+that is what I used as a model for my design of RESTLog.
+</p>
+<h3> How does the server side work? </h3>
+<p>Items are stored in individual files with their name being their ID number.
+They are stored as xml files. Specifically they are stored
+as 'item' elements from <a href="http://backend.userland.com/rss2">RSS 2.0</a>. For example:</p>
+<div class="example">
+<pre><code>&lt;item xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+      &lt;title&gt;My Summer Vacation&lt;/title&gt;
+      &lt;description&gt;On my summer vacation I went to...&lt;/description&gt;
+      &lt;link&gt;http://127.0.0.1/cgi-bin/RESTLog.py/4&lt;/link&gt;
+      &lt;dc:date&gt;2002-10-28T22:18:53-05:00&lt;/dc:date&gt;
+&lt;/item&gt; </code></pre>
+</div>
+<p>Why? Well first note that this file is conveniently formatted so that it can be easily placed 
+inside an RSS file directly as an item which will speed up the rebuilding of the index.rss
+file each time an item is modified. Also having each item in its own file makes the 
+system more robust, if one of the files becomes corrupt I have lost as most one 
+item not all of them. I ran into this problem when working on Pamphlet, my as yet
+unpublished weblogging tool. The items in Pamphlet are kept in monthly archives which has the 
+weakness of potentially losing a whole months worth of posts if a single
+file gets corrupted. Luckily I keep good backups.</p>
+<p>The HTML main page 'index.html' and the RSS file 'index.rss' are served up statically. That is, they
+are static files that are only updated by the server side script when items are added or changed. 
+Each item has it's own permalink and that permalink is served up dynamically
+through the RESTLog.cgi script, but this only uses a crude string substitution
+templating mechanism.</p>
+<p>Tomorrow I'll cover the HTTP interface to RESTLog.</p>
+  
+  
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

@@ -16,6 +16,106 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="How To Use Mime-Types To Get Your Aggregator To Subscribe To An AtomFeed">
+  <meta name="twitter:description" content="  <p>There has been much talk today, and in the far past, of how 
+    to automatically handle syndication subscription. The conversation
+    was first brought up and <a href="http://www.rassoc.com/gregr/weblog/archive.aspx?post=656">
+        thoroughly discussed by Greg Reinacker</a>.
+    The issue has <a href="http://www.imc.org/atom-syntax/mail-archive/msg01344.html">
+        resurfaced on the [atom-syntax] mailing list</a>.
+    Now there are a small contingent of folks pushing for a new
+    uri scheme called 'feed:' that would enable syndication subscription.
+    <a href="http://www.w3.org/TR/webarch/#pr-new-scheme-expensive">Creating
+        a new URI scheme is a bad idea, don't do it</a>. </p>
+  <p>So what is the alternative to hooking onto a new URI scheme? Well,
+    the correct way to this is to hook onto the mime-type. 
+    Mime-types are the fundamental way types of files are identified 
+    in HTTP, and SMTP and in other areas too but well just concentrate
+    on HTTP for now. Atom feeds have the mime-type of 'application/atom+xml'.</p>
+<p>How do we go about using mime-types to connect an Atom feed sitting on
+    a web server to a client aggregator application? There are two sides
+    to the equation, the client side, and the server side.</p>
+<h3>Server Side</h3>
+<p>In order for this to work the Atom feed must be server up with 
+    a mime-type of 'application/atom+xml'. There are two general
+    cases to consider. Either the file is server up statically or it is
+    generated on the fly by a CGI program. The CGI generated case is the 
+    easiest of the two. When producing the output from the CGI program
+    just include the <code>Content-type:</code> header with the correct
+    mime-type:</p>
+<pre class="example"><code>Content-type: application/atom+xml</code></pre>
+<p>The case for statically served files is only slightly
+    more complicated, in this case you just need to let Apache
+    know about the new mime-type. You do that by using the
+    <a href="http://httpd.apache.org/docs/mod/mod_mime.html#addtype">
+        AddType directive</a>, which maps a file extension to a mime-type.
+    In the directory that you are storing the Atom feeds in 
+    add the following line to your <code>.htaccess</code> file:</p>
+<pre class="example"><code>AddType application/atom+xml .atom</code></pre>
+<p>Now any file stored with a <code>.atom</code> file extension will
+    be served up with the mime-type of 'application/atom+xml'.</p>
+<h3>Client Side</h3>
+<p>The server side of the equation was easy, things get a little more
+    complicated on the client side. To make things easier we'll assume
+    you are running under Windows, people in the know of how to do
+    these things under Mac and unix should feel free to speak up 
+    in the comments. Under Windows the mapping of mime-types to
+    applications is handled through the registry. So let's walk
+    through the process of setting up the registry to handle
+    the Atom mime-type. To make the discussion concrete here 
+    is a little stub of a C program
+    that is going to stand in for our aggregator:
+</p>
+<pre class="example"><code>  #include &lt;stdio.h&gt;
+  #include &lt;conio.h&gt;
+        
+  int main(int argc, char * argv[]) {
+     printf("Atom Handling Application.");
+     printf("The Atom Feed is located at: %s\n", argv[1]);
+     getch();
+     return 1;
+  }</code></pre>
+<p>When called this program just prints the command line argument
+    it was passed and then waits for the user to press any
+    key before the program completes. If you have 
+    Microsoft's C++ compiler installed you can build it with:
+</p>
+<pre class="example"><code>cl -GX handle.c</code></pre>
+<p>Or if you have the Borland compiler installed:</p>
+<pre class="example"><code>bcc32 handle.c</code></pre>
+<p>Either way you end up with an executable <code>handle.exe</code>.
+    For the rest of this dicussion we'll assume that handle.exe
+    is installed at the fixed location <code>C:\AtomHandler\handle.exe</code>.
+    New values are then added to the Registry to map the mime-type 
+    <code>application/atom+xml</code> to our handler application.
+    Just like under Apache mapping of mime-types is done using file
+    extensions even if a file with that extension is never involved.
+    I'll explain that in a minute. First we hook into the file extension
+    <code>.atom</code>. The following three snippets are from 
+    exported sections of the registry. You would not actually
+    hand edit or manually add these items to your registry,
+    instead the application installation program needs to
+    take care of this step. 
+</p>
+<pre class="example"><code>[HKEY_CLASSES_ROOT\.atom]
+        @="atom_file"
+</code></pre>
+<p>This binds the <code>.atom</code> extension to a
+    name, a kind of indirection, of "atom_file". Now we
+    need to add values to the registry to indicate 
+    what to do when encountering a file with this
+    extension:
+</p>
+<pre class="example"><code>[HKEY_CLASSES_ROOT\atom_file]
+@="Atom Syndication Program"
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

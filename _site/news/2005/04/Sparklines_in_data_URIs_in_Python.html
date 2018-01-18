@@ -16,6 +16,50 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Sparklines in data URIs in Python">
+  <meta name="twitter:description" content="  <p><a href="http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR&amp;topic_id=1&amp;topic=">Sparklines</a>, 
+   as defined by <a href="http://www.edwardtufte.com">Tufte</a>, are intense, simple, word-sized graphics.
+   Kind of like this: <img src="data:image/png,%89PNG%0D%0A%1A%0A%00%00%00%0DIHDR%00%00%00%3C%00%00%00%0F%08%02%00%00%007p%3B%26%00%00%01%1BIDATx%9Cb%FC%FF%FF%3F%C3P%03%00%00%00%00%FF%FFb%1Ah%07%90%03%00%00%00%00%FF%FF%22%E4hFF%04I-%80%DF4%22%EC%02%00%00%00%FF%FF%227%A4%A9%EB%0D%E2mddd%60%60%00%00%00%00%FF%FF%A2e%F2%20%DEc%24%06%01%00%00%00%FF%FF%829%1AY%1B%C5%D1G%94.%0A%E2%0A%00%00%00%FF%FF%22%14%D2%90%B2%85%D4%12%06%7F%10%E07%8D%08%BB%00%00%00%00%FF%FFbjll%84sp%B1%897%9A%80.J%00R%F0%01%00%00%00%FF%FF%A2B%9A%868%14%8Bs1%3C%86%A9%06%2ABbL%02%00%00%00%FF%FF%829%1AY%1B%FEP%24%AF2%C2%D4%85%D7%1C%FC1%06%00%00%00%FF%FF%A2%28%A4q%1AMD%10%90%60%1A%06%00%00%00%00%FF%FFb%AA%AF%AF%87sp%B1%89%07%E4%E9%C2%05p%25%3C%00%00%00%00%FF%FF%A2B%9A%868%94%18%E7b%AA%21%CF%93%00%00%00%00%FF%FF%22%C1%D1%D4%0DEJ%EC%02%00%00%00%FF%FF%A2%28%A4%A9%EB%0D%E2M%03%00%00%00%FF%FF%03%00%1B%19J%21uT%D5%80%00%00%00%00IEND%AEB%60%82" /> .
+   I seemed to stumble across them at just the right time, as I have regression tests I
+   am adding to on a daily basis. The result is a flood of information.
+   I believe sparklines may be the answer to my information avalanche. 
+</p>
+<p>All of my regression scripts are written
+   in Python and the output of those scripts
+   is HTML. Embedding sparklines in that report output sounds like a perfect application
+   of "data: URIs" <a href="http://www.ietf.org/rfc/rfc2397">[RFC 2397]</a>, which allow you to 
+   take small bits of data, like small images, and instead of serving them up seperately, you 
+   embed the data right into the URI. In this case, I'll generate PNG formatted sparklines
+   then encode them as data URIs that can be included directly in my HTML formatted 
+   regression test results.
+   So I dashed off to find a sparklines module for Python. </p>
+<p>
+   I found none.</p>
+<p> I did find one 
+   for PHP, <a href="http://sparkline.org/">http://sparkline.org</a>, but that would
+   not be Python now would it?</p>
+<p>Not to be discouraged, I set off to load up the standard image manipulation
+   package for Python.</p>
+<p>Crud.</p>
+<p>Explain to me again why doesn't Python have a standard image manipulation
+   package? </p>
+<p>I settled on <a href="http://www.pythonware.com/products/pil/">Python Imaging Library (PIL)</a>.</p>
+<p>Making the sparklines turned out to be incredibly easy, making me think that the reason there
+    wasn't any libraries is that it's just so easy to glue the right
+    pieces together in Python that a library would be overkill.
+    Here is the code:</p>
+<pre><code>
+import Image, ImageDraw
+import StringIO
+import urllib
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

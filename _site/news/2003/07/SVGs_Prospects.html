@@ -16,6 +16,19 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="SVGs Prospects">
+  <meta name="twitter:description" content="  <p>Both <a href="http://tbray.org/ongoing/When/200x/2003/07/17/BrowserDream">Tim Bray</a> and <a href="http://www.xml.com/pub/a/2003/07/16/svg-prescod.html">Paul Prescod</a> are talking about <acronym title="Scalable Vector Graphics">SVG</acronym>, which is quite timely. Just last week I was doing SVG myself. I had large chunks of data from disparate systems that I needed to visualize. The nice part about SVG being an XML vocabulary is that it is just as easy to generate programmatically as it is with a content generation tool. It didn't take me long to put together a Python script that ran over the files and plotted them out in a unified SVG file. You won't see me doing the same with a Word document any time soon.</p>
+<p>After getting some hands on experience I like SVG even more than before when I just liked it in theory. The format itself is clean, with good naming conventions for it's purpose. Note that I say that as a caveat. While SVG is mostly an attribute driven format, I like the element driven design that <a href="http://www.intertwingly.net/wiki/pie/FrontPage">Atom</a> is taking for it's vocabulary. The difference is in the intended audience. SVG can show up in-line in an HTML document, and the use of attributes vs. elements in SVG is tuned so that just the right stuff shows up in old browsers that don't understand SVG. On the other hand, Atom was never meant to be embedded into HTML and as such works much better with the majority of information in elements.</p>
+<p>So the script was easy to put together, part of that being the cleanness of the Python language, and part being that Python is a scripting language. It is very easy to pop into the Python environment, try out a few things, building up code incrementally, then moving working pieces into a <code>.PY</code> file. This is made even easier when you run Python right in the Emacs editor.</p>
+<p>Speaking of content generation tools, the Draw program in <a href="http://openoffice.org">OpenOffice</a> can generate SVG, and that generation has improved dramatically in the 1.1 release. All in all I think that SVG does indeed have a bright future, given that as of today SVG is here, viewers are available, it's amenable to "view-source" and it just works. It also has the luxury of not being surrounded by a lot of hype and the associated unrealistic expectations, something that hurt VRML.</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

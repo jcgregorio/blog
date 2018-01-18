@@ -16,6 +16,40 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Automake">
+  <meta name="twitter:description" content="  <p>I had to write some Automake and Autoconf scripts from scratch yesterday and 
+  came across this in the <a href="http://sources.redhat.com/automake/automake.html#Introduction">documentation</a>:
+  </p>
+<blockquote><p>
+Automake is a tool for automatically generating Makefile.ins from files called Makefile.am. Each Makefile.am is basically a series of make variable definitions, with rules being thrown in occasionally. The generated Makefile.ins are compliant with the GNU Makefile standards. 
+</p><p>
+The GNU Makefile Standards Document (see Makefile Conventions) is long, complicated, and subject to change. The goal of Automake is to remove the burden of Makefile maintenance from the back of the individual GNU maintainer (and put it on the back of the Automake maintainers). </p></blockquote>
+<p>That's like claiming you wrote a C compiler to ensure that the assembly 
+  conforms to your coding standards.</p>
+<p>
+  All snark aside, the documentation was good and I was up and building a library 
+  in an hour or two from a C++ codebase I had never touched before, which isn't bad
+  since I'd never previously written automake or autoconf scripts.
+  </p>
+  <div class="commentContent" id="X1">
+    No, it's like claiming that you wrote -- or at least used -- a C compiler to ensure that the resulting machine code conforms to the platform ABI, which is a lot more reasonable.  The GNU Makefile Standards Document is not about coding style (if you've ever tried to read an automake-generated Makefile, it's certainly not very stylish!), but is about portability and meeting the expectations of *users* of the makefiles (e.g., the meanings of the "clean", "all", "check", and "install" targets).
+    <p class="commentByLine">Posted by
+       <a href="http://code.v.igoro.us">Dustin</a> on <a href="#X1" title="2009-01-07T23:13:34.686915">2009-01-07</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Dustin is correct. GNU packages must conform to very strict standards for build system and Makefile conventions. This in turn enables all users and administrators of an Autotools managed package to rely on and consistently use various features, from simply changing the PREFIX through to using VPATH builds. In reality, I'm only commenting because I want to thank Dustin for making me laugh, I shall be stealinating your comment about "X not being very stylish."
+    <p class="commentByLine">Posted by
+       <a href="http://tumbolia.org/nslater">Noah Slater</a> on <a href="#X2" title="2009-01-07T23:26:51.421703">2009-01-07</a>
+    </p>
+</div>
+  
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

@@ -16,6 +16,34 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="The URI of a Weblog Entry">
+  <meta name="twitter:description" content="  <p>RSS 2.0 introduced the idea of a <code>guid</code>, an identifier that uniquely identifies an entry. 
+When <a href="http://www.intertwingly.net/blog/1472.html">Sam called for a discussion</a> of the essence of an entry, 
+the <a href="http://www.intertwingly.net/wiki/pie/PermaLinks">permalink versus guid discussion began</a>.</p>
+  <p>The discussion has settled down and the concensus seems to be that each entry will be identified by a URI. If the URI has the scheme <code>http:</code> or <code>https:</code> then  the identifier is also considered a permalink, i.e. a link to the content on the web.</p>
+<p>This is a really good compromise, giving people who want to supply permalinks the ability to do so, while giving tool vendors a wide range of options if they don't, or can't, supply a permalink. It is also forward looking, allowing you to build RSS feeds that point into other networks, such as freenode.</p>
+<p>The use of URI's is good because it allows the assigning of a uniqe identifier, that could be a web address, but regardless fits within a proscribed syntax. The best reading of the lot, for implementation details, was the <a href="http://www.apache.org/~fielding/uri/rev-2002/rfc2396bis.html#regexp">URI specification</a> which includes a regular expression for parsing URIs:</p>
+<pre><code>^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?</code></pre>
+<p>A litte Python shows how easy it is to parse up a URI, whether is it a web address or not:</p>
+<pre class="example"><code>&gt;&gt;&gt; import re
+&gt;&gt;&gt; uri_regex = re.compile(r"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?")
+&gt;&gt;&gt; uri_regex.search("http://www.ics.uci.edu/pub/ietf/uri/#Related").groups()
+('http:', 'http', '//www.ics.uci.edu', 'www.ics.uci.edu', '/pub/ietf/uri/', 
+    None, None, '#Related', 'Related')</code></pre>
+<p>Now if you don't want to use an http URI then the best bet seems to be the URN, which can be just as easily parsed by the same regular expression:</p>
+<pre class="example"><code>&gt;&gt;&gt; uri_regex.search("URN:foo:a123,456").groups()
+('URN:', 'URN', None, None, 'foo:a123,456', None, None, None, None)
+</code></pre>
+<h3>Further reading</h3>
+<p>In the process of discussing the options, <a href="http://tbray.org/ongoing">Tim Bray</a> pointed to the <a href="http://www.apache.org/~fielding/uri/rev-2002/rfc2396bis.html">URI specfication</a>, which led to a trail of reading for me, including <a href="http://tbray.org/ongoing/When/200x/2003/06/18/EntryID">his article on weblog ids</a>, the <a href="http://www.iana.org/assignments/uri-schemes">Official IANA Registry of URI Schemes</a>, the <a href="http://www.ietf.org/rfc/rfc2141.txt">RFC for URNs</a>, and the <a href="http://www.w3.org/Addressing/schemes.html">W3C list of Addressing Schemes</a>. The last one lists both registered schemes and unregister schemes in popular use.</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

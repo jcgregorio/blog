@@ -16,6 +16,46 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Wavering on PUT">
+  <meta name="twitter:description" content="  <p>I am now wavering in my support
+for the HTTP verb PUT. I used to think
+that it had wide applicability but now I am
+beginning to question that. 
+<a href="http://radio.weblogs.com/0108971/2003/03/09.html#a127">Clemens Vasters</a> 
+talks a little about the applicability of using PUT to create a new 
+resource. From the experimenting with <a href="http://wellformedweb.org/news/5">RESTLog</a> 
+I know that creating 
+a resource is better done by a POST and then returning the URL of the 
+created resource in the Location: header. You avoid, or can more easily
+control concurrency problems when the URL creation is specified by the server.
+( Now that I think of it, what's wrong
+with a belt and suspenders strategy and also delivering that new
+URL in a SOAP envelope...)</p>
+<p>Any way, Clemens goes on to point out problems with updating a resource with PUT.
+Now <a href="http://www.intertwingly.net/blog/1250.html">Sam Ruby thinks this is just a SMOP</a>.
+It actually may be, if you use ETags to guard against concurrent updates. Even if 
+this were a solvable problem, there is a deeper problem
+from the <cite title="* shudder *">semantics</cite> of PUT. You see, PUT is supposed to be
+an exact copy of what you get if you do a GET, modulo someone else
+updating things between your calls. Now I originally thought
+this was a good way to do updates to stories in <a href="http://wellformedweb.org/news/5">RESTLog</a>, but
+as my work progresses I realize it may not be the best way to go. For example, what if I 
+want to add a field to the 'item' to track the last time it was updated? The best 
+place to track and update that information would be on the server. So now I end up taking
+in an updated 'item' via PUT but now RESTLog would have to modify it to update the 
+'lastUpdated' element. I won't be returning the same exact XML as was just PUT
+to the server. This kind of updating of the content is exactly the difference 
+between PUT and POST. After my run-in with <a href="http://bitworking.org/news/46">XForms and DELETE</a> 
+I am beginning to think the only two verbs I can count on are GET and POST. Just two verbs. Hopefully
+I won't lose any more. You can't go to zero verbs, <a href="http://www.intertwingly.net/blog/1254.html">can you</a>?</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

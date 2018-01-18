@@ -16,6 +16,50 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="BitTorrent as a positive role model">
+  <meta name="twitter:description" content="  <p>Guess what this is?</p>
+<pre><code>http://bitflood.org:8080/file?info_hash=D%12%85z%88%AF%22%A7%C4VA1DP%97%A2%89%E9O8</code></pre>
+<p>Well, it's a URI, and as a matter of fact it's a plain old HTTP URI.
+   Now that might not be suprising to you, but it sure was suprising to me. You
+   see, this turns out to be a link to a bittorrent of 
+   Jon Stewart's appearance on CNN's Crossfire. 
+</p>
+<p>Why is this suprising? Well, I have it on good authority that
+   if you want to do anything new on the internet then, 
+   despite the <a href="http://www.w3.org/TR/2004/WD-webarch-20040816/#pr-reuse-uri-schemes">
+   admonition of the W3C's TAG</a>, and a 
+   <a href="http://bitworking.org/news/Atom_Auto_Sub_How_To">fairly detailed 
+   tutorial to the contrary</a>, you <a href="http://www.25hoursaday.com/draft-obasanjo-feed-URI-scheme-02.html">
+   have to come up
+   with a <strong>new</strong> URI scheme</a>. Yet, after installing 
+   <a href="http://bittorrent.com/">BitTorrent</a>, with a single click on that URI
+   the BitTorrent application loads and the download begins. Is it voodoo? 
+   I was told this just can't work. I mean, I have
+   it on good authority that using mime-types doesn't work:</p>
+<blockquote><p>
+MIME types alone do not solve the problem
+[<a href="http://www.rassoc.com/gregr/weblog/archive.aspx?post=659">Greg Reinacker</a>
+</p></blockquote>
+<p>So let's look under that URI and see what's really going on:</p>
+<pre><code>C:\&gt;curl --include http://bitflood.org:8080/file?info_hash=D%12%85z%88%AF%22%A7%C4VA1DP%97%A2%89%E9O8
+HTTP/1.0 200 OK
+Content-Length: 3054
+<b>Content-Type: application/x-bittorrent</b>
+Content-Disposition: attachment; filename=Crossfire-20041015-John_Stewart--compressed.wmv.torrent
+</code></pre>
+<p>Well it appears that BitTorrent 
+   <strong>does</strong> use mime-types to 
+   launch the application. Who knew? So now explain to me
+   again why this works for BitTorrent but you have to
+   create a new URI scheme to subscribe to feeds?</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

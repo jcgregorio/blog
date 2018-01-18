@@ -16,6 +16,59 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Text Editor Saving Routines">
+  <meta name="twitter:description" content="  <p>I have, for reasons that will become obvious in a week or so, been looking at
+    text editors and what happens when you save a file. For example, if we are editing the file
+    <code>filename.txt</code>, different things will happen when you
+    save the file depending on which editor you are using.
+    VIM is fairly straight forward in that it renames the original file
+    to <code>filename.txt<b>~</b></code>, writes the modified
+    contents to <code>filename.txt</code>, and then if that is successful
+    deletes <code>filename.txt<b>~</b></code>. 
+    </p>
+<p>Emacs does roughly the same thing as VIM, but by default doesn't clean up the <code>filename.txt<b>~</b></code> file.
+    </p>
+<p>Eclipse is by far the simplest, truncating <code>filename.txt</code> 
+    to a length of 0 and then writing the new contents.
+    </p>
+<p>Gedit is by far the most byzantine, first it writes the contents of the modified buffer 
+    to a hidden file <code>.gedit-save-NNNN</code>, then it renames the original file
+    to <code>filename.txt<b>~</b></code>, then renames <code>.gedit-save-NNN</code> to <code>filename.txt</code>
+    and finally deletes <code>filename.txt<b>~</b></code>.
+    What makes Gedit really stand out from other text editors is that
+    if for some reason the filesystem doesn't support 'rename' then Gedit refuses
+    to save the file, as opposed to VIM and Emacs which will just write new
+    contents to <code>filename.txt</code>. As you can imagine that's controversial
+    behavior and <a href="https://bugs.launchpad.net/ubuntu/+source/gedit/+bug/34813">there's 
+    a long and painful bug thread on it</a>, which is filled with all the painful things 
+    you'd expect it to be filled with, like claiming it's not a bug, or that
+    the bug is in some other piece of software, or that it's not a problem
+    under 'normal' usage, or that any other way of saving files is unsafe.
+    Like I said, painful.
+    </p>
+<p>
+    But I'm willing to believe there are even more complex cases, and if you know of an editor 
+    that has an even more convoluted save routine I'd be glad to hear about it.
+    </p>
+  <div class="commentContent" id="X1">
+    <p>There's actually more to emacs (should be no surprise).</p>
+<p>First, emacs will keep automatic backups, like #filename.txt#, while a file is in the process of being edited (every so-many keystrokes); these go away when a file is finally successfully saved.  If it can't create the auto-backup, it will warn you but will still allow you to proceed.</p>
+<p>When saving, to create the backup file emacs can use two methods: RENAME filename.txt to filename.txt~, or COPY filename.txt to filename.txt~.  It will generally try the rename approach first, if possible, unless the original file is a link or the file ownership permissions are mismatched, or the user has customized emacs to use the copying approach first.</p>
+<p>Also emacs can perform version controlled backups, where it creates filename.txt.~1~, filename.txt.~2~, filename.txt.~3~, etc.</p>
+<p>Another related thing that emacs does is to use lock files.  This prevents (or at least alerts the user) having two different emacs processes editing the same file simultaneously and potentially overwriting the changes of the other.  This feature alone has saved me countless times, as I tend to have dozens of terminals and screen sessions and ssh's going at once.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://deron.meranda.us/">Deron Meranda</a> on <a href="#X1" title="2009-01-05T16:28:39.913772">2009-01-05</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Put:<pre>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

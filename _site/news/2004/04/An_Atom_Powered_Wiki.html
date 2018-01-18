@@ -16,6 +16,41 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="An Atom-Powered Wiki">
+  <meta name="twitter:description" content="  <p>My latest article, <a href="http://www.xml.com/pub/a/2004/04/14/atomwiki.html">
+   An Atom-Powered Wiki</a>, is now available at <a href="http://xml.com">XML.com</a>.
+   In this article I cover the steps needed to create
+   an Atom Enabled wiki, paying attention in particular
+   to the character encoding issues. As <a href="http://www.intertwingly.net/blog/1760.html">
+   Sam Ruby has pointed out</a> character encoding may be the 
+   number one cause of ill-formed feeds. The code for both the client
+   and the server are both available as downloads from 
+   the <a href="http://piki.bitworking.org/piki.cgi">live version of the wiki I describe 
+   in the article</a>. If you feel so inclined you can download
+   the client and test it against the wiki for yourself, just make sure
+   that you have the unicode enabled version of <a href="http://www.wxwidgets.org">
+   wxWidgets</a> (<a href="http://www.wxwidgets.org/name.htm">nee wxWindows</a>).
+</p>
+<p>At the end of the article I cover two of the 
+   most glaring issues with the implementation, first
+   that the 'issued' element is not information that is 
+   currently stored in PikiPiki, but since the 'issued'
+   element is required we just used the 'modified' time
+   in it's place. </p>
+<p> The second rough spot that was covered is that 
+   there is no way to detect before hand which types of
+   content an AtomAPI server will accept in a 'content' element.
+   There is an entry on the <a href="http://www.intertwingly.net/wiki/pie/AtomApiContentNegotiation">
+   Atom Wiki dealing with just this
+   issue of negotiating the type of content a server will accept</a>.
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>

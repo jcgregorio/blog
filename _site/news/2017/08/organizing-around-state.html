@@ -16,6 +16,29 @@
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Organizing around State">
+  <meta name="twitter:description" content="<p>
+  This is <a
+    href="/news/2017/08/l-systems-with-redux-and-statereflector">
+    L-Systems with Redux and StateReflector</a>, but now with more
+  organization around updating the state and around efficiently updating
+  the DOM to changes in the state. That is, a simple app for drawing
+  L-Systems, where making changes to the parameters (Length, Angle) is stored
+  in the URL fragment identifier, thus creating a permalink for any
+  selections a user makes. The state of the page is kept in a Redux state
+  store and we use <a
+    href="https://gist.github.com/jcgregorio/fee80c6484d718f7e037916ba323abf6#file-urlreflector-js-L130">StateTools.getDelta()</a>
+  to store that changing state in the URL fragment, and also pull the state
+  out of the URL and push it into the state when the URL changes.
+</p>
+
+">
+  
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+  
   
   
   <script>
