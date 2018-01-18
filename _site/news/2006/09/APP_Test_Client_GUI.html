@@ -19,6 +19,83 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="APP Test Client GUI">
+  <meta name="twitter:description" content="
+  Back in March I released the command line  
+  Atom 
+  Publishing Protocol Test Suite, a
+  utility that, when pointed at a Introspection Service 
+  document, would test the conformance
+  of that APP implementation. That was good, 
+  and it seems to be inspiring
+  others, but it's not really the best tool. There currently isn't a
+  way to run just a one test, or a subset of tests,
+  and it's not very interactive, just aim it at the Service document
+  and fire it off. I've found that when I am developing an APP 
+  server implementation what would be a lot more helpful would be
+  an APP client that I could use interactively. An interactive tool
+  would allow me to  incrementally implement the service and test  pieces
+  as I get them working. Having an APP client that actually logged 
+  the requests and responses and validated
+  as it was used would be an optimal solution.
+  
+
+  Introducing the APP Test Client. It does all that.
+  It's a desktop application
+  written in Python using wxWidgets that works as an 
+  APP client, logging and validating every transaction. Here is a screenshot 
+  of it in action, working against Abdera.  Click on that image for a larger version.
+  
+
+
+
+Currently the APP Test Client can:
+
+Create, update and delete entries.
+Handle text, html, and xhtml Text Constructs.
+Log every transaction in the bottom window.
+Validate every Atom Entry and Feed against the FeedValidator.  
+
+What it doesn't do (Oh yeah, it's a much longer list):
+
+Export and Config buttons aren't implemented.
+No ability to edit the author, or any other part of the Entry for that matter.
+Currently validation is just for the entries and feeds, not on anything related to the actual protocol. 
+ The Add button isn't implemented either.  
+No support for categories.
+Doesn't traverse 'next' links in collection documents. 
+Only tested on Ubuntu, but given that it's built
+         on wxWidgets it should work on Windows and OS X.
+
+To get up and running you can pull the sources from subversion:
+$ svn co\
+ https://svn.sourceforge.net/svnroot/feedvalidator/trunk/apptestsuite/ apptestsuite
+
+This will pull down some of the dependencies, such
+  as httplib2 and 
+    feedvalidator. 
+    Others like wxWidgets and cElementTree you will need to install
+  separately.
+
+To run the application:
+$ python appeditor.py
+
+
+  The user-interface is constructed 
+  using wxGlade. To modify the 
+  GUI:
+
+$ wxglade appeditor.wxg
+
+Note that you only need to install wxGlade if you are going to
+  modify the user interface, not if you are just going to run
+  the APP Test Client.
+
+So it's pretty rough, feel free to pitch in with patches, tests, documentation, etc.
+   Discussion will take place on the feedvalidator-users
+   mailing list.
+   
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

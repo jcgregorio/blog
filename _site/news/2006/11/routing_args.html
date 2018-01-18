@@ -19,6 +19,23 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="routing_args">
+  <meta name="twitter:description" content="The WSGI based URI path parsing specification that used to be referred to as wsgi.url_vars
+   is now specified as wsgiorg.routing_args and has now stabilized,
+   with an implementation in selector. I have now updated 
+   wsgicollection to be conformant, but falling back to the old
+   selector.vars if the new style environment variable is not present.
+
+
+   Yes, this stuff is moving rather fast and loose, and I 
+   keep feeling the urge to yell "Corner-turn!", yet I 
+   believe this stuff is useful, important, and will improve
+   the experience of building web applications under Python,
+   and at this point I'll gladly trade slow and precise 
+   for fast and sloppy. The nice part of open source
+   is that if we're wrong the code just doesn't get used.
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

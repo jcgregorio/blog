@@ -19,6 +19,63 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Content Negotiation Considered Harmful, Again">
+  <meta name="twitter:description" content="  Elliotte Rusty Harold
+Apparently Google does not recognize XHTML, at least not when served as application/xhtml+xml. Try this search which should return exactly one hit pointing to an XHTML document. Notice that the file format is “unrecognized” and they offer to let you “View it as HTML”.
+Ouch. I appear to be suffering from the same fate. Oddly enough, Sam doesn't seem to have that problem. The difference between us may be in content negotiation. Here is my code for determining when to use application/xhml+xml or text/html:
+
+  # Only serve XHTML to those clients that can understand it.
+if serialization in matching:
+        best = mimeparse.best_match(matching.keys(), environ.get('HTTP_ACCEPT', 
+        'application/xhtml+xml'))
+        (contenttype, serialization) = (best, match[best])
+if serialization == 'xhtml' and environ.get('HTTP_USER_AGENT', '').find("MSIE") &gt;= 0:
+        (contenttype, serialization) = extensions['html']
+Note the great bit of code for detecting and compensating
+  for IE, which sends the equivalent of "*/*" in its Accept: header, yet
+  doesn't handle XHTML.
+
+The mimeparse module follows the algorithm given in 
+RFC 2616 for matching the media type against the Accept: header, and it is covered in detail in my XML.com article, 
+"Just use media types?".
+
+Compare this to Sam's detection algorithm, which
+is implemented in his .htaccess file:
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteCond %{HTTP_ACCEPT} !application/xhtml\+xml\s*;\s*q=0\.?0*(\s|,|$)
+RewriteCond %{REQUEST_URI} \.html$
+RewriteRule .* - [T=application/xhtml+xml;charset=utf-8]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteCond %{HTTP_ACCEPT} !application/xhtml\+xml\s*;\s*q=0\.?0*(\s|,|$)
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule .* - [T=application/xhtml+xml;charset=utf-8]
+
+The difference being that Sam will serve up his content as 
+application/xhtml+xml only if that media type appears explicitly in the Accept: header, and it's not followed with a zero or fractional quality parameter. This neatly fixes the problem for IE and apparently also for the Google crawler. If I were a gambling man I'd wager that Google also sends Accept: */*, and just like IE, doesn't understand XHTML.
+
+I've warned against using content negotiation before and this is just another example of the kinds of problems it can cause.
+
+At this point I will probably drop back to text/html for all my pages and explore other means of displaying SVG, or convert the SVG into PNGs on the fly.
+
+  
+    Google search for site:thebjoernhoehrmannproject.org.
+    Posted by
+       Anne van Kesteren on 2007-03-08
+    
+
+    I got rid of the content negotiation, too (before going public). Inline MathML/SVG is not worth a) losing incremental rendering in Firefox and b) coping with the differences between XHTML and HTML.
+    Posted by
+       Jeff on 2007-03-08
+    
+
+    Living and dying by Google.  Sigh.  I had a funky XSLT-based web site for my old .mac site: http://homepage.mac.com/pmuellr .  But of course, google couldn't index any of it.  Really sad, because this is actually pretty good way to add boilerplate html goop around the pages on your site.  I suppose I could have fixed this with a lot of .htaccess magic, but then I'd lose some of the great features of the system anyway, like being able to view the files directly from disk without having to have .htaccess magic fix things.
+    Posted by
+       Patrick Mueller on 2007-03-08
+    
+
+    How about using local quality preferences to weigh in on the content negotiation?
+Your application can be configured to serve pages with MIME types in the following order of highest preference descending:
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

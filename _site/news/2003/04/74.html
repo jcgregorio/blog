@@ -19,6 +19,33 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="XmlToDictBySaxNS.py">
+  <meta name="twitter:description" content="  Ken MacLeod has an updated version of XmlToDictBySAX.py that includes
+   a neat technique for working with namespaces.
+   His code uses James Clark's namespace notation for referring to element names,
+   which is a lot more elegant and robust than my original implementation. 
+
+In Clark's notation the indirect reference to the namespace URI are mapped to a direct reference. For example:
+&lt;cars:part xmlns:cars="http://www.cars.com/xml"/&gt;
+maps to an element name of:
+{http://www.cars.com/xml}part
+The idea is to referer to the element by the name {uri}name which avoids
+   the problem of picking different prefixes for the same namespace. Ken also uses a neat
+   ability of Python, in which a class can define the function __getattr__(), which
+   is used to resolve object attibute references. If you try to access an attribute
+   on an object and it does not define that attribute, either in it's class or any parent 
+   class, then the __getattr__ function performs the lookup. Ken uses this trick to
+   define a Namespace class:
+ class Namespace:
+    def __init__(self, uri):
+        self.__uri = uri
+    def __getattr__(self, local_name):
+        return '{' + self.__uri + '}' + local_name
+    def __getitem__(self, local_name):
+        return '{' + self.__uri + '}' + local_name
+which can them be used as such:
+  DC = Namespace('http://purl.org/dc/elements/1.1/')
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

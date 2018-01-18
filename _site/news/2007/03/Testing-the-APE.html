@@ -19,6 +19,83 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Testing the APE">
+  <meta name="twitter:description" content="  Tim Bray:
+And by the way, as of the writing of this I’m not aware of any APP server implementations that get green check-marks all the way down the line from the Ape.
+You can run the APE against my apptestsite:http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document
+No name or password are required. You will see that some things don't look quite right:
+  
+1. Content-type must be 'application/atomserv+xml', not 'application/atomsvc+xml'
+ That's not true as of draft-14.
+11. 'summary' has type='html' in entry as posted, type='xhtml' in returned entry.
+ I presume the ? is just an informational message and not a warning or an error? For reference, the 
+APP Test Client breaks messages down into three categories: Informational, Warning (breaks a SHOULD/SHOULD NOT) and Error (breaks a MUST/MUST NOT).
+12. 'content' in entry as posted [ ... ] differs from that in returned entry [ ... ].
+ The problem here is that my implementation normalizes the content and turns all chracter entities into their real characters, unless that would cause a problem. For example, the &amp;gt; gets turned into &gt; as opposed to being preserved as a character entity. A little more robust string comparison would eliminate this false negative.
+
+28. Can't update new entry with PUT: Not Found Method not allowed
+Where did that URI come from? Fixed the bad URI returned on my side, but now we have a problem with conditional PUTs.
+
+I do have one bug to fix and that is the relative URI being returned in the Location: header upon a successful create.
+ Fixed.
+
+  
+    Hey, cool stuff.  Fixed #1.  
+On #11, at the moment the '?' means "something that an implementor might well need to know about".  I'm not sure that introducing more granularity corresponding to SHOULD-or-not would be helpful to the potential implementor who I see as the Ape's most common user.
+On #12, there was a problem, but it's not what you think.  The problem was that the Ape was treating white-space between &lt;content type="xhtml"&gt; and the enclosed &lt;xhtml:div&gt; as significant in the comparison... the spec maybe gives a little wiggle room on this, but I think that restricting the comparison to the div gives a more useful result.
+Conditional-PUT now works.  Having now actually read 9.5 in draft-14 carefully, I urge all other potential implementors to do the same.
+    Posted by
+       Tim on 2007-03-12
+    
+
+    I noticed the atom:author/atom:name changed, and so did atom:updated. Interested to know your reasoning for usurping those two.
+    Posted by
+       eric on 2007-03-13
+    
+
+    Tim,
+Ok, I fixed the text-title escaping problems, so now were down to 
+  just warnings about dropped categories and foreign markup. Those 
+  I don't plan on fixing those since it's the client that SHOULD round-trip
+  the foreign markup, not the server. 
+
+The one last problem is interesting:
+
+
+Client-provided slug 'ape-92515' not used in server-generated URI.
+This is interesting since I do use the slug on the 
+    URI of the generated web page, i.e. the "alternate" link, but 
+    it was redundant to use it on the "edit" link. I may change that
+    just for the sake of completeness.
+  
+
+    Posted by
+       Joe on 2007-03-13
+    
+
+    Eric,
+The atom:author/atom:name is hard coded into the templates. I suppose
+  if 1812 was designed to be a multi-author blogging 
+  platform then that would end up being configurable.
+
+As for atom:updated, I consider that a server controlled
+  element and I set that to the local time when an entry
+  is edited for any reason, because I sort 
+  entries by atom:updated when generating the collection feed.
+  Now if collections were sorted by atom:edited, then I could 
+  let atom:updated revert to being client controlled.
+
+    Posted by
+       Joe on 2007-03-13
+    
+
+    I decided that Joe was right and the Ape was wrong about the Slug.  Who cares if the slug shows up in the edit-URI?  The reason it exists is to personalize the URI the world sees, especially the search-engine bots.  So I just checked in a change where it runs through all the rel="alt" links (including those with no rel=) and if it finds the slug in one of the hrefs it's happy.
+Also, fixing up the conditional-PUT thing has convinced me that the first sentence of 9.5 in draft-14 isn't strong enough.  The etag stuff isn't there to make editing easier, it's there to help allow safe concurrent editing, and the spec should say so.
+    Posted by
+       Tim on 2007-03-13
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

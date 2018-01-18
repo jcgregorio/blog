@@ -19,6 +19,50 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Rip, Mix and Burn Python">
+  <meta name="twitter:description" content="  In his post on Dynamically Extending API's 
+Mark provided the groundwork for some Python code I was working
+on at the same time. Mark ends up creating a list of tuples from an 
+RSS file. What I needed was to run over an RSS file and produce
+a dictionary for each 'item' encountered. In addition I needed
+the namespace mapping to be "fixed". In this case "fixed"  means
+that 'dc' always maps to the Dublin Core namespace. It is one 
+of the flexibility/difficulty tradeoffs you make when you choose
+to use XML. That is, the chosen pre-fix for an element in a namespace
+need not be the same from document to document. For example the following
+two documents should be treated exactly the same:
+&lt;item xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+  &lt;title&gt;MetaData&lt;/title&gt;
+  &lt;dc:date&gt;2003-01-12T00:18:05-05:00&lt;/bc:date&gt;
+  &lt;link&gt;http://bitworking.org/news/8&lt;/link&gt;
+  &lt;description&gt;Upon waking, the dinosaur...&lt;/description&gt;
+&lt;/item&gt;
+&lt;root:item xmlns:bc="http://purl.org/dc/elements/1.1/" xmlns:root="" &gt;
+  &lt;root:title&gt;MetaData&lt;/root:title&gt;
+  &lt;bc:date&gt;2003-01-12T00:18:05-05:00&lt;/bc:date&gt;
+  &lt;root:link&gt;http://bitworking.org/news/8&lt;/root:link&gt;
+  &lt;description&gt;Upon waking, the dinosaur...&lt;/description&gt;
+&lt;/root:item&gt;
+
+In either case the desired output should be
+a dictionary populated as such:
+{ 'link': 'http://bitworking.org/news/8', 
+  'dc:date': '2003-01-12T00:18:05-05:00', 
+  'description': 'Upon waking, the dinosaur...', 
+  'title': 'MetaData'}
+
+I needed code that would retreive all the sub-elements of 'item'
+and present them in a dictionary that maps the element name to
+it's value, with all the elements names being "fixed".
+Building off of Mark's code XmlToDict.py does all that.
+Note that it has unit tests in the file that demonstrate how it operates.
+One other thing to note is the 'seperator' setting. This allows you to control
+the seperator to use when building up the dictionary keys. In the unit tests
+the ':' seperator is used so that element names are mapped as you would 
+expect them in an XML file. For example 'dc:date'. This can be changed to use
+another character, which comes in handy if you are using a templating
+system that doesn't like colons in its dictionary keys.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

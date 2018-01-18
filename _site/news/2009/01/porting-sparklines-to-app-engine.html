@@ -19,6 +19,198 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Porting Sparklines to App Engine">
+  <meta name="twitter:description" content="  
+        The title of this article is actually misleading
+        as the code isn't ported, but altered to run on both
+        App Engine and under CGI. App Engine exposes a CGI 
+        environment that your requests run under, so the real
+        challenge comes from the differences in the runtime
+        environment.
+        
+Imaging
+
+        The first big difference is that PIL (the Python Imaging
+        Library) isn't available on App Engine, and it's not possible
+        to add C extensions to your App Engine project, so we will have to find
+        a pure Python substitute. Such a substitute exists in
+        pngcanvas, a pure Python module for creating PNG images.
+        
+
+        My use of pngcanvas is actually the completion of a virtuous circle: 
+        I originally created the Python sparklines service and
+        why wanted to create one in Ruby 
+        using pure Ruby and BMPs, then that was the jumping off point for some commenters to
+        do the same for PNGs, which led 
+        mir.aculo.us to create 
+        a library for creating sparkline PNGs in pure Ruby, which 
+        Rui Carmo then ported to Python, 
+        which I will now use in porting the original sparklines code to App Engine.
+        Small world.
+        
+
+        Now you probably won't want to use pngcanvas for 
+        extensive graphics manipulation, but since sparklines
+        are small it will be just fine.
+        As a side note, I really like the simplicity of the
+        pngcanvas interface, the port actually resulted in removing
+        lines of code compared to PIL, which is always a good sign.
+        
+
+        The one problem that arises in moving from PIL to pngcanvas
+        is the lack of color names. PIL allows you to specify
+        colors by name, something pngcanvas doesn't support.
+        Luckily X11 includes a convenient list of color names
+        and their equivalent in RGB triples (/etc/X11/rgb.txt)
+        which just needs to be converted into a form usable for
+        Python. I could write code to import rgb.txt via Python, but
+        since I have to upload the file to App Engine anyway, I'll 
+        exercise the macro capabilities of my text editor and
+        covert it into a Python file:
+        
+_colors = {
+"snow": (255, 250, 250, 255),
+"ghost white": (248, 248, 255, 255),
+"ghostwhite": (248, 248, 255, 255),
+# ...
+"light green": (144, 238, 144, 255),
+"lightgreen": (144, 238, 144, 255)
+}
+def colors(name):
+    name = name.strip().lower()
+    if name in _colors:
+        return _colors[name]
+    else:
+        return (0, 0, 0, 255)
+
+        Now I can use rgb.py to covert color names into RGB triples, 
+        or in this case RGBA tuples like pngcanvas expects. 
+        
+App.yaml
+
+        If we wanted to do the absolute minimum then
+        that would be all the changes we would need to make.
+        The only extra step needed for App Engine is to describe
+        the files we are using and their location so it knows
+        what to upload and how to direct requests, which is done
+        through the app.yaml file.
+        
+application: sparklines-bitworking
+version: 1
+runtime: python
+api_version: 1
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+- url: /spark.js
+  static_files: spark.js 
+  upload: spark.js 
+- url: /spark.cgi?.*
+  script: spark.py
+
+
+        And were done. But there are some other changes we can make
+        to take full advantage of the App Engine platform.
+        
+The main() optimization
+
+        If your handler script exports a main() function
+        that takes no arguments then App Engine will keep the script
+        cached and call main() for subsequent requests. 
+        Skipping the evaluation of the script on each
+        request improves performance, so we'll break out the code into two modules,
+        main.py which will be our script handler
+        and script.py which will contain
+        all of the sparkline drawing logic.
+        That change is now reflected in our app.yaml
+        file:
+        
+application: sparklines-bitworking
+version: 1
+runtime: python
+api_version: 1
+handlers:
+- url: /
+  static_files: index.html
+  upload: index.html
+- url: /spark.js
+  static_files: spark.js 
+  upload: spark.js 
+- url: /spark.cgi?.*
+  script: main.py
+        
+And the main.py is very simple:
+from spark import plot
+def main():
+    plot()
+if __name__ == '__main__':
+    main()  
+Memcache
+
+        Now the original sparklines code already made good use
+        HTTP caching by setting ETag: and Cache-control: headers, but
+        we can do more under App Engine by using the memcache service.
+        After drawing each sparkline we can store the PNG in 
+        memcache using a hash of the incoming request query 
+        parameters and the application version as the key 
+        and subsequently look for images in memcache when 
+        requests come in using that same hash. If there is a hit we can avoid 
+        doing any drawing at all.
+        We still want to be able to use the code on a
+        system that doesn't have memcache support so
+        we will make its use conditional.
+        
+try:
+    from google.appengine.api import memcache
+except:
+    memcache = None
+
+Check for memcached images:
+def plot():
+    plot_types = {
+        'discrete': plot_sparkline_discrete, 
+        'impulse': lambda data, args: plot_sparkline_discrete(data, args, True), 
+        'smooth': plot_sparkline_smooth,
+        'error': plot_error
+    }
+    if not os.environ['REQUEST_METHOD'] in ['GET', 'HEAD']:
+        error("Status: 405 Method Not Allowed")
+    if_none_match = os.environ.get('HTTP_IF_NONE_MATCH', '')
+    hashkey = entity_hash()
+    if if_none_match and hashkey == if_none_match:
+        not_modified()
+    if memcache:
+        image_data = memcache.get(hashkey)
+        if image_data is not None:
+            ok()
+            sys.stdout.write(image_data)
+            sys.exit()
+    form = cgi.FieldStorage()
+    # ...
+    
+Populate memcache with images after drawing them:
+
+    # ...
+    image_data = plot_types[type](data, args)
+    if memcache:
+        memcache.add(hashkey, image_data)
+    # ... 
+    
+
+    By making the use of memcache conditional on its presence
+    this code can now be used both on App Engine and also on my 
+    server which doesn't have memcache. 
+    
+
+    This service can be found hosted at 
+    both http://bitworking.org/projects/sparklines/ 
+    and on Google App Engine at http://sparklines-bitworking.appspot.com/.
+    Both are running the identical code, which can be found at  
+    http://bitbucket.org/jcgregorio/sparklines/overview.
+    
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

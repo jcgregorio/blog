@@ -19,6 +19,63 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="PATCH motivating examples">
+  <meta name="twitter:description" content="  Sam Ruby:  Spend some time up front specifying the behaviors that you want to address.  In the case of Atom, adding an entry, deleting an entry, adding a category to an entry, fixing a typo in the content are examples of common scenarios.  Feel free to use the Atom wiki for this purpose.   To move the discussion of PATCH forward I've posted some examples on the Atom Wiki. They're good examples because the highlight the problem with coming up with a PATCH format for Atom. The largest of those problems is ordering in Atom. That is:   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;       &lt;summary&gt;Some text.&lt;/summary&gt;    &lt;/entry&gt;
+and   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;       &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt;       &lt;summary&gt;Some text.&lt;/summary&gt;    &lt;/entry&gt;
+are the same even though the &lt;updated&gt; element has moved. You can create a patch format that required the server to always serialize elements the same order. For example, in the first example we could order our elements:   &lt;entry xmlns="http://www.w3.org/2005/Atom"&gt;                #1       &lt;title&gt;Atom-Powered Robots Run Amok&lt;/title&gt;            #2       &lt;link href="http://example.org/2003/12/13/atom03"/&gt;    #3        &lt;id&gt;urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a&lt;/id&gt; #4       &lt;updated&gt;2003-12-13T18:30:02Z&lt;/updated&gt;                #5       &lt;summary&gt;Some text.&lt;/summary&gt;                          #6    &lt;/entry&gt;
+Then our patch format becomes a matter of sending over the element number, and information on either the updated element value or updated attribute values. For example, to change the summary to "foo" we could send:{
+  "n": 6,
+  "value": "foo"
+}
+
+But given that order is not significant for Atom we may not want to use that approach.Once you step outside of ordering you need some other way of addressing the elements and attributes that are changed. Note that relying on an already existing XML technology like XPath doesn't solve the problem. For example, here is a severely elided example from Google Calendar:&lt;?xml version='1.0' encoding='utf-8'?&gt;&lt;entry xmlns='http://www.w3.org/2005/Atom'    xmlns:batch='http://schemas.google.com/gdata/batch'    xmlns:gCal='http://schemas.google.com/gCal/2005'    xmlns:gd='http://schemas.google.com/g/2005'&gt;  &lt;id&gt;http://www.google.com/calenda...ervobk3ng&lt;/id&gt;  ...  &lt;gd:who rel='http://schemas.google.com/g/2005#event.attendee'      valueString='Fred Flintstone'       email='fred@example.com'&gt;    &lt;gd:attendeeStatus value='http://schemas.google.com/g/2005#event.invited' /&gt;  &lt;/gd:who&gt;  &lt;gd:who rel='http://schemas.google.com/g/2005#event.organizer'      valueString='Joe Gregorio'       email='joe@bitworking.org'&gt;    &lt;gd:attendeeStatus value='http://schemas.google.com/g/2005#event.accepted' /&gt;  &lt;/gd:who&gt;  &lt;gd:where /&gt;&lt;/entry&gt;
+If I wanted to send back a patch to update Fred's gd:attendeeStatus, what XPath would I construct to isolate that element and attribute?atom:entry/gd:who/gd:attendeeStatus/@value
+No, since that will capture both attendees.atom:entry/gd:who[position()=0]/gd:attendeeStatus/@value
+No, since that relies on the ordering of the elements.atom:entry/gd:who[valueString="Fred Flintstone"]/gd:attendeeStatus/@value
+Maybe, but is there any guarantee that valueStrings are unique?atom:entry/gd:who[email="fred@example.com"]/gd:attendeeStatus/@value
+This is right, but how would a generic client know how to construct such an XPath? 
+I am bringing this up to highlight the questions that need to be answered. 
+
+Does the patch format work only for base Atom elements? 
+Will it work for any and all extensions? 
+Do we assume that all extensions are order independent? 
+Do we presume that the server can always reconstruct the element ordering? 
+Do we require out-of-band information to use or construct the patch representation?
+The gd:attendeeStatus example points out that we either need out-of-band information, i.e. that @email uniquely identifies a gd:who element, or that order is preserved. The only other option is to include "in-band" information that makes constructing patches possible, for example, adding id attributes to each element.
+  
+    Maybe you could expand a bit more on what problem exactly PATCH is trying to solve. This is still unclear to me, and probably others as well, because I seem to see different interpretations. Is it about:
+1) *patching* the entire resource (as in: PUT, but trying to save bandwidth)
+2) updating part of the resource/a subresource (probably best solved by giving it a separate URI, and using PUT on that, I'll try not to repeat myself and point to a comment I made on one of your previous posts)
+3) batch processing, in the sense of doing multiple updates from the previous point at the same time (there seem to be different ways you could approach this: you could do the equivalent of multiple PUT'S on different Atom entries as a PATCH of the collection, or multiple updates on one entry as a BATCH of PUT's on subresources etc...)
+
+So: why exactly PATCH? What are the use cases where PATCH is better than the other solutions and vice versa? And should an Atom PATCH format try to solve all these cases, or only those things that cannot be done using other approaches?
+    Posted by
+       Steven Vereecken on 2008-03-04
+    
+
+    Steven,
+Not #3.
+#1 and #2 are different solutions to the same problem, which is the one I want to address, how to update a small portion of a resource without re-transmitting the entire representation back in a PUT.
+
+    Posted by
+       Joe on 2008-03-04
+    
+
+    Joe,
+You ask "5. Do we require out-of-band information to use or construct the patch representation?"
+I'd argue that patches should be usable without out-of-band information.  Providing out-of-band information to optimize the patch, however, seems eminently reasonable.
+As a discussion starter, I've created a theoretical patch format which should work with any ordered or unordered XML file structure.
+    Posted by
+       Stephen Bounds on 2008-03-04
+    
+
+    I don't think it's a huge burden to assume the client has additional semantic knowledge about the elements (that email is a unique key in this case).  In most cases it's constructing the XML from some other source (such as a web form) anyway, and so has to have explicit or implicit schema knowledge anyway.
+    Posted by
+       John on 2008-03-05
+    
+
+    Optimizations don't have to be 100% to be useful.  A set of rules can be defined for Atom base elements and attributes.  Individual extensions may provide additional rules for those extensions.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

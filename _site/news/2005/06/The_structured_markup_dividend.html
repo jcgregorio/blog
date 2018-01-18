@@ -19,6 +19,56 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="The structured markup dividend">
+  <meta name="twitter:description" content="  
+        Marc Hedlund on the O'Reilly Radar points out the 
+   Behaviour JavaScript Library.
+The idea behind this Javascript library is great -- it's similar to what I argued for in Why JSP Sucks So Hard.  As I mentioned in my post on Ruby on Rails,
+I still find it grating when I see so much non-HTML code in an HTML
+page; and the CSS marker system seems like a great way to hook code and
+markup together. Cheers to the Behaviour folks.
+I will note the irony that the original HTML quoted above
+   has inline JavaScript in every anchor:
+
+  &lt;a onmousedown="return insertScript('http://oreillynet.com/pub/wlg/2423')"...
+
+Anyway, I had no idea how cutting edge I was, maybe because it never crossed 
+   my mind to litter my HTML with JavaScript. In my Sparklines Generator
+   there is only one line of JavaScript in the HTML:
+
+
+  &lt;body class='main' id="top" name="top" onload="setup();"&gt;
+
+All of the onwhatever behaviours are hooked up on the fly in the setup() function. 
+   It wasn't a conscious decision to be cutting edge, but a practical one
+   that followed from my decision to make the application as data table driven as possible.
+
+Not only are we are seeing the benefits of clean structured markup in faster load times and more flexible designs, 
+   we are also getting the unexpected dividends of enabling new developments 
+   like microformats and 
+   now Unobstrusive JavaScript.
+
+Further Reading:
+
+
+          Peter-Paul Koch: Separating behavior and structure
+
+          Simon Willison: Enhancing Structural Markup with JavaScript
+
+          Stuart Langridge: Unobtrusive DHTML
+
+Updated: Re-tagged this as 'unobstrusive javascript' to bring it into
+   line with 
+   Simon Willison's work on the subject. Also added the further reading section.
+   I may also need to go back and update
+   my Sparklines markup since I used divs instead of fieldsets.
+
+Tags: 
+    sparklines 
+ microformats 
+unobtrusive javascript
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

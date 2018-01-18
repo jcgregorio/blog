@@ -19,6 +19,35 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Obsolete">
+  <meta name="twitter:description" content="  Linux Command Line Tips:
+(Note ifconfig, route, mii-tool, nslookup commands are obsolete)
+I apparently missed a memo.
+  
+    I have a faint recollection of some noise a while back about making ip (provided by iproute2) the interface to ifconfig and route.
+As far as I can see, that's just more fodder for the Unix rosetta stone someone has kindly compiled. I also remember how even NT had standard route(8) syntax. But Leeenux? Can't have that, can we?
+I value commonality of basic syntax between my tools above cleverness.
+    Posted by
+       Luis Bruno on 2007-06-08
+    
+
+    Luis,
+Thanks for the link to the Unix Rosetta Stone, that's fantastic.
+    Posted by
+       joe on 2007-06-08
+    
+
+    On my Mac at least, dig seems to be the official successor to nslookup.
+    Posted by
+       Stefan Tilkov on 2007-06-08
+    
+
+    Just becuase they're obsolete doesn't mean they don't still work ok, but you can do much more with their replacements - ip addr, ip route, ethtool and dig. For example, you can abbreviate arguments to ip (great for those more used to routers), easily add/remove an address (ip addr add IP dev eth0 vs some ifconfig-fu I was always scared of using in case I took down the network by accident), do source routing, change wake-on-lan options, and see much more useful info when debugging DNS issues.
+    Posted by
+       James on 2007-06-10
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

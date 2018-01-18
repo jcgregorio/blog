@@ -19,6 +19,54 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Binary XML">
+  <meta name="twitter:description" content="  W3C:
+The Efficient XML Interchange Working Group has published
+the First Public Working Draft of Efficient XML Interchange (EXI) Format
+1.0. EXI is a very compact representation for the eXtensible Markup
+Language (XML) Information Set that is intended to simultaneously
+optimize performance and the utilization of computational resources.
+Using a relatively simple algorithm and a small set of data types, it
+reliably produces efficient encodings of XML event streams.
+
+You can call it anything you want, but that's Binary XML.
+Update: Larry O'Brien points out that the
+situation is even worse than it appears, as they've designed in Pluggable CODECS.
+
+  
+    After listening to Jon Udell's interview of John Schneider regarding efficient XML I understood for the first time why anyone would want such a thing: wireless communications.  Of course, I still think that compression + XML is worth doing, but Mr. Schneider makes a good case.  (Of course, I'm a total nobody when it comes to any sort of standards talk too, but that isn't stopping me from typing here :)
+Schneider's argument came down to the power costs of antenna usage versus processor time (if I recall).  This is a serve blow to the children of the future I think, as it makes initial hackability and discovery that much harder (but then again I knew people growing up who taught themselves Apple II machine language ...)
+    Posted by
+       Josh on 2007-07-22
+    
+
+    Josh,
+I have heard the "wireless" argument before and it doesn't hold water;
+   if bandwidth was really the problem then an investment in 
+   compression algorithms or HTTP style Range: requests would help,
+   and would do so for all formats, not just XML.
+  
+Personally I have trouble applying a technological fix to a social problem,    
+   where the technological problem is scarce bandwidth, and the 
+   social problem is 
+   an oligopoly 
+   that creates artificial scarcity to keep prices high.
+  
+    Posted by
+       joe on 2007-07-23
+    
+
+    I found the description of the format so impenetrable that I just gave up reading it (since I don't plan to use it, it was not worth the effort...).  
+
+
+If what they want is a binary format for tables or arrays of strings, integers and binary lumps, then they don't really want XML's quirky infoset, they want arrays of tables or arrays of strings, integers and binary lumps.  And in that case, what was wrong with XDR or ASN.1 -- or even some trivial binary encoding of JSON?
+
+    Posted by
+       Damian Cugley on 2007-07-25
+    
+
+    Impenetrable is a good description.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

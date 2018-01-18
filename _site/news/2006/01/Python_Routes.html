@@ -19,6 +19,19 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Python Routes">
+  <meta name="twitter:description" content="  Routes is a Python re-implementation of the Rails routes system that 
+ allows for a two-way mapping between URLs and a dictionary. That is, you can pass it a URL and it will 
+ make sure it conforms to your specifications and it will then pull out the relavent bits as specified.
+ Just as importantly it allows you to pass info back in and it will generate the appropriate URL.
+
+
+&gt;&gt;&gt; from routes import Mapper
+&gt;&gt;&gt; m = Mapper()
+&gt;&gt;&gt; m.prefix = 'http://bitworking.org/some.cgi'
+&gt;&gt;&gt; m.connect(':(collection)/:(id)')
+&gt;&gt;&gt; m.create_regs([])
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

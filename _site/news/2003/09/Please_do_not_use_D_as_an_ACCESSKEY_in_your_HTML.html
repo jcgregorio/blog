@@ -19,6 +19,46 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Please do not use D as an ACCESSKEY in your HTML">
+  <meta name="twitter:description" content="  Congrats, your new site is redesigned, all shiny and new, and in the 
+   redesign you decided to cover accessibility and 
+   in the process start using 
+   accesskey. 
+   Now accesskey is neat, in that it
+   which gives you the power to re-map keys to move the keyboard
+   focus to a control or to follow a link, but with that power comes responsibility. 
+   You can add an accesskey attribute 
+   to a, area, button, input, 
+   label, legend, and textarea. 
+I use the keyboard shortcuts for
+   all my applications as much as possible. One of those keyboard shortcuts I use all day is
+   Alt-D, which from within Mozilla or IE will jump the keyboard focus to the address bar of
+   the browser. Unless of course, I'm reading your webpage where you have defined the ACCESSKEY D 
+   to jump to some particular link or web form element. 
+   Bugzilla is one such example. 
+   That is annoying. Don't do that. You are actually reducing your sites accessibility. While were at 
+   it, never define ACCESSKEY bindings for:
+
+F - File
+B - Bookmarks
+E - Edit
+V - View
+G - Go
+T - Tools
+H - Help
+A - Favorites
+
+Your safest bet, if you want access keys, is to bind them to numeric keys only, which has the smallest 
+   chance of conflicting with browser based keyboard shortcuts.
+Further reading: 
+Improving accessibility with accesskey in HTML forms and links.
+Update 1: Damian Cugley points out that the exact keys listed above can't be counted in because the shortcut keys for the browser depend on the I18N of the browser. All the more reason to stick to numeric access keys.
+Update 2: Just stumbled across another site: National Film Board of Canada. Do I need to start a running list?
+
+  
+    The other trick is that the access-keys that cannot be used will vary according to the locale of your reader, because the words they are mnemonic for will of course be spelled differently...
+The best approach I can think of to that little problem is to make sure that when I internationalize a web page, the access keys are included in the i18n effort. That will not save someone who is reading your page in English in a non-English browser, but that can't be helped.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

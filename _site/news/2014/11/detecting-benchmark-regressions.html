@@ -19,6 +19,69 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Detecting Benchmark Regression">
+  <meta name="twitter:description" content="  Subtitle if this were an academic paper, which
+    it’s not: A k-means clustering derived point statistic highly
+    correlated with regressions in commit-series data with applications
+    to automatic anomaly detection in large sets of benchmark
+    results.
+  TL;DR: To detect
+    regressions in benchmark data over a series of commits use k-means
+    clustering on mean and variance normed commit-series. For each of the
+    clusters find the best fitting step function to each cluster’s centroid. The
+    metric |step/fit| is highly correlated with regressions, where step is the
+    height of the step function, and fit is the mean square error of the fit of
+    the step function to the centroid.
+  
+  
+    Below is the description of how we detect performance regression for the Skia graphics library. I’m
+    writing this up because after much searching I haven’t found anyone describe
+    the method we came up with for detecting performance regressions and maybe
+    this writeup will be useful to other people.
+  
+  Problem Statement
+  Skia is an open source cross platform 2D
+    graphics library. In Skia, like many other software projects, we
+    have large number of performance tests, aka benchmarks, and we run
+    those benchmarks every time we change the code. Just having a large
+    number of benchmarks isn’t a problem, but being cross
+    platform means running those tests across many different platforms;
+    Linux, Mac, Windows, Android, ChromeOS, on different GPUs, etc.
+    which leads to a combinatorial explosion in benchmark results. For
+    every commit to Skia today the testing infrastructure generates
+    approximately 40,000 benchmark measurements. That number of results
+    tends to change frequently as tests, platforms, and configurations
+    are added and removed regularly. The number of results has been
+    over 70,000 per commit in the past several months.
+  Definitions
+  To make the following discussion easier
+    let’s define some terms.
+  
+    Trace
+    
+    A Trace is single benchmark and configuration
+    tracked over a series of commits. Note that this isn’t
+    exactly a time series since the measurements aren’t taken at
+    equidistant times, but are spaced by commits to the codebase. Also
+    note that for each benchmark there may be multiple traces, for
+    example, one for Windows 8, one for Linux, and one for
+    Android.
+    
+  
+  
+    
+  Fig 1 - Trace
+  
+    Regression
+    
+    A “performance regression” is a significant change in either
+    direction of a metric. Now a metric that drops may actually be a good
+    performance increase, but could also be an indication of a test that is
+    broken, or has stopped working entirely. So regardless of the benchmark,
+    we are looking for step-like changes in either direction.
+    
+  
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

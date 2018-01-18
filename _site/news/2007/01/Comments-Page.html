@@ -19,6 +19,64 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Comments Page">
+  <meta name="twitter:description" content="  I've added a comments page that lists the most recent comments to the site. I used to have a page like this
+in the old system, but I'm trying a different format. The problem
+with the old view was that the straight list of all comments
+and their content made it hard to follow a conversation. This new
+view uses the :hover CSS Selector to make the comment 
+appear to the right as you hover your mouse over each link.
+
+There is one major and one minor problem with this view. The minor one is that this only works
+  in modern browsers, and by modern I mean not Interner Explorer.
+  The second, and larger, problem is the lack of any user-interface clues of the capability. 
+  That is, unless I told you that hovering over the links will do something, you would never know. 
+  I'm pretty sure that hurts accessibility too.
+
+  
+    Your most immediate accessibility problem is that you don't display the comments while you're tabbing through the list with the keyboard.  This CSS rule will add the appropriate keyboard support:
+a.comment_title:focus + .comment_content,
+.comment_li:hover .comment_content {
+ ...
+}
+    Posted by
+       Mark on 2007-01-19
+    
+
+    Done. Thanks!
+    Posted by
+       joe on 2007-01-19
+    
+
+    For some reason, when tabbing through the list, I can only get about half way down it before my next "tab" sends me back up to the links in the header.
+    Posted by
+       Andrew Sidwell on 2007-01-20
+    
+
+    Now if you tab to a comment and then move the mouse to over over a different comment, you get to see both -- overlaid.
+    Posted by
+       Sam Ruby on 2007-01-20
+    
+
+    Andrew,
+The problem there was that a comment would appear that contained a link, and the next time you pressed tab the focus would shift to the link. Of course, that would shift the focus away from the comment title, so the content would disappear. Did you watch "The Lost Room"? It's just like that.
+Anyway, that problem I fixed by setting display:none on all links
+in the comment, which is crude but effective. Maybe there is a way to set 
+z-index or something else to move that link to somewhere else in the tab order which would be better.
+
+    Posted by
+       joe on 2007-01-20
+    
+
+    Sam,
+As a partial solution I changed the background color to white, that way they would overlap, but not overlay. Not optimal, let me know if you think of anything better.
+
+    Posted by
+       joe on 2007-01-20
+    
+
+    Discoverability: you can use an always visible container to show that something will be displayed. 
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

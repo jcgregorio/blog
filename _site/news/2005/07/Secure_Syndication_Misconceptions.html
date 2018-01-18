@@ -19,6 +19,51 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Secure Syndication Misconceptions">
+  <meta name="twitter:description" content="  My Secure Syndication article 
+   and greasemonkey script has now
+   been up for a week. It's received a lot of attention and I'd like to clear up some of the
+misunderstandings I've seen.
+
+This is just for RSS.
+Not true. While I concentrated on RSS in the article this will work just 
+     fine for Atom, or for that matter, as I point out in the article, any old web page.
+     It doesn't even need to be syndicated.
+   
+Atom has it's own mechanism
+Not true. This one is my own fault. If you read the article
+     you get the impression that Atom has the same capabilites, but just delivered
+     using XML Encryption. That is not the case. The Atom Format specification only 
+     defines how to apply XML Encryption to the whole feed document, which would
+     require the aggregator to be able to decrypt the feed, and that 
+     was the situation we wanted to avoid. There is nothing in the Atom specification
+     that specifies how to encrypt just part of the 'content'. 
+   
+Greasemonkey has bugs so the whole idea is wrong.
+Yes, bugs have been found in Greasemonkey, and it appears that 
+      some of the impetus 
+      came from people looking at how secure Secure Syndication was. I very much appreciate the effort
+      that has gone into that review, and I am glad that those issues 
+      have been found and are being resolved, but none of the problems found
+      so far have been flaws in the basic premise, but instead are 
+      bugs in Greasemonkey. Which leads to the next misconception.
+   
+This is only for FireFox/Greasemonkey
+Not at all. Opera now supports user scripting and I have found
+     at least three different projects to bring user scripting to IE.
+     The JavaScript used is very basic and should be able to be ported 
+     to all those enviroments. I used Greasemonkey because it was the fastest way to get this 
+     system up and running. I could have just as easily created a FireFox extension to 
+     do the same thing, it just would have taken me longer.
+   
+
+
+ greasemonkey 
+ microformats 
+ blowfish 
+ encryption 
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

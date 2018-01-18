@@ -19,6 +19,22 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="draft-gregorio-04.html">
+  <meta name="twitter:description" content="  The fourth version of the draft EchoAPI RFC has been posted.
+Rather large changes for this version based on the feedback from the wiki:
+
+Updated the RSD version used from 0.7 to 1.0. 
+Change the method of deleting an Entry from POSTing &lt;delete/&gt; to using the HTTP DELETE verb. 
+Also changed the query interface to GET instead of POST. 
+Moved Introspection Discovery to be up under Introspection. 
+Introduced the term 'facet' for the services listed in the Introspection file.
+
+Please give feedback via the Wiki.
+  
+    Joe,
+I put a comment in the wiki a while ago, but didn't see anything change in the API, nor a response in the wiki as a result.  Here it is.  I'm interested in your thoughts.
+I think there need to be a couple other methods to support editing of entries and comments. These should get the source of the entry (rather than the to-be-disseminated version), as this is what needs to be edited. Let me explain. A lot of blog servers do this thing where they accept tags and text that mean something special to the specific blog engine. One example is livejournal's "lj" tags. These have special meaning and are converted in the server on their way to consumption. Another example is the comments for this blog. Like Word, it converts asterisks to "b" or "em" tags before consumption. Then there's what wikis do with ThingsLikeThis. In each of these cases, what the editor submits is different than what is eventually disseminated. This pattern is prevalent enough that it's something that should probably be supported; otherwise the API will have limited usefulness. To support it, there should be a method in the API intended for editing that gets the source of the entry/comment (not the to-be-consumed version).
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

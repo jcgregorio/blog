@@ -19,6 +19,45 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Gnome, JavaScript, Gio, FUSE, and Acme">
+  <meta name="twitter:description" content="  
+The 
+prospects for Seed and Gjs look good, the idea of having 
+a scripting extension built in at such a low level is awesome. One of the things I've been
+looking at lately has been Gio and GVFS; you see, I had this idea
+of trying to build a text editor based on Acme
+in GTK+, but the stumbling block came about from the limited implementation of 
+FUSE, which
+doesn't support non-blocking I/O on your filesystem, 
+which would be required if the editor were to have any fidelity
+to the original Acme implementation.
+Poking around it does appear that GVFS does support non-blocking I/O, but that
+all of the applications that would use your filesystem would have to be Gio enabled applications (at least for now).
+
+
+So, if I did attempt building Acme, it looks in the short term 
+it would be limiting since only Gio enabled applications could be used
+as scripts to the editor, but in a few years you
+could build Acme scripts easily in JavaScript and legacy applications
+like grep and awk could still be enabled by the GVFS to FUSE bridge.
+I like it when I wait long enough and someone else does all the hard
+work for me.  
+
+  
+    Could you explain what the VFS part would be for?  I've seen ACME referenced often, but I've never used it, and the Wikipedia article doesn't really explain much of what set it apart from other editors.  In short, what made ACME great?
+    Posted by
+       Adam Sanderson on 2009-01-19
+    
+
+    Adam,
+A good description of Acme is from the original paper:
+http://www.usenix.org/publications/library/proceedings/sf94/full_papers/pike.pdf. That should give you an idea of how Acme works and how it interacts with a virtual file system. After reading the paper I strongly suggest running Wily, which works like Acme, and experience it first hand, the totally unique interface is amazing for its expressiveness and flexibility, and if you're like me you'll miss it when you go back to your normal editor.
+
+    Posted by
+       Joe on 2009-01-19
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

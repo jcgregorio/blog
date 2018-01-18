@@ -19,6 +19,28 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Sparklines Moved">
+  <meta name="twitter:description" content="  My site is now running on a shiny new server at cornerhost.
+Because of the transition my local install of Python 2.5 started to fail on the new architecture. It was a quick fix to download
+Python 2.5 and rebuild it from source and then install the extra libraries I needed, and it was also a good indication
+of how fast the new machines are: the build from scratch of Python went very fast. The downside is that 
+in the process of the transition my sparklines service also stopped for the same reason and that gets a
+decent amount of traffic. The failure was entirely my fault, and I don't like the idea of people depending on that service and it not being available
+so I've moved it to App Engine. I previously blogged how I'd re-written the service so it runs both on cornerhost
+    and also on App Engine, but now I've taken it one step further and all requests to the service will redirect to 
+the App Engine instance. If you're running a service that uses sparklines then you should use the new URI
+and avoid the latency of the extra round-trip to bitworking.org.
+
+One last thing to note about the migrated sparklines service is its URI:
+http://sparklines.bitworking.info/
+That is a Google App Engine application running inside a Google Apps domain.
+The Apps domain is my newly registered bitworking.info, (don't worry, all
+the rest of my content will remain here on bitworking.org), and I installed
+my App Engine application into that domain at the sparklines.bitworking.info address.
+See the documentation for more information.
+
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

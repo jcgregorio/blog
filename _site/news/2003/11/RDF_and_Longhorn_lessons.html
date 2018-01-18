@@ -19,6 +19,115 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="RDF and Longhorn Lessons">
+  <meta name="twitter:description" content="  Recently I ranted about the Longhorn, and relished in Clay Shirky's pointed barbs
+  at the Semantic Web. Both of these topics deserve a little more elaboration before
+  I finish.
+  RDF
+Some are suprised
+  at the strength of my reaction when I talk about the 
+  Semantic Web. This has more to do with 
+  history than any strong feelings about the actual technology and goals of the project.
+The biggest source of irritation with the whole Semantic Web effort comes
+not from the project or it's goals, but with the behaviour of its ardent supporters.
+Their constant interjecting of themselves into every XML format discussion with pushing
+for every XML format to be RDF is tiring at first and infuriating in the long run.
+No matter which format I am working on, be it
+RSS, OPML, Atom, etc. there's always a Semantic Web advocate waiting to pounce, pointing
+at all my elements and namespaces and wagging a finger, "sure, you may have elements
+and namespaces, but it doesn't mean anything." Don't believe me? 
+Check this out:
+
+One thing about the syntax that concerns me greatly is that there doesn't
+yet appear to be a consistent way of interpreting material from other
+namespaces. I believe this to be a make or break issue for interop.
+
+The issue was however thoroughly covered in RSS 1.0 thanks to RDF/XML. 
+[atom-syntax]
+
+ Yes, I selectively quoted from that message, but realize 
+his is the fourth message on the atom-syntax mailing list. The FOURTH!
+What were the three messages that came before that? All messages saying "test", because the list 
+was that new. This was the very first message with any content on the list!
+You don't see any "rules based systems" people jumping in explaining the right  
+way to format our data. Not any ASN.1 people either. No database people jumping in
+extolling the virtures of storing the data in a table instead of XML. No, not all, just
+the RDF advocates. I would really like to see the RDF community stop suggesting 
+that every format has to be serialized as RDF/XML. 
+Instead what would be more useful and welcome would be to offer useful feedback, 
+like how the format could be structured to make it easier to transform into RDF.
+For example, we learned a lot from working on XSLT to transform Atom in RDF:
+this effort provided an alternate insight into this data, 
+  which surfaced a number of questions I never pondered before.  For example: is the order of contributors significant?  This needs to be answered and documented.
+[Sam Ruby]
+
+Now some working on RDF are dogmatic and unwilling to accept anything but pure RDF/XML.
+Suggest that a format that is transformable into RDF/XML is just as good 
+as having the format as pure RDF and some in the RDF camp
+will tell you that it's not enough, that applying an XSLT transform
+is prohibitively expensive:
+If a person who has the Pie/Echo/Atom syndication feed does not run an XSLT transform on the data to create RDF/XML versions of the data, the web bots then will need to do this, and this makes most data gathering techniques prohibitive.
+[Shelley Powers]
+
+It is unreasonable to expect everyone to conform to a single vision 
+of how data should be serialized. Not every format needs to be serialized in RDF. 
+There is already a huge amount
+of data available, billions of pages of HTML and hundreds of thousands of feeds
+of RSS. How many terabytes of Apache log files are there in the world?. 
+That is all useful information that is not going to be re-written in RDF.
+Some people are beginning to come to this same conclusion:
+Moreover, in light in my semantic web involvement, I'm getting more and 
+more unconfortable with RDF (see my semantic web fight club pictures in 
+boston in the gallery at http://www.betaversion.org/~stefano/) and I'm 
+more and more heading myself into the concept of 'data emergence' where 
+you don't go around bothering people to markup their data as *you* like 
+it, but *you* make an effort to collect their data and make a sense out 
+of it. I'm starting to call it 'pedantic web' myself :)
+[Stefano Mazzocchi]
+
+Longhorn
+With Longhon I
+do have a little sympathy for the employess of Microsoft as no matter what approach
+they take it will be attacked.
+ With their current approach to XAML they are seen as 
+trying to break or avoid standards by coming up with their own technologies. But consider this: what
+if they had used XHTML, SVG, CSS, etc and then strapped on the extensions they saw that 
+they obviously needed? In that case they would have been accused of embrace-extend-extinguish.
+Either way they couldn't win, but then again, life is tough when you are a monopoly.
+Sam nails it when he says, "What I believe 
+we are seeing is domain experts seeking each other out.  Crossing organizational and philosophical boundaries."
+It was great to get thoughtful feedback from the WinFS API Program Manager Mike Deem and his response got me thinking about this problem
+ and motivated me to work on a solution that fits my needs today.
+My Indexed Life
+What I am working on is moving all my content into HTML. For work 
+I have an internal weblog, so that is obviously already available in HTML format. 
+The next piece is email. Since I use Mozilla all my email is stored in mbox format
+and it was trivial to convert each mbox file into a set of HTML 
+pages using Hypermail.
+
+Now that I've got a pile of HTML documents on the linux box, I can throw
+SWISH-E at the pile and make it keyword searchable.
+Now I have searching that crosses my blog and email. The last two pieces of the
+puzzle are source code and other documents. With source code the plan is 
+to do scheduled pulls out of version control and then run lxr over all the code.
+That leaves documents. I haven't even started looking, but given the open nature
+of the OpenOffice file format I have no doubt I can find code to convert OpenOffice
+documents into HTML.
+There are benefits to this loosely coupled approach.
+
+Each email has it's own URI.  Now
+   when referring to an old email instead of 
+  obliquely referring to it, or forwarding around an old copy, I just send 
+  its permalink. As Jon Udell put it: Hyperlinks matter.
+I can try different search engines. Actually, given the loosely coupled nature of the whole
+   scheme I can run multiple search engines at the same time and try
+   them out, or even run multiple search engines and merge the results! This merging, of course, would be 
+   easier if all the search engines were members of the Well-Formed Web,
+   all of them producing their output in alternate pure XML formats, but we'll get there.
+   
+
+I'll keep you updated as this experiment proceeds.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

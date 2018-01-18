@@ -19,6 +19,52 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Caching HTTP Requests in Python using httpcache.py">
+  <meta name="twitter:description" content="  I really like Python. The more I work with the language
+the more I like it. It has a nice clean syntax and a 
+very nice set of standard libraries. In particular
+it has a wide range of web libraries, from low-level
+sockets, to cgi processing, to a library for connecting to an IMAP server, it
+has it all. It even has three libraries
+for pulling content off the web, httplib, urllib and urllib2. If
+you know you are going to just be pulling information
+over http then you can use httplib,
+which acts as a web client. One of the omissions
+in httplib that I noticed was that it does not handle
+compressed content, nor does it cache results, nor does
+it use ETags to avoid retrieving files that haven't
+changed since the last time you requested them. I have worked
+with RSS news aggregators and seen the dramatic performance gains
+that these features provide. Thus I give you httpcache.py.
+It does all that, and a little bit more.
+
+The little bit more is a little meta-data thing.
+That is, when I store the content from the URL in
+the cache, I also store all the headers that I 
+received when I pulled that file. In addition httpcache.py provides
+a way to add and/or update the values of the headers
+stored in the cache. This gives a nice clean place to 
+store meta-data for that content. 
+For Python, the book Python Essential Reference (2nd Edition)
+is my constant companion. If you already know another programming language
+then this is the only Python book you will need to get up and running.
+It contains a quick tutorial section, basic language reference, and then
+covers most of the libraries that come standard with Python. I empahasized
+most, because it doesn't cover any of the XML libraries, instead referring you
+to another book that just covers XML for Python.
+14-May-2003 An updated version has been posted. This fixes the coversion of the md5 hash into a string by 
+   dropping the redundant '0x's. It also fixes gzip support and adds another unit test case.
+21-Oct-2004 Httpcache.py now has it's own project page. Go there 
+ for downloads and the latest news.
+  
+    ython Essential Reference (2nd Edition) is a really good reference, one of my office mates has
+has it and it is pretty thourough. I just got Python in a Nutshell
+    Posted by
+       John Beimler on 2003-04-06
+    
+
+    and its one of the best all around references I've read. Its also a bit smaller so it's easier to carry around. 
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

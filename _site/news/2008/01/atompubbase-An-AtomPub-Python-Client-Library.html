@@ -19,6 +19,26 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="atompubbase - An AtomPub Python Client Library">
+  <meta name="twitter:description" content="  Do you know how many Atom Publishing Protocol (AtomPub) clients and servers I've written? No? Neither do I, but it's a lot. At least five distinct versions of client code and all of them were written in Python. The reason I kept re-writing clients is that all of them sucked in one way or another and it was always easier to start from scratch. Of course, each time I'd learning a little more and they'd get incrementally better, but obviously not enough. When I started looking at updating the App Test Client I wanted this to be the "last one", the last time I re-write an AtomPub client library in Python, and to that end went through all my old designs (both pros and cons) and used that as input to new Python library for building AtomPub clients. Introducting: atompubbase, a Python library for AtomPub clients.  The idea of atompubbase is that it is a rather thin layer over straight HTTP, but supplying the convenience functions that are really needed and plenty of hooks points for extension.  One of the major hook points is the eventing system, which allows you to register callbacks for any of the basic calls. Not only that but you choose if your callback is triggered before or after the call. If you choose to get called before-hand then you can modify the request headers on the way in, or conversely you can get a callback on the way out and get the response headers and body. A lot of that design was driven off the needs of appclienttest which needs to validate not only content on the way out but also returned from the server and to do it in a seamless way. Here's the documentation for atompubbase.events which gives much more detail. The design of the rest of the library is intentionally sparse, with a Context class for remembering where you are, and a Service, Collection and Entry class. Hopefully those last three will be obvious in an AtomPub client. Two things I did were important for testing and loose coupling. The first is that Context doesn't know about the Service, Collection and Entry classes as it only stores URIs. That same goes for Service, Collection and Entry classes, they don't know anything about each other, only creating and passing around instances of Context. That will make it much easier for a user of the library to subclass or outright replace the Service, Collection and Entry classes.  The other thing I did was a form of Dependency Injection, by requiring that an instance of httplib2.Http() be passed into a Context at construction time. Now there's a lot of caveats to put on that; the first is that if you don't pass in an instance then Context just constructs an instance of httplib2.Http on its own and the second is that I don't rely on the object being an instance of httplib2.Http(), it only has to support two of the member functions of httplib2.Http: request() and add_credentials(), i.e. Duck Typing. This allows you do unit testing easily by replacing httplib2.Http() with a mock that gets it's data off a file and not off the network. There's no contract that enforces that, no interface class that defines the shape of the object we want - we're all adults here. Like I said this is "a kind of dependency injection" because if you program in Python (or any other dynamic language) this kind of coding is straight forward, you don't normally apply a name to it. Contrast that with how this would have to be written in Java. You'd have to create an interface class and have both httplib2.Http() and your unit test mock derive from that base, or you'd have to create a HttpClientFactory that you passed into Context to construct such objects, or you'd have to use a DI framework that rewrites your bytecode on the fly probably based on the contents of an XML file somewhere.  The point is that in a dynamic language the pattern doesn't get named because I don't have to write any code for it. The capability is built into the language. To get a better sense of this see this article on patterns, languages, and the 'subroutine pattern'. To vet the library, and because I really needed one, I wrote a command-line program apexer for manipulating AtomPub services. If you pull the source for atompubbase and install it you will also install apexer. Here's a wiki page that shows how to use apexer,  both on entry and media collections. Now that I have all those yaks shaved I can get back to the task I originally set out to do: freshen up appclienttest and get it up to par with the APE.
+  
+    A better permalink for that article is http://blog.plover.com/prog/design-patterns.html.
+    Posted by
+       Aristotle Pagaltzis on 2008-01-09
+    
+
+    Aristotle,
+Done.
+    Posted by
+       Joe on 2008-01-09
+    
+
+    Thanks to both of you!
+    Posted by
+       Mark Dominus on 2008-01-09
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

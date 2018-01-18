@@ -19,6 +19,76 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="In which we narrowly save Dare from inventing his own publishingprotocol">
+  <meta name="twitter:description" content="  Dare Obasanjo has come up with a number of issues he has with the
+        Atom Publishing Protocol. I am led to wonder about the timing of
+        his complaints as the APP is close to getting an RFC number.
+        What spurred this sudden bout of sour grapes?:
+
+            For this reason, we will likely standardize on a different RESTful protocol
+            which I'll discuss in a later post.
+Ah, so if these issues just turn out to be misunderstandings on your part
+        then Microsoft will just use the APP and not roll out its own protocol?
+        I'm so glad to hear that.
+The first complaint is that Dare doesn't understand that an Atom Entry is a document
+        and not an envelope. He would like to cram everything under the sun into an Entry, which isn't
+        how the format is supposed to be used. Note, I'm saying format here, and not protocol, since
+        that is where the problem lies - Dare should have the same complaints about syndicating
+        the data as he has about authoring it.
+This actually isn't a problem in the APP, if you have something that doesn't
+        fit into an Entry then store it under a Media Collection.  You could store
+        vCards, vCalendars, PDFs, images, videos, etc. When you create
+        such a collection member you actually create two resources, the media itself, and an
+        associated Atom Entry that contains meta-data about the media. The
+        nice part is that those other formats have their own mime-types, which
+        is important and something I stressed when talking about WADL. Also see what
+        Bill has to say about this.
+The second complaint is one of data loss:
+
+            The problem is that there is data loss if the entry has changed between the
+            time the client downloaded it and when it tries to PUT its changes.
+Fortunately, the only real problem is that Dare seems to have only
+        skimmed the specification. From Section 9.3:
+
+            To avoid unintentional loss of data when editing Member Entries or Media Link
+            Entries, Atom Protocol clients SHOULD preserve all metadata that has not been
+            intentionally modified, including unknown foreign markup as defined in Section
+            6 of [RFC4287].
+And further, from Section 9.5:
+
+            Implementers are advised to pay attention to cache controls, and to make use
+            of the mechanisms available in HTTP when editing Resources, in particular
+            entity-tags as outlined in [NOTE-detect-lost-update]. Clients are not assured
+            to receive the most recent representations of Collection Members using GET if
+            the server is authorizing intermediaries to cache them.
+Hey look, we actually reference the lost update paper that specifies how
+        to solve this problem, right there in the spec! And Section 9.5.1 even shows
+an example of just such a conditional PUT failing. Who knew?
+        And just to make this crystal clear, you can build a server that is compliant
+        to the APP that accepts only conditional PUTs. I did, and it
+        performed quite well at the last APP Interop.
+The last complaint is a vague one about non-hierarchy. Of course,
+        in the middle of his explanation of the problem, Dare actually admits it really isn't a problem:
+
+            This means if you want to represent an item that has children they must be
+            referenced via a link instead of included inline.
+Again, what we have here is a complaint about the format and not the protocol, as this
+        applies just as well to syndication as it does to authoring.
+        And yes, that's the way Atom the syndication format, and the protocol, represent
+        relationships between items, via links. One simple, consistent, easy to explain mechanism,
+        as opposed to a hybrid approach of allowing linking and inline inclusion, because
+        even if you allowed inlining you would still need to allow linking because no one has found
+        the one true hierarchy to rule them all.
+In summary, the three issues are not issues at all and
+        have very simple solutions.
+
+Use Media Collections when appropriate.
+Read the Spec.
+Gloves
+
+  
+    Maybe Dare wrote that post over several editing sessions, but:
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

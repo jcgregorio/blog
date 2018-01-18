@@ -19,6 +19,78 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="One of these things is not like the other">
+  <meta name="twitter:description" content="  
+  Two of the sites below are driven off flat files, the third is driven off of a database.
+  Can you spot the difference?
+
+  One
+                of these things is not like the other
+Now this is not to pick on Mark, or WordPress, or MySQL.
+The reason I picked Mark, Sam, and myself is that we are all 
+hosted at cornerhost, and yet only one of us is having a problem,
+and that problem stems from N = 1 thinking. 
+In this case Mark's blog is running on
+  a MySQL database which is served off another machine.
+  You might think that running the database off another machine
+  would make his site more robust, but instead it actually does
+  the opposite.
+Since the web server is on one machine and MySQL on another,
+the chance of Mark's site going down is:
+1-(1-P(F1))*(1-P(F2))
+That is, one minus the probability of the Apache server machine not failing
+(over some set period of time) times the probability of the MySQL server not failing
+(over that same set period of time).
+If we assume, for generality that both machines have the same
+chance of failure, then we get:
+1-(1-P(F))^2
+Sam and I both serve our sites off local
+flat files, so our probablity of failure is limited to that one
+machine. Which gives us:
+P(F)
+ When I was talking about N = 1 systems this is exactly
+the type of thing I was talking about. What if the database
+was an N &gt; 1 system, say composed of three machines, again all
+with the same failure rating, and let's assume that the web serving 
+was done the same way, with three machines all running a web server. Then the
+chance of a failure is that either all three web server machines fail, or 
+all three database machines fail. That gives us a chance of failure of:
+
+1-(1-P(F)^3)*(1-P(F)^3)
+That is, one minus the chance that either the MySQL server cluster doesn't fail
+and the web server cluster doesn't fail. The chance that a cluster doesn't fail is
+one minus the chance that all three machines in the cluster fail.
+
+Let's plug in some numbers to see how dramatic a difference
+this makes. If we happen to have an outrageously high failure rate like 1%
+per machine then Mark has a 2%  (0.199% actually) chance of failure, while Sam and I
+both have a 1% chance of failure. Compare that to the 
+replicated scenario where we have three web servers and three
+database servers, which has a chance of failure of 0.0002%.
+
+That's pretty dramatic. But what if we just lived in a world where
+N &gt; 1 and databases and web servers were just built
+that way, and let's also presume that there are just two machines, like
+we have today in Mark's WordPress install. What does a change of 
+failure look like there? In that case, you would only fail if both
+servers went down at the same time:
+P(F)*P(F)
+Using our 1% failure chance from above we get a failure chance
+of 0.01%. That's quite a bit different from the same two machines
+today with an N = 1 legacy providing a 2% chance of failure.
+
+Think about it; that dramatic increase in reliability, close to two
+  orders of magnitude, comes not from hardware, or Moore's Law, 
+  but from designing software differently.
+
+N.B.: Updated to do the math correctly for N = 1 cases.
+ See the comments for the discussion. The numbers don't actually change, but that's just
+ an artifact of me choosing a probablity of failure of 1% and not of my math actually 
+being right the first time.
+
+  
+    While your conclusions are correct, I think your math is just a bit off. Perhaps I misread what you wrote, but it seems to me that if you have two servers with identical chance of failure P(F), then the chance of failure is actually
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

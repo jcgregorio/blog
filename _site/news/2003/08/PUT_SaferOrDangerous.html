@@ -19,6 +19,92 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="The HTTP verb PUT under Apache Safe or Dangerous?">
+  <meta name="twitter:description" content="  "Is the HTTP verb PUT under Apache safe or dangerous?" This is a question I come across often, and have now 
+  run into it twice in the work on Atom. So is it safe? The answer is maybe.
+  Here are two such examples:
+
+  Using DELETE and PUT may be the "right thing to do" 
+  in an ideal world, but the fact of the matter is that a 
+  lot -- if not the vast majority -- of webservers do not allow these 
+  operations. 
+If anyone knows of a newer article describing 
+  HTTP PUT with apache, I would be very interested in seeing it. Because, 
+  due to my experience with PUT, you have to define a single PUTScript in 
+  httpd.conf, and if you PUT something to an apache server at the URI 
+  www.example.com/blog/entries/1 or something similar, apache passes all 
+  of the information to the PUTScript, not to anything else.
+Both of the above quotes are from the Atom Wiki discussion 
+  of the use of PUT. A little digging reveals that the ApacheWeek article 
+  Publishing Pages with PUT 
+  is referenced most often when the danger of PUT is raised. 
+That ApacheWeek article does talk about the dangers of PUT and
+  the cautions you need to follow when writing a script that
+  does content publishing via PUT. That key part of that phrase
+  is content publishing. That means that PUT is being 
+  used to upload arbitrary content to the server and the client
+  is determining via the URI where the content should be stored.
+  Now you can imagine how this might be dangerous, for example
+  not correctly checking URI paths that include ../.. could
+  let a malicious agent re-write your .bashrc.
+Implementing a PUT script can be difficult and a security hazard
+   in the context of content publishing, but that's the case because
+   the client is choosing the target URI and the client could upload
+   any content type. In the case of Web Services in general, and
+   the AtomAPI in particular, PUT is used in a much narrower manner
+   and avoids those potential security problems.
+In the case of the AtomAPI PUT is only allowed on URIs that point 
+   to a pre-existing resource. The
+   AtomAPI follows a general idiom for editing resources of doing 
+   a GET to retrieve the original XML, then a PUT on the same URI
+   to upate that resource with the edited XML. No URIs are created 
+   by doing a PUT. PUT is not accepted on arbitrary URIs. This makes
+   the use of PUT in the context of the AtomAPI just as safe as POST.
+There are quite a few ways to configure Apache to process
+   incoming requests. In particular it is possible to have a single
+   script that handles all PUT requests below a chosen directory. This 
+   strategy, and all of the associated security concerns associated with
+   it, are covered fully in the Publishing Pages with PUT.
+When processing request with a CGI script all the PUT requests
+   will come through. The verb is passed to the CGI program via the REQUEST_METHOD environment 
+   variable, and the program decides what to do with the content.
+Using PUT propoerly has advantages in Web Service development. First,
+   Apache lets you control security based on the verb using the 
+   Limit 
+   and LimitExcept
+   directives, which
+   let you restrict access controls based on the verb. Here is a sample 
+   of one of my .htaccess files that restricts the use of 
+   all verbs except GET to the CGI program Bulu.cgi.
+&lt;Files Bulu.cgi&gt;
+AuthType Basic
+AuthName myrealm
+AuthUserFile /path/to/my/password/file
+  &lt;LimitExcept GET&gt;
+  Require valid-user
+  &lt;/LimitExcept&gt;
+&lt;/Files&gt;
+
+In addition, the Script
+   directive can be used to dispatch to a CGI program based on the verb used:
+Script PUT /cgi-bin/put.cgi
+The second advantage using PUT brings is clarity. Given the idiom
+   of using GET/PUT in tandem on a URI to edit resources PUT
+   clearly signals what the interface is doing.
+Resources
+ApacheWeek: Publishing Pages with PUT
+RestEchoApiPutAndDelete: Discussion on the use of PUT
+   and DELETE in the AtomAPI.
+mod_actions: An Apache module for 
+  controlling dispatching based on verb or content-type.
+Configuring your WWW server to understand the PUT method, from the W3Cs Amaya project documentation.
+WebDAV is also something you may be interested in if you
+   are looking for ways to publish your content using HTTP. WebDAV stands for 
+   "Web-based Distributed Authoring and Versioning". It is a set of extensions to the HTTP 
+  protocol which allows users to collaboratively edit and manage files on remote web servers. 
+  
+   Mod_dav in an Apache module that implements WebDAV.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

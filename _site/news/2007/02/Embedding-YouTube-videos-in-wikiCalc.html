@@ -19,6 +19,26 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Embedding YouTube videos in wikiCalc">
+  <meta name="twitter:description" content="  Dan Bricklin points to a cool demo
+of embedding a YouTube video into a wikiCalc spreadsheet.
+Of course, in a show of self-referential-integrity, the demo is done as a screencast and is hosted on YouTube.
+
+Meanwhile I upgraded to the 1.0 release of wikiCalc
+and have my sparklines embedding down to a single line:
+
+B1=wkcHTML(wkctext("&lt;img src='http://bitworking.org/projects/sparklines/spark.cgi?d=",  
+   wkcjoin(A2:A21), "'/&gt;")) 
+
+That requires the wkcJoin() function
+which I added to my install, but that doesn't detract from
+the fact that we're getting closer and closer to 
+spreadsheets as mashup fabric.
+See Dan's notes in the comments on how to do this without adding any new functions.
+
+  
+    If you have A16:A20 with numbers, you can have B16 have =A16&amp;"," -- The &amp; is force to string and concatenate. Then you can have:
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

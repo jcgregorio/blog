@@ -19,6 +19,86 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Reconsidering Search (Kinda) in the AtomAPI.">
+  <meta name="twitter:description" content="  Of all the facets of the AtomAPI, the search mechanism has
+   caused the most angst. Indeed there is a whole page
+   dedicated to discussing just this facet on the wiki.
+   The search mechanism has gone through many changes and
+   at this point I would like to re-introduce the search 
+   mechanism from the RESTLog API.
+  Actually, to call it a seach mechanism is really the wrong
+   word, it is really a structured mechanism for browsing
+   the archives of a site. In the case of the RESTLog
+   Archive interface, the form and function of the browsing 
+   is completely under the control of the server.
+Let's start by looking at the RESTLog Archive format:
+
+&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
+  &lt;res href="http://wfw.org/news/5"&gt;RESTLog Interface&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/4"&gt;One step at a time&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/3"&gt;What's the point?&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/2"&gt;RESTLog Overview&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/1"&gt;Welcome to the Well-Formed Web&lt;/res&gt;
+&lt;/archives&gt;
+
+This is a very simple example of an archive file. In this case it is just
+   a list of res elements that each have an href
+   attribute that points to the Entry, and an element value that is a string
+   that is used to display to the user to help them select which Entry to choose.
+Here is a more complicated example:
+
+&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
+   &lt;group title="Last Ten Stories"&gt;
+      &lt;res href="http://wfw.org/news/100"&gt;My Most Recent Post&lt;/res&gt;
+      &lt;res href="http://wfw.org/news/99"&gt;My Next Most Recent Pos&lt;/res&gt;
+      .
+      .
+      .
+      &lt;res href="http://wfw.org/news/91"&gt;Some Post In The Recent Past&lt;/res&gt;
+   &lt;/group&gt;
+   &lt;more href="http://wfw.org/news/moreViews"&gt;All Items&lt;/more&gt;
+&lt;/archives&gt;
+
+Note that this example introduces the group element. This 
+   allows multiple resources to be grouped together. Note that multiple
+   groups can be used, and that they can also be nested. 
+In addition this example introduces the more element. This 
+   is an element that points to another file in archive format. In this way
+   the client can navigate around a set of archive files and not have to 
+   retrieve the whole list at one time.
+Let's go back and consider the group element. Think about
+   what this would look like if you wanted to present it to a user. With their
+   ability to nest you would use a Tree control, with folders for each of the 
+   group elements and files for each of the res elements.
+   If you keep that analogy, then the more element is also just
+   a folder, but one that doesn't get retrieved or displayed until the user
+   clicks on it.
+So how would this integrate into the AtomAPI? The Introspection file
+   facet for seaching, currently search-entries would be changed
+   to a more appropriate browse-entries and doing a GET on that 
+   URI would retrieve the first archive formatted file. Note that more 
+   GETs might follow as the client followed more links 
+   in that archive file, which lead to still further archive files.
+Now the advantages of this approach are that is puts the entire
+   browsing experience in the hands of the server. The server could 
+   present very simple archive files or it could present a rich 
+   and varied archive format. The server could present multiple 
+   views into the archive, with one group or more
+   presenting a heirarchy by date, and another group presenting
+   a heirarchy by subject, or by poster, or by content-type. It really doesn't 
+   matter as the server has complete control. In addition the 
+   text of the res element isn't restricted, you could put the 
+   post title there, or the server could put any reasonable information
+   the user might find useful there. 
+This also puts the server in firm control of the amount of bandwidth
+   the browsing interface uses. There is no "atom-all" list of all the 
+   feeds in the archive unless the server decides to produce it.
+Now admittedly this does raise the bar for the client developers
+   as they have to implement a more complicated interface, but the
+   payback is in a much richer browsing experience. This also let's 
+   the server developers compete by producing different browsing 
+   strategies, all while using the same format and mechanisms.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,62 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Combinatorial Critter Generator Web Service">
+  <meta name="twitter:description" content="  
+
+Inspired by 
+            Combinatorial Critters,
+            and MonsterID, 
+            which allow you to create critters from combinations of parts, I 
+            just couldn't help but think, "That would be so much better as a web service", and thus the 
+
+Critter Generator was born.
+
+
+
+
+
+
+
+Now, as you will soon realize, I am not much of an artist, so if you want to take a crack 
+  at creating monster parts I'd love to update the service with some real art, and if anyone
+sends in another 'set' of parts I'll update the service to allow selecting among the sets
+sent in.
+
+The source images are 300x500 PNGs with transparent backgrounds. There are five sets of images:
+
+faceN.png
+eyesN.png
+footN.png
+hairN.png
+mouthN.png
+
+Where N is from 1 to 8. I then use ImageMagick to convert the full size originals
+into the three smaller sizes used by the web service. The 
+source
+code listed off the 
+project page also contains all the images if you want to get 
+a feel for how they work. If you just want to peek at the source code for the service you can see it here.
+
+  
+    Great idea.
+I see you're not caching the critters. I think I'd be wary about running a potentially popular service that generates an image for every (non-repeat) request. Then again, you have some experience running PIL-based services. If caching ever is needed, since it's CGI, you can use the Location pseudo-header and let Apache do what it's good at.
+    Posted by
+       Lenny on 2007-02-23
+    
+
+    This may be just too meta... but you could add another web service layer by farming out the art production with Mechanical Turk.  See The Sheep Market.
+    Posted by
+       Ansel on 2007-02-26
+    
+
+    If someone could do this with Miis, I would &lt;3 them forever.
+    Posted by
+       Jeff on 2007-02-26
+    
+
+    I ported your fabulous generator to PHP to use it as a plugin for an elearning management software. We got many laughs about those critters :-)
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

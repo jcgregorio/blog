@@ -19,6 +19,32 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Thoughts on the Google API">
+  <meta name="twitter:description" content="  It's been a while since Google released it's SOAP based API and 
+   all ensuing discussion. I only recently have had a chance to play with 
+   the API and it does raise a question.
+Paul Prescod
+   covered what the API would have looked like if it were formulated under
+   REST, but his formulation does have a major weakness, in that it encodes
+   the Google Key into the URI. The problem is that the URI may show up in referrer 
+   logs and thus increasing your chance of getting your key stolen.
+On the other hand, Google opted for SOAP and thus embeds the key directly in the 
+   requesting SOAP body.
+What both of these approaches ignore is that there are 
+  Six Places to store information
+   in any HTTP request/response pair. In particular they both ignore HTTP headers,
+   which in this case is the perfect location to store the Google key.
+So if you remember, the old unrestricted pre-SOAP Google interface was
+   to just replace /search to /xml. If I were to 
+   search for the word 'adagio' using such a REST version of the API then the 
+   request would look like:
+GET /xml?q=adagio HTTP/1.1
+Host: www.google.com
+Accept: application/xml 
+X-Google-Key: 734981732987374940
+Now the key doesn't get held in the URI and the API reverts to a simple GET
+with no need for POSTing SOAP envelope wrapped XML query parameters.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

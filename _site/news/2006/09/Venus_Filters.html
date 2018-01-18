@@ -19,6 +19,29 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Venus Filters">
+  <meta name="twitter:description" content="Sam has done some 
+amazing things with Venus, turning it into a feed processing platform. The really
+amazing part is at the bottom of the architecture document.
+Everything, absolutely everything, is turned into Atom, and not just Atom, but
+Atom with title, summary and content in XHTML. Let that sink in.
+
+
+Once it does then you then get to the filters:
+
+Furthermore, the design is that both filters and templates read from 
+stdin and produce output using stdout.  This means that any programming language may be used. 
+Furthermore, as filters can be real programs, they need not limit themselves to filtering. 
+In Unix terms, the can be tees.  They can scan the input for interesting data, and POST ones that 
+are of interest elsewhere.  They can index the data using something like Lucene.
+
+I could put Bayesian filters in place and populate a new feed using
+the Atom Publishing Protocol from a filter. I could filter a bunch of feeds
+and build up my own Statistically Improbable Phrases
+and use that to highlight entries. And don't even get
+me started on what I could with microformats...
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

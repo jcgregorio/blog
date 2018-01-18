@@ -19,6 +19,96 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="A Theory of Templating Languages">
+  <meta name="twitter:description" content="  Working on the URI Templating specification has made me realize that there is a pretty substantial hole in computer science theory: a lack of a theory of templating languages. For example, the current version of URI Templates is not Turing-complete, which excludes a whole bunch of possible attacks. In the specification I state:  On the balance, the template processing is not Turing complete, thus avoiding a number of security issues, ala the billion-laughs attack of XML DTDs. I was rightly called out on this on the W3C URI mailing list:  This reads a little odd, as not being Turing-complete is not sufficientto avoid the attack.  (And DTDs are not Turing-complete either.) The criticism is correct. The problem is that I don't know of any finer grained levels of classifications of templating languages than Turing/non-Turing, and not only for security reasons, but for general capabilities.  For example, if there were classes of templating languages, I could say that URI Templates fell into 'class X', and if that class had a known set of limitations and capabilities then I could say that URI Templates thus had those limitations and capabilities. The weakness to the billion laughs attack comes from two facets of DTD usage, the first being that templates can be defined in terms of other templates, and the second is that the depth of template definition, in terms of other templates, isn't limited. But the converse isn't true, that is, I don't have a general theory of templating to lean on that says since URI Template expansions are never defined in terms of other expansions then URI Templates are immune to such resource exhaustion attacks. I did find one paper that makes a start at such work, "Enforcing Strict Model-View Separation in Template Engines" (pdf), but the theory is a little weak and it focuses on the nebulous idea of separation of model and view, as opposed to a classification of capabilities and limitations. I'd love to be proven wrong and find that there's a rich theory that I'm over-looking, if so let me know in the comments.
+  
+    hello,
+i always wanted to ask this: please, how do i know if some language is turing-complete or not?
+    Posted by
+       ju on 2007-11-28
+    
+
+    the billions laugh attack relies on the fact that non-recursive (i.e finite) DTD expansion still has more than one stage, so it's possible to express an n^m output with an n x m input.  so I think categorically, it would be helpful to separate recursive vs non-recursive and n vs 1.
+    Posted by
+       Assaf on 2007-11-28
+    
+
+    Not providing a proof here, but I think URI templates are regular.
+    Posted by
+       Lenny on 2007-11-28
+    
+
+    Consider an implementation that parses an IRI template by looking the template up in a dictionary that maps from strings to parse trees. Such an implementation would return O(2^20n) of space to work correctly. This illustrates the impracticality (impossibility) of specifying URI templates in a way that prevents inefficient implementations.
+Instead, you can prove that there exists an efficient, O(n), method of parsing URI templates and an efficient, O(n), method of variable substitution. Both of these are trivial: for the former, simply prove that the grammar is regular, LL(k), LR(k), or any other class known to require only constant space and O(n) time to parse. The latter can be proven by showing that the number of substitutions required at the start is O(n), and then show that the number of pending substitutions decreases by one for each substitution done.
+Couple this with an example that illustrates that an implementation that expands templates at more than one level is incorrect.
+By the way, the grammar you currently have is ambiguous, I believe. In particular, how should http://foo/{join|}|x} be parsed? Note that "}" is in "unreserved", and so it is a valid "arg".
+URI templates as currently specified suffer from the fact that braces are in "unreserved", and so "http://foo.com/{bar}" is a valid URI, even when not expanded. (If there are already braces that need to be included in the template, they should be percent-encoded, right?) If you had chosen to use "%{" and %}" then an unexpanded URI template would never be a valid URI, and then you would also not have the problem mentioned in the preceding paragraph.
+What does this template mechanism have to do with URIs except that it requires some substituted values to be percent-encoded? Really, it isn't much different the generic StringTemplate mechanism that is described in Terence Parr's paper or other general string substitution mechanisms.
+I also consider the over-conservative quoting to be a unfortunate. I think you mentioned this in an earlier blog post: you cannot have a mailto:{email} URI that expands to "mailto:bill@example.org" because the URI template mechanism requires the "@" to be percent-encoded. I think a mailto example should be included in the spec to illustrate this. Another problematic example is any URI that allows another URI in its query string: e.g. "http://example.org/foo?atom:id=http://somewhere/this", gets expanded into something nasty to read. This will mean that URI templates cannot be used in applications that require character-for-character equality tests for URIs (atom:id for example). This is a problem not just with URI templates, though; IRI-URI round-tripping has similar issues. And, allowing customization of the percent-encoding requirements would add complexity.
+    Posted by
+       Brian on 2007-11-28
+    
+
+    I take it back, "}" is not in unreserved, it is in the set that is neither reserved nor unreserved. I keep forgetting that set.
+    Posted by
+       Brian on 2007-11-28
+    
+
+    Brian,
+From the draft:
+To provide feedback on this Internet-Draft, join the W3C URI mailing list (http://lists.w3.org/Archives/Public/uri/).
+    Posted by
+       Joe on 2007-11-28
+    
+
+    I'm rather rusty on this stuff and could be way off, but I believe URI Templates fall into Type 3 of the Chomsky hierarchy.  Given a template and a set of inputs, there is a finite set of very predictable results.  Further, given the fact that there is no recursion, attacks similar to the million laughs attack are not possible.
+    Posted by
+       James Snell on 2007-11-29
+    
+
+    I think Brian's designation of a complexity class makes sense, but I think the class has to be at least O(TD) where T and D are the size of the template and data.
+Consider the template {a}{a}..{a}{a} with data a=zz..zz - the output is of length O(TD), so assuming you want a regular string as output it's going to take that long.
+This criterion distinguishes URI templating from DTDs in complexity. A DTD parser (that outputs text nodes as strings) can't be implemented with better than O(2^n) complexity, as the output size of billion laughs demonstrates.
+An example efficient implementation is an another way of proving the deliberately low power of the language.
+    Posted by
+       Sam McCall on 2007-11-29
+    
+
+    I think there needs to be a bright line drawn between the complexity 
+  of parsing the template versus the possible runtime of actually
+  expanding such templates. That latter is what I was talking about,
+  and the two are not related. For example, we can have a trivial template 
+  language that is easily parsed by a regular expression:
+
+a*
+If we define template substitution to be variables of one letter, where 
+   variables are substituted with their values recursively until
+   no more matches are found, then this simple template
+a
+with the definition
+a := aa
+will expand forever.
+In addition the examples given so far only cover completely self-contained
+  templates like URI Template expansions, there's much more 
+  complex constructs, like Cheetah's #for, #end for construct. I'm interested in the 
+  the total complexity of the output
+  based on the template and the variables supplied, not only
+  for putting a bound on the time and space complexity of the expansion, but
+  also in the types of constructs that can be expressed. That is,
+  given a template language and allowable input data structures
+  can I - fill in the options for a combo box? fill out a row-oriented 
+  table? fill out a column-oriented table? etc.
+
+From the responses so far I guess there isn't 
+   a rich theory of templating
+  languages that I just happened to overlook.
+
+    Posted by
+       Joe on 2007-11-29
+    
+
+    Ju,
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

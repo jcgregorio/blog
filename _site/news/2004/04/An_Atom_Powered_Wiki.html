@@ -19,6 +19,34 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="An Atom-Powered Wiki">
+  <meta name="twitter:description" content="  My latest article, 
+   An Atom-Powered Wiki, is now available at XML.com.
+   In this article I cover the steps needed to create
+   an Atom Enabled wiki, paying attention in particular
+   to the character encoding issues. As 
+   Sam Ruby has pointed out character encoding may be the 
+   number one cause of ill-formed feeds. The code for both the client
+   and the server are both available as downloads from 
+   the live version of the wiki I describe 
+   in the article. If you feel so inclined you can download
+   the client and test it against the wiki for yourself, just make sure
+   that you have the unicode enabled version of 
+   wxWidgets (nee wxWindows).
+
+At the end of the article I cover two of the 
+   most glaring issues with the implementation, first
+   that the 'issued' element is not information that is 
+   currently stored in PikiPiki, but since the 'issued'
+   element is required we just used the 'modified' time
+   in it's place. 
+ The second rough spot that was covered is that 
+   there is no way to detect before hand which types of
+   content an AtomAPI server will accept in a 'content' element.
+   There is an entry on the 
+   Atom Wiki dealing with just this
+   issue of negotiating the type of content a server will accept.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

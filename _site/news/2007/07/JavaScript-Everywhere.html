@@ -19,6 +19,31 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="JavaScript Everywhere">
+  <meta name="twitter:description" content="  Brendan covers some really exciting announcements about the 
+Tamarin project, which 
+aims to:
+implement a high-performance, open source implementation of the ECMAScript 4th edition (ES4) language specification. The Tamarin virtual machine will be used by Mozilla within SpiderMonkey, the core JavaScript engine embedded in Firefox®, and other products based on Mozilla technology. The code will continue to be used by Adobe as part of the ActionScript™ Virtual Machine within Adobe® Flash® Player.
+
+Not only will Tamarin become the VM for JavaScript in FireFox, there's work being 
+done on getting it working in IE, and also work to get IronPython and IronRuby to also map
+onto Tamarin. This is an interesting development as it appears that with Tamarin 
+we have a solid VM, with JIT support, that will be widely available and embedded into
+many applications and that actually deigns to touch "C"-land. The nice part is that in theory
+Rhino could also be brought up to ES4 and then you'd have a language that was available
+in "C"-land and on the JVM, if that kind of thing is important to you.
+
+That at least gets us half of the requirements for a 'real' language, which is 
+  technical depth on the language development side. The other half of the equation
+ is going to be a broad set of libraries, which I am going to need if I am going to
+write server-side applications in Tamarin. Currently there isn't a lot there and it will
+be interesting to see if/when we have SWIG
+for Tamarin.
+
+Update: A similar
+  perspective on the need for libraries from Tom Insam, who wrote mod_js.
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

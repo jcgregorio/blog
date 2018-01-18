@@ -19,6 +19,27 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="The URI of a Weblog Entry">
+  <meta name="twitter:description" content="  RSS 2.0 introduced the idea of a guid, an identifier that uniquely identifies an entry. 
+When Sam called for a discussion of the essence of an entry, 
+the permalink versus guid discussion began.
+  The discussion has settled down and the concensus seems to be that each entry will be identified by a URI. If the URI has the scheme http: or https: then  the identifier is also considered a permalink, i.e. a link to the content on the web.
+This is a really good compromise, giving people who want to supply permalinks the ability to do so, while giving tool vendors a wide range of options if they don't, or can't, supply a permalink. It is also forward looking, allowing you to build RSS feeds that point into other networks, such as freenode.
+The use of URI's is good because it allows the assigning of a uniqe identifier, that could be a web address, but regardless fits within a proscribed syntax. The best reading of the lot, for implementation details, was the URI specification which includes a regular expression for parsing URIs:
+^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?
+A litte Python shows how easy it is to parse up a URI, whether is it a web address or not:
+&gt;&gt;&gt; import re
+&gt;&gt;&gt; uri_regex = re.compile(r"^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?")
+&gt;&gt;&gt; uri_regex.search("http://www.ics.uci.edu/pub/ietf/uri/#Related").groups()
+('http:', 'http', '//www.ics.uci.edu', 'www.ics.uci.edu', '/pub/ietf/uri/', 
+    None, None, '#Related', 'Related')
+Now if you don't want to use an http URI then the best bet seems to be the URN, which can be just as easily parsed by the same regular expression:
+&gt;&gt;&gt; uri_regex.search("URN:foo:a123,456").groups()
+('URN:', 'URN', None, None, 'foo:a123,456', None, None, None, None)
+
+Further reading
+In the process of discussing the options, Tim Bray pointed to the URI specfication, which led to a trail of reading for me, including his article on weblog ids, the Official IANA Registry of URI Schemes, the RFC for URNs, and the W3C list of Addressing Schemes. The last one lists both registered schemes and unregister schemes in popular use.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

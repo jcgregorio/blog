@@ -19,6 +19,66 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="WSGIDispatcher">
+  <meta name="twitter:description" content="  Introducing WSGIDispatcher [code][docs][tests]. It's just like 
+Luke Arno's Selector,
+except for the following:
+
+The license is MIT.
+It does not use setuptools.
+It has no external dependencies.
+It has unit tests.
+Regular expressions are compiled lazily.
+Non-regex path expression are treated as string matches, not regular expressions.
+You can mix and match templates and regular expressions in the same instance of Dispatcher().
+Hooking up applications that handle all methods doesn't require _ANY_.
+
+The lazy compilation of regular expressions is important when running
+as CGI; you don't want to have each template compiled
+until you know all the previous template rules failed to match.
+
+For now the code sits in the 1812 project.
+I haven't decided if it's enough code to warrant being in a standalone project
+or if it can just live as a part of 1812.
+
+I've mentioned previously that I'm not thrilled with Python documentation options, so for this module  I'm experimenting with docutils. All of the documentation is in the module doc strings as reStructured Text, which I then extract and convert into HTML using the docutils library.
+
+  
+    Regarding the documentation problem, have you considered the use of doctests? Make the documentation do double-duty as functional tests in addition to the unit tests you have. If you do explore this option, you may want to also use zope.testbrowser for testing the web based functionality.
+BTW, note that in your current docs, you repeat the URL 'http://localhost:8000/index/Joe' twice, with two different outputs ('Hello Joe' vs. 'Hi there'), which is exactly the kind of documentation error doctests are good at catching.
+    Posted by
+       Michael R. Bernstein on 2007-04-24
+    
+
+    Ha, you are just reluctant to separate it into its own package because you aren't using the handy things Setuptools gives you to manage the packages!
+    Posted by
+       Ian Bicking on 2007-04-24
+    
+
+    Michael,
+I fixed the bug in the docs, thanks! I will look at doctests.
+    Posted by
+       Joe on 2007-04-24
+    
+
+    I am not really sure why you list "does not use setuptools" as though it is a feature. While I understand setuptools can make some aspects difficult regarding packaging modules for distributions, overall, using setuptools has been extremely helpful in my own experience. Can you explain?
+    Posted by
+       Eric on 2007-04-24
+    
+
+    Eric,
+Setuptools is so focused on helping the developer it actually ends up being hostile to the consumer of any libraries that use it.
+For example:
+
+joe@joe-laptop:~$ wget http://cheeseshop.python.org/packages/source/P/Pylons/Pylons-0.9.2.tar.gz
+joe@joe-laptop:~$ tar -xzf Pylons-0.9.2.tar.gz 
+joe@joe-laptop:~$ cd Pylons-0.9.2
+/home/joe/Pylons-0.9.2
+joe@joe-laptop:~/Pylons-0.9.2$ python setup.py install
+The required version of setuptools (&gt;=0.6c2) is not available, and
+can't be installed while this script is running. Please install
+ a more recent version first.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

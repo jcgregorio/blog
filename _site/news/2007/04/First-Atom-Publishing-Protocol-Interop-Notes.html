@@ -19,6 +19,124 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="First Atom Publishing Protocol Interop Notes">
+  <meta name="twitter:description" content="  
+So the first Atom Publishing Protocol Interop meeting took
+place over the past two days. The event was hosted by Google,
+and I'd like to extend a big Thank You to DeWitt and the rest of the Googlers for 
+hosting this event. The food and facilities were great, though
+it appears 20 guests in a single room seemed to tromp the guest wi-fi network.
+
+  
+It was great to meet so many people face to face after all this time.
+See 
+    Tim's post for a good set of pictures, plus write-ups from 
+Keith Fahlgren, 
+Dave Johnson,
+Joe Cheng,
+James Snell, and 
+John Panzer.
+Hat tip to John, with Sam Ruby not able to make it, he and I were the only
+two people from the original Atom meeting almost four years ago.
+
+Down to interop. The executive summary: It's all good.
+The slightly longer summary:
+We had interop a majority of the time.
+  The fact that at the very first interop meeting you could pick
+  any two implementations at random and have a good chance
+  that they'd work together is fantastic.
+
+Here is the interop grid, with checkmarks where
+we had interop between a client and a server. Note that there are notes 
+in the grid for both successful and unsuccessful pairings.
+With 14 serves and 9 clients it just wasn't going to be possible to fill
+in all 126 combinations in two days. That fact that we had that many
+servers and clients before even getting an RFC number is very encouraging.
+
+
+  While we did have some cases where we didn't achieve interop,
+  the best news is that none of the problems was due to an
+  ambiguity in the spec.
+  
+There were several areas that were consistent sticking points.
+
+Authentication
+There was a much wider variety of authentication schemes
+      than most people expected. I'll correct James here and point out
+      that the APP Test Client is built on 
+     httplib2, which supported all the
+      authentication mechanisms there, including WSSE.
+       
+Relative URIs
+
+        My server implementation was considered "evil" by some
+        since I used relative URIs everywhere I could. The "evil" was
+        all in joking and I have to agree with Tim about the attitude in the room. 
+        We had a general discussion about relative URIs and xml:base 
+        and everyone who didn't support them went on to add support right there in the room, or to 
+        put it on their to-do list.
+        
+Semicolons, who knew?
+The semicolon I added to my service document URI was not 
+      intended in anyway to be "evil", but it caused at least one
+      client to fail "spectacularly", to quote that clients author.
+      
+XHTML
+My APP Test Client can send summary and content
+      as XHTML, which caused problems for two servers that I know
+      of, with one of them dropping all the markup while
+      preserving the text. Back to the attitude, this was 
+      logged as a bug, and it will be fixed.
+      
+
+In all, the meeting was incredibly useful and productive 
+and everyone agreed that we should have these
+face to face sessions every six months to a year, and that
+we should also have "virtual" interop sessions once a month.
+Thankfully DeWitt volunteered to herd those cats.
+
+What next?
+
+This was a question I got alot; "After APP gets
+an RFC number, what comes next?"
+
+Part of the answer is logistical and it was great to have 
+Lisa Dusseault there to answer those questions. The WG will cease, 
+but the mailing list will continue to operate. Extensions
+can be brought forward as individual submissions and discussed
+on the list before asking the IETF to raise them 
+to Informational, Experimental, or Proposed Standard.
+As for the future of APP itself I see useful work 
+going forward on:
+
+
+Extensions
+ I think there are a bunch of useful ones
+    that could be added, such as a standard way to link from
+    an OpenSearch document from a service document. Navigating
+    around a small collection via paging is okay, but when you
+    get to collections with members in the thousands or 
+    millions, search is going to be primary means of navigating
+    the collection, and OpenSearch is the drop dead obvious
+    way to do that.
+    
+Profiles
+now there seem to be two schools of thought
+    on this, either a profile for a 'workspace', i.e. these
+    collections represent a blog, or a more focused profile
+    for collections, i.e. this is a blog entry collection,
+    this is a collection for links, this is 'trash', etc.
+    
+Relationships
+
+    Also there was a lot of interest in links among collections, i.e.
+    entry 'A' has a link to collection 'B', where 'B' is 
+    a collection of all the comments on entry 'A'.
+    
+
+All in all it was a great meeting and I look forward to the next one.
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

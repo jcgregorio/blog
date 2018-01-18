@@ -19,6 +19,21 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="httplib2.HttpAsync()">
+  <meta name="twitter:description" content="        
+        I've created a new mercurial repository in httplib2 called async2.
+        The goal is to address issues #5,
+        #25,
+        #44
+        and address these in a way that makes it possible
+        to experiment with SPDY
+        in httplib2, which would be difficult if not impossible with the
+        current blocking IO implementation.  The very rough goal is to create,
+        or creatively reuse, a non-blocking async version of httplib, and then
+        have httplib2 choose between the blocking or non-blocking version based
+        on how the library is used.
+        
+    
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

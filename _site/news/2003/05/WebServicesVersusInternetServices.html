@@ -19,6 +19,64 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Web Services vs. Internet Services">
+  <meta name="twitter:description" content="  I think a new name is in order, "Internet Services" to distinguish
+them from "Web Services".
+  First let's discuss Web Services. The first person who comes
+   to mind for this definition is Jon Udell, who has been covering 
+   the idea of hooking up various services on the web for a long time,
+   most recently covering how to transform an RSS feed into HTML fit for
+   a Nokia which was done by Robert Ivanc, and how his bank
+   could have used Web Services to fix his online account. 
+But since 1994 or so, things have been different. Integrating two Web-based systems, if only 
+  by brute force, is not only necessary but possible. If I can log in to both systems and drive them 
+  interactively, I can write a script to join them programmatically. Every Web application can be tortured 
+  into behaving like a Web service, 
+  even when its creator never intended it to. [Jon Udell]
+  
+To me that sums up Web Services, as a way to streamline such natural information flows. 
+Now, in contrast, I have been lurking on the W3C Web Services and the W3C Web Services Architecture Working Group mailing lists.
+   As a side note, I think Mark Baker, no matter what you think of his arguments, definitely 
+   deserves a medal for persistence, as he tries to promote the REST architecture
+   to the Web Services Architecture Working Group. Anyway, medals aside, I have been following the arguments
+   and think that the term Web Services, and the actual goals of the majority of the people
+   in the Working Group have little, or nothing, to do with the ideas Jon Udell is talking about.
+   The group seems pretty centered on using SOAP via HTTP to connect big business databases
+   together. As far as I can tell, this group would be much better off if they dropped HTTP
+   and just started creating a BEEP profile that incorporated SOAP, 
+   which they could call "Internet Services" to differentiate themselves from "Web Services".
+Now, back to Web Services, brings us to Robert Scoble, latest borg victim, is trying to 
+   answer the question "Is IE Dead" while not trying to break an NDA ends up asking what
+   people would like to see in a new version of IE. (See the comments to this post.)
+   Which got me to thinking, what is the least amount of innovation that would be necessary 
+   to get Jon Udell's concept of Web Services up and running. That is, what's the minimum amount 
+   of tweaking to the browser that could be made so that services could be designed to be 
+   used from a browser, or programmatically. Here's the short list of changes: 
+
+Add the ability for HTML forms to submit their data as "text/xml" in addition
+      to "application/x-www-form-urlencoded".
+      This would be a half-way step between current HTML forms and XForms, which is only supposed to make
+      an appearance in XHTML 2.0.
+Also, have the optional ability for form values to be populated via XML. Now it looks like what I am asking for is XForms here, but
+      I've looked at XForms and it is way too complex and too radical a departure from 
+      current HTML forms that it won't be adopted anytime soon. There was no effort to leverage current
+      developer skills, nor any effort to minimize breakage when migrating from HTML forms to XForms. 
+
+That is the minimal list, if I were to go for the whole enchilada, I would also want:
+
+A native form element for editing HTML. A long time request of Dave Winer.
+The ability for HTML forms to use the "PUT" and "DELETE" methods in addition to the current "POST" and "GET" methods.
+
+That's it, those are all the changes that would be needed 
+   to support Jon Udell's concept of Web Services. These changes would make it dramatically
+   easier to create Web Services that could be used either by a browser or programmatically.
+   No SOAP, no WS-Security, no InfoPath, no XForms. Unfortunately, this has a zero percent chance
+   of being implemented. In a way I wish we we're back in the days of the browser wars, at 
+   least back then there's a chance at least one of the competitors would implement these 
+   ideas just on the hope it would give them an edge. Now Microsoft dominates the browser scene
+   and is unlikely to try anything innovative, and the W3C has moved well beyond this level
+   of tinkering and is dealing with bigger and better things like RDF, XForms and XHTML 2.0.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

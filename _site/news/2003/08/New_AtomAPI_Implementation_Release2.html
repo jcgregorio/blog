@@ -19,6 +19,60 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="New AtomAPI Implementation Release">
+  <meta name="twitter:description" content="  We came, we saw, we did, we got spanked, we did it right.
+  Last week Mark Pilgrim and I released an implementation of the AtomAPI, both 
+   a client and a server. That implementation included a new authorization
+   scheme that we came up with. Now we would have liked to used HTTP Digest authentication, and the AtomAPI should
+   support Digest authentication, but for many users setting up Digest just isn't possible.
+   Many users, like myself, are using a server that does not have Digest authentication 
+   turned on. Similarly not everyone has the ability to use .htaccess files,
+   which you need to be able to modify to setup Digest autentication, that or 
+   modify your servers httpd.conf which is even rarer still. However we heard    from CMS vendors that they want at least
+   the level of password security that HTTP Digest offers. So we needed to come up with 
+   a scheme that:
+
+Is a challenge-response Digest authentication scheme.
+Is able to be handled by a CGI program with no .htaccess, httpd.conf
+      tricks or requirements to be running as an Apache module, ala mod_perl or mod_python.
+Gracefully extends current authentication schemes.
+Is the simplest thing that could possibly work.
+
+So what we did was a simple transposition of Digest authentication into custom HTTP headers:
+   That authorization scheme was a variant of the 
+   RFC 2617 Digest authentication with the following changes:
+
+Used sha1 instead of md5.
+Triggered authentication by rejecting a request with an HTTP status code of 447 instead of 401.
+The server response when rejecting a request with a 447 also included an Atom-Authenticate: header that included the 'nonce'. This 
+      parallels the role of the WWW-Authenticate:  header in HTTP Digest.
+The client sends an Atom-Authorization: header with all the Digest authentication information in it.
+The server sends back an Atom-Authentication-Info: header with the 'nextnonce'.
+
+Now this was a good first pass but we did several things wrong as Ken Coar 
+   pointed out on his site and on 
+   the atom-syntax mailing list.
+   Basically it boils down to the fact that we ignored the built-in extensiblity of the 
+   HTTP authenciation mechanism and went around it starting with returning an HTTP status code 
+   of 447.
+What we should have done:
+
+Triggered an auth by rejecting a request with an HTTP status code of 401.
+The server response includes an Authenticate: header that includes Atom as an authentication scheme.
+The client then sends an Authorization: header with the scheme of Atom with 
+      all the Digest authentication information going into X-Atom-Authorization: header.
+With every request the server sends back an X-Atom-Authentication-Info: header with the 'nextnonce'.
+
+Note that this now uses the extensibility of the HTTP authentication scheme. When 
+   the server responds with a WWW-Authenticate: header, that header
+   lists, in order of preference, the authentication schemes that the server supports.
+   The client then selects the most preferred scheme that it also knows. Note that
+   the whole authentication mechanism is designed to be robust to the addition of
+   new/unknown schemes. We are leveraging this extensibilty by passing in an authentication
+   scheme to Apache that it doesn't know about. The Apache server reacts appropriately
+   by passing the request onto the CGI program to give it a chance to handle the 
+   authentication.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

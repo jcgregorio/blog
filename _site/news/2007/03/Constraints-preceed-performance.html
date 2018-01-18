@@ -19,6 +19,55 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Constraints preceed performance">
+  <meta name="twitter:description" content="  
+REST
+REST provides a set of architectural constraints that, when applied as a whole, 
+    emphasizes scalability of component interactions, generality of interfaces, independent 
+    deployment of components, and intermediary components to reduce interaction latency, 
+    enforce security, and encapsulate legacy systems.
+GFS
+We treat component failures as the norm rather than the
+    exception, optimize for huge ﬁles that are mostly appended
+    to (perhaps concurrently) and then read (usually sequen-
+    tially), and both extend and relax the standard ﬁle system
+    interface to improve the overall system.
+
+    The system is tuned for a modest number of large files
+    and presumes large streaming reads and small random reads, and
+    many large sequential appends.
+
+git
+
+At the lowest level in git there are only threetwo operations on the content store:
+    create, read, and delete. You don't even get to choose the name of
+    a file when it is created, all the data is written into
+    a file (deflated with zlib) where the filename is the sha1 hash
+    of the contents.
+
+
+Performance, either defined as speed or as scalibility, is achieved
+in each system because of the chosen constraints.
+What are your constraints? And what are they buying you?
+  
+    "...there are only two operations..."
+Nobody expects the Spanish Inquisition! Our two weapons are fear and surprise...
+    Posted by
+       Paul Morriss on 2007-03-19
+    
+
+    Paul,
+Fixed, thanks!
+    Posted by
+       Joe on 2007-03-19
+    
+
+    Too bad that Roy didn't write instead. "REST provides a set of architectural benefits that, when…" or something similar. Maybe it would have been easier for people to accept it.
+    Posted by
+       Karl Dubost, W3C on 2007-03-19
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

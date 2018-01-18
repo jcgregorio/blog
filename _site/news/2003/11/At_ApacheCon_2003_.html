@@ -19,6 +19,25 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="At ApacheCon 2003">
+  <meta name="twitter:description" content="  Today I am live from ApacheCon 2003.
+  I will be presenting later today. Pictures and text as time and battery life permits.
+  
+The day started at 4:40AM when I woke up for the first time, not being used to
+  to west coast time. The timing was perfect I got to call and talk to Lynne and the
+  kids just before they went off to school. I woke again at 6 and finally gave up when 
+  I woke for the third time at 6:30.
+First off was breakfast. The hotel only supplies Pepsi products and given the
+long day ahead of me I needed a large dose of Coca-Cola, so I headed out in
+the rental car to search for food. Finally settled on a McDonalds on the strip
+and headed back to the conference.
+The conference opened with the Plenary
+and Keynote. After that I attended Ted Leung's talk  XML at the ASF: The XML, WS, and Cocoon projects. I was introduced to Ted by Sam Ruby yesterday when I arrived. After his talk I had lunch with Ted, Mark and Stefano Mazzocchi.
+The second talk I went to was another Ted Leung talk Everything you always wanted to know about XML parsing, but had to leave in the middle for a bit (sorry Ted!) because I got a phone call. Well, let me back up, I got the call. Lynne called with the news that our referral had arrived. We now know the name, age and have a picture of our daughter that we are adopting from China. Her name is Jiang Xun, she is 8.57.5 months old and comes from the Szechuan province.
+I was hoping to see low-level details of compiling Apache for different size platforms when I attended "Shoehorning Apache Onto Your Box: System Sizing Tips", but the focus of the talk was tuning parameters on startup. Still a very informative and useful talk. It was very convenient as Apollo3 was the room in which Mark and I were presenting next. Probably the coolest part of the talks was that Roy Fielding showed up for both, and afterward we got to ask him questions about how well the AtomAPI was conforming to REST. (Ted Leung also posted about Roy being there.) It was cool to hear dirctly from him that he thought that the AtomAPI looked fine. He did have some minor corrections to the Atom Authentication scheme that we came up with. The first was that headers that begin with 'X-' should never be used on the open internet, if you do you them in a closed experimental situation that is fine, but once you go public you should remove them. That raised the problem that was had run into that PHP didn't pass along custom headers that didn't begin with 'X-', a situation Roy said he would look into. The second observation he made was that the header names we chose were very long and we should go for shorter ones, for example Atom-Auth instead of the current X-Atom-Authentication. The last thing he mentioned was looking into changing the behaviour of the Apache server in the case of Digest authentication to pass all the Digest headers to the CGI program. That would be great if that change went through then it would go a long way towards obviating the need for Atom Authentication as it would then be possible to implement Digest authentication in a CGI program (that wasn't running as a module.)
+From there to the reception for two hours of chatting, then onto the Atom BOF, which was scheduled for one hour but ended up lasting for 1:45 before we finally left at 9:45PM for dinner at P.F. Changs, which was excellent. I think it was close to midnight when we left the restaurant and since I've never been to Vegas before Mark and Sam indulged me and we drove up and down the strip at night, which is quite a site to see, then we wandered around the MGM Grand for a while before returning the hotel. Since I had to get up at 5AM the next morning to catch a flight back to N.C. I had to get everything packed before finally going to bed at 1:30AM. 6:30AM to 1:30AM makes for a very long day. 
+There are a lot of people I met through the day, like all the people that showed up to the Atom BOF, and the folks we had dinner with. I'll come back to this post and update it with links and pictures after I upload them.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

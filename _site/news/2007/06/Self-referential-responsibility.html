@@ -19,6 +19,49 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Self-referential responsibility">
+  <meta name="twitter:description" content="  My wife is starting a business, something I will blog more about in the future.
+The important part, for this story, is that all the web based things fell to me, and 
+I turned to Google Apps. The startup process was amazing, in just two hours 
+we went from zero to having our own domain name, a web site, email, chat,
+docs, and calendaring. There's just two employees in the business today, but
+we can add up to 200, and all for no costs beyond the $10 for the domain name
+registration.
+
+Anyway, one of the things Lynne wanted was a registration form. I wanted
+to keep things simple and keep as much data in Google Apps as possible, so
+what I came up with was the idea of creating a registration form that 
+appended the data into a Google Spreadsheet. Lynne was thrilled with the idea.
+
+
+Now Google Page Creator doesn't have the ability to create forms using the 
+GUI tools so I had to hand code one. Also, there is no gateway for moving
+form data into a spreadsheet, so I decided to write a little 
+Python CGI script on bitworking.org that would take the output of the form, append it as a 
+new row in the spreadsheet, and then redirect back to a page on the
+website.
+
+So, for the record we have:
+
+A Python script
+using the gdata-python-client
+which uses the Atom Publishing Protocol
+to add data to a spreadsheet
+
+As I'm coding this up it dawns on me:
+If I can't get this to work, I have no one to blame but myself!
+  
+    You had a Bill Gates moment!
+    Posted by
+       Michael R. Bernstein on 2007-06-01
+    
+
+    I must have been asleep for the past few months because I never realized that it was already possible to automate the editing of Google Spreadsheets.  And via Python!  Very slick.  The cost of creating a small business just keeps getting lower and lower.
+    Posted by
+       Scott Johnson on 2007-06-01
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

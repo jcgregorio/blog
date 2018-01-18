@@ -19,6 +19,321 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="REST Tip Deep etags give you more benefits.">
+  <meta name="twitter:description" content="  ETags, or entity-tags, are an important part of HTTP, being
+        a critical part of caching, and also used in "conditional" requests.
+        So what is an etag?
+        
+
+Entity tag
+The ETag response-header field value, an entity tag, provides for an "opaque" cache validator.
+
+
+        That's not very helpful, is it?
+        
+  
+        The easiest way to think of an etag is as an
+        MD5 or SHA1 hash of all the bytes in a representation.
+        If just one byte in the representation changes, the etag will change.
+        
+
+        Aside: I am only talking about strong etags here. There are such
+        things as weak etags, they only indicate two representations 
+        are semantically equivalent. Semantically equivalent? 
+        From here on out when I say 'etag', I mean a strong etag.
+        
+
+        ETags are returned in a response to a GET:
+        
+joe@joe-laptop:~$ curl --include http://bitworking.org/news/
+HTTP/1.1 200 Ok
+Date: Wed, 21 Mar 2007 15:06:15 GMT
+Server: Apache
+etag: "078de59b16c27119c670e63fa53e5b51"
+Content-Length: 23081
+Vary: Accept-Encoding,User-Agent
+Connection: close
+Content-Type: application/xhtml+xml; charset=utf-8
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;&lt;link href="/favicon.ico" type="image/ico" rel="shortcut icon" /&gt;
+...
+
+On a subsequent GET request you can put the value in that  ETag: header in an
+        If-None-Match: header and if there is a representation that has
+        that etag, i.e. if the representation hasn't changed, then the response 
+        is a 304 with no entity body returned.
+That's a great savings in bandwidth.
+ The inclusion
+        of an If-* header turns any normal request into a 
+        "conditional" request, in this case our GET became a 
+        "conditional" GET.
+        
+
+        The etag is used as a cache-validator and can 
+        be combined with other cache related headers
+        to great effect. See my article on XML.com:
+        Doing HTTP Caching Right: Introducing httplib2.
+        
+
+        In addition to being used during GETs, the etag can be used
+        to do a "conditional" PUT, which can be used to avoid the 
+        Lost Update Problem.
+        
+Static files
+
+        The Apache httpd web server has built in support for generating etags 
+        for statically served files.
+        FileETag 
+        allows you to set what pieces of information are used to
+        generate an etag. You can choose a combination of inode, last-modified,
+        and the file size.
+        
+
+        Why not turn them all on? Well, in cases where you are 
+        serving the same file from several servers you
+        definitely want to turn off the use of the 'inode' for generating
+        the etag since the inode will vary from system to system.
+        
+Non-static content
+
+        If you are not serving up static content then you need to do some more
+        work to enable etags. How much work you do will determine how much
+        benefit you get from etags. The deeper the concept of an entity-tag
+        permeates your application, the more benefit you will receive.
+        
+
+        Aside: Many of the things I'm talking about with ETags and
+        If-* headers can also be done with a last modified
+        time served in the Last-Modified: header. In general I 
+        advise against using Last-Modified: since it is limited to
+        a one second granularity and you may have issues with clock skew
+        among a group of servers. ETags are just conceptually 
+        simpler and just as powerful. This advice is only really 
+        for servers, which can decide which cache-validators to 
+        support, clients have no such luck and should 
+        support both. 
+        
+Constructing ETags
+
+        How do you generate an etag? Find all the bits of information that could impact
+        your representation of a resource and use that information to build
+        an 'opaque' etag. I usually do that by concatenating the values of these
+        key pieces of information as strings and then calculating an MD5 or SHA1 hash of that string.
+        The MD5 hashed value is certainly opaque, and the MD5 hash assures that the actual
+        etag is only 32 characters long, while ensuring that
+        they are highly unlikely to collide. 
+        
+A shallow implementation
+
+        You can get away with a very shallow implementation of etags
+        and get a lot of benefits to your bandwidth.  You could implement
+        a simple layer in your stack that actually built the full response and
+        then calculated an MD5 hash of the bytes returned and use that
+        as an etag. From that simple base you could handle "conditional"
+        GETs and achieve a savings in bandwidth. This isn't to be sneezed at, as
+        the savings could be substantial.
+        
+A deeper implementation
+
+        On the other hand, if you bring the concept of etags deeper into
+        you application you could get even more benfits. First, you could
+        support things like "conditional" PUTs, which allows clients
+        to detect lost updates. [For the terminology-oriented this is a
+        form of optimistic concurreny.]
+        
+
+         Secondly, the data query
+        and templating needed to create a representation may be
+        the time-consuming part of the response and the bandwidth 
+        savings may be negligable in comparison. In this case
+        it's beneficial to bury etag support deep in your application
+        and use it to shortcut the querying and templating steps.
+        
+REST Tip: Deep etags give you more benefits.
+
+        For this to work you need to pick out key values or characteristics
+        of your data the will determine if a representation will
+        change, and then build an etag from that. For example, in 
+        the case of files, Apache httpd uses a combination of 
+        inode, last-modified time, and the file size. For your
+        application you may already store a timestamp of when
+        each resource is modified, which is perfect information 
+        to fold into an etag.
+        
+In the case of data stored in a database, if a resource is tied
+        to a single row in a table then a simple timestamp or revision number 
+        on the row is a good source of information for generating an etag.
+        But that is just one source. If you then process that through a 
+        template then the 'version' of the template also needs to used in
+        calculating your etag. A change to the template would alter the
+        representation even though the revision number for a row in the database
+        didn't change, so both need to be used together when calculating 
+        the etag.
+        
+Examples
+Here are some examples of deep etags that 
+           avoid a lot of computation.
+Here is the bit of code in the sparklines 
+        web service that checks for matching etags:
+        
+if_none_match = os.environ.get('HTTP_IF_NONE_MATCH', '')
+if if_none_match and str(hash(os.environ.get('QUERY_STRING', '') + __version__)) == if_none_match:
+    not_modified()
+
+The whole source file is available. 
+        In this case the etag is driven off the query parameters passed into the service and
+           the version of the file spark.cgi itself. 
+           
+I took a slightly different approach in the Critter Generator
+              and instead of using the file version I used the last-modified timestamp 
+              of the program.
+              
+def etag(critterid):
+    file_version = os.stat(sys.argv[0]).st_mtime
+    etag = sha.sha(critterid)
+    etag.update(str(file_version))
+    return '"%s"' % etag.hexdigest()
+
+In both of these services the etag check is done very early and 
+              avoids all of the calculations required for a non-matching response.
+              
+But I use a database...
+
+              You have a good knowledge of your domain and can come up with
+              a method of determining an etag from your data. Maybe the
+              data is never updated, or you keep track of updates already, or
+              your database keeps fine grained timestamps on rows
+              that you can use for etag generation.
+              
+
+              You should use those.
+              
+
+              What I'm going to show you is a sledge hammer approach
+              that doesn't rely on specialized knowledge of your problem domain.
+              Like all sledgehammers, it's a heavy tool that should be applied 
+              with care.
+              
+
+              If your resource maps one to one with a row in a table, and you keep a revision number
+              for each row then you can use that as a value to build an etag.
+              
+
+              This technique doens't require adding any code to 
+              update the revision number on the rows, that can be done
+              by using a trigger. Here is an example from SQLite:
+CREATE TABLE notes (
+     id        INTEGER PRIMARY KEY autoincrement,
+     note      TEXT,
+     rev       INTEGER DEFAULT 0);
+CREATE TRIGGER insert_notes_revision AFTER UPDATE ON notes
+        BEGIN
+          UPDATE notes SET 
+                rev = rev+1 
+            WHERE id = new.id; 
+        END;
+
+Let's look at some Python code that handles this, a trivial Python application
+           for editing 'notes'. Just editing. You can't even add or delete
+       notes, just edit them. 
+       All of the code for this sample is available here. 
+       This service is built on my throw away Python framework Robaccia.
+       Here are the modifications
+       to robaccia.py. Note that render() depends upon the caller passing in
+       some information, raw_etag, to be used as a basis for an etag. It then adds in a dependency on the last-modified timestamp of 
+       the template file. It returns a 304 if appropriate, otherwise
+       it includes the calculated entity tag in the ETag: header.
+    
+def render(environ, start_response, template_file, vars, headers={}, status="200 Ok", raw_etag=None):
+    
+    file=os.path.join("templates", template_file)
+    if raw_etag:
+        last_modified = str(os.stat(file).st_mtime)
+        hash = md5.new(raw_etag)
+        hash.update(last_modified)
+        etag = '"%s"' % hash.hexdigest()
+        headers['etag'] = etag
+        if etag == environ.get('HTTP_IF_NONE_MATCH', ''):
+            start_response('304 Not Modified', [])
+            return []
+    
+    (contenttype, serialization) = ('text/html; charset=utf-8', 'html')
+    ext = template_file.rsplit(".")
+    if len(ext) &gt; 1 and (ext[1] in extensions):
+        (contenttype, serialization) = extensions[ext[1]]
+    # Only serve XHTML to those clients that can understand it.
+if serialization in matching:
+        best = mimeparse.best_match(matching.keys(), environ.get('HTTP_ACCEPT', 'application/xhtml+xml'))
+        (contenttype, serialization) = (best, match[best])
+    if serialization == 'xhtml' and environ.get('HTTP_USER_AGENT', '').find("MSIE") &gt;= 0:
+        (contenttype, serialization) = extensions['html']
+    template = kid.Template(file, **vars)
+    body = template.serialize(output=serialization, encoding='utf-8')
+    headers['Content-Type'] = contenttype
+    start_response(status, list(headers.iteritems()))
+    return [body]
+And here is the view implementation, based on wsgicollection.
+    The _raw_etag() method is what builds up the raw information to be used
+    in the calculation of the etag. In this case it is just a concatenation
+    of all the 'rev' columns in the rows used to generate the response.
+    
+import robaccia
+import dbconfig
+from wsgicollection import Collection
+from config import log
+class Notes(Collection):
+    def _raw_etag(self, cursor):
+        e = []
+        for row in iter(cursor):
+            e.append("%d-%d" % (row['id'], row['rev']))
+        return "-".join(e)
+    def list(self, environ, start_response):
+        c = dbconfig.connection.cursor()
+        rows = list(c.execute("select id, note, rev from notes;"))
+        return robaccia.render(environ, start_response, 'list.xhtml', {'rows': rows}, raw_etag=self._raw_etag(rows))
+    def get_edit_form(self, environ, start_response):
+        c = dbconfig.connection.cursor()
+        id = environ['wsgiorg.routing_args'][1]['id']
+        rows = list(c.execute("select id, note, rev from notes where id = ? ;", id))
+        return robaccia.render(environ, start_response, 'edit_form.xhtml', {'rows': rows}, raw_etag=self._raw_etag(rows))
+    def update(self, environ, start_response):
+        c = dbconfig.connection.cursor()
+        id = environ['wsgiorg.routing_args'][1]['id']
+        f = environ['formpostdata']
+        note = f.get('note', ['no note found'])[0]
+        rev = f.get('rev', ['no rev found'])[0]
+        c.execute('update notes set note=:note where id=:id;', locals())
+        dbconfig.connection.commit() 
+        start_response("303 See Other", [('Location', "../")])
+        return []
+You'll note that this implementation requires looking at all the 
+    rows that will be used to generate the response, so this technique
+    isn't going to save you any computation time; it will only save bandwidth, and
+    the processing time for the templates.
+ I told you it was a sledgehammer. 
+One more thing to note, look at the implementation of _raw_etag(), it concatenates the 'id' and 'rev'
+    for each row used to build the representation. If this list ran to hundreds of items and
+    we didn't form the etag from an MD5 hash of raw_etag, then we'd end up 
+    schlepping around an etag hundreds of bytes long, which is no way to save bandwidth.
+    
+Again, the point isn't to show you exactly how you should be
+    implementing etags, but to give you some ideas
+  on how to start, and how 
+    you can use them to speed up your application. The deeper you build 
+    etags into your application, and the earlier to start thinking about
+    them, the better off you'll be.
+    
+  
+    Very good post (as always)!
+
+Another possibility for etag generation is not to do it yourself but let the httpd do it by creating static content. If you create static files of your database content then Apache could serve them with etags, last modified, etc. in the most efficient way. This of course is not feasible in all cases. A usual use case to do such a thing is for serving RSS/Atom feeds where the static files can be generated (or can be checked if they need to be generated), let's say, every 10 minutes.
+
+
+If someone is worried about serving stale information by following this periodic generation of static files there are ways to avoid the staleness. As an extreme example, in the past I have  implemented the following: I created a database trigger that deletes (!) the static file when the database is updated and I configured Apache (with mod_rewrite) so that when the static file is referenced but does not exist a cgi should run that, based on the database content, recreates the static file. That way I had always fresh content delivered through the static files and these files are created in a lazy, on demand manner.
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

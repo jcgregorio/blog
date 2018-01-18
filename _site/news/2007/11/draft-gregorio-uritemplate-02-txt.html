@@ -19,6 +19,38 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="draft-gregorio-uritemplate-02.txt">
+  <meta name="twitter:description" content="  I've submitted the next version of the URI Templating specification, draft-gregorio-uritemplate-02.txt, but it won't be officially published until Dec 3rd because of the upcoming IETF meeting. I've gone ahead and released the HTML and TXT versions of the draft and will update the pointer to the TXT version once it is published as an internet-draft. As usual, the draft can be found here: http://bitworking.org/projects/URI-Templates/This version adds the '-cmd' commands we've been talking about, w/o the '-sub' command. I've also added an examples section and some example code in an Appendix to demonstrate how easy the parsing can be.I've also written a parser that extracts the example templates and variable definitions from the final .TXT version of the specification and runs them through the template-expansion code to check them against the supplied expansions. Finally, the URI Template explainer web service has been updated to conform to this draft. I'm actually running off of two different subversion repositories, one for the code, and another for the specification text. I'll be consolidating them into one repository in the future.
+  
+    Hi Joe -- I think the link is missing a t in projects.  Thanks, Nell
+    Posted by
+       Nell Gawor on 2007-11-26
+    
+
+    You missed a 't' Joe!
+    Posted by
+       JamieT on 2007-11-26
+    
+
+    Nell and Jamie,
+Thanks! Now fixed.
+    Posted by
+       Joe on 2007-11-26
+    
+
+    Why did you choose to define URI templates instead of IRI templates?
+    Posted by
+       Brian on 2007-11-26
+    
+
+    Brian,
+There will probably be an IRI part of the specification.
+    Posted by
+       Joe on 2007-11-26
+    
+
+    I think there is a security consideration in terms of injection attacks.  I don't *think* this consideration is a problem, but it could be noted, as I think it also drives some of the design considerations.  An injection attack would be something like ?foo={article_id}, where article_id="1&amp;action=delete" (with the value somehow submitted by an attacker).  This would be a problem *if* it expanded to ?foo=1&amp;action=delete.  But expanding to ?foo=1%26action%3Ddelete is generally safe.  Of course if there is any structure to the values beyond normal parameters, e.g., ?action=SELECT%20{table} and someone submits table="foo;DELETE bar", then you'll still be unsafe (assuming for some reason allowing destructive query parameters are "safe").  So that still might be a consideration.  Changing your URI to ?action=SELECT&amp;table={table} would make it safer.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

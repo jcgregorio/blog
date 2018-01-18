@@ -19,6 +19,22 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Five things I hate about Python">
+  <meta name="twitter:description" content="  Jacob Kaplan-Moss:
+I completely agree with Brian that you can’t trust any advocate who doesn’t know enough to find stuff to hate. Given that I spend a lot of time advocating Python, writing down what I hate seems a good exercise.
+  I'm flattered to see httplib2 listed as one of the libraries Jacob would want in the standard library.
+
+I agree almost completely with his list, though I would have folded #4 and #5 together into a single request for abstract base classes. I would add a couple exclamation points around the complaints about eggs, and I would add one more thing I hate, (which I can do since I folded 4 and 5 into one), and that is poor documentation. The documentation for Python is too scattered and uneven. Compare this to the clear and comprehensive documentation around Django. Part of the problem may be the awful  tools for developers trying to create documentation, and yes, I'm allowed to complain because I've used them. Getting the tool chain to work to generate the Python library style documentation was a royal pain, I literally had to patch some cryptic TeX files and download some other ones. I don't mind that it's in TeX, but the output is pretty ugly, and not usable anywhere else. This is on top the fact that there are multiple ways to document your Python code, such as docstrings, so now I have two different sets of documentation I need to keep synchronized.
+
+ There needs to be one and only one way to generate documentation for modules, that should generate both the web page help and the docstrings, and I should be able to put it inline with the code.
+Maybe there's a way to do that today. I wouldn't know, I couldn't find it in the documentation...
+
+Just to be clear, it's not just the library docs that need work. Here is a simple test to take, presuming you don't already know the answer: If you are going to contribute a patch to Python do you have to sign anything, and if so, where is that form? Please start from python.org and let me know how long it took you.
+Besides those five things, I really love the language, and given more hours in a day I'd do more to try to help fix the things I dislike.
+
+  
+    Pudge is a documentation system for Python that generates documentation files from docstrings and uses Restructured Text syntax. You can see a running example in Python Paste.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

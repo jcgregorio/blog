@@ -19,6 +19,43 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Sparklines in data URIs in Python">
+  <meta name="twitter:description" content="  Sparklines, 
+   as defined by Tufte, are intense, simple, word-sized graphics.
+   Kind of like this:  .
+   I seemed to stumble across them at just the right time, as I have regression tests I
+   am adding to on a daily basis. The result is a flood of information.
+   I believe sparklines may be the answer to my information avalanche. 
+
+All of my regression scripts are written
+   in Python and the output of those scripts
+   is HTML. Embedding sparklines in that report output sounds like a perfect application
+   of "data: URIs" [RFC 2397], which allow you to 
+   take small bits of data, like small images, and instead of serving them up seperately, you 
+   embed the data right into the URI. In this case, I'll generate PNG formatted sparklines
+   then encode them as data URIs that can be included directly in my HTML formatted 
+   regression test results.
+   So I dashed off to find a sparklines module for Python. 
+
+   I found none.
+ I did find one 
+   for PHP, http://sparkline.org, but that would
+   not be Python now would it?
+Not to be discouraged, I set off to load up the standard image manipulation
+   package for Python.
+Crud.
+Explain to me again why doesn't Python have a standard image manipulation
+   package? 
+I settled on Python Imaging Library (PIL).
+Making the sparklines turned out to be incredibly easy, making me think that the reason there
+    wasn't any libraries is that it's just so easy to glue the right
+    pieces together in Python that a library would be overkill.
+    Here is the code:
+
+import Image, ImageDraw
+import StringIO
+import urllib
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

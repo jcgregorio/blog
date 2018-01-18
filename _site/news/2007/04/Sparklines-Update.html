@@ -19,6 +19,32 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Sparklines Update">
+  <meta name="twitter:description" content="  The sparklines generator has been updated to offer a new graph type: impulse. This is similar to a discrete graph 
+ , but the lines extend all the way down to zero
+.
+Note I said "zero", and not "the bottom of the graph". That lets me introduce
+another often requested feature, the ability to make graphs like this:
+.
+All lines in an impulse graph are plotted from zero, and if you put a lower limit
+for your data that is negative, then negative data points are plotted down
+from zero. The last feature I added, also visible in that last sparkline, 
+is the ability to set the width of the lines in the "discrete" and "impulse" graphs.
+   The generator page
+has been updated with the controls for the new features, the docs
+have been updated, and as always the code is available.
+
+Big thanks to Alan Powell, whose patch kicked me off
+   on adding these features.
+
+Just a gentle nudge of a reminder, 
+   if you are hosting a version of sparklines internally,
+  and have added some nifty features or graph types, 
+  I sure would appreciate the patches, presuming you can 
+  wrangle them past legal. 
+
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

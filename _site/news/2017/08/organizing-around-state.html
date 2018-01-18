@@ -19,6 +19,20 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Organizing around State">
+  <meta name="twitter:description" content="
+  This is 
+    L-Systems with Redux and StateReflector, but now with more
+  organization around updating the state and around efficiently updating
+  the DOM to changes in the state. That is, a simple app for drawing
+  L-Systems, where making changes to the parameters (Length, Angle) is stored
+  in the URL fragment identifier, thus creating a permalink for any
+  selections a user makes. The state of the page is kept in a Redux state
+  store and we use StateTools.getDelta()
+  to store that changing state in the URL fragment, and also pull the state
+  out of the URL and push it into the state when the URL changes.
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

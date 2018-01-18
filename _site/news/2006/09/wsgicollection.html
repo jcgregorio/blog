@@ -19,6 +19,72 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="wsgicollection">
+  <meta name="twitter:description" content="
+  The idea of RESTful "Collections", i.e. doing CRUD over HTTP correctly,
+  has been percolating for years now.
+  A Collection is nothing more than a list, a container for resources.
+  While the APP defines a Collection in terms of Atom Feed and Entry documents
+  we don't have to be limited to that. 
+  It's time to complete a virtuous circle;
+  RESTLog 
+  inspired the Atom Publishing Protocol which 
+  inspired David Heinemeier Hansson's
+World of Resources (pdf) 
+  and now it's time to come full circle and get that 
+  world of resources in Python.
+  
+
+  In particular look at page 18 of that slide deck, where
+  dispatching to a collection of people, the following URIs
+  are to be handled:
+  
+  GET    /people         
+  POST   /people
+  GET    /people/1
+  PUT    /people/1
+  DELETE /people/1
+  GET    /people;new
+  GET    /people/1;edit
+
+  Now the 'new' and 'edit' URIs can be a bit ambiguous, only in the sense
+  that you might not guess right away that they are nouns, and remember,
+  URIs always identify nouns.
+  I prefer to make the noun-ishness of them more apparent.
+  
+  GET    /people;create_form
+  GET    /people/1;edit_form
+
+  In general, using the notation of Selector, we are looking at URIs 
+  of the form:
+  
+ /...people/[{id}][;{noun}] 
+
+  And dispatching requests to URIs of that form to functions with nice names:
+  
+  GET    /people               list()
+  POST   /people               create()
+  GET    /people/1             retrieve()
+  PUT    /people/1             update()
+  DELETE /people/1             delete()
+  GET    /people;create_form   get_create_form()
+  GET    /people/1;edit_form   get_edit_form()
+  
+
+  Introducing wsgicollection, a Python library that 
+  does just that, simplifying 
+  implementing such a Collection under WSGI.
+  
+
+  Wsgicollection uses Selector indirectly, relying on it to parse the URIs
+  for {id} and {noun}. In theory it will work with any WSGI middleware that
+  sets values for 'id' and 'noun' in 
+  
+ environ['selector.vars'] environ['wsgiorg.routing_args'].
+  Here is how you would define a WSGI application that implements a collection:
+  
+from wsgicollection import Collection
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,156 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="REST Tips URI space is infinite">
+  <meta name="twitter:description" content="  One of the questions that has arisen several times recently is 
+validation using REST. 
+
+
+The scenario is that a client, a web page or some other
+agent, needs to do some quick validation for feedback to 
+the user. For example, when entering a zipcode into 
+a form we'd like to check that zipcode as it's
+entered and display some visual feedback when it's valid. 
+
+
+Let's follow our REST recipe and see what we end up with:
+
+  
+Find the nouns (resources).
+    Determine the representations.
+    Pick the methods.
+    Highlight specific status codes.
+
+
+The noun in this case is a zipcode.
+
+zipcode/{zipcode}
+
+The representation will be a PNG file of a happy
+green checkmark.
+
+
+The method will obviously be GET.
+
+
+For status codes, if the given zipcode is not a valid
+one then we will return a 404 Not Found, and a PNG of a
+red X, otherwise we return a 200 Ok for the happy green
+checkmark.
+
+
+Note that we are returing small PNGs to make the 
+web page easy to construct, and we are also 
+sending back a 200 only on a good 
+zipcode, which means that a client can 
+programatically use this service by 
+just checking the status code returned, ignoring
+the PNG.
+
+
+The trick here is not caring about the size of the URI
+space we are creating. The number of potential
+URIs in /zipcode/{zipcode}
+is huge if we include all the 404's in there.
+That is, the valid URIs in /zipcode/{zipcode}
+are sparse. But since we are only keeping a list of
+valid zipcodes we don't have to keep track
+of the 404 space, only its complement.
+That is, I know /zipcode/foo isn't a valid
+zipcode, but I don't have 'foo' in a file somewhere.
+This is one example of a more general principal:
+
+
+Tip: It's useful to think of URI space as infinite.
+
+
+As specified in RFC 3986, URIs are not limited in length.
+In reality servers, browsers, and proxies have various limits
+that in practice bring the number down to 4096 characters. 
+Let's do a quick back of the envelope calculation: if you 
+just consider [a-zA-Z0-9] as a really stripped down set of 
+characters allowed in a URI and then look at the 
+longest practical URI, you are looking at roughly 62^4000 addressable resources. Just to put that in perspective
+a rough estimate for the number of atoms in the
+    observable universe  is 10^81.
+
+
+URI space is infinite.
+
+
+Here is the code for the lookup service. It presumes
+the existence of a file that contains all the valid 
+zipcodes, sorted, with one per line. The file I used
+is very old and comes from the census bureau, so
+please don't use this service for anything 
+legitimate; it's only presented for demonstration.
+
+from mmap import mmap
+import os
+from bisect import bisect_left
+import sys
+class Zipcodes(object):
+    """Use mmap to treat the sorted file of zipcodes
+    as an array"""
+    def __init__(self):
+        self.f = open("sortzips.txt", "r+")
+        self.size = os.path.getsize("sortzips.txt")
+        self.m = mmap(self.f.fileno(), self.size)
+    def __getitem__(self, i):
+        self.m.seek(6*i)
+        return self.m.read(5)
+    def __del__(self):
+        self.m.close()
+        self.f.close()
+    def __len__(self):
+        return self.size / 6
+zipcodes = Zipcodes()
+target = os.environ.get('PATH_INFO', '/')[1:]
+found = ( zipcodes[bisect_left(zipcodes, target)] == target )
+print "Status: " + ( found and "200 Ok" or "404 Not Found" )
+print "Cache-control: max-age=172800"
+print "Content-type: image/png"
+print ""
+f = open(found and "good.png" or "bad.png", "r")
+png = f.read()
+f.close()
+sys.stdout.write(png)
+
+
+Here is a simple web page that uses the service. You
+can view source on that page to see the tiny amount of JavaScript needed.
+
+  
+    I couldn't agree more.
+OTOH, do you find people thinking that the URI space should be smaller and more finite? It hadn't occurred to me anyone would think that way until someone I work with made a point that a certain technique I was advocating resulted in more URIs than his preferred method and as such he felt my preferred method was less desirable for that (as well as other) reason(s). I'd explain what we were debating, but it's a long story planned for a long blog post one day (not our debate, but the technique I was advocating.)
+Anyway, it reminds me of this time when this other guy I used to work with who had a really geeky sense of humor wrote a web page with a GUID generator (this was way back when GUIDs were actually a relatively new programming solution.) So I started refreshing the page watching the GUID change which caused him to yell at me (in a purposefully nasally voice): "Stop it....You're gonna use them all up!" ;-)
+    Posted by
+       Mike Schinkel on 2007-03-03
+    
+
+    "OTOH, do you find people thinking that the URI space should be smaller and more finite?"
+Definitely. I don't mind using uids and md5 hashes for certain apps handling machine generated masses of content, but I think people like "socialable urls" which reduces the number to countably infinite at best, and more likely to be "lots" in practice. They don't need infinite URLs, they need nice ones (it's exactly the same for domain names)
+For example, I know people can't stand Vignette URLs (the numerical ones with commas). For another example, lastfm's and wikipedia's URL spaces are highly elegant; I suspect it's one of the reason's wikipdedia is successful. Yet flickr is doing fine with hashes.
+"Let's do a quick back of the envelope calculation"
+Domain names will bring the calculated order down; maybe to the number of stars in the universe or something sufficient. 
+    Posted by
+       Bill de hOra on 2007-03-03
+    
+
+    Bill,
+"Domain names will bring the calculated order down; maybe to the number of stars in the universe or something sufficient."
+I was actually expecting that complaint, which is why I used 4000 instead of 4096, to leave room for domain name.
+    Posted by
+       Joe on 2007-03-03
+    
+
+    I seem to remember that when we were working on Webarch in the TAG, we were told that the 4096-byte limit on URIs was, practically speaking, distant history.
+    Posted by
+       Tim on 2007-03-03
+    
+
+    Queries that return images like this are bad for accessibility: How do you present alternate text for disabled users (or for any sort of automated post-processing)?
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

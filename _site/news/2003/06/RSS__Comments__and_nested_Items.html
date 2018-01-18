@@ -19,6 +19,69 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="RSS, Comments, and nested Items">
+  <meta name="twitter:description" content="  I recently implemented per-item RSS feeds for comments on BitWorking.org. In the process had to decide what the channel level title, link and description should be. I settled on making them the contents of the original item that the comments were on.
+   The whole situation does point to a striking symmetry in RSS that really isn’t supported by the current element naming conventions. That is, the major elements of channel (title, link, description) are the same as the major elements of item (title, link, description).
+Ok, here is the main RSS feed of intertwingly (with some content elided for clarity):
+&lt;rss version="0.91"&gt;
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+      &lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+      &lt;/description&gt;
+And here is the comment feed:
+&lt;rss version="2.0"
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby: Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+    &lt;description&gt;Simon Willison: Parsing simple HTML with regular expressions is...
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+      &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+      &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+      &lt;/description&gt;
+    &lt;/item&gt;
+What would a main feed look like that contained both stories and comments? How about nesting items?
+&lt;rss version="0.91"&gt;
+  &lt;channel&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+      &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+          &lt;item&gt;
+            &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+            &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+            &lt;description&gt;Agreed. I was in regex-hell this weekend trying to....
+            &lt;/description&gt;
+          &lt;/item&gt;
+        &lt;/item&gt;
+Of course, if you are going to this, why bother with the ‘rss’ element and why not rename ‘channel’ to ‘item’ too:
+  &lt;item&gt;
+    &lt;title&gt;Sam Ruby&lt;/title&gt;
+    &lt;link&gt;http://www.intertwingly.net/blog/&lt;/link&gt;
+    &lt;description&gt;It's just data&lt;/description&gt;
+    &lt;item&gt;
+        &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+        &lt;link&gt;http://www.intertwingly.net/blog/1470.html&lt;/link&gt;
+	&lt;description&gt;Simon Willison&lt;/a&gt;: &lt;em&gt;Parsing simple HTML with regular...
+        &lt;/description&gt;
+        &lt;item&gt;
+          &lt;title&gt;Safely consuming RSS: RegExps don't cut it&lt;/title&gt;
+          &lt;link&gt;http://www.intertwingly.net/blog/1470.html#c1055774394&lt;/link&gt;
+          &lt;description&gt;Agreed. I was in regex-hell this weekend trying to add...
+          &lt;/description&gt;
+        &lt;/item&gt;
+      &lt;/item&gt;
+But now you‘re pretty far from what we call RSS…
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,24 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="C10K">
+  <meta name="twitter:description" content="  The December issue of Linux Journal was among the newest arrivals in the pile of magazines in the cafeteria this week. 
+   In his column "Linux for Suits", Doc Searls interviews some of the fine folks at Technorati and talks about
+   some of the infrastructure they use. One of the tools mentioned is memcached, 
+   a high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
+But it didn't end there. It never ends there.
+Memcached is built on libevent, an API that  provides a mechanism to execute a callback function when a specific event occurs on a file descriptor or after a timeout has been reached. Furthermore, libevent also support callbacks due to signals or regular timeouts. Now this leads me on a side trip to
+  /dev/poll, 
+  epoll,
+  and kqueue/kevent.
+Libevent also leads to C10K, which is an article on how to configure servers and write code to support thousands of clients:
+It's time for web servers to handle ten thousand clients simultaneously, don't you think? After all, the web is a big place now.
+
+And computers are big, too. You can buy a 1000MHz machine with 2 gigabytes of RAM and an 1000Mbit/sec Ethernet card for $1200 or so. Let's see - at 20000 clients, that's 50KHz, 100Kbytes, and 50Kbits/sec per client. It shouldn't take any more horsepower than that to take four kilobytes from the disk and send them to the network once a second for each of twenty thousand clients. (That works out to $0.08 per client, by the way. Those $100/client licensing fees some operating systems charge are starting to look a little heavy!) So hardware is no longer the bottleneck.
+
+In 1999 one of the busiest ftp sites, cdrom.com, actually handled 10000 clients simultaneously through a Gigabit Ethernet pipe. As of 2001, that same speed is now being offered by several ISPs, who expect it to become increasingly popular with large business customers. 
+In the Books to Read First of the C10K paper is a reference to a paper by Welsh, Gibble, Brewer and Culler on A Design Framework for Highly Concurrent Systems (pdf). So far it is a good read. The downside is that I'm itching to pick up a couple of cheap Debian boxes  and do some experimenting/benchmarking of my own.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

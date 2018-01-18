@@ -19,6 +19,21 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="RSS and Content Negotiation">
+  <meta name="twitter:description" content="  Simon
+has just checked in support for content negotiation
+for Aggie. Hopefully well see more tools support this.
+RESTLog has always supported
+content negotiaion. For example, if you do a GET on the url
+http://wellformedweb.org/news in a browser you will
+get the HTML version but an RSS aggregator that supports content negotiation
+will get the RSS feed from the same URL. Now there are few aggregators that
+currently support conneg so RESTLog allows you to add a query parameter to
+over-ride the content type. Thus the other way to get the RSS feed is by the
+url http://wellformedweb.org/news?rss
+  
+    Is this a good idea? This might be confusing to people, and seems silly to have two URIs to the same document (one with o=rss in the query string and one without).
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

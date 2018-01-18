@@ -19,6 +19,38 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="The eBay Architecture">
+  <meta name="twitter:description" content="
+A nice set of 
+ slides 
+from Randy Shoup and Dan Pritchett
+on the evolving architecture of eBay.
+
+
+Lot's of interesting stuff in there, particularly on scaling their
+databases:
+
+
+
+No business logic in database
+
+No stored procedures
+Only very simple triggers (default value population)
+
+                                                                                  .
+    Move CPU-intensive work to applications
+
+Referential Integrity
+Joins
+Sorting
+
+
+
+
+By the time you get to slide 28 you realize they've evolved their
+very own BigTable
+[video][paper].
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

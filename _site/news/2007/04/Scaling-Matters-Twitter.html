@@ -19,6 +19,17 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Scaling Matters  Twitter">
+  <meta name="twitter:description" content="  Alex Payne:
+The problem is that more instances of Rails (running as part of a Mongrel
+cluster, in our case) means more requests to your database. At this
+point in time there’s no facility in Rails to talk to more than one
+database at a time. The solutions to this are caching the hell out
+of everything and setting up multiple read-only slave databases,
+neither of which are quick fixes to implement. 
+  
+    I simply don’t buy it. Write your own DB extension to Rails that load balances request. Or, use something like pg-pool for Postgres that pools connections between a cluster of read/write slaves.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

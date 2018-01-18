@@ -19,6 +19,43 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="BitTorrent as a positive role model">
+  <meta name="twitter:description" content="  Guess what this is?
+http://bitflood.org:8080/file?info_hash=D%12%85z%88%AF%22%A7%C4VA1DP%97%A2%89%E9O8
+Well, it's a URI, and as a matter of fact it's a plain old HTTP URI.
+   Now that might not be suprising to you, but it sure was suprising to me. You
+   see, this turns out to be a link to a bittorrent of 
+   Jon Stewart's appearance on CNN's Crossfire. 
+
+Why is this suprising? Well, I have it on good authority that
+   if you want to do anything new on the internet then, 
+   despite the 
+   admonition of the W3C's TAG, and a 
+   fairly detailed 
+   tutorial to the contrary, you 
+   have to come up
+   with a new URI scheme. Yet, after installing 
+   BitTorrent, with a single click on that URI
+   the BitTorrent application loads and the download begins. Is it voodoo? 
+   I was told this just can't work. I mean, I have
+   it on good authority that using mime-types doesn't work:
+
+MIME types alone do not solve the problem
+[Greg Reinacker
+
+So let's look under that URI and see what's really going on:
+C:\&gt;curl --include http://bitflood.org:8080/file?info_hash=D%12%85z%88%AF%22%A7%C4VA1DP%97%A2%89%E9O8
+HTTP/1.0 200 OK
+Content-Length: 3054
+Content-Type: application/x-bittorrent
+Content-Disposition: attachment; filename=Crossfire-20041015-John_Stewart--compressed.wmv.torrent
+
+Well it appears that BitTorrent 
+   does use mime-types to 
+   launch the application. Who knew? So now explain to me
+   again why this works for BitTorrent but you have to
+   create a new URI scheme to subscribe to feeds?
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,48 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Pudge Mailing List">
+  <meta name="twitter:description" content="  cavorite:
+Pudge is a documentation system for Python that generates documentation files from docstrings and uses Restructured Text syntax. You can see a running example in Python Paste.
+Maybe you could give it a try.
+Pudge does look promising. I was able to successfully pull the code from subversion, 
+  and after a small patch ;) to setup.py, I was able to install it:
+
+Index: setup.py
+===================================================================
+--- setup.py    (revision 134)
++++ setup.py    (working copy)
+@@ -1,6 +1,5 @@
+ # bootstrap setuptools if necessary
+-from ez_setup import use_setuptools
+-use_setuptools()
++from distutils.core import setup
+ 
+ import os
+ import os.path
+@@ -38,7 +37,6 @@
+                ('licenses', )]:
+     package_data.extend(get_data_files(os.path.join(*subdir)))
+ 
+-from setuptools import setup
+ 
+ setup(
+     name=name,
+
+I wanted to check the archives to see 
+  if there had been a discussion about the use
+  of setuptools, but it appears the 
+  mailing list,
+  linked from the front page of the project, has gone 404.
+
+  
+    It does look promising from a technological standpoint, but as far as I can tell the project is dead. No trac, no blog, no mailing list, and no public release.
+    Posted by
+       Jeff on 2007-03-23
+    
+
+    I think that pudge was originally written by Ryan Tomayko, who has since moved on to Rails and Ruby land.  The chances of him continuing the project are slim to none, which is a shame, since its a really nice project.  We are using it for the elixir website and documentation, and are very pleased with it.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

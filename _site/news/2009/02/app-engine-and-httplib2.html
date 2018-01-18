@@ -19,6 +19,28 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="App Engine and httplib2">
+  <meta name="twitter:description" content="  
+The 
+ 1.1.9 release of the App Engine SDK includes support for httplib, urllib and urllib2. 
+This is great since httplib2 depends on httlib. 
+So far I've only found
+one problem, which is that httplib2 presumes that httplib returns all headers in lower case, and 
+have 
+already committed a fix to httplib2 for that. The change is currently in trunk and will appear
+in the next release.
+
+
+Setting up is easy, just pull the httplib2 directory into your project.
+
+
+The nice part is that you can hook up httplib2 to 
+the memcache
+support in App Engine very easily:
+
+import wsgiref.handlers
+from google.appengine.ext import webapp
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

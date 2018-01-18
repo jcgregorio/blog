@@ -19,6 +19,67 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="CommentAPI now with experimental SOAP support">
+  <meta name="twitter:description" content="  I am experimenting with adding support for an optional
+SOAP envelope on the CommentAPI.
+I haven't updated the specification for the CommentAPI, waiting instead for
+feedback from y'all. Thanks to Sam 
+my script will produce a correctly formatted
+SOAP fault in an error condition. Here are two examples of posts to the comments
+of this entry, both using cURL. These 
+are both single line commands, just formatted into multiple lines for make
+them easier to read. First example is the currently documented format:
+curl --header "Content-type: text/xml"  
+   --data "&lt;item&gt;&lt;title&gt;Joe&lt;/title&gt;&lt;description&gt;Posted via cURL.&lt;/description&gt;&lt;/item&gt;"  
+   http://bitworking.org/news/comments/58
+
+Now here is an example with the optional SOAP envelope:
+curl --header "Content-type: text/xml"  
+   --data "&lt;soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/'&gt;
+               &lt;soap:Header/&gt;&lt;soap:Body&gt;
+                    &lt;item&gt;
+                        &lt;title&gt;Joe&lt;/title&gt;
+                        &lt;description&gt;A test from within a SOAP envelope&lt;/description&gt;
+                     &lt;/item&gt;
+               &lt;/soap:Body&gt;
+          &lt;/soap:Envelope&gt;"  
+    http://bitworking.org/news/comments/58
+
+The code that lets me robustly handle both messages is built on top of
+   the XmlToDictBySAX.py 
+   that I posted yesterday.
+  
+    Posted via cURL.
+    Posted by
+       anonymous on 2003-03-17
+    
+
+    A test from within a SOAP envelope
+    Posted by
+       anonymous on 2003-03-17
+    
+
+    This is my comment
+    Posted by
+       anonymous on 2003-03-18
+    
+
+    Posted via cURL.
+    Posted by
+       Joe on 2004-01-22
+    
+
+    Posted via cURL.
+    Posted by
+       Joe on 2004-01-22
+    
+
+    A test from within a SOAP envelope
+    Posted by
+       anonymous on 2004-08-12
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

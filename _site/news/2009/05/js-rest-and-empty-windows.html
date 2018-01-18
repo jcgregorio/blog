@@ -19,6 +19,114 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Selected quotes on REST and empty window interfaces">
+  <meta name="twitter:description" content="  
+The impetus for this post in part comes from a conversation 
+I had at PyCon. A developer had admitted that in
+the past he had served up a high-traffic web page that was the same
+for every visitor, but then used a bit of Javascript to pull up
+the users information separately to customize the page, but he
+felt "dirty" doing it.
+That was pretty surprising to me because it's a perfect use of Javascript, 
+and it highlights a misunderstanding about the role of Javascript in
+the web.
+
+Sean McGrath:
+
+
+    I don't know which way it will go but I would suggest that if we are 
+    searching for what exactly the web *is* we have to go further than say it is
+    HTML, as Hugh does in this piece.
+    
+
+    For me, the web is URIs, a standard set of verbs and a standardized EVAL
+    function. The verbs are mostly GET and POST and the standardized EVAL function
+    is the concept of a browser that can EVAL HTML and can eval JavaScript. I don't
+    thing we can afford to leave JavaScript out of the top level definition of what
+    the Web is because there is too much at stake.
+    
+
+The short answer is that using Javascript can be RESTful:
+Fielding Dissertation - Section 5.1.7:
+
+
+    The final addition to our constraint set for REST comes from the code-on-demand
+    style of Section 3.5.3 (Figure 5-8). REST allows client functionality to be
+    extended by downloading and executing code in the form of applets or scripts.
+    This simplifies clients by reducing the number of features required to be
+    pre-implemented. Allowing features to be downloaded after deployment improves
+    system extensibility. However, it also reduces visibility, and thus is only an
+    optional constraint within REST.
+    
+
+
+The emphasis is my own, and is the crux of the problem, that using too much Javascript can
+reduce visibility, not only to intermediaries, but also to other denizens 
+of the web, like crawlers.
+
+
+There is a broad range on which Javascript can be applied in building
+a web site, from sites that use HTML and CSS only, to sites that
+require Javascript to access any functionality. 
+The latter are what I call "empty window" interfaces, because
+if you visit the site with Javascript turned off all you're 
+going to see is an "empty window".
+
+GWT and Search Engine indexing:
+
+
+    You're barking up the wrong tree here. GWT is for writing
+    AJAX/RIA/whatever-you-want-to-call-them applications. It makes the
+    obnoxious JS bits tolerable. JS applications are inherently unfriendly
+    to search engines. You can overcome that (as Ian has done) but it
+    isn't going to be as simple as tossing an HTML file on some random web
+    server and having it indexed. 
+    
+
+It's picking the right range for your application to sit in 
+that matters, and picking that range depends on how searchable
+you want to be.
+
+
+Simon Willison:
+
+
+
+    Annoyed at Google Moderator http://moderator.appspot.com/ - I can 
+    see absolutely no reason why it should be a JavaScript-required service
+    
+
+
+NIST is assembling standards around SaaS, and one component of 
+that standard is understanding the value of the data versus the 
+risk of it being exposed. We need a similar decision framework 
+for web applications, but in this case the reverse, the value of 
+the data versus the risk of it not being indexed. 
+
+  
+    We do the same thing in our project -- serve up a standard page for everyone, then pull up customized code for the user.  In some cases it is not just personalization but, say, a bit of content that was changed by a user action and needs to be refreshed (w/o wanting to re-render the entire page).
+
+Whenever it IS possible, I try to follow the HATEOS principle of REST and not let javascript construct the URL, but rather have the target URL sit in a link element on the page. The link@rel lets the javascript find the proper link and send off the request.  If I am not mistaken, that would help for search optimization as well.  As long as the content is "surfaced," in this case by a link on the page, I assume the crawler can get to it.
+
+And while it's often not possible, I'd like to see more folks embed link@rel=alternate in their web pages that points to a more highly structure "version" of the content/data there.  My preference is Atom, but I suspect RDF would be fine for that as well. Nicely illustrated by http://id.loc.gov/authorities/sh95000541
+
+    Posted by
+       Peter Keane on 2009-05-08
+    
+
+    My current thinking is that when you create a full-blown AJAX (including GWT) app, you need a "mobile"/simple version anyway.
+
+Using rel=canonical, the AJAX pages could simply point to the mobile version of the page in question, which uses HTML only and is thus crawlable.
+    Posted by
+       Manuel Simoni on 2009-05-08
+    
+
+    @Peter Keane: if that JavaScript was delivered the server in question, then there's no violation of URI opacity, nor of HATEOAS, and the situation is no different than if you were fabricating a URI from a URI template downloaded from the server. Still, it is, of course, better to have proper links if possible.
+    Posted by
+       Keith Gaughan on 2009-05-08
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,28 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="AppClientTest Update">
+  <meta name="twitter:description" content="  I've just checked in an updated version of the AppClientTest, a program for testing your AtomPub service. It has been updated to use the atompubbase module and also sports HTML output as an option. To make it easier to develop I've transcluded via svn:externals all the libraries you will need as long as you are running Python 2.5. You will need to install elementtree if you are on something older than 2.5. The transcluding means it is this easy to get up and running from svn:
+$ svn co http://feedvalidator.googlecode.com/svn/trunk/apptestsuite/client/validator/ validator
+$ python validator/appclienttest.py --output=results.html "http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document" 
+$ firefox results.html
+
+Here is a sample report (looks better with JavaScript enabled) after running it against my APP Test Site. The icons are courtesy of Tango.
+Here are the command line options:
+$ python validator/appclienttest.py --helpusage: appclienttest.py [options]options:  -h, --help          show this help message and exit  --credentials=FILE  FILE that contains a name and password on separate lines                      with an optional third line with the authentication type                      of 'ClientLogin &lt;service&gt;'.  --output=FILE       FILE to store test results  --verbose           Print extra information while running.  --quiet             Do not print anything while running.  --debug             Print low level HTTP information while running.  --html              Output is formatted in HTML
+The code is far from complete. It does most of the tests of Tim's APE (with the exception of categories), but there are many more tests to add. The next step for me is to add unit tests for appclienttest.py, which should be fairly simple given the structure of atompubbase, and the use of MockHttp. 
+  
+    Hmm, with Python 2.5, credentials in a file (no third line), and a fresh WP 2.3.3, I get an internal error:
+
+[junk stripped]
+
+(most recent call last): File "validator/appclienttest.py", line 345, in run test_member_function() File "validator/appclienttest.py", line 549, in testEntry_Collection entry_collections = list(service.iter_match("application/atom+xml;type=entry"))
+    Posted by
+       Morten Høybye Frederiksen on 2008-02-29
+    
+
+    Typo: s/you/your/ in the first sentence.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

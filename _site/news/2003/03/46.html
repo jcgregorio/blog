@@ -19,6 +19,30 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Sans DELETE">
+  <meta name="twitter:description" content="  XForms doesn't support the DELETE verb. 
+  Do you want the long version or the short version?
+
+Long Version
+I have had it confirmed that XForms 
+   does not support the DELETE verb. It does not support any verbs besides GET, PUT and POST.
+   This comes from the specfication trying to be too general. That is, XForms was designed not
+   to just be used on a web page and submit over HTTP but to also work
+   on file: and mailto: URIs. To make that work the method you
+   specify isn't "GET" but instead "get", which your XForms processor needs to map
+   to the right HTTP verb if you are going over HTTP. The problem with that design
+   decision, that reach for too much generality, is that in order for an XForms processor
+   to support another verb, the processor itself had to be changed. So it looks like a fully 
+   conformant XForms processor will not be able to support 
+   RESTLog, nor will it be able to support
+   WebDAV, which uses verbs like MKCOL, COPY, etc.
+Short Version
+No DELETE verb. Lather, Rinse, Repeat.
+
+Many thanks to Mark Birbeck of x-port.net Ltd. for answering my
+questions.
+  
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

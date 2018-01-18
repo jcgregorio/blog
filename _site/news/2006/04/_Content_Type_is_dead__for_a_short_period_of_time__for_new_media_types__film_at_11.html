@@ -19,6 +19,52 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Content-Type is dead, for a short period of time, for new media-types,film at 11">
+  <meta name="twitter:description" content="  
+Ian Hickson claims that 
+  the Content-Type: header is dead.
+
+
+I think it may be time to retire the Content-Type header, putting to sleep the myth that it is in any way authoritative, and instead have well-defined content-sniffing rules for Web content.
+
+Of course, this is after stating:
+
+IE in particular is well known for ignoring the Content-Type header, despite this having been the source of security bugs in the past.
+
+That right there is a good enough reason for not dumping Content-Type 
+   across the board. But let's look carefully at the other examples
+   that Ian gives.
+
+
+RSS feeds are always sniffed, regardless of their MIME type, because, to quote a Safari engineer, "none of them have the right mime type".
+
+and
+
+Browsers have been forced to implement heuristics to handle text/plain files as binary because video files are widely served with the wrong MIME types.
+
+Most video file formats are relatively new and it takes time for 
+   servers to be updated so that they know about the new
+   mime-types. This isn't a new problem, do you remember PDFs?
+   Pointing to RSS as an example isn't really helpful either, as RSS is special, 
+  and I don't mean special in a good way, as RSS doesn't have, and will
+  never have, an official mime-type.
+
+The root of the problem is change. There are new mime-types
+   today that didn't exist a year 
+   ago. In a year there will be more new ones that don't exist today.
+   Every time a new mime-type shows up we have the same problems all over again.
+   It's called life, get over it.
+
+Should it be easier to configure mime-types on the server? Yes.
+Should web clients be aware that new mime-types are new and servers may not be
+   configured properly and maybe do some sniffing to 
+   ensure a good user experience? Yes.
+Should web clients optionally display or inform the user when such 
+  an inconsisteny is found? Yes.
+Should we throw out Content-Type? No. 
+Should we all go read the TAG's finding on 
+   Authoritative Metadata? Yes. 
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

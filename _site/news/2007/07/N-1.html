@@ -19,6 +19,25 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="N > 1">
+  <meta name="twitter:description" content="  The underlying assumption, which I whole heartedly agree with, of 
+
+Joe Armstrong's algorithms is that any system that is scalable, 
+fault-tolerant, and upgradable is composed of N nodes, where N &gt; 1.
+The problem with current data storage systems, with 
+rare exception, is that
+they are all "one box native" applications, i.e. from a world
+where N = 1.  From Berkeley DB to MySQL, they were all designed 
+initially to sit on one box. Even after several years of dealing
+with MegaData you still see painful stories like what the YouTube guys went through as they scaled up. All of this stems from 
+an N = 1 mentality.
+
+So when Sam answers Anant's calls for patterns of information needs of Web 2.0 applications,
+I would add N &gt; 1 as a prerequisite, regardless of 
+which 'size' of database you choose.
+  
+    Definitely in general agreement with you. The place where N &gt; 1 is very hard, though, is when you have data you need to write with transactional guarantees. The reality is SQL databases make this way easier than any other production quality option, so sometimes you really do need a big N=1 box. Partitioning the database, read-only replicas, etc all can help manage this, but sometimes the truth is you need a big single threaded thing.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

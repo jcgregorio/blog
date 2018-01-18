@@ -19,6 +19,43 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Date Constructs in the Atom Syndication Format">
+  <meta name="twitter:description" content="  One of the questions that has come up is why RFC 3339 style dates were chosen for the date format
+   in Atom. The simple answer is that any date that is 
+   conformant to RFC 3339 is also conformant
+   to XML Schema, 
+   ISO 8601, and W3C Datetimes.
+
+The slightly longer answer is that all the other schemas are more complex
+   than RFC 3339. In particular the daddy of them all, ISO 8601 is the most 
+   complex. For example, all of the following are valid ISO 8601 dates:
+
+1997
+1997-07
+19970716
+1997-07-16 19:20+01:00
+1997-07-16T19:20+01:00
+2003-W14-2
+2003W142
+12:30:01
+19
+
+Care to guess what that last one represents?
+
+ atom 
+ syndication 
+ ietf 
+ standard 
+
+  
+    Umm ... A really, really old unixtime, i.e. 19 seconds after the "UNIX Epoch" began?
+    Posted by
+       Joe Grossberg on 2005-08-18
+    
+
+    To make that wonderful interop happen, we had to profile RFC3339 just slightly:
+"In addition, an uppercase "T" character MUST be used to separate date and time, and an uppercase "Z" character MUST be present in the absence of a numeric time zone offset."
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,84 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Aggie 1.0 RC5">
+  <meta name="twitter:description" content="   
+                The latest version of Aggie is 1.0 Release Candidate 5. Full source, 
+                executable, and README are available as a 
+                    download. If you are curious here is a screenshot of 
+                    Aggie at work.
+            
+Special thanks to: Simon Fell, 
+                    Eric Vitiello Jr., Ziv Caspi,
+                Ingve Voremstrand, 
+                    Tim Danner, and everybody that has submitted bug reports and 
+                enhancement requests.
+            
+Improvements in Feed Retrieval
+
+HTTP Compression
+
+                    Added support for HTTP compression. [Simon Fell]
+RssHarvest
+
+                    Aggie can now be taught how to 
+                    transform any structured web page into an RSS feed. This is useful for sites 
+                    that produce content in an orderly fashion, but publish no RSS feeds of their 
+                        own (such as MSDN). See here for details [Ziv Caspi]
+XSLT transformation of XML documents into RSS feeds
+
+                    Aggie can also directly transform XML content into RSS feeds if you provide it 
+                    with a proper XSLT transform. To subscribe to a feed whose URL is
+                    xmlurl and whose transform into RSS is xslurl, use the following
+                    URL: xslt:?xmlfile=xmlurl&amp;xslfile=xslurl&amp;title=feedTitle.
+                    [Ziv Caspi]
+
+Improved Output
+
+Output Items as SMTP Messages
+
+                    Optionally, Aggie can send SMTP mail messages to your Email account. You can 
+                    have each new item in its own message, all new items in a given feed in a 
+                    single message, or all new items in a given feed with the same title in a 
+                    single message. See here for details. [Tim Danner, Ziv Caspi]
+
+Improved RSS Parsing and Vocabulary
+
+Robust and extensible RSS parser
+
+                    The RSS parser has been completely rewritten. It is now very robust, will let 
+                    you know if the feed is not stricly XML but will still parse non-well-formed 
+                    feeds (within reason). Additionally, it is extensible, so you can ask it to 
+                    parse elements that it does not know about. [Ziv Caspi]
+"Shame into submission"
+
+                    If the RSS parser finds a feed which is not strictly well-formed, but it still 
+                    readable, it generates a detailed description of what is wrong with the feed, 
+                    to help authors locate problems. [Ziv Caspi]
+                
+New RSS elements supported
+
+                    In addition to title, link, and description elements, Aggie now supports Dublin 
+                    Core date, encoded content, CDATA descriptions, RDF encoded content, and 
+                    Trackback pings. [Ziv Caspi]
+Support for base element
+
+                    Aggie can now identify feeds that publish their "base", and automatically 
+                    provide the proper HTML base element. This feature works only for mail output, 
+                    and is most useful with RSSHarvest-ed feeds. [Ziv Caspi]
+
+Miscellaneous
+
+Installer
+
+                    Now has an installation program.
+                
+Bug fixes
+
+                    Multiple bug fixes have been applies, which are too numerous to include here. 
+                    [All]
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

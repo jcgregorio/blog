@@ -19,6 +19,43 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Document Centric">
+  <meta name="twitter:description" content="Half of the world's business data is in Excel. [Not really a quote, just paraphrasing.]
+We've all heard the same thing before, that stupid users are putting important data into spreadsheets and running their businesses with them. 
+Here is a Slashdot article that was originally about errors in spreadsheets but one comment thread spirals into deriding people that put data into spreadsheets that really belong in databases.
+
+Oh, those stupid lazy users, if only they'd learn to put their data into normal form and enjoy all the benefits of a relational database.
+Wrong.
+Why do people keep putting data in spreadsheets that obviously belongs in a database? Oddly enough, part of the reason came to me in a fairly unlikely place, reading to my kids before bed. We had just plopped on the couch to read a book when my kindergartener made me back up and read the cover of the book, pointing out to me the author and the illustrator. That was an enlightening moment; from a very early age we start learning the structure of documents. Title, author, and date of publication, page number, etc, etc is reinforced at every grade level. 
+
+
+And why not, writing is one of our greatest achievements and it's been refined over a few thousand years. A book, a newspaper article, a blog entry, a business form, a term paper, a dollar bill, all have the same basic structure: title, author, date, and the content, possibly broken up into paragraphs, sections and chapters depending on length. The location on the page, the font, the font weight, the font size, etc. all serve as guideposts to the document structure; title in a large font at the top of the page; signatures at the bottom. This isn't an accident, nor is it a tired ritual of cargo-cult document construction, it's a strong set of idioms that make navigating our world easier. Break those idioms and you break several centuries of ingrained expectations. Do that at your own peril.
+
+
+Breaking those idioms is exactly what databases do.
+
+
+Databases, more precisely relational databases, shred those assumptions, and they do it for very good reasons; to avoid redundancies, reduce inconsistencies, and to allow the data to be searched, sorted, joined and remixed in a variety of ways, but without any consideration for centuries of accumulated experience with "documents".
+
+
+Ever seen how a naive user constructs a database? It's all done in a very document-centric way. Sure they call them forms, but really they're just constructing documents, with each type of document inhabiting a table and each row of that table an instance of that kind of document. I've seen it a dozen times myself and I know you have too. A part number database with one table. An ECO system that had one table for ECRs (Engineering Change Requests) and another one for ECOs (Engineering Change Order, which is just an ECR that has been approved) and the guy working on the database trying to figure out how to copy all the values from the ECR table to the ECO table once the ECR was approved. I kid you not. An entire company that had its shipping run out of a database, with one table each for 'orders', 'invoices', 'BOM', etc. No linking between the tables, no data broken down into normal form, nothing but forms - documents - jammed into tables. Are these people stupid? No. They took their perfectly good working paper system, composed of "documents" and put it in a database as best they could.
+
+
+That's why spreadsheets are so popular and why so many businesses are run on them. Each spreadsheet is a document. A document that has a name, an author, and is broken down into pages. Sure it does calculations and graphing and all sorts of other cool stuff, but the reason I crack open a spreadsheet long before I ever open a database is that the metaphor is more familiar, one that's been ingrained in my psyche from childhood. The users aren't stupid or wrong, it's the database software that has a mismatch with their expectations. 
+
+
+Want to create a unique and useful product? How about an application like a spreadsheet that allowed you to morph along the way into a series of forms. Instead of fighting the document centric way of thinking, embrace it and use it to your applications advantage. It could still be powered by a database, but you can't expect the end user to understand normal form just to store their data. On the side facing people that just want to get their job done the relational model needs to go away. And please don't tell me that these people just need to hire a good database engineer to help them normalize their data, we're talking about every small business on the planet. 
+
+
+What's the point?
+
+
+I am not attacking relational databases, they have their role to play and are very useful tools, nor am I attacking people that use databases. What I am doing is taking people  to task that berate users for putting too much data into spreadsheets and not databases. We, as software developers, have let them down and not provided them with tools that work with how they've been trained to work with the data, the failing is on our side, not theirs. 
+
+
+So that covers the side of the technology that faces the customers, and you may be asking, if document-centric is so useful for user-interface, then why not put that into the developers hands also? Funny you should mention that...
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,40 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Microformats and Syndication">
+  <meta name="twitter:description" content="  Kevin Marks, among others, has announced the launch of microformats.org. One question this raises is how does this markup survive a trip through an aggregator? I have done a little testing and found that Bloglines keeps class attributes intact. Are there exceptions? Do 'rel's pass through unmolested? What do other aggregators do? 
+You might claim that it doesn't matter since all this stuff is just supposed to be in a web page, but I disagree. The value starts to really add up if these microformats can survive a trip through an aggregator.  Imagine if my aggregator can pick up hCards and keep track of them for me (along with a link back to the entry where they were found). Even if the aggregator clients don't start adding these features, web based aggregators could still be enhanced by adding microformat processing capabilities via Greasemonkey scripts.
+Tags: microformat syndication
+Survey Results
+
+Web-Based Aggregator Microformat Preserving Scorecard
+Service Preserves Microformats
+Bloglines Yes
+Rojo Yes
+Kinja No
+Yahoo! No
+MSN Spaces Beats me, it refuses to let me sign in.
+NewsGator Online Edition No. (Converts 'abbr' elements to 'p'. Fails to preserve class attributes and titles.)
+
+Update: Here is the feed I have been testing with: 
+       
+           http://bitworking.org/projects/microformats/index.rss
+
+  
+    (Missing an http:// on your microformats link. Feel free to delete this comment.)
+    Posted by
+       Adam Vandenberg on 2005-06-22
+    
+
+    Adam,
+  Fixed. Thanks!
+    Posted by
+       Joe on 2005-06-22
+    
+
+    My Universal Feed Parser retains both class and rel in embedded HTML content.
+http://feedparser.org/docs/html-sanitization.html
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

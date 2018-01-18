@@ -19,6 +19,37 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Cheetah">
+  <meta name="twitter:description" content="  Dorothea asked about experiences
+with Cheetah. I am currently in the process
+of re-doing the templating mechanism
+in RESTLog, throwing out my hand made templating scheme 
+and replacing it with Cheetah and it's been a 
+great success. I initially learned of Cheetah from 
+Sam Ruby
+as he is using to write his own blogging software. 
+The transformations are fast and Cheetah, to me, 
+has struck just the right balance, sticking to
+adding features needed for templating and avoiding
+the tempation to become a full-blown language
+on it's own, instead deferring to Python when appropriate.
+
+The NameMapper functionality is very cool. NameMapper is how
+Cheetah maps names in Cheetah into names in Python. You want to get
+data into the template right? So you stuff all the data into 
+variables of various types. How you get to that info
+in the template is handled by the NameMapper syntax.
+Here is a
+great example from the Cheetah documentation.
+
+Cheetah definitely passes by first cut utility test, in 
+adding Cheetah to RESTLog my code got smaller and cleaner.
+In fact, after adding in Cheetah and my XmlToDict.py 
+my templating code is only a handful of lines long.
+The updated version of RESTLog, including Cheetah templating and 
+support for comments, should be released by next weekend.
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

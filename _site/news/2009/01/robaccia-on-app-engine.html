@@ -19,6 +19,44 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Robaccia on App Engine">
+  <meta name="twitter:description" content="  
+    When trying to port Robaccia to App Engine the hard part 
+    has been finding anything to do. If you remember from my previous
+    write-up I started with choosing the components to build on, but
+    in the case of App Engine the model classes are already provided
+    and the development kit already provides Django templates, which have
+    become a favorite of mine, so there's little to choose except for
+    a library to dispatch incoming requests. In the intervening
+    years since I first wrote about Robaccia I've written my own library 
+    to do URL dispatching (WSGIDispatcher) and I'll use that.
+  
+
+    There are other pieces we don't need to construct, for example, the
+    SDK comes with a development server so we don't need to write
+    that ourselves. We don't need dbconfig.py either.   
+  
+
+    There were two bits of functionality in manage.py, the first was
+    to create the tables in the database and the second was to run
+    a development server, but neither of those are needed if we
+    are running under App Engine; the datastore doesn't require you to
+    create tables before operating, and the SDK has it's own development
+    server.
+  
+
+    That doesn't leave us with a lot.
+    We have our convention of models in model.py, views in view.py,
+    url dispatching via WSGIDispatcher in urls.py, and finally all of the
+    templates in a templates subdirectory.
+    The little bit of glue we need to add is the same as in 
+    the original Robaccia which is render(), a convenience
+    function for rendering templates.
+  
+import os
+import mimetypes
+from google.appengine.ext.webapp import template
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

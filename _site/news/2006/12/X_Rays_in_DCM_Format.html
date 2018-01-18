@@ -19,6 +19,31 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="X-Rays in DCM Format">
+  <meta name="twitter:description" content="
+
+  Just a few days before leaving on our last vacation Austin 
+  fell at school and severely sprained his ankle.
+  In the course of the doctor visits we ended up with a 
+  CD containing the X-Rays of his ankle.
+  A little poking around on the CD turned up a 
+  whole heap of Windows specific executables and DLLs 
+  and a few likely suspects for the X-Ray images themselves.
+  It turns out they are stored in DCM format, which is an 
+  extension that seems to have no associations under Ubuntu
+  but could be opened by The Gimp nevertheless.
+
+What was even more interesting was the metadata stored
+  in the image, which was extensive and included the patients name,
+  the address where the X-Rays were taken, the manufacturer
+  of the X-Ray machine, the name of referring doctor, and much
+  much more.
+
+The DCM format is also understood by ImageMagick, which I used to 
+   convert the images into PNGs, and to view
+   the metadata using 'identify -verbose'.
+
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

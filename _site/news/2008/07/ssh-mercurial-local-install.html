@@ -19,6 +19,57 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Mercurial, SSH, and a local install">
+  <meta name="twitter:description" content="  
+I have the latest and greatest version of Mercurial on
+my laptop but the other machines I want to 'push' to
+over ssh are either a shared host without Mercurial installed
+or are pinned to a release of a distro
+that has a very old version of Mercurial.
+This means that I had to $ make install-home, 
+which leaves me with a problem, 
+which is that the installed Mercurial files won't be
+on my Python path when I ssh in. That means I see
+this when I ssh in from my laptop:
+
+$ ssh bitworking.org /home/jcgregorio/bin/hg
+Traceback (most recent call last):
+  File "/home/jcgregorio/bin/hg", line 14, in ?
+    from mercurial import demandimport; demandimport.enable()
+ImportError: No module named mercurial
+~
+$ 
+
+
+The easiest way I found to fix 
+this to add the following two lines to 
+the beginning of ~/bin/hg
+on the server:
+
+import sys
+sys.path.append('/home/jcgregorio/lib/python')
+
+Then  I need to specify the exact location
+   of hg from the command line on the laptop, so it uses
+   my locally installed version on the server:
+
+$ hg push --remotecmd ~/bin/hg ssh://bitworking.org/myproject/
+
+That --remotecmd can be made to go away if I add it 
+  to the config file for the project on the laptop. I created the file 
+  .hg/hgrc and added the following lines:
+
+[ui]
+remotecmd = ~/bin/hg
+
+
+Now I can finally run:
+
+$ hg push ssh://bitworking.org/myproject/
+
+  
+    I solved the problem by adding a couple of lines to .profile (or .bash_profile or whatever) on my shared host:
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

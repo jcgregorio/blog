@@ -19,6 +19,39 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Test stubbing httplib2">
+  <meta name="twitter:description" content="  I'm writing some HTTP client code that uses httplib2,
+and the following code has allowed me to
+create unit tests without creating a bunch of resources
+on the web to test against. It's a stub of 
+httlib2.Http that reads its responses off the 
+disk. I monkey-patch 
+it in place for unit tests, and
+restore the original after I'm done, so as not to
+interfere with other unit tests that might run
+and require the original class.
+
+
+As an aside I want to point out that this isn't particularly
+clever or unique, I'm writing this up just to have a nice place
+drop the code, and document its usage, to save time for anyone else
+building with httplib2.
+
+Here is the stub class and a unittest.TestCase that uses it.
+
+
+import unittest
+import urlparse
+import httplib2
+import os
+from email import message_from_string, message_from_file
+HTTP_SRC_DIR = "./tests/model/"
+class MyHttpReplacement:
+    """Build a stand-in for httplib2.Http that takes its
+    response headers and bodies from files on disk"""
+def __init__(self, cache=None, timeout=None):
+        self.hit_counter = {}
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,41 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="SimpleDB is GETSful">
+  <meta name="twitter:description" content="  Upon closer inspection it appears that SimpleDB is GETSful.
+  
+    
+Indeed.  It's even stranger because they make it look like it's ReSTful.
+
+The front page docs have bits like "GET, PUT or DELETE" in addition to claiming to be a REST interface.  Which all looks fine until you realize that "Amazon SimpleDB REST calls are made using HTTP GET requests" and the URIs look like this:
+
+
+https://sdb.amazonaws.com/?Action=PutAttributes
+
+
+It's too bad.  I really thought for a minute that they guys building this really Got It.
+    Posted by
+       Justin Sheehy on 2007-12-16
+    
+
+    Indeed. For those that prefer RESTful, I say take CouchDB and run it on an EC2 cluster.
+    Posted by
+       Seth Wagoner on 2007-12-17
+    
+
+    Apart from the desire to call a spade a spade and SimpleDB a crowbar in order to promote real standards - does that really matter technically in this case when for the most part intermediaries will be Amazon themselves?
+Have I got this correct in that the real benefits of ReST are architecturally between ends affording intermediaries of the likes of proxies? Not just the nice CRUD-like resource interface pattern that gets all the lime-light?
+    Posted by
+       Craig Overend on 2007-12-17
+    
+
+    Craig: intermediaries are far from the only reason to do REST. Roy explicitly took them into account in constructing the style, but accommodation of intermediaries wasn’t the only desirable property that the REST style was designed to induce in systems.
+The problem with GETSful interfaces specifically is that GET is supposed to be safe: while the server may (as always) do anything it wants in response to the request, the client bears no responsibility for any of it, be it desired or a catastrophe. For a demonstration of what happens when you ignore this expectation that GET requests never change resource state on the server, just look back at the Google Web Accelerator fiasco.
+    Posted by
+       Aristotle Pagaltzis on 2007-12-17
+    
+
+  
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

@@ -19,6 +19,21 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Working AtomAPI Implemenation">
+  <meta name="twitter:description" content="  A real live working implementation of the AtomAPI has been posted. Mark has all the details.
+This is an implementation in two parts. The first is a server-side CGI script that Mark wrote in Python that hooks into a Movable Type installation. Yes, it's true, this is an AtomAPI implementation for Movable Type.
+The second part of the implementation is a client side GUI written in Python that allows you to
+  create, modify and delete entries. If you download the client implementation and run it, it will automatically connect to 
+  Marks implementation and let you add, remove and modify entries. 
+Things to note:
+
+This implementation does no optimizing, that is neither ETags nor gzip are used on GETs to speed up those actions. Implementing both ETags and gzip would speed up the interface considerably.
+This uses a slightly modified implementation of HTTP Digest Authentication. Note that in the config.xml file
+   included with the GUI the plain text password is not included, only a hash value that includes the password, username and realm is stored.
+The GUI has only been tested under Windows and I am curious how it looks/operates on other platforms. 
+
+As always, you can give feedback on RestEchoApiDiscuss, or atom-syntax.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

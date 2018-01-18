@@ -19,6 +19,27 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="XForms and Security">
+  <meta name="twitter:description" content="  Andrew Watt has raised some questions on the security in XForms:
+There are two potential sources of security concern:
+1. That a malicious XForms-containing document can upload files from a user's 
+computer without their knowledge
+2. A malicious XForms-containing document could download a virus or other 
+nasty to the user's computer.
+However, 
+the current CR seems to rely largely on implementers' common sense ... a 
+dangerous commodity where security is concerned ... rather than provide a 
+detailed consideration of the risks (perhaps only simply to dismiss them?) 
+and solution for these potential security concerns.
+Remember that XForms is supposed to be a general forms solution and as such
+is not tied to a browser, so the XForms Specification covers submission via
+http, https, smtp and native file system. That excess generality, or at least the lack of any
+security guidelines in the specification regarding submissions, seems to be the source of the security concerns.
+
+Andrew also posted the same message to [xml-dev],
+in case you care to follow the action in both arenas.
+Update: Micah Dubinko has responded to Andrew's concerns .
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

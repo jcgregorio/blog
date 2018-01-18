@@ -19,6 +19,65 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="RESTLog Interface Specification">
+  <meta name="twitter:description" content="  The RESTLog interface is defined in Table 1. The 
+table lists the URLs, the verbs that can act on those locations,
+the mime-type of the content and a description of the results
+of that action. 
+
+N.B. The URL RESTLog.cgi is used as a placeholder for
+the implementations real URL. For example, the real URL could easily be 
+http://bitworking/RESTLog.py or http://WellFormedWeb/news.
+The RESTLog interface does not define what the URL is, instead it defines
+the actions that are allowed on that URL and the format of the responses. For example,
+I can hand you a URL such as http://bitworking.org/stories and tell you that it conforms
+to the RESTLog interface and you can perform, modulo security restrictions, all of 
+the actions listed below on that URL.
+
+Interface
+
+
+          Table 1The RESTLog Interface
+
+ URL Verb Type Description Format 
+ RESTLog.cgi GET html Retrieves the main web page.
+ rss Retrieves the RSS file.
+ POST xml Creates a new news item.RSS Fragment
+ RESTLog.cgi/itemID GET html Retrieves the item transformed into an HTML page.
+ xml Retrieves the xml form of the item, i.e. as an RSS 2.0 'item' fragment.RSS Fragment
+ PUT xml Putting an item replaces it's contents. This is how editing an item is done.RSS Fragment
+ DELETE - Delete the item.
+
+
+Verb
+    The HTTP verbs that can operate on the given URL. HTTP
+    defines a standard set of verbs and we are only using
+    a subset of them here.
+Type
+    Type is just a shorthand for the mime-type of that 
+    transaction. Normally selecting the mime type is handled through content
+    negotiation for GETs and specified in the Content-Type for 
+    PUTs and POSTs. Content-type can also be forced on a GET
+    by appending a ?Type to any URL. For example, a link
+    to the RSS file would be /RESTLog.cgi?rss.
+
+
+Table 2 Type mappings
+TypeMIME-type
+xmltext/xml
+htmltext/html
+rssapplication/rss+xml
+
+Format
+All the actions that deal with content type 'xml' are transporting items. Items are formatted 
+as 'item' elements from RSS 2.0. The items
+must additionally conform to the RSS 2.0/XSS-extensible profile
+with the exception of defining the default namespace. For example:
+
+&lt;item xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
+      &lt;title&gt;My Summer Vacation&lt;/title&gt;
+      &lt;description&gt;On my summer vacation I went to...&lt;/description&gt;
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

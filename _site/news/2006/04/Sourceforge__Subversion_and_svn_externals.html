@@ -19,6 +19,70 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Sourceforge, Subversion and svnexternals">
+  <meta name="twitter:description" content="  Sourceforge now supports Subversion. This isn't new,
+   I blogged about it back in February.
+   What is still unfolding is the impact of that change, and one aspect of subversion
+   that is plum full of potential is also one of its best kept secrets, svn:externals.
+
+svn:externals
+Subversion supports setting properties on files and directories, bits of information 
+  about the file. You can store any information you want there for your own use. There 
+  are several predefined properties that Subversion knows about that modify how files or directories 
+  are handled. For example, the svn:keywords
+   property controls which keywords are expanded when a file is checked in. The property
+  I want to draw attention to today is svn:externals:
+
+The svn:externals property contains instructions for Subversion to populate a versioned directory with one or more other checked-out Subversion working copies.
+
+Using this property you can rip, mix, and blend source as long as you can get read 
+    access to all the Subversion repositories involved. Let's look 
+   at a concrete example of how I use this in the Atom Publishing Protocol Test Suite. 
+   The APP Test Suite relies heavily on httplib
+   and also feedvalidator. 
+   You are unlikely to have current versions of those modules installed
+   so let's make svn do all the heavy lifting for us. Here we see a checked out copy of the APP Test Suite:
+
+
+jcgregorio@scandium ~/web/bitworking.org/projects/apptestsuite/client
+$ svn info
+Path: .
+URL: https://svn.sourceforge.net/svnroot/feedvalidator/trunk/apptestsuite/client
+Repository UUID: 51a99c5e-f20d-0410-a720-9ba508ce125a
+Revision: 596
+Node Kind: directory
+Schedule: normal
+Last Changed Author: jcgregorio
+Last Changed Rev: 596
+Last Changed Date: 2006-04-03 23:42:34 -0400 (Mon, 03 Apr 2006)
+Properties Last Updated: 2006-03-12 17:01:43 -0500 (Sun, 12 Mar 2006)
+
+There is a single property set on the directory:
+
+jcgregorio@scandium ~/web/bitworking.org/projects/apptestsuite/client
+$ svn proplist .
+Properties on '.':
+  svn:externals
+
+We can inspect that value of that property:
+
+jcgregorio@scandium ~/web/bitworking.org/projects/apptestsuite/client
+$ svn propget svn:externals .
+httplib2 https://svn.sourceforge.net/svnroot/httplib2/trunk/httplib2
+feedvalidator https://svn.sourceforge.net/svnroot/feedvalidator/trunk/feedvalidator/src/feedvalidator
+
+This tells Subversion that after checking out the APP Test Suite where it should
+   go to fetch the httplib2 and feedvalidator subprojects.
+   Note that feedvalidator is off in another directory of the same
+   repository and httplib2 is in a completely different repository. Let's see
+   this in action when we check out the APP Test Suite.
+
+
+$ svn co https://svn.sourceforge.net/svnroot/feedvalidator/trunk/apptestsuite/client .
+A    appclienttest.py
+A    helloworld.png
+ U   .
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

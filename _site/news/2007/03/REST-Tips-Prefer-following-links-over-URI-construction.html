@@ -19,6 +19,163 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="REST Tips Prefer following links over URI construction">
+  <meta name="twitter:description" content="  
+When putting together a table to describe your REST service, and believe
+me, I've been seeing a lot of these tables recently, there needs to be a 
+distinction between the server view and the client view.
+
+
+For example, here is our table for the employee service
+    from my worked example of how to create a RESTful protocol:
+
+  
+Table 1: Employee Web Service
+ Resource URI Method Representation Description
+ Employee List /employees/ GET JSON (emp list) Retrieve the list of employees 
+ POST JSON (employee) Create a new employee 
+ Employee /employees/{employee-id} GET JSON (employee) Retrieve an employee
+ PUT JSON (employee) Update an employee
+ DELETE - Remove an employee
+
+
+The important point is that this is the server's view
+of the service, the table is a guide to the implementor
+of the service on how to structure the URIs. The view
+that actually gets documented and presented to the client
+needs to be slightly different, the most important 
+part being the replacement of URI construction with links.
+
+
+As a reminder, here is an example of the employee list, which contains
+the URIs of the employee resources.
+    
+
+  [
+    {
+      "name": "Joe Gregorio",
+      "href": "jcg111002222"
+    },
+    {
+      "name": "John Q. Public",
+      "href": "jqp333445555"
+    },
+    ...
+  ]
+
+
+Figure 1
+    Employee List JSON Representation
+    
+
+Here is our table as it should be presented to client implementors:
+
+
+Table 2: Employee Web Service
+ Resource URI Method Representation Description
+ Employee List /employees/ GET JSON (emp list) Retrieve the list of employees 
+ POST JSON (employee) Create a new employee 
+ Employee Found in the 'href' of each object in Employee List. GET JSON (employee) Retrieve an employee
+ PUT JSON (employee) Update an employee
+ DELETE - Remove an employee
+
+
+Note that the client doesn't get to 'know' how to
+construct employee URIs from employee-ids, instead it just follows links
+from the employee list to each employee resource.
+
+Tip: Prefer following links over URI construction.
+
+There are still cases for URI construction, where the
+representation given is really a recipe for how to
+construct a URI, such as an HTML form, or an 
+OpenSearch document. Even in these cases, the client doesn't have
+hard-coded knowledge on how to construct a 
+URI, it is only following the recipe in the HTML form, or 
+OpenSearch document. If the recipe gets updated
+the client will follow the new recipe without needing to
+be modified.
+
+There are several advantages to keeping 
+  URI construction out of view of the client:
+
+
+Simpler Client Code
+The client code is simpler, dereferencing a (possibly relative) URI
+    is simpler than constructing a URI and then dereferencing it.
+    
+Server flexibility
+
+    The URIs on the server side can be changed
+    as needed without having to update
+    all the clients. Yes, you should strive for 
+    unchanging Cool URIs, but 
+    mistakes happen and this lets you fix those mistakes without
+    updating the clients.
+    
+
+This isn't just idle theory, at one point in the 
+   development of the Atom Publishing Protocol there
+   was a push for a form of URI construction, a WebDAV like use of the URI path
+   for creating and manipulating resources.
+   Luckily that never made it into the specification, because now I can 
+   create a service document for a group of APP collections that currently 
+   don't have service documents:
+
+The resource at http://bitworking.org/projects/gdata/gdata-service.atomserv
+is a service document for all my APP collections on Google, and it looks like:
+&lt;?xml version="1.0" encoding='utf-8'?&gt;
+&lt;service xmlns="http://purl.org/atom/app#"  xmlns:atom="http://www.w3.org/2005/Atom"&gt;
+  &lt;workspace&gt; 
+    &lt;atom:title&gt;Google&lt;/atom:title&gt;
+    &lt;collection href="http://www.google.com/calendar/feeds/default/private/full"&gt;
+        &lt;atom:title&gt;Calendar&lt;/atom:title&gt;
+    &lt;/collection&gt;
+    &lt;collection href="http://base.google.com/base/feeds/items" &gt;
+        &lt;atom:title&gt;Base&lt;/atom:title&gt;
+    &lt;/collection&gt;
+    &lt;collection href="http://www.blogger.com/feeds/6464869902972579239/posts/default" &gt;
+        &lt;atom:title&gt;Blogger (jcgregorio)&lt;/atom:title&gt;
+    &lt;/collection&gt;
+    &lt;collection href="http://spreadsheets.google.com/feeds/spreadsheets/private/full" &gt;
+        &lt;atom:title&gt;Spreadsheet&lt;/atom:title&gt;
+    &lt;/collection&gt;
+  &lt;/workspace&gt;
+&lt;/service&gt;
+  
+    I'm sure this is a small error, but your server table shows a URI /employees/{employee-id} and your client table instructs them to follow what would only be /{employee-id}
+I considered making a joke about using XSLT to generate your client table from your server table, but given the nature of the 'net I'm afraid I'd be taken seriously :)
+    Posted by
+       Josh Peters on 2007-03-16
+    
+
+    Josh,
+The links in the Employee List are relative URIs. They are relative to the URI from which the Employee List was retrieved. 
+So if our service was located at http://example.com/employees/, then  one employee list URI would be:
+
+http://example.com/employees/jcg111002222
+A good URI parsing library makes this easy:
+&gt;&gt;&gt; import urlparse
+&gt;&gt;&gt; urlparse.urljoin("http://example.com/employees/", "jcg11102222")
+'http://example.com/employees/jcg11102222'
+&gt;&gt;&gt;
+
+    Posted by
+       Joe on 2007-03-16
+    
+
+    Thanks for pointing that out Joe.  That makes a good deal of sense, but I think I would have implemented it incorrectly if I had to make an implementation.
+    Posted by
+       Josh Peters on 2007-03-16
+    
+
+    I contrasted/compared this approach a while back in an entry called Resource vs. Service Oriented Data Design. They're two very different approaches. I tend to like the linkable approach you're advocating a lot better.
+    Posted by
+       Dan Diephouse on 2007-03-17
+    
+
+    Relative links seem difficult -- moving the resources around requires understanding where the links are, and there's no standard or even convention in JSON as to where the links are located.  xml:base offers a solution to this, or if you are using HTML the &lt;base&gt; tag, or with HTML you can more-or-less know what attributes need to be changed.  But with JSON it's more difficult, and so the document isn't really self-describing -- it only is meaningful in the context of the location of the container, and you'll have to drag both around.  But anyway, that's a minor detail.
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 

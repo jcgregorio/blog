@@ -19,6 +19,52 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Text Editor Saving Routines">
+  <meta name="twitter:description" content="  I have, for reasons that will become obvious in a week or so, been looking at
+    text editors and what happens when you save a file. For example, if we are editing the file
+    filename.txt, different things will happen when you
+    save the file depending on which editor you are using.
+    VIM is fairly straight forward in that it renames the original file
+    to filename.txt~, writes the modified
+    contents to filename.txt, and then if that is successful
+    deletes filename.txt~. 
+    
+Emacs does roughly the same thing as VIM, but by default doesn't clean up the filename.txt~ file.
+    
+Eclipse is by far the simplest, truncating filename.txt 
+    to a length of 0 and then writing the new contents.
+    
+Gedit is by far the most byzantine, first it writes the contents of the modified buffer 
+    to a hidden file .gedit-save-NNNN, then it renames the original file
+    to filename.txt~, then renames .gedit-save-NNN to filename.txt
+    and finally deletes filename.txt~.
+    What makes Gedit really stand out from other text editors is that
+    if for some reason the filesystem doesn't support 'rename' then Gedit refuses
+    to save the file, as opposed to VIM and Emacs which will just write new
+    contents to filename.txt. As you can imagine that's controversial
+    behavior and there's 
+    a long and painful bug thread on it, which is filled with all the painful things 
+    you'd expect it to be filled with, like claiming it's not a bug, or that
+    the bug is in some other piece of software, or that it's not a problem
+    under 'normal' usage, or that any other way of saving files is unsafe.
+    Like I said, painful.
+    
+
+    But I'm willing to believe there are even more complex cases, and if you know of an editor 
+    that has an even more convoluted save routine I'd be glad to hear about it.
+    
+  
+    There's actually more to emacs (should be no surprise).
+First, emacs will keep automatic backups, like #filename.txt#, while a file is in the process of being edited (every so-many keystrokes); these go away when a file is finally successfully saved.  If it can't create the auto-backup, it will warn you but will still allow you to proceed.
+When saving, to create the backup file emacs can use two methods: RENAME filename.txt to filename.txt~, or COPY filename.txt to filename.txt~.  It will generally try the rename approach first, if possible, unless the original file is a link or the file ownership permissions are mismatched, or the user has customized emacs to use the copying approach first.
+Also emacs can perform version controlled backups, where it creates filename.txt.~1~, filename.txt.~2~, filename.txt.~3~, etc.
+Another related thing that emacs does is to use lock files.  This prevents (or at least alerts the user) having two different emacs processes editing the same file simultaneously and potentially overwriting the changes of the other.  This feature alone has saved me countless times, as I tend to have dozens of terminals and screen sessions and ssh's going at once.
+    Posted by
+       Deron Meranda on 2009-01-05
+    
+
+    Put:
+
+">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
 
