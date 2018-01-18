@@ -19,62 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="The professionalization of scripting languages">
-  <meta name="twitter:description" content="  <p>So by now everyone should have seen the <a href="http://webkit.org/blog/189/announcing-squirrelfish/">SquirrelFish</a> announcement.
-And <a href="http://www.avibryant.com/2008/06/maglev-recap.html">MagLev</a>.
-And you've see Steve Yegge's presentation, 
-"<a href="http://steve-yegge.blogspot.com/2008/05/dynamic-languages-strike-back.html">Dynamic Languages Strike Back</a>".
-And you've been following the discussion about the relative merits of
-stack versus register based VMs.</p>
-<p class="aside"> As an aside, note that the Java VM is stack based and the <a href="http://en.wikipedia.org/wiki/Dalvik_virtual_machine">Dalvik VM</a>
-on <a href="http://code.google.com/android/">Android</a> is register based.
-</p>
-<p>All of those things on their own are interesting, but what's more important
-is that we're talking about them all at the same time. There's real research 
-going on to produce faster VMs and that research is being applied
-to real scripting languages today. What we are priveleged to witness, something
-that wasn't happening a year ago, and will probably be complete in another
-year or two, is the professionalization of scripting languages.
-There was a time when you could whip out a parser in lex and yacc, stitch together
-a naive VM and throw it over the wall and you'd have a new scripting language.
-Those days are coming to a close and in a few years (if not months) you won't be able
-get traction with anything unless it does direct
-threading, is register based, has generational GC, does peephole optimizations, does trace-folding, does type-inferenced
-inline caching, etc. That's not a bad thing, real work being applied to improving the performance
-of scripting languages is great and should greatly increase the areas where they'll be applied
-as long standing concerns about performance are removed and the benefits of increased
-productivity come to the fore.
-</p>
-<p>If you haven't been keeping up on all of this then start with the 
-  three papers that the <a href="http://webkit.org/blog/189/announcing-squirrelfish/">SquirrelFish announcement</a> references.
-  They're clear, well written, and are a good starting place before diving
-  into the rest of the literature.
-</p>
-<p>And yes, it's all true, once you trace all of this stuff back
-  it all eventually leads to Smalltalk. Poor old disrespected Smalltalk,
-  all those years of work, all that cutting edge research, and nary a bit
-  of credit, which is particularly galling if you think about the fact that,
-  to date, the language that has benefitted the most from Smalltalk is Java.
-</p>
-  <div class="commentContent" id="X1">
-    <p>Nobody writes a parser anymore; we describe it to yacc/lex. Maybe abstractions will be created that do type-inferenced inline caching and generational GC. Not that I really know how... maybe by describing these features as possible parse-tree manipulations?</p>
-<p>Smalltalk had/has a language-aware version-control system. That's something else I'd like to get my grubby mints on.</p>
-    <p class="commentByLine">Posted by
-       <a href="http://lbruno.org">Luis Bruno</a> on <a href="#X1" title="2008-06-08T07:19:54.490937">2008-06-08</a>
-    </p>
-</div><div class="commentContent" id="X2">
-    For those who don't know, Smalltalk-80 still lives on at http://www.squeak.org It would be a fun project to slip one of the fast new VMs under the hood of Squeak and see how it runs.
-    <p class="commentByLine">Posted by
-       <a href="http://www.squeak.org">Jerry</a> on <a href="#X2" title="2008-06-08T08:28:28.466839">2008-06-08</a>
-    </p>
-</div><div class="commentContent" id="X3">
-    <i>Nobody writes a parser anymore; we describe it to yacc/lex</i>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

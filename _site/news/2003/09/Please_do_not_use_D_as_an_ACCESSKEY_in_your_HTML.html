@@ -19,51 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Please do not use D as an ACCESSKEY in your HTML">
-  <meta name="twitter:description" content="  <p>Congrats, your new site is redesigned, all shiny and new, and in the 
-   redesign you decided to cover <a href="http://diveintoaccessibility.org/">accessibility</a> and 
-   in the process start using 
-   <a href="http://www.w3.org/TR/1999/REC-html401-19991224/interact/forms.html#adef-accesskey">accesskey</a>. 
-   Now <code>accesskey</code> is neat, in that it
-   which gives you the power to re-map keys to move the keyboard
-   focus to a control or to follow a link, but with that power comes responsibility. 
-   You can add an <code>accesskey</code> attribute 
-   to <code>a</code>, <code>area</code>, <code>button</code>, <code>input</code>, 
-   <code>label</code>, <code>legend</code>, and <code>textarea</code>. </p>
-<p>I use the keyboard shortcuts for
-   all my applications as much as possible. One of those keyboard shortcuts I use all day is
-   Alt-D, which from within Mozilla or IE will jump the keyboard focus to the address bar of
-   the browser. Unless of course, I'm reading your webpage where you have defined the ACCESSKEY D 
-   to jump to some particular link or web form element. 
-   <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=168905">Bugzilla</a> is one such example. 
-   That is annoying. Don't do that. You are actually <strong>reducing</strong> your sites accessibility. While were at 
-   it, never define ACCESSKEY bindings for:</p><p>
-<ul>
-<li>F - <u>F</u>ile</li>
-<li>B - <u>B</u>ookmarks</li>
-<li>E - <u>E</u>dit</li>
-<li>V - <u>V</u>iew</li>
-<li>G - <u>G</u>o</li>
-<li>T - <u>T</u>ools</li>
-<li>H - <u>H</u>elp</li>
-<li>A - F<u>a</u>vorites</li>
-</ul>
-</p><p>Your safest bet, if you want access keys, is to bind them to numeric keys only, which has the smallest 
-   chance of conflicting with browser based keyboard shortcuts.</p>
-<p>Further reading: 
-<a href="http://www.cs.tut.fi/~jkorpela/forms/accesskey.html#assign">Improving accessibility with accesskey in HTML forms and links</a>.</p>
-<p><strong>Update 1:</strong> <a href="http://www.alleged.org.uk/pdc/">Damian Cugley</a> points out that the exact keys listed above can't be counted in because the shortcut keys for the browser depend on the I18N of the browser. All the more reason to stick to numeric access keys.</p>
-<p><strong>Update 2:</strong> Just stumbled across another site: <a href="http://www.nfb.ca/e/index.html">National Film Board of Canada</a>. Do I need to start a running list?
-</p>
-  <div class="commentContent" id="X1">
-    <p>The other trick is that the access-keys that cannot be used will vary according to the locale of your reader, because the words they are mnemonic for will of course be spelled differently...</p>
-<p>The best approach I can think of to that little problem is to make sure that when I internationalize a web page, the access keys are included in the i18n effort. That will not save someone who is reading your page in English in a non-English browser, but that can't be helped.</p>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

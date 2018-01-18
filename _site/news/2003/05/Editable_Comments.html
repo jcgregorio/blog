@@ -19,49 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Editable Comments">
-  <meta name="twitter:description" content="  <p>Ever dropped a comment on a site and wished you could go back and fix that typo, 
-or maybe the next morning you regret the use of the 'bollocks', either way
-what you want is editable comments, which <a href="http://wellformedweb.org/news/6">Bulu</a>, the software that runs this site, now supports.</p>
-  <p>Now some sites have solved this problem by having you log into the site 
-   to post a comment. It works, but when most people are presented with the option
-   of 'registering' with a site, or not leaving a comment, the usually choose the latter.
-   I do this myself all the time. Over the past year of surfing I have not registered with
-   a single site to leave a comment. So what I wanted was a system where you could leave a comment,
-   and return to edit it at any later time, yet not require registration.
-</p>
-<p>Here's the basic description of how it work. Once you post a comment, that comment
-   gets a unique <code>ID</code>. I take that ID and concatenate it with a secret string <code>secret</code> that only I know,
-   then get an MD5 hash of the string <code>ID+secret</code>. The cgi script that accepts your 
-   initial comment returns to you a URL that's of the form:
-</p>
-<pre><code>http://bitworking.org/news/comments/1-3/e0fd9772343dde302f7d709a45856fa8b</code></pre>
-<p>Where '1-3' is the ID of the comment and 'e0fd9772343dde302f7d709a45856fa8b' is the md5 hash.
-   When you visit that URL Bulu gets an md5 hash of the <code>ID+secret</code>, and  if that
-   calculated md5 matches the one in the URL then you are allowed to edit the comment.
-   Now you can bookmark this URL, and use this URL to edit the comment, and as long as you keep the URL a 
-   secret, no one else can edit your comment.
-</p>
-<p>It's actually pretty simple once you give up on the idea of registration. You see,
-   registration is really asking for more information than is necessary. All I want to
-   know is that if you try to edit a comment, you were the person that created that comment
-   to begin with. With registration, the server knows <strong>all</strong> the comments
-   you have ever left. 
-</p>
-<p>How secure is it? Well, the URL is travelling over the web in plaintext, and all you
-   need is the URL to edit any comment, so I wouldn't use this to secure the commenting
-   system on anything real important. However, this is just a weblog, so I believe that 
-   the level of security provided is appropriate for the context. 
-</p>
-<p>Once I have this tested for a few more days I will make another release of <a href="http://wellformedweb.org/news/6">Bulu</a>.</p>
-  <div class="commentContent" id="X1">
-    IMHO, there's a better way...
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

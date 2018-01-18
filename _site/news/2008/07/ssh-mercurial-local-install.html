@@ -19,62 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Mercurial, SSH, and a local install">
-  <meta name="twitter:description" content="  <p>
-I have the latest and greatest version of <a href="http://www.selenic.com/mercurial/">Mercurial</a> on
-my laptop but the other machines I want to 'push' to
-over ssh are either a shared host without Mercurial installed
-or are pinned to a release of a distro
-that has a very old version of Mercurial.
-This means that I had to <a href="http://www.selenic.com/mercurial/wiki/index.cgi/UnixInstall"><code>$ make install-home</code></a>, 
-which leaves me with a problem, 
-which is that the installed Mercurial files won't be
-on my Python path when I ssh in. That means I see
-this when I ssh in from my laptop:
-</p>
-<pre><code>$ ssh bitworking.org /home/jcgregorio/bin/hg
-Traceback (most recent call last):
-  File "/home/jcgregorio/bin/hg", line 14, in ?
-    from mercurial import demandimport; demandimport.enable()
-ImportError: No module named mercurial
-~
-$ 
-</code></pre>
-<p>
-The easiest way I found to fix 
-this to add the following two lines to 
-the beginning of <code>~/bin/hg</code>
-on the server:
-</p>
-<pre><code>import sys
-sys.path.append('/home/jcgregorio/lib/python')
-</code></pre>
-<p>Then  I need to specify the exact location
-   of <code>hg</code> from the command line on the laptop, so it uses
-   my locally installed version on the server:
-</p>
-<pre><code>$ hg push --remotecmd ~/bin/hg ssh://bitworking.org/myproject/
-</code></pre>
-<p>That <code>--remotecmd</code> can be made to go away if I add it 
-  to the config file for the project on the laptop. I created the file 
-  <code>.hg/hgrc</code> and added the following lines:
-</p>
-<pre><code>[ui]
-remotecmd = ~/bin/hg
-</code></pre>
-<p>
-Now I can finally run:
-</p>
-<pre><code>$ hg push ssh://bitworking.org/myproject/
-</code></pre>
-  <div class="commentContent" id="X1">
-    I solved the problem by adding a couple of lines to <code>.profile</code> (or <code>.bash_profile</code> or whatever) on my shared host:
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

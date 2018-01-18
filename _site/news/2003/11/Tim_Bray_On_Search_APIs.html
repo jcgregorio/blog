@@ -19,33 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Tim Bray On Search APIs">
-  <meta name="twitter:description" content="  <p>Tim Bray has posted a nice summary of what he thinks a 
-   a search API should look like: 
-  <a href="http://tbray.org/ongoing/When/200x/2003/11/16/SearchAPIs">On Search: Interfaces</a> </p>
-<p>Most of it I agree with, but I think there are advantages to having it a bit more RESTful.</p>
-  
-<p>His query interface I agree, though I 
-   <a href="http://bitworking.org/news/Google2Atom">
-   obviously have a bias towards the results set being expressed
-   as an Atom feed</a>.</p>
-<p>The API for managing postings isn't as RESTful as I think
-   it could be. In his proposal Tim uses an attribute 'op'
-   that is used to indicate which action is to take place. It would be 
-   better if the verb were moved out of the body and into the HTTP 
-   method.
-</p>
-<p>Initially adding a new resouce could still be done using a 
-  POST but have the response be a status code 303 with a Location:
-  header with a URI. Here is an example 'add' request:</p>
-<pre><code>POST /cgi-bin/add.cgi HTTP/1.1
-Host: 127.0.0.1:8085
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

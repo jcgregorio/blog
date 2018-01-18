@@ -19,33 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="AppClientTest Update">
-  <meta name="twitter:description" content="  <p>I've just checked in an updated version of the AppClientTest, a program for testing your AtomPub service. It has been updated to use the <a href="http://bitworking.org/news/285/atompubbase-An-AtomPub-Python-Client-Library">atompubbase</a> module and also sports HTML output as an option. To make it easier to develop I've transcluded via svn:externals all the libraries you will need as long as you are running Python 2.5. You will need to install elementtree if you are on something older than 2.5. The transcluding means it is this easy to get up and <a href="http://intertwingly.net/blog/2008/02/28/Migratory-Ape">running from svn</a>:</p><pre><code>
-$ svn co http://feedvalidator.googlecode.com/svn/trunk/apptestsuite/client/validator/ validator
-$ python validator/appclienttest.py --output=results.html "http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document" 
-$ firefox results.html
-</code></pre>
-<p><a href="http://bitworking.org/projects/apptestsuite/client/results.html">Here is a sample report</a> (looks better with JavaScript enabled) after running it against my <a href="http://bitworking.org/projects/apptestsite/">APP Test Site</a>. The icons are courtesy of <a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango</a>.</p>
-<p>Here are the command line options:</p>
-<p><code>$ python validator/appclienttest.py --help<br />usage: appclienttest.py [options]<br /><br />options:<br />  -h, --help          show this help message and exit<br />  --credentials=FILE  FILE that contains a name and password on separate lines<br />                      with an optional third line with the authentication type<br />                      of 'ClientLogin &lt;service&gt;'.<br />  --output=FILE       FILE to store test results<br />  --verbose           Print extra information while running.<br />  --quiet             Do not print anything while running.<br />  --debug             Print low level HTTP information while running.<br />  --html              Output is formatted in HTML<br /></code></p>
-<p>The code is far from complete. It does most of the tests of <a href="http://www.tbray.org/ape/">Tim's APE</a> (with the exception of categories), but there are many more tests to add. The next step for me is to add unit tests for appclienttest.py, which should be fairly simple given the structure of atompubbase, and the use of <a href="http://code.google.com/p/feedvalidator/source/browse/trunk/apptestsuite/client/atompubbase/tests/mockhttp.py">MockHttp</a>. </p>
-  <div class="commentContent" id="X1">
-    Hmm, with Python 2.5, credentials in a file (no third line), and a fresh WP 2.3.3, I get an internal error:
-<br />
-[junk stripped]
-<br />
-(most recent call last): File "validator/appclienttest.py", line 345, in run test_member_function() File "validator/appclienttest.py", line 549, in testEntry_Collection entry_collections = list(service.iter_match("application/atom+xml;type=entry"))
-    <p class="commentByLine">Posted by
-       <a href="http://www.wasab.dk/morten/">Morten Høybye Frederiksen</a> on <a href="#X1" title="2008-02-29T03:35:37.468043">2008-02-29</a>
-    </p>
-</div><div class="commentContent" id="X2">
-    Typo: s/you/your/ in the first sentence.
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

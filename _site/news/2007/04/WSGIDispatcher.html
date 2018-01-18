@@ -19,71 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="WSGIDispatcher">
-  <meta name="twitter:description" content="  <p>Introducing WSGIDispatcher [<a href="http://bitworking.org/projects/1812/wsgidispatcher.py">code</a>][<a href="http://bitworking.org/projects/1812/wsgidispatcher.html">docs</a>][<a href="http://bitworking.org/projects/1812/tests/test_dispatcher.py">tests</a>]. It's just like 
-<a href="http://lukearno.com/projects/selector/">Luke Arno's Selector</a>,
-except for the following:</p>
-<ul>
-<li>The license is MIT.</li>
-<li>It does not use setuptools.</li>
-<li>It has no external dependencies.</li>
-<li>It has unit tests.</li>
-<li>Regular expressions are compiled lazily.</li>
-<li>Non-regex path expression are treated as string matches, not regular expressions.
-</li><li>You can mix and match templates and regular expressions in the same instance of Dispatcher().</li>
-<li>Hooking up applications that handle all methods doesn't require _ANY_.</li>
-</ul>
-<p>The lazy compilation of regular expressions is important when running
-as CGI; you don't want to have each template compiled
-until you know all the previous template rules failed to match.
-</p>
-<p>For now the code sits in the <a href="http://bitworking.org/projects/1812/">1812</a> project.
-I haven't decided if it's enough code to warrant being in a standalone project
-or if it can just live as a part of 1812.
-</p>
-<p><a href="http://bitworking.org/news/148/Five-things-I-hate-about-Python">I've mentioned previously</a> that I'm not thrilled with Python documentation options, so for this module  I'm experimenting with <a href="http://docutils.sourceforge.net/">docutils</a>. All of the documentation is in the module doc strings as reStructured Text, which I then extract and convert into HTML using the docutils library.
-</p>
-  <div class="commentContent" id="X2">
-    <p>Regarding the documentation problem, have you considered the use of <a href="http://docs.python.org/lib/module-doctest.html">doctests</a>? Make the documentation do double-duty as functional tests in addition to the unit tests you have. If you do explore this option, you may want to also use <a href="http://cheeseshop.python.org/pypi/ZopeTestbrowser">zope.testbrowser</a> for testing the web based functionality.</p>
-<p>BTW, note that in your current docs, you repeat the URL 'http://localhost:8000/index/Joe' twice, with two different outputs ('Hello Joe' vs. 'Hi there'), which is exactly the kind of documentation error doctests are good at catching.</p>
-    <p class="commentByLine">Posted by
-       <a href="http://michaelbernstein.com">Michael R. Bernstein</a> on <a href="#X2" title="2007-04-24T13:04:05.154683">2007-04-24</a>
-    </p>
-</div><div class="commentContent" id="X3">
-    Ha, you are just reluctant to separate it into its own package because you aren't using the handy things Setuptools gives you to manage the packages!
-    <p class="commentByLine">Posted by
-       <a href="http://blog.ianbicking.org">Ian Bicking</a> on <a href="#X3" title="2007-04-24T13:32:12.015339">2007-04-24</a>
-    </p>
-</div><div class="commentContent" id="X4">
-    Michael,<br />
-<p>I fixed the bug in the docs, thanks! I will look at doctests.</p>
-    <p class="commentByLine">Posted by
-       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2007-04-24T14:29:19.761500">2007-04-24</a>
-    </p>
-</div><div class="commentContent" id="X5">
-    I am not really sure why you list "does not use setuptools" as though it is a feature. While I understand setuptools can make some aspects difficult regarding packaging modules for distributions, overall, using setuptools has been extremely helpful in my own experience. Can you explain?
-    <p class="commentByLine">Posted by
-       <a href="http://ionrock.org/blog/">Eric</a> on <a href="#X5" title="2007-04-24T14:47:08.338234">2007-04-24</a>
-    </p>
-</div><div class="commentContent" id="X6">
-    Eric,<br />
-<p>Setuptools is so focused on helping the developer it actually ends up being hostile to the consumer of any libraries that use it.</p>
-<p>For example:</p>
-<pre><code>
-joe@joe-laptop:~$ wget http://cheeseshop.python.org/packages/source/P/Pylons/Pylons-0.9.2.tar.gz
-joe@joe-laptop:~$ tar -xzf Pylons-0.9.2.tar.gz 
-joe@joe-laptop:~$ cd Pylons-0.9.2
-/home/joe/Pylons-0.9.2
-joe@joe-laptop:~/Pylons-0.9.2$ python setup.py install
-The required version of setuptools (&gt;=0.6c2) is not available, and
-can't be installed while this script is running. Please install
- a more recent version first.
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

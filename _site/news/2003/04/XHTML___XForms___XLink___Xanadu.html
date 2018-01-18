@@ -19,77 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="XHTML + XForms + XLink = Xanadu">
-  <meta name="twitter:description" content="  <p>We appear to be creeping towards Xanadu. Not that <a href="http://dictionary.reference.com/search?q=xanadu" title="The dictionary meaning.">idyllic, beautiful place</a>,
-but instead <a href="http://xanadu.com/">Xanadu</a> the Ted Nelson project. And that's not a good thing.</p>
-  <p>Now, Clay Shirky has laid down the reasons the web is 
-   so successful in his essay <a href="http://www.shirky.com/writings/evolve.html">In Praise of Evolvable Systems</a>.
-   The key phrase I want to point out today is:
-</p>
-<blockquote><p>Furthermore, the Web's almost babyish SGML syntax, so far from any serious 
-  computational framework (Where are the conditionals? Why is the Document Type Description so inconsistent? 
-  Why are the browsers enforcement of conformity so lax?), made it possible for anyone wanting a 
-  Web page to write one. </p></blockquote>
-<p>One more time, for emphasis:</p>
-<blockquote><p><strong> made it possible for anyone wanting a Web page to write one. </strong></p></blockquote>
-<p>In that light let's look at Sterling Hughes essay <a href="http://www.edwardbear.org/blog/archives/000161.html">Isn't It Supposed To Get Easier?</a>.
-   He, rightly so, complains about the plethora of new specs coming out of the W3C and their complexity. Very early on
-   he nails it (<em>Emphasis mine.</em>):</p>
-<blockquote><p>Don't get me wrong, these new technologies are certainly spiffy from the computer's point of view. 
-  I'm sure all the robots are very happy about their new, uber-understandable XML markups. 
-  <strong> But what about humans?</strong></p></blockquote>
-<p>Add if you look at the collection of specifications coming out, with their overt complexity,
-  ever more muddied intertwingly-ness, and strictness, you can see a move towards Ted Nelson's 
-  tightly controlled Xanadu. </p>
-<p>Just one side example to make my point. Look at XForms. This is a whole
-  forms manipulation, filling, and event system in one, made to be modular and hook not only into
-  a web page but into <a href="http://www.w3.org/MarkUp/Forms/#waXForms">other user interfaces</a>.
-  Yes, it has it's own event system, above, beyond, and seperate from what JavaScript provides.
-  Now I thought the problems with forms in a web page were pretty easy to isolate, and pretty easy
-  to fix. That is, the source of the web form data came from the HTML itself, and the
-  submitted data could only be in one format, <code>x-www-form-urlencoded</code>. Now both of these have their downsides,
-  but I believe it would have been a lot more helpful if they had just defined a new submission mime-type 
-  of <code>text/xml</code> and specified how form data would be serialized into XML. It's not that I am
-  dismissing all the work the XForms group did. They put a lot of work into the specification and test suites.
-  It's just that I think they egregiously missed the 80/20 mark. If you want more examples, read about the
-  interoperability problems you get with <a href="http://www.hixie.ch/advocacy/xhtml">XHTML and mime-types</a>, or the
-  troubles you can get into trying to follow 
-  the <a href="http://diveintomark.org/archives/2003/01/13/semantic_obsolescence.html">ever evolving XHTML</a>.</p>
-<p>Now look at the fact that XForms relies on XML Schema, and XHTML 2.0 relies on XForms and
-  you can see the source of Sterling's distress. Now, these are all rigorously defined and implemented
-  specifications, but, as Clay points out, the web didn't succeed inspite of 
-  it's poorer engineering qualites, but because of them. Put another way, if the web, in it's infancy, was
-  rolled out as XHTML 2.0 + XForms + SVG + XLink, it would have fallen as flat as Xanadu. </p>
-<p>This reminds me of a parallel in architecture. I just finished reading <a href="http://www.amazon.com/exec/obidos/ASIN/067974195X/bitworking-20">
-  The Death and Life of Great American Cities</a> by Jane Jacobs. It is a great book on how the interactions of people,
-  the different types of buildings, the different phases of a buildings life, and the flow of pedestrian traffic 
-  combine to make some parts of cities work better than others. She presents the emergent, sometimes chaotic,
-  growth of good functioning neighborhoods, with their myriad small shops and interspersed dwellings. This she juxtaposes
-  with the Radiant City, a catch all designation she uses for a top down designed city, where there is nothing but park space and dwellings, all arranged in
-  long 'super-blocks'. The whole space is specified out from the beginning. No room for failure, experimentation,
-  or growth. Despite the well intentioned designers, these Radiant Cities always end up being lifeless and stagnant.</p>
-<p>What's the point? We're heading towards Xanadu, and Xanadu is to a vibrant evolving web
-  what the Radiant City is to a vibrant and growing city. The web is for, and written by, humans. 
-  If we want to see the webs historical wild growth continue, it shouldn't be choked off with machine-legible-only formats.</p>
-<p><strong>Note 1:</strong> Please don't take my panning of Xanadu too hard. It might be a nice system, and parts of 
-   it inspired the web, but it was never a viable contender for the vaunted position the web now holds.</p>
-<p><strong>Note 2:</strong> You may have noticed I left CSS out of the mix. That's because I believe CSS is very amenable to "view source".
-  That is, if you want to get up and running and don't know anything about CSS or HTML, if you viewed
-  the source for a web page and saw 'background-color: blue', you have a good change of figuring out
-  what's going on.</p>
-<p><strong>Note 3:</strong> So what's the cure? My recommendation, shortly, is to put the W3C back into 
-   a janitorial position like other standards bodies, for example, the ASTM. That is, to not be in a position
-   of innovating itself, but to come in after the innovation and clean up. That's what standard bodies are for, to 
-   tidy up the mess left after real experimentation has taken place and the market's decided the winning idea.
-   Now all this isn't cut and dried, as there are interactions between a market and it's standards and things
-   like the presence of monopolies or oligopolies can change the role of a standards body, but I'll save that for 
-   a future rant.</p>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

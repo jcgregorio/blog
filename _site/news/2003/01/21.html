@@ -19,56 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Positive Feedback Loops and XML">
-  <meta name="twitter:description" content="  <p>A part of me wants to rail against <a href="http://diveintomark.org">
-   Mark Pilgrim's</a> latest article <a href="http://www.xml.com/pub/a/2003/01/22/dive-into-xml.html">
-   Parsing RSS At All Costs</a>. On one hand I think it introdcuces a positive feedback
-   loop into the systen to introduce a liberal parser. That is, once you sink below
-   Well-Formed, you end up in a race to the bottom. Who is to say what is 'liberal' enough.
-   Tomorrow someone will introduce a new parser that is even more liberal than
-   Marks. When RSS feed quality declines even more then a whole new round of ever more
-   liberal parsers will arrive to fill the need. Where does it end?</p>
-<p>The designers of XML knew this all too well and designed in a constriant into 
-   the system, the concept of Well-Formed. It is a minimum standard to be called
-   XML and it effectively breaks the positive feedback loop referred to above.
-   Well-Formedness wasn't an accident, it was intentionally put in to avoid
-   such a "race-to-the-bottom". That positive feedback loop may have effects
-   outside the RSS community and have impacts on the larger XML community.</p>
-<p>I don't care. Being the guy who maintains <a href="http://wellformedweb.org">
-   The Well-Formed Web</a> you might think I'd be the first to attack the article.
-   I still took my time responding to Mark's article because while I think it will damage
-   XML I'm not convinced it's a bad thing.</p>
-<p>Think back to the good/bad old days of web when we all learned HTML by
-   viewing the source and experimenting. Browsers were liberal and documentation
-   was scant. Now there is something to say about the value of reminiscing about
-   the good-old-days, but I think there is an important lesson to be learned
-   from the early versions of HTML. I am not talking about the HTML as specified in some specification but
-   the HTML as practiced. It was sloppy and ill-defined, but it had the following
-   advantages:</p>
-<dl>
-<dt>Built in character entities.</dt>
-<dd>No need to include some stinking DTD, all the good entities were already pre-defined.</dd>
-<dt>Closure</dt>
-<dd>No need to close all the tags, the parser could figure out what you meant most of the time.</dd>
-<dt>Extensibility</dt>
-<dd>Just dump a new tag in for your custom data. Browsers were supposed to ignore
-           any tags they don't recognize and we didn't have and fancy-schmancy validators back then.</dd>
-<dt>Built in web</dt>
-<dd>HTML, unlike XML, was <em>aware</em> of the web from day one, unlike XML
-           where web awareness is still being added in a patchwork fashion, ala <a href="http://www.w3.org/TR/xlink/">XLink</a>, 
-           <a href="http://www.w3.org/TR/xptr/">XPointer</a>, etc.</dd>
-</dl>
-<p>All that and you still ended up with a tree-structured document model.</p>
-<p>So do I want a return to the good/bad old days of HTML? Not really. What I
-  <strong>do</strong> want is the good parts of old HTML along with the experience
-  of Well-Formed XML to strongly influence and inform the development of XML's successor,
-  be that XML 2.0 or some other markup language.</p>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

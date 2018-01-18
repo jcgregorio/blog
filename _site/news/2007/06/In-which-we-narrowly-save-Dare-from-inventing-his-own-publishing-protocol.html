@@ -19,81 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="In which we narrowly save Dare from inventing his own publishingprotocol">
-  <meta name="twitter:description" content="  <p><a href="http://www.25hoursaday.com/weblog/2007/06/09/WhyGDataAPPFailsAsAGeneralPurposeEditingProtocolForTheWeb.aspx">Dare Obasanjo</a> has come up with a number of <em>issues</em> he has with the
-        Atom Publishing Protocol. I am led to wonder about the timing of
-        his complaints as the APP is close to getting an RFC number.
-        What spurred this sudden bout of sour grapes?:</p>
-<blockquote><p>
-            For this reason, we will likely standardize on a different RESTful protocol
-            which I'll discuss in a later post.</p></blockquote>
-<p>Ah, so if these <em>issues</em> just turn out to be misunderstandings on your part
-        then Microsoft will just use the APP and not roll out its own protocol?
-        I'm so glad to hear that.</p>
-<p>The first complaint is that Dare doesn't understand that an Atom Entry is a document
-        and not an envelope. He would like to cram everything under the sun into an Entry, which isn't
-        how the format is supposed to be used. Note, I'm saying format here, and not protocol, since
-        that is where the problem lies - Dare should have the same complaints about syndicating
-        the data as he has about authoring it.</p>
-<p>This actually isn't a problem in the APP, if you have something that doesn't
-        fit into an Entry then store it under a Media Collection.  You could store
-        vCards, vCalendars, PDFs, images, videos, etc. When you create
-        such a collection member you actually create two resources, the media itself, and an
-        associated Atom Entry that contains meta-data about the media. The
-        nice part is that those other formats have their own mime-types, which
-        is important and something I stressed <a href="http://bitworking.org/news/193/Do-we-need-WADL">when talking about WADL</a>. Also see what
-        <a href="http://www.dehora.net/journal/2007/06/app_on_the_web_has_failed_miserably_utterly_and_completely.html">Bill</a> has to say about this.</p>
-<p>The second complaint is one of data loss:</p>
-<blockquote><p>
-            The problem is that there is data loss if the entry has changed between the
-            time the client downloaded it and when it tries to PUT its changes.</p></blockquote>
-<p>Fortunately, the only real problem is that Dare seems to have only
-        skimmed the specification. From <a href="http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-15.html#edit-via-PUT">Section 9.3</a>:</p>
-<blockquote><p>
-            To avoid unintentional loss of data when editing Member Entries or Media Link
-            Entries, Atom Protocol clients SHOULD preserve all metadata that has not been
-            intentionally modified, including unknown foreign markup as defined in Section
-            6 of [RFC4287].</p></blockquote>
-<p>And further, from <a href="http://bitworking.org/projects/atom/draft-ietf-atompub-protocol-15.html#etags">Section 9.5</a>:</p>
-<blockquote><p>
-            Implementers are advised to pay attention to cache controls, and to make use
-            of the mechanisms available in HTTP when editing Resources, in particular
-            entity-tags as outlined in [NOTE-detect-lost-update]. Clients are not assured
-            to receive the most recent representations of Collection Members using GET if
-            the server is authorizing intermediaries to cache them.</p></blockquote>
-<p>Hey look, we actually reference the <a href="http://www.w3.org/1999/04/Editing/">lost update</a> paper that specifies how
-        to solve this problem, right there in the spec! And Section 9.5.1 even shows
-an example of just such a conditional PUT failing. Who knew?
-        And just to make this crystal clear, you can build a server that is compliant
-        to the APP that accepts <em>only</em> conditional PUTs. <a href="http://bitworking.org/news/138/Testing-the-APE">I did</a>, and it
-        <a href="http://intertwingly.net/wiki/pie/InteropGrid">performed quite well at the last APP Interop</a>.</p>
-<p>The last complaint is a vague one about non-hierarchy. Of course,
-        in the middle of his explanation of the problem, Dare actually admits it really isn't a problem:</p>
-<blockquote><p>
-            This means if you want to represent an item that has children they must be
-            referenced via a link instead of included inline.</p></blockquote>
-<p>Again, what we have here is a complaint about the format and not the protocol, as this
-        applies just as well to syndication as it does to authoring.
-        And yes, that's the way Atom the syndication format, and the protocol, represent
-        relationships between items, via links. One simple, consistent, easy to explain mechanism,
-        as opposed to a hybrid approach of allowing linking <em>and</em> inline inclusion, because
-        even if you allowed inlining you would still need to allow linking because no one has found
-        the one true hierarchy to rule them all.</p>
-<p>In summary, the three <em>issues</em> are not <em>issues</em> at all and
-        have very simple solutions.</p>
-<ol>
-<li>Use Media Collections when appropriate.</li>
-<li>Read the Spec.</li>
-<li><a href="http://worsethanfailure.com/Articles/The_Complicator_0x27_s_Gloves.aspx">Gloves</a></li>
-</ol>
-  <div class="commentContent" id="X1">
-    Maybe Dare wrote that post over several editing sessions, but:
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

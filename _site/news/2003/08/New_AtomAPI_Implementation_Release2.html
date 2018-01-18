@@ -19,65 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="New AtomAPI Implementation Release">
-  <meta name="twitter:description" content="  <p>We came, we saw, we did, we got spanked, we did it right.</p>
-  <p>Last week Mark Pilgrim and I released an implementation of the AtomAPI, both 
-   a client and a server. That implementation included a new authorization
-   scheme that we came up with. Now we would have liked to used HTTP Digest authentication, and the AtomAPI should
-   support Digest authentication, but for many users setting up Digest just isn't possible.
-   Many users, like myself, are using a server that does not have Digest authentication 
-   turned on. Similarly not everyone has the ability to use <code>.htaccess</code> files,
-   which you need to be able to modify to setup Digest autentication, that or 
-   modify your servers <code>httpd.conf</code> which is even rarer still. However we heard    from CMS vendors that they want at least
-   the level of password security that HTTP Digest offers. So we needed to come up with 
-   a scheme that:</p>
-<ol>
-<li>Is a challenge-response Digest authentication scheme.</li>
-<li>Is able to be handled by a CGI program with no <code>.htaccess</code>, <code>httpd.conf</code>
-      tricks or requirements to be running as an Apache module, ala mod_perl or mod_python.</li>
-<li>Gracefully extends current authentication schemes.</li>
-<li><a href="http://xp.c2.com/DoTheSimplestThingThatCouldPossiblyWork.html">Is the simplest thing that could possibly work.</a></li>
-</ol>
-<p>So what we did was a simple transposition of Digest authentication into custom HTTP headers:</p>
-   That authorization scheme was a variant of the 
-   RFC 2617 Digest authentication with the following changes:
-<ol>
-<li>Used sha1 instead of md5.</li>
-<li>Triggered authentication by rejecting a request with an HTTP status code of 447 instead of 401.</li>
-<li>The server response when rejecting a request with a 447 also included an Atom-Authenticate: header that included the 'nonce'. This 
-      parallels the role of the <code>WWW-Authenticate: </code> header in HTTP Digest.</li>
-<li>The client sends an <code>Atom-Authorization:</code> header with all the Digest authentication information in it.</li>
-<li>The server sends back an <code>Atom-Authentication-Info:</code> header with the 'nextnonce'.</li>
-</ol>
-<p>Now this was a good first pass but we did several things wrong as Ken Coar 
-   pointed out on his <a href="http://ken.coar.org/burrow/index?entry=568">site</a> and on 
-   the <a href="http://www.imc.org/atom-syntax/mail-archive/msg00334.html">atom-syntax mailing list</a>.
-   Basically it boils down to the fact that we ignored the built-in extensiblity of the 
-   HTTP authenciation mechanism and went around it starting with returning an HTTP status code 
-   of 447.</p>
-<p>What we should have done:</p>
-<ol>
-<li>Triggered an auth by rejecting a request with an HTTP status code of 401.</li>
-<li>The server response includes an <code>Authenticate:</code> header that includes Atom as an authentication scheme.</li>
-<li>The client then sends an <code>Authorization:</code> header with the scheme of Atom with 
-      all the Digest authentication information going into <code>X-Atom-Authorization:</code> header.</li>
-<li>With every request the server sends back an <code>X-Atom-Authentication-Info:</code> header with the 'nextnonce'.</li>
-</ol>
-<p>Note that this now uses the extensibility of the HTTP authentication scheme. When 
-   the server responds with a <code>WWW-Authenticate:</code> header, that header
-   lists, in order of preference, the authentication schemes that the server supports.
-   The client then selects the most preferred scheme that it also knows. Note that
-   the whole authentication mechanism is designed to be robust to the addition of
-   new/unknown schemes. We are leveraging this extensibilty by passing in an authentication
-   scheme to Apache that it doesn't know about. The Apache server reacts appropriately
-   by passing the request onto the CGI program to give it a chance to handle the 
-   authentication.</p>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

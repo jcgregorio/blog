@@ -19,91 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Reconsidering Search (Kinda) in the AtomAPI.">
-  <meta name="twitter:description" content="  <p>Of all the facets of the <a href="http://www.intertwingly.net/wiki/pie/RestEchoApiDiscuss">AtomAPI</a>, the search mechanism has
-   caused the most angst. Indeed there is a <a href="http://www.intertwingly.net/wiki/pie/RestEchoSearchApi">whole page
-   dedicated to discussing just this facet on the wiki</a>.
-   The search mechanism has gone through many changes and
-   at this point I would like to re-introduce the search 
-   mechanism from the RESTLog API.</p>
-  <p>Actually, to call it a seach mechanism is really the wrong
-   word, it is really a structured mechanism for browsing
-   the archives of a site. In the case of the <a href="http://wellformedweb.org/story/6">RESTLog
-   Archive interface</a>, the form and function of the browsing 
-   is completely under the control of the server.</p>
-<p>Let's start by looking at the RESTLog Archive format:</p>
-<pre class="example"><code>
-&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
-  &lt;res href="http://wfw.org/news/5"&gt;RESTLog Interface&lt;/res&gt;
-  &lt;res href="http://wfw.org/news/4"&gt;One step at a time&lt;/res&gt;
-  &lt;res href="http://wfw.org/news/3"&gt;What's the point?&lt;/res&gt;
-  &lt;res href="http://wfw.org/news/2"&gt;RESTLog Overview&lt;/res&gt;
-  &lt;res href="http://wfw.org/news/1"&gt;Welcome to the Well-Formed Web&lt;/res&gt;
-&lt;/archives&gt;
-</code></pre>
-<p>This is a very simple example of an archive file. In this case it is just
-   a list of <code>res</code> elements that each have an <code>href</code>
-   attribute that points to the Entry, and an element value that is a string
-   that is used to display to the user to help them select which Entry to choose.</p>
-<p>Here is a more complicated example:</p>
-<pre class="example"><code>
-&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
-   &lt;group title="Last Ten Stories"&gt;
-      &lt;res href="http://wfw.org/news/100"&gt;My Most Recent Post&lt;/res&gt;
-      &lt;res href="http://wfw.org/news/99"&gt;My Next Most Recent Pos&lt;/res&gt;
-      .
-      .
-      .
-      &lt;res href="http://wfw.org/news/91"&gt;Some Post In The Recent Past&lt;/res&gt;
-   &lt;/group&gt;
-   &lt;more href="http://wfw.org/news/moreViews"&gt;All Items&lt;/more&gt;
-&lt;/archives&gt;
-</code></pre>
-<p>Note that this example introduces the <code>group</code> element. This 
-   allows multiple resources to be grouped together. Note that multiple
-   groups can be used, and that they can also be nested. </p>
-<p>In addition this example introduces the <code>more</code> element. This 
-   is an element that points to another file in archive format. In this way
-   the client can navigate around a set of archive files and not have to 
-   retrieve the whole list at one time.</p>
-<p>Let's go back and consider the <code>group</code> element. Think about
-   what this would look like if you wanted to present it to a user. With their
-   ability to nest you would use a Tree control, with folders for each of the 
-   <code>group</code> elements and files for each of the <code>res</code> elements.
-   If you keep that analogy, then the <code>more</code> element is also just
-   a folder, but one that doesn't get retrieved or displayed until the user
-   clicks on it.</p>
-<p>So how would this integrate into the AtomAPI? The Introspection file
-   facet for seaching, currently <code>search-entries</code> would be changed
-   to a more appropriate <code>browse-entries</code> and doing a GET on that 
-   URI would retrieve the first archive formatted file. Note that more 
-   GETs might follow as the client followed <code>more</code> links 
-   in that archive file, which lead to still further archive files.</p>
-<p>Now the advantages of this approach are that is puts the entire
-   browsing experience in the hands of the server. The server could 
-   present very simple archive files or it could present a rich 
-   and varied archive format. The server could present multiple 
-   views into the archive, with one <code>group</code> or <code>more</code>
-   presenting a heirarchy by date, and another <code>group</code> presenting
-   a heirarchy by subject, or by poster, or by content-type. It really doesn't 
-   matter as the server has complete control. In addition the 
-   text of the <code>res</code> element isn't restricted, you could put the 
-   post title there, or the server could put any reasonable information
-   the user might find useful there. </p>
-<p>This also puts the server in firm control of the amount of bandwidth
-   the browsing interface uses. There is no "atom-all" list of all the 
-   feeds in the archive unless the server decides to produce it.</p>
-<p>Now admittedly this does raise the bar for the client developers
-   as they have to implement a more complicated interface, but the
-   payback is in a much richer browsing experience. This also let's 
-   the server developers compete by producing different browsing 
-   strategies, all while using the same format and mechanisms.</p>
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

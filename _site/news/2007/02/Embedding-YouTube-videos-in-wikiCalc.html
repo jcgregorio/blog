@@ -19,31 +19,9 @@
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
   <meta name="twitter:title"   content="Embedding YouTube videos in wikiCalc">
-  <meta name="twitter:description" content="  <p><a href="http://danbricklin.com/log/2007_01_25.htm#iwoorxvideo">Dan Bricklin points</a> to a cool demo
-of embedding a YouTube video into a wikiCalc spreadsheet.
-Of course, in a show of self-referential-integrity, the demo is done as a screencast and is hosted on YouTube.
-</p>
-<p>Meanwhile I upgraded to the 1.0 release of wikiCalc
-and have my <a href="http://sourceforge.net/forum/forum.php?thread_id=1675189&amp;forum_id=584568">sparklines embedding down to a single line</a>:
-</p>
-<pre><code>B1=wkcHTML(wkctext("&lt;img src='http://bitworking.org/projects/sparklines/spark.cgi?d=",  
-   wkcjoin(A2:A21), "'/&gt;")) 
-</code></pre>
-<p><del>That requires the <code>wkcJoin()</code> function
-which I added to my install, but that doesn't detract from
-the fact that</del> we're getting closer and closer to 
-<a href="http://bitworking.org/news/The_Spreadsheet_as_Mashup_Fabric">spreadsheets as mashup fabric</a>.
-<ins>See Dan's notes in the comments on how to do this without adding any new functions.</ins>
-</p>
-  <div class="commentContent" id="X1">
-    If you have A16:A20 with numbers, you can have B16 have =A16&amp;"," -- The &amp; is force to string and concatenate. Then you can have:
-
-">
-  
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
-  
-  
+
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
