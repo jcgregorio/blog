@@ -495,9 +495,17 @@ blockquote {
 .PageNavigation .next {
   text-align: right; }
 
-.webmention-content {
+.wm-content {
   display: block;
-  margin-bottom: 0.2em; }
+  margin-bottom: 1em; }
+
+.wm-author {
+  font-weight: bold; }
 
 #webmention {
-  margin-left: 1em; }
+  margin-left: 1em;
+  margin-bottom: 1em; }
+
+#webmention h3 {
+  border-bottom: solid lightgray 1px;
+  margin-left: -1em; }
