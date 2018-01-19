@@ -494,3 +494,10 @@ blockquote {
 
 .PageNavigation .next {
   text-align: right; }
+
+.webmention-content {
+  display: block;
+  margin-bottom: 0.2em; }
+
+#webmention {
+  margin-left: 1em; }
