@@ -502,7 +502,7 @@ blockquote {
 .wm-author {
   font-weight: bold; }
 
-.wm-thumbnail {
+.wm-thumbnail:hover {
   text-decoration: none; }
 
 #webmention {
