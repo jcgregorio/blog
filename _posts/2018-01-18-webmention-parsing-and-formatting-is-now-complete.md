@@ -9,4 +9,4 @@ As [Chris suggested](http://stream.boffosocko.com/2018/i-suspect-that-next-with-
 
 This is what they should look like in action:
 
-![Screenshot of webmentions in action.](/images/2018/webmention.png)
+![Screenshot of webmentions in action.](/images/2018/webmentions.png)
