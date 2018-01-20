@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Having fun with silo metadata.
+title: Having fun with silo metadata
 ---
 I just recently finished adding support for
 [Twitter metadata](https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary)
