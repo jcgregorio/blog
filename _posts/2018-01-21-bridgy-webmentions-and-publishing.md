@@ -16,7 +16,7 @@ it to Twitter.
 
 ![Using webmentions to trigger brid.gy to publish to Twitter](/images/2018/bridgy.png)
 
-Note that this also works for Facebook and flickr, and you obviously need to
+Note that this also works for Facebook and Flickr, and you obviously need to
 authorize brid.gy to post to Twitter for you.
 
 <a href="https://brid.gy/publish/twitter"></a>
