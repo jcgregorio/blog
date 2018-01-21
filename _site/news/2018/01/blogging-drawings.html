@@ -6,27 +6,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Having fun with silo metadata</title>
-  <meta name="description" content="I just recently finished adding support for Twitter metadata to the blog, mostly motivaged by brid.gy’s ability to use Webmentions to automatically post my b...">
+  <title>Blogging drawings</title>
+  <meta name="description" content="One of the goals with my new blogging system has been a flow for getting hand drawn images onto the blog. I will admit this is purely driven by jealousy of t...">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2018/01/having-fun-silo-metadata">
+  <link rel="canonical" href="https://bitworking.org/news/2018/01/blogging-drawings">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="Having fun with silo metadata">
-  <meta name="twitter:description" content="I just recently finished adding support for
-Twitter metadata
-to the blog, mostly motivaged by brid.gy’s ability to use
-Webmentions to automatically post my blog entries to Twitter. As I worked on
-the Twitter metadata I wondered if other silos had their own metadata they
-supported. Indeed they do, and Kevin Marks brilliantly demonstrates how
-ridiculous the situation is by creating a
-blog post that appears different in every silo.
+  <meta name="twitter:title"   content="Blogging drawings">
+  <meta name="twitter:description" content="One of the goals with my new blogging system has been a flow for getting hand
+drawn images onto the blog. I will admit this is purely driven by jealousy of
+the awesome drawings on the morning
+paper.
+I didn’t know if I’d ever find a setup I would like until I got to borrow a
+Google Pixelbook,
+which is just an amazing machine and deserves a writeup on its own, but has
+several key features, such as the ability to run Android apps and the ability
+to fold over and turn into a tablet, along with one of the best digital pens
+I’ve ever used. In the end my flow looks like this:
 
 ">
   <meta name="twitter:card"  content="summary">
@@ -108,12 +110,12 @@ blog post that appears different in every silo.
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Having fun with silo metadata</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Blogging drawings</h1>
     <p class="post-meta">
-      <a class="u-url" href="/news/2018/01/having-fun-silo-metadata">
-        <time datetime="2018-01-20T00:00:00-05:00" itemprop="datePublished" class="dt-published">
+      <a class="u-url" href="/news/2018/01/blogging-drawings">
+        <time datetime="2018-01-21T00:00:00-05:00" itemprop="datePublished" class="dt-published">
           
-          Jan 20, 2018
+          Jan 21, 2018
         </time>
       </a>
       • <a rel="author" class="p-author h-card" href="/about"> <span itemprop="author"
@@ -125,14 +127,30 @@ blog post that appears different in every silo.
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>I just recently finished adding support for
-<a href="https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary">Twitter metadata</a>
-to the blog, mostly motivaged by <a href="https://brid.gy/">brid.gy</a>’s ability to use
-Webmentions to automatically post my blog entries to Twitter. As I worked on
-the Twitter metadata I wondered if other silos had their own metadata they
-supported. Indeed they do, and Kevin Marks brilliantly demonstrates how
-ridiculous the situation is by creating a
-<a href="http://www.kevinmarks.com/partialsilos.html">blog post that appears different in every silo</a>.</p>
+    <p>One of the goals with my new blogging system has been a flow for getting hand
+drawn images onto the blog. I will admit this is purely driven by jealousy of
+the awesome drawings on <a href="https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/">the morning
+paper</a>.
+I didn’t know if I’d ever find a setup I would like until I got to borrow a
+<a href="https://store.google.com/us/product/google_pixelbook">Google Pixelbook</a>,
+which is just an amazing machine and deserves a writeup on its own, but has
+several key features, such as the ability to run Android apps and the ability
+to fold over and turn into a tablet, along with one of the best digital pens
+I’ve ever used. In the end my flow looks like this:</p>
+
+<p><img src="/images/2018/blogging_pictures.png" alt="Squid to Google Drive to Jekyll to GCE" /></p>
+
+<p><a href="https://play.google.com/store/apps/details?id=com.steadfastinnovation.android.projectpapyrus">Squid</a>
+is an Android app, one of the dozens I looked at, and the one that worked
+the best for me, which means it is simple and has nice defaults.</p>
+
+<p>The “NUC” is my desktop machine which is where my blogging work is mostly
+done, but that’s a machine I almost never physically touch, I’m almost always
+accessing it over SSH, which is why this flow is probably a little more
+complicated than you might have guessed.</p>
+
+<p>The “GCE” box in that picture is the Google Compute Enging instance that runs
+<a href="https://github.com/jcgregorio/userve">userve</a> and hosts this blog.</p>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 
@@ -157,8 +175,8 @@ ridiculous the situation is by creating a
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2018/01/having-fun-silo-metadata';
-      this.page.identifier = 'https://bitworking.org/news/2018/01/having-fun-silo-metadata';
+      this.page.url = 'https://bitworking.org/news/2018/01/blogging-drawings';
+      this.page.identifier = 'https://bitworking.org/news/2018/01/blogging-drawings';
     };
 
     (function() {
@@ -186,12 +204,12 @@ ridiculous the situation is by creating a
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2018/01/space-gas-station">&laquo;
-        Space Gas Station</a>
+      <a class="prev" href="/news/2018/01/having-fun-silo-metadata">&laquo;
+        Having fun with silo metadata</a>
       
       
       <a class="next"
-        href="/news/2018/01/blogging-drawings">Blogging drawings &raquo;</a>
+        href="/news/2018/01/bridgy-webmentions-and-publishing">Bridgy, webmentions, and publishing. &raquo;</a>
       
     </div>
     

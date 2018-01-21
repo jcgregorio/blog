@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-21T01:40:50-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Bridgy, webmentions, and publishing.</title><link href="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing" rel="alternate" type="text/html" title="Bridgy, webmentions, and publishing." /><published>2018-01-21T00:00:00-05:00</published><updated>2018-01-21T01:40:12-05:00</updated><id>https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing</id><content type="html" xml:base="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing">&lt;p&gt;&lt;a href=&quot;https://brid.gy/about#webmentions&quot;&gt;Brid.gy&lt;/a&gt; has a cool feature for
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-21T10:41:56-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Bridgy, webmentions, and publishing.</title><link href="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing" rel="alternate" type="text/html" title="Bridgy, webmentions, and publishing." /><published>2018-01-21T00:00:00-05:00</published><updated>2018-01-21T01:41:16-05:00</updated><id>https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing</id><content type="html" xml:base="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing">&lt;p&gt;&lt;a href=&quot;https://brid.gy/about#webmentions&quot;&gt;Brid.gy&lt;/a&gt; has a cool feature for
 automatically posting blog posts to Twitter, which is interesting because it
 uses Webmentions to kick off the whole process. I.e. just including the
 link:&lt;/p&gt;
@@ -17,7 +17,32 @@ it to Twitter.&lt;/p&gt;
 &lt;p&gt;Note that this also works for Facebook and Flickr, and you obviously need to
 authorize brid.gy to post to Twitter for you.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brid.gy has a cool feature for automatically posting blog posts to Twitter, which is interesting because it uses Webmentions to kick off the whole process. I.e. just including the link:</summary></entry><entry><title type="html">Having fun with silo metadata</title><link href="https://bitworking.org/news/2018/01/having-fun-silo-metadata" rel="alternate" type="text/html" title="Having fun with silo metadata" /><published>2018-01-20T00:00:00-05:00</published><updated>2018-01-20T10:41:15-05:00</updated><id>https://bitworking.org/news/2018/01/having-fun-silo-metadata</id><content type="html" xml:base="https://bitworking.org/news/2018/01/having-fun-silo-metadata">&lt;p&gt;I just recently finished adding support for
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brid.gy has a cool feature for automatically posting blog posts to Twitter, which is interesting because it uses Webmentions to kick off the whole process. I.e. just including the link:</summary></entry><entry><title type="html">Blogging drawings</title><link href="https://bitworking.org/news/2018/01/blogging-drawings" rel="alternate" type="text/html" title="Blogging drawings" /><published>2018-01-21T00:00:00-05:00</published><updated>2018-01-21T10:41:16-05:00</updated><id>https://bitworking.org/news/2018/01/blogging-drawings</id><content type="html" xml:base="https://bitworking.org/news/2018/01/blogging-drawings">&lt;p&gt;One of the goals with my new blogging system has been a flow for getting hand
+drawn images onto the blog. I will admit this is purely driven by jealousy of
+the awesome drawings on &lt;a href=&quot;https://blog.acolyer.org/2016/04/21/the-amazing-power-of-word-vectors/&quot;&gt;the morning
+paper&lt;/a&gt;.
+I didn’t know if I’d ever find a setup I would like until I got to borrow a
+&lt;a href=&quot;https://store.google.com/us/product/google_pixelbook&quot;&gt;Google Pixelbook&lt;/a&gt;,
+which is just an amazing machine and deserves a writeup on its own, but has
+several key features, such as the ability to run Android apps and the ability
+to fold over and turn into a tablet, along with one of the best digital pens
+I’ve ever used. In the end my flow looks like this:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/blogging_pictures.png&quot; alt=&quot;Squid to Google Drive to Jekyll to GCE&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://play.google.com/store/apps/details?id=com.steadfastinnovation.android.projectpapyrus&quot;&gt;Squid&lt;/a&gt;
+is an Android app, one of the dozens I looked at, and the one that worked
+the best for me, which means it is simple and has nice defaults.&lt;/p&gt;
+
+&lt;p&gt;The “NUC” is my desktop machine which is where my blogging work is mostly
+done, but that’s a machine I almost never physically touch, I’m almost always
+accessing it over SSH, which is why this flow is probably a little more
+complicated than you might have guessed.&lt;/p&gt;
+
+&lt;p&gt;The “GCE” box in that picture is the Google Compute Enging instance that runs
+&lt;a href=&quot;https://github.com/jcgregorio/userve&quot;&gt;userve&lt;/a&gt; and hosts this blog.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">One of the goals with my new blogging system has been a flow for getting hand drawn images onto the blog. I will admit this is purely driven by jealousy of the awesome drawings on the morning paper. I didn’t know if I’d ever find a setup I would like until I got to borrow a Google Pixelbook, which is just an amazing machine and deserves a writeup on its own, but has several key features, such as the ability to run Android apps and the ability to fold over and turn into a tablet, along with one of the best digital pens I’ve ever used. In the end my flow looks like this:</summary></entry><entry><title type="html">Having fun with silo metadata</title><link href="https://bitworking.org/news/2018/01/having-fun-silo-metadata" rel="alternate" type="text/html" title="Having fun with silo metadata" /><published>2018-01-20T00:00:00-05:00</published><updated>2018-01-20T10:41:15-05:00</updated><id>https://bitworking.org/news/2018/01/having-fun-silo-metadata</id><content type="html" xml:base="https://bitworking.org/news/2018/01/having-fun-silo-metadata">&lt;p&gt;I just recently finished adding support for
 &lt;a href=&quot;https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary&quot;&gt;Twitter metadata&lt;/a&gt;
 to the blog, mostly motivaged by &lt;a href=&quot;https://brid.gy/&quot;&gt;brid.gy&lt;/a&gt;’s ability to use
 Webmentions to automatically post my blog entries to Twitter. As I worked on
@@ -72,17 +97,4 @@ true that &lt;a href=&quot;https://en.wikipedia.org/wiki/On_the_Internet,_nobody
   &lt;p&gt;Hoping this post, syndication, and backfeeding works as expected!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Welcome!&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Michael Singletary</summary></entry><entry><title type="html">Going beyond minimal Webmentions</title><link href="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions" rel="alternate" type="text/html" title="Going beyond minimal Webmentions" /><published>2018-01-14T00:00:00-05:00</published><updated>2018-01-15T00:03:24-05:00</updated><id>https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions</id><content type="html" xml:base="https://bitworking.org/news/2018/01/going-beyond-minimal-webmentions">&lt;p&gt;&lt;a href=&quot;http://stream.boffosocko.com/2018/i-suspect-that-next-with-a-tad-bit-of-parsing&quot;&gt;Chris Aldrich&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;I suspect that next, with a tad bit of parsing using microformats, you can
-add some display elements to your webmentions to indicate the author, their
-url, date/time, and actually include the reply text to have a better UI for
-them.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Indeed, my current implementation just shows the validated Webmention
-links, and my plan is to slowly enhance them over time. I think, just like
-in the &lt;a href=&quot;https://willnorris.com/go/webmention&quot;&gt;case of the basic Webmention support&lt;/a&gt;, &lt;a href=&quot;https://willnorris.com&quot;&gt;Will
-Norris&lt;/a&gt; may have my back again and have already done
-the heavy lifting for &lt;a href=&quot;https://willnorris.com/go/microformats&quot;&gt;Microformats and Go&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Chris Aldrich</summary></entry></feed>
+&lt;p&gt;Welcome!&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Michael Singletary</summary></entry></feed>
