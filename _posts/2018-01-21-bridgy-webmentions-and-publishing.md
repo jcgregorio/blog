@@ -8,7 +8,7 @@ automatically posting blog posts to Twitter, which is interesting because it
 uses Webmentions to kick off the whole process. I.e. just including the
 link:
 
-    &lt;a href="https://brid.gy/publish/twitter">&lt;/a>
+    <a href="https://brid.gy/publish/twitter"></a>
 
 ![Using webmentions to trigger brid.gy to publish to Twitter](/images/2018/bridgy.png)
 
