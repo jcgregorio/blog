@@ -1,5 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-21T00:41:06-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Having fun with silo metadata</title><link href="https://bitworking.org/news/2018/01/having-fun-silo-metadata" rel="alternate" type="text/html" title="Having fun with silo metadata" /><published>2018-01-20T00:00:00-05:00</published><updated>2018-01-20T10:41:15-05:00</updated><id>https://bitworking.org/news/2018/01/having-fun-silo-metadata</id><content type="html" xml:base="https://bitworking.org/news/2018/01/having-fun-silo-metadata">&lt;p&gt;I just recently finished adding support for
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-01-21T01:33:55-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Bridgy, webmentions, and publishing.</title><link href="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing" rel="alternate" type="text/html" title="Bridgy, webmentions, and publishing." /><published>2018-01-21T00:00:00-05:00</published><updated>2018-01-21T01:33:53-05:00</updated><id>https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing</id><content type="html" xml:base="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing">&lt;p&gt;&lt;a href=&quot;https://brid.gy/about#webmentions&quot;&gt;Brid.gy&lt;/a&gt; has a cool feature for
+automatically posting blog posts to Twitter, which is interesting because it
+uses Webmentions to kick off the whole process. I.e. just including the
+link:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;amp;lt;a href=&quot;https://brid.gy/publish/twitter&quot;&amp;gt;&amp;amp;lt;/a&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/brigy.png&quot; alt=&quot;Using webmentions to trigger brid.gy to publish to Twitter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that this also works for Facebook and flickr, and you obviously need to
+authorize brid.gy to post to Twitter for you.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Brid.gy has a cool feature for automatically posting blog posts to Twitter, which is interesting because it uses Webmentions to kick off the whole process. I.e. just including the link:</summary></entry><entry><title type="html">Having fun with silo metadata</title><link href="https://bitworking.org/news/2018/01/having-fun-silo-metadata" rel="alternate" type="text/html" title="Having fun with silo metadata" /><published>2018-01-20T00:00:00-05:00</published><updated>2018-01-20T10:41:15-05:00</updated><id>https://bitworking.org/news/2018/01/having-fun-silo-metadata</id><content type="html" xml:base="https://bitworking.org/news/2018/01/having-fun-silo-metadata">&lt;p&gt;I just recently finished adding support for
 &lt;a href=&quot;https://developer.twitter.com/en/docs/tweets/optimize-with-cards/overview/summary&quot;&gt;Twitter metadata&lt;/a&gt;
 to the blog, mostly motivaged by &lt;a href=&quot;https://brid.gy/&quot;&gt;brid.gy&lt;/a&gt;’s ability to use
 Webmentions to automatically post my blog entries to Twitter. As I worked on
@@ -67,9 +81,4 @@ them.&lt;/p&gt;
 links, and my plan is to slowly enhance them over time. I think, just like
 in the &lt;a href=&quot;https://willnorris.com/go/webmention&quot;&gt;case of the basic Webmention support&lt;/a&gt;, &lt;a href=&quot;https://willnorris.com&quot;&gt;Will
 Norris&lt;/a&gt; may have my back again and have already done
-the heavy lifting for &lt;a href=&quot;https://willnorris.com/go/microformats&quot;&gt;Microformats and Go&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Chris Aldrich</summary></entry><entry><title type="html">First</title><link href="https://bitworking.org/news/2018/01/first" rel="alternate" type="text/html" title="First" /><published>2018-01-14T00:00:00-05:00</published><updated>2018-01-14T10:20:18-05:00</updated><id>https://bitworking.org/news/2018/01/first</id><content type="html" xml:base="https://bitworking.org/news/2018/01/first">&lt;p&gt;&lt;a href=&quot;http://stream.boffosocko.com/2018/if-youve-got-incoming-webmentions-working-let-me-have-the&quot;&gt;Chris Aldrich&lt;/a&gt; has the honor of being
-the first sender of an organic incoming Webmention received on
-&lt;a href=&quot;https://bitworking.org&quot;&gt;bitworking.org&lt;/a&gt;, which you can see on &lt;a href=&quot;https://bitworking.org/news/2018/01/comments&quot;&gt;this post&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;I say “organic” because I’ve been using all the &lt;a href=&quot;https://indieweb.org/Webmention-developer#How_to_test&quot;&gt;testing tools listed on the indieweb.org site&lt;/a&gt;
-to test my implementation.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Chris Aldrich has the honor of being the first sender of an organic incoming Webmention received on bitworking.org, which you can see on this post.</summary></entry></feed>
+the heavy lifting for &lt;a href=&quot;https://willnorris.com/go/microformats&quot;&gt;Microformats and Go&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Chris Aldrich</summary></entry></feed>
