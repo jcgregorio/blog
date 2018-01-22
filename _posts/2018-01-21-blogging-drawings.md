@@ -14,7 +14,7 @@ several key features, such as the ability to run Android apps and the ability
 to fold over and turn into a tablet, along with one of the best digital pens
 I've ever used. In the end my flow looks like this:
 
-![Squid to Google Drive to Jekyll to GCE](/images/2018/blogging_pictures.png)
+![Squid to Google Drive to Jekyll to GCE](/images/2018/blogging_pictures.png){: style="max-width:70%"}
 
 [Squid](https://play.google.com/store/apps/details?id=com.steadfastinnovation.android.projectpapyrus)
 is an Android app, one of the dozens I looked at, and the one that worked
