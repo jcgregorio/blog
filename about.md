@@ -5,6 +5,8 @@ permalink: /about/
 redirect_from: /news/bio
 ---
 
+![Joe Gregorio](/images/joe2016.jpg)
+
 My name is Joe Gregorio and I am the father of three boys and one girl and a
 husband to Lynne Gregorio. We live in sunny North Carolina where I work for
 Google on the [Skia](https://skia.org) graphics library. I am the editor of
