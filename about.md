@@ -15,7 +15,7 @@ have a deep interest in web technologies: I wrote The RESTFul Web column for
 the online O’Reilly publication XML.com, wrote the first desktop aggregator
 written in C#, and have published various Python modules to help in putting
 together RESTful web services such as mimeparse, httplib2, and the
-google-api-python-client. I'm is interested in Go, Polymer, Web Components,
+google-api-python-client. I'm interested in Go, Polymer, Web Components,
 REST, web services, APIs, URI templates, the Atom Publishing Protocol, big
 data, and any linear combination of such.
 
