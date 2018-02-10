@@ -1,5 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-02-08T09:08:38-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">StartupGrind - How Transloc Scaled in the Triangle and Exited to Ford</title><link href="https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford" rel="alternate" type="text/html" title="StartupGrind - How Transloc Scaled in the Triangle and Exited to Ford" /><published>2018-02-08T00:00:00-05:00</published><updated>2018-02-08T09:08:36-05:00</updated><id>https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford</id><content type="html" xml:base="https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford">&lt;p&gt;Rats, I’m going to be travelling on the 28th and will miss this StartupGrind event:
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-02-10T12:59:45-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Custom Elements “Neat”</title><link href="https://bitworking.org/news/2018/02/custom-elements-neat" rel="alternate" type="text/html" title="Custom Elements &quot;Neat&quot;" /><published>2018-02-10T00:00:00-05:00</published><updated>2018-02-10T12:59:20-05:00</updated><id>https://bitworking.org/news/2018/02/custom-elements-neat</id><content type="html" xml:base="https://bitworking.org/news/2018/02/custom-elements-neat">&lt;blockquote&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;“Neat” – as applied to drinks served in bars – refers to a shot of liquor&lt;/dt&gt;
+    &lt;dt&gt; poured directly from the bottle and into a glass. There is no chilling&lt;/dt&gt;
+    &lt;dt&gt; involved with a “neat” drink. There is never an additional ingredient in a&lt;/dt&gt;
+    &lt;dt&gt; drink served “neat”.&lt;/dt&gt;
+    &lt;dd&gt;&lt;a href=&quot;http://www.jeffreymorgenthaler.com/2008/up-neat-straight-up-or-on-the-rocks/&quot;&gt;Up, Neat, Straight Up, or On the Rocks&lt;/a&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements&quot;&gt;Custom Elements V1&lt;/a&gt; spec
+has reached concensus and implementations are &lt;a href=&quot;https://caniuse.com/#feat=custom-elementsv1&quot;&gt;going well&lt;/a&gt;,
+which is all great news, but what I find surprising is the lack of
+&lt;a href=&quot;http://vanilla-js.com/&quot;&gt;VanillaJS&lt;/a&gt; custom elements on &lt;a href=&quot;https://www.webcomponents.org/&quot;&gt;WebComponents.org&lt;/a&gt;.
+Doing a simple search for “vanilla” &lt;a href=&quot;https://www.webcomponents.org/search/vanilla&quot;&gt;only returns a smattering of
+elements&lt;/a&gt; at this time.&lt;/p&gt;
+
+&lt;p&gt;I’ve been working on a set of such elements myself, and went looking for
+others to compare and contrast against, and was surprised to find so little.
+It would be nice to have a larger selection of “neat” elements to choose from.&lt;/p&gt;
+
+&lt;p&gt;For the curious, here’s a screenshot of the elements I’ve gotten so far:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/2018/skia-elements.png&quot; alt=&quot;Screen capture of some custom elements in action.&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ll point to the code once it reaches a slightly less embarassing stage.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">“Neat” – as applied to drinks served in bars – refers to a shot of liquor poured directly from the bottle and into a glass. There is no chilling involved with a “neat” drink. There is never an additional ingredient in a drink served “neat”. Up, Neat, Straight Up, or On the Rocks</summary></entry><entry><title type="html">StartupGrind - How Transloc Scaled in the Triangle and Exited to Ford</title><link href="https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford" rel="alternate" type="text/html" title="StartupGrind - How Transloc Scaled in the Triangle and Exited to Ford" /><published>2018-02-08T00:00:00-05:00</published><updated>2018-02-08T09:09:02-05:00</updated><id>https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford</id><content type="html" xml:base="https://bitworking.org/news/2018/02/startupgrind-how-transloc-scaled-in-the-triangle-and-exited-to-ford">&lt;p&gt;Rats, I’m going to be travelling on the 28th and will miss this StartupGrind event:
 &lt;a href=&quot;How Transloc Scaled in the Triangle and Exited to Ford&quot;&gt;https://www.startupgrind.com/events/details/startup-grind-triangle-presents-how-transloc-scaled-in-the-triangle-and-exited-to-ford#/&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Rats, I’m going to be travelling on the 28th and will miss this StartupGrind event: https://www.startupgrind.com/events/details/startup-grind-triangle-presents-how-transloc-scaled-in-the-triangle-and-exited-to-ford#/.</summary></entry><entry><title type="html">Paul Kinlan - A simple clientside templating language</title><link href="https://bitworking.org/news/2018/01/paul-kinlan-a-simple-clientside-templating-language" rel="alternate" type="text/html" title="Paul Kinlan - A simple clientside templating language" /><published>2018-01-31T00:00:00-05:00</published><updated>2018-01-31T21:29:26-05:00</updated><id>https://bitworking.org/news/2018/01/paul-kinlan-a-simple-clientside-templating-language</id><content type="html" xml:base="https://bitworking.org/news/2018/01/paul-kinlan-a-simple-clientside-templating-language">&lt;p&gt;Paul Kinlan’s &lt;a href=&quot;https://paul.kinlan.me/a-simple-dom-template-language/&quot;&gt;A simple clientside templating langauge&lt;/a&gt;
@@ -87,10 +114,4 @@ being bootstrapped from a space gas station is so much more
 
 &lt;p&gt;&lt;img src=&quot;/images/2018/webmentions.png&quot; alt=&quot;Screenshot of webmentions in action.&quot; /&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">As Chris suggested, I have gone beyond my minimal webmentions, and thanks to the heavy lifting of Will Norris, I got to avoid handwriting a microformats parser in the process.</summary></entry><entry><title type="html">Snow - 2018</title><link href="https://bitworking.org/news/2018/01/snow-2018" rel="alternate" type="text/html" title="Snow - 2018" /><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T10:13:53-05:00</updated><id>https://bitworking.org/news/2018/01/snow---2018</id><content type="html" xml:base="https://bitworking.org/news/2018/01/snow-2018">&lt;p&gt;&lt;img src=&quot;/images/2018/snow.jpeg&quot; alt=&quot;Fallen snow at night&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;There’s a road under that, somewhere.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry><entry><title type="html">Google Cloud Free Tier</title><link href="https://bitworking.org/news/2018/01/google-cloud-free-tier" rel="alternate" type="text/html" title="Google Cloud Free Tier" /><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T09:19:09-05:00</updated><id>https://bitworking.org/news/2018/01/google-cloud-free-tier</id><content type="html" xml:base="https://bitworking.org/news/2018/01/google-cloud-free-tier">&lt;p&gt;Looks like Google Cloud Platform now has a &lt;a href=&quot;https://cloud.google.com/free/&quot;&gt;Free Tier&lt;/a&gt;.
-I know Google App Engine has always had a free tier, it’s nice to see Cloud
-Platform offer something similar.&lt;/p&gt;
-
-&lt;p&gt;That explains why my monthly bill for hosting my blog went from $9/month to
-around 0.75$/month. The only thing I exceed the free tier on is egress
-bandwidth.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Looks like Google Cloud Platform now has a Free Tier. I know Google App Engine has always had a free tier, it’s nice to see Cloud Platform offer something similar.</summary></entry></feed>
+&lt;p&gt;There’s a road under that, somewhere.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>
