@@ -3,10 +3,7 @@ layout: post
 title: Custom Elements "Neat"
 ---
 
->  “Neat” – as applied to drinks served in bars – refers to a shot of liquor
->  poured directly from the bottle and into a glass. There is no chilling
->  involved with a “neat” drink. There is never an additional ingredient in a
->  drink served “neat”.
+>  “Neat” – as applied to drinks served in bars – refers to a shot of liquor poured directly from the bottle and into a glass. There is no chilling involved with a “neat” drink. There is never an additional ingredient in a drink served “neat”.
 : [Up, Neat, Straight Up, or On the Rocks](http://www.jeffreymorgenthaler.com/2008/up-neat-straight-up-or-on-the-rocks/)
 
 The [Custom Elements V1](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements) spec
