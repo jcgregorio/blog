@@ -1,5 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-02-10T13:01:22-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Custom Elements “Neat”</title><link href="https://bitworking.org/news/2018/02/custom-elements-neat" rel="alternate" type="text/html" title="Custom Elements &quot;Neat&quot;" /><published>2018-02-10T00:00:00-05:00</published><updated>2018-02-10T13:00:09-05:00</updated><id>https://bitworking.org/news/2018/02/custom-elements-neat</id><content type="html" xml:base="https://bitworking.org/news/2018/02/custom-elements-neat">&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-02-11T11:07:05-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Shadow DOM and CSS</title><link href="https://bitworking.org/news/2018/02/shadow-dom-and-css" rel="alternate" type="text/html" title="Shadow DOM and CSS" /><published>2018-02-10T00:00:00-05:00</published><updated>2018-02-11T11:06:18-05:00</updated><id>https://bitworking.org/news/2018/02/shadow-dom-and-css</id><content type="html" xml:base="https://bitworking.org/news/2018/02/shadow-dom-and-css">&lt;p&gt;
+  I love custom elements! I've been building UIs with them since Polymer 0.5
+  was announced in 2014. One of the things that I've questioned with custom
+  elements has been Shadow DOM and its relationship to CSS. This page is an
+  experiment for comparing custom elements with and without Shadow DOM. Press
+  the buttons below and 1,000 spinners will be displayed on the page, when 'Light'
+  is pressed the custom element uses CSS defined for the whole page, and when
+  'Shadow' is pressed the custom elements have a style sheet attached to their
+  Shadow DOM, and when 'External' is pressed the CSS for the element is still
+  encapsulated in the Shadow DOM, but it is loaded as an external stylesheet.
+&lt;/p&gt;
+&lt;p&gt;
+  &lt;strong&gt;N.B.&lt;/strong&gt; I am not loading any polyfills on this page, so it
+  will only work on browsers with native custom elements support.
+&lt;/p&gt;
+
+&lt;p&gt;
+  This is the code that is running:
+&lt;/p&gt;
+
+&lt;h2&gt;CSS&lt;/h2&gt;
+&lt;pre id=style_code&gt;&lt;/pre&gt;
+&lt;h2&gt;Javascript&lt;/h2&gt;
+&lt;pre id=js_code&gt;&lt;/pre&gt;
+
+&lt;style type=&quot;text/css&quot; media=&quot;screen&quot; id=style&gt;
+spinner-light {
+  margin: 6px;
+  display: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 8px solid #A6CEE3;
+  border-left: 8px solid #1F78B4;
+  animation: spinner-light-spin 1.5s infinite linear;
+}
+
+spinner-light[active] {
+  display: inline-block;
+}
+
+@keyframes spinner-light-spin {
+  0% {
+    transform:
+    rotate(0deg);
+  }
+  100% {
+    transform:
+    rotate(360deg);
+  }
+}
+&lt;/style&gt;
+
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; id=code&gt;
+function upgradeProperty(ele, prop) {
+  if (ele.hasOwnProperty(prop)) {
+    let value = ele[prop];
+    delete ele[prop];
+    ele[prop] = value;
+  }
+}
+
+window.customElements.define('spinner-light', class extends HTMLElement {
+  constructor() {
+    super();
+  }
+
+  connectedCallback() {
+    upgradeProperty(this, 'active');
+  }
+
+  get active() { return this.hasAttribute('active'); }
+  set active(val) {
+    if (val) {
+      this.setAttribute('active', '');
+    } else {
+      this.removeAttribute('active');
+    }
+  }
+});
+
+window.customElements.define('spinner-shadow', class extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+@keyframes spinner-shadow-spin {
+  0% {
+    transform:
+    rotate(0deg);
+  }
+  100% {
+    transform:
+    rotate(360deg);
+  }
+}
+
+:host {
+  margin: 6px;
+  display: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 8px solid #A6CEE3;
+  border-left: 8px solid #1F78B4;
+  animation: spinner-shadow-spin 1.5s infinite linear;
+}
+
+:host([active]) {
+  display: inline-block;
+}
+&lt;/style&gt;
+`;
+	}
+
+  connectedCallback() {
+    upgradeProperty(this, 'active');
+  }
+
+  get active() { return this.hasAttribute('active'); }
+  set active(val) {
+    if (val) {
+      this.setAttribute('active', '');
+    } else {
+      this.removeAttribute('active');
+    }
+  }
+});
+
+window.customElements.define('spinner-external', class extends HTMLElement {
+  constructor() {
+    super();
+    const shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.innerHTML = `
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/images/2018/spinner-styles.css&quot;&gt;`;
+	}
+
+  connectedCallback() {
+    upgradeProperty(this, 'active');
+  }
+
+  get active() { return this.hasAttribute('active'); }
+  set active(val) {
+    if (val) {
+      this.setAttribute('active', '');
+    } else {
+      this.removeAttribute('active');
+    }
+  }
+});
+&lt;/script&gt;
+
+&lt;p&gt;
+  The &lt;code&gt;spinner-shadow&lt;/code&gt; element follows the &lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/best-practices#create-a-shadow-root-to-encapsulate-styles&quot;
+    &gt;suggested best practice&lt;/a&gt; of encapsulating the styles via the shadow
+  root. But this seems problematic for a couple of reasons. The first is that
+  it's going to be difficult to pass that CSS through an autoprefixer or any
+  other tooling. The second problem is that this means the CSS will get
+  duplicated for every instance of the element.  You can see that by looking
+  in Chrome Dev Tools, that there are 3,000 more nodes on this page when the
+  shadow spinners are displayed as compared to when the light spinners are
+  displayed.
+&lt;/p&gt;
+&lt;p&gt;
+  The &lt;code&gt;spinner-external&lt;/code&gt; loads the CSS in the Shadow DOM but uses
+  an external stylesheet, which does seem to reduce the number of nodes to
+  below that of the &lt;code&gt;spinner-shadow&lt;/code&gt;, but still not close to
+  &lt;code&gt;spinner-light&lt;/code&gt;. Also, I don't want to have a separate HTTP
+  request for every element class I use on a page, so this also seems like
+  a non-starter.
+&lt;/p&gt;
+&lt;p&gt;
+  So am I holding it wrong? Is there really no way in custom elements to
+  specify the CSS for an element once without resorting to external CSS
+  stylesheets? Or am I reading the Chrome Dev Console page wrong and the
+  Node count doesn't mean what I think it means? I think for now I'm going to
+  stick to avoiding Shadow DOM and specifying the CSS just once in a single
+  stylesheet.
+&lt;/p&gt;
+
+&lt;button id=light&gt;Light&lt;/button&gt;
+&lt;button id=shadow&gt;Shadow&lt;/button&gt;
+&lt;button id=external&gt;External&lt;/button&gt;
+
+&lt;div id=manyspinners&gt;
+	&lt;spinner-light active&gt;&lt;/spinner-light&gt;
+	&lt;spinner-shadow active&gt;&lt;/spinner-shadow&gt;
+	&lt;spinner-external active&gt;&lt;/spinner-external&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+let manyspinners = document.getElementById('manyspinners');
+
+const clear = () =&gt; {
+  while (manyspinners.firstChild) {
+    manyspinners.removeChild(manyspinners.firstChild);
+  }
+}
+
+document.getElementById('light').addEventListener('click', e =&gt; {
+  clear();
+  let spinner = document.createElement('spinner-light');
+  spinner.active = true;
+  for (var i = 0; i &lt; 1000; i++) {
+    manyspinners.appendChild(spinner.cloneNode(true));
+  }
+});
+
+document.getElementById('shadow').addEventListener('click', e =&gt; {
+  clear();
+  let spinner = document.createElement('spinner-shadow');
+  spinner.active = true;
+  for (var i = 0; i &lt; 1000; i++) {
+    manyspinners.appendChild(spinner.cloneNode(true));
+  }
+});
+
+document.getElementById('external').addEventListener('click', e =&gt; {
+  clear();
+  let spinner = document.createElement('spinner-external');
+  spinner.active = true;
+  for (var i = 0; i &lt; 1000; i++) {
+    manyspinners.appendChild(spinner.cloneNode(true));
+  }
+});
+
+document.getElementById('style_code').textContent = document.getElementById('style').textContent;
+document.getElementById('js_code').textContent = document.getElementById('code').textContent;
+&lt;/script&gt;
+
+
+&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I love custom elements! I've been building UIs with them since Polymer 0.5 was announced in 2014. One of the things that I've questioned with custom elements has been Shadow DOM and its relationship to CSS. This page is an experiment for comparing custom elements with and without Shadow DOM. Press the buttons below and 1,000 spinners will be displayed on the page, when 'Light' is pressed the custom element uses CSS defined for the whole page, and when 'Shadow' is pressed the custom elements have a style sheet attached to their Shadow DOM, and when 'External' is pressed the CSS for the element is still encapsulated in the Shadow DOM, but it is loaded as an external stylesheet. N.B. I am not loading any polyfills on this page, so it will only work on browsers with native custom elements support.</summary></entry><entry><title type="html">Custom Elements “Neat”</title><link href="https://bitworking.org/news/2018/02/custom-elements-neat" rel="alternate" type="text/html" title="Custom Elements &quot;Neat&quot;" /><published>2018-02-10T00:00:00-05:00</published><updated>2018-02-10T13:01:46-05:00</updated><id>https://bitworking.org/news/2018/02/custom-elements-neat</id><content type="html" xml:base="https://bitworking.org/news/2018/02/custom-elements-neat">&lt;blockquote&gt;
   &lt;dl&gt;
     &lt;dt&gt;“Neat” – as applied to drinks served in bars – refers to a shot of liquor poured directly from the bottle and into a glass. There is no chilling involved with a “neat” drink. There is never an additional ingredient in a drink served “neat”.&lt;/dt&gt;
     &lt;dd&gt;&lt;a href=&quot;http://www.jeffreymorgenthaler.com/2008/up-neat-straight-up-or-on-the-rocks/&quot;&gt;Up, Neat, Straight Up, or On the Rocks&lt;/a&gt;&lt;/dd&gt;
@@ -109,6 +341,4 @@ being bootstrapped from a space gas station is so much more
 
 &lt;p&gt;This is what they should look like in action:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/2018/webmentions.png&quot; alt=&quot;Screenshot of webmentions in action.&quot; /&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">As Chris suggested, I have gone beyond my minimal webmentions, and thanks to the heavy lifting of Will Norris, I got to avoid handwriting a microformats parser in the process.</summary></entry><entry><title type="html">Snow - 2018</title><link href="https://bitworking.org/news/2018/01/snow-2018" rel="alternate" type="text/html" title="Snow - 2018" /><published>2018-01-18T00:00:00-05:00</published><updated>2018-01-18T10:13:53-05:00</updated><id>https://bitworking.org/news/2018/01/snow---2018</id><content type="html" xml:base="https://bitworking.org/news/2018/01/snow-2018">&lt;p&gt;&lt;img src=&quot;/images/2018/snow.jpeg&quot; alt=&quot;Fallen snow at night&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;There’s a road under that, somewhere.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>
+&lt;p&gt;&lt;img src=&quot;/images/2018/webmentions.png&quot; alt=&quot;Screenshot of webmentions in action.&quot; /&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">As Chris suggested, I have gone beyond my minimal webmentions, and thanks to the heavy lifting of Will Norris, I got to avoid handwriting a microformats parser in the process.</summary></entry></feed>

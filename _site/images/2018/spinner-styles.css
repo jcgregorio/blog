@@ -1,0 +1,25 @@
+@keyframes spinner-external-spin {
+  0% {
+    transform:
+    rotate(0deg);
+  }
+  100% {
+    transform:
+    rotate(360deg);
+  }
+}
+
+:host {
+  margin: 6px;
+  display: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 8px solid #A6CEE3;
+  border-left: 8px solid #1F78B4;
+  animation: spinner-external-spin 1.5s infinite linear;
+}
+
+:host([active]) {
+  display: inline-block;
+}
