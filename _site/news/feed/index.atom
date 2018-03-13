@@ -1,5 +1,211 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-03-12T15:37:21-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">2 factor auth and planes</title><link href="https://bitworking.org/news/2018/02/2-factor-auth-and-planes" rel="alternate" type="text/html" title="2 factor auth and planes" /><published>2018-02-28T00:00:00-05:00</published><updated>2018-02-28T09:33:19-05:00</updated><id>https://bitworking.org/news/2018/02/2-factor-auth-and-planes</id><content type="html" xml:base="https://bitworking.org/news/2018/02/2-factor-auth-and-planes">&lt;p&gt;I have just discovered a downside to using SMS as a 2-factor
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-03-13T12:25:10-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">A la carte Web Development</title><link href="https://bitworking.org/news/2018/03/a-la-carte-web-development" rel="alternate" type="text/html" title="A la carte Web Development" /><published>2018-03-13T00:00:00-04:00</published><updated>2018-03-13T12:24:42-04:00</updated><id>https://bitworking.org/news/2018/03/a-la-carte-web-development</id><content type="html" xml:base="https://bitworking.org/news/2018/03/a-la-carte-web-development">&lt;p&gt;&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;Stop using JS Frameworks&lt;/a&gt; is something I’ve been advocating for years now, and a
+legitimate question I get is what do you replace it with?&lt;/p&gt;
+
+&lt;p&gt;The answer is “a la carte” web development.&lt;/p&gt;
+
+&lt;p&gt;Instead of picking a monolithic solution like a web framework, you just pick
+the pieces you need. I don’t mean any old random pieces, below I am going to
+outline specific criteria that need to be met for some components to
+participate in a la carte web development.&lt;/p&gt;
+
+&lt;p&gt;To get a better feel for this let’s start by looking at what a web framework
+“normally” provides. The “normally” is in quotes because not all frameworks
+provide all of these features, but most frameworks provide a majority of them:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Framework
+    &lt;ul&gt;
+      &lt;li&gt;Model&lt;/li&gt;
+      &lt;li&gt;Tooling and structure&lt;/li&gt;
+      &lt;li&gt;Elements&lt;/li&gt;
+      &lt;li&gt;Templating&lt;/li&gt;
+      &lt;li&gt;State Management&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All good things, but why do they have to be bundled together like a TV dinner?&lt;/p&gt;
+
+&lt;h2 id=&quot;a-la-carte&quot;&gt;A la carte&lt;/h2&gt;
+&lt;p&gt;“A la carte” web development does away with the framework, says just
+use the browser for the model, and the rest of the pieces you pick and choose
+the ones that work for you. In a la carte development each bullet point is a
+separate piece of software:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;A la carte&lt;/em&gt;&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;Defines a directory structure for how a project is put together and provides tooling such as
+JS transpiling, CSS prefixing, etc. for projects that conform that directory structure.
+Expects ES6 modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;A library of v1 custom elements in ES6 modules. Note that these elements must be provided in ES6
+modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.
+The elements much also be &lt;a href=&quot;https://bitworking.org/news/2018/02/custom-elements-neat&quot;&gt;“neat”&lt;/a&gt;, i.e.
+just HTML, CSS, and JS. No SCSS or templating libraries.&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;Any templating library you like, as long as it works with v1 custom elements.&lt;/dd&gt;
+  &lt;dt&gt;State Management&lt;/dt&gt;
+  &lt;dd&gt;Any state management library you like, if you even need one.&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;The assumptions needed for all of this to work together are fairly minimal:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ES6 modules and the extension that webpack, rollup, and similar tools presume, i.e.
+    allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The base elements are “Neat”, i.e. they are JS, CSS, and HTML only. No additional
+    libraries are used, such as a templating library. Note that sets of ‘neat’ elements also conform
+    to #1, i.e. they are provided as webpack/rollup compatible ES6 modules.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Obviously there are other guidelines that could be added as advisory, for example
+&lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/best-practices&quot;&gt;Google Developers Guide - Custom Elements Best Practices&lt;/a&gt;,
+should be followed when creating custom elements sets,
+except for the admonition to use Shadow DOM, &lt;a href=&quot;https://bitworking.org/news/2018/02/shadow-dom-and-css&quot;&gt;which I would avoid for now, unless you really need it&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Such code will natively run in browsers that support custom elements v1. To get
+it to run in a wider range of browsers you will need to add polyfills and,
+depending on the target browser version, compile the JS back to an older
+version of ES, and run a prefixer on the CSS. The wider the target set of
+browsers and the older the versions you are targeting the more processing you
+will need to do, but the original code doesn’t need to change, and all those
+extra processing steps are only incurred by projects that need it.&lt;/p&gt;
+
+&lt;h2 id=&quot;concrete&quot;&gt;Concrete&lt;/h2&gt;
+
+&lt;p&gt;To move this proposal beyond just theoretical I’ve been developing and
+porting applications over to this model for the past few months.&lt;/p&gt;
+
+&lt;p&gt;We just published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, a stake in the ground for what a “tooling and
+structure” component looks like. You will note that it isn’t very complex, nothing more than an opinionated
+webpack config file.&lt;/p&gt;
+
+&lt;p&gt;Similarly we’ve published our set of “neat” custom elements
+&lt;a href=&quot;https://www.npmjs.com/package/skia-elements&quot;&gt;skia-elements&lt;/a&gt;. A small set of
+elements that is still very much a work in progress. Documentation and live
+demos for skia-elements can be found on
+&lt;a href=&quot;https://jsdoc.skia.org&quot;&gt;jsdoc.skia.org&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our current stack looks like:&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/skia-elements&quot;&gt;skia-elements&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/lit-html&quot;&gt;lit-html&lt;/a&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;We have used Redux in an experimental app that never shipped and haven’t needed
+any state management libraries in the other applications we’ve ported over, so
+our ‘state management’ library is still an open question.&lt;/p&gt;
+
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;What is like to use this stack? Let’s start from an empty directory
+and start building a web app:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ yarn init
+$ yarn add pulito
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We are starting from scratch so use the project skeleton that &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt; provides:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ unzip node_modules/pulito/skeleton.zip
+$ yarn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;We can now run the dev server and see our running skeleton application:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now let’s add in &lt;a href=&quot;https://www.npmjs.com/package/skia-elements&quot;&gt;skia-elements&lt;/a&gt; and add a set of tabs to the UI.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ yarn add skia-elements
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now add imports to &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.js&lt;/code&gt; to bring in the elements we need:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'skia-elements/tabs-sk'&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'skia-elements/tabs-panel-sk'&lt;/span&gt;
+&lt;span class=&quot;kr&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'../modules/example-element'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And then use those elements on &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Some Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;Another Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-panel-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt; This is Some Tab contents.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      This is the contents for Another Tab.
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-panel-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;example-element&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;active&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/example-element&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now restart the dev server and see the updated page:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;why-is-this-better&quot;&gt;Why is this better?&lt;/h2&gt;
+&lt;p&gt;Web frameworks usually make all these choices for you, you don’t
+get to choose, even if you don’t need the functionality. For example, state
+managament might not be needed, why are you ‘paying’ for it, where ‘paying’
+means learning about that aspect of the web framework, and possibly even
+having to serve the code that implements state managment even if you never
+use it. With a la carte development you only include what you use.&lt;/p&gt;
+
+&lt;p&gt;An extra benefit comes when it is time to upgrade. How much time
+have you lost with massive upgrades from v1 to v2 of a web framework?
+With ‘a la carte’ developement the upgrades don’t have to be monolithic.
+I.e. if you’ve chosen a templating library and want to upgrade to
+the next version you only need to update your templates, and not have to
+touch every aspect of your application.&lt;/p&gt;
+
+&lt;p&gt;Finally, ‘a la carte’ web development provides no “model” but the browser.  Of
+all the things that frameworks provide, “model” is the most problematic.
+Instead of just using the browser as it is, many frameworks have their own
+model of the browser, how DOM works, how events work, etc. &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;I have gone into depth on the issues previously&lt;/a&gt;, but
+they can be summarized as lost effort (learning something that doesn’t
+translate) and a barrier to reuse. What should replace it? Just use the
+browser, it already has a &lt;a href=&quot;https://bitworking.org/news/2015/03/Six_Places&quot;&gt;model for how to combine elements together&lt;/a&gt;, and now with custom
+elements v1 gives you the ability to create your own elements, you have all you
+need.&lt;/p&gt;
+
+&lt;h2 id=&quot;let-a-thousand-flowers-bloom&quot;&gt;Let a thousand flowers bloom&lt;/h2&gt;
+
+&lt;p&gt;One of the most important aspects of ‘a la carte’ web developement is that it
+decouples all the components, allowing them to evolve and adapt to user needs
+on a much faster cycle than the normal web framework release cycle allows.
+Just because we’ve published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt; and &lt;a href=&quot;https://www.npmjs.com/package/skia-elements&quot;&gt;skia-elements&lt;/a&gt; doesn’t mean we believe
+they are the best solutions. I’d love to have a slew of options to choose from
+for tooling, base element sets, templating, and state management.  I’d like to
+see Rollup based tools that take the place of &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, and a whole swarm of
+“neat” custom elements sets with varying levels of customizability and breadth.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Stop using JS Frameworks is something I’ve been advocating for years now, and a legitimate question I get is what do you replace it with?</summary></entry><entry><title type="html">2 factor auth and planes</title><link href="https://bitworking.org/news/2018/02/2-factor-auth-and-planes" rel="alternate" type="text/html" title="2 factor auth and planes" /><published>2018-02-28T00:00:00-05:00</published><updated>2018-02-28T09:33:19-05:00</updated><id>https://bitworking.org/news/2018/02/2-factor-auth-and-planes</id><content type="html" xml:base="https://bitworking.org/news/2018/02/2-factor-auth-and-planes">&lt;p&gt;I have just discovered a downside to using SMS as a 2-factor
 authentication method, as I sit here at 30,000 ft, unable to
 login to github.&lt;/p&gt;
 
@@ -337,12 +543,4 @@ supported. Indeed they do, and Kevin Marks brilliantly demonstrates how
 ridiculous the situation is by creating a
 &lt;a href=&quot;http://www.kevinmarks.com/partialsilos.html&quot;&gt;blog post that appears different in every silo&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I just recently finished adding support for Twitter metadata to the blog, mostly motivaged by brid.gy’s ability to use Webmentions to automatically post my blog entries to Twitter. As I worked on the Twitter metadata I wondered if other silos had their own metadata they supported. Indeed they do, and Kevin Marks brilliantly demonstrates how ridiculous the situation is by creating a blog post that appears different in every silo.</summary></entry><entry><title type="html">Space Gas Station</title><link href="https://bitworking.org/news/2018/01/space-gas-station" rel="alternate" type="text/html" title="Space Gas Station" /><published>2018-01-19T00:00:00-05:00</published><updated>2018-01-19T22:37:57-05:00</updated><id>https://bitworking.org/news/2018/01/space-gas-station</id><content type="html" xml:base="https://bitworking.org/news/2018/01/space-gas-station">&lt;p&gt;This SingularityHub post brings a good perspective
-on the economics of asteroid mining:
-&lt;a href=&quot;https://singularityhub.com/2018/01/19/want-faster-data-and-a-cleaner-planet-start-mining-asteroids/&quot;&gt;Want Faster Data and a Cleaner Planet? Start Mining Asteroids&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Besides, the idea of our gateway to becoming a space faring civilization
-being bootstrapped from a space gas station is so much more
-&lt;a href=&quot;https://www.jamessacorey.com/books/&quot;&gt;Expanse&lt;/a&gt; level scifi that I can’t help but like it.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">This SingularityHub post brings a good perspective on the economics of asteroid mining: Want Faster Data and a Cleaner Planet? Start Mining Asteroids</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I just recently finished adding support for Twitter metadata to the blog, mostly motivaged by brid.gy’s ability to use Webmentions to automatically post my blog entries to Twitter. As I worked on the Twitter metadata I wondered if other silos had their own metadata they supported. Indeed they do, and Kevin Marks brilliantly demonstrates how ridiculous the situation is by creating a blog post that appears different in every silo.</summary></entry></feed>
