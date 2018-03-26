@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Silicon Valley Libertarianism: Remembered
+title: Silicon Valley Libertarianism - Remembered
 ---
 
 Remember the last time silicon valley was growing like crazy without any supervision?
