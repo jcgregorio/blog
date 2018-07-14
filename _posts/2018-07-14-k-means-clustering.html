@@ -3,11 +3,16 @@ layout: post
 title: k-means clustering
 ---
 
+<p>
+  A simple demo of <a href="https://en.wikipedia.org/wiki/K-means_clustering"> k-means clustering</a>.
+  The little squares are the observations and the cirles are the centroids.
+</p>
 
 <canvas id=cluster width=500 height=500></canvas>
 <div>
   <button id=restart>Restart</button>
   <button id=step>Step</button>
+  <p id=stepStatus></p>
 </div>
 <script type="text/javascript" charset="utf-8">
 
@@ -17,6 +22,7 @@ const HEIGHT=500;
 const radius = 0.1;
 const colors = ['darkgreen', 'blue', 'darkorange', 'red', 'purple'];
 let ctx = document.getElementById('cluster').getContext('2d');
+let stepEle = document.getElementById('stepStatus');
 
 function clear() {
   ctx.fillStyle = 'white';
@@ -31,10 +37,10 @@ function render(points, circle) {
     ctx.strokeStyle = colors[pt.c];
     ctx.lineWidth = 2;
     if (!circle) {
-      ctx.fillRect(x-2, y-2, 5, 5);
+      ctx.fillRect(x-4, y-4, 9, 9);
     } else {
       ctx.beginPath();
-      ctx.arc(x, y, 8, 0, Math.PI*2, true);
+      ctx.arc(x, y, 12, 0, Math.PI*2, true);
       ctx.stroke();
     }
   });
@@ -87,10 +93,14 @@ function closest(centroids, pt) {
   return c
 }
 
-function cluster(centroids, points) {
+function cluster1(centroids, points) {
   points.forEach(pt => {
     pt.c = closest(centroids, pt)
   });
+  return centroids
+}
+
+function cluster2(centroids, points) {
   // Recalc centroids.
   let new_centroids = [];
   let counts = [];
@@ -122,6 +132,7 @@ function cluster(centroids, points) {
   return ret
 }
 
+let currentStep = 0;
 let points = distribute();
 let centroids = JSON.parse(JSON.stringify(points.slice(0, K)));
 centroids.forEach((pt, i) => {
@@ -133,6 +144,7 @@ render(points);
 render(centroids, true);
 
 function restart() {
+  currentStep = 0;
   points = distribute();
   centroids = JSON.parse(JSON.stringify(points.slice(0, K)));
   centroids.forEach((pt, i) => {
@@ -141,10 +153,18 @@ function restart() {
   clear();
   render(points);
   render(centroids, true);
+  stepEle.innerText = '';
 }
 
 function step() {
-  centroids = cluster(centroids, points);
+  if (currentStep % 2 == 0) {
+    centroids = cluster1(centroids, points);
+    stepEle.innerText = 'Step: Assign points to a cluster.';
+  } else {
+    centroids = cluster2(centroids, points);
+    stepEle.innerText = 'Step: Recalculate centroids.';
+  }
+  currentStep+=1;
   clear();
   render(points);
   render(centroids, true);
