@@ -6,23 +6,26 @@ title: k-means clustering
 <p>
   A simple demo of <a href="https://en.wikipedia.org/wiki/K-means_clustering"> k-means clustering</a>.
   The little squares are the observations and the cirles are the centroids.
+  Press the 'Step:' button to step through the algorithm.
 </p>
 
 <canvas id=cluster width=500 height=500></canvas>
 <div>
   <button id=restart>Restart</button>
-  <button id=step>Step</button>
-  <p id=stepStatus></p>
+  <button id=step></button>
 </div>
 <script type="text/javascript" charset="utf-8">
 
-const K = 5;
+const K = 3;
 const WIDTH=500;
 const HEIGHT=500;
-const radius = 0.1;
-const colors = ['darkgreen', 'blue', 'darkorange', 'red', 'purple'];
+const RADIUS = 0.1;
+const STEP1 = "Step 1: Assign observations to clusters."
+const STEP2 = "Step 2: Update centroids."
+const COLORS = ['darkgreen', 'blue', 'darkorange', 'red', 'purple'];
+
 let ctx = document.getElementById('cluster').getContext('2d');
-let stepEle = document.getElementById('stepStatus');
+let stepEle = document.getElementById('step');
 
 function clear() {
   ctx.fillStyle = 'white';
@@ -33,8 +36,8 @@ function render(points, circle) {
   points.forEach(pt => {
     let x = Math.floor(pt.x*WIDTH);
     let y = Math.floor(pt.y*HEIGHT);
-    ctx.fillStyle = colors[pt.c];
-    ctx.strokeStyle = colors[pt.c];
+    ctx.fillStyle = COLORS[pt.c];
+    ctx.strokeStyle = COLORS[pt.c];
     ctx.lineWidth = 2;
     if (!circle) {
       ctx.fillRect(x-4, y-4, 9, 9);
@@ -46,6 +49,7 @@ function render(points, circle) {
   });
 }
 
+// Create a set of observations that look clumpy.
 function distribute() {
   let clumps = [];
   for (var i = 0; i < 3; i++) {
@@ -64,8 +68,8 @@ function distribute() {
       // Reject if not close enough to an x.
       let hit = clumps.reduce((accumulator, current) => {
         return accumulator || (
-          Math.abs(current.x - x) < radius
-          && Math.abs(current.y - y) < radius);
+          Math.abs(current.x - x) < RADIUS
+          && Math.abs(current.y - y) < RADIUS);
       }, false);
       if (!hit) {
         continue
@@ -80,6 +84,7 @@ function distribute() {
   return points;
 }
 
+// Return the index of the closest centroid to the given point.
 function closest(centroids, pt) {
   let c = 0;
   let dist = 100;
@@ -93,6 +98,7 @@ function closest(centroids, pt) {
   return c
 }
 
+// Step 1 of the clustering algorithm.
 function cluster1(centroids, points) {
   points.forEach(pt => {
     pt.c = closest(centroids, pt)
@@ -100,6 +106,7 @@ function cluster1(centroids, points) {
   return centroids
 }
 
+// Step 2 of the clustering algorithm.
 function cluster2(centroids, points) {
   // Recalc centroids.
   let new_centroids = [];
@@ -133,15 +140,8 @@ function cluster2(centroids, points) {
 }
 
 let currentStep = 0;
-let points = distribute();
-let centroids = JSON.parse(JSON.stringify(points.slice(0, K)));
-centroids.forEach((pt, i) => {
-  pt.c = i;
-});
-
-clear();
-render(points);
-render(centroids, true);
+let points = [];
+let centroids = [];
 
 function restart() {
   currentStep = 0;
@@ -153,16 +153,16 @@ function restart() {
   clear();
   render(points);
   render(centroids, true);
-  stepEle.innerText = '';
+  stepEle.innerText = STEP1;
 }
 
 function step() {
   if (currentStep % 2 == 0) {
     centroids = cluster1(centroids, points);
-    stepEle.innerText = 'Step: Assign points to a cluster.';
+    stepEle.innerText = STEP2;
   } else {
     centroids = cluster2(centroids, points);
-    stepEle.innerText = 'Step: Recalculate centroids.';
+    stepEle.innerText = STEP1;
   }
   currentStep+=1;
   clear();
@@ -172,6 +172,8 @@ function step() {
 
 document.getElementById('restart').addEventListener('click', restart);
 document.getElementById('step').addEventListener('click', step);
+
+restart();
 </script>
 
 
