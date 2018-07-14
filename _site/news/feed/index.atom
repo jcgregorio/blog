@@ -1,24 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-07-14T11:35:21-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">k-means clustering</title><link href="https://bitworking.org/news/2018/07/k-means-clustering" rel="alternate" type="text/html" title="k-means clustering" /><published>2018-07-14T00:00:00-04:00</published><updated>2018-07-14T11:35:09-04:00</updated><id>https://bitworking.org/news/2018/07/k-means-clustering</id><content type="html" xml:base="https://bitworking.org/news/2018/07/k-means-clustering">&lt;p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-07-14T14:15:56-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">k-means clustering</title><link href="https://bitworking.org/news/2018/07/k-means-clustering" rel="alternate" type="text/html" title="k-means clustering" /><published>2018-07-14T00:00:00-04:00</published><updated>2018-07-14T14:15:49-04:00</updated><id>https://bitworking.org/news/2018/07/k-means-clustering</id><content type="html" xml:base="https://bitworking.org/news/2018/07/k-means-clustering">&lt;p&gt;
   A simple demo of &lt;a href=&quot;https://en.wikipedia.org/wiki/K-means_clustering&quot;&gt; k-means clustering&lt;/a&gt;.
   The little squares are the observations and the cirles are the centroids.
+  Press the 'Step:' button to step through the algorithm.
 &lt;/p&gt;
 
 &lt;canvas id=cluster width=500 height=500&gt;&lt;/canvas&gt;
 &lt;div&gt;
   &lt;button id=restart&gt;Restart&lt;/button&gt;
-  &lt;button id=step&gt;Step&lt;/button&gt;
-  &lt;p id=stepStatus&gt;&lt;/p&gt;
+  &lt;button id=step&gt;&lt;/button&gt;
 &lt;/div&gt;
 &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
 
-const K = 5;
+const K = 3;
 const WIDTH=500;
 const HEIGHT=500;
-const radius = 0.1;
-const colors = ['darkgreen', 'blue', 'darkorange', 'red', 'purple'];
+const RADIUS = 0.1;
+const STEP1 = &quot;Step 1: Assign observations to clusters.&quot;
+const STEP2 = &quot;Step 2: Update centroids.&quot;
+const COLORS = ['darkgreen', 'blue', 'darkorange', 'red', 'purple'];
+
 let ctx = document.getElementById('cluster').getContext('2d');
-let stepEle = document.getElementById('stepStatus');
+let stepEle = document.getElementById('step');
 
 function clear() {
   ctx.fillStyle = 'white';
@@ -29,8 +32,8 @@ function render(points, circle) {
   points.forEach(pt =&gt; {
     let x = Math.floor(pt.x*WIDTH);
     let y = Math.floor(pt.y*HEIGHT);
-    ctx.fillStyle = colors[pt.c];
-    ctx.strokeStyle = colors[pt.c];
+    ctx.fillStyle = COLORS[pt.c];
+    ctx.strokeStyle = COLORS[pt.c];
     ctx.lineWidth = 2;
     if (!circle) {
       ctx.fillRect(x-4, y-4, 9, 9);
@@ -42,6 +45,7 @@ function render(points, circle) {
   });
 }
 
+// Create a set of observations that look clumpy.
 function distribute() {
   let clumps = [];
   for (var i = 0; i &lt; 3; i++) {
@@ -60,8 +64,8 @@ function distribute() {
       // Reject if not close enough to an x.
       let hit = clumps.reduce((accumulator, current) =&gt; {
         return accumulator || (
-          Math.abs(current.x - x) &lt; radius
-          &amp;&amp; Math.abs(current.y - y) &lt; radius);
+          Math.abs(current.x - x) &lt; RADIUS
+          &amp;&amp; Math.abs(current.y - y) &lt; RADIUS);
       }, false);
       if (!hit) {
         continue
@@ -76,6 +80,7 @@ function distribute() {
   return points;
 }
 
+// Return the index of the closest centroid to the given point.
 function closest(centroids, pt) {
   let c = 0;
   let dist = 100;
@@ -89,6 +94,7 @@ function closest(centroids, pt) {
   return c
 }
 
+// Step 1 of the clustering algorithm.
 function cluster1(centroids, points) {
   points.forEach(pt =&gt; {
     pt.c = closest(centroids, pt)
@@ -96,6 +102,7 @@ function cluster1(centroids, points) {
   return centroids
 }
 
+// Step 2 of the clustering algorithm.
 function cluster2(centroids, points) {
   // Recalc centroids.
   let new_centroids = [];
@@ -129,15 +136,8 @@ function cluster2(centroids, points) {
 }
 
 let currentStep = 0;
-let points = distribute();
-let centroids = JSON.parse(JSON.stringify(points.slice(0, K)));
-centroids.forEach((pt, i) =&gt; {
-  pt.c = i;
-});
-
-clear();
-render(points);
-render(centroids, true);
+let points = [];
+let centroids = [];
 
 function restart() {
   currentStep = 0;
@@ -149,16 +149,16 @@ function restart() {
   clear();
   render(points);
   render(centroids, true);
-  stepEle.innerText = '';
+  stepEle.innerText = STEP1;
 }
 
 function step() {
   if (currentStep % 2 == 0) {
     centroids = cluster1(centroids, points);
-    stepEle.innerText = 'Step: Assign points to a cluster.';
+    stepEle.innerText = STEP2;
   } else {
     centroids = cluster2(centroids, points);
-    stepEle.innerText = 'Step: Recalculate centroids.';
+    stepEle.innerText = STEP1;
   }
   currentStep+=1;
   clear();
@@ -168,10 +168,12 @@ function step() {
 
 document.getElementById('restart').addEventListener('click', restart);
 document.getElementById('step').addEventListener('click', step);
+
+restart();
 &lt;/script&gt;
 
 
-&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">A simple demo of k-means clustering. The little squares are the observations and the cirles are the centroids.</summary></entry><entry><title type="html">elements-sk material design icons</title><link href="https://bitworking.org/news/2018/06/elements-sk-icons" rel="alternate" type="text/html" title="elements-sk material design icons" /><published>2018-06-20T00:00:00-04:00</published><updated>2018-06-20T09:38:49-04:00</updated><id>https://bitworking.org/news/2018/06/elements-sk-icons</id><content type="html" xml:base="https://bitworking.org/news/2018/06/elements-sk-icons">&lt;p&gt;The latest release of &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;
+&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">A simple demo of k-means clustering. The little squares are the observations and the cirles are the centroids. Press the 'Step:' button to step through the algorithm.</summary></entry><entry><title type="html">elements-sk material design icons</title><link href="https://bitworking.org/news/2018/06/elements-sk-icons" rel="alternate" type="text/html" title="elements-sk material design icons" /><published>2018-06-20T00:00:00-04:00</published><updated>2018-06-20T09:38:49-04:00</updated><id>https://bitworking.org/news/2018/06/elements-sk-icons</id><content type="html" xml:base="https://bitworking.org/news/2018/06/elements-sk-icons">&lt;p&gt;The latest release of &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;
 has added elements for all the
 &lt;a href=&quot;https://github.com/google/material-design-icons&quot;&gt;Material Design Icons&lt;/a&gt;.
 You can see the full set of icons in action on the
