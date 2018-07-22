@@ -33,4 +33,7 @@ href="https://twitter.com/jack/status/1020767829878947840?ref_src=twsrc%5Etfw">J
 21, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+*Update* Oh look, actual historians making the case for blocking
+holocaust deniers: [How One of the Internet’s Biggest History Forums Deals With Holocaust Deniers](https://slate.com/technology/2018/07/the-askhistorians-subreddit-banned-holocaust-deniers-and-facebook-should-too.html).
+
 <a href="https://brid.gy/publish/twitter"></a>
