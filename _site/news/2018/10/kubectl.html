@@ -6,23 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Firebase Hosting</title>
-  <meta name="description" content="Firebase Hosting is amazing, so fast and easy to setup and they even take care of the SSL cert for you. I work for Google and didn’t even know we had this as...">
+  <title>kubectl</title>
+  <meta name="description" content="The kubectl command combined with jq is the Swiss Army Chainsaw of kubernetes management. Some of my more useful kubectl commands:">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2018/10/firebase-hosting">
+  <link rel="canonical" href="https://bitworking.org/news/2018/10/kubectl">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="Firebase Hosting">
-  <meta name="twitter:description" content="Firebase Hosting is amazing,
-so fast and easy to setup and they even take care of the SSL cert for you.
-I work for Google and didn’t even know we had this as a product,
-so just posting it here in case anyone else missed it.
+  <meta name="twitter:title"   content="kubectl">
+  <meta name="twitter:description" content="The kubectl command combined with jq is the Swiss Army Chainsaw of
+kubernetes management. Some of my more useful kubectl commands:
 
 ">
   <meta name="twitter:card"  content="summary">
@@ -107,12 +105,12 @@ so just posting it here in case anyone else missed it.
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Firebase Hosting</h1>
+    <h1 class="post-title p-name" itemprop="name headline">kubectl</h1>
     <p class="post-meta">
-      <a class="u-url" href="/news/2018/10/firebase-hosting">
-        <time datetime="2018-10-13T00:00:00-04:00" itemprop="datePublished" class="dt-published">
+      <a class="u-url" href="/news/2018/10/kubectl">
+        <time datetime="2018-10-31T00:00:00-04:00" itemprop="datePublished" class="dt-published">
           
-          Oct 13, 2018
+          Oct 31, 2018
         </time>
       </a>
       • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
@@ -124,10 +122,18 @@ so just posting it here in case anyone else missed it.
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p><a href="https://firebase.google.com/docs/hosting/">Firebase Hosting</a> is amazing,
-so fast and easy to setup and they even take care of the SSL cert for you.
-I work for Google and didn’t even know we had this as a product,
-so just posting it here in case anyone else missed it.</p>
+    <p>The <code class="highlighter-rouge">kubectl</code> command combined with <code class="highlighter-rouge">jq</code> is the Swiss Army Chainsaw of
+kubernetes management. Some of my more useful <code class="highlighter-rouge">kubectl</code> commands:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  watch <span class="s1">'kubectl get pods | column'</span>
+
+  // Delete all failed pods.
+  kubectl get pods --field-selector<span class="o">=</span>status.phase<span class="o">=</span>Failed -o json | jq -r <span class="s1">'.items[] .metadata.name'</span>  | xargs kubectl delete pod
+
+  // All images running that have the word <span class="s1">'dirty'</span> <span class="k">in </span>their name.
+  kubectl get pods -o json | jq -r <span class="s1">'..|.containerStatuses?|select(.!=null)|.[].image'</span> | sort | uniq | grep dirty
+</code></pre>
+</div>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 
@@ -152,8 +158,8 @@ so just posting it here in case anyone else missed it.</p>
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2018/10/firebase-hosting';
-      this.page.identifier = 'https://bitworking.org/news/2018/10/firebase-hosting';
+      this.page.url = 'https://bitworking.org/news/2018/10/kubectl';
+      this.page.identifier = 'https://bitworking.org/news/2018/10/kubectl';
     };
 
     (function() {
@@ -181,12 +187,9 @@ so just posting it here in case anyone else missed it.</p>
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2018/07/the-experience-driven-source-of-elements-sk">&laquo;
-        The experience driven source of the elements-sk set of custom elements.</a>
+      <a class="prev" href="/news/2018/10/firebase-hosting">&laquo;
+        Firebase Hosting</a>
       
-      
-      <a class="next"
-        href="/news/2018/10/kubectl">kubectl &raquo;</a>
       
     </div>
     
