@@ -127,10 +127,10 @@ kubernetes management. Some of my more useful <code class="highlighter-rouge">ku
 
 <div class="language-bash highlighter-rouge"><pre class="highlight"><code>  watch <span class="s1">'kubectl get pods | column'</span>
 
-  // Delete all failed pods.
+  <span class="c"># Delete all failed pods.</span>
   kubectl get pods --field-selector<span class="o">=</span>status.phase<span class="o">=</span>Failed -o json | jq -r <span class="s1">'.items[] .metadata.name'</span>  | xargs kubectl delete pod
 
-  // All images running that have the word <span class="s1">'dirty'</span> <span class="k">in </span>their name.
+  <span class="c"># All images running that have the word 'dirty' in their name.</span>
   kubectl get pods -o json | jq -r <span class="s1">'..|.containerStatuses?|select(.!=null)|.[].image'</span> | sort | uniq | grep dirty
 </code></pre>
 </div>

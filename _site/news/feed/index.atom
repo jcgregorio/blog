@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-10-31T09:29:24-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">kubectl</title><link href="https://bitworking.org/news/2018/10/kubectl" rel="alternate" type="text/html" title="kubectl" /><published>2018-10-31T00:00:00-04:00</published><updated>2018-10-31T09:29:13-04:00</updated><id>https://bitworking.org/news/2018/10/kubectl</id><content type="html" xml:base="https://bitworking.org/news/2018/10/kubectl">&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; command combined with &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; is the Swiss Army Chainsaw of
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-10-31T09:42:24-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">kubectl</title><link href="https://bitworking.org/news/2018/10/kubectl" rel="alternate" type="text/html" title="kubectl" /><published>2018-10-31T00:00:00-04:00</published><updated>2018-10-31T09:29:50-04:00</updated><id>https://bitworking.org/news/2018/10/kubectl</id><content type="html" xml:base="https://bitworking.org/news/2018/10/kubectl">&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; command combined with &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; is the Swiss Army Chainsaw of
 kubernetes management. Some of my more useful &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; commands:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  watch &lt;span class=&quot;s1&quot;&gt;'kubectl get pods | column'&lt;/span&gt;
 
-  // Delete all failed pods.
+  &lt;span class=&quot;c&quot;&gt;# Delete all failed pods.&lt;/span&gt;
   kubectl get pods --field-selector&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;status.phase&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Failed -o json | jq -r &lt;span class=&quot;s1&quot;&gt;'.items[] .metadata.name'&lt;/span&gt;  | xargs kubectl delete pod
 
-  // All images running that have the word &lt;span class=&quot;s1&quot;&gt;'dirty'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;their name.
+  &lt;span class=&quot;c&quot;&gt;# All images running that have the word 'dirty' in their name.&lt;/span&gt;
   kubectl get pods -o json | jq -r &lt;span class=&quot;s1&quot;&gt;'..|.containerStatuses?|select(.!=null)|.[].image'&lt;/span&gt; | sort | uniq | grep dirty
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
