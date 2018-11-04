@@ -1,5 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-10-31T09:42:24-04:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">kubectl</title><link href="https://bitworking.org/news/2018/10/kubectl" rel="alternate" type="text/html" title="kubectl" /><published>2018-10-31T00:00:00-04:00</published><updated>2018-10-31T09:29:50-04:00</updated><id>https://bitworking.org/news/2018/10/kubectl</id><content type="html" xml:base="https://bitworking.org/news/2018/10/kubectl">&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; command combined with &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; is the Swiss Army Chainsaw of
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-11-04T11:32:09-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Why crowdsourcing will die</title><link href="https://bitworking.org/news/2018/11/why-crowdsourcing-will-die" rel="alternate" type="text/html" title="Why crowdsourcing will die" /><published>2018-11-04T00:00:00-04:00</published><updated>2018-11-04T11:32:02-05:00</updated><id>https://bitworking.org/news/2018/11/why-crowdsourcing-will-die</id><content type="html" xml:base="https://bitworking.org/news/2018/11/why-crowdsourcing-will-die">&lt;p&gt;Crowdsourcing, the idea of slapping together an algortihm that quietly works
+alone in the background on a large corpus of data to generate recommendations,
+most popular lists, etc. is slowly dying. I pointed this out in my &lt;a href=&quot;https://bitworking.org/news/2018/01/2018-predictions&quot;&gt;2018
+Predictions&lt;/a&gt; post, but
+didn’t offer a concise explaination as to why that would occur, but as I’ve
+watched the year progress, and added more examples to that predicitions post,
+I’ve come up with a fairly simple model.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-model-10&quot;&gt;The Model 1.0&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Computers always beat humans.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The first thing to understand is that on any constrained problem, a computer
+can be built that will eventually out perform any human. You can see this in
+constrained domains like playing chess and Go, where human capabilties are now
+totally surpassed by computer players. And this is where your recommendation
+algorithm author enters the scene and builds a recommendation engine that they
+know will be better than anything a human can do. And they may be right. Now
+just because a recommendation is done by an algorithm doesn’t necessarily mean
+that it’s better, but from our 1.0 model you can see that if you put enough
+time into building that algorithm that on that constrained problem space you
+will eventuallly be able to beat all humans at the task of generating
+recommendations. And that, unfortunately, is where most companies stopped
+years ago.&lt;/p&gt;
+
+&lt;p&gt;But our model is incomplete, first because it doesn’t recognize that the
+generated output of that algorithm has value, and I’m not even talking about
+monetary value, I’m speaking of power to influence people, i.e. the next news
+article to read or the next book to buy has a lot of power to bring fringe
+ideas into the mainstream. Let’s just think about the resurgence of flat
+earthers, or more sinisterly that of white nationalists. Being able to game
+the algorithm to get your fringe idea bumped up in the recommendation engine
+is a huge win for these groups. Gaming those algorithms is the sole focus
+of Russia’s Internet Research Agency.&lt;/p&gt;
+
+&lt;p&gt;But didn’t I just say that algorithms can always be built to beat the humans,
+so isn’t this a contradiction? Well, it is of our 1.0 model, but that’s
+because we’ve left something out.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-model-20&quot;&gt;The Model 2.0&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Computers always beat humans.&lt;/li&gt;
+  &lt;li&gt;Computers plus humans always beat computers.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You can see this in particular in the realm of chess, where a &lt;a href=&quot;https://www.huffingtonpost.com/mike-cassidy/centaur-chess-shows-power_b_6383606.html&quot;&gt;human and
+computer pair of players can beat a
+computer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now suddenly launching a recommendation algorithm to silently chug along and
+produce recommendations looks like a fools errand, as there will always be
+groups that have an incentive, either monetary or otherwise, to use humans and
+computers together to subvert your algorithm. See for example Russia’s
+Internet Research Agency and their computer generated troll army. This &lt;a href=&quot;https://www.gimletmedia.com/reply-all/124&quot;&gt;Reply
+All podcast has another great example of gaming
+rankings&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;So every time you create a recommendation engine, you’ve basically signed up
+for a battle that requires you to continuously update your algorithm,
+continuously invest engineering resources to keep yourself ahead of the
+scammers, spammers, and computer generated troll armies. Suddenly it doesn’t
+seem like such a great idea, does it?&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Crowdsourcing, the idea of slapping together an algortihm that quietly works alone in the background on a large corpus of data to generate recommendations, most popular lists, etc. is slowly dying. I pointed this out in my 2018 Predictions post, but didn’t offer a concise explaination as to why that would occur, but as I’ve watched the year progress, and added more examples to that predicitions post, I’ve come up with a fairly simple model.</summary></entry><entry><title type="html">kubectl</title><link href="https://bitworking.org/news/2018/10/kubectl" rel="alternate" type="text/html" title="kubectl" /><published>2018-10-31T00:00:00-04:00</published><updated>2018-10-31T09:42:50-04:00</updated><id>https://bitworking.org/news/2018/10/kubectl</id><content type="html" xml:base="https://bitworking.org/news/2018/10/kubectl">&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; command combined with &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; is the Swiss Army Chainsaw of
 kubernetes management. Some of my more useful &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; commands:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  watch &lt;span class=&quot;s1&quot;&gt;'kubectl get pods | column'&lt;/span&gt;
@@ -603,7 +669,4 @@ security and speed are worth the tradeoff.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Both Pulito and VanillaJS have updated to webpack 4.</summary></entry><entry><title type="html">Silicon Valley Libertarianism - Remembered</title><link href="https://bitworking.org/news/2018/03/silicon-valley-libertarianism-remembered" rel="alternate" type="text/html" title="Silicon Valley Libertarianism - Remembered" /><published>2018-03-26T00:00:00-04:00</published><updated>2018-03-26T19:13:22-04:00</updated><id>https://bitworking.org/news/2018/03/silicon-valley-libertarianism-remembered</id><content type="html" xml:base="https://bitworking.org/news/2018/03/silicon-valley-libertarianism-remembered">&lt;p&gt;Remember the last time silicon valley was growing like crazy without any supervision?
 &lt;a href=&quot;https://www.nytimes.com/2018/03/26/lens/the-superfund-sites-of-silicon-valley.html&quot;&gt;We’re still dealing with that mess&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Remember the last time silicon valley was growing like crazy without any supervision? We’re still dealing with that mess.</summary></entry><entry><title type="html">Stop using Medium</title><link href="https://bitworking.org/news/2018/03/centralized-publishing" rel="alternate" type="text/html" title="Stop using Medium" /><published>2018-03-25T00:00:00-04:00</published><updated>2018-03-25T16:53:23-04:00</updated><id>https://bitworking.org/news/2018/03/centralized-publishing</id><content type="html" xml:base="https://bitworking.org/news/2018/03/centralized-publishing">&lt;p&gt;It’s 2018 and it’s still a &lt;a href=&quot;https://mastodon.xyz/@Liberapay/99744324870271197&quot;&gt;bad
-idea to trust centralized publishing platforms&lt;/a&gt;. Film at 11.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">It’s 2018 and it’s still a bad idea to trust centralized publishing platforms. Film at 11.</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Remember the last time silicon valley was growing like crazy without any supervision? We’re still dealing with that mess.</summary></entry></feed>
