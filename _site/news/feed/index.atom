@@ -1,5 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-11-23T09:46:02-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Lina Khan on antitrust and Amazon</title><link href="https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon" rel="alternate" type="text/html" title="Lina Khan on antitrust and Amazon" /><published>2018-11-23T00:00:00-05:00</published><updated>2018-11-23T09:46:00-05:00</updated><id>https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon</id><content type="html" xml:base="https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon">&lt;p&gt;This Yale Law Journal Note from &lt;a href=&quot;https://www.linamkhan.com/&quot;&gt;Lina M. Khan&lt;/a&gt; on
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-11-26T18:40:58-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Welcome to your Corporatocracy</title><link href="https://bitworking.org/news/2018/11/welcome-to-your-oligarchy" rel="alternate" type="text/html" title="Welcome to your Corporatocracy" /><published>2018-11-26T00:00:00-05:00</published><updated>2018-11-26T18:40:55-05:00</updated><id>https://bitworking.org/news/2018/11/welcome-to-your-oligarchy</id><content type="html" xml:base="https://bitworking.org/news/2018/11/welcome-to-your-oligarchy">&lt;p&gt;&lt;a href=&quot;https://www.nytimes.com/2018/11/25/opinion/monopolies-in-the-us.html&quot;&gt;The Monopolization of America&lt;/a&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;On Monday, the Open Markets Institute — an anti-monopoly think tank — is releasing the
+first part of a &lt;a href=&quot;https://concentrationcrisis.openmarketsinstitute.org&quot;&gt;data set&lt;/a&gt; showing the market share that the largest companies
+have in each industry.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Nothing surprising there, unless you didn’t realize you lived in a
+corporatocracy/oligarchy and not a functioning democracy.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">The Monopolization of America:</summary></entry><entry><title type="html">Lina Khan on antitrust and Amazon</title><link href="https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon" rel="alternate" type="text/html" title="Lina Khan on antitrust and Amazon" /><published>2018-11-23T00:00:00-05:00</published><updated>2018-11-23T09:46:28-05:00</updated><id>https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon</id><content type="html" xml:base="https://bitworking.org/news/2018/11/lina-khan-on-antitrust-and-amazon">&lt;p&gt;This Yale Law Journal Note from &lt;a href=&quot;https://www.linamkhan.com/&quot;&gt;Lina M. Khan&lt;/a&gt; on
 &lt;a href=&quot;https://www.yalelawjournal.org/note/amazons-antitrust-paradox&quot;&gt;Amazon’s Antitrust Paradox&lt;/a&gt;
 is an amazing read on several levels.&lt;/p&gt;
 
@@ -506,13 +517,4 @@ believe it’s possible. Mix of algos and network.&lt;/p&gt;&amp;mdash; jack (@j
 &lt;p&gt;&lt;em&gt;Update&lt;/em&gt; Oh look, actual historians making the case for blocking
 holocaust deniers: &lt;a href=&quot;https://slate.com/technology/2018/07/the-askhistorians-subreddit-banned-holocaust-deniers-and-facebook-should-too.html&quot;&gt;How One of the Internet’s Biggest History Forums Deals With Holocaust Deniers&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry><entry><title type="html">machine learning for continuous integration</title><link href="https://bitworking.org/news/2018/07/machine-learning-for-continuous-integration-ocson" rel="alternate" type="text/html" title="machine learning for continuous integration" /><published>2018-07-21T00:00:00-04:00</published><updated>2018-09-24T12:52:40-04:00</updated><id>https://bitworking.org/news/2018/07/machine-learning-for-continuous-integration-#ocson</id><content type="html" xml:base="https://bitworking.org/news/2018/07/machine-learning-for-continuous-integration-ocson">&lt;p&gt;Here are the slides for my OSCON presentation &lt;a href=&quot;http://bit.ly/ml-4-ci&quot;&gt;Machine Learning for
-Continuous Integration&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;As usual my slides are pretty worthless on their own, except for the links.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Update (24-Sep-2018)&lt;/em&gt; Recording is now available:&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/yWl-AMMN-ug?rel=0&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Here are the slides for my OSCON presentation Machine Learning for Continuous Integration.</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>
