@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Oligarchy collusion
+title: Oligopoly collusion
 ---
 
-Don't you just love it when oligarchies collude?
+Don't you just love it when oligopolies collude?
 
 ![Alaska Airlines giving preferential treatment to Facebook and Apple.](/images/collusion.jpg)
 {:title="Alaska Airlines giving preferential treatment to Facebook and Apple."}
