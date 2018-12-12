@@ -6,21 +6,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Hot Take</title>
-  <meta name="description" content="Here are a few articles that are good background on what I am about to talk about:">
+  <title>Core Slicing</title>
+  <meta name="description" content="With Spectre and Meltdown we can see the inevitable results of trying to squeeze more and more performance out of a small number of cores. I believe the futu...">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2018/12/hot-take">
+  <link rel="canonical" href="https://bitworking.org/news/2018/12/core-slicing">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="Hot Take">
-  <meta name="twitter:description" content="Here are a few articles that are good background on what I am about to
-talk about:
+  <meta name="twitter:title"   content="Core Slicing">
+  <meta name="twitter:description" content="With Spectre and Meltdown we can see the
+inevitable results of trying to squeeze more and more performance out of a
+small number of cores. I believe the future is in processors with a high
+number of cores, such as RISC-V. With hundreds or thousands of cores on a
+single chip you can stop doing time-slicing and start doing core-slicing. That
+is, instead of doing preemtive multitasking, each process will be scheduled
+with a subset of the total number of core. The cores will be distrubuted among
+the processes that are running and they will keep those cores until they are
+done. A change in priority for a process would mean they get more or less
+cores.
 
 ">
   <meta name="twitter:card"  content="summary">
@@ -105,12 +113,12 @@ talk about:
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Hot Take</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Core Slicing</h1>
     <p class="post-meta">
-      <a class="u-url" href="/news/2018/12/hot-take">
-        <time datetime="2018-12-08T00:00:00-05:00" itemprop="datePublished" class="dt-published">
+      <a class="u-url" href="/news/2018/12/core-slicing">
+        <time datetime="2018-12-12T00:00:00-05:00" itemprop="datePublished" class="dt-published">
           
-          Dec 8, 2018
+          Dec 12, 2018
         </time>
       </a>
       • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
@@ -122,27 +130,16 @@ talk about:
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Here are a few articles that are good background on what I am about to
-talk about:</p>
-
-<ul>
-  <li><a href="https://www.nytimes.com/2018/12/07/science/climate-change-mass-extinction.html">The Planet Has Seen Sudden Warming Before. It Wiped Out Almost Everything.</a></li>
-  <li><a href="https://www.nytimes.com/2018/11/27/magazine/insect-apocalypse.html">The Insect Apocalypse Is Here</a></li>
-  <li><a href="https://www.nytimes.com/interactive/2017/11/06/climate/world-emissions-goals-far-off-course.html">Here’s How Far the World Is From Meeting Its Climate Goals</a></li>
-</ul>
-
-<p>In my opinion, after watching climate change research for years and watching
-the effects of climate change arrive faster than predicted, and the continual
-shortening of timelines for climate change effects, and the fact that we are
-nowhere close to cutting emissions fast enough, I firmly believe that climate
-change is an existential threat to humans and that we need to start
-researching geoengineering strategies for cooling the planet today.</p>
-
-<p>Yes, we still need to research fusion power and move as fast as possible to
-wind, solar, and other renewable sources of power, but I don’t believe
-that we can transition fast enough, and given that we are talking about the
-lives of millions, if not billions, of humans on the line, it is morally
-irresponsible to not research geoengineering.</p>
+    <p>With <a href="https://meltdownattack.com/">Spectre and Meltdown</a> we can see the
+inevitable results of trying to squeeze more and more performance out of a
+small number of cores. I believe the future is in processors with a high
+number of cores, such as RISC-V. With hundreds or thousands of cores on a
+single chip you can stop doing time-slicing and start doing core-slicing. That
+is, instead of doing preemtive multitasking, each process will be scheduled
+with a subset of the total number of core. The cores will be distrubuted among
+the processes that are running and they will keep those cores until they are
+done. A change in priority for a process would mean they get more or less
+cores.</p>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 
@@ -167,8 +164,8 @@ irresponsible to not research geoengineering.</p>
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2018/12/hot-take';
-      this.page.identifier = 'https://bitworking.org/news/2018/12/hot-take';
+      this.page.url = 'https://bitworking.org/news/2018/12/core-slicing';
+      this.page.identifier = 'https://bitworking.org/news/2018/12/core-slicing';
     };
 
     (function() {
@@ -196,12 +193,9 @@ irresponsible to not research geoengineering.</p>
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2018/11/oligarchy-collusion">&laquo;
-        Oligopoly collusion</a>
+      <a class="prev" href="/news/2018/12/hot-take">&laquo;
+        Hot Take</a>
       
-      
-      <a class="next"
-        href="/news/2018/12/core-slicing">Core Slicing &raquo;</a>
       
     </div>
     

@@ -1,5 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-08T11:13:11-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Hot Take</title><link href="https://bitworking.org/news/2018/12/hot-take" rel="alternate" type="text/html" title="Hot Take" /><published>2018-12-08T00:00:00-05:00</published><updated>2018-12-08T11:13:08-05:00</updated><id>https://bitworking.org/news/2018/12/hot-take</id><content type="html" xml:base="https://bitworking.org/news/2018/12/hot-take">&lt;p&gt;Here are a few articles that are good background on what I am about to
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-12T12:12:19-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Core Slicing</title><link href="https://bitworking.org/news/2018/12/core-slicing" rel="alternate" type="text/html" title="Core Slicing" /><published>2018-12-12T00:00:00-05:00</published><updated>2018-12-12T12:12:16-05:00</updated><id>https://bitworking.org/news/2018/12/core-slicing</id><content type="html" xml:base="https://bitworking.org/news/2018/12/core-slicing">&lt;p&gt;With &lt;a href=&quot;https://meltdownattack.com/&quot;&gt;Spectre and Meltdown&lt;/a&gt; we can see the
+inevitable results of trying to squeeze more and more performance out of a
+small number of cores. I believe the future is in processors with a high
+number of cores, such as RISC-V. With hundreds or thousands of cores on a
+single chip you can stop doing time-slicing and start doing core-slicing. That
+is, instead of doing preemtive multitasking, each process will be scheduled
+with a subset of the total number of core. The cores will be distrubuted among
+the processes that are running and they will keep those cores until they are
+done. A change in priority for a process would mean they get more or less
+cores.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">With Spectre and Meltdown we can see the inevitable results of trying to squeeze more and more performance out of a small number of cores. I believe the future is in processors with a high number of cores, such as RISC-V. With hundreds or thousands of cores on a single chip you can stop doing time-slicing and start doing core-slicing. That is, instead of doing preemtive multitasking, each process will be scheduled with a subset of the total number of core. The cores will be distrubuted among the processes that are running and they will keep those cores until they are done. A change in priority for a process would mean they get more or less cores.</summary></entry><entry><title type="html">Hot Take</title><link href="https://bitworking.org/news/2018/12/hot-take" rel="alternate" type="text/html" title="Hot Take" /><published>2018-12-08T00:00:00-05:00</published><updated>2018-12-08T11:13:38-05:00</updated><id>https://bitworking.org/news/2018/12/hot-take</id><content type="html" xml:base="https://bitworking.org/news/2018/12/hot-take">&lt;p&gt;Here are a few articles that are good background on what I am about to
 talk about:&lt;/p&gt;
 
 &lt;ul&gt;
@@ -155,9 +166,4 @@ kubernetes management. Some of my more useful &lt;code class=&quot;highlighter-r
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">The kubectl command combined with jq is the Swiss Army Chainsaw of kubernetes management. Some of my more useful kubectl commands:</summary></entry><entry><title type="html">Firebase Hosting</title><link href="https://bitworking.org/news/2018/10/firebase-hosting" rel="alternate" type="text/html" title="Firebase Hosting" /><published>2018-10-13T00:00:00-04:00</published><updated>2018-10-13T11:21:54-04:00</updated><id>https://bitworking.org/news/2018/10/firebase-hosting</id><content type="html" xml:base="https://bitworking.org/news/2018/10/firebase-hosting">&lt;p&gt;&lt;a href=&quot;https://firebase.google.com/docs/hosting/&quot;&gt;Firebase Hosting&lt;/a&gt; is amazing,
-so fast and easy to setup and they even take care of the SSL cert for you.
-I work for Google and didn’t even know we had this as a product,
-so just posting it here in case anyone else missed it.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Firebase Hosting is amazing, so fast and easy to setup and they even take care of the SSL cert for you. I work for Google and didn’t even know we had this as a product, so just posting it here in case anyone else missed it.</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">The kubectl command combined with jq is the Swiss Army Chainsaw of kubernetes management. Some of my more useful kubectl commands:</summary></entry></feed>
