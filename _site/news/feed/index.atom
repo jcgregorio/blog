@@ -1,5 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-12T12:13:24-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Core Slicing</title><link href="https://bitworking.org/news/2018/12/core-slicing" rel="alternate" type="text/html" title="Core Slicing" /><published>2018-12-12T00:00:00-05:00</published><updated>2018-12-12T12:12:45-05:00</updated><id>https://bitworking.org/news/2018/12/core-slicing</id><content type="html" xml:base="https://bitworking.org/news/2018/12/core-slicing">&lt;p&gt;With &lt;a href=&quot;https://meltdownattack.com/&quot;&gt;Spectre and Meltdown&lt;/a&gt; we can see the
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-15T10:13:44-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Prometheus alerts and missing data.</title><link href="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data" rel="alternate" type="text/html" title="Prometheus alerts and missing data." /><published>2018-12-15T00:00:00-05:00</published><updated>2018-12-15T10:13:40-05:00</updated><id>https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data</id><content type="html" xml:base="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data">&lt;p&gt;Alerting in &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; is great, and easy, but one of
+the gotchas is that there’s no warnings or errors if you write an alert rule
+and there’s no data for that alert.&lt;/p&gt;
+
+&lt;p&gt;Now Prometheus does have the &lt;code class=&quot;highlighter-rouge&quot;&gt;absent()&lt;/code&gt; function, and you could tack&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;OR absent(some_metric_name) == 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;to the end of every alert you write, but that’s tedious and error prone.
+So I wrote a quick little tool on Go to create a set of absence alerts based on
+an existing set of alerts. It just processes a single alerts YAML file
+and emits a new alerts YAML file with one absent alert for each alert
+in the original file. To install it run:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;go get go.skia.org/infra/promk/go/promk-absent
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then run it with&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;promk-absent --input=your-rules.yml --output=absent-rules.yml
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Don’t forget to include your new absent rules in your &lt;code class=&quot;highlighter-rouge&quot;&gt;prometheus.yml&lt;/code&gt;
+file.&lt;/p&gt;
+
+&lt;p&gt;The tool does have the restriction that all expressions must be written in
+the form of:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;expression [&amp;lt;&amp;gt;=!]+ (some constant)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;So far that hasn’t been an issue for us.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Alerting in Prometheus is great, and easy, but one of the gotchas is that there’s no warnings or errors if you write an alert rule and there’s no data for that alert.</summary></entry><entry><title type="html">Core Slicing</title><link href="https://bitworking.org/news/2018/12/core-slicing" rel="alternate" type="text/html" title="Core Slicing" /><published>2018-12-12T00:00:00-05:00</published><updated>2018-12-12T12:13:50-05:00</updated><id>https://bitworking.org/news/2018/12/core-slicing</id><content type="html" xml:base="https://bitworking.org/news/2018/12/core-slicing">&lt;p&gt;With &lt;a href=&quot;https://meltdownattack.com/&quot;&gt;Spectre and Meltdown&lt;/a&gt; we can see the
 inevitable results of trying to squeeze more and more performance out of a
 small number of cores. I believe the future is in processors with a high
 number of cores, such as &lt;a href=&quot;https://riscv.org/&quot;&gt;RISC-V&lt;/a&gt;. With hundreds or
@@ -153,17 +191,4 @@ continuously invest engineering resources to keep yourself ahead of the
 scammers, spammers, and computer generated troll armies. Suddenly it doesn’t
 seem like such a great idea, does it?&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Crowdsourcing, the idea of slapping together an algortihm that quietly works alone in the background on a large corpus of data to generate recommendations, most popular lists, etc. is slowly dying. I pointed this out in my 2018 Predictions post, but didn’t offer a concise explaination as to why that would occur, but as I’ve watched the year progress, and added more examples to that predicitions post, I’ve come up with a fairly simple model.</summary></entry><entry><title type="html">kubectl</title><link href="https://bitworking.org/news/2018/10/kubectl" rel="alternate" type="text/html" title="kubectl" /><published>2018-10-31T00:00:00-04:00</published><updated>2018-10-31T09:42:50-04:00</updated><id>https://bitworking.org/news/2018/10/kubectl</id><content type="html" xml:base="https://bitworking.org/news/2018/10/kubectl">&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; command combined with &lt;code class=&quot;highlighter-rouge&quot;&gt;jq&lt;/code&gt; is the Swiss Army Chainsaw of
-kubernetes management. Some of my more useful &lt;code class=&quot;highlighter-rouge&quot;&gt;kubectl&lt;/code&gt; commands:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  watch &lt;span class=&quot;s1&quot;&gt;'kubectl get pods | column'&lt;/span&gt;
-
-  &lt;span class=&quot;c&quot;&gt;# Delete all failed pods.&lt;/span&gt;
-  kubectl get pods --field-selector&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;status.phase&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Failed -o json | jq -r &lt;span class=&quot;s1&quot;&gt;'.items[] .metadata.name'&lt;/span&gt;  | xargs kubectl delete pod
-
-  &lt;span class=&quot;c&quot;&gt;# All images running that have the word 'dirty' in their name.&lt;/span&gt;
-  kubectl get pods -o json | jq -r &lt;span class=&quot;s1&quot;&gt;'..|.containerStatuses?|select(.!=null)|.[].image'&lt;/span&gt; | sort | uniq | grep dirty
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">The kubectl command combined with jq is the Swiss Army Chainsaw of kubernetes management. Some of my more useful kubectl commands:</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Crowdsourcing, the idea of slapping together an algortihm that quietly works alone in the background on a large corpus of data to generate recommendations, most popular lists, etc. is slowly dying. I pointed this out in my 2018 Predictions post, but didn’t offer a concise explaination as to why that would occur, but as I’ve watched the year progress, and added more examples to that predicitions post, I’ve come up with a fairly simple model.</summary></entry></feed>
