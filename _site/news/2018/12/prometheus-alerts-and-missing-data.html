@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Prometheus alerts and missing data.</title>
+  <title>Prometheus alerts and missing data</title>
   <meta name="description" content="Alerting in Prometheus is great, and easy, but one of the gotchas is that there’s no warnings or errors if you write an alert rule and there’s no data for th...">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
@@ -18,7 +18,7 @@
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="Prometheus alerts and missing data.">
+  <meta name="twitter:title"   content="Prometheus alerts and missing data">
   <meta name="twitter:description" content="Alerting in Prometheus is great, and easy, but one of
 the gotchas is that there’s no warnings or errors if you write an alert rule
 and there’s no data for that alert.
@@ -106,7 +106,7 @@ and there’s no data for that alert.
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Prometheus alerts and missing data.</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Prometheus alerts and missing data</h1>
     <p class="post-meta">
       <a class="u-url" href="/news/2018/12/prometheus-alerts-and-missing-data">
         <time datetime="2018-12-15T00:00:00-05:00" itemprop="datePublished" class="dt-published">
@@ -134,7 +134,8 @@ and there’s no data for that alert.</p>
 </div>
 
 <p>to the end of every alert you write, but that’s tedious and error prone.
-So I wrote a quick little tool on Go to create a set of absence alerts based on
+So I wrote <a href="https://github.com/google/skia-buildbot/blob/master/promk/go/promk-absent/main.go">promk-absent</a>
+a quick little tool on Go to create a set of absence alerts based on
 an existing set of alerts. It just processes a single alerts YAML file
 and emits a new alerts YAML file with one absent alert for each alert
 in the original file. To install it run:</p>
@@ -155,11 +156,11 @@ file.</p>
 <p>The tool does have the restriction that all expressions must be written in
 the form of:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>expression [&lt;&gt;=!]+ (some constant)
+<div class="highlighter-rouge"><pre class="highlight"><code>expression relation constant
 </code></pre>
 </div>
 
-<p>So far that hasn’t been an issue for us.</p>
+<p>and so far that hasn’t been an issue for us.</p>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 

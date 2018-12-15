@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-15T10:13:44-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Prometheus alerts and missing data.</title><link href="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data" rel="alternate" type="text/html" title="Prometheus alerts and missing data." /><published>2018-12-15T00:00:00-05:00</published><updated>2018-12-15T10:13:40-05:00</updated><id>https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data</id><content type="html" xml:base="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data">&lt;p&gt;Alerting in &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; is great, and easy, but one of
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2018-12-15T10:16:57-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Prometheus alerts and missing data</title><link href="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data" rel="alternate" type="text/html" title="Prometheus alerts and missing data" /><published>2018-12-15T00:00:00-05:00</published><updated>2018-12-15T10:14:10-05:00</updated><id>https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data</id><content type="html" xml:base="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data">&lt;p&gt;Alerting in &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; is great, and easy, but one of
 the gotchas is that there’s no warnings or errors if you write an alert rule
 and there’s no data for that alert.&lt;/p&gt;
 
@@ -10,7 +10,8 @@ and there’s no data for that alert.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;to the end of every alert you write, but that’s tedious and error prone.
-So I wrote a quick little tool on Go to create a set of absence alerts based on
+So I wrote &lt;a href=&quot;https://github.com/google/skia-buildbot/blob/master/promk/go/promk-absent/main.go&quot;&gt;promk-absent&lt;/a&gt;
+a quick little tool on Go to create a set of absence alerts based on
 an existing set of alerts. It just processes a single alerts YAML file
 and emits a new alerts YAML file with one absent alert for each alert
 in the original file. To install it run:&lt;/p&gt;
@@ -31,11 +32,11 @@ file.&lt;/p&gt;
 &lt;p&gt;The tool does have the restriction that all expressions must be written in
 the form of:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;expression [&amp;lt;&amp;gt;=!]+ (some constant)
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;expression relation constant
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;p&gt;So far that hasn’t been an issue for us.&lt;/p&gt;
+&lt;p&gt;and so far that hasn’t been an issue for us.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Alerting in Prometheus is great, and easy, but one of the gotchas is that there’s no warnings or errors if you write an alert rule and there’s no data for that alert.</summary></entry><entry><title type="html">Core Slicing</title><link href="https://bitworking.org/news/2018/12/core-slicing" rel="alternate" type="text/html" title="Core Slicing" /><published>2018-12-12T00:00:00-05:00</published><updated>2018-12-12T12:13:50-05:00</updated><id>https://bitworking.org/news/2018/12/core-slicing</id><content type="html" xml:base="https://bitworking.org/news/2018/12/core-slicing">&lt;p&gt;With &lt;a href=&quot;https://meltdownattack.com/&quot;&gt;Spectre and Meltdown&lt;/a&gt; we can see the
 inevitable results of trying to squeeze more and more performance out of a
