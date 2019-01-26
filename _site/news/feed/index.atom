@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-01-26T02:17:57-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">A thing that happened</title><link href="https://bitworking.org/news/2019/01/a-thing-that-happened" rel="alternate" type="text/html" title="A thing that happened" /><published>2019-01-25T00:00:00-05:00</published><updated>2019-01-26T02:16:50-05:00</updated><id>https://bitworking.org/news/2019/01/a-thing-that-happened</id><content type="html" xml:base="https://bitworking.org/news/2019/01/a-thing-that-happened">&lt;p&gt;So here I am on a Tuesday morning, in the bathroom, getting ready for work
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-01-26T08:55:02-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">A thing that happened</title><link href="https://bitworking.org/news/2019/01/a-thing-that-happened" rel="alternate" type="text/html" title="A thing that happened" /><published>2019-01-25T00:00:00-05:00</published><updated>2019-01-26T02:18:24-05:00</updated><id>https://bitworking.org/news/2019/01/a-thing-that-happened</id><content type="html" xml:base="https://bitworking.org/news/2019/01/a-thing-that-happened">&lt;p&gt;So here I am on a Tuesday morning, in the bathroom, getting ready for work
 while my wife still sleeps. The only context you need for what’s about to
 happen next is that my intestines had been a little sore the previous two
 days and that last year I found out that I had diverticulosis. The latter
@@ -50,11 +50,9 @@ speak and tell them my pain is a 6 is that sharp of a diagnostic tool?
 Regardless, I spend the next two hours oscillating between a 4 and an 8, and
 anything above a 7 requires chanting the “Litany of Pain”:&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;“Shit. Fuck. Damn.”
-“Shit. Fuck. Damn.”
-“Fuck. Fuck. Fucking fuckity fuck.”&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;“Shit. Fuck. Damn.”
+  “Shit. Fuck. Damn.”
+  “Fuck. Fuck. Fucking fuckity fuck.”&lt;/p&gt;
 
 &lt;p&gt;Which I promptly did, for an hour, in the ER waiting room lying across a bench
 seat. Please note that I understand that your personal “Litany of Pain” may differ,
@@ -113,7 +111,7 @@ the conversations are about pee, poop, and sleeping schedules, except in this
 case I’m the baby. Really it’s all about the gas. Every part of my now
 shortened digestive tract is swollen and irritable, so everything produces
 gas, and all gas produces discomfort. Which leads me to my three rules of
-colon surgery recovery:&lt;/p&gt;
+colon surgery recovery discomfort:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;It’s always gas.&lt;/li&gt;

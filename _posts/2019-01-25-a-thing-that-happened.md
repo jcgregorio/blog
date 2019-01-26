@@ -52,9 +52,9 @@ speak and tell them my pain is a 6 is that sharp of a diagnostic tool?
 Regardless, I spend the next two hours oscillating between a 4 and an 8, and
 anything above a 7 requires chanting the "Litany of Pain":
 
-> "Shit. Fuck. Damn."
-> "Shit. Fuck. Damn."
-> "Fuck. Fuck. Fucking fuckity fuck."
+  "Shit. Fuck. Damn."
+  "Shit. Fuck. Damn."
+  "Fuck. Fuck. Fucking fuckity fuck."
 
 Which I promptly did, for an hour, in the ER waiting room lying across a bench
 seat. Please note that I understand that your personal "Litany of Pain" may differ,
@@ -113,7 +113,7 @@ the conversations are about pee, poop, and sleeping schedules, except in this
 case I'm the baby. Really it's all about the gas. Every part of my now
 shortened digestive tract is swollen and irritable, so everything produces
 gas, and all gas produces discomfort. Which leads me to my three rules of
-colon surgery recovery:
+colon surgery recovery discomfort:
 
   1. It's always gas.
   2. Walking fixes everything. (See #1).
