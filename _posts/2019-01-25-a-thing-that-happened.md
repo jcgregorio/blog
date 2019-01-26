@@ -129,11 +129,12 @@ rise from the nurses station every time. Nurses are weird.
 
 I'm just two days home from the hospital at this point, with another two weeks
 of recovery at least before I can return to anything resembling a normal life,
-except for the shadow of the reversal surgery hanging out there three months from now.
-Thanks for reading this far, if anyone has. I know that writing it has
-certainly helped me process the adventure so far. Many thanks to family, friends, and
-co-workers for all their support, it means a huge amount to me and Lynne. Oh yeah,
-did I mention that Lynne had a sinus infection through all this, she's been
-an amazing trooper, my rock, and I wouldn't have made it through without her.
+except for the shadow of the reversal surgery hanging out there three months
+from now. Thanks for reading this far, as I know that writing it has certainly
+helped me process my adventure to date. Many thanks to family, friends, and
+co-workers for all their support, it means a huge amount to me and Lynne. Oh
+yeah, did I mention that Lynne had a sinus infection through all this, she's
+been an amazing trooper, my rock, and I wouldn't have made it through without
+her.
 
 <a href="https://brid.gy/publish/twitter"></a>
