@@ -52,9 +52,9 @@ speak and tell them my pain is a 6 is that sharp of a diagnostic tool?
 Regardless, I spend the next two hours oscillating between a 4 and an 8, and
 anything above a 7 requires chanting the "Litany of Pain":
 
-  "Shit. Fuck. Damn."
-  "Shit. Fuck. Damn."
-  "Fuck. Fuck. Fucking fuckity fuck."
+    "Shit. Fuck. Damn."
+    "Shit. Fuck. Damn."
+    "Fuck. Fuck. Fucking fuckity fuck."
 
 Which I promptly did, for an hour, in the ER waiting room lying across a bench
 seat. Please note that I understand that your personal "Litany of Pain" may differ,
