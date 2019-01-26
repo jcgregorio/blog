@@ -100,7 +100,7 @@ outside exercise area, which is a small stone lined plaza in Italy. Wait,
 what?
 
 Needless to say, the full eight days I spent in the hospital are a little
-fuzzy, and I might not be an accurate witness.
+fuzzy, and I might not be an reliable witness.
 
 Over the eight days I had get to past certain milestones, such as peeing on my
 own. I never realized how happy you could make a nurse by peeing, which
@@ -110,7 +110,7 @@ that many people were excited by my poop production.
 
 Now I am home recovering from colon surgery. It's like having a new baby, all
 the conversations are about pee, poop, and sleeping schedules, except in this
-case I'm the baby. Really it's all about the gas. Every part of my now
+case, I'm the baby. Really it's all about the gas. Every part of my now
 shortened digestive tract is swollen and irritable, so everything produces
 gas, and all gas produces discomfort. Which leads me to my three rules of
 colon surgery recovery discomfort:
@@ -123,7 +123,7 @@ So I walk, and I walk, and I walk. In the house though, because it has been
 either too cold outside, or drenching rain. So I walk up and down the upstairs
 hall, or loop-de-loops around the furniture downstairs, and I belch, and I
 belch, and I belch. That's apparently yet another thing that makes nurses
-happy; I would doing one of my regular walks in the hospital wing and let out
+happy; I would be doing one of my regular walks in the hospital wing and let out
 one of those deep, loud belches that start at your toes, and a cheer would
 rise from the nurses station every time. Nurses are weird.
 
