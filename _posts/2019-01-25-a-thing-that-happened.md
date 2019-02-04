@@ -96,11 +96,11 @@ how fucking insane and nonsensical that sounds. So I begin going back over
 the things I know and fact checking them. I know, for example, that they have
 me up and walking right after surgery and that I take regular walks on that
 hospital floor, and as I get better I might be able to go for a walk in the
-outside exercise area, which is a small stone lined plaza in Italy. Wait,
+outside exercise area, which is a small stone-lined plaza in Italy. Wait,
 what?
 
 Needless to say, the full eight days I spent in the hospital are a little
-fuzzy, and I might not be an reliable witness.
+fuzzy, and I might not be a reliable witness.
 
 Over the eight days I had get to past certain milestones, such as peeing on my
 own. I never realized how happy you could make a nurse by peeing, which
