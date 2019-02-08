@@ -5,7 +5,7 @@ title: The real value of a 70% top marginal tax rate
 
 The last time we had a 70% top marginal tax rate in the U.S.
 it generated very little revenue. That doesn't mean it failed,
-that means it was dong it's job, as explained in
+that means it was doing it's job, as explained in
 [The opportunity cost of firm payouts](https://www.interfluidity.com/v2/7065.html).
 
 
