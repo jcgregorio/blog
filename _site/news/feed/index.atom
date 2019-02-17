@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-02-17T11:45:46-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">More TMI recovery stories</title><link href="https://bitworking.org/news/2019/02/more-tmi-recovery-stories" rel="alternate" type="text/html" title="More TMI recovery stories" /><published>2019-02-17T00:00:00-05:00</published><updated>2019-02-17T11:45:43-05:00</updated><id>https://bitworking.org/news/2019/02/more-tmi-recovery-stories</id><content type="html" xml:base="https://bitworking.org/news/2019/02/more-tmi-recovery-stories">&lt;p&gt;&lt;strong&gt;This is another story from my recovery that might be TMI for some people. Read with caution, or skip.&lt;/strong&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-02-17T11:47:42-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">More TMI recovery stories</title><link href="https://bitworking.org/news/2019/02/more-tmi-recovery-stories" rel="alternate" type="text/html" title="More TMI recovery stories" /><published>2019-02-17T00:00:00-05:00</published><updated>2019-02-17T11:46:14-05:00</updated><id>https://bitworking.org/news/2019/02/more-tmi-recovery-stories</id><content type="html" xml:base="https://bitworking.org/news/2019/02/more-tmi-recovery-stories">&lt;p&gt;&lt;strong&gt;This is another story from my recovery that might be TMI for some people. Read with caution, or skip.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;So &lt;a href=&quot;https://bitworking.org/news/2019/01/a-thing-that-happened&quot;&gt;while describing my initial hospitalization&lt;/a&gt;
 I mentioned an open question:&lt;/p&gt;
@@ -12,19 +12,23 @@ I mentioned an open question:&lt;/p&gt;
 are curious too.&lt;/p&gt;
 
 &lt;p&gt;The answer turns out to be “nothing much” for most of the time, with
-occassional bouts of (Phantom Limb)[https://en.wikipedia.org/wiki/Phantom_limb] sensation.  Now the “phantom
-limb” in this case is my large intestines, which are no longer hooked up to my
-rectum. The sensation they are missing is the pressure that comes when stool
-builds up in the colon, which in turn triggers the sensations of “needing to
-go”. So one or two times a day I get the sensation of “needing to go”. I
+occassional bouts of &lt;a href=&quot;https://en.wikipedia.org/wiki/Phantom_limb&quot;&gt;Phantom Limb&lt;/a&gt; sensation.&lt;/p&gt;
+
+&lt;p&gt;Now the “phantom limb” in this case is my large intestines, which are no
+longer hooked up to my rectum. The sensation they are missing is the pressure
+that comes when stool builds up in the colon, which in turn triggers the
+sensations of “needing to go”.&lt;/p&gt;
+
+&lt;p&gt;So one or two times a day I get the sensation of “needing to go”. I
 logically know that’s an impossibility, but apparently my rectum is not swayed
 by logic, so I had to look for alternative methods of getting the sensation to
 go away. It turns out there is one way to get it to go away and that’s to go
 and sit on the toilet as if I were having a bowl-movement. And I realize, as I
 sit here, on the toilet, not having a bowl-movement, that what I’m really
-doing in playing “make pretend” for my rectum. And it works! I wonder if
-my rectum will be as grateful as my kids are for all the time I spent playing
-“make pretend” with them?&lt;/p&gt;
+doing in playing “make pretend” for my rectum. And it works!&lt;/p&gt;
+
+&lt;p&gt;I wonder if my rectum will be as grateful as my kids are for all the time I
+spent playing “make pretend” with them?&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">This is another story from my recovery that might be TMI for some people. Read with caution, or skip.</summary></entry><entry><title type="html">Tim O’Reilly on Silicon Valley</title><link href="https://bitworking.org/news/2019/02/tim-oreilly-on-silicon-valley" rel="alternate" type="text/html" title="Tim O'Reilly on Silicon Valley" /><published>2019-02-08T00:00:00-05:00</published><updated>2019-02-08T09:23:32-05:00</updated><id>https://bitworking.org/news/2019/02/tim-oreilly-on-silicon-valley</id><content type="html" xml:base="https://bitworking.org/news/2019/02/tim-oreilly-on-silicon-valley">&lt;p&gt;&lt;a href=&quot;https://qz.com/1540608/the-problem-with-silicon-valleys-obsession-with-blitzscaling-growth/&quot;&gt;The fundamental problem with Silicon Valley’s favorite growth strategy&lt;/a&gt;
 is great article by Tim O’Reilly on the fundamental harm Silicon Valley’s
