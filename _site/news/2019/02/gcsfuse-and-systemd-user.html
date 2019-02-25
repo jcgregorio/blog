@@ -6,22 +6,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Google SRE Book and Workbook</title>
-  <meta name="description" content="I never realized the detail that the Google SRE book provided on the production environment at Google, including such things as D, Colossus, Jupiter, BNS, an...">
+  <title>gcsfuse and systemd --user</title>
+  <meta name="description" content="Google Cloud Storage has an officially supported fuse client!">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2019/02/google-sre-book-and-workbook">
+  <link rel="canonical" href="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <link href="https://bitworking.org/u/webmention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="Google SRE Book and Workbook">
-  <meta name="twitter:description" content="I never realized the detail that the Google SRE book provided
-on the production environment at Google,
-including such things as D, Colossus, Jupiter, BNS, and GSLB.
+  <meta name="twitter:title"   content="gcsfuse and systemd --user">
+  <meta name="twitter:description" content="Google Cloud Storage has an officially supported fuse client!
 
 ">
   <meta name="twitter:card"  content="summary">
@@ -91,12 +89,12 @@ including such things as D, Colossus, Jupiter, BNS, and GSLB.
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Google SRE Book and Workbook</h1>
+    <h1 class="post-title p-name" itemprop="name headline">gcsfuse and systemd --user</h1>
     <p class="post-meta">
-      <a class="u-url" href="/news/2019/02/google-sre-book-and-workbook">
-        <time datetime="2019-02-22T00:00:00-05:00" itemprop="datePublished" class="dt-published">
+      <a class="u-url" href="/news/2019/02/gcsfuse-and-systemd-user">
+        <time datetime="2019-02-25T00:00:00-05:00" itemprop="datePublished" class="dt-published">
           
-          Feb 22, 2019
+          Feb 25, 2019
         </time>
       </a>
       • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
@@ -108,11 +106,18 @@ including such things as D, Colossus, Jupiter, BNS, and GSLB.
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>I never realized the detail that the Google SRE book provided
-<a href="https://landing.google.com/sre/sre-book/chapters/production-environment/">on the production environment at Google</a>,
-including such things as D, Colossus, Jupiter, BNS, and GSLB.</p>
+    <p>Google Cloud Storage has an officially supported <a href="https://cloud.google.com/storage/docs/gcs-fuse">fuse client</a>!</p>
 
-<p>Also there’s now <a href="https://landing.google.com/sre/workbook/toc/">The Site Reliability Workbook</a>, a hands-on implementation guide.</p>
+<p>This is something I have always wanted and would have expected for Google
+Drive, but 🤷.</p>
+
+<p>The only thing better than a fuse client is a fuse directory that gets
+mounted automatically when you log in, which you can do fairly simply
+using <code class="highlighter-rouge">systemd --user</code>, which is just systemd, but everthing runs as you.</p>
+
+<p>Here’s a gist of how I set this up on my machine:</p>
+
+<script src="https://gist.github.com/jcgregorio/3d30cb7673e80b85c2153db9ff8be7c4.js"></script>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 
@@ -137,8 +142,8 @@ including such things as D, Colossus, Jupiter, BNS, and GSLB.</p>
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2019/02/google-sre-book-and-workbook';
-      this.page.identifier = 'https://bitworking.org/news/2019/02/google-sre-book-and-workbook';
+      this.page.url = 'https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user';
+      this.page.identifier = 'https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user';
     };
 
     (function() {
@@ -166,12 +171,9 @@ including such things as D, Colossus, Jupiter, BNS, and GSLB.</p>
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2019/02/more-tmi-recovery-stories">&laquo;
-        More TMI recovery stories</a>
+      <a class="prev" href="/news/2019/02/google-sre-book-and-workbook">&laquo;
+        Google SRE Book and Workbook</a>
       
-      
-      <a class="next"
-        href="/news/2019/02/gcsfuse-and-systemd-user">gcsfuse and systemd --user &raquo;</a>
       
     </div>
     
