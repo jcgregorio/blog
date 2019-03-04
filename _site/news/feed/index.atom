@@ -1,7 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-03-04T08:52:22-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">CEO Pay</title><link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-03-04T08:52:19-05:00</updated><id>https://bitworking.org/news/2019/03/ceo-pay</id><content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.4.3">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-03-04T08:57:16-05:00</updated><id>https://bitworking.org/</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">CEO Pay</title><link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-03-04T08:52:50-05:00</updated><id>https://bitworking.org/news/2019/03/ceo-pay</id><content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
 I might have to clarify that to “&lt;a href=&quot;https://www.institutionalinvestor.com/article/b1db3jy3201d38/The-MBA-Myth-and-the-Cult-of-the-CEO&quot;&gt;the &lt;strong&gt;myth&lt;/strong&gt; of the Harvard MBA is the second
 most damaging thing to happen to business in the last 40 years&lt;/a&gt;”.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We found no statistically significant alphas — despite testing every
+possible school with a reasonable sample size. MBA programs simply do not
+produce CEOs who are better at running companies, if performance is measured
+by stock price return.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But if there is no evidence that stock returns are attributable to CEOs,
+then what justification is there for their stratospheric pay? How much
+longer will investors and boards be fooled by randomness and hollow
+credentialism?&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;
 
