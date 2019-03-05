@@ -8,7 +8,7 @@ title: I'm not done trickling on you!
 Look at poor Ken, so freaked out that everyone is talking about taxes.
 Obviously a firm believer in [trickle-down economics](https://en.wikipedia.org/wiki/Trickle-down_economics), his entire screed boils down to:
 
-> Don't tax me, bro! I'm not done trickling on you!
+> [Don't tax me, bro!](https://www.crazygames.com/game/dont-tax-me-bro) I'm not done trickling on you!
 
 Ironically he refers to Bill Gates, who appears [not to agree with Ken at all](https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory).
 
