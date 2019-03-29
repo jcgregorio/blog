@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://bitworking.org/news/2006/04/_Content_Type_is_dead__for_a_short_period_of_time__for_new_media_types__film_at_11">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
-  <link href="https://bitworking.org/u/webmention" rel="webmention" />
+  <link href="https://us-central1-heroic-muse-88515.cloudfunctions.net/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
@@ -200,7 +200,7 @@ Browsers have been forced to implement heuristics to handle text/plain files as 
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('/u/mentions').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
       if (!resp.ok) {
         return
       }

@@ -6,4 +6,5 @@ JEKYLL_ENV=production bundle exec jekyll build
 git add --all
 git commit -m "publish"
 git push
-ssh jcgregorio@bitworking.org 'cd ~/blog; git pull'
+#ssh jcgregorio@bitworking.org 'cd ~/blog; git pull'
+firebase deploy
