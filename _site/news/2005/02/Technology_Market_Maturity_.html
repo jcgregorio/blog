@@ -179,7 +179,10 @@ Like I said at the beginning, there's a benefit to looking at a market in this m
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+      mode: 'no-cors',
+      cache: 'no-cache',
+    }).then(function(resp) {
       if (!resp.ok) {
         return
       }

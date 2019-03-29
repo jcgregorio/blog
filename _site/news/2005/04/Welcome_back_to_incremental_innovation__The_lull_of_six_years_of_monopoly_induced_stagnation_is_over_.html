@@ -145,7 +145,10 @@ over. [<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=288714#c50">Brendan
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+      mode: 'no-cors',
+      cache: 'no-cache',
+    }).then(function(resp) {
       if (!resp.ok) {
         return
       }

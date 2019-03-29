@@ -322,7 +322,10 @@ Using <tt>rel=canonical</tt>, the AJAX pages could simply point to the mobile ve
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+      mode: 'no-cors',
+      cache: 'no-cache',
+    }).then(function(resp) {
       if (!resp.ok) {
         return
       }

@@ -157,7 +157,10 @@ the <a href="http://www.intertwingly.net/wiki/pie/PermaLinks">permalink versus g
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+      mode: 'no-cors',
+      cache: 'no-cache',
+    }).then(function(resp) {
       if (!resp.ok) {
         return
       }

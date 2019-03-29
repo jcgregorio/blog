@@ -149,7 +149,10 @@ http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/').then(function(resp) {
+    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+      mode: 'no-cors',
+      cache: 'no-cache',
+    }).then(function(resp) {
       if (!resp.ok) {
         return
       }
