@@ -6,6 +6,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "cleanUrls": true
+    "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "/news/feed/",
+        "destinations": "/news/feed/index.atom"
+      }
+    ]
   }
 }
