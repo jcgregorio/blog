@@ -9,7 +9,7 @@
     "cleanUrls": true,
     "redirects": [
       {
-        "source": "/news/feed/",
+        "source": "/news/feed/**",
         "destinations": "/news/feed/index.atom",
         "type": 302
       }
