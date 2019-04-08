@@ -7,10 +7,11 @@
       "**/node_modules/**"
     ],
     "cleanUrls": true,
-    "rewrites": [
+    "redirects": [
       {
-        "source": "/news/feed/**",
-        "destinations": "/news/feed/index.atom"
+        "source": "/news/feed/",
+        "destinations": "/news/feed/index.atom",
+        "type": 302
       }
     ]
   }
