@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://bitworking.org/news/2018/10/kubectl">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
-  <link href="https://us-central1-heroic-muse-88515.cloudfunctions.net/IncomingWebMention" rel="webmention" />
+  <link href="https://webmention-nuau7zlm6q-uc.a.run.app/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
@@ -75,9 +75,6 @@ kubernetes management. Some of my more useful kubectl commands:
             
             
           
-            
-            
-          
         </div>
       </nav>
     
@@ -110,22 +107,21 @@ kubernetes management. Some of my more useful kubectl commands:
     <p>The <code class="highlighter-rouge">kubectl</code> command combined with <code class="highlighter-rouge">jq</code> is the Swiss Army Chainsaw of
 kubernetes management. Some of my more useful <code class="highlighter-rouge">kubectl</code> commands:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>  watch <span class="s1">'kubectl get pods | column'</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  watch <span class="s1">'kubectl get pods | column'</span>
 
   <span class="c"># Delete all failed pods.</span>
-  kubectl get pods --field-selector<span class="o">=</span>status.phase<span class="o">=</span>Failed -o json | jq -r <span class="s1">'.items[] .metadata.name'</span>  | xargs kubectl delete pod
+  kubectl get pods <span class="nt">--field-selector</span><span class="o">=</span>status.phase<span class="o">=</span>Failed <span class="nt">-o</span> json | jq <span class="nt">-r</span> <span class="s1">'.items[] .metadata.name'</span>  | xargs kubectl delete pod
 
   <span class="c"># All images running that have the word 'dirty' in their name.</span>
-  kubectl get pods -o json | jq -r <span class="s1">'..|.containerStatuses?|select(.!=null)|.[].image'</span> | sort | uniq | grep dirty
-</code></pre>
-</div>
+  kubectl get pods <span class="nt">-o</span> json | jq <span class="nt">-r</span> <span class="s1">'..|.containerStatuses?|select(.!=null)|.[].image'</span> | <span class="nb">sort</span> | <span class="nb">uniq</span> | <span class="nb">grep </span>dirty
+</code></pre></div></div>
 
 <p><a href="https://brid.gy/publish/twitter"></a></p>
 
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+    fetch('https://webmention-nuau7zlm6q-uc.a.run.app/Mentions/', {
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {

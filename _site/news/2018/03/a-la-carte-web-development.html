@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://bitworking.org/news/2018/03/a-la-carte-web-development">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
-  <link href="https://us-central1-heroic-muse-88515.cloudfunctions.net/IncomingWebMention" rel="webmention" />
+  <link href="https://webmention-nuau7zlm6q-uc.a.run.app/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
@@ -58,9 +58,6 @@ legitimate question I get is what do you replace it with?
             
             
             <a class="page-link" href="/about/">About</a>
-            
-          
-            
             
           
             
@@ -219,41 +216,36 @@ our ‘state management’ library is still an open question.</p>
 <p>What is like to use this stack? Let’s start from an empty directory
 and start building a web app:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn init
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn init
 $ yarn add pulito
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We are starting from scratch so use the project skeleton that <a href="https://www.npmjs.com/package/pulito">pulito</a> provides:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ unzip node_modules/pulito/skeleton.zip
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ unzip node_modules/pulito/skeleton.zip
 $ yarn
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>We can now run the dev server and see our running skeleton application:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ make serve
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ make serve
+</code></pre></div></div>
 
 <p>Now let’s add in <a href="https://www.npmjs.com/package/skia-elements">skia-elements</a> and add a set of tabs to the UI.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ yarn add skia-elements
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ yarn add skia-elements
+</code></pre></div></div>
 
 <p>Now add imports to <code class="highlighter-rouge">pages/index.js</code> to bring in the elements we need:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="s1">'skia-elements/tabs-sk'</span>
-<span class="kr">import</span> <span class="s1">'skia-elements/tabs-panel-sk'</span>
-<span class="kr">import</span> <span class="s1">'../modules/example-element'</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="s1">'skia-elements/tabs-sk'</span>
+<span class="k">import</span> <span class="s1">'skia-elements/tabs-panel-sk'</span>
+<span class="k">import</span> <span class="s1">'../modules/example-element'</span>
+</code></pre></div></div>
 
 <p>And then use those elements on <code class="highlighter-rouge">pages/index.html</code>:</p>
 
-<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
   <span class="nt">&lt;tabs-sk&gt;</span>
     <span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">selected</span><span class="nt">&gt;</span>Some Tab<span class="nt">&lt;/button&gt;</span>
     <span class="nt">&lt;button&gt;</span>Another Tab<span class="nt">&lt;/button&gt;</span>
@@ -268,14 +260,12 @@ $ yarn
   <span class="nt">&lt;/tabs-panel-sk&gt;</span>
   <span class="nt">&lt;example-element</span> <span class="na">active</span><span class="nt">&gt;&lt;/example-element&gt;</span>
 <span class="nt">&lt;/body&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now restart the dev server and see the updated page:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ make serve
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ make serve
+</code></pre></div></div>
 
 <h2 id="why-is-this-better">Why is this better?</h2>
 <p>Web frameworks usually make all these choices for you, you don’t
@@ -318,7 +308,7 @@ see Rollup based tools that take the place of <a href="https://www.npmjs.com/pac
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+    fetch('https://webmention-nuau7zlm6q-uc.a.run.app/Mentions/', {
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {

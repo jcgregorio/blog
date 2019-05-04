@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://bitworking.org/news/2018/12/prometheus-alerts-and-missing-data">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
-  <link href="https://us-central1-heroic-muse-88515.cloudfunctions.net/IncomingWebMention" rel="webmention" />
+  <link href="https://webmention-nuau7zlm6q-uc.a.run.app/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
@@ -76,9 +76,6 @@ and there’s no data for that alert.
             
             
           
-            
-            
-          
         </div>
       </nav>
     
@@ -114,9 +111,8 @@ and there’s no data for that alert.</p>
 
 <p>Now Prometheus does have the <code class="highlighter-rouge">absent()</code> function, and you could tack</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>OR absent(some_metric_name) == 1
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OR absent(some_metric_name) == 1
+</code></pre></div></div>
 
 <p>to the end of every alert you write, but that’s tedious and error prone.
 So I wrote <a href="https://github.com/google/skia-buildbot/blob/master/promk/go/promk-absent/main.go">promk-absent</a>
@@ -125,15 +121,13 @@ an existing set of alerts. It just processes a single alerts YAML file
 and emits a new alerts YAML file with one absent alert for each alert
 in the original file. To install it run:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>go get go.skia.org/infra/promk/go/promk-absent
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get go.skia.org/infra/promk/go/promk-absent
+</code></pre></div></div>
 
 <p>Then run it with</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>promk-absent --input=your-rules.yml --output=absent-rules.yml
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>promk-absent --input=your-rules.yml --output=absent-rules.yml
+</code></pre></div></div>
 
 <p>Don’t forget to include your new absent rules in your <code class="highlighter-rouge">prometheus.yml</code>
 file.</p>
@@ -141,9 +135,8 @@ file.</p>
 <p>The tool does have the restriction that all expressions must be written in
 the form of:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>expression relation constant
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>expression relation constant
+</code></pre></div></div>
 
 <p>and so far that hasn’t been an issue for us.</p>
 
@@ -152,7 +145,7 @@ the form of:</p>
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+    fetch('https://webmention-nuau7zlm6q-uc.a.run.app/Mentions/', {
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {

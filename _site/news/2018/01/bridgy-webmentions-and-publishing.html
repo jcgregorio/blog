@@ -14,7 +14,7 @@
   <link rel="canonical" href="https://bitworking.org/news/2018/01/bridgy-webmentions-and-publishing">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
-  <link href="https://us-central1-heroic-muse-88515.cloudfunctions.net/IncomingWebMention" rel="webmention" />
+  <link href="https://webmention-nuau7zlm6q-uc.a.run.app/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
@@ -77,9 +77,6 @@ link:
             
             
           
-            
-            
-          
         </div>
       </nav>
     
@@ -114,9 +111,8 @@ automatically posting blog posts to Twitter, which is interesting because it
 uses Webmentions to kick off the whole process. I.e. just including the
 link:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;a href="https://brid.gy/publish/twitter"&gt;&lt;/a&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;a href="https://brid.gy/publish/twitter"&gt;&lt;/a&gt;
+</code></pre></div></div>
 
 <p>The webmention sent to brig.gy triggers it to look back at the post, parse it
 and look for microformats indicating what content to publish, and then posts
@@ -132,7 +128,7 @@ authorize brid.gy to post to Twitter for you.</p>
   </div>
 
   <script type="text/javascript" charset="utf-8">
-    fetch('https://us-central1-heroic-muse-88515.cloudfunctions.net/Mentions/', {
+    fetch('https://webmention-nuau7zlm6q-uc.a.run.app/Mentions/', {
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
