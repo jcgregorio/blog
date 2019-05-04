@@ -199,9 +199,11 @@ Here's the basic layout of an embedded system, stripped to just
 
   <script type="text/javascript" charset="utf-8">
     fetch('https://webmention-nuau7zlm6q-uc.a.run.app/Mentions', {
-      mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });
