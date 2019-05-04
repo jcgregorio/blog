@@ -149,9 +149,6 @@ Maybe that's part of the story as well; of Java / Ruby / Python / JavaScript, Ja
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

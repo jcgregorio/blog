@@ -333,9 +333,6 @@ XML.  See <a href="http://www.concisexml.org">http://www.concisexml.org</a></p>
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

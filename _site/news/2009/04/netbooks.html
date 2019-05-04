@@ -153,9 +153,6 @@ Alternately, right now today you could run xvncserver (on a rooted G1 anyway) an
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

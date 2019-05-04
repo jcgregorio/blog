@@ -150,9 +150,6 @@ such a thing. That might avoid the need for headers with names like <a href="htt
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

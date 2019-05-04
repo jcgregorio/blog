@@ -236,9 +236,6 @@ darcs get <a href="http://mainland.virtuos.uos.de/mlunzena/irgendwieanders">http
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -137,9 +137,6 @@ Reminds of a quote I saw on an old proto-monopoly game: "Labour applied to land 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -119,9 +119,6 @@ I think Newsqueak might be an instantiation of that future. (And no, this isn't 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -131,9 +131,6 @@ Let me repeat this before it gets misunderstood: Dynamo is an internal-only tool
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

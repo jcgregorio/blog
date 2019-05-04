@@ -167,9 +167,6 @@ everywhere. The release supports C++, Java and Python, but <a href="http://brad.
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

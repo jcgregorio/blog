@@ -286,9 +286,6 @@ Semantics Web is not about fantasies, it's all about making an effort of collabo
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -149,9 +149,6 @@ Taking a train is just so much better than flying, I'd pick the train at any tim
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

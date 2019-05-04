@@ -137,9 +137,6 @@ Werner Vogels gave a presentation on EC2, S3 and SQS</a>. One thing I learned
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

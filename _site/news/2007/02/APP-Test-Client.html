@@ -129,9 +129,6 @@ to <a href="http://bitworking.org/projects/1812/">1812</a> a month ago.</p>
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -127,9 +127,6 @@ Parenting's Effect on Usability Studies</a> Yes, we are a different species.</li
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

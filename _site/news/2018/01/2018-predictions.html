@@ -137,9 +137,6 @@ true that <a href="https://en.wikipedia.org/wiki/On_the_Internet,_nobody_knows_y
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

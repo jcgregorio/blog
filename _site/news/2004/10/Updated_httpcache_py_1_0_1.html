@@ -119,9 +119,6 @@ I also created a dedicated <a href="/projects/httpcache/">project page for httpc
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

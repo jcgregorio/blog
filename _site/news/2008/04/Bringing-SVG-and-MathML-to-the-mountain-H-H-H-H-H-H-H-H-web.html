@@ -137,9 +137,6 @@ The discussion about getting MathML and SVG in to HTML 5 is interesting because 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

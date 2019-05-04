@@ -247,9 +247,6 @@ I don't believe this is accurate.  Sidebars and previews are easier if you don't
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -241,9 +241,6 @@ What happens then with some of the stuff that Ben Hammersley writes about at htt
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

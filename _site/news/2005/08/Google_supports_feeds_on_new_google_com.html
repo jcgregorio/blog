@@ -119,9 +119,6 @@ On the downside, the Atom feeds are version 0.3 and not 1.0. Let's hope that's
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

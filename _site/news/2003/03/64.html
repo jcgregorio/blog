@@ -123,9 +123,6 @@ there are 292,310 new RSS 2.0 feeds in the wild.</p>
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

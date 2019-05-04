@@ -144,9 +144,6 @@ These read like a quote from The Innovator's Dilemma. People enjoy the benefits 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

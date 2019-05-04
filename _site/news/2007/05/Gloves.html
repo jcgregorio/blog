@@ -1517,9 +1517,6 @@ One thing, I've been thinking about is a slight tweak to your WSGICollection url
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

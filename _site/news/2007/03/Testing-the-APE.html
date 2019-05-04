@@ -261,9 +261,6 @@ Also, fixing up the conditional-PUT thing has convinced me that the first senten
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

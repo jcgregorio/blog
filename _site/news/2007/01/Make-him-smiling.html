@@ -139,9 +139,6 @@ I was helping Reilly, my first grader, build a Space Alien from items around the
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

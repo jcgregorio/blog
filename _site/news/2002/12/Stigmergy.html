@@ -416,9 +416,6 @@ The Google Pagerank is not to be trusted cause it's has it weakness. High PR doe
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

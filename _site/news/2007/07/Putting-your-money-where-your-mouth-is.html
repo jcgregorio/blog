@@ -125,9 +125,6 @@ Why $4.6 billion? While we think that a robust and competitive auction based on 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

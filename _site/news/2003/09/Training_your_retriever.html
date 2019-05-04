@@ -139,9 +139,6 @@ Ok, a little update to that last line. No, I never trained my dog to that, but I
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -169,9 +169,6 @@ Robaccia is a cool project too, interesting seeing it progress over time. I just
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

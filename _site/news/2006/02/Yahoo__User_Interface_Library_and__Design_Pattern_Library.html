@@ -123,9 +123,6 @@ Welcome to the Yahoo! Design Pattern Library. We are very happy to be sharing ou
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -143,9 +143,6 @@ I don't know what to build first, the Shockwave Air Cannon, or the Marshmallow S
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -145,9 +145,6 @@ In 1999 one of the busiest ftp sites, cdrom.com, actually handled 10000 clients 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

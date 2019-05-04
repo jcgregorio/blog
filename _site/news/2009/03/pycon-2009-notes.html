@@ -285,9 +285,6 @@ I was hoping we'd get someone in there familiar with Dojo or other protocols in 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

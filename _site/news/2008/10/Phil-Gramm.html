@@ -225,9 +225,6 @@ But what role did the repeal of Glass-Steagal have to do with that? That's my qu
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

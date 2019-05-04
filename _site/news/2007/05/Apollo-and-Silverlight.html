@@ -117,9 +117,6 @@ Did I mention that on Tuesday I seamlessly rolled out an upgrade to the sparklin
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

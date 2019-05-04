@@ -119,9 +119,6 @@ William Gibson:</a> In very much the sense that Bush is not actually a Christian
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

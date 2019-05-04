@@ -275,9 +275,6 @@ Were you not <a href="http://intertwingly.net/blog/2008/02/15/Embrace-Extend-the
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

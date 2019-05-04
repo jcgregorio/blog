@@ -123,9 +123,6 @@ Timothy Appnel summed up the situation well with <a href="http://www.mplode.com/
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

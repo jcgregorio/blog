@@ -125,9 +125,6 @@ BTW, just upgraded the laptop to <a href="http://www.ubuntu.com/">Dapper (aka 6.
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

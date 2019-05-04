@@ -147,9 +147,6 @@ could end up doing <a href="http://www.ietf.org/internet-drafts/draft-ietf-atomp
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

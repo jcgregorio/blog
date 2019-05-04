@@ -139,9 +139,6 @@ The <a href="http://dsource.org/projects/tioport">TIOPORT</a> project is a Java 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

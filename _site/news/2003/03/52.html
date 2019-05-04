@@ -334,9 +334,6 @@ Finally, for blog apps that don't do page-per-post stuff i.e. everything is on o
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

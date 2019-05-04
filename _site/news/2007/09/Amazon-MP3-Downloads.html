@@ -221,9 +221,6 @@ have a <a href="http://www.amazon.com/gp/product/B000UDKQ4W/ref=sr_1_artist_7/10
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

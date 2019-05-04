@@ -239,9 +239,6 @@ I can't do it right now, but I *may* end-up doing it (after summer 2007) if some
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -121,9 +121,6 @@ And, as Ted Leung kindly put it, there will be a "bonus" this year, as I will be
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

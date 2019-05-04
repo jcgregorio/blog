@@ -141,9 +141,6 @@ A journalist's job is not to reveal The Truth to the ignorant masses; it's to pr
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

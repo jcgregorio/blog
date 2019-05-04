@@ -130,9 +130,6 @@ that format is little beyond <em>experimental</em>. Hey, I thought it was amusin
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

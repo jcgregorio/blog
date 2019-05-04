@@ -485,9 +485,6 @@ May I copy and paste it into an e-mail and  how must I cite it so as not to vio
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -121,9 +121,6 @@ shooting for over two hours. And the safest place to be in the backyard?</p>
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

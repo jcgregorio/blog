@@ -123,9 +123,6 @@ density has to be bleak and sterile, have a look at the Lincoln Institute of Lan
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

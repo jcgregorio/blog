@@ -184,9 +184,6 @@ Sorry, much as you may dislike it, Java's still mainstream for the time being un
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

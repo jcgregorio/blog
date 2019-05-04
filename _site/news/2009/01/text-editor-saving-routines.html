@@ -252,9 +252,6 @@ BTW, for FLOSS, "joe" keeps file~.txt by default. I turn off that option as soon
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

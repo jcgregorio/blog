@@ -119,9 +119,6 @@ Though I contend as bad as Quest's usability is, I've got a DVD remote
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

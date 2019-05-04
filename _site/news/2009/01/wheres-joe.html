@@ -232,9 +232,6 @@ Being Irish, all I can say is may all of the bad in 2008 turn to the good, and m
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

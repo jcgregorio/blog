@@ -169,9 +169,6 @@ Using the Name field as a spam check is a great idea; hope you don't mind if I e
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

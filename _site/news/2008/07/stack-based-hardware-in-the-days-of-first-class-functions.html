@@ -153,9 +153,6 @@ I would not pray for a silicon solution.  The tendency of hardware guys who do t
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

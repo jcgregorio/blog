@@ -384,9 +384,6 @@ a 1% chance of failure is also 99% chance of success.  if you need both machines
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

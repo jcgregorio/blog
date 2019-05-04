@@ -162,9 +162,6 @@ to have WSDL and SOAP. This will happen. I kid you not. Please choose another na
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

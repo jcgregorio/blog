@@ -222,9 +222,6 @@ The thing about XML is that it is extremely expensive to parse and transform.  A
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

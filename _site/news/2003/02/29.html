@@ -117,9 +117,6 @@ have released a <a href="http://wellformedweb.org/news/31">demo version of Pamph
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

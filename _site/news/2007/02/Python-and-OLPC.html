@@ -147,9 +147,6 @@ But the really insane thing about FORTH to me is that, in the intervening 25 yea
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

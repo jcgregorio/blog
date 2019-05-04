@@ -138,9 +138,6 @@ Lynne arrived towards the end of the fishing trip and got to see Reilly catch hi
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

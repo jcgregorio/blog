@@ -119,9 +119,6 @@ and <a href="https://www.bloomberg.com/news/articles/2018-01-11/uber-s-secret-to
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

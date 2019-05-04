@@ -117,9 +117,6 @@ is the heavy dose of social and family events. Bonus points to <a href="http://w
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

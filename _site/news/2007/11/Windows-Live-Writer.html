@@ -139,9 +139,6 @@ And there you have it.  That alone a huge tribute to the value of the protocol, 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

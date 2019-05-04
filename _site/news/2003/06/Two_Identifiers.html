@@ -283,9 +283,6 @@ As a child element of the ITEM element the GUID element with a uri to the blog-e
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

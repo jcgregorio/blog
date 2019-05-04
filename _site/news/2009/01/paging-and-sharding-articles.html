@@ -161,9 +161,6 @@ http://decafbad.com/blog/2008/07/17/date-based-pagination
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

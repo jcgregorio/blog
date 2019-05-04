@@ -478,9 +478,6 @@ I had septoplasy/turbinate reduction about two weeks ago. My nose is starting to
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

@@ -197,9 +197,6 @@ To be honest, languages like Python and Ruby are pretty easy to pick up. I've be
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

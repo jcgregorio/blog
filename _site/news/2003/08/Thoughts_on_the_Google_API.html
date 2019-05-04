@@ -255,9 +255,6 @@ Authorization: Basic Yml0d29ya2luZy5vcmc6NzM0OTgxNzMyOTg3Mzc0OTQw</p>
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

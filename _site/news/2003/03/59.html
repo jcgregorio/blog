@@ -145,9 +145,6 @@ Update: This ends up being a closed loop. Tim Bray emailed me and it turns out t
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

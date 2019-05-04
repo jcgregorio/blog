@@ -146,9 +146,6 @@ over. [<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=288714#c50">Brendan
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

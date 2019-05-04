@@ -337,9 +337,6 @@ I don't know if you mean this or not, but your WSGIDispatcher link is going back
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

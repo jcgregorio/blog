@@ -207,9 +207,6 @@ Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });

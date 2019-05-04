@@ -131,9 +131,6 @@ I'm not a 64 bigot, and it's not that Base16 and Base32 are bad, it's just that 
       mode: 'no-cors',
       cache: 'no-cache',
     }).then(function(resp) {
-      if (!resp.ok) {
-        return
-      }
       resp.text().then(function(text) {
         document.getElementById('mentions').innerHTML = text;
       });
