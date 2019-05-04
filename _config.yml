@@ -32,12 +32,12 @@ google_analytics: UA-1974123-1
 # Build settings
 markdown: kramdown
 theme: minima
-gems:
+plugins:
   - jekyll-feed
   - jekyll-redirect-from
   - jekyll-last-modified-at
 feed:
-  path: /news/feed/index.atom
+  path: news/feed/index.atom
 exclude:
   - Gemfile
   - Gemfile.lock
