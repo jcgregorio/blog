@@ -18,4 +18,3 @@ about a top marginal tax rate of 70%:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/r5LtFnmPruU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<a href="https://brid.gy/publish/twitter"></a>

@@ -8,3 +8,4 @@ git commit -m "publish"
 git push
 #ssh jcgregorio@bitworking.org 'cd ~/blog; git pull'
 firebase deploy
+xmlstarlet sel -t -m "//_:entry/_:link[@rel='alternate']/@href" -v . -n ./_site/news/feed/index.atom | xargs -L 1 webmention-cli -selector .post-content

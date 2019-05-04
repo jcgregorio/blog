@@ -15,4 +15,3 @@ after [the previous damage they've
 done](https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html).
 
 
-<a href="https://brid.gy/publish/twitter"></a>

@@ -12,5 +12,3 @@ title: simplifying income
 I would love to see the U.S. do away with categories of income (income, earned
 interest, capital gains, etc) and make it all just one bucket and tax that at
 a progressive rate.
-
-<a href="https://brid.gy/publish/twitter"></a>
