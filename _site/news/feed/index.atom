@@ -3,15 +3,46 @@
 <generator uri="http://jekyllrb.com" version="3.8.5">Jekyll</generator>
 <link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" />
 <link href="https://bitworking.org/" rel="alternate" type="text/html" />
-<updated>2019-05-04T10:55:27-04:00</updated>
+<updated>2019-05-04T20:50:37-04:00</updated>
 <id>https://bitworking.org/</id>
 <subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle>
 <entry>
+<title>The Great Famine of 1315-1317</title>
+<link href="https://bitworking.org/news/2019/05/great-famine-of-1315-1317" rel="alternate" type="text/html" title="The Great Famine of 1315-1317" />
+<published>2019-05-04T00:00:00-04:00</published>
+<updated>2019-05-04T20:50:34-04:00</updated>
+<id>https://bitworking.org/news/2019/05/great-famine-of-1315-1317</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/05/great-famine-of-1315-1317">&lt;h1 id=&quot;great-famine&quot;&gt;Great Famine&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Great_Famine_of_1315â€“1317&quot;&gt;Great Famine of
+1315-1317&lt;/a&gt; only
+lasted two years, was no where close to the change in climate that we are
+looking in the face right now, and it wiped out 10-25% of the population.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;To provide some measure of relief, the future was mortgaged by slaughtering
+the draft animals, eating the seed grain, abandoning children to fend for
+themselves (see “Hansel and Gretel”) and, among old people, voluntarily
+refusing food for the younger generation to survive.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;One of the things that frightens me most about climate change is that small
+changes can have drastic affects and institutions can unravel much more
+quickly than anyone imagines. My fear is that by the time things get bad
+enough that we need to try things like geoengineering our institutions will
+have fallen apart and we’ll be incapable of launching such efforts.&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>Great Famine</summary>
+</entry>
+<entry>
 <title>simplifying income</title>
 <link href="https://bitworking.org/news/2019/03/simplifying-income" rel="alternate" type="text/html" title="simplifying income" />
 <published>2019-03-05T00:00:00-05:00</published>
-<updated>2019-03-05T06:45:02-05:00</updated>
+<updated>2019-05-04T10:55:41-04:00</updated>
 <id>https://bitworking.org/news/2019/03/simplifying-income</id>
 <content type="html" xml:base="https://bitworking.org/news/2019/03/simplifying-income">&lt;p&gt;&lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;Bill Gates&lt;/a&gt;&lt;/p&gt;
 
@@ -34,7 +65,7 @@ a progressive rate.&lt;/p&gt;
 <title>Concentrated corporate power as a threat to democracy</title>
 <link href="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy" rel="alternate" type="text/html" title="Concentrated corporate power as a threat to democracy" />
 <published>2019-03-05T00:00:00-05:00</published>
-<updated>2019-03-05T08:22:15-05:00</updated>
+<updated>2019-05-04T10:55:41-04:00</updated>
 <id>https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy</id>
 <content type="html" xml:base="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy">&lt;blockquote&gt;
   &lt;p&gt;In this essay, I will argue that the interaction of concentrated corporate
@@ -59,7 +90,7 @@ done&lt;/a&gt;.&lt;/p&gt;
 <title>I’m not done trickling on you!</title>
 <link href="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you" rel="alternate" type="text/html" title="I'm not done trickling on you!" />
 <published>2019-03-04T00:00:00-05:00</published>
-<updated>2019-03-04T21:22:33-05:00</updated>
+<updated>2019-05-04T10:55:41-04:00</updated>
 <id>https://bitworking.org/news/2019/03/im-not-done-trickling-on-you</id>
 <content type="html" xml:base="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU?start=1270&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
 
@@ -88,7 +119,7 @@ about a top marginal tax rate of 70%:&lt;/p&gt;
 <title>CEO Pay</title>
 <link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" />
 <published>2019-03-04T00:00:00-05:00</published>
-<updated>2019-03-04T08:57:43-05:00</updated>
+<updated>2019-05-04T10:55:41-04:00</updated>
 <id>https://bitworking.org/news/2019/03/ceo-pay</id>
 <content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
 I might have to clarify that to “&lt;a href=&quot;https://www.institutionalinvestor.com/article/b1db3jy3201d38/The-MBA-Myth-and-the-Cult-of-the-CEO&quot;&gt;the &lt;strong&gt;myth&lt;/strong&gt; of the Harvard MBA is the second
@@ -120,7 +151,7 @@ credentialism?&lt;/p&gt;
 <title>Arts and crafts</title>
 <link href="https://bitworking.org/news/2019/02/arts-and-crafts" rel="alternate" type="text/html" title="Arts and crafts" />
 <published>2019-02-26T00:00:00-05:00</published>
-<updated>2019-02-26T10:15:30-05:00</updated>
+<updated>2019-05-04T10:55:41-04:00</updated>
 <id>https://bitworking.org/news/2019/02/arts-and-crafts</id>
 <content type="html" xml:base="https://bitworking.org/news/2019/02/arts-and-crafts">&lt;p&gt;When you have a stoma &lt;em&gt;every day&lt;/em&gt; is arts and crafts day.&lt;/p&gt;
 
@@ -238,23 +269,5 @@ single-minded pursuit of unicorns does to the whole economy.&lt;/p&gt;
 <name>Joe Gregorio</name>
 </author>
 <summary>The fundamental problem with Silicon Valley’s favorite growth strategyis great article by Tim O’Reilly on the fundamental harm Silicon Valley’ssingle-minded pursuit of unicorns does to the whole economy.</summary>
-</entry>
-<entry>
-<title>The real value of a 70% top marginal tax rate</title>
-<link href="https://bitworking.org/news/2019/02/the-real-value-of-a-70-top-marginal-tax-rate" rel="alternate" type="text/html" title="The real value of a 70% top marginal tax rate" />
-<published>2019-02-08T00:00:00-05:00</published>
-<updated>2019-02-08T09:38:30-05:00</updated>
-<id>https://bitworking.org/news/2019/02/the-real-value-of-a-70-top-marginal-tax-rate</id>
-<content type="html" xml:base="https://bitworking.org/news/2019/02/the-real-value-of-a-70-top-marginal-tax-rate">&lt;p&gt;The last time we had a 70% top marginal tax rate in the U.S.
-it generated very little revenue. That doesn’t mean it failed,
-that means it was doing it’s job, as explained in
-&lt;a href=&quot;https://www.interfluidity.com/v2/7065.html&quot;&gt;The opportunity cost of firm payouts&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-</content>
-<author>
-<name>Joe Gregorio</name>
-</author>
-<summary>The last time we had a 70% top marginal tax rate in the U.S.it generated very little revenue. That doesn’t mean it failed,that means it was doing it’s job, as explained inThe opportunity cost of firm payouts.</summary>
 </entry>
 </feed>
