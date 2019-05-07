@@ -15,3 +15,8 @@ using [Firebase Hosting](https://firebase.google.com/docs/hosting) to host the
 static ([Jekyll](https://jekyllrb.com/)) parts of my blog, which is also
 effectively free.
 
+Another awesome feature is that both services will provide SSL certificates; in
+my case Firebase Hosting provides the cert for https://bitworking.org, and
+Google Cloud Run provides the SSL cert for the subdomain where my instance of
+`webmention-run` is running, which is the subdomain
+https://webmention.bitworking.org.
