@@ -1,5 +1,257 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-05-06T20:03:08-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Webmention on Google Cloud Run</title><link href="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run" rel="alternate" type="text/html" title="Webmention on Google Cloud Run" /><published>2019-05-06T00:00:00-04:00</published><updated>2019-05-06T19:38:42-04:00</updated><id>https://bitworking.org/news/2019/05/webmention-on-google-cloud-run</id><content type="html" xml:base="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run">&lt;p&gt;I just published
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<generator uri="http://jekyllrb.com" version="3.8.5">Jekyll</generator>
+<link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" />
+<link href="https://bitworking.org/" rel="alternate" type="text/html" />
+<updated>2019-05-09T22:59:48-04:00</updated>
+<id>https://bitworking.org/</id>
+<subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle>
+<entry>
+<title>Colostomy Takedown</title>
+<link href="https://bitworking.org/news/2019/05/colostomy-takedown" rel="alternate" type="text/html" title="Colostomy Takedown" />
+<published>2019-05-09T00:00:00-04:00</published>
+<updated>2019-05-09T22:59:45-04:00</updated>
+<id>https://bitworking.org/news/2019/05/colostomy-takedown</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/05/colostomy-takedown">&lt;p&gt;This colostomy takedown surgery is the second in the pair of surgeries I have
+had this year. If you would like to read the story of how I came to need a
+colostomy takedown please read &lt;a href=&quot;https://bitworking.org/news/2019/01/a-thing-that-happened&quot;&gt;A thing that
+happened&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As opposed to the first surgery which was done as an emergency procedure, this
+was a planned surgery, which made a world of difference. We were able to
+research and hire a patient advocate to stay with me a few nights, apply for
+short term disability &lt;em&gt;before&lt;/em&gt; the surgery, etc.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-of-surgery&quot;&gt;Day of surgery&lt;/h2&gt;
+
+&lt;p&gt;I was told to arrive at 11 AM for a 2 PM surgery, but when I got there at 11
+they told me that both the surgeon and anesthetist had arrived and were ready
+to start, so my prep was actually pretty quick, they brought me back without
+Lynne to get me dressed and an IV started before Lynne was allowed to come back
+to see me, by the time they allowed her to come back and see me we only had 5
+minutes together before they wheeled me off to the operating room.&lt;/p&gt;
+
+&lt;p&gt;The prep for the surgery went well. I have deep and abiding issues with getting
+IVs, a leftover from a previous surgery years ago when I was traumatized with
+an awful IV experience. This time, instead of just sucking it up, I talked to
+the anesthesiologist before hand, they added notes to my chart about my issues
+with IVs, and I also, on their advice, talked to the nurse giving me the IV.
+She was very understanding and gave me a Lidocaine shot before giving me the
+IV. This turned out to be a much better strategy than sucking it up, and the IV
+was painless and easy.&lt;/p&gt;
+
+&lt;p&gt;Compared to the first surgery, which was an emergency surgery, I was awake for
+much more of the process leading up to the surgery, even helping to move myself
+onto the operating table and watching them apply straps to hold me in place. I
+was also woken up in the operating room at the end of the surgery, I remember
+moving off the operating table and being rolled into PACU.&lt;/p&gt;
+
+&lt;p&gt;Going into the surgery the goal was to do the whole thing laparoscopically, but
+if that didn’t work they would have to re-open me up in same dramatic fashion
+that they had for the first surgery. Also, if there was still too much swelling
+or scarring on my large intesting they might also have to give me an ileostomy
+that I would then need to wait yet another three months to have taken down.
+Luckily all went well and when I woke up I was glad to hear that they were able
+to to do the whole thing laparoscopically, and I didn’t have an ostomy of any
+kind.&lt;/p&gt;
+
+&lt;p&gt;When coming out of surgery you initially have no pain medication in you, so
+they need to judge how much pain you are in and how much pain medication to give
+you. This is always a point of confusion post-op for me because I do this thing
+where I shake when I’m in extreme pain, not a little shaking mind you, I’m
+talking full-racking-body-swaying-the-hospital-bed shakes. This, unfortunately leads
+the nurse to believe I’m cold, and not in pain, so they start wrapping me in
+more and more layers of blankets. By the time they let Lynne into the PACU I
+was under 10 blankets, 6 over my body and 4 around my head. She explained that
+I wasn’t cold, but in pain. The nurse gave me my first dose of pain medicine,
+but having just come out from under anesthesia I was a little incoherent:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Nurse: Did that help?
+
+Me: Yes.
+
+Lynne: You are still shaking, are you still in pain?
+
+Me: Yes.
+
+Lynne: So that last set of pain meds wasn't enough?
+
+Me: What pain meds?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As you can see from this exchange that both the nurse and Lynne are saints.&lt;/p&gt;
+
+&lt;p&gt;After they had my pain under control they set me up with a pain pump and moved
+me to my room.&lt;/p&gt;
+
+&lt;p&gt;The doctors and nurses told me that the more I walked the better I would heal
+and I took them very seriously. I was out of PACU and in my room by 5pm and took my
+first walk an hour or so later, with Lynne pushing IV pole and me with a
+walker. Lynne then had to leave to take care of the kids for the night, so I
+took another walk with the help of the nurse at 8PM. That exhausted me and I
+took an hour nap, but that got me behind on the pain pump and I felt it when I
+woke up at 9PM.&lt;/p&gt;
+
+&lt;p&gt;My pain was mostly in area where colostomy was closed, except for the hiccups,
+which caused intense pain right below the rib cage. My Dr. explained that they
+were the result of the CO2 they pumped me full of for the laparoscopic surgery
+and that they should go away as my body absorbs the rest of the CO2.&lt;/p&gt;
+
+&lt;p&gt;I actually slept pretty well that first night, sleeping in solid blocks of 2-4
+hours and then waking up to use the pain pump.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-2&quot;&gt;Day 2&lt;/h2&gt;
+
+&lt;p&gt;I was serious about my walking and if I was awake and had my pain under control
+I would try to get out for a walk. I was also serious about keeping hydrated,
+as I had been since the first surgery, as becoming dehydrated and constipated
+with a colostomy was something I dreaded. So as the day wore on I kept drinking
+and walking, but after a while it felt like I couldn’t drink any more and my
+stomach was getting sore. The Dr for that shift suggested I stop drinking, that
+my bowels probably hadn’t woken up and that everything I was drinking was just
+accumulating in my stomach. I did hold off on the liquids for the rest of the
+day, and then asked my Dr. when I saw her later in the day and she agreed with
+his prognosis. At this point I suggested that if I wasn’t going to drink maybe
+they should increase my rate of IV fluids above the KVO (Keep Vein Open) level
+so I didn’t get dehydrated. She agreed and actually changed me to IV Lactate. I
+don’t think anyone would have thought of this on their own, just pointing this
+out that no matter how great the care, you really need to be your own advocate.&lt;/p&gt;
+
+&lt;p&gt;That morning they removed both the catheter and pain pump, I apparently didn’t
+use the pain pump very much, and they moved to oral pain meds, falling back to
+IV injection for breakthrough pain, which didn’t happen very often. I was still
+having hiccups, which were still painful, and would be triggered by coughing,
+laughing, or most annoyingly, just saying the word “hiccups”.&lt;/p&gt;
+
+&lt;p&gt;I walked 6 more times, now without the walker since without the pain pump I was
+very stable on my feet. As the day went on my stomach got better and towards
+evening started to pee &lt;strong&gt;a lot&lt;/strong&gt; more, around 700ml every hour or two. The IV
+fluids were only coming in at 75ml/h so that wasn’t the source and I hoped that
+my digestive tract had started to wake up.&lt;/p&gt;
+
+&lt;p&gt;I had a total of four bowel movements during the day, but they were entirely
+blood clots, and each one was progressively smaller than the previous one, and
+since I didn’t pass any gas they didn’t “count”. What the staff were waiting
+for was me to pass gas, at which point I would be allowed to transition from
+“clears” to solid foods. I know they were blood clots and not “blood” because I
+dragged a nurse into the bathroom each time to inspect them and confirm that it
+wasn’t “blood”.&lt;/p&gt;
+
+&lt;p&gt;I took 3 more walks through the evening for a total of 10 walks for the whole
+day.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-3&quot;&gt;Day 3&lt;/h2&gt;
+
+&lt;p&gt;Early in the morning I saw the other Dr and he said I had urinated over 3L
+during the night, in addition the nurse listened to abdomen and said it sounded
+very active, so I was hopeful that would be enough evidence that my bowels had
+woken up.&lt;/p&gt;
+
+&lt;p&gt;The majority of the day was again more walks, keeping on top of oral pain meds,
+and napping between walks. The only change was that it was now beautiful and I
+upgraded to walking around outside.&lt;/p&gt;
+
+&lt;p&gt;The hiccups are gone at this point, and the pain at this point is mostly in the
+site of the former colostomy and only during transitions to/from walking/lying
+down.&lt;/p&gt;
+
+&lt;p&gt;I saw my surgeon at 3 PM and she wrote me up for solid foods, and I immediately
+ate one Ritz cracker, from a sleeve I had squirreled away in my travel bad for
+just such an occasion. Later they deliver the hospital dinner, which I nibbled
+at, and then went for another walk and then back to sleeping. I woke later that
+evening and had another small bowl of chicken noodle soup they prepared at the
+nurses station, got my pain pills, and went back to sleeping.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-4&quot;&gt;Day 4&lt;/h2&gt;
+
+&lt;p&gt;I took my first walk at 6 AM and had a bowl movement with real stool and a
+small amount of blood clot. I also had a lot of gas coming out both ends of my
+digestive tract.&lt;/p&gt;
+
+&lt;p&gt;Later that morning I walked down to Au Bon Pain in the hospital lobby to get a
+croissant for breakfast, and I also went back down there for lunch. Yes, the
+hospital food was that bad. The folks working at the Au Bon Pain seemed
+oblivious to me wearing a hospital gown and pushing my IV pole as I ordered my
+lunch, but some of the other patrons gave me wary looks.&lt;/p&gt;
+
+&lt;p&gt;I was released later that day.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-5&quot;&gt;Day 5&lt;/h2&gt;
+
+&lt;p&gt;I didn’t realize that when they released me I was still on 10mg of oxy every 4
+hours, but they wrote a prescription for 5mg of oxy every four hours. It took me
+some time to coordinate my pills and get on an overlapping Motrin/Tylenol shift
+with just oxy for the breakthrough pain.&lt;/p&gt;
+
+&lt;p&gt;At this point I am home and walking 2-3 times a day, where each walk is about a
+mile long. A new symptom appears at this point, occasionally I will get a
+muscle cramp in my abdomen around the old ostomy site, and that will slowly
+spread across my entire upper abdomen. It usually only lasts a minute or two,
+but it is fairly painful when it happens.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-7&quot;&gt;Day 7&lt;/h2&gt;
+
+&lt;p&gt;I am no longer using the oxy for breakthrough pain.&lt;/p&gt;
+
+&lt;p&gt;I did have a bit of a panic this day, I had been regular and stools were
+beginning to become more formed, but then I “missed”, or really just went a few
+hours over when I was due for a BM, so I tried lots of things, taking a stool
+softener, drinking apple juice, etc. A few hours later I had a normal BM, but
+unfortunately all the things I had tried to loosen up my stools were still in
+my system working away and I ended up giving myself diarrhea and re-irritating
+my bowels. Fortunately that died down over the next 24 hours.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-11&quot;&gt;Day 11&lt;/h2&gt;
+
+&lt;p&gt;No longer taking Motrin or Tylenol on a regular basis. At this point I am fine
+if I am standing, walking, or lying down, but sitting gets uncomfortable, and
+if I sit too long then when I stand up the area just under my ribs feels
+uncomfortable, it’s hard to describe, bit it almost feels like my intenstines
+stiffen into one position when I sit and then when I stand up they resist, in a
+painful way, moving back into the standing position.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-12&quot;&gt;Day 12&lt;/h2&gt;
+
+&lt;p&gt;Stopped wet packing the former colostomy site as it was almost completely
+closed.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-14&quot;&gt;Day 14&lt;/h2&gt;
+
+&lt;p&gt;Actually had enough brain power to do some real programming, but that only
+lasted for about 30 minutes; it is shocking how much pain and healing will take
+out of you and turn your brain to mush.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-30&quot;&gt;Day 30&lt;/h2&gt;
+
+&lt;p&gt;First day back to work. I am still taking Motrin occasionally, usually if I
+just try to do too much. I can now sit for much longer periods of time, and I
+don’t get that stiffness in my abdomen when I stand, but I will still
+occasionally get a muscle spasm around the old ostomy site. All my wounds are
+closed at this point, but my abdomen is covered with scars, swollen in some
+areas from the last surgery and distened from where the colostomy was; in
+summary I look like my stomach was run over with farm equipment.&lt;/p&gt;
+
+&lt;p&gt;At this point I am 20 lbs lighter than when I went into the emergency room for
+that first surgery. I lost 15 lbs from the first surgery and another 5 lbs from
+this latest surgery. I’m fine with the weight loss, just not what I had to go
+through to get here.&lt;/p&gt;
+
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>This colostomy takedown surgery is the second in the pair of surgeries I havehad this year. If you would like to read the story of how I came to need acolostomy takedown please read A thing thathappened.</summary>
+</entry>
+<entry>
+<title>Webmention on Google Cloud Run</title>
+<link href="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run" rel="alternate" type="text/html" title="Webmention on Google Cloud Run" />
+<published>2019-05-06T00:00:00-04:00</published>
+<updated>2019-05-06T20:03:25-04:00</updated>
+<id>https://bitworking.org/news/2019/05/webmention-on-google-cloud-run</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run">&lt;p&gt;I just published
 &lt;a href=&quot;https://github.com/jcgregorio/webmention-run&quot;&gt;webmention-run,&lt;/a&gt; a &lt;a href=&quot;https://cloud.google.com/run/docs/&quot;&gt;Google
 Run&lt;/a&gt; application written in
 &lt;a href=&quot;https://golang.org&quot;&gt;Go&lt;/a&gt; that implements
@@ -14,7 +266,20 @@ effectively free.&lt;/p&gt;
 my case Firebase Hosting provides the cert for https://bitworking.org, and
 Google Cloud Run provides the SSL cert for the subdomain where my instance of
 &lt;code class=&quot;highlighter-rouge&quot;&gt;webmention-run&lt;/code&gt; is running, which is the subdomain
-https://webmention.bitworking.org.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I just published webmention-run, a Google Run application written in Go that implements Webmention. I’m now using this to handle webmentions on bitworking.org. Given the generous free quota for Google Run I don’t expect this to cost me anything. This is on top of using Firebase Hosting to host the static (Jekyll) parts of my blog, which is also effectively free.</summary></entry><entry><title type="html">The Great Famine of 1315-1317</title><link href="https://bitworking.org/news/2019/05/great-famine-of-1315-1317" rel="alternate" type="text/html" title="The Great Famine of 1315-1317" /><published>2019-05-04T00:00:00-04:00</published><updated>2019-05-04T20:53:23-04:00</updated><id>https://bitworking.org/news/2019/05/great-famine-of-1315-1317</id><content type="html" xml:base="https://bitworking.org/news/2019/05/great-famine-of-1315-1317">&lt;h1 id=&quot;great-famine&quot;&gt;Great Famine&lt;/h1&gt;
+https://webmention.bitworking.org.&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>I just publishedwebmention-run, a GoogleRun application written inGo that implementsWebmention. I’m now using this to handlewebmentions on bitworking.org. Given the generous freequota for Google Run I don’t expect this to cost me anything. This is on top ofusing Firebase Hosting to host thestatic (Jekyll) parts of my blog, which is alsoeffectively free.</summary>
+</entry>
+<entry>
+<title>The Great Famine of 1315-1317</title>
+<link href="https://bitworking.org/news/2019/05/great-famine-of-1315-1317" rel="alternate" type="text/html" title="The Great Famine of 1315-1317" />
+<published>2019-05-04T00:00:00-04:00</published>
+<updated>2019-05-04T20:53:23-04:00</updated>
+<id>https://bitworking.org/news/2019/05/great-famine-of-1315-1317</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/05/great-famine-of-1315-1317">&lt;h1 id=&quot;great-famine&quot;&gt;Great Famine&lt;/h1&gt;
 
 &lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Great_Famine_of_1315–1317&quot;&gt;Great Famine of
 1315-1317&lt;/a&gt; only
@@ -32,7 +297,43 @@ refusing food for the younger generation to survive.&lt;/p&gt;
 changes can have drastic affects and institutions can unravel much more
 quickly than anyone imagines. My fear is that by the time things get bad
 enough that we need to try things like geoengineering our institutions will
-have fallen apart and we’ll be incapable of launching such efforts.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Great Famine</summary></entry><entry><title type="html">Concentrated corporate power as a threat to democracy</title><link href="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy" rel="alternate" type="text/html" title="Concentrated corporate power as a threat to democracy" /><published>2019-03-05T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy</id><content type="html" xml:base="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy">&lt;blockquote&gt;
+have fallen apart and we’ll be incapable of launching such efforts.&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>Great Famine</summary>
+</entry>
+<entry>
+<title>simplifying income</title>
+<link href="https://bitworking.org/news/2019/03/simplifying-income" rel="alternate" type="text/html" title="simplifying income" />
+<published>2019-03-05T00:00:00-05:00</published>
+<updated>2019-05-04T10:55:41-04:00</updated>
+<id>https://bitworking.org/news/2019/03/simplifying-income</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/03/simplifying-income">&lt;p&gt;&lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;Bill Gates&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In terms of revenue collection, you wouldn’t want to just focus on the
+ ordinary income rate, because people who are wealthy have a rounding error
+ of ordinary income.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I would love to see the U.S. do away with categories of income (income, earned
+interest, capital gains, etc) and make it all just one bucket and tax that at
+a progressive rate.&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>Bill Gates</summary>
+</entry>
+<entry>
+<title>Concentrated corporate power as a threat to democracy</title>
+<link href="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy" rel="alternate" type="text/html" title="Concentrated corporate power as a threat to democracy" />
+<published>2019-03-05T00:00:00-05:00</published>
+<updated>2019-05-04T10:55:41-04:00</updated>
+<id>https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy">&lt;blockquote&gt;
   &lt;p&gt;In this essay, I will argue that the interaction of concentrated corporate
 power and politics it a threat to the functioning of the free market economy
 and to economic prosperity it can generate, and a threat to democracy as
@@ -43,17 +344,50 @@ well.&lt;/p&gt;
 
 &lt;p&gt;Glad to see the Chicago School of Economics trying to resuscitate their image
 after &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;the previous damage they’ve
-done&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In this essay, I will argue that the interaction of concentrated corporate power and politics it a threat to the functioning of the free market economy and to economic prosperity it can generate, and a threat to democracy as well.</summary></entry><entry><title type="html">simplifying income</title><link href="https://bitworking.org/news/2019/03/simplifying-income" rel="alternate" type="text/html" title="simplifying income" /><published>2019-03-05T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/simplifying-income</id><content type="html" xml:base="https://bitworking.org/news/2019/03/simplifying-income">&lt;p&gt;&lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;Bill Gates&lt;/a&gt;&lt;/p&gt;
+done&lt;/a&gt;.&lt;/p&gt;
+
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>  In this essay, I will argue that the interaction of concentrated corporatepower and politics it a threat to the functioning of the free market economyand to economic prosperity it can generate, and a threat to democracy aswell.</summary>
+</entry>
+<entry>
+<title>I’m not done trickling on you!</title>
+<link href="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you" rel="alternate" type="text/html" title="I'm not done trickling on you!" />
+<published>2019-03-04T00:00:00-05:00</published>
+<updated>2019-05-04T10:55:41-04:00</updated>
+<id>https://bitworking.org/news/2019/03/im-not-done-trickling-on-you</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU?start=1270&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Look at poor Ken, so freaked out that everyone is talking about taxes.
+Obviously a firm believer in &lt;a href=&quot;https://en.wikipedia.org/wiki/Trickle-down_economics&quot;&gt;trickle-down economics&lt;/a&gt;, his entire screed boils down to:&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;In terms of revenue collection, you wouldn’t want to just focus on the
- ordinary income rate, because people who are wealthy have a rounding error
- of ordinary income.&lt;/p&gt;
+  &lt;p&gt;&lt;a href=&quot;https://www.crazygames.com/game/dont-tax-me-bro&quot;&gt;Don’t tax me, bro!&lt;/a&gt; I’m not done trickling on you!&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;I would love to see the U.S. do away with categories of income (income, earned
-interest, capital gains, etc) and make it all just one bucket and tax that at
-a progressive rate.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Bill Gates</summary></entry><entry><title type="html">CEO Pay</title><link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/ceo-pay</id><content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
+&lt;p&gt;Ironically he refers to Bill Gates, who appears &lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;not to agree with Ken at all&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To get the full context it’s useful to watch the video from the beginning
+where Historian Rutger Bregman schools Michael Dell on his ignorant comment
+about a top marginal tax rate of 70%:&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary></summary>
+</entry>
+<entry>
+<title>CEO Pay</title>
+<link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" />
+<published>2019-03-04T00:00:00-05:00</published>
+<updated>2019-05-04T10:55:41-04:00</updated>
+<id>https://bitworking.org/news/2019/03/ceo-pay</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
 I might have to clarify that to “&lt;a href=&quot;https://www.institutionalinvestor.com/article/b1db3jy3201d38/The-MBA-Myth-and-the-Cult-of-the-CEO&quot;&gt;the &lt;strong&gt;myth&lt;/strong&gt; of the Harvard MBA is the second
 most damaging thing to happen to business in the last 40 years&lt;/a&gt;”.&lt;/p&gt;
 
@@ -71,25 +405,38 @@ longer will investors and boards be fooled by randomness and hollow
 credentialism?&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years. I might have to clarify that to “the myth of the Harvard MBA is the second most damaging thing to happen to business in the last 40 years”.</summary></entry><entry><title type="html">I’m not done trickling on you!</title><link href="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you" rel="alternate" type="text/html" title="I'm not done trickling on you!" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/im-not-done-trickling-on-you</id><content type="html" xml:base="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU?start=1270&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Look at poor Ken, so freaked out that everyone is talking about taxes.
-Obviously a firm believer in &lt;a href=&quot;https://en.wikipedia.org/wiki/Trickle-down_economics&quot;&gt;trickle-down economics&lt;/a&gt;, his entire screed boils down to:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;https://www.crazygames.com/game/dont-tax-me-bro&quot;&gt;Don’t tax me, bro!&lt;/a&gt; I’m not done trickling on you!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Ironically he refers to Bill Gates, who appears &lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;not to agree with Ken at all&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To get the full context it’s useful to watch the video from the beginning
-where Historian Rutger Bregman schools Michael Dell on his ignorant comment
-about a top marginal tax rate of 70%:&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry><entry><title type="html">Arts and crafts</title><link href="https://bitworking.org/news/2019/02/arts-and-crafts" rel="alternate" type="text/html" title="Arts and crafts" /><published>2019-02-26T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/02/arts-and-crafts</id><content type="html" xml:base="https://bitworking.org/news/2019/02/arts-and-crafts">&lt;p&gt;When you have a stoma &lt;em&gt;every day&lt;/em&gt; is arts and crafts day.&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.I might have to clarify that to “the myth of the Harvard MBA is the secondmost damaging thing to happen to business in the last 40 years”.</summary>
+</entry>
+<entry>
+<title>Arts and crafts</title>
+<link href="https://bitworking.org/news/2019/02/arts-and-crafts" rel="alternate" type="text/html" title="Arts and crafts" />
+<published>2019-02-26T00:00:00-05:00</published>
+<updated>2019-05-04T10:55:41-04:00</updated>
+<id>https://bitworking.org/news/2019/02/arts-and-crafts</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/02/arts-and-crafts">&lt;p&gt;When you have a stoma &lt;em&gt;every day&lt;/em&gt; is arts and crafts day.&lt;/p&gt;
 
 &lt;p&gt;I swear I’ve modified more articles of clothing than my sister did
-during her entire teenage life in the 80s.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">When you have a stoma every day is arts and crafts day.</summary></entry><entry><title type="html">gcsfuse and systemd –user</title><link href="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user" rel="alternate" type="text/html" title="gcsfuse and systemd --user" /><published>2019-02-25T00:00:00-05:00</published><updated>2019-02-25T09:10:59-05:00</updated><id>https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user</id><content type="html" xml:base="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user">&lt;p&gt;Google Cloud Storage has an officially supported &lt;a href=&quot;https://cloud.google.com/storage/docs/gcs-fuse&quot;&gt;fuse client&lt;/a&gt;!&lt;/p&gt;
+during her entire teenage life in the 80s.&lt;/p&gt;
+
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>When you have a stoma every day is arts and crafts day.</summary>
+</entry>
+<entry>
+<title>gcsfuse and systemd –user</title>
+<link href="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user" rel="alternate" type="text/html" title="gcsfuse and systemd --user" />
+<published>2019-02-25T00:00:00-05:00</published>
+<updated>2019-02-25T09:10:59-05:00</updated>
+<id>https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user">&lt;p&gt;Google Cloud Storage has an officially supported &lt;a href=&quot;https://cloud.google.com/storage/docs/gcs-fuse&quot;&gt;fuse client&lt;/a&gt;!&lt;/p&gt;
 
 &lt;p&gt;This is something I have always wanted and would have expected for Google
 Drive, but 🤷.&lt;/p&gt;
@@ -102,41 +449,30 @@ using &lt;code class=&quot;highlighter-rouge&quot;&gt;systemd --user&lt;/code&gt
 
 &lt;script src=&quot;https://gist.github.com/jcgregorio/3d30cb7673e80b85c2153db9ff8be7c4.js&quot;&gt;&lt;/script&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Google Cloud Storage has an officially supported fuse client!</summary></entry><entry><title type="html">Google SRE Book and Workbook</title><link href="https://bitworking.org/news/2019/02/google-sre-book-and-workbook" rel="alternate" type="text/html" title="Google SRE Book and Workbook" /><published>2019-02-22T00:00:00-05:00</published><updated>2019-02-22T10:06:33-05:00</updated><id>https://bitworking.org/news/2019/02/google-sre-book-and-workbook</id><content type="html" xml:base="https://bitworking.org/news/2019/02/google-sre-book-and-workbook">&lt;p&gt;I never realized the detail that the Google SRE book provided
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>Google Cloud Storage has an officially supported fuse client!</summary>
+</entry>
+<entry>
+<title>Google SRE Book and Workbook</title>
+<link href="https://bitworking.org/news/2019/02/google-sre-book-and-workbook" rel="alternate" type="text/html" title="Google SRE Book and Workbook" />
+<published>2019-02-22T00:00:00-05:00</published>
+<updated>2019-02-22T10:06:33-05:00</updated>
+<id>https://bitworking.org/news/2019/02/google-sre-book-and-workbook</id>
+<content type="html" xml:base="https://bitworking.org/news/2019/02/google-sre-book-and-workbook">&lt;p&gt;I never realized the detail that the Google SRE book provided
 &lt;a href=&quot;https://landing.google.com/sre/sre-book/chapters/production-environment/&quot;&gt;on the production environment at Google&lt;/a&gt;,
 including such things as D, Colossus, Jupiter, BNS, and GSLB.&lt;/p&gt;
 
 &lt;p&gt;Also there’s now &lt;a href=&quot;https://landing.google.com/sre/workbook/toc/&quot;&gt;The Site Reliability Workbook&lt;/a&gt;, a hands-on implementation guide.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I never realized the detail that the Google SRE book provided on the production environment at Google, including such things as D, Colossus, Jupiter, BNS, and GSLB.</summary></entry><entry><title type="html">More TMI recovery stories</title><link href="https://bitworking.org/news/2019/02/more-tmi-recovery-stories" rel="alternate" type="text/html" title="More TMI recovery stories" /><published>2019-02-17T00:00:00-05:00</published><updated>2019-02-17T11:48:09-05:00</updated><id>https://bitworking.org/news/2019/02/more-tmi-recovery-stories</id><content type="html" xml:base="https://bitworking.org/news/2019/02/more-tmi-recovery-stories">&lt;p&gt;&lt;strong&gt;This is another story from my recovery that might be TMI for some people. Read with caution, or skip.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;So &lt;a href=&quot;https://bitworking.org/news/2019/01/a-thing-that-happened&quot;&gt;while describing my initial hospitalization&lt;/a&gt;
-I mentioned an open question:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;What exactly my anus is supposed to be doing for those three months is a question I forget to ask.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And now I know from the questions and comments I’ve received that many of you
-are curious too.&lt;/p&gt;
-
-&lt;p&gt;The answer turns out to be “nothing much” for most of the time, with
-occassional bouts of &lt;a href=&quot;https://en.wikipedia.org/wiki/Phantom_limb&quot;&gt;Phantom Limb&lt;/a&gt; sensation.&lt;/p&gt;
-
-&lt;p&gt;Now the “phantom limb” in this case is my large intestines, which are no
-longer hooked up to my rectum. The sensation they are missing is the pressure
-that comes when stool builds up in the colon, which in turn triggers the
-sensations of “needing to go”.&lt;/p&gt;
-
-&lt;p&gt;So one or two times a day I get the sensation of “needing to go”. I
-logically know that’s an impossibility, but apparently my rectum is not swayed
-by logic, so I had to look for alternative methods of getting the sensation to
-go away. It turns out there is one way to get it to go away and that’s to go
-and sit on the toilet as if I were having a bowl-movement. And I realize, as I
-sit here, on the toilet, not having a bowl-movement, that what I’m really
-doing in playing “make pretend” for my rectum. And it works!&lt;/p&gt;
-
-&lt;p&gt;I wonder if my rectum will be as grateful as my kids are for all the time I
-spent playing “make pretend” with them?&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">This is another story from my recovery that might be TMI for some people. Read with caution, or skip.</summary></entry></feed>
+&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+</content>
+<author>
+<name>Joe Gregorio</name>
+</author>
+<summary>I never realized the detail that the Google SRE book providedon the production environment at Google,including such things as D, Colossus, Jupiter, BNS, and GSLB.</summary>
+</entry>
+</feed>
