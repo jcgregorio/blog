@@ -4,21 +4,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>OpenID Connect for US Citizens</title>
-  <meta name="description" content="Is there an OpenID Connect for US Citizens run by the US government? I’m not sure why I’ve been thinking a lot about such a utility lately. &amp;lt;/sarcasm&amp;gt;)">
+  <title>Stream</title>
+  <meta name="description" content="I’ve launched a new micro-blog at https://stream.bitworking.org, which has an Atom Feed if you want to follow along. You can also follow along on Mastodon by...">
   <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens">
+  <link rel="canonical" href="https://bitworking.org/news/2019/06/stream">
   <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
   <link rel="author" href="/about/">
   <link href="https://webmention.bitworking.org/IncomingWebMention" rel="webmention" />
   <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
   <meta name="twitter:site"    content="@bitworking">
   <meta name="twitter:creator" content="@bitworking">
-  <meta name="twitter:title"   content="OpenID Connect for US Citizens">
-  <meta name="twitter:description" content="Is there an OpenID Connect for US Citizens run by the US government? I’m not sure why I’ve been thinking a lot about
-such a utility lately. &lt;/sarcasm&gt;)
+  <meta name="twitter:title"   content="Stream">
+  <meta name="twitter:description" content="I’ve launched a new micro-blog at https://stream.bitworking.org, which has an
+Atom Feed if  you want to follow along. You
+can also follow along on Mastodon by following
+@stream.bitworking.org@stream.bitworking.org thanks to https://fed.brid.gy/.
+Any entries will also appear on Twitter thanks to https://brid.gy.
+Interactions on any of those sites should flow back to
+https://stream.bitworking.org thanks to
+webmention support via
+https://github.com/jcgregorio/webmention-run.
+
 ">
   <meta name="twitter:card"  content="summary">
   <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
@@ -81,12 +89,12 @@ such a utility lately. &lt;/sarcasm&gt;)
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">OpenID Connect for US Citizens</h1>
+    <h1 class="post-title p-name" itemprop="name headline">Stream</h1>
     <p class="post-meta">
-      <a class="u-url" href="/news/2019/05/openid-connect-for-us-citizens">
-        <time datetime="2019-05-25T00:00:00-04:00" itemprop="datePublished" class="dt-published">
+      <a class="u-url" href="/news/2019/06/stream">
+        <time datetime="2019-06-16T00:00:00-04:00" itemprop="datePublished" class="dt-published">
           
-          May 25, 2019
+          Jun 16, 2019
         </time>
       </a>
       • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
@@ -98,9 +106,31 @@ such a utility lately. &lt;/sarcasm&gt;)
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Is there an OpenID Connect for US Citizens run by the US government? <a href="https://www.cnn.com/2019/05/23/tech/facebook-transparency-report/index.html">I’m not sure why I’ve been thinking a lot about
-such a utility lately.</a> &lt;/sarcasm&gt;)</p>
+    <p>I’ve launched a new micro-blog at https://stream.bitworking.org, which has an
+<a href="https://stream.bitworking.org">Atom Feed</a> if  you want to follow along. You
+can also follow along on Mastodon by following
+<code class="highlighter-rouge">@stream.bitworking.org@stream.bitworking.org</code> thanks to https://fed.brid.gy/.
+Any entries will also appear on Twitter thanks to https://brid.gy.
+Interactions on any of those sites should flow back to
+https://stream.bitworking.org thanks to
+<a href="https://www.w3.org/TR/webmention/">webmention</a> support via
+https://github.com/jcgregorio/webmention-run.</p>
 
+<p>Finally the admin interface to Stream is a
+<a href="https://developers.google.com/web/progressive-web-apps/">PWA</a> that supports
+the <a href="https://developers.google.com/web/updates/2018/12/web-share-target">Web Share Target API</a>,
+which means I can trivially share content to Stream using the native Android
+Share intent.</p>
+
+<p>The backend is written in Go and it runs entirely on <a href="https://cloud.google.com/run/">Google Cloud Run</a>.
+The login is handled via
+<a href="https://developers.google.com/identity/sign-in/web/">Google Sign-In for Websites</a>, and
+<a href="https://developers.google.com/web/tools/workbox/">Workbox</a> is used for the
+PWA aspects.</p>
+
+<p>The <a href="https://github.com/jcgregorio/stream-run">code for Stream is on GitHub</a>
+and I’ve endeavored to make it customizable via the <code class="highlighter-rouge">config,json</code> file, but no
+guarantees since I just got it all working today.</p>
 
     <a href="https://brid.gy/publish/twitter"></a>
   </div>
@@ -124,8 +154,8 @@ such a utility lately.</a> &lt;/sarcasm&gt;)</p>
     <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = 'https://bitworking.org/news/2019/05/openid-connect-for-us-citizens';
-      this.page.identifier = 'https://bitworking.org/news/2019/05/openid-connect-for-us-citizens';
+      this.page.url = 'https://bitworking.org/news/2019/06/stream';
+      this.page.identifier = 'https://bitworking.org/news/2019/06/stream';
     };
 
     (function() {
@@ -149,12 +179,9 @@ such a utility lately.</a> &lt;/sarcasm&gt;)</p>
     
     <div class="PageNavigation">
       
-      <a class="prev" href="/news/2019/05/colostomy-takedown">&laquo;
-        Colostomy Takedown</a>
+      <a class="prev" href="/news/2019/05/openid-connect-for-us-citizens">&laquo;
+        OpenID Connect for US Citizens</a>
       
-      
-      <a class="next"
-        href="/news/2019/06/stream">Stream &raquo;</a>
       
     </div>
     

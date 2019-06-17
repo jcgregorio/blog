@@ -1,5 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-06-11T20:16:34-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">OpenID Connect for US Citizens</title><link href="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens" rel="alternate" type="text/html" title="OpenID Connect for US Citizens" /><published>2019-05-25T00:00:00-04:00</published><updated>2019-05-25T11:29:53-04:00</updated><id>https://bitworking.org/news/2019/05/openid-connect-for-us-citizens</id><content type="html" xml:base="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens">&lt;p&gt;Is there an OpenID Connect for US Citizens run by the US government? &lt;a href=&quot;https://www.cnn.com/2019/05/23/tech/facebook-transparency-report/index.html&quot;&gt;I’m not sure why I’ve been thinking a lot about
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-06-16T21:10:59-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Stream</title><link href="https://bitworking.org/news/2019/06/stream" rel="alternate" type="text/html" title="Stream" /><published>2019-06-16T00:00:00-04:00</published><updated>2019-06-16T21:10:50-04:00</updated><id>https://bitworking.org/news/2019/06/stream</id><content type="html" xml:base="https://bitworking.org/news/2019/06/stream">&lt;p&gt;I’ve launched a new micro-blog at https://stream.bitworking.org, which has an
+&lt;a href=&quot;https://stream.bitworking.org&quot;&gt;Atom Feed&lt;/a&gt; if  you want to follow along. You
+can also follow along on Mastodon by following
+&lt;code class=&quot;highlighter-rouge&quot;&gt;@stream.bitworking.org@stream.bitworking.org&lt;/code&gt; thanks to https://fed.brid.gy/.
+Any entries will also appear on Twitter thanks to https://brid.gy.
+Interactions on any of those sites should flow back to
+https://stream.bitworking.org thanks to
+&lt;a href=&quot;https://www.w3.org/TR/webmention/&quot;&gt;webmention&lt;/a&gt; support via
+https://github.com/jcgregorio/webmention-run.&lt;/p&gt;
+
+&lt;p&gt;Finally the admin interface to Stream is a
+&lt;a href=&quot;https://developers.google.com/web/progressive-web-apps/&quot;&gt;PWA&lt;/a&gt; that supports
+the &lt;a href=&quot;https://developers.google.com/web/updates/2018/12/web-share-target&quot;&gt;Web Share Target API&lt;/a&gt;,
+which means I can trivially share content to Stream using the native Android
+Share intent.&lt;/p&gt;
+
+&lt;p&gt;The backend is written in Go and it runs entirely on &lt;a href=&quot;https://cloud.google.com/run/&quot;&gt;Google Cloud Run&lt;/a&gt;.
+The login is handled via
+&lt;a href=&quot;https://developers.google.com/identity/sign-in/web/&quot;&gt;Google Sign-In for Websites&lt;/a&gt;, and
+&lt;a href=&quot;https://developers.google.com/web/tools/workbox/&quot;&gt;Workbox&lt;/a&gt; is used for the
+PWA aspects.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://github.com/jcgregorio/stream-run&quot;&gt;code for Stream is on GitHub&lt;/a&gt;
+and I’ve endeavored to make it customizable via the &lt;code class=&quot;highlighter-rouge&quot;&gt;config,json&lt;/code&gt; file, but no
+guarantees since I just got it all working today.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve launched a new micro-blog at https://stream.bitworking.org, which has an Atom Feed if you want to follow along. You can also follow along on Mastodon by following @stream.bitworking.org@stream.bitworking.org thanks to https://fed.brid.gy/. Any entries will also appear on Twitter thanks to https://brid.gy. Interactions on any of those sites should flow back to https://stream.bitworking.org thanks to webmention support via https://github.com/jcgregorio/webmention-run.</summary></entry><entry><title type="html">OpenID Connect for US Citizens</title><link href="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens" rel="alternate" type="text/html" title="OpenID Connect for US Citizens" /><published>2019-05-25T00:00:00-04:00</published><updated>2019-05-25T11:29:53-04:00</updated><id>https://bitworking.org/news/2019/05/openid-connect-for-us-citizens</id><content type="html" xml:base="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens">&lt;p&gt;Is there an OpenID Connect for US Citizens run by the US government? &lt;a href=&quot;https://www.cnn.com/2019/05/23/tech/facebook-transparency-report/index.html&quot;&gt;I’m not sure why I’ve been thinking a lot about
 such a utility lately.&lt;/a&gt; &amp;lt;/sarcasm&amp;gt;)&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Is there an OpenID Connect for US Citizens run by the US government? I’m not sure why I’ve been thinking a lot about such a utility lately. &amp;lt;/sarcasm&amp;gt;)</summary></entry><entry><title type="html">Colostomy Takedown</title><link href="https://bitworking.org/news/2019/05/colostomy-takedown" rel="alternate" type="text/html" title="Colostomy Takedown" /><published>2019-05-09T00:00:00-04:00</published><updated>2019-05-09T23:00:04-04:00</updated><id>https://bitworking.org/news/2019/05/colostomy-takedown</id><content type="html" xml:base="https://bitworking.org/news/2019/05/colostomy-takedown">&lt;p&gt;This colostomy takedown surgery is the second in the pair of surgeries I have
 had this year. If you would like to read the story of how I came to need a
 colostomy takedown please read &lt;a href=&quot;https://bitworking.org/news/2019/01/a-thing-that-happened&quot;&gt;A thing that
@@ -314,17 +338,4 @@ about a top marginal tax rate of 70%:&lt;/p&gt;
 &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry><entry><title type="html">Arts and crafts</title><link href="https://bitworking.org/news/2019/02/arts-and-crafts" rel="alternate" type="text/html" title="Arts and crafts" /><published>2019-02-26T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/02/arts-and-crafts</id><content type="html" xml:base="https://bitworking.org/news/2019/02/arts-and-crafts">&lt;p&gt;When you have a stoma &lt;em&gt;every day&lt;/em&gt; is arts and crafts day.&lt;/p&gt;
 
 &lt;p&gt;I swear I’ve modified more articles of clothing than my sister did
-during her entire teenage life in the 80s.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">When you have a stoma every day is arts and crafts day.</summary></entry><entry><title type="html">gcsfuse and systemd –user</title><link href="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user" rel="alternate" type="text/html" title="gcsfuse and systemd --user" /><published>2019-02-25T00:00:00-05:00</published><updated>2019-02-25T09:10:59-05:00</updated><id>https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user</id><content type="html" xml:base="https://bitworking.org/news/2019/02/gcsfuse-and-systemd-user">&lt;p&gt;Google Cloud Storage has an officially supported &lt;a href=&quot;https://cloud.google.com/storage/docs/gcs-fuse&quot;&gt;fuse client&lt;/a&gt;!&lt;/p&gt;
-
-&lt;p&gt;This is something I have always wanted and would have expected for Google
-Drive, but 🤷.&lt;/p&gt;
-
-&lt;p&gt;The only thing better than a fuse client is a fuse directory that gets
-mounted automatically when you log in, which you can do fairly simply
-using &lt;code class=&quot;highlighter-rouge&quot;&gt;systemd --user&lt;/code&gt;, which is just systemd, but everthing runs as you.&lt;/p&gt;
-
-&lt;p&gt;Here’s a gist of how I set this up on my machine:&lt;/p&gt;
-
-&lt;script src=&quot;https://gist.github.com/jcgregorio/3d30cb7673e80b85c2153db9ff8be7c4.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://brid.gy/publish/twitter&quot;&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Google Cloud Storage has an officially supported fuse client!</summary></entry></feed>
+during her entire teenage life in the 80s.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">When you have a stoma every day is arts and crafts day.</summary></entry></feed>
