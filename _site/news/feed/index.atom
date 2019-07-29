@@ -1,153 +1,144 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-07-28T22:40:57-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Looking back on five years of web components</title><link href="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components" rel="alternate" type="text/html" title="Looking back on five years of web components" /><published>2019-07-27T00:00:00-04:00</published><updated>2019-07-28T22:16:14-04:00</updated><id>https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components</id><content type="html" xml:base="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components">Over 5 years ago I wrote
-[No more JS frameworks](https://bitworking.org/news/2014/05/zero_framework_manifesto)
-and just recently Jon Udell asked for an update.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-07-28T22:41:17-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Looking back on five years of web components</title><link href="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components" rel="alternate" type="text/html" title="Looking back on five years of web components" /><published>2019-07-27T00:00:00-04:00</published><updated>2019-07-28T22:16:14-04:00</updated><id>https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components</id><content type="html" xml:base="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components">&lt;p&gt;Over 5 years ago I wrote
+&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;
+and just recently Jon Udell asked for an update.&lt;/p&gt;
 
 &lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;It&amp;#39;s almost 4
-years since &lt;a
-href=&quot;https://twitter.com/bitworking?ref_src=twsrc%5Etfw&quot;&gt;@bitworking&lt;/a&gt;
+years since &lt;a href=&quot;https://twitter.com/bitworking?ref_src=twsrc%5Etfw&quot;&gt;@bitworking&lt;/a&gt;
 said: &amp;quot;Stop using JS frameworks, start writing reusable,
-orthogonally-composable units of HTML+CSS+JS.&amp;quot; &lt;br&gt;&lt;br&gt;I&amp;#39;m curious,
+orthogonally-composable units of HTML+CSS+JS.&amp;quot; &lt;br /&gt;&lt;br /&gt;I&amp;#39;m curious,
 Joe, about what you&amp;#39;ve since learned, thought about, and done with the
 idea.&lt;a href=&quot;https://t.co/zdKjEZfIe3&quot;&gt;https://t.co/zdKjEZfIe3&lt;/a&gt;&lt;/p&gt;&amp;mdash;
-Jon Udell (@judell) &lt;a
-href=&quot;https://twitter.com/judell/status/1151608248316788736?ref_src=twsrc%5Etfw&quot;&gt;July
-17, 2019&lt;/a&gt;&lt;/blockquote&gt; &lt;script async
-src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+Jon Udell (@judell) &lt;a href=&quot;https://twitter.com/judell/status/1151608248316788736?ref_src=twsrc%5Etfw&quot;&gt;July
+17, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
 
-I have been blogging bits and pieces over the years but Jon's query has given
-me a good excuse to roll all of that up into a single document.
+&lt;p&gt;I have been blogging bits and pieces over the years but Jon’s query has given
+me a good excuse to roll all of that up into a single document.&lt;/p&gt;
 
-For the last five years me and my team have been using web components to build
+&lt;p&gt;For the last five years me and my team have been using web components to build
 our web UIs. At the time I wrote the Zero Framework Manifesto we moved all of our
-development over to [Polymer](https://www.polymer-project.org/).
+development over to &lt;a href=&quot;https://www.polymer-project.org/&quot;&gt;Polymer&lt;/a&gt;.&lt;/p&gt;
 
-## Why Polymer?
+&lt;h2 id=&quot;why-polymer&quot;&gt;Why Polymer?&lt;/h2&gt;
 
-We started with Polymer 0.5 as it was the closest thing to web components that
+&lt;p&gt;We started with Polymer 0.5 as it was the closest thing to web components that
 was available. At the time I wrote the Zero Framework Manifest all of the
 specifications that made up web components were still just proposed standards
 and only Chrome had implemented any of them natively. We closely followed
 Polymer, migrating all of our apps to Polymer 0.8 and finally to Polymer 1.0
 when it was released. This gave us a good taste for what building web
 components was like and verified that building HTML elements was a productive
-way to do web development.
+way to do web development.&lt;/p&gt;
 
-## How
+&lt;h2 id=&quot;how&quot;&gt;How&lt;/h2&gt;
 
-One of the questions that comes up regularly when talking about [zero frameworks](http://bitworking.org/news/2014/05/zero_framework_manifesto)
+&lt;p&gt;One of the questions that comes up regularly when talking about &lt;a href=&quot;http://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;zero frameworks&lt;/a&gt;
 is how can you expect to stitch together an application without a framework? The
-short answer is 'the same way you stitch together native elements', but I think
-it's interesting and instructional to look at those ways of stitching elements
-together individually.
+short answer is ‘the same way you stitch together native elements’, but I think
+it’s interesting and instructional to look at those ways of stitching elements
+together individually.&lt;/p&gt;
 
-There are six surfaces, or points of contact, between elements, that you can
+&lt;p&gt;There are six surfaces, or points of contact, between elements, that you can
 use when stitching elements together, whether they are native or custom
-elements.
+elements.&lt;/p&gt;
 
-Before we go further a couple notes on terminology and scope. For
-scope, realize that we are only talking about DOM, we aren't talking about
+&lt;p&gt;Before we go further a couple notes on terminology and scope. For
+scope, realize that we are only talking about DOM, we aren’t talking about
 composing JS modules or strategies for composing CSS. For the terminology
-clarification, when talking about DOM I'm referring to the DOM
+clarification, when talking about DOM I’m referring to the DOM
 Interface for an element, not the element markup.  Note that there is a
 subtle difference between the markup element and the DOM Interface to such
-an element.
+an element.&lt;/p&gt;
 
-For example, `&lt;img data-foo=&quot;5&quot; src=&quot;https://example.com/image.png&quot;/&gt;` may be
+&lt;p&gt;For example, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img data-foo=&quot;5&quot; src=&quot;https://example.com/image.png&quot;/&amp;gt;&lt;/code&gt; may be
 the markup for an image. The corresponding DOM Interface has an attribute of
-src with a value of `https://example.com/image.png` but the corresponding DOM
-Interface doesn't have a `data-foo` attribute, instead all data-\* attributes
+src with a value of &lt;code class=&quot;highlighter-rouge&quot;&gt;https://example.com/image.png&lt;/code&gt; but the corresponding DOM
+Interface doesn’t have a &lt;code class=&quot;highlighter-rouge&quot;&gt;data-foo&lt;/code&gt; attribute, instead all data-* attributes
 are available via the dataset attribute on the DOM Interface. In the
-terminology of the [WhatWG Living Standard](https://html.spec.whatwg.org/multipage/infrastructure.html#terminology),
+terminology of the &lt;a href=&quot;https://html.spec.whatwg.org/multipage/infrastructure.html#terminology&quot;&gt;WhatWG Living Standard&lt;/a&gt;,
 this is the distinction between content attributes vs IDL
-attributes, and I'll only be referring to IDL attributes.
+attributes, and I’ll only be referring to IDL attributes.&lt;/p&gt;
 
-With the preliminaries out of the way let's get into the six surfaces
-that can be used to stitch together an application.
+&lt;p&gt;With the preliminaries out of the way let’s get into the six surfaces
+that can be used to stitch together an application.&lt;/p&gt;
 
-###  Attributes and Methods
-The first two surfaces, and probably the most obvious, are attributes and
-methods. If you are interacting with an element it's usually either reading and
-writing attribute values:
+&lt;h3 id=&quot;attributes-and-methods&quot;&gt;Attributes and Methods&lt;/h3&gt;
+&lt;p&gt;The first two surfaces, and probably the most obvious, are attributes and
+methods. If you are interacting with an element it’s usually either reading and
+writing attribute values:&lt;/p&gt;
 
-~~~ javascript
-element.children
-~~~
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-or calling element methods:
+&lt;p&gt;or calling element methods:&lt;/p&gt;
 
-~~~
-document.querySelector('#foo');
-~~~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;document.querySelector('#foo');
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Technically these are the same thing, as they are both just properties with
+&lt;p&gt;Technically these are the same thing, as they are both just properties with
 different types. Native elements have their set of defined attributes and
 methods, and depending on which element a custom element is derived from it
-will also have that base element's attributes and methods along with the
-custom ones it defines.
+will also have that base element’s attributes and methods along with the
+custom ones it defines.&lt;/p&gt;
 
-### Events
+&lt;h3 id=&quot;events&quot;&gt;Events&lt;/h3&gt;
 
-The next two surface are events. Events are actually two surfaces because an
-element can listen for events,
+&lt;p&gt;The next two surface are events. Events are actually two surfaces because an
+element can listen for events,&lt;/p&gt;
 
-~~~
-ele.addEventListener(‘some-event’, function(e) { /* */ });
-~~~
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ele.addEventListener(‘some-event’, function(e) { /* */ });
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-and an element can dispatch its own events:
+&lt;p&gt;and an element can dispatch its own events:&lt;/p&gt;
 
-~~~
-var e = new CustomEvent(‘some-event’, {details: details});
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var e = new CustomEvent(‘some-event’, {details: details});
 this.dispatchEvent(e);
-~~~
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-### DOM Position
+&lt;h3 id=&quot;dom-position&quot;&gt;DOM Position&lt;/h3&gt;
 
-The final two surfaces are position in the DOM tree, and again I'm
+&lt;p&gt;The final two surfaces are position in the DOM tree, and again I’m
 counting this as two surfaces because each element has a parent and can be
 a parent to another element. Yeah, an element has siblings too, but that
 would bring the total count of surfaces to seven and ruin my nice round
-even six.
+even six.&lt;/p&gt;
 
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-~~~ html
-&lt;button&gt;
-  &lt;img src=&quot;&quot;&gt;
-&lt;/button&gt;
-~~~
-
-### Combinations are powerful
-Let's look at a relatively simple but powerful example, the 'sort-stuff'
+&lt;h3 id=&quot;combinations-are-powerful&quot;&gt;Combinations are powerful&lt;/h3&gt;
+&lt;p&gt;Let’s look at a relatively simple but powerful example, the ‘sort-stuff’
 element. This is a custom element that allows the user to sort elements. All
-children of 'sort-stuff' with an attribute of 'data-key' are used for sorting
-the children of the element pointed to by the sort-stuff's 'target' attribute.
-See below for an example usage:
+children of ‘sort-stuff’ with an attribute of ‘data-key’ are used for sorting
+the children of the element pointed to by the sort-stuff’s ‘target’ attribute.
+See below for an example usage:&lt;/p&gt;
 
-~~~ html
- &lt;sort-stuff target='#sortable'&gt;
-   &lt;button data-key=one&gt;Sort on One&lt;/button&gt;
-   &lt;button data-key=two&gt;Sort on Two&lt;/button&gt;
- &lt;/sort-stuff&gt;
- &lt;ul id=sortable&gt;
-   &lt;li data-one=c data-two=x&gt;Item 3&lt;/li&gt;
-   &lt;li data-one=a data-two=z&gt;Item 1&lt;/li&gt;
-   &lt;li data-one=d data-two=w&gt;Item 4&lt;/li&gt;
-   &lt;li data-one=b data-two=y&gt;Item 2&lt;/li&gt;
-   &lt;li data-one=e data-two=v&gt;Item 5&lt;/li&gt;
- &lt;/ul&gt;
-~~~
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;sort-stuff&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;target=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#sortable'&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Sort on One&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;two&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Sort on Two&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/sort-stuff&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sortable&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 5&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-If the user presses the &quot;Sort on One&quot; button then the children of #sortable
+&lt;p&gt;If the user presses the “Sort on One” button then the children of #sortable
 are sorted in alphabetical order of their data-one attributes. If the user
-presses the &quot;Sort on Two&quot; button then the children of #sortable are sorted in
-alphabetical order of their data-two attributes.
+presses the “Sort on Two” button then the children of #sortable are sorted in
+alphabetical order of their data-two attributes.&lt;/p&gt;
 
-Here is the definition of the 'sort-stuff' element:
+&lt;p&gt;Here is the definition of the ‘sort-stuff’ element:&lt;/p&gt;
 
-&lt;pre markdown=&quot;0&quot; id=&quot;viewcode&quot;&gt;&lt;/pre&gt;
+&lt;pre id=&quot;viewcode&quot;&gt;&lt;/pre&gt;
 
-And here is a running example of the code above:
+&lt;p&gt;And here is a running example of the code above:&lt;/p&gt;
 
 &lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
   sort-stuff button {
@@ -168,7 +159,8 @@ And here is a running example of the code above:
 &lt;/ul&gt;
 
 &lt;script src=&quot;/js/custom-elements.min.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;script markdown=&quot;0&quot; id=&quot;code&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+
+&lt;script id=&quot;code&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
 window.customElements.define('sort-stuff', class extends HTMLElement {
   connectedCallback() {
     Array.from(this.querySelectorAll('[data-key]')).forEach(
@@ -198,7 +190,7 @@ window.customElements.define('sort-stuff', class extends HTMLElement {
   document.getElementById('viewcode').textContent = document.getElementById('code').textContent;
 &lt;/script&gt;
 
-Note the surfaces that were used in constructing this functionality:
+&lt;p&gt;Note the surfaces that were used in constructing this functionality:&lt;/p&gt;
 
 &lt;ol&gt;
   &lt;li&gt;sort-stuff has an &lt;strong&gt;attribute&lt;/strong&gt; 'target' that selects the element to sort.&lt;/li&gt;
@@ -207,92 +199,92 @@ Note the surfaces that were used in constructing this functionality:
   &lt;li&gt;sort-stuff &lt;strong&gt;children&lt;/strong&gt; have data &lt;strong&gt;attributes&lt;/strong&gt; that determine how the target children will be sorted.&lt;/li&gt;
 &lt;/ol&gt;
 
-In addition you could imagine adding a custom event 'sorted' that
-'sort-stuff' could generate each time it sorts.
+&lt;p&gt;In addition you could imagine adding a custom event ‘sorted’ that
+‘sort-stuff’ could generate each time it sorts.&lt;/p&gt;
 
-## Why not Polymer?
+&lt;h2 id=&quot;why-not-polymer&quot;&gt;Why not Polymer?&lt;/h2&gt;
 
-But after having used Polymer for so many years we looked at the direction of
+&lt;p&gt;But after having used Polymer for so many years we looked at the direction of
 Polymer 2.0 and now 3.0 and decided that may not be the direction we want to
-take.
+take.&lt;/p&gt;
 
-There are a few reasons we moved away from Polymer. Polymer started out and
+&lt;p&gt;There are a few reasons we moved away from Polymer. Polymer started out and
 continues to be a platform for experimentation with proposed standards, which
 is great, as they are able to give concrete feedback to standards committees
 and allow people to see how those proposed standards could be used in
 development. The downside to the approach of adopting nascent standards is
-that sometimes those things don't become standards. For example, HTML Imports
+that sometimes those things don’t become standards. For example, HTML Imports
 was a part of Polymer 1.0 that had a major impact on how you wrote your
-elements, and when [HTML Imports failed to become a
-standard](https://hacks.mozilla.org/2015/06/the-state-of-web-components/) you
+elements, and when &lt;a href=&quot;https://hacks.mozilla.org/2015/06/the-state-of-web-components/&quot;&gt;HTML Imports failed to become a
+standard&lt;/a&gt; you
 had a choice of either a major migration to ES modules or to carry around a
-polyfill for HTML Imports for the remainder of that web app's life. You can
-see the same thing happening today with Polymer 3.0 and [CSS
-mixins](https://polymer-library.polymer-project.org/3.0/docs/devguide/custom-css-properties#use-custom-css-mixins).
+polyfill for HTML Imports for the remainder of that web app’s life. You can
+see the same thing happening today with Polymer 3.0 and &lt;a href=&quot;https://polymer-library.polymer-project.org/3.0/docs/devguide/custom-css-properties#use-custom-css-mixins&quot;&gt;CSS
+mixins&lt;/a&gt;.&lt;/p&gt;
 
-There are also implementation decisions I don't completely agree with in
-Polymer, for example, the default use of [Shadow
-DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+&lt;p&gt;There are also implementation decisions I don’t completely agree with in
+Polymer, for example, the default use of &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM&quot;&gt;Shadow
+DOM&lt;/a&gt;.
 Shadow DOM allows for the encapsulation of the children of a custom element so
-they don't participate in things like `querySelector()` and normal CSS
+they don’t participate in things like &lt;code class=&quot;highlighter-rouge&quot;&gt;querySelector()&lt;/code&gt; and normal CSS
 styling. But there are several problems with that, the first is that when
 using Shadow DOM you lose the ability to do global styling changes. If you
-suddenly decide to add a &quot;dark mode&quot; to your app you will need to go and
-modify each element's CSS. It was also supposed to be faster, but since each
-element contains a copy of the CSS there are [performance
-implications](https://bitworking.org/news/2018/02/shadow-dom-and-css), though
-[there is work underway to address
-that](https://github.com/w3c/webcomponents/issues/468). Shadow DOM seems like
+suddenly decide to add a “dark mode” to your app you will need to go and
+modify each element’s CSS. It was also supposed to be faster, but since each
+element contains a copy of the CSS there are &lt;a href=&quot;https://bitworking.org/news/2018/02/shadow-dom-and-css&quot;&gt;performance
+implications&lt;/a&gt;, though
+&lt;a href=&quot;https://github.com/w3c/webcomponents/issues/468&quot;&gt;there is work underway to address
+that&lt;/a&gt;. Shadow DOM seems like
 a solution searching for a problem, and Polymer defaults to using Shadow DOM
 while offering a way to opt out and use Light DOM for your elements; I believe
-the default should lie in the other direction.
+the default should lie in the other direction.&lt;/p&gt;
 
-Finally Polymer's data binding has some mis-features. It offers two-way data
+&lt;p&gt;Finally Polymer’s data binding has some mis-features. It offers two-way data
 binding which is never a good idea, every instance of two-way data binding is
 just a bug waiting to happen. The data binding also has a lot of magic to it,
 in theory you just update your model and Polymer will re-render your template
-at some point in the future with the updated values. The &quot;at some point in the
-future&quot; is because updates happen in an async fashion, which in theory allows
+at some point in the future with the updated values. The “at some point in the
+future” is because updates happen in an async fashion, which in theory allows
 the updates to be more efficient by batching the updates, but the reality is
 that you spend a lot of development time updating your model, not getting
 updated DOM, and scratching your head until you remember to either call a
 function which forces a synchronous render, or that you updated a deep part of
-your model and Polymer can't observe that change so you need to update your
-code to use the `set()` method where you give the path to the part of the
+your model and Polymer can’t observe that change so you need to update your
+code to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;set()&lt;/code&gt; method where you give the path to the part of the
 model you just updated. The async rendering and observing of data is fine for
 simple applications, but for more complex applications leads to wasted
 developer time debugging situations where a simpler data binding model would
-suffice.
+suffice.&lt;/p&gt;
 
-It is interesting to note that the Polymer team also produces the
-[lit-html](https://lit-html.polymer-project.org/) library which is simply a
+&lt;p&gt;It is interesting to note that the Polymer team also produces the
+&lt;a href=&quot;https://lit-html.polymer-project.org/&quot;&gt;lit-html&lt;/a&gt; library which is simply a
 library for templating that uses template literals and HTML Templates to make
 the rendering more efficient, and it  has none of the issues I just pointed
-out in Polymer.
+out in Polymer.&lt;/p&gt;
 
-## What comes after Polymer?
+&lt;h2 id=&quot;what-comes-after-polymer&quot;&gt;What comes after Polymer?&lt;/h2&gt;
 
-This is where I started with a very concrete and data driven minimalist
+&lt;p&gt;This is where I started with a very concrete and data driven minimalist
 approach, first determining what base elements we really needed and then what
 library features we would need as we built up those elements, and finally what
 features we need as we build full fledged apps from those base elements. I was
 completely open to the idea that maybe I was just being naive about the need
-for async render or Shadow DOM and I'd let the process of building real world
-applications inform what features were really needed.
+for async render or Shadow DOM and I’d let the process of building real world
+applications inform what features were really needed.&lt;/p&gt;
 
-The first step was to determine which base elements we really needed. The
-library of iron-\* and paper-\* elements that Polymer provides is large and the
+&lt;p&gt;The first step was to determine which base elements we really needed. The
+library of iron-* and paper-* elements that Polymer provides is large and the
 idea of writing our own version of each was formidable, so instead I looked
-back over the previous years of code we'd written in Polymer to determine
-which elements we really did need. If we'd started this process today I would
-probably just have gone with [Elix](https://component.kitchen/elix) or another
+back over the previous years of code we’d written in Polymer to determine
+which elements we really did need. If we’d started this process today I would
+probably just have gone with &lt;a href=&quot;https://component.kitchen/elix&quot;&gt;Elix&lt;/a&gt; or another
 pure web components library of elements, but none of them existed at the time
-we started this process.
+we started this process.&lt;/p&gt;
 
-The first thing I did was scan each project and record every Polymer element
-used in every project. If I'm going to replace Polymer at least I should know
-how many elements I'm signing up to rewrite. That initial list was surpising
-in a couple of ways, the first was how short the list was:
+&lt;p&gt;The first thing I did was scan each project and record every Polymer element
+used in every project. If I’m going to replace Polymer at least I should know
+how many elements I’m signing up to rewrite. That initial list was surpising
+in a couple of ways, the first was how short the list was:&lt;/p&gt;
 
 &lt;style&gt;
 table{
@@ -308,346 +300,898 @@ th, td {
 }
 &lt;/style&gt;
 
-| Polymer/Iron elements Used |
-|----------------------------|
-| iron-ajax                  |
-| iron-autogrow-textarea     |
-| iron-collapse              |
-| iron-flex-layout           |
-| iron-icon                  |
-| iron-pages                 |
-| iron-resizable-behavior    |
-| iron-scroll-threshold      |
-| iron-selector              |
-| paper-autocomplete         |
-| paper-button               |
-| paper-checkbox             |
-| paper-dialog               |
-| paper-dialog-scrollable    |
-| paper-drawer-panel         |
-| paper-dropdown-menu        |
-| paper-fab                  |
-| paper-header-panel         |
-| paper-icon-button          |
-| paper-input                |
-| paper-item                 |
-| paper-listbox              |
-| paper-menu                 |
-| paper-menu-button          |
-| paper-radio-button         |
-| paper-radio-group          |
-| paper-spinner              |
-| paper-tabs                 |
-| paper-toast                |
-| paper-toggle-button        |
-| paper-toolbar              |
-| paper-tooltip              |
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Polymer/Iron elements Used&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-ajax&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-autogrow-textarea&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-collapse&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-flex-layout&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-icon&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-pages&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-resizable-behavior&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-scroll-threshold&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-selector&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-autocomplete&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-checkbox&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog-scrollable&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-drawer-panel&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dropdown-menu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-fab&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-header-panel&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-icon-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-input&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-item&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-listbox&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-group&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-spinner&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tabs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toast&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toggle-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toolbar&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tooltip&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-After four years of development I expected the list to be much larger.
+&lt;p&gt;After four years of development I expected the list to be much larger.&lt;/p&gt;
 
-The second surpise was how many of the elements in that list really shouldn't
+&lt;p&gt;The second surpise was how many of the elements in that list really shouldn’t
 be elements at all. For example, some could be replaced with native elements
-with some better styling, for example `button` for `paper-button`.
+with some better styling, for example &lt;code class=&quot;highlighter-rouge&quot;&gt;button&lt;/code&gt; for &lt;code class=&quot;highlighter-rouge&quot;&gt;paper-button&lt;/code&gt;.
 Alternatively some could be replaced with CSS or a non-element solution, such
-as `iron-ajax`, which shouldn't be an element at all and should be replaced
-with the `fetch()` function. After doing that analysis the number of elements
-actually needed to be re-implemented from Polymer fell to a very small number.
+as &lt;code class=&quot;highlighter-rouge&quot;&gt;iron-ajax&lt;/code&gt;, which shouldn’t be an element at all and should be replaced
+with the &lt;code class=&quot;highlighter-rouge&quot;&gt;fetch()&lt;/code&gt; function. After doing that analysis the number of elements
+actually needed to be re-implemented from Polymer fell to a very small number.&lt;/p&gt;
 
-In the table below the 'Native' column is for places where we could use native
-elements and just have a good default styling for them. The 'Use Instead'
+&lt;p&gt;In the table below the ‘Native’ column is for places where we could use native
+elements and just have a good default styling for them. The ‘Use Instead’
 column is what we could use in place of a custom element. Here you will notice
 a large number of elements that can be replaced with CSS. Finally the last
-column, 'Replacement Element', is the name of the element we made to replace
-the Polymer element:
+column, ‘Replacement Element’, is the name of the element we made to replace
+the Polymer element:&lt;/p&gt;
 
-| Polymer                    | Native        | Use Instead              | Replacement Element       |
-|----------------------------|---------------|--------------------------|---------------------------|
-| iron-ajax                  |               | Use fetch()              |                           |
-| iron-collapse              |               |                          |collapse-sk                |
-| iron-flex-layout           |               | Use CSS Flexbox/Grid     |                           |
-| iron-icon                  |               |                          |\*-icon-sk                 |
-| iron-pages                 |               |                          |tabs-panel-sk              |
-| iron-resizable-behavior    |               | Use CSS Flexbox/Grid     |                           |
-| iron-scroll-threshold      |               | Shouldn't be an element  |                           |
-| iron-selector              |               |                          |select-sk/multi-select-sk  |
-| paper-autocomplete         |               | No replacement yet.      |                           |
-| paper-button               | button        |                          |                           |
-| paper-checkbox             |               |                          |checkbox-sk                |
-| paper-dialog               |               |                          |dialog-sk                  |
-| paper-dialog-scrollable    |               | Use CSS                  |                           |
-| paper-drawer-panel         |               | Use CSS Flexbox/Grid     |                           |
-| paper-dropdown-menu        |               |                          |nav-sk                     |
-| paper-fab                  | button        |                          |                           |
-| paper-header-panel         |               | Use CSS Flexbox/Grid     |                           |
-| paper-icon-button          | button        |                          |button + \*-icon-sk        |
-| paper-input                | input         |                          |                           |
-| paper-item                 |               |                          |nav-sk                     |
-| paper-listbox              | option/select |                          |                           |
-| paper-menu                 |               |                          |nav-sk                     |
-| paper-menu-button          |               |                          |nav-sk                     |
-| paper-radio-button         |               |                          |radio-sk                   |
-| paper-radio-group          |\*\*           |                          |                           |
-| paper-spinner              |               |                          |spinner-sk                 |
-| paper-tabs                 |               |                          |tabs-sk                    |
-| paper-toast                |               |                          |toast-sk                   |
-| paper-toggle-button        |               |                          |checkbox-sk                |
-| paper-toolbar              |               | Use CSS Flexbox/Grid     |                           |
-| paper-tooltip              |               | Use title attribute      |                           |
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Polymer&lt;/th&gt;
+      &lt;th&gt;Native&lt;/th&gt;
+      &lt;th&gt;Use Instead&lt;/th&gt;
+      &lt;th&gt;Replacement Element&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-ajax&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use fetch()&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-collapse&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;collapse-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-flex-layout&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-icon&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;*-icon-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-pages&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;tabs-panel-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-resizable-behavior&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-scroll-threshold&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Shouldn’t be an element&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-selector&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;select-sk/multi-select-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-autocomplete&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;No replacement yet.&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-button&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-checkbox&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;checkbox-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;dialog-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog-scrollable&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-drawer-panel&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dropdown-menu&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-fab&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-header-panel&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-icon-button&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;button + *-icon-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-input&lt;/td&gt;
+      &lt;td&gt;input&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-item&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-listbox&lt;/td&gt;
+      &lt;td&gt;option/select&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;radio-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-group&lt;/td&gt;
+      &lt;td&gt;**&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-spinner&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;spinner-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tabs&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;tabs-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toast&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;toast-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toggle-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;checkbox-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toolbar&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tooltip&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use title attribute&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-\*\* - For radio-sk elements just set a common name like you would for a
-native radio button.
+&lt;p&gt;** - For radio-sk elements just set a common name like you would for a
+native radio button.&lt;/p&gt;
 
-That set of minimal custom elements has now been launched as
-[elements-sk](https://www.npmjs.com/package/elements-sk).
+&lt;p&gt;That set of minimal custom elements has now been launched as
+&lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;.&lt;/p&gt;
 
-Now that we have our base list of elements let's think about the rest of the
-tools and techniques we are going to need.
+&lt;p&gt;Now that we have our base list of elements let’s think about the rest of the
+tools and techniques we are going to need.&lt;/p&gt;
 
-To get a better feel for this let's start by looking at what a web framework
-&quot;normally&quot; provides. The &quot;normally&quot; is in quotes because not all frameworks
-provide all of these features, but most frameworks provide a majority of them:
+&lt;p&gt;To get a better feel for this let’s start by looking at what a web framework
+“normally” provides. The “normally” is in quotes because not all frameworks
+provide all of these features, but most frameworks provide a majority of them:&lt;/p&gt;
 
-  * Framework
-    - Model
-    - Tooling and structure
-    - Elements
-    - Templating
-    - State Management
+&lt;ul&gt;
+  &lt;li&gt;Framework
+    &lt;ul&gt;
+      &lt;li&gt;Model&lt;/li&gt;
+      &lt;li&gt;Tooling and structure&lt;/li&gt;
+      &lt;li&gt;Elements&lt;/li&gt;
+      &lt;li&gt;Templating&lt;/li&gt;
+      &lt;li&gt;State Management&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
-All good things, but why do they have to be bundled together like a TV dinner?
-Let's break each of those aspects of a framework out into their own standalone
+&lt;p&gt;All good things, but why do they have to be bundled together like a TV dinner?
+Let’s break each of those aspects of a framework out into their own standalone
 thing and then we can pick and choose from the various implementations when we
-start developing an application. This style of developement we call &quot;a la
-carte&quot; web development.
+start developing an application. This style of developement we call “a la
+carte” web development.&lt;/p&gt;
 
-Instead of picking a monolithic solution like a web framework, you just pick
+&lt;p&gt;Instead of picking a monolithic solution like a web framework, you just pick
 the pieces you need. Below I outline specific criteria that need to be met for
-some components to participate in &quot;a la carte&quot; web development.
+some components to participate in “a la carte” web development.&lt;/p&gt;
 
-A la carte
-----------
-&quot;A la carte&quot; web development does away with the framework, and says just
+&lt;h2 id=&quot;a-la-carte&quot;&gt;A la carte&lt;/h2&gt;
+&lt;p&gt;“A la carte” web development does away with the framework, and says just
 use the browser for the model, and the rest of the pieces you pick and choose
 the ones that work for you. In a la carte development each bullet point is a
-separate piece of software:
+separate piece of software:&lt;/p&gt;
 
-*A la carte*
+&lt;p&gt;&lt;em&gt;A la carte&lt;/em&gt;&lt;/p&gt;
 
-Tooling and structure
-: Defines a directory structure for how a project is put together and provides tooling such as
-  JS transpiling, CSS prefixing, etc. for projects that conform to that directory structure.
-  Expects ES modules with the extension that webpack, rollup, and similar tools presume, i.e.
-  allow importing other types of files, see [webpack loaders](https://webpack.js.org/concepts/#loaders).
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;Defines a directory structure for how a project is put together and provides tooling such as
+JS transpiling, CSS prefixing, etc. for projects that conform to that directory structure.
+Expects ES modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;A library of v1 custom elements in ES6 modules. Note that these elements must be provided in ES6
+modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.
+The elements should also be &lt;a href=&quot;https://bitworking.org/news/2018/02/custom-elements-neat&quot;&gt;“neat”&lt;/a&gt;, i.e.
+just HTML, CSS, and JS.&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;Any templating library you like, as long as it works with v1 custom elements.&lt;/dd&gt;
+  &lt;dt&gt;State Management&lt;/dt&gt;
+  &lt;dd&gt;Any state management library you like, if you even need one.&lt;/dd&gt;
+&lt;/dl&gt;
 
-Elements
-: A library of v1 custom elements in ES6 modules. Note that these elements must be provided in ES6
-  modules with the extension that webpack, rollup, and similar tools presume, i.e.
-  allow importing other types of files, see [webpack loaders](https://webpack.js.org/concepts/#loaders).
-  The elements should also be [&quot;neat&quot;](https://bitworking.org/news/2018/02/custom-elements-neat), i.e.
-  just HTML, CSS, and JS.
+&lt;p&gt;The assumptions needed for all of this to work together are fairly minimal:&lt;/p&gt;
 
-Templating
-: Any templating library you like, as long as it works with v1 custom elements.
-
-State Management
-: Any state management library you like, if you even need one.
-
-The assumptions needed for all of this to work together are fairly minimal:
-
-  1. ES6 modules and the extension that webpack, rollup, and similar tools presume, i.e.
-    allow importing other types of files, see [webpack loaders](https://webpack.js.org/concepts/#loaders).
-  2. The base elements are “Neat”, i.e. they are JS, CSS, and HTML only. No additional
+&lt;ol&gt;
+  &lt;li&gt;ES6 modules and the extension that webpack, rollup, and similar tools presume, i.e.
+    allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The base elements are “Neat”, i.e. they are JS, CSS, and HTML only. No additional
     libraries are used, such as a templating library. Note that sets of ‘neat’ elements also conform
-    to #1, i.e. they are provided as webpack/rollup compatible ES6 modules.
+    to #1, i.e. they are provided as webpack/rollup compatible ES6 modules.&lt;/li&gt;
+&lt;/ol&gt;
 
-Obviously there are other guidelines that could be added as advisory, for example
-[Google Developers Guide - Custom Elements Best Practices](https://developers.google.com/web/fundamentals/web-components/best-practices),
+&lt;p&gt;Obviously there are other guidelines that could be added as advisory, for example
+&lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/best-practices&quot;&gt;Google Developers Guide - Custom Elements Best Practices&lt;/a&gt;,
 should be followed when creating custom elements sets,
-except for the admonition to use Shadow DOM, [which I would avoid for now, unless you really need it](https://bitworking.org/news/2018/02/shadow-dom-and-css).
+except for the admonition to use Shadow DOM, &lt;a href=&quot;https://bitworking.org/news/2018/02/shadow-dom-and-css&quot;&gt;which I would avoid for now, unless you really need it&lt;/a&gt;.&lt;/p&gt;
 
-Such code will natively run in browsers that support custom elements v1. To
+&lt;p&gt;Such code will natively run in browsers that support custom elements v1. To
 get it to run in a wider range of browsers you will need to add polyfills and,
 depending on the target browser version, compile the JS back to an older
 version of ES, and run a prefixer on the CSS. The wider the target set of
 browsers and the older the versions you are targeting the more processing you
-will need to do, but the original code doesn't need to change, and all those
-extra processing steps are only incurred by projects that need it.
+will need to do, but the original code doesn’t need to change, and all those
+extra processing steps are only incurred by projects that need it.&lt;/p&gt;
 
-Concrete
---------
+&lt;h2 id=&quot;concrete&quot;&gt;Concrete&lt;/h2&gt;
 
-So now that we have our development system we've started to publish some of those pieces.
+&lt;p&gt;So now that we have our development system we’ve started to publish some of those pieces.&lt;/p&gt;
 
-We published [pulito](https://www.npmjs.com/package/pulito), a stake in the ground for what a &quot;tooling and
-structure&quot; component looks like. You will note that it isn't very complex, nothing more than an opinionated
-webpack config file. Similarly we published our set of &quot;neat&quot; custom elements [elements-sk](https://www.npmjs.com/package/elements-sk).
+&lt;p&gt;We published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, a stake in the ground for what a “tooling and
+structure” component looks like. You will note that it isn’t very complex, nothing more than an opinionated
+webpack config file. Similarly we published our set of “neat” custom elements &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;.&lt;/p&gt;
 
-Our current stack looks like:
+&lt;p&gt;Our current stack looks like:&lt;/p&gt;
 
-Tooling and structure
-: [pulito](https://www.npmjs.com/package/pulito)
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/lit-html&quot;&gt;lit-html&lt;/a&gt;&lt;/dd&gt;
+&lt;/dl&gt;
 
-Elements
-: [elements-sk](https://www.npmjs.com/package/elements-sk)
-
-Templating
-: [lit-html](https://www.npmjs.com/package/lit-html)
-
-We have used Redux in an experimental app that never shipped and haven’t needed
+&lt;p&gt;We have used Redux in an experimental app that never shipped and haven’t needed
 any state management libraries in the other applications we’ve ported over, so
-our 'state management' library is still an open question.
+our ‘state management’ library is still an open question.&lt;/p&gt;
 
-Example
--------
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
 
-What is like to use this stack? Let's start from an empty directory
-and start building a web app:
+&lt;p&gt;What is like to use this stack? Let’s start from an empty directory
+and start building a web app:&lt;/p&gt;
 
-    $ npm init
-    $ npm add pulito
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm init
+$ npm add pulito
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-We are starting from scratch so use the project skeleton that [pulito](https://www.npmjs.com/package/pulito) provides:
+&lt;p&gt;We are starting from scratch so use the project skeleton that &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt; provides:&lt;/p&gt;
 
-    $ unzip node_modules/pulito/skeleton.zip
-    $ npm
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ unzip node_modules/pulito/skeleton.zip
+$ npm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-We can now run the dev server and see our running skeleton application:
+&lt;p&gt;We can now run the dev server and see our running skeleton application:&lt;/p&gt;
 
-    $ make serve
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Now let's add in [elements-sk](https://www.npmjs.com/package/elements-sk) and add a set of tabs to the UI.
+&lt;p&gt;Now let’s add in &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt; and add a set of tabs to the UI.&lt;/p&gt;
 
-    $ npm add elements-sk
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm add elements-sk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Now add imports to `pages/index.js` to bring in the elements we need:
+&lt;p&gt;Now add imports to &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.js&lt;/code&gt; to bring in the elements we need:&lt;/p&gt;
 
-~~~ javascript
-import 'elements-sk/tabs-sk'
-import 'elements-sk/tabs-panel-sk'
-import '../modules/example-element'
-~~~
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'elements-sk/tabs-sk'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'elements-sk/tabs-panel-sk'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'../modules/example-element'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-And then use those elements on `pages/index.html`:
+&lt;p&gt;And then use those elements on &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.html&lt;/code&gt;:&lt;/p&gt;
 
-~~~ html
-&lt;body&gt;
-  &lt;tabs-sk&gt;
-    &lt;button class=selected&gt;Some Tab&lt;/button&gt;
-    &lt;button&gt;Another Tab&lt;/button&gt;
-  &lt;/tabs-sk&gt;
-  &lt;tabs-panel-sk&gt;
-    &lt;div&gt;
-      &lt;p&gt; This is Some Tab contents.&lt;/p&gt;
-    &lt;/div&gt;
-    &lt;div&gt;
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Some Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;Another Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-panel-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt; This is Some Tab contents.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
       This is the contents for Another Tab.
-    &lt;/div&gt;
-  &lt;/tabs-panel-sk&gt;
-  &lt;example-element active&gt;&lt;/example-element&gt;
-&lt;/body&gt;
-~~~
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-panel-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;example-element&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;active&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/example-element&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Now restart the dev server and see the updated page:
+&lt;p&gt;Now restart the dev server and see the updated page:&lt;/p&gt;
 
-    $ make serve
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-Why is this better?
--------------------
-Web frameworks usually make all these choices for you, you don’t
+&lt;h2 id=&quot;why-is-this-better&quot;&gt;Why is this better?&lt;/h2&gt;
+&lt;p&gt;Web frameworks usually make all these choices for you, you don’t
 get to choose, even if you don’t need the functionality. For example, state
-managament might not be needed, why are you 'paying' for it, where 'paying'
+managament might not be needed, why are you ‘paying’ for it, where ‘paying’
 means learning about that aspect of the web framework, and possibly even
 having to serve the code that implements state managment even if you never
-use it. With &quot;a la carte&quot; development you only include what you use.
+use it. With “a la carte” development you only include what you use.&lt;/p&gt;
 
-An extra benefit comes when it is time to upgrade. How much time
+&lt;p&gt;An extra benefit comes when it is time to upgrade. How much time
 have you lost with massive upgrades from v1 to v2 of a web framework?
-With 'a la carte' developement the upgrades don’t have to be monolithic.
-I.e. if you've chosen a templating library and want to upgrade to
+With ‘a la carte’ developement the upgrades don’t have to be monolithic.
+I.e. if you’ve chosen a templating library and want to upgrade to
 the next version you only need to update your templates, and not have to
-touch every aspect of your application.
+touch every aspect of your application.&lt;/p&gt;
 
-Finally, 'a la carte' web development provides no &quot;model&quot; but the browser. Of
-all the things that frameworks provide, &quot;model&quot; is the most problematic.
+&lt;p&gt;Finally, ‘a la carte’ web development provides no “model” but the browser. Of
+all the things that frameworks provide, “model” is the most problematic.
 Instead of just using the browser as it is, many frameworks have their own
-model of the browser, how DOM works, how events work, etc. [I have gone into
+model of the browser, how DOM works, how events work, etc. &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;I have gone into
 depth on the issues
-previously](https://bitworking.org/news/2014/05/zero_framework_manifesto), but
+previously&lt;/a&gt;, but
 they can be summarized as lost effort (learning something that doesn’t
 translate) and a barrier to reuse. What should replace it? Just use the
-browser, it already has a [model for how to combine elements
-together](https://bitworking.org/news/2015/03/Six_Places), and now with custom
+browser, it already has a &lt;a href=&quot;https://bitworking.org/news/2015/03/Six_Places&quot;&gt;model for how to combine elements
+together&lt;/a&gt;, and now with custom
 elements v1 gives you the ability to create your own elements, you have all
-you need.
+you need.&lt;/p&gt;
 
-One of the most important aspects of 'a la carte' web developement is that it
+&lt;p&gt;One of the most important aspects of ‘a la carte’ web developement is that it
 decouples all the components, allowing them to evolve and adapt to user needs
 on a much faster cycle than the normal web framework release cycle allows.
-Just because we've published [pulito](https://www.npmjs.com/package/pulito)
-and [elements-sk](https://www.npmjs.com/package/elements-sk) doesn't mean we
-believe they are the best solutions. I'd love to have a slew of options to
+Just because we’ve published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;
+and &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt; doesn’t mean we
+believe they are the best solutions. I’d love to have a slew of options to
 choose from for tooling, base element sets, templating, and state management.
 I’d like to see Rollup based tools that take the place of
-[pulito](https://www.npmjs.com/package/pulito), and a whole swarm of &quot;neat&quot;
-custom elements sets with varying levels of customizability and breadth.
+&lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, and a whole swarm of “neat”
+custom elements sets with varying levels of customizability and breadth.&lt;/p&gt;
 
+&lt;h2 id=&quot;what-weve-learned&quot;&gt;What we’ve learned&lt;/h2&gt;
 
-## What we've learned
+&lt;p&gt;We continue to learn as we build larger applications.&lt;/p&gt;
 
-We continue to learn as we build larger applications.
-
-lit-html is very fast and all the applications we've ported over have been
+&lt;p&gt;lit-html is very fast and all the applications we’ve ported over have been
 smaller and faster after the port. It is rather pleasant to call the
-`render()` function and know that the element has been rendered and not
-getting tripped up by async rendering. We haven't found the need for async
-rendering either, but that's not surprising. Let's think about cases where
+&lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt; function and know that the element has been rendered and not
+getting tripped up by async rendering. We haven’t found the need for async
+rendering either, but that’s not surprising. Let’s think about cases where
 async rendering would make a big difference, i.e. where it would be a big
 performance difference to batch up renders and do them asynchronously. This
 would have to be an element with a large number of properties and each change
 of the property would change the DOM expressed and thus would require a large
-number of calls to `render()`. But in all the development we've done that
+number of calls to &lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt;. But in all the development we’ve done that
 situation has never arisen, elements always have a small number of attributes
 and properties. If an element takes in a large amount of data to display
-that's usually done by passing in a small number of complex object as
-properties on the element and that results in a small number of renders.
+that’s usually done by passing in a small number of complex object as
+properties on the element and that results in a small number of renders.&lt;/p&gt;
 
-We haven't found the need for Shadow DOM. In fact, I've come to think of the
+&lt;p&gt;We haven’t found the need for Shadow DOM. In fact, I’ve come to think of the
 Light DOM children of elements as part of their public API that goes along
-with the attributes, properties, and events that make up the 'normal'
-programming surface of an element.
+with the attributes, properties, and events that make up the ‘normal’
+programming surface of an element.&lt;/p&gt;
 
-We've also learned that there's a difference between creating base elements
+&lt;p&gt;We’ve also learned that there’s a difference between creating base elements
 and higher level elements as you build up your application. You are not
 creating bullet-proof re-usable elements at every step of development; the
-same level of detail and re-usability aren't needed as you move up the stack.
+same level of detail and re-usability aren’t needed as you move up the stack.
 If an element looks like it could be re-used across applications then we may
 tighten up the surface of the element and add more options to cover more use
-cases, but that's done on an as-needed basis, not for every element. Just
-because you are using the web component APIs to build an application doesn't
+cases, but that’s done on an as-needed basis, not for every element. Just
+because you are using the web component APIs to build an application doesn’t
 mean that every element you build needs to be as general purpose and bullet
 proof as low level elements. You can use HTML Templates without using any
 other web component technology. Same for template literals, and for each of
-the separate technologies that make up the web components group of APIs.</content><author><name>Joe Gregorio</name></author><summary type="html">Over 5 years ago I wrote No more JS frameworks and just recently Jon Udell asked for an update.</summary></entry><entry><title type="html">Stream</title><link href="https://bitworking.org/news/2019/06/stream" rel="alternate" type="text/html" title="Stream" /><published>2019-06-16T00:00:00-04:00</published><updated>2019-06-16T21:16:59-04:00</updated><id>https://bitworking.org/news/2019/06/stream</id><content type="html" xml:base="https://bitworking.org/news/2019/06/stream">I've launched a new micro-blog at  [stream.bitworking.org](https://stream.bitworking.org), which has an
-[Atom Feed](https://stream.bitworking.org) if  you want to follow along. You
+the separate technologies that make up the web components group of APIs.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Over 5 years ago I wrote No more JS frameworks and just recently Jon Udell asked for an update.</summary></entry><entry><title type="html">Stream</title><link href="https://bitworking.org/news/2019/06/stream" rel="alternate" type="text/html" title="Stream" /><published>2019-06-16T00:00:00-04:00</published><updated>2019-06-16T21:16:59-04:00</updated><id>https://bitworking.org/news/2019/06/stream</id><content type="html" xml:base="https://bitworking.org/news/2019/06/stream">&lt;p&gt;I’ve launched a new micro-blog at  &lt;a href=&quot;https://stream.bitworking.org&quot;&gt;stream.bitworking.org&lt;/a&gt;, which has an
+&lt;a href=&quot;https://stream.bitworking.org&quot;&gt;Atom Feed&lt;/a&gt; if  you want to follow along. You
 can also follow along on Mastodon by following
-`@stream.bitworking.org@stream.bitworking.org` thanks to [https://fed.brid.gy/](https://fed.brid.gy/).
-Any entries will also appear on Twitter thanks to [https://brid.gy](https://brid.gy).
+&lt;code class=&quot;highlighter-rouge&quot;&gt;@stream.bitworking.org@stream.bitworking.org&lt;/code&gt; thanks to &lt;a href=&quot;https://fed.brid.gy/&quot;&gt;https://fed.brid.gy/&lt;/a&gt;.
+Any entries will also appear on Twitter thanks to &lt;a href=&quot;https://brid.gy&quot;&gt;https://brid.gy&lt;/a&gt;.
 Interactions on any of those sites should flow back to
-Stream thanks to [webmention](https://www.w3.org/TR/webmention/) support via
-[github.com/jcgregorio/webmention-run](https://github.com/jcgregorio/webmention-run).
+Stream thanks to &lt;a href=&quot;https://www.w3.org/TR/webmention/&quot;&gt;webmention&lt;/a&gt; support via
+&lt;a href=&quot;https://github.com/jcgregorio/webmention-run&quot;&gt;github.com/jcgregorio/webmention-run&lt;/a&gt;.&lt;/p&gt;
 
-Finally the admin interface to Stream is a
-[PWA](https://developers.google.com/web/progressive-web-apps/) that supports
-the [Web Share Target API](https://developers.google.com/web/updates/2018/12/web-share-target),
+&lt;p&gt;Finally the admin interface to Stream is a
+&lt;a href=&quot;https://developers.google.com/web/progressive-web-apps/&quot;&gt;PWA&lt;/a&gt; that supports
+the &lt;a href=&quot;https://developers.google.com/web/updates/2018/12/web-share-target&quot;&gt;Web Share Target API&lt;/a&gt;,
 which means I can trivially share content to Stream using the native Android
-Share intent.
+Share intent.&lt;/p&gt;
 
-The backend is written in Go and it runs entirely on [Google Cloud Run](https://cloud.google.com/run/).
+&lt;p&gt;The backend is written in Go and it runs entirely on &lt;a href=&quot;https://cloud.google.com/run/&quot;&gt;Google Cloud Run&lt;/a&gt;.
 The login is handled via
-[Google Sign-In for Websites](https://developers.google.com/identity/sign-in/web/), and
-[Workbox](https://developers.google.com/web/tools/workbox/) is used for the
-PWA aspects.
+&lt;a href=&quot;https://developers.google.com/identity/sign-in/web/&quot;&gt;Google Sign-In for Websites&lt;/a&gt;, and
+&lt;a href=&quot;https://developers.google.com/web/tools/workbox/&quot;&gt;Workbox&lt;/a&gt; is used for the
+PWA aspects.&lt;/p&gt;
 
-The [code for Stream is on GitHub](https://github.com/jcgregorio/stream-run)
-and I've endeavored to make it customizable via the `config.json` file, but no
-guarantees since I just got it all working today.</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve launched a new micro-blog at stream.bitworking.org, which has an Atom Feed if you want to follow along. You can also follow along on Mastodon by following @stream.bitworking.org@stream.bitworking.org thanks to https://fed.brid.gy/. Any entries will also appear on Twitter thanks to https://brid.gy. Interactions on any of those sites should flow back to Stream thanks to webmention support via github.com/jcgregorio/webmention-run.</summary></entry></feed>
+&lt;p&gt;The &lt;a href=&quot;https://github.com/jcgregorio/stream-run&quot;&gt;code for Stream is on GitHub&lt;/a&gt;
+and I’ve endeavored to make it customizable via the &lt;code class=&quot;highlighter-rouge&quot;&gt;config.json&lt;/code&gt; file, but no
+guarantees since I just got it all working today.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve launched a new micro-blog at stream.bitworking.org, which has an Atom Feed if you want to follow along. You can also follow along on Mastodon by following @stream.bitworking.org@stream.bitworking.org thanks to https://fed.brid.gy/. Any entries will also appear on Twitter thanks to https://brid.gy. Interactions on any of those sites should flow back to Stream thanks to webmention support via github.com/jcgregorio/webmention-run.</summary></entry><entry><title type="html">OpenID Connect for US Citizens</title><link href="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens" rel="alternate" type="text/html" title="OpenID Connect for US Citizens" /><published>2019-05-25T00:00:00-04:00</published><updated>2019-05-25T11:29:53-04:00</updated><id>https://bitworking.org/news/2019/05/openid-connect-for-us-citizens</id><content type="html" xml:base="https://bitworking.org/news/2019/05/openid-connect-for-us-citizens">&lt;p&gt;Is there an OpenID Connect for US Citizens run by the US government? &lt;a href=&quot;https://www.cnn.com/2019/05/23/tech/facebook-transparency-report/index.html&quot;&gt;I’m not sure why I’ve been thinking a lot about
+such a utility lately.&lt;/a&gt; &amp;lt;/sarcasm&amp;gt;)&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Is there an OpenID Connect for US Citizens run by the US government? I’m not sure why I’ve been thinking a lot about such a utility lately. &amp;lt;/sarcasm&amp;gt;)</summary></entry><entry><title type="html">Colostomy Takedown</title><link href="https://bitworking.org/news/2019/05/colostomy-takedown" rel="alternate" type="text/html" title="Colostomy Takedown" /><published>2019-05-09T00:00:00-04:00</published><updated>2019-05-09T23:00:04-04:00</updated><id>https://bitworking.org/news/2019/05/colostomy-takedown</id><content type="html" xml:base="https://bitworking.org/news/2019/05/colostomy-takedown">&lt;p&gt;This colostomy takedown surgery is the second in the pair of surgeries I have
+had this year. If you would like to read the story of how I came to need a
+colostomy takedown please read &lt;a href=&quot;https://bitworking.org/news/2019/01/a-thing-that-happened&quot;&gt;A thing that
+happened&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;As opposed to the first surgery which was done as an emergency procedure, this
+was a planned surgery, which made a world of difference. We were able to
+research and hire a patient advocate to stay with me a few nights, apply for
+short term disability &lt;em&gt;before&lt;/em&gt; the surgery, etc.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-of-surgery&quot;&gt;Day of surgery&lt;/h2&gt;
+
+&lt;p&gt;I was told to arrive at 11 AM for a 2 PM surgery, but when I got there at 11
+they told me that both the surgeon and anesthetist had arrived and were ready
+to start, so my prep was actually pretty quick, they brought me back without
+Lynne to get me dressed and an IV started before Lynne was allowed to come back
+to see me, by the time they allowed her to come back and see me we only had 5
+minutes together before they wheeled me off to the operating room.&lt;/p&gt;
+
+&lt;p&gt;The prep for the surgery went well. I have deep and abiding issues with getting
+IVs, a leftover from a previous surgery years ago when I was traumatized with
+an awful IV experience. This time, instead of just sucking it up, I talked to
+the anesthesiologist before hand, they added notes to my chart about my issues
+with IVs, and I also, on their advice, talked to the nurse giving me the IV.
+She was very understanding and gave me a Lidocaine shot before giving me the
+IV. This turned out to be a much better strategy than sucking it up, and the IV
+was painless and easy.&lt;/p&gt;
+
+&lt;p&gt;Compared to the first surgery, which was an emergency surgery, I was awake for
+much more of the process leading up to the surgery, even helping to move myself
+onto the operating table and watching them apply straps to hold me in place. I
+was also woken up in the operating room at the end of the surgery, I remember
+moving off the operating table and being rolled into PACU.&lt;/p&gt;
+
+&lt;p&gt;Going into the surgery the goal was to do the whole thing laparoscopically, but
+if that didn’t work they would have to re-open me up in same dramatic fashion
+that they had for the first surgery. Also, if there was still too much swelling
+or scarring on my large intesting they might also have to give me an ileostomy
+that I would then need to wait yet another three months to have taken down.
+Luckily all went well and when I woke up I was glad to hear that they were able
+to to do the whole thing laparoscopically, and I didn’t have an ostomy of any
+kind.&lt;/p&gt;
+
+&lt;p&gt;When coming out of surgery you initially have no pain medication in you, so
+they need to judge how much pain you are in and how much pain medication to give
+you. This is always a point of confusion post-op for me because I do this thing
+where I shake when I’m in extreme pain, not a little shaking mind you, I’m
+talking full-racking-body-swaying-the-hospital-bed shakes. This, unfortunately leads
+the nurse to believe I’m cold, and not in pain, so they start wrapping me in
+more and more layers of blankets. By the time they let Lynne into the PACU I
+was under 10 blankets, 6 over my body and 4 around my head. She explained that
+I wasn’t cold, but in pain. The nurse gave me my first dose of pain medicine,
+but having just come out from under anesthesia I was a little incoherent:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Nurse: Did that help?
+
+Me: Yes.
+
+Lynne: You are still shaking, are you still in pain?
+
+Me: Yes.
+
+Lynne: So that last set of pain meds wasn't enough?
+
+Me: What pain meds?
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;  &lt;/div&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As you can see from this exchange that both the nurse and Lynne are saints.&lt;/p&gt;
+
+&lt;p&gt;After they had my pain under control they set me up with a pain pump and moved
+me to my room.&lt;/p&gt;
+
+&lt;p&gt;The doctors and nurses told me that the more I walked the better I would heal
+and I took them very seriously. I was out of PACU and in my room by 5pm and took my
+first walk an hour or so later, with Lynne pushing IV pole and me with a
+walker. Lynne then had to leave to take care of the kids for the night, so I
+took another walk with the help of the nurse at 8PM. That exhausted me and I
+took an hour nap, but that got me behind on the pain pump and I felt it when I
+woke up at 9PM.&lt;/p&gt;
+
+&lt;p&gt;My pain was mostly in area where colostomy was closed, except for the hiccups,
+which caused intense pain right below the rib cage. My Dr. explained that they
+were the result of the CO2 they pumped me full of for the laparoscopic surgery
+and that they should go away as my body absorbs the rest of the CO2.&lt;/p&gt;
+
+&lt;p&gt;I actually slept pretty well that first night, sleeping in solid blocks of 2-4
+hours and then waking up to use the pain pump.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-2&quot;&gt;Day 2&lt;/h2&gt;
+
+&lt;p&gt;I was serious about my walking and if I was awake and had my pain under control
+I would try to get out for a walk. I was also serious about keeping hydrated,
+as I had been since the first surgery, as becoming dehydrated and constipated
+with a colostomy was something I dreaded. So as the day wore on I kept drinking
+and walking, but after a while it felt like I couldn’t drink any more and my
+stomach was getting sore. The Dr for that shift suggested I stop drinking, that
+my bowels probably hadn’t woken up and that everything I was drinking was just
+accumulating in my stomach. I did hold off on the liquids for the rest of the
+day, and then asked my Dr. when I saw her later in the day and she agreed with
+his prognosis. At this point I suggested that if I wasn’t going to drink maybe
+they should increase my rate of IV fluids above the KVO (Keep Vein Open) level
+so I didn’t get dehydrated. She agreed and actually changed me to IV Lactate. I
+don’t think anyone would have thought of this on their own, just pointing this
+out that no matter how great the care, you really need to be your own advocate.&lt;/p&gt;
+
+&lt;p&gt;That morning they removed both the catheter and pain pump, I apparently didn’t
+use the pain pump very much, and they moved to oral pain meds, falling back to
+IV injection for breakthrough pain, which didn’t happen very often. I was still
+having hiccups, which were still painful, and would be triggered by coughing,
+laughing, or most annoyingly, just saying the word “hiccups”.&lt;/p&gt;
+
+&lt;p&gt;I walked 6 more times, now without the walker since without the pain pump I was
+very stable on my feet. As the day went on my stomach got better and towards
+evening started to pee &lt;strong&gt;a lot&lt;/strong&gt; more, around 700ml every hour or two. The IV
+fluids were only coming in at 75ml/h so that wasn’t the source and I hoped that
+my digestive tract had started to wake up.&lt;/p&gt;
+
+&lt;p&gt;I had a total of four bowel movements during the day, but they were entirely
+blood clots, and each one was progressively smaller than the previous one, and
+since I didn’t pass any gas they didn’t “count”. What the staff were waiting
+for was me to pass gas, at which point I would be allowed to transition from
+“clears” to solid foods. I know they were blood clots and not “blood” because I
+dragged a nurse into the bathroom each time to inspect them and confirm that it
+wasn’t “blood”.&lt;/p&gt;
+
+&lt;p&gt;I took 3 more walks through the evening for a total of 10 walks for the whole
+day.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-3&quot;&gt;Day 3&lt;/h2&gt;
+
+&lt;p&gt;Early in the morning I saw the other Dr and he said I had urinated over 3L
+during the night, in addition the nurse listened to abdomen and said it sounded
+very active, so I was hopeful that would be enough evidence that my bowels had
+woken up.&lt;/p&gt;
+
+&lt;p&gt;The majority of the day was again more walks, keeping on top of oral pain meds,
+and napping between walks. The only change was that it was now beautiful and I
+upgraded to walking around outside.&lt;/p&gt;
+
+&lt;p&gt;The hiccups are gone at this point, and the pain at this point is mostly in the
+site of the former colostomy and only during transitions to/from walking/lying
+down.&lt;/p&gt;
+
+&lt;p&gt;I saw my surgeon at 3 PM and she wrote me up for solid foods, and I immediately
+ate one Ritz cracker, from a sleeve I had squirreled away in my travel bad for
+just such an occasion. Later they deliver the hospital dinner, which I nibbled
+at, and then went for another walk and then back to sleeping. I woke later that
+evening and had another small bowl of chicken noodle soup they prepared at the
+nurses station, got my pain pills, and went back to sleeping.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-4&quot;&gt;Day 4&lt;/h2&gt;
+
+&lt;p&gt;I took my first walk at 6 AM and had a bowl movement with real stool and a
+small amount of blood clot. I also had a lot of gas coming out both ends of my
+digestive tract.&lt;/p&gt;
+
+&lt;p&gt;Later that morning I walked down to Au Bon Pain in the hospital lobby to get a
+croissant for breakfast, and I also went back down there for lunch. Yes, the
+hospital food was that bad. The folks working at the Au Bon Pain seemed
+oblivious to me wearing a hospital gown and pushing my IV pole as I ordered my
+lunch, but some of the other patrons gave me wary looks.&lt;/p&gt;
+
+&lt;p&gt;I was released later that day.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-5&quot;&gt;Day 5&lt;/h2&gt;
+
+&lt;p&gt;I didn’t realize that when they released me I was still on 10mg of oxy every 4
+hours, but they wrote a prescription for 5mg of oxy every four hours. It took me
+some time to coordinate my pills and get on an overlapping Motrin/Tylenol shift
+with just oxy for the breakthrough pain.&lt;/p&gt;
+
+&lt;p&gt;At this point I am home and walking 2-3 times a day, where each walk is about a
+mile long. A new symptom appears at this point, occasionally I will get a
+muscle cramp in my abdomen around the old ostomy site, and that will slowly
+spread across my entire upper abdomen. It usually only lasts a minute or two,
+but it is fairly painful when it happens.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-7&quot;&gt;Day 7&lt;/h2&gt;
+
+&lt;p&gt;I am no longer using the oxy for breakthrough pain.&lt;/p&gt;
+
+&lt;p&gt;I did have a bit of a panic this day, I had been regular and stools were
+beginning to become more formed, but then I “missed”, or really just went a few
+hours over when I was due for a BM, so I tried lots of things, taking a stool
+softener, drinking apple juice, etc. A few hours later I had a normal BM, but
+unfortunately all the things I had tried to loosen up my stools were still in
+my system working away and I ended up giving myself diarrhea and re-irritating
+my bowels. Fortunately that died down over the next 24 hours.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-11&quot;&gt;Day 11&lt;/h2&gt;
+
+&lt;p&gt;No longer taking Motrin or Tylenol on a regular basis. At this point I am fine
+if I am standing, walking, or lying down, but sitting gets uncomfortable, and
+if I sit too long then when I stand up the area just under my ribs feels
+uncomfortable, it’s hard to describe, bit it almost feels like my intenstines
+stiffen into one position when I sit and then when I stand up they resist, in a
+painful way, moving back into the standing position.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-12&quot;&gt;Day 12&lt;/h2&gt;
+
+&lt;p&gt;Stopped wet packing the former colostomy site as it was almost completely
+closed.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-14&quot;&gt;Day 14&lt;/h2&gt;
+
+&lt;p&gt;Actually had enough brain power to do some real programming, but that only
+lasted for about 30 minutes; it is shocking how much pain and healing will take
+out of you and turn your brain to mush.&lt;/p&gt;
+
+&lt;h2 id=&quot;day-30&quot;&gt;Day 30&lt;/h2&gt;
+
+&lt;p&gt;First day back to work. I am still taking Motrin occasionally, usually if I
+just try to do too much. I can now sit for much longer periods of time, and I
+don’t get that stiffness in my abdomen when I stand, but I will still
+occasionally get a muscle spasm around the old ostomy site. All my wounds are
+closed at this point, but my abdomen is covered with scars, swollen in some
+areas from the last surgery and distened from where the colostomy was; in
+summary I look like my stomach was run over with farm equipment.&lt;/p&gt;
+
+&lt;p&gt;At this point I am 20 lbs lighter than when I went into the emergency room for
+that first surgery. I lost 15 lbs from the first surgery and another 5 lbs from
+this latest surgery. I’m fine with the weight loss, just not what I had to go
+through to get here.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">This colostomy takedown surgery is the second in the pair of surgeries I have had this year. If you would like to read the story of how I came to need a colostomy takedown please read A thing that happened.</summary></entry><entry><title type="html">Webmention on Google Cloud Run</title><link href="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run" rel="alternate" type="text/html" title="Webmention on Google Cloud Run" /><published>2019-05-06T00:00:00-04:00</published><updated>2019-05-06T20:03:25-04:00</updated><id>https://bitworking.org/news/2019/05/webmention-on-google-cloud-run</id><content type="html" xml:base="https://bitworking.org/news/2019/05/webmention-on-google-cloud-run">&lt;p&gt;I just published
+&lt;a href=&quot;https://github.com/jcgregorio/webmention-run&quot;&gt;webmention-run,&lt;/a&gt; a &lt;a href=&quot;https://cloud.google.com/run/docs/&quot;&gt;Google
+Run&lt;/a&gt; application written in
+&lt;a href=&quot;https://golang.org&quot;&gt;Go&lt;/a&gt; that implements
+&lt;a href=&quot;https://indieweb.org/Webmention&quot;&gt;Webmention&lt;/a&gt;. I’m now using this to handle
+webmentions on &lt;a href=&quot;http://bitworking.org&quot;&gt;bitworking.org&lt;/a&gt;. Given the generous free
+quota for Google Run I don’t expect this to cost me anything. This is on top of
+using &lt;a href=&quot;https://firebase.google.com/docs/hosting&quot;&gt;Firebase Hosting&lt;/a&gt; to host the
+static (&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;) parts of my blog, which is also
+effectively free.&lt;/p&gt;
+
+&lt;p&gt;Another awesome feature is that both services will provide SSL certificates; in
+my case Firebase Hosting provides the cert for https://bitworking.org, and
+Google Cloud Run provides the SSL cert for the subdomain where my instance of
+&lt;code class=&quot;highlighter-rouge&quot;&gt;webmention-run&lt;/code&gt; is running, which is the subdomain
+https://webmention.bitworking.org.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I just published webmention-run, a Google Run application written in Go that implements Webmention. I’m now using this to handle webmentions on bitworking.org. Given the generous free quota for Google Run I don’t expect this to cost me anything. This is on top of using Firebase Hosting to host the static (Jekyll) parts of my blog, which is also effectively free.</summary></entry><entry><title type="html">The Great Famine of 1315-1317</title><link href="https://bitworking.org/news/2019/05/great-famine-of-1315-1317" rel="alternate" type="text/html" title="The Great Famine of 1315-1317" /><published>2019-05-04T00:00:00-04:00</published><updated>2019-05-04T20:53:23-04:00</updated><id>https://bitworking.org/news/2019/05/great-famine-of-1315-1317</id><content type="html" xml:base="https://bitworking.org/news/2019/05/great-famine-of-1315-1317">&lt;h1 id=&quot;great-famine&quot;&gt;Great Famine&lt;/h1&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://en.wikipedia.org/wiki/Great_Famine_of_1315–1317&quot;&gt;Great Famine of
+1315-1317&lt;/a&gt; only
+lasted two years, was no where close to the change in climate that we are
+looking in the face right now, and it wiped out 10-25% of the population.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;To provide some measure of relief, the future was mortgaged by slaughtering
+the draft animals, eating the seed grain, abandoning children to fend for
+themselves (see “Hansel and Gretel”) and, among old people, voluntarily
+refusing food for the younger generation to survive.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;One of the things that frightens me most about climate change is that small
+changes can have drastic affects and institutions can unravel much more
+quickly than anyone imagines. My fear is that by the time things get bad
+enough that we need to try things like geoengineering our institutions will
+have fallen apart and we’ll be incapable of launching such efforts.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Great Famine</summary></entry><entry><title type="html">Concentrated corporate power as a threat to democracy</title><link href="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy" rel="alternate" type="text/html" title="Concentrated corporate power as a threat to democracy" /><published>2019-03-05T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy</id><content type="html" xml:base="https://bitworking.org/news/2019/03/concentrated-corporate-power-as-a-threat-to-democracy">&lt;blockquote&gt;
+  &lt;p&gt;In this essay, I will argue that the interaction of concentrated corporate
+power and politics it a threat to the functioning of the free market economy
+and to economic prosperity it can generate, and a threat to democracy as
+well.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.nber.org/papers/w23593.pdf&quot;&gt;Towards a Political Theory of the Firm&lt;/a&gt; (PDF).&lt;/p&gt;
+
+&lt;p&gt;Glad to see the Chicago School of Economics trying to resuscitate their image
+after &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;the previous damage they’ve
+done&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In this essay, I will argue that the interaction of concentrated corporate power and politics it a threat to the functioning of the free market economy and to economic prosperity it can generate, and a threat to democracy as well.</summary></entry><entry><title type="html">simplifying income</title><link href="https://bitworking.org/news/2019/03/simplifying-income" rel="alternate" type="text/html" title="simplifying income" /><published>2019-03-05T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/simplifying-income</id><content type="html" xml:base="https://bitworking.org/news/2019/03/simplifying-income">&lt;p&gt;&lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;Bill Gates&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In terms of revenue collection, you wouldn’t want to just focus on the
+ ordinary income rate, because people who are wealthy have a rounding error
+ of ordinary income.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;I would love to see the U.S. do away with categories of income (income, earned
+interest, capital gains, etc) and make it all just one bucket and tax that at
+a progressive rate.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Bill Gates</summary></entry><entry><title type="html">CEO Pay</title><link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/ceo-pay</id><content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
+I might have to clarify that to “&lt;a href=&quot;https://www.institutionalinvestor.com/article/b1db3jy3201d38/The-MBA-Myth-and-the-Cult-of-the-CEO&quot;&gt;the &lt;strong&gt;myth&lt;/strong&gt; of the Harvard MBA is the second
+most damaging thing to happen to business in the last 40 years&lt;/a&gt;”.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We found no statistically significant alphas — despite testing every
+possible school with a reasonable sample size. MBA programs simply do not
+produce CEOs who are better at running companies, if performance is measured
+by stock price return.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;But if there is no evidence that stock returns are attributable to CEOs,
+then what justification is there for their stratospheric pay? How much
+longer will investors and boards be fooled by randomness and hollow
+credentialism?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years. I might have to clarify that to “the myth of the Harvard MBA is the second most damaging thing to happen to business in the last 40 years”.</summary></entry><entry><title type="html">I’m not done trickling on you!</title><link href="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you" rel="alternate" type="text/html" title="I'm not done trickling on you!" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/im-not-done-trickling-on-you</id><content type="html" xml:base="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU?start=1270&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Look at poor Ken, so freaked out that everyone is talking about taxes.
+Obviously a firm believer in &lt;a href=&quot;https://en.wikipedia.org/wiki/Trickle-down_economics&quot;&gt;trickle-down economics&lt;/a&gt;, his entire screed boils down to:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;a href=&quot;https://www.crazygames.com/game/dont-tax-me-bro&quot;&gt;Don’t tax me, bro!&lt;/a&gt; I’m not done trickling on you!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ironically he refers to Bill Gates, who appears &lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;not to agree with Ken at all&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;To get the full context it’s useful to watch the video from the beginning
+where Historian Rutger Bregman schools Michael Dell on his ignorant comment
+about a top marginal tax rate of 70%:&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>

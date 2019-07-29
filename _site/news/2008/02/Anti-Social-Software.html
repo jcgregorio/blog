@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Anti-Social Software</title>
+  <meta name="description" content="Enough of this so-called Social Software, what I want is Anti-Social Software, it isn&#39;t about my friends or my connections, it&#39;s all about me. Me. Me. Me. In...">
+  <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2008/02/Anti-Social-Software">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <link rel="author" href="/about/">
+  <link href="https://webmention.bitworking.org/IncomingWebMention" rel="webmention" />
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Anti-Social Software">
+  <meta name="twitter:description" content="  Enough of this so-called Social Software, what I want is Anti-Social Software, it isn't about my friends or my connections, it's all about me. Me. Me. Me. Introducing my Me page. Not that I'm really anti-social, the launch of Social Graph just got me thinking and I decided to gather as much of my public information available from various sites as I could, and put it on one page to see what it looks like. That's all there is to it, but the process did generate some thoughts. Privacy With Social Graph there was some questions about privacy, not that the individual bits of information were private, but that collecting previously public information and organizing it just so violated someone's privacy. It's an interesting question because the same questions got raised about Street View. Taking pictures from public land is legal. Similarly your public records at the town hall can be viewed by anyone. The crystallization point seems to be when it is done in bulk and then made available freely. But there's the rub, previously all this info, such as deeds, etc. were all available, but you needed to physically go down to the town hall to get them, you needed to stand out in the street and take the picture yourself, or pay someone to do it. Either hire a private detective or outfit a van with cameras and pay someone to drive it around. It took time, or it's equivalent, money. All this information was already available, but only to people that could afford it. So are we really talking about privacy, or is this about class?  Sorry, no answers here, just questions. Life A second reason for constructing the page is that Lynne and I are also entering that phase of life where the kids are finally getting a little older and we start making contact with people we haven't talked to in years. We went to a college reunion a few years back and apologized to one of our professors for not keeping in touch. He said that he didn't really expect us to, that everyone graduates, scatters to the wind, and only after getting married and having kids entering middle or high school do they start to make contact again. Anyway, we're entering that phase and this page is a nice place to point renewed contacts to. Technology This page was actually a relative pain to put together. I have various cron jobs running to pull the information down and then I run the results through XSLT to filter out just the information I need. (Yes, I could have used Venus, but I think I still would have needed to create a new config file and possibly a new filter for each site I wanted to include, and each of those would have to be added to a cron job.) That wouldn't have helped with the Dopplr badge. Nor would it have helped with del.icio.us which already has a mechanism for exporting an HTML representation of your recent bookmarks. Also, many sites like del.icio.us and GoodReads support a slew of query parameters to control the output of either the HTML or syndication feed, but those are just documented in HTML, there isn't an interactive web page to construct those URIs and see dynamically what the output will look like.  While the Dopplr badge was probably the easiest to add, it's the one the concerns me the most since that information is completely unindexable. Tom Insam of Dopplr wrote to inform me that Dopplr does have an API. Similarly the badges that GoodReads offers are either Flash or pure images, also unindexable.  Finally, if you offer a way to generate HTML, ala del.icio.us, then a nice feature would be to offer an AJAXy interface that let you construct the URI and immediately see the results, as opposed to what I had to do which was constantly flipping back and forth between the documentation and 'curl' or a web browser tweaking query parameters.
+  
+    You may be interested in my 'me page' which is built with 0% server side processing. Everything is either the result of a json/xml fetch or - in the case of last.fm - a flash object.
+
+">
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">
+      <img src="https://bitworking.org/images/newlogo.png" >
+      BitWorking
+    </a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Anti-Social Software</h1>
+    <p class="post-meta">
+      <a class="u-url" href="/news/2008/02/Anti-Social-Software">
+        <time datetime="2008-02-16T00:00:00-05:00" itemprop="datePublished" class="dt-published">
+          
+          Feb 16, 2008
+        </time>
+      </a>
+      • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
+          itemscope itemtype="http://schema.org/Person">
+          <img class="u-photo" src="/images/joe2016.jpg" alt="" style="height: 16px; border-radius: 8px; margin-right: 4px;" />
+          <span
+            itemprop="name">Joe Gregorio</span></span></a>
+      </p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+      <p>Enough of this so-called Social Software, what I want is Anti-Social Software, it isn't about my friends or my connections, it's all about me. Me. Me. Me.</p> <p>Introducing my <a href="http://bitworking.org/projects/me/">Me page</a>.</p> <p>Not that I'm really anti-social, the launch of <a href="http://code.google.com/apis/socialgraph/">Social Graph</a> just got me thinking and I decided to gather as much of my public information available from various sites as I could, and put it on one page to see what it looks like. That's all there is to it, but the process did generate some thoughts.</p> <h3>Privacy</h3> <p>With Social Graph there was some questions about privacy, not that the individual bits of information were private, but that collecting previously public information and organizing it <em>just so</em> violated someone's privacy. It's an interesting question because the same questions got raised about Street View. Taking pictures from public land is legal. Similarly your public records at the town hall can be viewed by anyone. The crystallization point seems to be when it is done in bulk and then made available freely. But there's the rub, previously all this info, such as deeds, etc. were all available, but you needed to physically go down to the town hall to get them, you needed to stand out in the street and take the picture yourself, or pay someone to do it. Either hire a private detective or outfit a van with cameras and pay someone to drive it around. It took time, or it's equivalent, money. All this information was already available, but only to people that could afford it. So are we really talking about privacy, or is this about class? </p> <p>Sorry, no answers here, just questions.</p> <h3>Life</h3> <p>A second reason for constructing the page is that Lynne and I are also entering that phase of life where the kids are finally getting a little older and we start making contact with people we haven't talked to in years. We went to a college reunion a few years back and apologized to one of our professors for not keeping in touch. He said that he didn't really expect us to, that everyone graduates, scatters to the wind, and only after getting married and having kids entering middle or high school do they start to make contact again. Anyway, we're entering that phase and this page is a nice place to point renewed contacts to.</p> <h3>Technology</h3> <p>This page was actually a relative pain to put together. I have various cron jobs running to pull the information down and then I run the results through XSLT to filter out just the information I need. (Yes, I could have used Venus, but I think I still would have needed to create a new config file and possibly a new filter for each site I wanted to include, and each of those would have to be added to a cron job.) That wouldn't have helped with the <a href="http://www.dopplr.com">Dopplr</a> badge. Nor would it have helped with <a href="http://del.icio.us/">del.icio.us</a> which already has a mechanism for exporting an HTML representation of your recent bookmarks. Also, many sites like del.icio.us and <a href="http://www.goodreads.com/">GoodReads</a> support a slew of query parameters to control the output of either the HTML or syndication feed, but those are just documented in HTML, there isn't an interactive web page to construct those URIs and see dynamically what the output will look like. </p> <p><del>While the Dopplr badge was probably the easiest to add, it's the one the concerns me the most since that information is completely unindexable.</del> <ins>Tom Insam of Dopplr wrote to inform me that <a href="http://dopplr.pbwiki.com/">Dopplr does have an API</a>.</ins> Similarly the badges that GoodReads offers are either Flash or pure images, also unindexable. </p> <p>Finally, if you offer a way to generate HTML, ala del.icio.us, then a nice feature would be to offer an AJAXy interface that let you construct the URI and immediately see the results, as opposed to what I had to do which was constantly flipping back and forth between the documentation and 'curl' or a web browser tweaking query parameters.</p>
+  <div class="commentContent" id="X1">
+    You may be interested in my 'me page' which is built with 0% server side processing. Everything is either the result of a json/xml fetch or - in the case of last.fm - a flash object.
+
+Link: http://antrix.net/recently/
+    <p class="commentByLine">Posted by
+       <a href="http://antrix.net/">antrix</a> on <a href="#X1" title="2008-02-16T22:48:13.312702">2008-02-16</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Re: Privacy; the UK's Data Protection rules basically hinge around a single question; does the stored data allow an individual to be identified?
+
+So, having photographs of a place is fine, having some records is fine; but when some agent (human or otherwise) could process the two and pick a person out, that needs to be monitored.
+
+(Side issue; I'm getting the robot message, but the little icon next to the name field is a green tick... trying again with http:// prepended, if this goes through it's worked)
+    <p class="commentByLine">Posted by
+       <a href="http://ibroadfo.tumblr.com">iain</a> on <a href="#X2" title="2008-02-17T07:07:50.591708">2008-02-17</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>As long as <a href="http://www.deezer.com/track/67812">Antisocial</a> is concerned. </p><p><small>Sorry, couldn't resist the joke, even if only Frenchies understand ;-)</small></p>
+    <p class="commentByLine">Posted by
+       <a href="http://ltgt.net">Thomas Broyer</a> on <a href="#X3" title="2008-02-17T18:26:44.712871">2008-02-17</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>ObNitPick: Technically, what you're describing here is merely asocial, not anti-social.
+</p><p>
+BTW, I've noticed a number of <a href="http://www.readr.com/">startups</a> based around aggregating this sort of 'me page' though some are <a href="http://friendfeed.com/">more</a> <a href="http://blendix.com/">social</a> than <a href="http://www.isolatr.com/">others</a>.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://michaelbernstein.com">Michael R. Bernstein</a> on <a href="#X4" title="2008-02-18T01:24:22.239307">2008-02-18</a>
+    </p>
+</div>
+  
+
+    <a href="https://brid.gy/publish/twitter"></a>
+  </div>
+
+  <script type="text/javascript" charset="utf-8">
+    fetch('https://webmention.bitworking.org/Mentions', {
+      cache: 'no-cache',
+    }).then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = text;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2008/02/Anti-Social-Software';
+      this.page.identifier = 'https://bitworking.org/news/2008/02/Anti-Social-Software';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</article>
+
+      </div>
+    </main><footer class="site-footer">
+
+  <div class="wrapper">
+
+    
+    <div class="PageNavigation">
+      
+      <a class="prev" href="/news/2008/02/How-To-Do-RESTful-Partial-Updates">&laquo;
+        How To Do RESTful Partial Updates</a>
+      
+      
+      <a class="next"
+        href="/news/2008/02/Considering-PATCH">Considering PATCH &raquo;</a>
+      
+    </div>
+    
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a rel=me class="u-email" href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio" rel=me><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          <li>
+            <a rel="me" href="https://mastodon.cc/@jcgregorio">
+              <span class=icon>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 216 232" width="16px" xml:space="preserve">
+                  <path d="M211.80734 139.0875c-3.18125 16.36625-28.4925
+                  34.2775-57.5625 37.74875-15.15875 1.80875-30.08375
+                  3.47125-45.99875
+                  2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0
+                  2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47
+                  27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625
+                  39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125
+                  9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234
+                  213.82 1.40609 165.31125.20859
+                  116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33
+                  32.97625-65.0825 32.97625-65.0825C49.67234 3.45375
+                  78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125
+                  3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825
+                  0 0 .41375 37.13375-4.59875 62.915" fill="gray"/>
+                  <path d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675" fill="#fff"/>
+                </svg>
+              </span>
+              <span class="username">jcgregorio</span></a>
+            </a>
+          </li>
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking" rel=me><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="h-card footer-col footer-col-3">
+        <p class="p-note">Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+        <a class="p-name u-url" href="https://bitworking.org" style="display: none"><img
+          class="u-photo" src="/images/joe2016.jpg" alt="" />Joe Gregorio</a>
+        <a rel=me class="u-email" href="mailto:joe@bitworking.org">joe@bitworking.org</a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

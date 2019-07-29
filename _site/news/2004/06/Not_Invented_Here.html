@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Not Invented Here</title>
+  <meta name="description" content="Jeremy Gray on [atom-syntax] People have often argued that Atom should leverage existing web technology wherever possible but threads like this seem to repea...">
+  <meta name="google-site-verification" content="vZSL2JjLp0S_VXH743XRWWgko2D6B124A8pUAqT4FFk" />
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="https://bitworking.org/news/2004/06/Not_Invented_Here">
+  <link rel="alternate" type="application/atom+xml" title="BitWorking" href="/news/feed/">
+  <link rel="author" href="/about/">
+  <link href="https://webmention.bitworking.org/IncomingWebMention" rel="webmention" />
+  <script async defer src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_CHTML'></script>
+  <meta name="twitter:site"    content="@bitworking">
+  <meta name="twitter:creator" content="@bitworking">
+  <meta name="twitter:title"   content="Not Invented Here">
+  <meta name="twitter:description" content="  
+Jeremy Gray on [atom-syntax] People have often argued that Atom should leverage existing
+web technology wherever possible but threads like this seem to repeatedly
+steer us towards re-invention, in a sense, of technology by lifting (and
+sometimes mutating) it into Atom when it could be leveraged more directly.
+As a few off-the-cuff examples of pseudo-NIH we have: the overlap of
+numerous Atom elements with those of Dublin Core, recent discussion
+regarding definition of and reference to elements for purposes of reuse that
+would be provided for at a specification level by RDF, invention of
+API/protocol solutions instead of profiling/extension of WebDAV, etc. Of
+course, there are times, places, and reasons to _not_ leverage a given
+technology A in the face of requirement B, but one can only pursue so much
+NIH before attempts at its justification wear thin. :( 
+This reminded me recently of Tim Bray's comments on OpenOffice:
+
+The way that these guys store the data is massively, fiendishly, outrageously clever. They have their own XML tag set, which includes (in one namespace) all the basic word-processing, spreadsheet, and slide-show machinery. Then, for graphics they use SVG, for styles they use XSL-FO, for links they use XLink... you get the picture, they've invented the absolute minimum possible.
+Update:  I couldn't resist. Here is a short form of 
+Mark Pilgrim's Atom feed, and here is the same information with
+as many of the elements moved into equivalent namespaces
+for as many equivalents as I could find.
+
+">
+  <meta name="twitter:card"  content="summary">
+  <meta name="twitter:image" content="https://bitworking.org/images/newlogo.png">
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">
+      <img src="https://bitworking.org/images/newlogo.png" >
+      BitWorking
+    </a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+            <a class="page-link" href="/about/">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Not Invented Here</h1>
+    <p class="post-meta">
+      <a class="u-url" href="/news/2004/06/Not_Invented_Here">
+        <time datetime="2004-06-07T00:00:00-04:00" itemprop="datePublished" class="dt-published">
+          
+          Jun 7, 2004
+        </time>
+      </a>
+      • <a rel="author me" class="p-author h-card" href="/about"> <span itemprop="author"
+          itemscope itemtype="http://schema.org/Person">
+          <img class="u-photo" src="/images/joe2016.jpg" alt="" style="height: 16px; border-radius: 8px; margin-right: 4px;" />
+          <span
+            itemprop="name">Joe Gregorio</span></span></a>
+      </p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+      <blockquote><p><a href="http://www.imc.org/atom-syntax/mail-archive/msg04458.html">
+Jeremy Gray on [atom-syntax]</a> People have often argued that Atom should leverage existing
+web technology wherever possible but threads like this seem to repeatedly
+steer us towards re-invention, in a sense, of technology by lifting (and
+sometimes mutating) it into Atom when it could be leveraged more directly.
+As a few off-the-cuff examples of pseudo-NIH we have: the overlap of
+numerous Atom elements with those of Dublin Core, recent discussion
+regarding definition of and reference to elements for purposes of reuse that
+would be provided for at a specification level by RDF, invention of
+API/protocol solutions instead of profiling/extension of WebDAV, etc. Of
+course, there are times, places, and reasons to _not_ leverage a given
+technology A in the face of requirement B, but one can only pursue so much
+NIH before attempts at its justification wear thin. :( </p></blockquote>
+<p>This reminded me recently of <a href="http://www.tbray.org/ongoing/When/200x/2004/03/26/OpenOffice">Tim Bray's comments on OpenOffice</a>:</p>
+<blockquote><p>
+The way that these guys store the data is massively, fiendishly, outrageously clever. They have their own XML tag set, which includes (in one namespace) all the basic word-processing, spreadsheet, and slide-show machinery. Then, for graphics they use SVG, for styles they use XSL-FO, for links they use XLink... you get the picture, they've invented the absolute minimum possible.</p></blockquote>
+<p><b>Update:</b>  I couldn't resist. Here is a <a href="http://bitworking.org/projects/atom/examples/original.atom.html">short form of 
+Mark Pilgrim's Atom feed</a>, and here is the <a href="http://bitworking.org/projects/atom/examples/reuse.atom.html">same information with
+as many of the elements moved into equivalent namespaces</a>
+for as many equivalents as I could find.</p>
+
+  <div class="commentContent" id="X1">
+    I'm sort of vaguely curious: how would one go about leveraging all the beauty and joy of Dublin Core? I just don't have much experience with this stuff: all I really know about is RSS 1.0's use of dc:date. dc:date is whatever you want, "5th of June" is a perfectly valid dc:date, W3CDTF is only mentioned as "best practice". RSS 1.0 says it's dc:date, unlike DCMI's dc:date, is a W3CDTF and nothing but, but quite possibly without having noticed that W3CDTF says that anyone who uses it needs to profile it, to say what precision is required and allowed, and how to interpret missing precision. RSS 1.0 doesn't, so many people assume that the example is normative, and don't realize that 2004 is a perfectly valid RSS 1.0 dc:date with completely undefined precision beyond the year. So, err, what's the value in leveraging things like Dublin Core again?
+    <p class="commentByLine">Posted by
+       <a href="http://philringnalda.com">Phil Ringnalda</a> on <a href="#X1" title="2004-06-08T00:17:43">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    How is defining a profile of an already existing element in Dublin Core more work than defining a new element from scratch?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2004-06-08T08:25:22">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>First, a little nitpick with the example. IIRC, you can't put default namespace attributes in a namespace qualified element like dc:description in your example. </p>
+<p>At the Atom Meeting, Eric Miller said using Atom's namespace for a lot of this stuff made sense, since we're restricting the acceptable values, in many cases.</p>
+<p>WRT to the WebDAV stuff, I agree we shouldn't reinvent it. I just think it will go nowhere if we require its use at the most basic conformance level.</p>
+<p>Don't you think the Atom community is currently taking a pretty a hard look at the existing drafts, looking for cases where we could re-use other work? I definitely feel consensus forming around removing binary stuff from atom:content.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://franklinmint.fm">Robert Sayre</a> on <a href="#X3" title="2004-06-08T10:20:30">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>"IIRC, you can't put default namespace attributes in a namespace qualified element like dc:description in your example."</p>
+<p>You appear to have recalled incorrectly.</p>
+<p>"At the Atom Meeting, Eric Miller said using Atom's namespace for a lot of this stuff made sense, since we're restricting the acceptable values, in many cases."</p>
+<p>Dublin Core specifically states that you are to restrict the acceptable values in many cases. They usually say something like "Recommended best practice is to select a value from a controlled vocabulary" </p>
+<p>"Don't you think the Atom community is currently taking a pretty a hard look at the existing drafts, looking for cases where we could re-use other work?"</p>
+<p>This was just an experiment, not a proposal. I like to have a side-by-side comparison in front of me to base decisions on.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2004-06-08T10:46:59">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>I think I did recall correctly...</p>
+<p>"Note that default namespaces do not apply directly to attributes."</p>
+<p><a href="http://www.w3.org/TR/REC-xml-names/#defaulting">http://www.w3.org/TR/REC-xml-names/#defaulting</a><br />
+<a href="http://www.imc.org/atom-syntax/mail-archive/msg03903.html">http://www.imc.org/atom-syntax/mail-archive/msg03903.html</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://franklinmint.fm">Robert Sayre</a> on <a href="#X5" title="2004-06-08T10:56:01">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>There is a BIG difference between </p>
+<p>"you can't put default namespace attributes in a namespace qualified element"</p>
+<p>and </p>
+<p>"default namespaces do not apply directly to attributes."</p>
+<p>The latter being true, the former being false.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X6" title="2004-06-08T10:58:58">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Sorry, I'll try to be more precise. You can put them there, but the 'type' attribute in dc:description is not <a href="http://purl.org/atom/ns#type">http://purl.org/atom/ns#type</a> (it's not in any namespace), as I understand it. </p>
+<p>Are you saying I'm incorrect, or that this doesn't matter?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://franklinmint.fm">Robert Sayre</a> on <a href="#X7" title="2004-06-08T11:09:34">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>You are correct that @type does not reside in the Atom namespace. </p>
+<p>It also doesn't matter.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X8" title="2004-06-08T11:24:37">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>"WRT to the WebDAV stuff, I agree we shouldn't reinvent it. I just think it will go nowhere if we require its use at the most basic conformance level."</p>
+<p>No one is suggesting Atom require the use of WebDAV.  Atom uses only the methods from the HTTP spec without any need for WebDAV features at this time.  The methods from the HTTP spec are the core functionality in WebDAV, too.  On top of the HTTP-spec methods, WebDAV adds things like multi-user locking and transactions, things Atom users may need in the future.</p>
+<p>If or when Atom needs those features from WebDAV, Atom is positioned to make a profile of WebDAV for Atom users just as it is making a profile of HTTP for Atom users today.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X9" title="2004-06-08T12:08:24">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>See, I thought that the NEWRESOURCE stuff was specifically intended for collections. </p>
+<p>// And that it was requiring that the PostURI be a collection resource.</p>
+<p>It became clear later that even the WebDAV experts weren't in complete agreement on that.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://franklinmint.fm">Robert Sayre</a> on <a href="#X10" title="2004-06-08T12:33:23">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>I'm often reminded of my need to break down and get my blog up and running, something I've only been holding back on because I've wanted to build my own blog system as a way to dogfood my company's tech and I've been too busy with work itself to do that. :( </p>
+<p>Nothing like being quoted on someone else's blog to really kick you in the butt. :)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:jeremy@jeremygray.ca">Jeremy Gray</a> on <a href="#X11" title="2004-06-08T12:59:43">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Funky Atom!
+    <p class="commentByLine">Posted by
+       <a href="http://www.kbcafe.com">Randy Charles Morin</a> on <a href="#X12" title="2004-06-08T13:00:43">2004-06-08</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <p>I wish WebDAV had a core profile we could use directly in Atom, without inventing our own API. E.g., the core of WebDAV should be something like what the Atom API looks like at the moment, so we could just use it and easilly apply the other ornaments of WebDAV in the future.</p>
+<p>As WebDAV doesn't have such a core profile afaik, we need to build our own "core" API. If the community feels that the Atom API doesn't give enough functionality, we can either extend the API to be more WebDAV-like, or replace it completely with WebDAV. The current API and WebDAV could also co-exist quite nicely.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.virtuelvis.com/quark/">Asbj&oslash;rn Ulsberg</a> on <a href="#X13" title="2004-06-08T16:51:35">2004-06-08</a>
+    </p>
+</div>
+  
+
+    <a href="https://brid.gy/publish/twitter"></a>
+  </div>
+
+  <script type="text/javascript" charset="utf-8">
+    fetch('https://webmention.bitworking.org/Mentions', {
+      cache: 'no-cache',
+    }).then(function(resp) {
+      if (!resp.ok) {
+        return
+      }
+      resp.text().then(function(text) {
+        document.getElementById('mentions').innerHTML = text;
+      });
+    });
+  </script>
+  <div id=mentions>
+  </div>
+
+  
+    <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = 'https://bitworking.org/news/2004/06/Not_Invented_Here';
+      this.page.identifier = 'https://bitworking.org/news/2004/06/Not_Invented_Here';
+    };
+
+    (function() {
+      var d = document, s = d.createElement('script');
+
+      s.src = 'https://bitworking-1.disqus.com/embed.js';
+
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+</article>
+
+      </div>
+    </main><footer class="site-footer">
+
+  <div class="wrapper">
+
+    
+    <div class="PageNavigation">
+      
+      <a class="prev" href="/news/2004/06/3270_Redux">&laquo;
+        3270 Redux</a>
+      
+      
+      <a class="next"
+        href="/news/2004/06/Welcome_John_Panzer">Welcome John Panzer &raquo;</a>
+      
+    </div>
+    
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              BitWorking
+            
+            </li>
+            
+            <li><a rel=me class="u-email" href="mailto:joe@bitworking.org">joe@bitworking.org</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/jcgregorio" rel=me><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">jcgregorio</span></a>
+
+          </li>
+          
+
+          <li>
+            <a rel="me" href="https://mastodon.cc/@jcgregorio">
+              <span class=icon>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 216 232" width="16px" xml:space="preserve">
+                  <path d="M211.80734 139.0875c-3.18125 16.36625-28.4925
+                  34.2775-57.5625 37.74875-15.15875 1.80875-30.08375
+                  3.47125-45.99875
+                  2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0
+                  2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47
+                  27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625
+                  39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125
+                  9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234
+                  213.82 1.40609 165.31125.20859
+                  116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33
+                  32.97625-65.0825 32.97625-65.0825C49.67234 3.45375
+                  78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125
+                  3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825
+                  0 0 .41375 37.13375-4.59875 62.915" fill="gray"/>
+                  <path d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675" fill="#fff"/>
+                </svg>
+              </span>
+              <span class="username">jcgregorio</span></a>
+            </a>
+          </li>
+
+          
+          <li>
+            <a href="https://twitter.com/bitworking" rel=me><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">bitworking</span></a>
+
+          </li>
+          
+
+        </ul>
+      </div>
+
+      <div class="h-card footer-col footer-col-3">
+        <p class="p-note">Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</p>
+        <a class="p-name u-url" href="https://bitworking.org" style="display: none"><img
+          class="u-photo" src="/images/joe2016.jpg" alt="" />Joe Gregorio</a>
+        <a rel=me class="u-email" href="mailto:joe@bitworking.org">joe@bitworking.org</a>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
