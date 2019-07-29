@@ -1,0 +1,103 @@
+[debug] [2019-07-29T02:16:19.005Z] ----------------------------------------------------------------------
+[debug] [2019-07-29T02:16:19.007Z] Command:       /home/jcgregorio/node/bin/node /home/jcgregorio/node/bin/firebase deploy
+[debug] [2019-07-29T02:16:19.008Z] CLI Version:   6.5.0
+[debug] [2019-07-29T02:16:19.008Z] Platform:      linux
+[debug] [2019-07-29T02:16:19.008Z] Node Version:  v8.12.0
+[debug] [2019-07-29T02:16:19.008Z] Time:          Sun Jul 28 2019 22:16:19 GMT-0400 (EDT)
+[debug] [2019-07-29T02:16:19.008Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-07-29T02:16:19.020Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-07-29T02:16:19.021Z] > authorizing via signed-in user
+[debug] [2019-07-29T02:16:19.021Z] [iam] checking project api-project-825617891588 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-07-29T02:16:19.023Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-07-29T02:16:19.023Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-07-29T02:16:19.164Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-29T02:16:19.178Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/api-project-825617891588:testIamPermissions  
+
+[debug] [2019-07-29T02:16:19.377Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-29T02:16:19.379Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/api-project-825617891588  
+ 
+[debug] [2019-07-29T02:16:19.588Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'api-project-825617891588'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-07-29T02:16:19.592Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/api-project-825617891588/versions  
+
+[debug] [2019-07-29T02:16:20.426Z] <<< HTTP RESPONSE 200
+[info] i  hosting[api-project-825617891588]: beginning deploy...
+[info] i  hosting[api-project-825617891588]: found 1498 files in _site
+[debug] [2019-07-29T02:16:20.660Z] [hosting] hash cache [X3NpdGU] load error: lines is not defined
+[debug] [2019-07-29T02:16:23.562Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/api-project-825617891588/versions/6f73dd85690cf2c1:populateFiles  
+ <request body omitted>
+[debug] [2019-07-29T02:16:24.216Z] [hosting] hash cache [X3NpdGU] stored for 1498 files
+[debug] [2019-07-29T02:16:24.216Z] [hosting][hash queue][FINAL]
+[debug] [2019-07-29T02:16:24.216Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/api-project-825617891588/versions/6f73dd85690cf2c1:populateFiles  
+ <request body omitted>
+[debug] [2019-07-29T02:16:26.888Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-29T02:16:27.471Z] <<< HTTP RESPONSE 200
+[debug] [2019-07-29T02:16:27.482Z] [hosting][populate queue][FINAL]
+[debug] [2019-07-29T02:16:27.482Z] [hosting] uploads queued: 5
+[debug] [2019-07-29T02:16:28.117Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2UqHcIPTcgY8Pvgz60Uz-aKYtwqEH8QlRMHgRAeb8SVNTxwvvK0KUbdMa0RjtaIpRaQjQA5Giw_2KV7NxHLMvTkkRgwO5g',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:28 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:28.523Z] [uploadQueue] Retrying task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622
+[debug] [2019-07-29T02:16:29.077Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2UogJkCPdaMlJ3M_fsRNPQR2XcGLjL_jnteSUmh-9gGtETMMlWFG4BSXnFkBYCP6m4Mu19rzTghCBKLzOtbhaWqC86hb7SdxDgysBdr6m7QnqsSaSz0',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:29 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:29.878Z] [uploadQueue] Retrying task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622
+[debug] [2019-07-29T02:16:30.434Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2Ur_IVRZRMns3tANocWkb4OvCz41A62edTYwGZacyxfAwhMTfsPWTHdTBWziuHwr-2-Q1VtagpHL4eTRIQAz-fE4sOh7WcUdmSrjDIHO-Sn_XqJcB9w',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:30 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:32.083Z] [uploadQueue] Retrying task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622
+[debug] [2019-07-29T02:16:32.772Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2UqHHpw9wSO-sbh48RV5hVRrXOJExLv6oud4QXE0oD0u0RnMejhmcjpw9cRcPASIVnsWts-Zj6viy_MXOrOJk9euE8_q4A',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:32 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:35.973Z] [uploadQueue] Retrying task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622
+[debug] [2019-07-29T02:16:36.552Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2UqhFvM8c9anxcSrWTXqRJJp85JsJRQjXpHG-tqQmLZWTdlA9nKL8EYdYtJGQJjcHUZ6f4TDNVgieL7UkiLQUd9su6YSLizsoREJQF1IZLmZpRMbdkU',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:36 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:42.953Z] [uploadQueue] Retrying task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622
+[debug] [2019-07-29T02:16:43.609Z] [hosting][upload] news/feed/index.atom (419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622) HTTP ERROR 400 : { 'x-guploader-uploadid': 'AEnB2Upk1GIcSOzKwXdyMBl0XXi3EtnEHWHJ5-dj0oaHHABhwXwvdNVrzqGWC4iS-Xp_IkeGZPWNRP-FjmaMfSpgI43YvQSuDw',
+  'content-length': '37',
+  date: 'Mon, 29 Jul 2019 02:16:43 GMT',
+  server: 'UploadServer',
+  'content-type': 'text/html; charset=UTF-8',
+  'alt-svc': 'quic=":443"; ma=2592000; v="46,43,39"',
+  connection: 'close' } Couldn't process request (status=400)
+[debug] [2019-07-29T02:16:43.610Z] [uploadQueue] Retries exhausted for task 419eaecf1dbbec676eb5153ee450d0ab9630b0ec52386c972229c97200b23622:
+[debug] [2019-07-29T02:16:43.611Z] [hosting][upload queue][FINAL]
+[debug] [2019-07-29T02:16:43.708Z] Error: Unexpected error while uploading file.
+    at Request._callback (/home/jcgregorio/node/lib/node_modules/firebase-tools/lib/deploy/hosting/uploader.js:197:39)
+    at Request.self.callback (/home/jcgregorio/node/lib/node_modules/firebase-tools/node_modules/request/request.js:185:22)
+    at emitTwo (events.js:126:13)
+    at Request.emit (events.js:214:7)
+    at Request.<anonymous> (/home/jcgregorio/node/lib/node_modules/firebase-tools/node_modules/request/request.js:1161:10)
+    at emitOne (events.js:116:13)
+    at Request.emit (events.js:211:7)
+    at IncomingMessage.<anonymous> (/home/jcgregorio/node/lib/node_modules/firebase-tools/node_modules/request/request.js:1083:12)
+    at Object.onceWrapper (events.js:313:30)
+    at emitNone (events.js:111:20)
+[error] 
+[error] Error: An unexpected error has occurred.
