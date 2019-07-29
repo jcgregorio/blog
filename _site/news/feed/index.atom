@@ -1,5 +1,865 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-06-16T21:16:44-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Stream</title><link href="https://bitworking.org/news/2019/06/stream" rel="alternate" type="text/html" title="Stream" /><published>2019-06-16T00:00:00-04:00</published><updated>2019-06-16T21:15:32-04:00</updated><id>https://bitworking.org/news/2019/06/stream</id><content type="html" xml:base="https://bitworking.org/news/2019/06/stream">&lt;p&gt;I’ve launched a new micro-blog at  &lt;a href=&quot;https://stream.bitworking.org&quot;&gt;stream.bitworking.org&lt;/a&gt;, which has an
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-07-28T22:15:59-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Looking back on five years of web components</title><link href="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components" rel="alternate" type="text/html" title="Looking back on five years of web components" /><published>2019-07-27T00:00:00-04:00</published><updated>2019-07-28T22:12:02-04:00</updated><id>https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components</id><content type="html" xml:base="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components">&lt;p&gt;Over 5 years ago I wrote
+&lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;
+and just recently Jon Udell asked for an update.&lt;/p&gt;
+
+&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;It&amp;#39;s almost 4
+years since &lt;a href=&quot;https://twitter.com/bitworking?ref_src=twsrc%5Etfw&quot;&gt;@bitworking&lt;/a&gt;
+said: &amp;quot;Stop using JS frameworks, start writing reusable,
+orthogonally-composable units of HTML+CSS+JS.&amp;quot; &lt;br /&gt;&lt;br /&gt;I&amp;#39;m curious,
+Joe, about what you&amp;#39;ve since learned, thought about, and done with the
+idea.&lt;a href=&quot;https://t.co/zdKjEZfIe3&quot;&gt;https://t.co/zdKjEZfIe3&lt;/a&gt;&lt;/p&gt;&amp;mdash;
+Jon Udell (@judell) &lt;a href=&quot;https://twitter.com/judell/status/1151608248316788736?ref_src=twsrc%5Etfw&quot;&gt;July
+17, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;I have been blogging bits and pieces over the years but Jon’s query has given
+me a good excuse to roll all of that up into a single document.&lt;/p&gt;
+
+&lt;p&gt;For the last five years me and my team have been using web components to build
+our web UIs. At the time I wrote the Zero Framework Manifesto we moved all of our
+development over to &lt;a href=&quot;https://www.polymer-project.org/&quot;&gt;Polymer&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-polymer&quot;&gt;Why Polymer?&lt;/h2&gt;
+
+&lt;p&gt;We started with Polymer 0.5 as it was the closest thing to web components that
+was available. At the time I wrote the Zero Framework Manifest all of the
+specifications that made up web components were still just proposed standards
+and only Chrome had implemented any of them natively. We closely followed
+Polymer, migrating all of our apps to Polymer 0.8 and finally to Polymer 1.0
+when it was released. This gave us a good taste for what building web
+components was like and verified that building HTML elements was a productive
+way to do web development.&lt;/p&gt;
+
+&lt;h2 id=&quot;how&quot;&gt;How&lt;/h2&gt;
+
+&lt;p&gt;One of the questions that comes up regularly when talking about &lt;a href=&quot;http://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;zero frameworks&lt;/a&gt;
+is how can you expect to stitch together an application without a framework? The
+short answer is ‘the same way you stitch together native elements’, but I think
+it’s interesting and instructional to look at those ways of stitching elements
+together individually.&lt;/p&gt;
+
+&lt;p&gt;There are six surfaces, or points of contact, between elements, that you can
+use when stitching elements together, whether they are native or custom
+elements.&lt;/p&gt;
+
+&lt;p&gt;Before we go further a couple notes on terminology and scope. For
+scope, realize that we are only talking about DOM, we aren’t talking about
+composing JS modules or strategies for composing CSS. For the terminology
+clarification, when talking about DOM I’m referring to the DOM
+Interface for an element, not the element markup.  Note that there is a
+subtle difference between the markup element and the DOM Interface to such
+an element.&lt;/p&gt;
+
+&lt;p&gt;For example, &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img data-foo=&quot;5&quot; src=&quot;https://example.com/image.png&quot;/&amp;gt;&lt;/code&gt; may be
+the markup for an image. The corresponding DOM Interface has an attribute of
+src with a value of &lt;code class=&quot;highlighter-rouge&quot;&gt;https://example.com/image.png&lt;/code&gt; but the corresponding DOM
+Interface doesn’t have a &lt;code class=&quot;highlighter-rouge&quot;&gt;data-foo&lt;/code&gt; attribute, instead all data-* attributes
+are available via the dataset attribute on the DOM Interface. In the
+terminology of the &lt;a href=&quot;https://html.spec.whatwg.org/multipage/infrastructure.html#terminology&quot;&gt;WhatWG Living Standard&lt;/a&gt;,
+this is the distinction between content attributes vs IDL
+attributes, and I’ll only be referring to IDL attributes.&lt;/p&gt;
+
+&lt;p&gt;With the preliminaries out of the way let’s get into the six surfaces
+that can be used to stitch together an application.&lt;/p&gt;
+
+&lt;h3 id=&quot;attributes-and-methods&quot;&gt;Attributes and Methods&lt;/h3&gt;
+&lt;p&gt;The first two surfaces, and probably the most obvious, are attributes and
+methods. If you are interacting with an element it’s usually either reading and
+writing attribute values:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;element&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;children&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;or calling element methods:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;document.querySelector('#foo');
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Technically these are the same thing, as they are both just properties with
+different types. Native elements have their set of defined attributes and
+methods, and depending on which element a custom element is derived from it
+will also have that base element’s attributes and methods along with the
+custom ones it defines.&lt;/p&gt;
+
+&lt;h3 id=&quot;events&quot;&gt;Events&lt;/h3&gt;
+
+&lt;p&gt;The next two surface are events. Events are actually two surfaces because an
+element can listen for events,&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ele.addEventListener(‘some-event’, function(e) { /* */ });
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;and an element can dispatch its own events:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var e = new CustomEvent(‘some-event’, {details: details});
+this.dispatchEvent(e);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;dom-position&quot;&gt;DOM Position&lt;/h3&gt;
+
+&lt;p&gt;The final two surfaces are position in the DOM tree, and again I’m
+counting this as two surfaces because each element has a parent and can be
+a parent to another element. Yeah, an element has siblings too, but that
+would bring the total count of surfaces to seven and ruin my nice round
+even six.&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;combinations-are-powerful&quot;&gt;Combinations are powerful&lt;/h3&gt;
+&lt;p&gt;Let’s look at a relatively simple but powerful example, the ‘sort-stuff’
+element. This is a custom element that allows the user to sort elements. All
+children of ‘sort-stuff’ with an attribute of ‘data-key’ are used for sorting
+the children of the element pointed to by the sort-stuff’s ‘target’ attribute.
+See below for an example usage:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; &lt;span class=&quot;nt&quot;&gt;&amp;lt;sort-stuff&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;target=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'#sortable'&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;one&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Sort on One&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-key=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;two&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Sort on Two&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/sort-stuff&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;ul&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;id=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sortable&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 3&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 1&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 4&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 2&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;li&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-one=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;e&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;data-two=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Item 5&lt;span class=&quot;nt&quot;&gt;&amp;lt;/li&amp;gt;&lt;/span&gt;
+ &lt;span class=&quot;nt&quot;&gt;&amp;lt;/ul&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If the user presses the “Sort on One” button then the children of #sortable
+are sorted in alphabetical order of their data-one attributes. If the user
+presses the “Sort on Two” button then the children of #sortable are sorted in
+alphabetical order of their data-two attributes.&lt;/p&gt;
+
+&lt;p&gt;Here is the definition of the ‘sort-stuff’ element:&lt;/p&gt;
+
+&lt;pre id=&quot;viewcode&quot;&gt;&lt;/pre&gt;
+
+&lt;p&gt;And here is a running example of the code above:&lt;/p&gt;
+
+&lt;style type=&quot;text/css&quot; media=&quot;screen&quot;&gt;
+  sort-stuff button {
+    padding: 0.5em;
+  }
+&lt;/style&gt;
+
+&lt;sort-stuff target=&quot;sortable&quot;&gt;
+  &lt;button data-key=&quot;one&quot;&gt;Sort on One&lt;/button&gt;
+  &lt;button data-key=&quot;two&quot;&gt;Sort on Two&lt;/button&gt;
+&lt;/sort-stuff&gt;
+&lt;ul id=&quot;sortable&quot;&gt;
+  &lt;li data-one=&quot;c&quot; data-two=&quot;x&quot;&gt;Item 3&lt;/li&gt;
+  &lt;li data-one=&quot;a&quot; data-two=&quot;z&quot;&gt;Item 1&lt;/li&gt;
+  &lt;li data-one=&quot;d&quot; data-two=&quot;w&quot;&gt;Item 4&lt;/li&gt;
+  &lt;li data-one=&quot;b&quot; data-two=&quot;y&quot;&gt;Item 2&lt;/li&gt;
+  &lt;li data-one=&quot;e&quot; data-two=&quot;v&quot;&gt;Item 5&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script src=&quot;/js/custom-elements.min.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+
+&lt;script id=&quot;code&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+window.customElements.define('sort-stuff', class extends HTMLElement {
+  connectedCallback() {
+    Array.from(this.querySelectorAll('[data-key]')).forEach(
+      ele =&gt; ele.addEventListener('click', this)
+    );
+  }
+
+  handleEvent(e) {
+    let target = document.getElementById(this.getAttribute('target'));
+    let elements = [];
+    let children = target.children;
+    for (let i=0; i&lt;children.length; i++) {
+      elements.push({
+        value: children[i].dataset[e.target.dataset.key],
+        node: children[i],
+      });
+    }
+    elements.sort((x, y) =&gt; (x.value == y.value ? 0 : (x.value &gt; y.value ? 1 : -1)));
+    elements.forEach(function(i) {
+      target.appendChild(i.node);
+    });
+  }
+});
+&lt;/script&gt;
+
+&lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;
+  document.getElementById('viewcode').textContent = document.getElementById('code').textContent;
+&lt;/script&gt;
+
+&lt;p&gt;Note the surfaces that were used in constructing this functionality:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;sort-stuff has an &lt;strong&gt;attribute&lt;/strong&gt; 'target' that selects the element to sort.&lt;/li&gt;
+  &lt;li&gt;The target &lt;strong&gt;children&lt;/strong&gt; have data &lt;strong&gt;attributes&lt;/strong&gt; that elements are sorted on.&lt;/li&gt;
+  &lt;li&gt;sort-stuff registers for 'click' events from its &lt;strong&gt;children&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;sort-stuff &lt;strong&gt;children&lt;/strong&gt; have data &lt;strong&gt;attributes&lt;/strong&gt; that determine how the target children will be sorted.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In addition you could imagine adding a custom event ‘sorted’ that
+‘sort-stuff’ could generate each time it sorts.&lt;/p&gt;
+
+&lt;h2 id=&quot;why-not-polymer&quot;&gt;Why not Polymer?&lt;/h2&gt;
+
+&lt;p&gt;But after having used Polymer for so many years we looked at the direction of
+Polymer 2.0 and now 3.0 and decided that may not be the direction we want to
+take.&lt;/p&gt;
+
+&lt;p&gt;There are a few reasons we moved away from Polymer. Polymer started out and
+continues to be a platform for experimentation with proposed standards, which
+is great, as they are able to give concrete feedback to standards committees
+and allow people to see how those proposed standards could be used in
+development. The downside to the approach of adopting nascent standards is
+that sometimes those things don’t become standards. For example, HTML Imports
+was a part of Polymer 1.0 that had a major impact on how you wrote your
+elements, and when &lt;a href=&quot;https://hacks.mozilla.org/2015/06/the-state-of-web-components/&quot;&gt;HTML Imports failed to become a
+standard&lt;/a&gt; you
+had a choice of either a major migration to ES modules or to carry around a
+polyfill for HTML Imports for the remainder of that web app’s life. You can
+see the same thing happening today with Polymer 3.0 and &lt;a href=&quot;https://polymer-library.polymer-project.org/3.0/docs/devguide/custom-css-properties#use-custom-css-mixins&quot;&gt;CSS
+mixins&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;There are also implementation decisions I don’t completely agree with in
+Polymer, for example, the default use of &lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM&quot;&gt;Shadow
+DOM&lt;/a&gt;.
+Shadow DOM allows for the encapsulation of the children of a custom element so
+they don’t participate in things like &lt;code class=&quot;highlighter-rouge&quot;&gt;querySelector()&lt;/code&gt; and normal CSS
+styling. But there are several problems with that, the first is that when
+using Shadow DOM you lose the ability to do global styling changes. If you
+suddenly decide to add a “dark mode” to your app you will need to go and
+modify each element’s CSS. It was also supposed to be faster, but since each
+element contains a copy of the CSS there are &lt;a href=&quot;https://bitworking.org/news/2018/02/shadow-dom-and-css&quot;&gt;performance
+implications&lt;/a&gt;, though
+&lt;a href=&quot;https://github.com/w3c/webcomponents/issues/468&quot;&gt;there is work underway to address
+that&lt;/a&gt;. Shadow DOM seems like
+a solution searching for a problem, and Polymer defaults to using Shadow DOM
+while offering a way to opt out and use Light DOM for your elements; I believe
+the default should lie in the other direction.&lt;/p&gt;
+
+&lt;p&gt;Finally Polymer’s data binding has some mis-features. It offers two-way data
+binding which is never a good idea, every instance of two-way data binding is
+just a bug waiting to happen. The data binding also has a lot of magic to it,
+in theory you just update your model and Polymer will re-render your template
+at some point in the future with the updated values. The “at some point in the
+future” is because updates happen in an async fashion, which in theory allows
+the updates to be more efficient by batching the updates, but the reality is
+that you spend a lot of development time updating your model, not getting
+updated DOM, and scratching your head until you remember to either call a
+function which forces a synchronous render, or that you updated a deep part of
+your model and Polymer can’t observe that change so you need to update your
+code to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;set()&lt;/code&gt; method where you give the path to the part of the
+model you just updated. The async rendering and observing of data is fine for
+simple applications, but for more complex applications leads to wasted
+developer time debugging situations where a simpler data binding model would
+suffice.&lt;/p&gt;
+
+&lt;p&gt;It is interesting to note that the Polymer team also produces the
+&lt;a href=&quot;https://lit-html.polymer-project.org/&quot;&gt;lit-html&lt;/a&gt; library which is simply a
+library for templating that uses template literals and HTML Templates to make
+the rendering more efficient, and it  has none of the issues I just pointed
+out in Polymer.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-comes-after-polymer&quot;&gt;What comes after Polymer?&lt;/h2&gt;
+
+&lt;p&gt;This is where I started with a very concrete and data driven minimalist
+approach, first determining what base elements we really needed and then what
+library features we would need as we built up those elements, and finally what
+features we need as we build full fledged apps from those base elements. I was
+completely open to the idea that maybe I was just being naive about the need
+for async render or Shadow DOM and I’d let the process of building real world
+applications inform what features were really needed.&lt;/p&gt;
+
+&lt;p&gt;The first step was to determine which base elements we really needed. The
+library of iron-* and paper-* elements that Polymer provides is large and the
+idea of writing our own version of each was formidable, so instead I looked
+back over the previous years of code we’d written in Polymer to determine
+which elements we really did need. If we’d started this process today I would
+probably just have gone with &lt;a href=&quot;https://component.kitchen/elix&quot;&gt;Elix&lt;/a&gt; or another
+pure web components library of elements, but none of them existed at the time
+we started this process.&lt;/p&gt;
+
+&lt;p&gt;The first thing I did was scan each project and record every Polymer element
+used in every project. If I’m going to replace Polymer at least I should know
+how many elements I’m signing up to rewrite. That initial list was surpising
+in a couple of ways, the first was how short the list was:&lt;/p&gt;
+
+&lt;style&gt;
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  border:2px solid gray;
+  margin: 1em;
+}
+
+th, td {
+  padding: 0.2em;
+  border:2px solid gray;
+}
+&lt;/style&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Polymer/Iron elements Used&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-ajax&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-autogrow-textarea&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-collapse&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-flex-layout&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-icon&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-pages&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-resizable-behavior&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-scroll-threshold&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-selector&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-autocomplete&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-checkbox&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog-scrollable&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-drawer-panel&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dropdown-menu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-fab&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-header-panel&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-icon-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-input&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-item&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-listbox&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-group&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-spinner&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tabs&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toast&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toggle-button&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toolbar&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tooltip&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;After four years of development I expected the list to be much larger.&lt;/p&gt;
+
+&lt;p&gt;The second surpise was how many of the elements in that list really shouldn’t
+be elements at all. For example, some could be replaced with native elements
+with some better styling, for example &lt;code class=&quot;highlighter-rouge&quot;&gt;button&lt;/code&gt; for &lt;code class=&quot;highlighter-rouge&quot;&gt;paper-button&lt;/code&gt;.
+Alternatively some could be replaced with CSS or a non-element solution, such
+as &lt;code class=&quot;highlighter-rouge&quot;&gt;iron-ajax&lt;/code&gt;, which shouldn’t be an element at all and should be replaced
+with the &lt;code class=&quot;highlighter-rouge&quot;&gt;fetch()&lt;/code&gt; function. After doing that analysis the number of elements
+actually needed to be re-implemented from Polymer fell to a very small number.&lt;/p&gt;
+
+&lt;p&gt;In the table below the ‘Native’ column is for places where we could use native
+elements and just have a good default styling for them. The ‘Use Instead’
+column is what we could use in place of a custom element. Here you will notice
+a large number of elements that can be replaced with CSS. Finally the last
+column, ‘Replacement Element’, is the name of the element we made to replace
+the Polymer element:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Polymer&lt;/th&gt;
+      &lt;th&gt;Native&lt;/th&gt;
+      &lt;th&gt;Use Instead&lt;/th&gt;
+      &lt;th&gt;Replacement Element&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-ajax&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use fetch()&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-collapse&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;collapse-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-flex-layout&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-icon&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;*-icon-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-pages&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;tabs-panel-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-resizable-behavior&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-scroll-threshold&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Shouldn’t be an element&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;iron-selector&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;select-sk/multi-select-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-autocomplete&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;No replacement yet.&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-button&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-checkbox&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;checkbox-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;dialog-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dialog-scrollable&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-drawer-panel&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-dropdown-menu&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-fab&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-header-panel&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-icon-button&lt;/td&gt;
+      &lt;td&gt;button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;button + *-icon-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-input&lt;/td&gt;
+      &lt;td&gt;input&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-item&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-listbox&lt;/td&gt;
+      &lt;td&gt;option/select&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-menu-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;nav-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;radio-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-radio-group&lt;/td&gt;
+      &lt;td&gt;**&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-spinner&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;spinner-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tabs&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;tabs-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toast&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;toast-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toggle-button&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;checkbox-sk&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-toolbar&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use CSS Flexbox/Grid&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;paper-tooltip&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;Use title attribute&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;** - For radio-sk elements just set a common name like you would for a
+native radio button.&lt;/p&gt;
+
+&lt;p&gt;That set of minimal custom elements has now been launched as
+&lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now that we have our base list of elements let’s think about the rest of the
+tools and techniques we are going to need.&lt;/p&gt;
+
+&lt;p&gt;To get a better feel for this let’s start by looking at what a web framework
+“normally” provides. The “normally” is in quotes because not all frameworks
+provide all of these features, but most frameworks provide a majority of them:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Framework
+    &lt;ul&gt;
+      &lt;li&gt;Model&lt;/li&gt;
+      &lt;li&gt;Tooling and structure&lt;/li&gt;
+      &lt;li&gt;Elements&lt;/li&gt;
+      &lt;li&gt;Templating&lt;/li&gt;
+      &lt;li&gt;State Management&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All good things, but why do they have to be bundled together like a TV dinner?
+Let’s break each of those aspects of a framework out into their own standalone
+thing and then we can pick and choose from the various implementations when we
+start developing an application. This style of developement we call “a la
+carte” web development.&lt;/p&gt;
+
+&lt;p&gt;Instead of picking a monolithic solution like a web framework, you just pick
+the pieces you need. Below I outline specific criteria that need to be met for
+some components to participate in “a la carte” web development.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-la-carte&quot;&gt;A la carte&lt;/h2&gt;
+&lt;p&gt;“A la carte” web development does away with the framework, and says just
+use the browser for the model, and the rest of the pieces you pick and choose
+the ones that work for you. In a la carte development each bullet point is a
+separate piece of software:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;A la carte&lt;/em&gt;&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;Defines a directory structure for how a project is put together and provides tooling such as
+JS transpiling, CSS prefixing, etc. for projects that conform to that directory structure.
+Expects ES modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;A library of v1 custom elements in ES6 modules. Note that these elements must be provided in ES6
+modules with the extension that webpack, rollup, and similar tools presume, i.e.
+allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.
+The elements should also be &lt;a href=&quot;https://bitworking.org/news/2018/02/custom-elements-neat&quot;&gt;“neat”&lt;/a&gt;, i.e.
+just HTML, CSS, and JS.&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;Any templating library you like, as long as it works with v1 custom elements.&lt;/dd&gt;
+  &lt;dt&gt;State Management&lt;/dt&gt;
+  &lt;dd&gt;Any state management library you like, if you even need one.&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;The assumptions needed for all of this to work together are fairly minimal:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ES6 modules and the extension that webpack, rollup, and similar tools presume, i.e.
+    allow importing other types of files, see &lt;a href=&quot;https://webpack.js.org/concepts/#loaders&quot;&gt;webpack loaders&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;The base elements are “Neat”, i.e. they are JS, CSS, and HTML only. No additional
+    libraries are used, such as a templating library. Note that sets of ‘neat’ elements also conform
+    to #1, i.e. they are provided as webpack/rollup compatible ES6 modules.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Obviously there are other guidelines that could be added as advisory, for example
+&lt;a href=&quot;https://developers.google.com/web/fundamentals/web-components/best-practices&quot;&gt;Google Developers Guide - Custom Elements Best Practices&lt;/a&gt;,
+should be followed when creating custom elements sets,
+except for the admonition to use Shadow DOM, &lt;a href=&quot;https://bitworking.org/news/2018/02/shadow-dom-and-css&quot;&gt;which I would avoid for now, unless you really need it&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Such code will natively run in browsers that support custom elements v1. To
+get it to run in a wider range of browsers you will need to add polyfills and,
+depending on the target browser version, compile the JS back to an older
+version of ES, and run a prefixer on the CSS. The wider the target set of
+browsers and the older the versions you are targeting the more processing you
+will need to do, but the original code doesn’t need to change, and all those
+extra processing steps are only incurred by projects that need it.&lt;/p&gt;
+
+&lt;h2 id=&quot;concrete&quot;&gt;Concrete&lt;/h2&gt;
+
+&lt;p&gt;So now that we have our development system we’ve started to publish some of those pieces.&lt;/p&gt;
+
+&lt;p&gt;We published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, a stake in the ground for what a “tooling and
+structure” component looks like. You will note that it isn’t very complex, nothing more than an opinionated
+webpack config file. Similarly we published our set of “neat” custom elements &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our current stack looks like:&lt;/p&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Tooling and structure&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Elements&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt;&lt;/dd&gt;
+  &lt;dt&gt;Templating&lt;/dt&gt;
+  &lt;dd&gt;&lt;a href=&quot;https://www.npmjs.com/package/lit-html&quot;&gt;lit-html&lt;/a&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+
+&lt;p&gt;We have used Redux in an experimental app that never shipped and haven’t needed
+any state management libraries in the other applications we’ve ported over, so
+our ‘state management’ library is still an open question.&lt;/p&gt;
+
+&lt;h2 id=&quot;example&quot;&gt;Example&lt;/h2&gt;
+
+&lt;p&gt;What is like to use this stack? Let’s start from an empty directory
+and start building a web app:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm init
+$ npm add pulito
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We are starting from scratch so use the project skeleton that &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt; provides:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ unzip node_modules/pulito/skeleton.zip
+$ npm
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can now run the dev server and see our running skeleton application:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now let’s add in &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt; and add a set of tabs to the UI.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ npm add elements-sk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now add imports to &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.js&lt;/code&gt; to bring in the elements we need:&lt;/p&gt;
+
+&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'elements-sk/tabs-sk'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'elements-sk/tabs-panel-sk'&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'../modules/example-element'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And then use those elements on &lt;code class=&quot;highlighter-rouge&quot;&gt;pages/index.html&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;body&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;class=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;selected&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;Some Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;button&amp;gt;&lt;/span&gt;Another Tab&lt;span class=&quot;nt&quot;&gt;&amp;lt;/button&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;tabs-panel-sk&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;p&amp;gt;&lt;/span&gt; This is Some Tab contents.&lt;span class=&quot;nt&quot;&gt;&amp;lt;/p&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;div&amp;gt;&lt;/span&gt;
+      This is the contents for Another Tab.
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;/tabs-panel-sk&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;example-element&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;active&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/example-element&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/body&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now restart the dev server and see the updated page:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ make serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;why-is-this-better&quot;&gt;Why is this better?&lt;/h2&gt;
+&lt;p&gt;Web frameworks usually make all these choices for you, you don’t
+get to choose, even if you don’t need the functionality. For example, state
+managament might not be needed, why are you ‘paying’ for it, where ‘paying’
+means learning about that aspect of the web framework, and possibly even
+having to serve the code that implements state managment even if you never
+use it. With “a la carte” development you only include what you use.&lt;/p&gt;
+
+&lt;p&gt;An extra benefit comes when it is time to upgrade. How much time
+have you lost with massive upgrades from v1 to v2 of a web framework?
+With ‘a la carte’ developement the upgrades don’t have to be monolithic.
+I.e. if you’ve chosen a templating library and want to upgrade to
+the next version you only need to update your templates, and not have to
+touch every aspect of your application.&lt;/p&gt;
+
+&lt;p&gt;Finally, ‘a la carte’ web development provides no “model” but the browser. Of
+all the things that frameworks provide, “model” is the most problematic.
+Instead of just using the browser as it is, many frameworks have their own
+model of the browser, how DOM works, how events work, etc. &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;I have gone into
+depth on the issues
+previously&lt;/a&gt;, but
+they can be summarized as lost effort (learning something that doesn’t
+translate) and a barrier to reuse. What should replace it? Just use the
+browser, it already has a &lt;a href=&quot;https://bitworking.org/news/2015/03/Six_Places&quot;&gt;model for how to combine elements
+together&lt;/a&gt;, and now with custom
+elements v1 gives you the ability to create your own elements, you have all
+you need.&lt;/p&gt;
+
+&lt;p&gt;One of the most important aspects of ‘a la carte’ web developement is that it
+decouples all the components, allowing them to evolve and adapt to user needs
+on a much faster cycle than the normal web framework release cycle allows.
+Just because we’ve published &lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;
+and &lt;a href=&quot;https://www.npmjs.com/package/elements-sk&quot;&gt;elements-sk&lt;/a&gt; doesn’t mean we
+believe they are the best solutions. I’d love to have a slew of options to
+choose from for tooling, base element sets, templating, and state management.
+I’d like to see Rollup based tools that take the place of
+&lt;a href=&quot;https://www.npmjs.com/package/pulito&quot;&gt;pulito&lt;/a&gt;, and a whole swarm of “neat”
+custom elements sets with varying levels of customizability and breadth.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-weve-learned&quot;&gt;What we’ve learned&lt;/h2&gt;
+
+&lt;p&gt;We continue to learn as we build larger applications.&lt;/p&gt;
+
+&lt;p&gt;lit-html is very fast and all the applications we’ve ported over have been
+smaller and faster after the port. It is rather pleasant to call the
+&lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt; function and know that the element has been rendered and not
+getting tripped up by async rendering. We haven’t found the need for async
+rendering either, but that’s not surprising. Let’s think about cases where
+async rendering would make a big difference, i.e. where it would be a big
+performance difference to batch up renders and do them asynchronously. This
+would have to be an element with a large number of properties and each change
+of the property would change the DOM expressed and thus would require a large
+number of calls to &lt;code class=&quot;highlighter-rouge&quot;&gt;render()&lt;/code&gt;. But in all the development we’ve done that
+situation has never arisen, elements always have a small number of attributes
+and properties. If an element takes in a large amount of data to display
+that’s usually done by passing in a small number of complex object as
+properties on the element and that results in a small number of renders.&lt;/p&gt;
+
+&lt;p&gt;We haven’t found the need for Shadow DOM. In fact, I’ve come to think of the
+Light DOM children of elements as part of their public API that goes along
+with the attributes, properties, and events that make up the ‘normal’
+programming surface of an element.&lt;/p&gt;
+
+&lt;p&gt;We’ve also learned that there’s a difference between creating base elements
+and higher level elements as you build up your application. You are not
+creating bullet-proof re-usable elements at every step of development; the
+same level of detail and re-usability aren’t needed as you move up the stack.
+If an element looks like it could be re-used across applications then we may
+tighten up the surface of the element and add more options to cover more use
+cases, but that’s done on an as-needed basis, not for every element. Just
+because you are using the web component APIs to build an application doesn’t
+mean that every element you build needs to be as general purpose and bullet
+proof as low level elements. You can use HTML Templates without using any
+other web component technology. Same for template literals, and for each of
+the separate technologies that make up the web components group of APIs.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Over 5 years ago I wrote No more JS frameworks and just recently Jon Udell asked for an update.</summary></entry><entry><title type="html">Stream</title><link href="https://bitworking.org/news/2019/06/stream" rel="alternate" type="text/html" title="Stream" /><published>2019-06-16T00:00:00-04:00</published><updated>2019-06-16T21:16:59-04:00</updated><id>https://bitworking.org/news/2019/06/stream</id><content type="html" xml:base="https://bitworking.org/news/2019/06/stream">&lt;p&gt;I’ve launched a new micro-blog at  &lt;a href=&quot;https://stream.bitworking.org&quot;&gt;stream.bitworking.org&lt;/a&gt;, which has an
 &lt;a href=&quot;https://stream.bitworking.org&quot;&gt;Atom Feed&lt;/a&gt; if  you want to follow along. You
 can also follow along on Mastodon by following
 &lt;code class=&quot;highlighter-rouge&quot;&gt;@stream.bitworking.org@stream.bitworking.org&lt;/code&gt; thanks to &lt;a href=&quot;https://fed.brid.gy/&quot;&gt;https://fed.brid.gy/&lt;/a&gt;.
@@ -334,7 +1194,4 @@ Obviously a firm believer in &lt;a href=&quot;https://en.wikipedia.org/wiki/Tric
 where Historian Rutger Bregman schools Michael Dell on his ignorant comment
 about a top marginal tax rate of 70%:&lt;/p&gt;
 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry><entry><title type="html">Arts and crafts</title><link href="https://bitworking.org/news/2019/02/arts-and-crafts" rel="alternate" type="text/html" title="Arts and crafts" /><published>2019-02-26T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/02/arts-and-crafts</id><content type="html" xml:base="https://bitworking.org/news/2019/02/arts-and-crafts">&lt;p&gt;When you have a stoma &lt;em&gt;every day&lt;/em&gt; is arts and crafts day.&lt;/p&gt;
-
-&lt;p&gt;I swear I’ve modified more articles of clothing than my sister did
-during her entire teenage life in the 80s.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">When you have a stoma every day is arts and crafts day.</summary></entry></feed>
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>
