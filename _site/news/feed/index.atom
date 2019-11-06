@@ -1,5 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-07-29T07:35:57-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Looking back on five years of web components</title><link href="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components" rel="alternate" type="text/html" title="Looking back on five years of web components" /><published>2019-07-27T00:00:00-04:00</published><updated>2019-07-28T22:16:14-04:00</updated><id>https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components</id><content type="html" xml:base="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components">&lt;p&gt;Over 5 years ago I wrote
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-11-05T20:49:59-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Inline Forms</title><link href="https://bitworking.org/news/2019/11/inline-forms" rel="alternate" type="text/html" title="Inline Forms" /><published>2019-11-05T00:00:00-05:00</published><updated>2019-11-05T20:49:46-05:00</updated><id>https://bitworking.org/news/2019/11/inline-forms</id><content type="html" xml:base="https://bitworking.org/news/2019/11/inline-forms">&lt;p&gt;Based on a &lt;a href=&quot;https://twitter.com/bitworking/status/1190822233528242182&quot;&gt;Twitter
+discussion&lt;/a&gt; about
+optimizing the performance of web apps, I implemented a very crude polyfill for
+an idea I recently had.&lt;/p&gt;
+
+&lt;p&gt;HTML forms support multiple &lt;code class=&quot;highlighter-rouge&quot;&gt;target&lt;/code&gt; values, i.e. where should the result of
+submitting the form be displayed, but there is no value for of &lt;code class=&quot;highlighter-rouge&quot;&gt;target&lt;/code&gt; for
+inline, that is, you submit the form and instead of the whole page refreshing
+the server returns HTML that takes the place of the Form contents.&lt;/p&gt;
+
+&lt;p&gt;The idea is that there would be a new target type for HTML Forms, an attribute
+of &lt;code class=&quot;highlighter-rouge&quot;&gt;target=_inline&lt;/code&gt; would mean the that Form would be processed by the server
+and the contents of the Form would be replaced with the HTML returned by the
+server. That is, on submit the form values would be sent to the server, either
+POST or GET, and the response should be HTML that the browser will simply
+&lt;code class=&quot;highlighter-rouge&quot;&gt;.innerHTML&lt;/code&gt; on the form that was submitted.&lt;/p&gt;
+
+&lt;p&gt;Code: https://github.com/jcgregorio/inline-form&lt;/p&gt;
+
+&lt;p&gt;Online Demo: https://inline-form-nuau7zlm6q-uc.a.run.app/&lt;/p&gt;
+
+&lt;p&gt;Also huge props to the team behind the &lt;a href=&quot;https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud&quot;&gt;Cloud Run
+Button&lt;/a&gt;
+which made this insanely simple to deploy.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Based on a Twitter discussion about optimizing the performance of web apps, I implemented a very crude polyfill for an idea I recently had.</summary></entry><entry><title type="html">Looking back on five years of web components</title><link href="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components" rel="alternate" type="text/html" title="Looking back on five years of web components" /><published>2019-07-27T00:00:00-04:00</published><updated>2019-07-28T22:16:14-04:00</updated><id>https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components</id><content type="html" xml:base="https://bitworking.org/news/2019/07/looking-back-on-five-years-of-web-components">&lt;p&gt;Over 5 years ago I wrote
 &lt;a href=&quot;https://bitworking.org/news/2014/05/zero_framework_manifesto&quot;&gt;No more JS frameworks&lt;/a&gt;
 and just recently Jon Udell asked for an update.&lt;/p&gt;
 
@@ -1179,19 +1202,4 @@ longer will investors and boards be fooled by randomness and hollow
 credentialism?&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years. I might have to clarify that to “the myth of the Harvard MBA is the second most damaging thing to happen to business in the last 40 years”.</summary></entry><entry><title type="html">I’m not done trickling on you!</title><link href="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you" rel="alternate" type="text/html" title="I'm not done trickling on you!" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/im-not-done-trickling-on-you</id><content type="html" xml:base="https://bitworking.org/news/2019/03/im-not-done-trickling-on-you">&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU?start=1270&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-
-&lt;p&gt;Look at poor Ken, so freaked out that everyone is talking about taxes.
-Obviously a firm believer in &lt;a href=&quot;https://en.wikipedia.org/wiki/Trickle-down_economics&quot;&gt;trickle-down economics&lt;/a&gt;, his entire screed boils down to:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;a href=&quot;https://www.crazygames.com/game/dont-tax-me-bro&quot;&gt;Don’t tax me, bro!&lt;/a&gt; I’m not done trickling on you!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Ironically he refers to Bill Gates, who appears &lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;not to agree with Ken at all&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;To get the full context it’s useful to watch the video from the beginning
-where Historian Rutger Bregman schools Michael Dell on his ignorant comment
-about a top marginal tax rate of 70%:&lt;/p&gt;
-
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/r5LtFnmPruU&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;</content><author><name>Joe Gregorio</name></author><summary type="html"></summary></entry></feed>
+&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years. I might have to clarify that to “the myth of the Harvard MBA is the second most damaging thing to happen to business in the last 40 years”.</summary></entry></feed>
