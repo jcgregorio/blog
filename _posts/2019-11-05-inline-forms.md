@@ -20,9 +20,9 @@ server. That is, on submit the form values would be sent to the server, either
 POST or GET, and the response should be HTML that the browser will simply
 `.innerHTML` on the form that was submitted.
 
-Code: https://github.com/jcgregorio/inline-form
+[Code](https://github.com/jcgregorio/inline-form)
 
-Online Demo: https://inline-form-nuau7zlm6q-uc.a.run.app/
+[Online Demo](https://inline-form-nuau7zlm6q-uc.a.run.app/)
 
 Also huge props to the team behind the [Cloud Run
 Button](https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud)

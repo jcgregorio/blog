@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-11-05T20:56:28-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-11-05T20:58:40-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
 </subtitle><entry><title type="html">Inline Forms</title><link href="https://bitworking.org/news/2019/11/inline-forms" rel="alternate" type="text/html" title="Inline Forms" /><published>2019-11-05T00:00:00-05:00</published><updated>2019-11-05T20:55:27-05:00</updated><id>https://bitworking.org/news/2019/11/inline-forms</id><content type="html" xml:base="https://bitworking.org/news/2019/11/inline-forms">&lt;p&gt;Based on a &lt;a href=&quot;https://twitter.com/bitworking/status/1190822233528242182&quot;&gt;Twitter
 discussion&lt;/a&gt; about
 optimizing the performance of web apps, I implemented a very crude polyfill for
@@ -16,9 +16,9 @@ server. That is, on submit the form values would be sent to the server, either
 POST or GET, and the response should be HTML that the browser will simply
 &lt;code class=&quot;highlighter-rouge&quot;&gt;.innerHTML&lt;/code&gt; on the form that was submitted.&lt;/p&gt;
 
-&lt;p&gt;Code: https://github.com/jcgregorio/inline-form&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jcgregorio/inline-form&quot;&gt;Code&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Online Demo: https://inline-form-nuau7zlm6q-uc.a.run.app/&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inline-form-nuau7zlm6q-uc.a.run.app/&quot;&gt;Online Demo&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Also huge props to the team behind the &lt;a href=&quot;https://cloud.google.com/blog/products/serverless/introducing-cloud-run-button-click-to-deploy-your-git-repos-to-google-cloud&quot;&gt;Cloud Run
 Button&lt;/a&gt;
