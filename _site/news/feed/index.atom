@@ -1,5 +1,161 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2019-11-05T20:58:40-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">Inline Forms</title><link href="https://bitworking.org/news/2019/11/inline-forms" rel="alternate" type="text/html" title="Inline Forms" /><published>2019-11-05T00:00:00-05:00</published><updated>2019-11-05T20:55:27-05:00</updated><id>https://bitworking.org/news/2019/11/inline-forms</id><content type="html" xml:base="https://bitworking.org/news/2019/11/inline-forms">&lt;p&gt;Based on a &lt;a href=&quot;https://twitter.com/bitworking/status/1190822233528242182&quot;&gt;Twitter
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2020-01-05T11:48:23-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">A failure of formats</title><link href="https://bitworking.org/news/2020/01/a-failure-of-formats" rel="alternate" type="text/html" title="A failure of formats" /><published>2020-01-05T00:00:00-05:00</published><updated>2020-01-05T11:47:24-05:00</updated><id>https://bitworking.org/news/2020/01/a-failure-of-formats</id><content type="html" xml:base="https://bitworking.org/news/2020/01/a-failure-of-formats">&lt;h1 id=&quot;a-failure-of-formats&quot;&gt;A failure of formats&lt;/h1&gt;
+
+&lt;p&gt;I have a very long diatribe on the state of document editors that I am working
+on, and almost anyone that knows me has heard parts of it, as I frequently rail
+against all of them: MS Word, Google Docs, Dropbox Paper, etc. In the process of
+writing up my screed I started thinking what a proper document format would look
+like and realized the awfulness of all the current document formats is a much
+more pressing problem than the lack of good editors. In fact, it may be that
+failing to have a standard, robust, and extensible file format for documents
+might be the single biggest impediment to having good document editing tools.
+Seriously, even if you designed the world’s best document editor but all it can
+output is PNGs then how useful if your world’s best document editor?&lt;/p&gt;
+
+&lt;p&gt;Let’s start with HTML, as that is probably the most successful document format
+in the history of the world outside of plain old paper. I can write an HTML
+page, host it on the web, and it can be read on any computer in the world.
+That’s amazing reach and power, but if you look at HTML as a universal document
+format you quickly realize it is stunted and inadequate. Let’s look at a series
+of comparisons between HTML and paper, starting with simple text, a note to
+myself:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/Drawing.png&quot; alt=&quot;Hand written words &amp;quot;get milk&amp;quot;&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now this is something that HTML excels at:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;p&amp;gt;Get Milk&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here HTML is better than paper because that HTML document is easily machine
+readable. I throw in the word “easily” because I know some ML/AI practitioner
+will come along and claim they can also “read” the image, but we know there are
+many orders of magnitude difference in processing power and complexity of those
+two approaches, so let’s ignore them.&lt;/p&gt;
+
+&lt;p&gt;So far HTML is looking good. Let’s make our example a little more complex; a
+shopping list.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/list.png&quot; alt=&quot;Hand written shopping list with milk and eggs.&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This again is something that HTML is great at:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Shopping list&amp;lt;/h1&amp;gt;
+&amp;lt;ul&amp;gt;
+  &amp;lt;li&amp;gt;Milk&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;Eggs&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Not only can HTML represent the text that’s been written, but can also capture the intended structure by encoding it as a list using the &amp;lt;ul&amp;gt; and &amp;lt;li&amp;gt; elements. So now we are expressing not only the text, but also the meaning, and again this representation is machine readable.&lt;/p&gt;
+
+&lt;p&gt;At this point we should take a small detour to talk about the duality we are seeing here with HTML, between the markup and the visual representation of that markup. That is, the following HTML:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;h1&amp;gt;Shopping list&amp;lt;/h1&amp;gt;
+&amp;lt;ul&amp;gt;
+  &amp;lt;li&amp;gt;Milk&amp;lt;/li&amp;gt;
+  &amp;lt;li&amp;gt;Eggs&amp;lt;/li&amp;gt;
+&amp;lt;/ul&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Is rendered in the browser as:&lt;/p&gt;
+
+&lt;h1 id=&quot;shopping-list&quot;&gt;Shopping list&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Milk&lt;/li&gt;
+  &lt;li&gt;Eggs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The markup carries not only the text, but also the semantics. I hesitate to use the term ‘semantics’ because that’s an overloaded term with a long history, particularly in web technology, but that is what we’re talking about. The web browser is able to convert from the markup semantics, &amp;lt;ul&amp;gt; and &amp;lt;li&amp;gt;, into the visual representation of a list, i.e. vertically laying out the items and putting bullets next to them. That duality between meaningful markup in text, distinct from the final representation, is important as it’s the distinction that made search engines possible. And we aren’t restricted to just visual representations, screen readers can also use the markup to guide their work of turning the markup into audio.&lt;/p&gt;
+
+&lt;p&gt;But as we make our example a little more complex we start to run into the limits of HTML, for example when we draw a block diagram:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/server.png&quot; alt=&quot;../../../images/2020/a-failure-of-formats/Drawing_(2).png&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When the web was first invented your only way to add such a thing to web page would have been by drawing it as an image and then including that image in the page:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;img src=&quot;server.png&quot; title=&quot;Server diagram with two disk drives.&quot;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The image is not very machine readable, even with the added title attribute. HTML didn’t initially offer a native way to create that visualization in a semantically more meaningful way. About a decade after the web came into being SVG was standardized and became available, so you can now write this as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&amp;lt;svg width=&quot;580&quot; height=&quot;400&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&amp;gt;
+ &amp;lt;title&amp;gt;Server diagram with two disk drives.&amp;lt;/title&amp;gt;
+ &amp;lt;g&amp;gt;
+  &amp;lt;rect height=&quot;60&quot; width=&quot;107&quot; y=&quot;45&quot; x=&quot;215&quot; stroke-width=&quot;1.5&quot; stroke=&quot;#000&quot; fill=&quot;#fff&quot;/&amp;gt;
+  &amp;lt;text font-size=&quot;24&quot; y=&quot;77&quot; x=&quot;235&quot; stroke-width=&quot;0&quot; stroke=&quot;#000&quot; fill=&quot;#000000&quot; id=&quot;svg_3&quot;&amp;gt;
+    Server
+  &amp;lt;/text&amp;gt;
+  &amp;lt;line y2=&quot;204&quot; x2=&quot;173&quot; y1=&quot;105&quot; x1=&quot;267&quot; stroke-width=&quot;1.5&quot; stroke=&quot;#000&quot; fill=&quot;none&quot; id=&quot;svg_4&quot;/&amp;gt;
+  &amp;lt;rect height=&quot;59&quot; width=&quot;125&quot; y=&quot;205&quot; x=&quot;98&quot; stroke-width=&quot;1.5&quot; stroke=&quot;#000&quot; fill=&quot;#fff&quot; id=&quot;svg_5&quot;/&amp;gt;
+  &amp;lt;rect height=&quot;62&quot; width=&quot;122&quot; y=&quot;199&quot; x=&quot;342&quot; stroke-width=&quot;1.5&quot; stroke=&quot;#000&quot; fill=&quot;#fff&quot; id=&quot;svg_6&quot;/&amp;gt;
+  &amp;lt;line y2=&quot;197&quot; x2=&quot;403&quot; y1=&quot;103&quot; x1=&quot;268&quot; stroke-width=&quot;1.5&quot; stroke=&quot;#000&quot; fill=&quot;none&quot; id=&quot;svg_7&quot;/&amp;gt;
+  &amp;lt;text font-size=&quot;24&quot; y=&quot;240&quot; x=&quot;119&quot; fill-opacity=&quot;null&quot; stroke-opacity=&quot;null&quot; stroke-width=&quot;0&quot; stroke=&quot;#000&quot; fill=&quot;#000000&quot; id=&quot;svg_8&quot;&amp;gt;
+    Disk 1
+  &amp;lt;/text&amp;gt;
+  &amp;lt;text stroke=&quot;#000&quot; font-size=&quot;24&quot; y=&quot;236&quot; x=&quot;361&quot; fill-opacity=&quot;null&quot; stroke-opacity=&quot;null&quot; stroke-width=&quot;0&quot; fill=&quot;#000000&quot; id=&quot;svg_9&quot;&amp;gt;
+    Disk 2
+  &amp;lt;/text&amp;gt;
+ &amp;lt;/g&amp;gt;
+&amp;lt;/svg&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is a slight improvement over the image. For example, we can extract the title and the text found in the diagram from such a representation, but the markup isn’t what I would call human readable. To get a truly human readable markup of such a diagram we’d need to leave HTML and write it in &lt;a href=&quot;https://www.graphviz.org/&quot;&gt;Graphviz&lt;/a&gt; dot notation:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;graph {
+  Server -- &quot;Disk 1&quot;;
+  Server -- &quot;Disk 2&quot;;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/graphviz.svg&quot; alt=&quot;../../../images/2020/a-failure-of-formats/graphviz.svg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;So we’ve already left the capabilities of HTML behind and we’ve only just begun, what about math formulas?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/math.png&quot; alt=&quot;Hand written integral of e.&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Again, about a decade after the web started &lt;a href=&quot;https://www.w3.org/TR/MathML/&quot;&gt;MathML&lt;/a&gt; was standardized as a way to add math to HTML pages. It’s been 20 years since the MathML specification was released and you still can’t use MathML in your web pages because &lt;a href=&quot;https://caniuse.com/#feat=mathml&quot;&gt;browser support is so bad&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;But even if MathML had been fully adopted and incorporated in to all web browsers, would we be done? Surely not, what about musical notations?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/Bachlut1.png&quot; alt=&quot;Musical notation - Public Domain, https://commons.wikimedia.org/w/index.php?curid=34876091&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If we want to include notes in a semantically meaningful way on a web page do we have to wait another 10 years for standardization and then hope that browsers actually implement the spec?&lt;/p&gt;
+
+&lt;p&gt;What about Feynman diagrams?&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;../../../images/2020/a-failure-of-formats/Feynmann_Diagram_Gluon_Radiation.svg&quot; alt=&quot;Feynman diagram - By Joel Holdsworth (Joelholdsworth) - Non-Derived SVG of Radiate_gluon.png, originally the work of SilverStar at Feynmann-diagram-gluon-radiation.svg, updated by joelholdsworth., CC BY 2.5, https://commons.wikimedia.org/w/index.php?curid=1764161&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Or &lt;a href=&quot;https://en.wikipedia.org/wiki/Structural_formula&quot;&gt;chemical formulas&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;Or &lt;a href=&quot;https://en.wikipedia.org/wiki/Dance_notation&quot;&gt;dance notations&lt;/a&gt;?&lt;/p&gt;
+
+&lt;p&gt;You see, the root of the issue is that humans don’t just communicate by text, we communicate by notation; we are continually creating new new notations, and we will never stop creating them. No matter how many FooML markup languages you standardize and stuff into a web browser implementation you will only ever scratch the surface,  you will always be leaving out more notations than you include. &lt;strong&gt;This is the great failing of HTML, that you cannot define some squiggly set of lines as a symbol and then use that symbol in your markup.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;is-such-a-thing-even-possible&quot;&gt;Is such a thing even possible?&lt;/h2&gt;
+
+&lt;p&gt;The only markup language that comes even close to achieving this universality of expression is TeX. In TeX it is possible to create you own notations and define how they are rendered and then to use that notation in your document. For example, there’s a TeX package that enables Feynman diagrams:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;\feynmandiagram [horizontal=a to b] {
+  i1 -- [fermion] a -- [fermion] i2,
+  a -- [photon] b,
+  f1 -- [fermion] b -- [fermion] f2,
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that both TeX and the &lt;code class=&quot;highlighter-rouge&quot;&gt;\feynmandiagram&lt;/code&gt; notation are both human readable, which is an important distinction, as without it you could point at Postscript or PDF as a possible solution. While PDF may be able to render just about anything, the underlying markup in PDF files is not human readable.&lt;/p&gt;
+
+&lt;p&gt;I’m also not suggesting we abandon HTML in favor of TeX. What I am pointing out is that there is a serious gap in the capabilities of HTML: the creation and re-use of notation, and if we want HTML to be a universal format for human communication then we need to fill this gap.&lt;/p&gt;
+
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;/h2&gt;
+
+&lt;p&gt;I’m not the first person to address these ideas by any stretch of the imagination. For example, see the entire fields of &lt;a href=&quot;https://en.wikipedia.org/wiki/Linguistics&quot;&gt;Linguistics&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Semiotics&quot;&gt;Semiotics&lt;/a&gt;. Also watch this talk from &lt;a href=&quot;http://worrydream.com/&quot;&gt;Bret Viktor&lt;/a&gt;:&lt;/p&gt;
+
+&lt;iframe src=&quot;https://player.vimeo.com/video/115154289?title=0&amp;amp;byline=0&amp;amp;portrait=0&quot; width=&quot;640&quot; height=&quot;360&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; fullscreen&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;https://vimeo.com/115154289&quot;&gt;The Humane Representation of Thought&lt;/a&gt; from &lt;a href=&quot;https://vimeo.com/worrydream&quot;&gt;Bret Victor&lt;/a&gt; on &lt;a href=&quot;https://vimeo.com&quot;&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;And check out &lt;a href=&quot;https://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0001OR&quot;&gt;Edward Tufte Sparklines&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">A failure of formats</summary></entry><entry><title type="html">Inline Forms</title><link href="https://bitworking.org/news/2019/11/inline-forms" rel="alternate" type="text/html" title="Inline Forms" /><published>2019-11-05T00:00:00-05:00</published><updated>2019-11-05T20:58:57-05:00</updated><id>https://bitworking.org/news/2019/11/inline-forms</id><content type="html" xml:base="https://bitworking.org/news/2019/11/inline-forms">&lt;p&gt;Based on a &lt;a href=&quot;https://twitter.com/bitworking/status/1190822233528242182&quot;&gt;Twitter
 discussion&lt;/a&gt; about
 optimizing the performance of web apps, I implemented a very crude polyfill for
 an idea I recently had.&lt;/p&gt;
@@ -1184,22 +1340,4 @@ done&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><su
 
 &lt;p&gt;I would love to see the U.S. do away with categories of income (income, earned
 interest, capital gains, etc) and make it all just one bucket and tax that at
-a progressive rate.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Bill Gates</summary></entry><entry><title type="html">CEO Pay</title><link href="https://bitworking.org/news/2019/03/ceo-pay" rel="alternate" type="text/html" title="CEO Pay" /><published>2019-03-04T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/ceo-pay</id><content type="html" xml:base="https://bitworking.org/news/2019/03/ceo-pay">&lt;p&gt;I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years.
-I might have to clarify that to “&lt;a href=&quot;https://www.institutionalinvestor.com/article/b1db3jy3201d38/The-MBA-Myth-and-the-Cult-of-the-CEO&quot;&gt;the &lt;strong&gt;myth&lt;/strong&gt; of the Harvard MBA is the second
-most damaging thing to happen to business in the last 40 years&lt;/a&gt;”.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;We found no statistically significant alphas — despite testing every
-possible school with a reasonable sample size. MBA programs simply do not
-produce CEOs who are better at running companies, if performance is measured
-by stock price return.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;But if there is no evidence that stock returns are attributable to CEOs,
-then what justification is there for their stratospheric pay? How much
-longer will investors and boards be fooled by randomness and hollow
-credentialism?&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Oh, and the first most damaging thing to happen to business in the past 40 years? &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;The Chicago School of Economics&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">I’ve said the Harvard MBA is the most second most damaging thing to happen to business in the last 40 years. I might have to clarify that to “the myth of the Harvard MBA is the second most damaging thing to happen to business in the last 40 years”.</summary></entry></feed>
+a progressive rate.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Bill Gates</summary></entry></feed>
