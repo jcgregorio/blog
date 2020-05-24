@@ -1,5 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2020-02-01T22:23:28-05:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
-</subtitle><entry><title type="html">A failure of formats</title><link href="https://bitworking.org/news/2020/01/a-failure-of-formats" rel="alternate" type="text/html" title="A failure of formats" /><published>2020-01-05T00:00:00-05:00</published><updated>2020-01-05T11:48:38-05:00</updated><id>https://bitworking.org/news/2020/01/a-failure-of-formats</id><content type="html" xml:base="https://bitworking.org/news/2020/01/a-failure-of-formats">&lt;h1 id=&quot;a-failure-of-formats&quot;&gt;A failure of formats&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://bitworking.org/news/feed/index.atom" rel="self" type="application/atom+xml" /><link href="https://bitworking.org/" rel="alternate" type="text/html" /><updated>2020-05-24T14:51:58-04:00</updated><id>https://bitworking.org/news/feed/index.atom</id><title type="html">BitWorking</title><subtitle>Joe Gregorio - REST, Web, Python, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.
+</subtitle><entry><title type="html">Adapting to new patterns in the pandemic.</title><link href="https://bitworking.org/news/2020/05/adapting-to-new-patterns-in-the-pandemic." rel="alternate" type="text/html" title="Adapting to new patterns in the pandemic." /><published>2020-05-24T00:00:00-04:00</published><updated>2020-05-24T14:51:33-04:00</updated><id>https://bitworking.org/news/2020/05/adapting-to-new-patterns-in-the-pandemic.</id><content type="html" xml:base="https://bitworking.org/news/2020/05/adapting-to-new-patterns-in-the-pandemic.">&lt;p&gt;It’s amazing to me how quickly something can become a habit; After only a couple
+months of one-way aisles, this weekend I was a little rattled with two-way
+traffic in the grocery store.&lt;/p&gt;
+
+&lt;p&gt;For context, &lt;a href=&quot;https://files.nc.gov/governor/documents/files/EO141-Phase-2.pdf&quot;&gt;North Carolina entered Phase
+II&lt;/a&gt; of our
+opening on Friday.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">It’s amazing to me how quickly something can become a habit; After only a couple months of one-way aisles, this weekend I was a little rattled with two-way traffic in the grocery store.</summary></entry><entry><title type="html">A failure of formats</title><link href="https://bitworking.org/news/2020/01/a-failure-of-formats" rel="alternate" type="text/html" title="A failure of formats" /><published>2020-01-05T00:00:00-05:00</published><updated>2020-01-05T11:48:38-05:00</updated><id>https://bitworking.org/news/2020/01/a-failure-of-formats</id><content type="html" xml:base="https://bitworking.org/news/2020/01/a-failure-of-formats">&lt;h1 id=&quot;a-failure-of-formats&quot;&gt;A failure of formats&lt;/h1&gt;
 
 &lt;p&gt;I have a very long diatribe on the state of document editors that I am working
 on, and almost anyone that knows me has heard parts of it, as I frequently rail
@@ -1330,14 +1336,4 @@ well.&lt;/p&gt;
 
 &lt;p&gt;Glad to see the Chicago School of Economics trying to resuscitate their image
 after &lt;a href=&quot;https://boingboing.net/2017/10/25/stiglitz-vs-friedman.html&quot;&gt;the previous damage they’ve
-done&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In this essay, I will argue that the interaction of concentrated corporate power and politics it a threat to the functioning of the free market economy and to economic prosperity it can generate, and a threat to democracy as well.</summary></entry><entry><title type="html">simplifying income</title><link href="https://bitworking.org/news/2019/03/simplifying-income" rel="alternate" type="text/html" title="simplifying income" /><published>2019-03-05T00:00:00-05:00</published><updated>2019-05-04T10:55:41-04:00</updated><id>https://bitworking.org/news/2019/03/simplifying-income</id><content type="html" xml:base="https://bitworking.org/news/2019/03/simplifying-income">&lt;p&gt;&lt;a href=&quot;https://www.theverge.com/2019/2/12/18220756/bill-gates-tax-rate-70-percent-marginal-modern-monetary-theory&quot;&gt;Bill Gates&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In terms of revenue collection, you wouldn’t want to just focus on the
- ordinary income rate, because people who are wealthy have a rounding error
- of ordinary income.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;I would love to see the U.S. do away with categories of income (income, earned
-interest, capital gains, etc) and make it all just one bucket and tax that at
-a progressive rate.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">Bill Gates</summary></entry></feed>
+done&lt;/a&gt;.&lt;/p&gt;</content><author><name>Joe Gregorio</name></author><summary type="html">In this essay, I will argue that the interaction of concentrated corporate power and politics it a threat to the functioning of the free market economy and to economic prosperity it can generate, and a threat to democracy as well.</summary></entry></feed>

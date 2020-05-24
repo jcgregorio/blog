@@ -10,4 +10,4 @@ title: $@
 
 EOL
 
-vim $filename
+$EDITOR $filename
