@@ -2,6 +2,6 @@
 
 set -e -x
 
-hugo -D
+HUGO_ENV="production" hugo -D
 firebase deploy
 xmlstarlet sel -t -m "//_:entry/_:link[@rel='alternate']/@href" -v . -n ./public/news/feed/index.xml | head -n 1 | xargs -L 1 webmention-cli -selector .post-content
