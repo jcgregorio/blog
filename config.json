@@ -79,7 +79,8 @@
     "images": ["images/newlogo.png"],
     "background_color_class": "bg-black",
     "recent_posts_number": 5,
-    "post_content_classes": "post-content"
+    "post_content_classes": "post-content",
+    "custom_css": ["css/custom.css"]
   },
   "markup": {
     "defaultMarkdownHandler": "goldmark",
