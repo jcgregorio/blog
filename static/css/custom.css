@@ -21,3 +21,8 @@
   border-bottom: solid lightgray 1px;
   margin-left: -1em;
 }
+
+#webmention img {
+  display: inline;
+  width: 16px;
+}
