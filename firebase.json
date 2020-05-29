@@ -8,6 +8,10 @@
       {
         "source": "/news/feed/",
         "destination": "/news/feed/index.xml"
+      },
+      {
+        "source": "/news/feed/index.atom",
+        "destination": "/news/feed/index.xml"
       }
     ]
   }
