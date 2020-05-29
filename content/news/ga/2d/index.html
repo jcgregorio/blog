@@ -1,0 +1,1526 @@
+---
+title: An Introduction to Geometric Algebra over R^2
+date: 2016-12-21T12:00:00-05:00
+tags:
+  - ga
+---
+
+<style type="text/css" media="screen">
+  img {
+    vertical-align: baseline;
+  }
+
+  th {
+    background: #fff;
+  }
+
+  body {
+    counter-reset: h3;
+  }
+  h3 {
+    counter-reset: h4;
+  }
+  h4 {
+    counter-reset: h5;
+  }
+  h5 {
+    counter-reset: h6;
+  }
+
+  h3:before {
+    counter-increment: h3;
+    content: counter(h3) '. ';
+  }
+  h4:before {
+    counter-increment: h4;
+    content: counter(h3) '.' counter(h4) '. ';
+  }
+  h5:before {
+    counter-increment: h5;
+    content: counter(h3) '.' counter(h4) '.' counter(h5) '. ';
+  }
+  h6:before {
+    counter-increment: h6;
+    content: counter(h3) '.' counter(h4) '.' counter(h5) '.' counter(h6) '. ';
+  }
+</style>
+<script src="/js/ga2d.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
+<div class="floatnav">
+  <ul>
+    <li><a href="#linear_algebra">Linear Algebra</a></li>
+    <li><a href="#geometric_algebra">Geometric Algebra</a></li>
+    <li><a href="#applications">Applications</a></li>
+    <ul>
+      <li><a href="#multiplying_vectors">Multiplying Vectors</a></li>
+      <li><a href="#rotors">Rotors</a></li>
+      <li><a href="#double_angle">Double Angle Formula</a></li>
+      <li><a href="#complex">Complex Numbers</a></li>
+      <li><a href="#B">Characterizing B</a></li>
+      <li><a href="#ratios">Ratios</a></li>
+      <li><a href="#conjugates">Conjugates</a></li>
+    </ul>
+  </ul>
+</div>
+<p>
+  Geometric Algebra is fascinating, and I believe solves a large number of
+  problems that arise from a more traditional approach to vectors, but I&#39;ve
+  been very disappointed with the quality of books and explanations I&#39;ve
+  found, most of them zooming off into abstract realms too quickly, or spending
+  an inordinate amount of time building up a generalized theory before finally
+  getting to something useful.
+</p>
+<p>
+  Below is an explanation of Geometric Algebra that will start with a simple two
+  dimensional vector space, i.e. ℝ<sup>2</sup>. This will be a concise
+  introduction to 𝔾<sup>2</sup>, the Geometric Algebra over ℝ<sup>2</sup>, and
+  then quickly pivot to applications in 𝔾<sup>2</sup>. This introduction will
+  not cover the fascinating history of GA,
+  <a href="https://en.wikipedia.org/wiki/Clifford_algebra">Clifford Algebras</a
+  >, or
+  <a href="https://en.wikipedia.org/wiki/Hermann_Grassmann">Hermann Grassman</a
+  >.
+</p>
+<p>
+  I'll presume a familiarity with
+  <a href="https://en.wikipedia.org/wiki/Linear_algebra">Linear Algebra</a>, and
+  then we'll introduce the geometric product on that and we'll have the
+  Geometric Alegebra over two dimensions: 𝔾<sup>2</sup>.
+</p>
+<p></p>
+<h3 id="linear_algebra">Linear Algebra</h3>
+
+<blockquote>
+  Linear algebra is the branch of mathematics concerning vector spaces and
+  linear mappings between such spaces. It includes the study of lines, planes,
+  and subspaces, but is also concerned with properties common to all vector
+  spaces. -<a href="https://en.wikipedia.org/wiki/Linear_algebra">Wikipedia</a>
+</blockquote>
+<p>
+  You should be familiar with the following axioms and definitions from Linear
+  Algebra:
+</p>
+
+<table>
+  <tr>
+    <td>
+      $$(\boldsymbol{a} + \boldsymbol{b}) + \boldsymbol{c} = \boldsymbol{a} +
+      (\boldsymbol{b} + \boldsymbol{c})$$
+    </td>
+    <td>Associative</td>
+    <td>(1)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} + \boldsymbol{b} = \boldsymbol{b} + \boldsymbol{a} $$
+    </td>
+    <td>Commutative</td>
+    <td>(2)</td>
+  </tr>
+  <tr>
+    <td>$$\boldsymbol{0} + \boldsymbol{b} = \boldsymbol{b} $$</td>
+    <td>Identity</td>
+    <td>(3)</td>
+  </tr>
+  <tr>
+    <td>$$\boldsymbol{-a} + \boldsymbol{a} = \boldsymbol{0}$$</td>
+    <td>Inverse</td>
+    <td>(4)</td>
+  </tr>
+  <tr>
+    <td>
+      $$c(\boldsymbol{a} + \boldsymbol{b}) = c\boldsymbol{a} + c\boldsymbol{b}
+      $$
+    </td>
+    <td>Scalar Distributive</td>
+    <td>(5)</td>
+  </tr>
+  <tr>
+    <td>$$1 \boldsymbol{b} = \boldsymbol{b} $$</td>
+    <td>Multiplicative Identity</td>
+    <td>(6)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \cdot \boldsymbol{b} = ||\boldsymbol{a}||
+      ||\boldsymbol{b}|| \cos \theta$$
+    </td>
+    <td>Dot/Inner Product</td>
+    <td>(7)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \cdot \boldsymbol{b} =
+      \sum_{i}\boldsymbol{a_i}\boldsymbol{b_i} $$
+    </td>
+    <td>Dot/Inner Product (Alternate)</td>
+    <td>(8)</td>
+  </tr>
+</table>
+
+<p>In particular, for ℝ<sup>2</sup> we have an orthonormal basis:</p>
+<dl>
+  <dd>$$ \boldsymbol{e_{1}} := (1,0) $$</dd>
+  <dd>$$ \boldsymbol{e_{2}} := (0,1) $$</dd>
+</dl>
+<p>where:</p>
+<dl>
+  <dd>$$ \boldsymbol{e_{1}} \perp \boldsymbol{e_{2}} $$</dd>
+</dl>
+
+<canvas id="basis" width="150" height="150"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var e1 = ga2d.vec(1, 0);
+    var e2 = ga2d.vec(0, 1);
+    var f = new draw_ga2d.Frame(document.getElementById('basis'));
+    f.axes();
+    f.vec(e1, 'e1');
+    f.vec(e2, 'e2');
+    f.expandTo([0, 2, 0, 0]);
+    f.draw();
+  })();
+</script>
+
+<p>
+  We know how to do vector addition and scalar multiplication of vectors, and
+  that any vector can be represented as a linear combination of basis elements.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} &= -1 \boldsymbol{e_{1}} + 2
+    \boldsymbol{e_{2}} \\ \boldsymbol{b} &= 2 \boldsymbol{e_{1}} + 3
+    \boldsymbol{e_{2}} \\ \boldsymbol{a} + \boldsymbol{b} &= 1 \boldsymbol{e_1}
+    + 5 \boldsymbol{e_2} \end{align*} $$
+  </dd>
+</dl>
+
+<canvas id="add" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var a = ga2d.vec(-1, 2);
+    var b = ga2d.vec(2, 3);
+    var c = ga2d.add(a, b);
+    var f = new draw_ga2d.Frame(document.getElementById('add'));
+    f.axes();
+    f.vec(a, 'a');
+    f.vec(b, 'b');
+    f.vec(c, 'a+b');
+    f.draw();
+  })();
+</script>
+
+<p>
+  Things to remember about the dot product, or inner product, is that it is 0
+  for orthogonal vectors:
+</p>
+<dl>
+  <dd>
+    $$ \boldsymbol{e_{1}} \perp \boldsymbol{e_{2}} \implies \boldsymbol{e_1}
+    \cdot \boldsymbol{e_2} = 0$$
+  </dd>
+</dl>
+<p>
+  And that a vector dot with itself gives the square of the norm of the vector,
+  since $$\cos 0 = 1$$:
+</p>
+<dl>
+  <dd>$$ \boldsymbol{a} \cdot \boldsymbol{a} = {||\boldsymbol{a}||}^2$$</dd>
+</dl>
+
+<p>
+  One important thing to notice about Linear Algebra is how often you have to
+  step outside of ℝ<sup>2</sup> to get work done. That is, operations frequently
+  have to take place outside ℝ<sup>2</sup> or those operations give you results
+  outside of ℝ<sup>2</sup>. For example, the dot product of two vector returns a
+  scalar, which is not a member of ℝ<sup>2</sup>.
+</p>
+<dl>
+  <dd>
+    $$ \boldsymbol{a} \cdot \boldsymbol{b} := ||\boldsymbol{a}||
+    ||\boldsymbol{b}|| \cos(\theta) $$
+  </dd>
+</dl>
+<p>
+  Similarly, to rotate vectors you have to create matrices, which don't exist in
+  ℝ<sup>2</sup>, and apply them to vectors through matrix multiplication.
+</p>
+<p>
+  One final example is the cross-product, which takes two vectors and operates
+  on them to produce a vector that is orthogonal to the original two vectors,
+  but if you are in ℝ<sup>2</sup> it doesn't exist, you have to then view that
+  cross-product vector as existing in ℝ<sup>3</sup>, which the original ℝ<sup
+    >2</sup
+  >
+  is embedded in.
+</p>
+<p>
+  All of this stands in stark contrast to 𝔾<sup>2</sup>, where these operations
+  take place in 𝔾<sup>2</sup>, in fact, many of the constructs we use in Linear
+  Algebra, such as rotations, exist as elements of 𝔾<sup>2</sup>, and applying
+  those operations is just a matter of taking the geometric product of those
+  objects. Not only is 𝔾<sup>2</sup> closed under many of these operations, but
+  the operations exist as elements in 𝔾<sup>2</sup>.
+</p>
+
+<h3 id="geometric_algebra">Geometric Algebra</h3>
+
+<p>
+  The Geometric Algebra of 𝔾<sup>2</sup> builds upon ℝ<sup>2</sup>, extending it
+  by adding multiplication, i.e. a geometric product. Before we get to the
+  geometric product we need to first quickly learn about the exterior product.
+</p>
+
+<h4 id="exterior_product">Exterior Product</h4>
+
+<p>
+  The exterior product operates on two vectors and is written as:
+</p>
+<dl>
+  <dd>$$\boldsymbol{a} \wedge \boldsymbol{b}$$</dd>
+</dl>
+
+<canvas id="wedge" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var a = ga2d.vec(Math.sqrt(2) / 2, Math.sqrt(2) / 2);
+    var b = ga2d.vec(Math.sqrt(2) / 2, -Math.sqrt(2) / 2);
+    var ab = ga2d.add(a, b);
+    var a_neg = ga2d.mul(ga2d.scalar(-1), a);
+    var b_neg = ga2d.mul(ga2d.scalar(-1), b);
+    var f = new draw_ga2d.Frame(document.getElementById('wedge'));
+    f.vec(a, 'a');
+    f.vecFrom(b, a, 'b');
+    f.region([[0, 0, 0, 0], a, ab, b], '', 'rgba(100, 0, 255, 0.2)');
+    f.draw();
+  })();
+</script>
+
+<p>
+  The exterior product represents the oriented area defined by the two vectors,
+  or more precisely is represents an oriented area in the plane defined by those
+  vectors, also known as a bivector. There are two important aspects of this,
+  the first is that the exact shape doesn't matter. For example, the bivectors
+  represented below are equal because they have the same orientation
+  (counter-clockwise) and the same area (3).
+</p>
+
+<dl>
+  <dd>$$ (1, 0) \wedge (0, 3) = (3, 0) \wedge (0, 1)$$</dd>
+</dl>
+<canvas id="wedge2" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var a = ga2d.vec(1, 0);
+    var b = ga2d.vec(0, 3);
+    var c = ga2d.vec(3, 0);
+    var d = ga2d.vec(0, 1);
+    var ab = ga2d.add(a, b);
+    var cd = ga2d.add(c, d);
+    var f = new draw_ga2d.Frame(document.getElementById('wedge2'));
+    f.vec(a, '(1, 0)');
+    f.vecFrom(b, a, '(0, 3)');
+    f.vec(c, '(3, 0)');
+    f.vecFrom(d, c, '(0, 1)');
+    f.region([[0, 0, 0, 0], a, ab, b], '', 'rgba(100, 0, 255, 0.2)');
+    f.region([[0, 0, 0, 0], c, cd, d], '', 'rgba(255, 0, 100, 0.2)');
+    f.expandTo([0, 4, 0, 0]);
+    f.draw();
+  })();
+</script>
+
+<p>
+  The second important factor is that the exterior product is anticommutative,
+  that is, if you reverse the order of the vectors involved then the sign of the
+  exterior product changes.
+</p>
+<dl>
+  <dd>
+    $$\boldsymbol{a} \wedge \boldsymbol{b} = - \boldsymbol{b} \wedge
+    \boldsymbol{a}$$
+  </dd>
+</dl>
+<p>
+  Using two of the vectors above, note that the order that they are used in the
+  exterior product will make the bivectors either clockwise or
+  counter-clockwise.
+</p>
+
+<canvas id="wedge_reverse" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var a = ga2d.vec(1, 0);
+    var b = ga2d.vec(0, 3);
+    var ab = ga2d.add(a, b);
+    var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse'));
+    f.vec(a, '(1, 0)');
+    f.vecFrom(b, a, '(0, 3)');
+    f.region([[0, 0, 0, 0], a, ab, b], '', 'rgba(100, 0, 255, 0.2)');
+    f.draw();
+  })();
+</script>
+
+<canvas id="wedge_reverse_2" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var c = ga2d.vec(0, 3);
+    var d = ga2d.vec(1, 0);
+    var cd = ga2d.add(c, d);
+    var f = new draw_ga2d.Frame(document.getElementById('wedge_reverse_2'));
+    f.vec(c, '(0, 3)');
+    f.vecFrom(d, c, '(1, 0)');
+    f.region([[0, 0, 0, 0], c, cd, d], '', 'rgba(255, 0, 100, 0.2)');
+    f.draw();
+  })();
+</script>
+
+<p>
+  The properties of the exterior product are:
+</p>
+
+<table>
+  <tr>
+    <td>
+      $$(\boldsymbol{a} \wedge \boldsymbol{b}) \wedge \boldsymbol{c} =
+      \boldsymbol{a} \wedge (\boldsymbol{b} \wedge \boldsymbol{c})$$
+    </td>
+    <td>Associative</td>
+    <td>(1)</td>
+  </tr>
+  <tr>
+    <td>
+      $$c(\boldsymbol{a} \wedge \boldsymbol{b}) = c\boldsymbol{a} \wedge
+      \boldsymbol{b} = \boldsymbol{a} \wedge c\boldsymbol{b}$$
+    </td>
+    <td>Scalar Associativity</td>
+    <td>(2)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \wedge (\boldsymbol{b} + \boldsymbol{c}) = \boldsymbol{a}
+      \wedge \boldsymbol{b} + \boldsymbol{a} \wedge \boldsymbol{c}$$
+    </td>
+    <td>Left Distributive</td>
+    <td>(3)</td>
+  </tr>
+  <tr>
+    <td>
+      $$(\boldsymbol{a} + \boldsymbol{b}) \wedge \boldsymbol{c} = \boldsymbol{a}
+      \wedge \boldsymbol{c} + \boldsymbol{b} \wedge \boldsymbol{c}$$
+    </td>
+    <td>Right Distributive</td>
+    <td>(4)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \wedge \boldsymbol{b} = -\boldsymbol{b} \wedge
+      \boldsymbol{a}$$
+    </td>
+    <td>Anti-symmetric</td>
+    <td>(5)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \parallel \boldsymbol{b} \Rightarrow \boldsymbol{a}
+      \wedge \boldsymbol{b} = 0$$
+    </td>
+    <td>Zero for Parallel Vectors.</td>
+    <td>(6)</td>
+  </tr>
+</table>
+
+<p>
+  In what is going to become a recurring theme, let's look at what this means in
+  terms of basis vectors. Since any vector can be written as a linear
+  combination of basis vectors we get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} &= a_1 \boldsymbol{e_{1}} + a_2
+    \boldsymbol{e_{2}} \\ \boldsymbol{b} &= b_1 \boldsymbol{e_{1}} + b_2
+    \boldsymbol{e_{2}} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  If we take their exterior product we get:
+</p>
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} \wedge \boldsymbol {b} &= (a_1
+    \boldsymbol{e_{1}} + a_2 \boldsymbol{e_{2}}) \wedge (b_1 \boldsymbol{e_{1}}
+    + b_2 \boldsymbol{e_{2}}) \\ &= a_1 b_1 \boldsymbol{e_{1}} \wedge
+    \boldsymbol{e_{1}} + a_1 b_2 \boldsymbol{e_{1}} \wedge \boldsymbol{e_{2}} +
+    a_2 b_1 \boldsymbol{e_{2}} \wedge \boldsymbol{e_{1}} + a_2 b_2
+    \boldsymbol{e_{2}} \wedge \boldsymbol{e_{2}} & \text{via 1} \\ &= 0 + a_1
+    b_2 \boldsymbol{e_{1}} \wedge \boldsymbol{e_{2}} + a_2 b_1
+    \boldsymbol{e_{2}} \wedge \boldsymbol{e_{1}} + 0 & \text{via 6} \\ &= a_1
+    b_2 \boldsymbol{e_{1}} \wedge \boldsymbol{e_{2}} - a_2 b_1
+    \boldsymbol{e_{1}} \wedge \boldsymbol{e_{2}} & \text{via 5} \\ &= ( a_1 b_2
+    - a_2 b_1 )\boldsymbol{e_{1}} \wedge \boldsymbol{e_{2}} & \text{via 2}
+    \end{align*} $$
+  </dd>
+</dl>
+<p>
+  So the exterior product of any two vectors can expressed as just a scalar
+  mulitple of <b>e<sub>1</sub>^e<sub>2</sub></b>
+</p>
+
+<h4 id="geometric_product">Geometric Product</h4>
+
+<p>
+  Now that we know about the exterior product, we can define the geometric
+  product, which is just the sum of the inner product and the exterior product:
+</p>
+
+<dl>
+  <dd>
+    $$\boldsymbol{a} \boldsymbol{b} := \boldsymbol{a} \cdot \boldsymbol{b}
+    +\boldsymbol{a} \wedge \boldsymbol{b}$$
+  </dd>
+</dl>
+
+<p>
+  Using just the above definition you can show that the geometric product has
+  the following properties:
+</p>
+
+<table>
+  <tr>
+    <td>
+      $$(\boldsymbol{a} \boldsymbol{b}) \boldsymbol{c} = \boldsymbol{a}
+      (\boldsymbol{b} \boldsymbol{c})$$
+    </td>
+    <td>Associative</td>
+    <td>(1)</td>
+  </tr>
+  <tr>
+    <td>
+      $$c(\boldsymbol{a} \boldsymbol{b}) = c\boldsymbol{a} \boldsymbol{b} =
+      \boldsymbol{a} c \boldsymbol{b}$$
+    </td>
+    <td>Scalar Associativity</td>
+    <td>(2)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} (\boldsymbol{b} + \boldsymbol{c}) = \boldsymbol{a}
+      \boldsymbol{b} + \boldsymbol{a} \boldsymbol{c}$$
+    </td>
+    <td>Left Distributive</td>
+    <td>(3)</td>
+  </tr>
+  <tr>
+    <td>
+      $$(\boldsymbol{a} + \boldsymbol{b}) \boldsymbol{c} = \boldsymbol{a}
+      \boldsymbol{c} + \boldsymbol{b} \boldsymbol{c}$$
+    </td>
+    <td>Right Distributive</td>
+    <td>(4)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \parallel \boldsymbol{a} \Rightarrow \boldsymbol{a}
+      \boldsymbol{a} = \boldsymbol{a} \cdot \boldsymbol{a} =
+      ||\boldsymbol{a}||^2 $$
+    </td>
+    <td>Norm</td>
+    <td>(5)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \boldsymbol{b} \neq \boldsymbol{b} \boldsymbol{a} $$
+    </td>
+    <td>Non-Commutative, except in some cases.</td>
+    <td>(6)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \neq 0 \Rightarrow \boldsymbol{a}
+      (\frac{1}{||\boldsymbol{a}||^2} \boldsymbol{a}) = 1$$
+    </td>
+    <td>Vector Inverses</td>
+    <td>(7)</td>
+  </tr>
+  <tr>
+    <td>
+      $$\boldsymbol{a} \perp \boldsymbol{b} \Rightarrow \boldsymbol{a}
+      \boldsymbol{b} = \boldsymbol{a} \wedge \boldsymbol{b}$$
+    </td>
+    <td>Orthogonal vector multiplication.</td>
+    <td>(8)</td>
+  </tr>
+</table>
+
+<p>
+  With the geometric product as defined above, and vector addition, our
+  Geometric Algebra 𝔾<sup>2</sup> forms a
+  <a href="https://en.wikipedia.org/wiki/Associative_algebra"
+    >unital associative algebra</a
+  >
+  with an orthonormal basis:
+</p>
+<dl>
+  <dd>
+    $$ 1, \boldsymbol{e_1}, \boldsymbol{e_2}, \boldsymbol{e_{1} e_{2}} $$
+  </dd>
+</dl>
+
+<p>
+  We can work out a multiplication table for the basis elements, with the
+  observation that if two elements are orthogonal then their dot product is
+  zero, so that implies that the geometric product reduces to the exterior
+  product between orthogonal vectors, which is anti-symmetric. So that implies
+  for each of our basis vectors:
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{e_1} \boldsymbol{e_2} = \boldsymbol{e_1} \wedge
+    \boldsymbol{e_2} $$
+  </dd>
+</dl>
+<p>
+  And that implies, by the anti-symmetry of the exterior product:
+</p>
+<dl>
+  <dd>
+    $$ \boldsymbol{e_1} \boldsymbol{e_2} = - \boldsymbol{e_2} \boldsymbol{e_1}
+    $$
+  </dd>
+</dl>
+
+<p>
+  And the geometric product of any basis element with itself, because they are
+  parallel means the exterior product is zero, so:
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{e_1} \boldsymbol{e_1} = \boldsymbol{e_1} \cdot
+    \boldsymbol{e_1} = ||\boldsymbol{e_1}||^2 = 1 $$
+  </dd>
+</dl>
+
+<p>
+  Note that we'll end up writing a lot of equations with basis vectors
+  multiplied together, so it's useful to have a shorthand, i.e.
+  <b>e<sub>12</sub></b> will be used as a short-hand for
+  <b>e<sub>1</sub> e<sub>2</sub></b
+  >.
+</p>
+
+<p>
+  We can now complete a multiplication table for the geometric product of all
+  the basis elements:
+</p>
+
+<table border="1" cellspacing="5" cellpadding="5">
+  <tr>
+    <th></th>
+    <th>\(1\)</th>
+    <th>\(e_1\)</th>
+    <th>\(e_2\)</th>
+    <th>\(e_{12}\)</th>
+  </tr>
+  <tr>
+    <th>\(1\)</th>
+    <td>\(1\)</td>
+    <th>\(e_1\)</th>
+    <th>\(e_2\)</th>
+    <th>\(e_{12}\)</th>
+  </tr>
+  <tr>
+    <th>\(e_1\)</th>
+    <td>\(e_1\)</td>
+    <td>\(1\)</td>
+    <td>\(e_{12}\)</td>
+    <td>\(e_2\)</td>
+  </tr>
+  <tr>
+    <th>\(e_2\)</th>
+    <td>\(e_2\)</td>
+    <td>\(-e_{12}\)</td>
+    <td>\(1\)</td>
+    <td>\(-e_1\)</td>
+  </tr>
+  <tr>
+    <th>\(e_{12}\)</th>
+    <td>\(e_{12}\)</td>
+    <td>\(-e_2\)</td>
+    <td>\(e_1\)</td>
+    <td>\(-1\)</td>
+  </tr>
+</table>
+
+<p>
+  Now that we know what elements of 𝔾<sup>2</sup> look like and how to
+  manipulate them, it's now time to put them to work.
+</p>
+<h3 id="applications">Applying Geometric Algebra</h3>
+
+<h4 id="multiplying_vectors">Multiplying Vectors</h4>
+<p>
+  Let's start by multiplying two vectors:
+</p>
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} &= a_1 \boldsymbol{e_{1}} + a_2
+    \boldsymbol{e_{2}} \\ \boldsymbol{b} &= b_1 \boldsymbol{e_{1}} + b_2
+    \boldsymbol{e_{2}} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  Under the geometric product we get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} \boldsymbol {b} &= (a_1 \boldsymbol{e_{1}}
+    + a_2 \boldsymbol{e_{2}}) (b_1 \boldsymbol{e_{1}} + b_2 \boldsymbol{e_{2}})
+    \\ &= a_1 b_1 \boldsymbol{e_{1}} \boldsymbol{e_{1}} + a_1 b_2
+    \boldsymbol{e_{1}} \boldsymbol{e_{2}} + a_2 b_1 \boldsymbol{e_{2}}
+    \boldsymbol{e_{1}} + a_2 b_2 \boldsymbol{e_{2}} \boldsymbol{e_{2}} \\ &= a_1
+    b_1 + a_1 b_2 \boldsymbol{e_{1}} \boldsymbol{e_{2}} + a_2 b_1
+    \boldsymbol{e_{2}} \boldsymbol{e_{1}} + a_2 b_2 \\ &= a_1 b_1 + a_2 b_2 +
+    a_1 b_2 \boldsymbol{e_{12}} - a_2 b_1 \boldsymbol{e_{12}} \\ &= (a_1 b_1 +
+    a_2 b_2) + (a_1 b_2 - a_2 b_1) \boldsymbol{e_{12}} \end{align*} $$
+  </dd>
+</dl>
+<p>
+  We can see that from the product of two vectors we get a scalar and a
+  bivector.
+</p>
+<p>
+  What if we take a scalar and a bivector and multiply it by a vector? Note that
+  below we are using a capital letter for our scalar plus bivector.
+</p>
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} &= a_1 \boldsymbol{e_{1}} + a_2
+    \boldsymbol{e_{2}} \\ \boldsymbol{B} &= B_1 + B_2 \boldsymbol{e_{12}}
+    \end{align*} $$
+  </dd>
+</dl>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} \boldsymbol {B} &= (a_1 \boldsymbol{e_{1}}
+    + a_2 \boldsymbol{e_{2}}) (B_1 + B_2 \boldsymbol{e_{12}}) \\ &= a_1 B_1
+    \boldsymbol{e_{1}} + a_1 B_2 \boldsymbol{e_{1}} \boldsymbol{e_{12}} + a_2
+    B_1 \boldsymbol{e_{2}} + a_2 B_2 \boldsymbol{e_{2}} \boldsymbol{e_{12}} \\
+    &= a_1 B_1 \boldsymbol{e_{1}} + a_2 B_1 \boldsymbol{e_{2}} + a_1 B_2
+    \boldsymbol{e_{1}} \boldsymbol{e_{12}} + a_2 B_2 \boldsymbol{e_{2}}
+    \boldsymbol{e_{12}} \\ &= a_1 B_1 \boldsymbol{e_{1}} + a_2 B_1
+    \boldsymbol{e_{2}} + a_1 B_2 \boldsymbol{e_{2}} - a_2 B_2 \boldsymbol{e_{1}}
+    \\ &= ( a_1 B_1 - a_2 B_2 )\boldsymbol{e_{1}} + ( a_2 B_1 + a_1 B_2 )
+    \boldsymbol{e_{2}} \\ \end{align*} $$
+  </dd>
+</dl>
+<p>
+  That product gives us back a vector, so <b>B</b> is an element of 𝔾<sup
+    >2</sup
+  >
+  that operates on vectors through the geometric product to give us another
+  vector.
+</p>
+<h4 id="rotors">Rotors</h4>
+<p>
+  A special case of <b>B</b> is called a Rotor. This Rotor is an element of
+  𝔾<sup>2</sup> that is just a restatement of
+  <a href="https://en.wikipedia.org/wiki/Euler's_formula">Euler's formula</a>
+  in 𝔾<sup>2</sup>.
+</p>
+<p>
+  First, for reasons that will become clearer later, we will begin to abbreviate
+  <b>e<sub>12</sub></b> as <b>I</b>. Our Rotor is then defined as:
+</p>
+<dl>
+  <dd>
+    $$ e^{\theta \boldsymbol{I}} := \cos(\theta) + \sin(\theta)\boldsymbol{I}$$
+  </dd>
+</dl>
+<p>
+  If you multiply any vector by this Rotor on the right it will rotate that
+  vector &theta; degrees in the direction from <b>e<sub>1</sub></b> to
+  <b>e<sub>2</sub></b
+  >. If you multiply that same vector on the left by this Rotor it will be
+  rotated &theta; degrees in the opposite direction.
+</p>
+
+<p>
+  For example, here is a dynamic illustration of the Rotor in action, In this
+  case, we are multiplying <b>e<sub>1</sub></b> by e<sup>&omega;t<b>I</b></sup
+  >, where t is time, and &omega; is the rate, in radians per second, that the
+  vector undergoes rotation. In this example we set &omega; = 1, so the vector
+  should complete a full circle every 2&pi; seconds.
+</p>
+<dl>
+  <dd>$$\boldsymbol{v} = \boldsymbol{e_1} e^{t \boldsymbol{I}}$$</dd>
+</dl>
+
+<button id="rotor_toggle">Start/Stop</button>
+<canvas id="rotor" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('rotor_toggle');
+    var running = false;
+    var omega = 1;
+    var start = Date.now();
+    var e1 = ga2d.vec(1, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('rotor'));
+    var step = function () {
+      var rotor = ga2d.e((omega * (Date.now() - start)) / 1000);
+      var dest = ga2d.mul(e1, rotor);
+      f.clear();
+      f.expandTo([0, 1, 1, 0]);
+      f.expandTo([0, -1, -1, 0]);
+      f.axes();
+      f.vec(dest, 'v');
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+<p>
+  Caveat: Rotors only work like this in ℝ<sup>2</sup>, in ℝ<sup>3</sup> and
+  above the formulation changes, so be aware of that.
+</p>
+<p>
+  Using geometric algebra makes it easy to read off this formula and determine
+  what is going to happen, i.e. the <b>e<sub>1</sub></b> vector is going to be
+  operated on via geometric product and the result will be another vector that
+  is rotated <em>&omega; t</em> radians in a counter-clockwise direction.
+</p>
+
+<p>
+  Since our Rotator is a member of 𝔾<sup>2</sup> it can be combined with other
+  operations. For example, we could start with a vector <em>p</em> at an initial
+  position and then perturb it by adding it to another vector that is multiplied
+  by our Rotor. In this case we set &omega; = 2.
+</p>
+
+<dl>
+  <dd>
+    $$\boldsymbol{v} = \boldsymbol{p} + 0.5 \boldsymbol{e_1} e^{2 t
+    \boldsymbol{I}}$$
+  </dd>
+</dl>
+
+<button id="sum_rotor_toggle">Start/Stop</button>
+<canvas id="sum_rotor" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('sum_rotor_toggle');
+    var running = false;
+    var omega = 2;
+    var start = Date.now();
+    var p = ga2d.vec(1, 1);
+    var e1 = ga2d.vec(0.5, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('sum_rotor'));
+    var step = function () {
+      var rotor = ga2d.e((omega * (Date.now() - start)) / 1000);
+      var dest = ga2d.add(p, ga2d.mul(e1, rotor));
+      f.clear();
+      f.expandTo([0, 1.5, 1.5, 0]);
+      f.axes();
+      f.vec(dest, 'v');
+      f.vec(p, 'p');
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<p>
+  We can take that one step further and rotate the whole thing around the
+  origin, where we set &omega;<sub>1</sub> = 2.9 and &omega;<sub>2</sub> = 1.
+</p>
+<dl>
+  <dd>
+    $$\boldsymbol{v} = (\boldsymbol{p} + 0.5 \boldsymbol{e_1} e^{\omega_1 t
+    \boldsymbol{I}})e^{\omega_2 t \boldsymbol{I}}$$
+  </dd>
+</dl>
+
+<button id="sum_rotor2_toggle">Start/Stop</button>
+<canvas id="sum_rotor2" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('sum_rotor2_toggle');
+    var running = false;
+    var omega1 = 2.9;
+    var omega2 = 1;
+    var start = Date.now();
+    var p = ga2d.vec(1, 1);
+    var e1 = ga2d.vec(0.5, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('sum_rotor2'));
+    var step = function () {
+      var rotor1 = ga2d.e((omega1 * (Date.now() - start)) / 1000);
+      var rotor2 = ga2d.e((omega2 * (Date.now() - start)) / 1000);
+      var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
+      f.clear();
+      f.expandTo([0, 2, 2, 0]);
+      f.expandTo([0, -2, -2, 0]);
+      f.axes();
+      f.vec(dest, 'v');
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<p>
+  That might be easier to follow if instead of drawing the vector we draw the
+  trail of points where the vector has been.
+</p>
+
+<button id="trail_rotor2_toggle">Start/Stop</button>
+<canvas id="trail_rotor2" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('trail_rotor2_toggle');
+    var running = false;
+    var omega1 = 2.9;
+    var omega2 = 1;
+    var start = Date.now();
+    var p = ga2d.vec(1, 1);
+    var e1 = ga2d.vec(0.5, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('trail_rotor2'));
+    var lastPoint = [];
+    var step = function () {
+      var rotor1 = ga2d.e((omega1 * (Date.now() - start)) / 1000);
+      var rotor2 = ga2d.e((omega2 * (Date.now() - start)) / 1000);
+      var dest = ga2d.mul(ga2d.add(p, ga2d.mul(e1, rotor1)), rotor2);
+      if (lastPoint === []) {
+        lastPoint = dest;
+        return;
+      }
+      f.reset();
+      f.segment(lastPoint, dest);
+      f.draw();
+      lastPoint = dest;
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        lastPoint = [];
+        f.clear();
+        f.expandTo([0, 2, 2, 0]);
+        f.expandTo([0, -2, -2, 0]);
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<h4 id="double_angle">Double Angle Formula</h4>
+
+<p>
+  Some of the power of Geometric Algebra comes from being able to go back and
+  forth between looking at a problem geometrically and looking at it
+  algrebraically. For example, it is easy to reason that rotating a vector
+  &theta; degrees twice is the same as rotating that same vector 2 &theta;
+  degrees. We can write that out as an algebraic expression:
+</p>
+
+<dl>
+  <dd>
+    $$ e^{2 \theta \boldsymbol{I}} = e^{\theta \boldsymbol{I}} e^{\theta
+    \boldsymbol{I}} $$
+  </dd>
+</dl>
+
+<p>
+  If we expand both sides of the equations above using the definition of
+  <em>e</em> we get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \cos 2 \theta + \sin 2 \theta \boldsymbol{I} &= (\cos
+    \theta + \sin \theta \boldsymbol{I}) (\cos \theta + \sin \theta
+    \boldsymbol{I}) \\ &= \cos^2 \theta + 2 \cos \theta \sin \theta
+    \boldsymbol{I} + \sin^2 \theta \boldsymbol{I}^2 \\ &= \cos^2 \theta + 2 \cos
+    \theta \sin \theta \boldsymbol{I} - \sin^2 \theta \\ &= \cos^2 \theta -
+    \sin^2 \theta + 2 \cos \theta \sin \theta \boldsymbol{I} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  Comparing the coefficients on the left hand side of the equation to that on
+  the right hand side we find we have derived the
+  <a href="http://mathworld.wolfram.com/Double-AngleFormulas.html"
+    >Double Angle Formulas</a
+  >:
+</p>
+
+<dl>
+  <dd>
+    $$ \cos 2 \theta = \cos^2 \theta - \sin^2 \theta $$
+  </dd>
+  <dd>
+    $$ \sin 2 \theta = 2 \cos \theta \sin \theta $$
+  </dd>
+</dl>
+<p>
+  You could start with the same geometric reasoning about any two angles,
+  &alpha; and &beta;, and use the same derivation to get the general
+  <a
+    href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities#Angle_sum_and_difference_identities"
+    >Angle sum identities</a
+  >. The power here is the ability to move back and forth between algebraic and
+  geometric reasoning quickly and easily.
+</p>
+
+<h4 id="complex">Complex Numbers</h4>
+<p>
+  From our definition of our Rotator, if we set &omega; to 90 degrees then since
+  <em>cos</em> becomes 0 we are left with only <b>I</b>, which is a 90 degree
+  Rotator. But if we apply a 90 degree Rotator twice we should get a 180 degree
+  Rotator:
+</p>
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{I} \boldsymbol{I} &= \boldsymbol{e_{12}}
+    \boldsymbol{e_{12}} \\ &= \boldsymbol{e_1} \boldsymbol{e_2} \boldsymbol{e_1}
+    \boldsymbol{e_2} \\ &= - \boldsymbol{e_1} \boldsymbol{e_1} \boldsymbol{e_2}
+    \boldsymbol{e_2} \\ &= - 1 \boldsymbol{e_2} \boldsymbol{e_2} \\ &= - 1 \\
+    \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  And -1 is exactly what we would expect, since that's what you multiply a
+  vector by to rotate it 180 degrees. But what we also have is a quantity in
+  𝔾<sup>2</sup> that when squared is equal to -1. This should remind you of
+  <em>i</em> in the complex numbers ℂ, but without the need to take the square
+  root of a negative number, or invoke anything imaginary. In fact the subset of
+  all linear combinations of <b>{1, I}</b> is closed under the geometric product
+  and is isomorphic to ℂ.
+</p>
+
+<h4 id="B">Characterizing B</h4>
+
+<p>
+  Now that we have learned about Rotors, let's apply that knowledge to
+  characterize elements of the form:
+</p>
+<dl>
+  <dd>
+    $$ \boldsymbol{B} = B_1 + B_2 \boldsymbol{e_{12}} $$
+  </dd>
+</dl>
+
+<p>
+  First, let's look at the relationship between any two non-zero vectors.
+</p>
+
+<canvas id="two" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var a = ga2d.vec(-1, 2);
+    var b = ga2d.vec(2, 3);
+    var f = new draw_ga2d.Frame(document.getElementById('two'));
+    f.axes();
+    f.vec(a, 'a');
+    f.vec(b, 'b');
+    f.draw();
+  })();
+</script>
+
+<p>
+  We can reason out geometrically that given <b>b</b> we can get <b>a</b> from
+  it by first scaling <b>b</b> to have a norm of 1, then rotating it to have the
+  same direction as <b>a</b>, and then finally scaling that unit vector to have
+  the same length as <b>a</b>. Now write that out algrebraically, where &theta;
+  is the angle between the two vectors.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} &= ||\boldsymbol{a}|| e^{\theta
+    \boldsymbol{I}} \frac{1}{||\boldsymbol{b}||} \boldsymbol{b} \\ &=
+    \frac{||\boldsymbol{a}||}{||\boldsymbol{b}||} e^{\theta \boldsymbol{I}}
+    \boldsymbol{b} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  If we look at any product of two non-zero vectors, <b>ab</b>, we know we get
+  an operator that, under the geometric product, takes vectors and returns new
+  vectors. If we substitute our derivation of how to get <b>a</b> from <b>b</b>,
+  then we get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{ab} &=
+    \frac{||\boldsymbol{a}||}{||\boldsymbol{b}||} e^{\theta \boldsymbol{I}}
+    \boldsymbol{b} \boldsymbol{b} \\ &=
+    \frac{||\boldsymbol{a}||}{||\boldsymbol{b}||} e^{\theta \boldsymbol{I}}
+    ||\boldsymbol{b}||^2 \\ &= ||\boldsymbol{a}|| ||\boldsymbol{b}|| e^{\theta
+    \boldsymbol{I}} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  So every such operator <b>ab</b> is actually just a rotation and a dilation.
+  We can see this in action if we have the operator <b>ab</b> and apply it to
+  vector <b>c</b> to get vector <b>d</b>. The animation will perturb vector
+  <b>b</b> to show how that affects vector <b>d</b>.
+</p>
+
+<p></p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{d} = \boldsymbol{ab}\boldsymbol{c} $$
+  </dd>
+</dl>
+
+<button id="ab_toggle">Start/Stop</button>
+<canvas id="ab" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('ab_toggle');
+    var running = false;
+    var omega = 2;
+    var start = Date.now();
+    var a = ga2d.vec(0.8, 0);
+    var b = ga2d.vec(1, 0.2);
+    var c = ga2d.vec(0, 0.5);
+    var p = ga2d.vec(0.2, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('ab'));
+    var step = function () {
+      var rotor = ga2d.e((omega * (Date.now() - start)) / 1000);
+      var bp = ga2d.add(b, ga2d.mul(rotor, p));
+      var op = ga2d.mul(bp, a);
+      var d = ga2d.mul(op, c);
+      f.clear();
+      f.axes();
+      f.vec(a, 'a');
+      f.vec(bp, 'b');
+      f.vec(c, 'c');
+      f.vec(d, 'd');
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<p>
+  Our generalized form for the geometric product of two vectors is:
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{B} = B_1 + B_2 \boldsymbol{e_{12}} $$
+  </dd>
+</dl>
+
+<p>
+  We can use what we've learned so far to break that apart into its scalar and
+  Rotor components:
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{B} = k e^{\theta \boldsymbol{I}} $$
+  </dd>
+</dl>
+
+<p>
+  Start by applying <b>B</b> to a unit basis element, which we know has a norm
+  of 1, which gives us a new vector <b>v</b>.
+</p>
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{v} &= \boldsymbol{B}\boldsymbol{e_1} \\ &= k
+    e^{\theta \boldsymbol{I}} \boldsymbol{e_1} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  We can see from the last equation that <b>v</b> has a norm of k, and now that
+  we know k, we can divide <b>B</b> by k to get our Rotor.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} k &= ||\boldsymbol{B}\boldsymbol{e_1}|| = \sqrt{B_{1}^{2}
+    + B_{2}^{2}} \\ e^{\theta \boldsymbol{I}} &= \frac{1}{k} \boldsymbol{B}
+    \end{align*} $$
+  </dd>
+</dl>
+
+<h4 id="ratios">Ratios</h4>
+<p>
+  While applying the operator <b>ab</b> above did show some of the behavior, it
+  may be useful to start over, this time building our operator from a ratio,
+  i.e. if we have two vectors <b>a</b> and <b>b</b>, and given a third vector
+  <b>c</b>, we'd like to calculate the vector <b>d</b> so that they have the
+  same ratio, i.e.
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{d} / \boldsymbol{c} = \boldsymbol{b} / \boldsymbol{a} $$
+  </dd>
+</dl>
+
+<p>
+  The geometric product isn't commutative, so we have to choose a side to do the
+  division on, so we will write this as:
+</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{d}\boldsymbol{c^{-1}} = \boldsymbol{b}\boldsymbol{a^{-1}} $$
+  </dd>
+</dl>
+
+<p>
+  But that's just a simple algrebraic equation we can solve by multiplying both
+  sides by <b>c</b>.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{d}\boldsymbol{c^{-1}} &=
+    \boldsymbol{b}\boldsymbol{a^{-1}} \\
+    \boldsymbol{d}\boldsymbol{c^{-1}}\boldsymbol{c} &=
+    \boldsymbol{b}\boldsymbol{a^{-1}}\boldsymbol{c} \\ \boldsymbol{d} &=
+    \boldsymbol{b}\boldsymbol{a^{-1}}\boldsymbol{c} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  The operator <b>ba<sup>-1</sup></b> should preserve the angle between
+  <b>a</b> and <b>b</b>, and also dilate <b>d</b> proportionally to the norms of
+  <b>a</b> and <b>b</b>. The following animation shows that relationship, also
+  perturbing <b>b</b> to show the affect on <b>d</b>.
+</p>
+
+<button id="ratio_toggle">Start/Stop</button>
+<canvas id="ratio" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('ratio_toggle');
+    var running = false;
+    var omega = 2;
+    var start = Date.now();
+    var a = ga2d.vec(0.8, 0);
+    var b = ga2d.vec(1, 0.2);
+    var c = ga2d.vec(0, 0.5);
+    var p = ga2d.vec(0.2, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('ratio'));
+    var step = function () {
+      var rotor = ga2d.e((omega * (Date.now() - start)) / 1000);
+      var bp = ga2d.add(b, ga2d.mul(rotor, p));
+      var op = ga2d.mul(bp, ga2d.inv(a));
+      var d = ga2d.mul(op, c);
+      f.clear();
+      f.axes();
+      f.vec(a, 'a');
+      f.vec(bp, 'b');
+      f.vec(c, 'c');
+      f.vec(d, 'd');
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<h4 id="conjugates">Conjugates and Inverses</h4>
+
+<p>
+  Let's see what the difference between <b>ab</b> and <b>ba</b> is. First let's
+  multiply out in terms of basis vectors:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} \boldsymbol {b} &= (a_1 \boldsymbol{e_{1}}
+    + a_2 \boldsymbol{e_{2}}) (b_1 \boldsymbol{e_{1}} + b_2 \boldsymbol{e_{2}})
+    \\ &= a_1 b_1 \boldsymbol{e_{1}} \boldsymbol{e_{1}} + a_1 b_2
+    \boldsymbol{e_{1}} \boldsymbol{e_{2}} + a_2 b_1 \boldsymbol{e_{2}}
+    \boldsymbol{e_{1}} + a_2 b_2 \boldsymbol{e_{2}} \boldsymbol{e_{2}} \\ &= a_1
+    b_1 + a_1 b_2 \boldsymbol{e_{1}} \boldsymbol{e_{2}} + a_2 b_1
+    \boldsymbol{e_{2}} \boldsymbol{e_{1}} + a_2 b_2 \\ &= a_1 b_1 + a_2 b_2 +
+    a_1 b_2 \boldsymbol{e_{12}} - a_2 b_1 \boldsymbol{e_{12}} \\ &= (a_1 b_1 +
+    a_2 b_2) + (a_1 b_2 - a_2 b_1) \boldsymbol{I} \end{align*} $$
+  </dd>
+</dl>
+
+<p>If we swap <b>a</b> and <b>b</b> we get:</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{b} \boldsymbol {a} &= (b_1 a_1 + b_2 a_2) +
+    (b_1 a_2 - b_2 a_1) \boldsymbol{I} \\ &= (a_1 b_1 + a_2 b_2) + (b_1 a_2 -
+    b_2 a_1) \boldsymbol{I} \\ &= (a_1 b_1 + a_2 b_2) + (a_2 b_1 - a_1 b_2)
+    \boldsymbol{I} \\ &= (a_1 b_1 + a_2 b_2) - (a_1 b_2 - a_2 b_1)
+    \boldsymbol{I} \\ \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  In that last step we just factor out a -1 from the coefficient of <b>I</b>. If
+  we substitute:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} B_1 &= a_1 b_1 + a_2 b_2 \\ B_2 &= a_1 b_2 - a_2 b_1
+    \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  Then we get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{a} \boldsymbol {b} &= B_1 + B_2 \boldsymbol{I}
+    \\ \boldsymbol{b} \boldsymbol {a} &= B_1 - B_2 \boldsymbol{I} \end{align*}
+    $$
+  </dd>
+</dl>
+
+<p>
+  So if we reverse the order of the geometric product of our vectors we end up
+  with the equivalent of the
+  <a href="https://en.wikipedia.org/wiki/Complex_conjugate">complex conjugate</a
+  >.
+</p>
+
+<p>
+  We will note the reverse of the product of two vectors with the dagger. While
+  this maps to the conjugate in 𝔾<sup>2</sup>, reversing a product of multiple
+  vectors will be more important and powerful in 𝔾<sup>3</sup>.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{B} &= \boldsymbol{a} \boldsymbol{b} &= B_1 +
+    B_2 \boldsymbol{I} \\ \boldsymbol{B}^{\dagger} &= \boldsymbol{b}
+    \boldsymbol{a} &= B_1 - B_2 \boldsymbol{I} \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  If we multiply them together we find:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{B} \boldsymbol{B}^{\dagger} &=
+    \boldsymbol{abba} \\ &= \boldsymbol{a} ||\boldsymbol{b}||^2 \boldsymbol{a}
+    \\ &= ||\boldsymbol{b}||^2 \boldsymbol{aa} \\ &= ||\boldsymbol{b}||^2
+    ||\boldsymbol{a}||^2 \\ &= ||\boldsymbol{a}||^2 ||\boldsymbol{b}||^2
+    \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  Their product just ends up being a scalar, so if divide by that scalar value
+  we should get:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{B}
+    \frac{\boldsymbol{B}^{\dagger}}{||\boldsymbol{a}||^2 ||\boldsymbol{b}||^2}
+    &= \frac{||\boldsymbol{a}||^2 ||\boldsymbol{b}||^2}{ ||\boldsymbol{a}||^2
+    ||\boldsymbol{b}||^2} \\ &= 1 \end{align*} $$
+  </dd>
+</dl>
+<p>Which means we've found the multiplicative inverse of <b>B</b>.</p>
+
+<dl>
+  <dd>
+    $$ \boldsymbol{B}^{-1} =
+    \frac{\boldsymbol{B}^{\dagger}}{\boldsymbol{B}\boldsymbol{B^{\dagger}}} $$
+  </dd>
+</dl>
+
+<p>
+  Normally geometric products aren't commutative, but in this case we can see
+  that we get the same result when we reverse the order of B and B dagger:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{B}^{\dagger}\boldsymbol{B} &=
+    \boldsymbol{baab} \\ &= \boldsymbol{b} ||\boldsymbol{a}||^2 \boldsymbol{b}
+    \\ &= ||\boldsymbol{a}||^2 \boldsymbol{bb} \\ &= ||\boldsymbol{a}||^2
+    ||\boldsymbol{b}||^2 \end{align*} $$
+  </dd>
+</dl>
+
+<p>
+  So our inverse will work whether applied on the left or on the right.
+</p>
+
+<p>
+  Let's see how that inverse operates by applying it to our previous ratio
+  example. This time we'll not only apply the <b>ba<sup>-1</sup></b> operator,
+  but also apply it's inverse to <b>c</b> to see how it compares.
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} \boldsymbol{d} &=
+    \boldsymbol{b}\boldsymbol{a^{-1}}\boldsymbol{c} \\ \boldsymbol{d'} &=
+    (\boldsymbol{b}\boldsymbol{a^{-1}})^{-1}\boldsymbol{c} \end{align*} $$
+  </dd>
+</dl>
+
+<button id="inv_ratio_toggle">Start/Stop</button>
+<canvas id="inv_ratio" width="300" height="300"></canvas>
+<script type="text/javascript" charset="utf-8">
+  (function () {
+    var button = document.getElementById('inv_ratio_toggle');
+    var running = false;
+    var omega = 2;
+    var start = Date.now();
+    var a = ga2d.vec(0.8, 0);
+    var b = ga2d.vec(1, 0.2);
+    var c = ga2d.vec(0, 0.5);
+    var p = ga2d.vec(0.2, 0);
+    var f = new draw_ga2d.Frame(document.getElementById('inv_ratio'));
+    var step = function () {
+      var rotor = ga2d.e((omega * (Date.now() - start)) / 1000);
+      var bp = ga2d.add(b, ga2d.mul(rotor, p));
+      var op = ga2d.mul(bp, ga2d.inv(a));
+      var d = ga2d.mul(op, c);
+      var norm = ga2d.mul(op, ga2d.conj(op))[0];
+      var opinv = ga2d.mul(ga2d.scalar(1.0 / norm), ga2d.conj(op));
+      var dinv = ga2d.mul(opinv, c);
+      f.clear();
+      f.axes();
+      f.vec(a, 'a');
+      f.vec(bp, 'b');
+      f.vec(c, 'c');
+      f.vec(d, 'd');
+      f.vec(dinv, "d'");
+      f.draw();
+      if (running) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    button.addEventListener('click', function () {
+      running = !running;
+      if (running) {
+        start = Date.now();
+        window.requestAnimationFrame(step);
+      }
+    });
+    step();
+  })();
+</script>
+
+<p>
+  Note that starting from conjugates isn't the only way to construct such an
+  inverse, we could, for example, note that because each non-zero vector has a
+  multiplicative inverse, we can come to the same conclusion:
+</p>
+
+<dl>
+  <dd>
+    $$ \begin{align*} 1 &= \boldsymbol{a}
+    (\frac{\boldsymbol{a}}{||\boldsymbol{a}||^2}) \\ &= \boldsymbol{a} 1
+    (\frac{\boldsymbol{a}}{||\boldsymbol{a}||^2}) \\ &= \boldsymbol{a}
+    (\boldsymbol{b} (\frac{\boldsymbol{b}}{||\boldsymbol{b}||^2})
+    (\frac{\boldsymbol{a}}{||\boldsymbol{a}||^2}) \\ &= \boldsymbol{ab}
+    (\frac{\boldsymbol{ba}}{||\boldsymbol{a}||^2||\boldsymbol{b}||^2})
+    \end{align*} $$
+  </dd>
+</dl>
+
+<h3 id="further_reading">Further Reading</h3>
+<p>
+  There are other introductions to GA around the web, some of the ones I've
+  found helpful are:
+</p>
+<ul>
+  <li>
+    <a href="http://www.jaapsuter.com/geometric-algebra/"
+      >Geometric Algebra Primer</a
+    >
+  </li>
+  <li>
+    <a
+      href="http://scholarworks.sjsu.edu/cgi/viewcontent.cgi?article=7943&context=etd_theses"
+      >Geometric Algebra: An Introduction with Applications in Euclidean and
+      Conformal Geometry</a
+    >
+  </li>
+</ul>

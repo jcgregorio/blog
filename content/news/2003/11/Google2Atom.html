@@ -1,0 +1,32 @@
+---
+title: Google2Atom
+date: 2003-11-22T12:00:00-05:00
+---
+
+  
+  <p>I mentioned a while a ago that I thought <a href="http://bitworking.org/news/Atom_for_search_results">
+Atom would be a good format
+  for search results</a>. I also mentioned in the past that
+  I thought SOAP was overkill for the Google API and that a REST 
+  based alternative would offer many advantages, either 
+  in the form that <a href="http://webservices.xml.com/pub/a/ws/2002/04/24/google.html">Paul Prescod proposed</a>, or in 
+  the <a href="http://bitworking.org/news/Thoughts_on_the_Google_API">formulation I had put forward</a>.</p>
+<p>Well, that's all fine and good for theory. Here is the practice.
+   Introducing the <a href="http://wellformedweb.org/news/Google2Atom">
+   Google2Atom gateway</a>. This service allows you to
+   do simple GET queries on Google and to get the results 
+   formatted as an Atom feed. Note that I used Paul's formulation with the
+   Google key being passed in via the URI. This has the advantage
+   that you can take the resulting URI and do cool things with it,
+   for example, plug it into your aggregator.</p>
+<p><strong>Update:</strong> To make it easier to experiment with
+  the interface the Google Key is no longer required, if you do not
+  supply it then the script will use my key.
+  In addition a longer description of the service has been 
+  added, including the fact that the gateway takes the HTML returned
+  by the GooleAPI and uses pyTidy to transform it into well-formed
+  XHMTL for inclusion in the Atom feed.</p>
+
+  
+  
+

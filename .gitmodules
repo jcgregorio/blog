@@ -1,0 +1,6 @@
+[submodule "themes/ananke"]
+	path = themes/ananke
+	url = https://github.com/jcgregorio/gohugo-theme-ananke.git
+[submodule "themes/hugo-atom-feed"]
+	path = themes/hugo-atom-feed
+	url = https://github.com/jcgregorio/hugo-atom-feed.git

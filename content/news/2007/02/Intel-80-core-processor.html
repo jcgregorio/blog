@@ -1,0 +1,87 @@
+---
+title: Intel 80 core processor
+date: 2007-02-20T12:00:00-05:00
+---
+
+  
+  <p>Everyone seems to be playing the 
+"<a href="http://radar.oreilly.com/archives/2007/02/a_fast_waitfree_1.html">how are we going to program for lots of cores</a>" game
+since Intel announced their experimental 
+<a href="http://news.com.com/Intel+shows+off+80-core+processor/2100-1006_3-6158181.html">80 core
+processor</a>.</p>
+<p>Maybe we can go forward by looking backward:</p>
+<pre><code><a href="http://httpd.apache.org/docs/2.0/mod/mpm_common.html#startservers">StartServers 80</a></code></pre>
+  <div class="commentContent" id="X1">
+    Seriously!  I have seen quite a few "threads aren't so bad" and "Python's GIL will doom it" posts since that announcement.  People seem to forget that threads are were created as shared-memory lightweight processes.  Why not just use *real* processes and let the OS do its job?
+
+I suspect that there will be more revolution and adaptation to multiprocessing in OS land than in language land.  If you properly structure your applications, multi-processing is a great way to scale.  Push your work on a queue, fire up a bunch of worker processes, and you are set.  The operating system will take care of the rest, thank you very much, and now I don't have to debug an endless and complex system of locks, events, mutexes and the like.
+
+Hooray for multi-processing.
+    <p class="commentByLine">Posted by
+       <a href="http://cleverdevil.org">Jonathan LaCour</a> on <a href="#X1" title="2007-02-20T12:34:21.477191">2007-02-20</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Maybe we can go forward by looking <a href="http://erlang.org/">forward</a>
+    <p class="commentByLine">Posted by
+       <a href="http://ssfak.org/">Stelios Sfakianakis</a> on <a href="#X2" title="2007-02-21T02:10:58.679072">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Stelios,<br />
+<p>You should read <a href="http://bitworking.org/news/126/Intel-80-core-processor#X1">Jonathan's comment</a>. </p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X3" title="2007-02-21T10:53:19.487486">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Joe,
+ I have read Jonathan's comment. So let's see what Erlang (for example) can offer:
+<ul>
+<li>Ultra-Lightweight <a href="http://www.erlang.org/doc/doc-5.5.3/doc/reference_manual/processes.html">processes </a> with no shared memory. (In erlang "threads" are called processes for a reason, cf. <a href="http://en.wikipedia.org/wiki/Communicating_sequential_processes">CSP</a>)</li>
+<li> Transparent parallelism in multi-core machines (<a href="http://erlang.org/doc/doc-5.5.3/doc/highlights.html">SMP</a>)</li>
+<li>Functional programming with single assignment and dynamic typing</li>
+<li><a href="http://www.erlang.org/doc/doc-5.5.3/doc/reference_manual/processes.html#errors">Fault Tolerance</a></li>
+<li><a href="http://www.erlang.org/doc/doc-5.5.3/doc/reference_manual/distributed.html">Distributed Programming</a></li>
+<li><a href="http://www.erlang.org/doc/doc-5.5.3/doc/reference_manual/code.html">"Hot" Code replacement</a></li>
+</ul>
+
+Now I don't know if Erlang ever becomes "mainstream" the way Java is but IMHO it   offers all the features that a modern "concurrency-oriented" programming language should have (of course there are others, like <a href="http://toute.ca/">Termite</a>, <a href="http://www.mozart-oz.org/">Oz/Mozart</a>,<a href="http://research.microsoft.com/Comega/">Comega</a>, etc.)
+    <p class="commentByLine">Posted by
+       <a href="http://ssfak.org/">Stelios Sfakianakis</a> on <a href="#X4" title="2007-02-21T12:49:09.525807">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <a href="http://www.sics.se/~joe/thesis/armstrong_thesis_2003.pdf">Some</a> <a href="http://bc.tech.coop/blog/060105.html">more</a> <a href="http://armstrongonsoftware.blogspot.com/2006/09/why-i-dont-like-shared-memory.html">links</a>
+    <p class="commentByLine">Posted by
+       <a href="http://ssfak.org/">Stelios Sfakianakis</a> on <a href="#X5" title="2007-02-21T13:01:40.678735">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    For the record, Joe, I would love it if Python would grow first-class concurrency-oriented features.  Erlang definitely beats Python in that regard, but claiming that Erlang is the first language to come up with such a model is not exactly correct.
+
+Honestly though, the situation isn't that bad as it is with Python.  We already have the option of using Stackless if we want nice pickleable "tasklets" and Python 2.5 introduced basic coroutine support.  PyPy has the ability to build a stackless Python as well.  Given these building blocks, it seems reasonable to expect tha, at some point in the future Python will have a standardized set of concurrency-oriented functionality.
+
+At least, I hope so :)
+    <p class="commentByLine">Posted by
+       <a href="http://cleverdevil.org">Jonathan LaCour</a> on <a href="#X6" title="2007-02-21T19:03:13.659773">2007-02-21</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Ah, the "throw more hardware at it" approach. That is indeed looking back; I remember in the 90's when one of my employers scaled a Web application by deploying a Sun E4000 for every 8 concurrent connections they needed to support.</p>
+<p>People with stupid amounts of money notwithstanding, being able to support 80 concurrent connections* is not worth the money one of these beasts would cost, especially when you'd have to deploy them in pairs for redundancy.</p>
+<p>The other concern is memory; processes will have more overhead, and that adds up pretty quickly. Sure, you can pile more on, but again, that's cash out of your pocket.</p>
+<p>Erlang is certainly cool, but I join others in the hope that Python will get better at concurrency over time.</p>
+<p><small>* Assuming you're using Apache and mod_worker; mod_event isn't ready for prime time, and may never be at the current rate. Lighttpd shows more promise here.</small></p>
+    <p class="commentByLine">Posted by
+       <a href="http://www.mnot.net/">Mark Nottingham</a> on <a href="#X7" title="2007-02-22T17:47:54.271180">2007-02-22</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Mark,<br />
+<p>We've hit the wall as far as speed goes with Moore's Law. The only option at this point is to scale out, with the choices being spread between either 80 separate machines, or an 80 core processor; both ends of that spectrum fit in "throw more hardware at it", if you measure hardware by counting transistors. Your comment confuses me since you seem to be impugning the "throw more hardware" approach. Do you know a way to scale w/o throwing more hardware (transistors) at the problem?
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X8" title="2007-02-22T18:57:19.889978">2007-02-22</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Yes. Give people better tools to work with. The way that most Web sites are served today is massively inefficient, and Apache is one of the main culprits. More soon. :)
+    <p class="commentByLine">Posted by
+       <a href="http://www.mnot.net/">Mark Nottingham</a> on <a href="#X9" title="2007-02-23T08:19:03.787752">2007-02-23</a>
+    </p>
+</div>
+  
+

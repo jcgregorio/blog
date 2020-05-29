@@ -1,0 +1,71 @@
+---
+title:  Snaplines in OpenOffice Impress 
+date: 2009-09-07T12:00:00-04:00
+---
+
+        <p>I give a lot of presentations and <a href=http://www.amazon.com/dp/0596522347>Slide:ology</a>
+        is one of the best books I've read on the subject. One of the things that I learned was
+        setting up a grid system in your presentation software using snap lines, which not only gives you a much cleaner
+        layout on the page but it also ensures that the elements you place on the 
+        slides are consistent from page to page, which is less distracting for the audience.
+        Slide:ology covers two variations on such grids, the simple rectangle and a Fibonacci
+        based grid.
+        </p>
+        <p>And now we run headlong into the software problem; my presentation software of choice, OpenOffice,
+        has made the decision to store snapline information with each individual presentation. Not only that
+        but there is no way to import or export a snapline configuration. Which means that adding snaplines
+        to an already built presentation, or changing the grid layout on a presentation, requires manually 
+        placing each snapline, along with using a calculator to determine positions, which is incredibly 
+        tedious. Until today.
+        </p>
+        <p><a href=http://www.c2.com/cgi/wiki?LazinessImpatienceHubris>Laziness,
+            impatient and hubris</a> are the three great virtues of a
+        programmer, and I'm way too lazy and impatient to fiddle with 
+        snaplines more than a couple times, so I wrote a Python script (grid.py)
+        to add snaplines to an OpenOffice Impress presentation.
+        The source is located <a href=http://code.google.com/p/jcgregorio/source/browse/grid.py>here on Google code hosting</a>.
+        </p>
+        <pre class=prettyprint>$ python grid.py --help
+Usage: grid.py [options] <presentation file="" name="">
+
+Adds grid lines of various geometries to OpenOffice Impress 
+Presenations. Always creates a new file with the grid lines, never
+overwrites the original file.
+
+
+Options:
+  -h, --help            show this help message and exit
+  -f MxN, --fibonacci=MxN
+                        Fibonnaci grid of MxN cells
+  -r MxN, --rectangular=MxN
+                        Rectangular grid of MxN cells
+  -m MARGIN, --margin=MARGIN
+                        Margin, in units of inches NNin or centimeters NNcm
+        </presentation></pre>
+        <p>Grid.py is very careful to not modify your original file.
+        If you run:
+        </p>
+        <pre class=prettyprint>$ python grid.py --fibonacci=5x5 --margin=0.25in MyPreso.odp</pre>
+        <p>It will create a copy of the presentation, <code>grid-MyPreso.odp</code>, 
+        that has the specified snaplines.</p>
+        <p>
+        This was bit more tedious to write than I expected, first because the snaplines
+        locations don't seem to be part of the Impress format that got standardized,
+        so there was a tiny bit of discovery involved in how they are specified. I then
+        had to go through the same discovery process to figure out the dimensions of
+        the master page which you need to calculate the correct location for the grid lines.
+        Finally I had to deal with OpenOffices file format. While OpenOffice serializes its
+        data into a format that can be consumed by an XML parser, OpenOffice itself
+        does <b>not</b> use XML. Merely opening an XML file, modifying it, and then serializing
+        it back to XML isn't guaranteed to make it consumable by OpenOffice. I'm not sure 
+        if it was unhappy about changing the namespace prefixes, or if it was a QName
+        problem, but Python's minidom was the only XML library that I found that could
+        placate OpenOffice.
+        </p>
+        <p>Last note, the code is hosted in <a href=http://code.google.com/p/jcgregorio/>http://code.google.com/p/jcgregorio/</a>, 
+        which is just a project of small scripts of mine that to are too small to require their own 
+        standalone project. I got the idea from someone, but for the life of me I can't remember who, but thanks to 
+        them for the idea.</p>
+        <p><b>Update:</b> <a href="http://code.google.com/p/jcgregorio/issues/detail?id=1&can=1">First patch.</a></p>
+    
+

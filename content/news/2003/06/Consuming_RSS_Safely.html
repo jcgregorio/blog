@@ -1,0 +1,23 @@
+---
+title: Consuming RSS Safely
+date: 2003-06-12T12:00:00-04:00
+---
+
+  
+   <p>The only reason users of Aggie didn’t get bit by Mark’s <a href="http://diveintomark.org/archives/2003/06/12/how_to_consume_rss_safely.html">prank</a> is that he put the rogue style attribute in the description element and not the content:encoded element. So <a href="http://aggie.sourceforge.net">Aggie</a>, while is does strip object, meta and script tags, is still vulnerable to this kind of hack. A new version of Aggie will be posted when I have this fixed.</p>
+
+  <div class="commentContent" id="X1">
+     <p>I don’t think that’s true, Joe. The Aggie parser folds content:encoded into description, if it finds any. (I already have the code that does the same for the Sam Ruby/Don Box xhtml tag, it’s just not checked in.) In any case, all such contents is checked for these tags, so I don’t see a reason to make any modifications.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://radio.weblogs.com/0106548/">Ziv Caspi</a> on <a href="#X1" title="2003-06-12T20:52:24">2003-06-12</a>
+    </p>
+</div><div class="commentContent" id="X2">
+     <p>I didn’t think we removed style attributes. Time to do some testing.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-06-13T20:46:00">2003-06-13</a>
+    </p>
+</div>
+  
+

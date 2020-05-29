@@ -1,0 +1,266 @@
+---
+title: Shadow DOM and CSS
+date: 2018-02-10T12:00:00-05:00
+tags:
+  - web components
+  - standards
+---
+
+<p>
+  I love custom elements! I've been building UIs with them since Polymer 0.5 was
+  announced in 2014. One of the things that I've questioned with custom elements
+  has been Shadow DOM and its relationship to CSS. This page is an experiment
+  for comparing custom elements with and without Shadow DOM. Press the buttons
+  below and 1,000 spinners will be displayed on the page, when 'Light' is
+  pressed the custom element uses CSS defined for the whole page, and when
+  'Shadow' is pressed the custom elements have a style sheet attached to their
+  Shadow DOM, and when 'External' is pressed the CSS for the element is still
+  encapsulated in the Shadow DOM, but it is loaded as an external stylesheet.
+</p>
+<p>
+  <strong>N.B.</strong> I am not loading any polyfills on this page, so it will
+  only work on browsers with native custom elements support.
+</p>
+
+<p>
+  This is the code that is running:
+</p>
+
+<h2>CSS</h2>
+<pre id="style_code"></pre>
+<h2>Javascript</h2>
+<pre id="js_code"></pre>
+
+<style type="text/css" media="screen" id="style">
+  spinner-light {
+    margin: 6px;
+    display: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    border: 8px solid #a6cee3;
+    border-left: 8px solid #1f78b4;
+    animation: spinner-light-spin 1.5s infinite linear;
+  }
+
+  spinner-light[active] {
+    display: inline-block;
+  }
+
+  @keyframes spinner-light-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script type="text/javascript" charset="utf-8" id="code">
+  function upgradeProperty(ele, prop) {
+    if (ele.hasOwnProperty(prop)) {
+      let value = ele[prop];
+      delete ele[prop];
+      ele[prop] = value;
+    }
+  }
+
+  window.customElements.define(
+    'spinner-light',
+    class extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        upgradeProperty(this, 'active');
+      }
+
+      get active() {
+        return this.hasAttribute('active');
+      }
+      set active(val) {
+        if (val) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+      }
+    }
+  );
+
+  window.customElements.define(
+    'spinner-shadow',
+    class extends HTMLElement {
+      constructor() {
+        super();
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        shadowRoot.innerHTML = `
+      <style type="text/css" media="screen">
+@keyframes spinner-shadow-spin {
+  0% {
+    transform:
+    rotate(0deg);
+  }
+  100% {
+    transform:
+    rotate(360deg);
+  }
+}
+
+:host {
+  margin: 6px;
+  display: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  border: 8px solid #A6CEE3;
+  border-left: 8px solid #1F78B4;
+  animation: spinner-shadow-spin 1.5s infinite linear;
+}
+
+:host([active]) {
+  display: inline-block;
+}
+</style>
+`;
+      }
+
+      connectedCallback() {
+        upgradeProperty(this, 'active');
+      }
+
+      get active() {
+        return this.hasAttribute('active');
+      }
+      set active(val) {
+        if (val) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+      }
+    }
+  );
+
+  window.customElements.define(
+    'spinner-external',
+    class extends HTMLElement {
+      constructor() {
+        super();
+        const shadowRoot = this.attachShadow({ mode: 'open' });
+        shadowRoot.innerHTML = `
+      <link rel="stylesheet" href="/images/2018/spinner-styles.css">`;
+      }
+
+      connectedCallback() {
+        upgradeProperty(this, 'active');
+      }
+
+      get active() {
+        return this.hasAttribute('active');
+      }
+      set active(val) {
+        if (val) {
+          this.setAttribute('active', '');
+        } else {
+          this.removeAttribute('active');
+        }
+      }
+    }
+  );
+</script>
+
+<p>
+  The <code>spinner-shadow</code> element follows the
+  <a
+    href="https://developers.google.com/web/fundamentals/web-components/best-practices#create-a-shadow-root-to-encapsulate-styles"
+    >suggested best practice</a
+  >
+  of encapsulating the styles via the shadow root. But this seems problematic
+  for a couple of reasons. The first is that it's going to be difficult to pass
+  that CSS through an autoprefixer or any other tooling. The second problem is
+  that this means the CSS will get duplicated for every instance of the element.
+  You can see that by looking in Chrome Dev Tools, that there are 3,000 more
+  nodes on this page when the shadow spinners are displayed as compared to when
+  the light spinners are displayed.
+</p>
+<p>
+  The <code>spinner-external</code> loads the CSS in the Shadow DOM but uses an
+  external stylesheet, which does seem to reduce the number of nodes to below
+  that of the <code>spinner-shadow</code>, but still not close to
+  <code>spinner-light</code>. Also, I don't want to have a separate HTTP request
+  for every element class I use on a page, so this also seems like a
+  non-starter.
+</p>
+<p>
+  So am I holding it wrong? Is there really no way in custom elements to specify
+  the CSS for an element once without resorting to external CSS stylesheets? Or
+  am I reading the Chrome Dev Console page wrong and the Node count doesn't mean
+  what I think it means? I think for now I'm going to stick to avoiding Shadow
+  DOM and specifying the CSS just once in a single stylesheet.
+</p>
+
+<p>
+  <strong>Update:</strong> It does look like this is a known issue as there's
+  <a href="https://github.com/w3c/webcomponents/issues/468"
+    >a proposal to address it in custom elements spec</a
+  >.
+</p>
+
+<button id="light">Light</button>
+<button id="shadow">Shadow</button>
+<button id="external">External</button>
+
+<div id="manyspinners">
+  <spinner-light active></spinner-light>
+  <spinner-shadow active></spinner-shadow>
+  <spinner-external active></spinner-external>
+</div>
+
+<script>
+  let manyspinners = document.getElementById('manyspinners');
+
+  const clear = () => {
+    while (manyspinners.firstChild) {
+      manyspinners.removeChild(manyspinners.firstChild);
+    }
+  };
+
+  document.getElementById('light').addEventListener('click', (e) => {
+    clear();
+    let spinner = document.createElement('spinner-light');
+    spinner.active = true;
+    for (var i = 0; i < 1000; i++) {
+      manyspinners.appendChild(spinner.cloneNode(true));
+    }
+  });
+
+  document.getElementById('shadow').addEventListener('click', (e) => {
+    clear();
+    let spinner = document.createElement('spinner-shadow');
+    spinner.active = true;
+    for (var i = 0; i < 1000; i++) {
+      manyspinners.appendChild(spinner.cloneNode(true));
+    }
+  });
+
+  document.getElementById('external').addEventListener('click', (e) => {
+    clear();
+    let spinner = document.createElement('spinner-external');
+    spinner.active = true;
+    for (var i = 0; i < 1000; i++) {
+      manyspinners.appendChild(spinner.cloneNode(true));
+    }
+  });
+
+  document.getElementById('style_code').textContent = document.getElementById(
+    'style'
+  ).textContent;
+  document.getElementById('js_code').textContent = document.getElementById(
+    'code'
+  ).textContent;
+</script>
+
+<a href="https://brid.gy/publish/twitter"></a>

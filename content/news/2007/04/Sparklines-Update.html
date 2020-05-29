@@ -1,0 +1,31 @@
+---
+title: Sparklines Update
+date: 2007-04-30T12:00:00-04:00
+---
+
+  <p>The <a href="http://bitworking.org/projects/sparklines/">sparklines generator</a> has been updated to offer a new graph type: <code>impulse</code>. This is similar to a discrete graph 
+ <img src="http://bitworking.org/projects/sparklines/spark.cgi?type=discrete&amp;d=88,84,82,92,82,86,66,82,44,64,66,88,96,80,24,26,14,0,0,26,8,6,6,24,52,66,36,6,10,14,30&amp;height=15&amp;limits=0,100&amp;upper=90&amp;above-color=red&amp;below-color=gray&amp;width=2" style="margin: 0;" />, but the lines extend all the way down to zero
+<img src="http://bitworking.org/projects/sparklines/spark.cgi?type=impulse&amp;d=88,84,82,92,82,86,66,82,44,64,66,88,96,80,24,26,14,0,0,26,8,6,6,24,52,66,36,6,10,14,30&amp;height=15&amp;limits=0,100&amp;upper=90&amp;above-color=red&amp;below-color=gray&amp;width=2" style="margin: 0;" />.</p>
+<p>Note I said "zero", and not "the bottom of the graph". That lets me introduce
+another often requested feature, the ability to make graphs like this:
+<img src="http://bitworking.org/projects/sparklines/spark.cgi?type=impulse&amp;d=-3,-2,-1,0,1,2,3,2,1&amp;height=15&amp;limits=-3,3&amp;upper=0&amp;above-color=blue&amp;below-color=orange&amp;width=6" style="margin: 0;" />.
+All lines in an impulse graph are plotted from zero, and if you put a lower limit
+for your data that is negative, then negative data points are plotted <i>down</i>
+from zero. The last feature I added, also visible in that last sparkline, 
+is the ability to set the width of the lines in the "discrete" and "impulse" graphs.</p>
+  <p> The generator page
+has been updated with the controls for the new features, the docs
+have been updated, and as always the code is available.
+</p>
+<p>Big thanks to Alan Powell, whose patch kicked me off
+   on adding these features.
+</p>
+<p>Just a gentle nudge of a reminder, 
+   if <b>you</b> are hosting a version of sparklines internally,
+  and have added some nifty features or graph types, 
+  I sure would appreciate the patches, presuming you can 
+  wrangle them past legal. 
+</p>
+  
+  
+

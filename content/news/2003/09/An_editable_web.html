@@ -1,0 +1,98 @@
+---
+title: An editable web
+date: 2003-09-06T12:00:00-04:00
+---
+
+  <p>Today on IRC Sam Ruby challenged some of my preconceived notions of a weblog editing API. 
+In particular he asked the very simple question, "How do you find the entry you want to edit".</p>
+
+  <p>Having a pre-conceived notion of blogs having a linear structure, I hadn't really thought too hard about that. But both <a href="http://www.blosxom.com/">Blosxom</a> and Wikis don't necessarily have that linear structure. Blosxom allows creating entries with a directory structure, with no predetermined concept of order among the individual entries. Sure, you could sort by date or by title, but traversing a potentially deep directory structure and visiting each file just to find the ten most recently updated entries is computationally expensive.</p>
+<p>Wikis, on the other hand, offer a different challenge and really open up the possibilities. First, I had never even considered applying the AtomAPI to a Wiki. Having deltas off a wiki show up in my aggregator, and then being able to edit that page directly, without having to open the page in my browser, seems like a killer application of the AtomAPI. It would certainly make tracking the Atom wiki easier.</p>
+<p>The other reason the I hadn't really thought too hard about finding an entry is that in <a href="http://wellformedweb.org/story/2">Bulu</a>, I cheat. Bulu is the server-side Python software I use to manage my sites, and it uses content negotiation. That is, the same URI that is used for the HTML form of the entry is the same URI used to get the XML version of the entry. Don't do this. In the process of implementing <abbrev title="Content Negotiation">conneg</abbrev> I discovered some fairly serious drawbacks.
+The one positive side-effect of this decision is that in Pamphlet, the client side tool I use to edit my sites, I can just drag-n-drop a URI from the browser to Pamphlet and begin editing. Pamphlet knows to GET the entry from a dropped URI. When I am done editing Pamplet PUT's the edited entry back to the same location.</p><p>
+</p><p>Like I said, conneg isn't easy to implement and has it's drawbacks, but there is a simple way to enable the same functionality with out using conneg. The link tag. Place a link tag in the head of the page that contains the <a href="http://bitworking.org/news/AtomAPI_URIs">entryURI</a>. That would enable any client and server to support the same drag-n-drop functionality by parsing the 'head' and looking for link tags of the form:</p>
+<pre class="example"><code>&lt; rel="service.edit" type="application/x.atom+xml" 
+      href="entryURI goes here" 
+      title="A name/desc of what you would be editing"&gt;
+</code></pre>
+<p>And to mirror that same functionality an Atom feed could have an entry level element <code>edit-uri</code> that pointed to the same entryURI.</p>
+<p>Now with that link tag in place you have some real opportunities for cool stuff to occur, for example you could build a browser add-on that displayed an 'edit this page' button for every web page that had such a link tag. That feature in particular would really help in wikis. Feed aggregators could also provide the same functionality. More importantly this "solves" the initial problem, "How do you find the entry you want to edit", and solves it in a very webbish way by pushing the answer back into the browser where the navigational possibilities are richer than anything that could be pre-built into any API.</p>
+<p><strong>Update:</strong> Please see the follow-on article: <a href="http://bitworking.org/news/Deconstructing_the_AtomAPI">Deconstructing the AtomAPI</a>. </p>
+  <div class="commentContent" id="X1">
+    <blockquote><p>Bulu is the server-side Python software I use to manage my sites, and it uses content negotiation. </p></blockquote><br />
+...<blockquote><p>Don't do this. In the process of implementing conneg I discovered some fairly serious drawbacks. </p></blockquote>
+<p>What are these exactly?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://icepick.info/">Myers Carpenter</a> on <a href="#X1" title="2003-09-06T09:51:08">2003-09-06</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>A combination of Wiki and AtomAPI is indeed an extremely compelling idea (not to mention being true to Tim Berners Lee's original conception of an editable web). I've been toying with the idea of using an Atom "client" as a means of updating a knowledge-base like website - something Wiki-like, and I like what I see/imagine.</p>
+<p>This is one of the reasons I've tried to spend some time over the last few weeks reading up about Mozilla application development - since it seems to me to be the natural environment to build an Atom client which doubles as a web content editing system, and as you so elegantly put it: pushing back to the browser what it does well - navigating the web.</p>
+<p>Your idea is giving me that warm fuzzy feeling.. the sorta "this is getting exciting" feeling.</p>
+<p>(Now if someone could make more hours in  a day....)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.isolani.co.uk/blog/">Isofarro</a> on <a href="#X2" title="2003-09-06T12:08:41">2003-09-06</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Another option would be to provide a link to the Atom representation of the page, and not a specific "edit" link to this page. You could then add in the Atom entry whatever metadata you need.
+    <p class="commentByLine">Posted by
+       <a href="http://radio.weblogs.com/0106548/">Ziv Caspi</a> on <a href="#X3" title="2003-09-06T16:54:16">2003-09-06</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Ziv,<br />
+  In case it wasn't clear, the link tag is pointing to a URL that contains a representation of the page as an Atom entry. HTTP GET to get the entry, HTTP PUT to update the entry.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2003-09-06T18:14:52">2003-09-06</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    <p>Myers,<br />
+  I have since written up the problems I have seen with Content Negotiation here:</p>
+<p><a href="http://wellformedweb.org/news/WebServicesAndContentNegotiation">http://wellformedweb.org/news/WebServicesAndContentNegotiation</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2003-09-06T22:04:02">2003-09-06</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    I like the way this is going! Wikis are a good example of what can be done with the same basic infrastructure as blogging tools. To generalise that out to what is effectively an editable knowledgebase, which can have all kinds of (possibly editable) views leaves the door wide open for applications like bugtracking or product catalogues. IMHO the easiest way of facilitating this would be with the RDF model, but it should be feasible for the AtomAPI to operate orthogonally to whatever model is used, as long as all the appropriate metadata is available for querying by whatever means (i.e. let the service figure out which entries you're likely to be interested in). <br />
+I would have thought conneg would have made a neat shortcut for common operations, but your notes to raise some big doubts...
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X6" title="2003-09-08T05:37:26">2003-09-08</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    see <br />
+<a href="http://www.gnu.org/home.de.html">http://www.gnu.org/home.de.html</a>
+    <p class="commentByLine">Posted by
+       <a href="http://weblog.beruf-it.de">reinhard</a> on <a href="#X7" title="2003-09-09T11:45:49">2003-09-09</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>I'm working on a program that would act as a bridge between wikis and Atom. See</p>
+<p> <a href="http://interwiki.sourceforge.net/cgi-bin/wiki.pl?WikiGateway">http://interwiki.sourceforge.net/cgi-bin/wiki.pl?WikiGateway</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://interwiki.sourceforge.net/cgi-bin/wiki.pl?BayleShanks">Bayle Shanks</a> on <a href="#X8" title="2003-10-18T11:33:21">2003-10-18</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>The application I am working on requires the ability to retrieve all or some of the content from a blog (preferably a date range) like all of 2002 entries.  This would be a pain in the butt and very network intensive with the need to do next/previous links.  I hope I am misreading some of this stuff but having no search ability and having to make hundreds of network requests to get data sounds bad. </p>
+<p>Also I can see a lot of blog clients wanting to be able to load in a full blog so that editing older entries can be done.</p>
+<p>Am I missing something?</p>
+<p>macro</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:bitworking@eatspam.com">macro</a> on <a href="#X9" title="2004-03-08T20:37:46">2004-03-08</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    macro,<br />
+  It's not as bad as it seems because, while there hasn't been as much attention focused on it as the feed format and API, an archival format in Atom is part of the charter:  <a href="http://www.intertwingly.net/wiki/pie/RoadMap">http://www.intertwingly.net/wiki/pie/RoadMap</a>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X10" title="2004-03-08T23:35:31">2004-03-08</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    link suggestion
+    <p class="commentByLine">Posted by
+       <a href="http://www.bizhat.com/contact.php">ramona</a> on <a href="#X11" title="2005-08-15T19:32:43">2005-08-15</a>
+    </p>
+</div>
+  
+

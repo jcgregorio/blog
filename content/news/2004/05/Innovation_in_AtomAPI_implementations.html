@@ -1,0 +1,43 @@
+---
+title: Innovation in AtomAPI implementations
+date: 2004-05-06T12:00:00-04:00
+---
+
+  
+  <p><a href="http://sfork.org/Atom/0.3/NoAuth/spec.html">Here is another
+   AtomAPI implementation</a> and this one has some interesting
+   extensions. There are additions for creating new users and
+   creating new groups. Particularly interesting to me is the use of
+   the HTTP OPTIONS method supported on the Post, Edit and Feed URIs.
+</p>
+<p>SixApart has their own extension in their 
+   <a href="http://sixapart.com/developers/atom/typepad/">implementation</a>.
+   Their extensions include an UploadURI for uploading any file, and 
+   a CategoryURI used to query the list of allowed categories an
+   entry can be classified under.</p>
+<p>It's heartening to see the innovation in these
+   implementations. Keep it coming.</p>
+
+  <div class="commentContent" id="X1">
+    I'm still trying to get my arms around the search function ... but it's good to see categories. I could use it for one of my other projects.
+    <p class="commentByLine">Posted by
+       <a href="http://www.healyourchurchwebsite.com">Mean Dean</a> on <a href="#X1" title="2004-05-07T10:38:39">2004-05-07</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>The innovation is to be welcomed, for sure. But the way they have done it is something of a workaround - OPTIONS is used to signal what can be recieved at the endpoint, the title attribute of link is used to pass on semantics of the rel type.</p>
+<p>Might this not be the smell of a fixed list of link rel values not being flexible enough?<br />
+The use of namespace-qualified terms in the rel value would be a way of making it more flexible, although there are undoubtedly alternatives. </p>
+<p>The use of OPTIONS is sweet, but I'm now sure how portable that approach might be to other implementations - the users/groups scenario is likely to be very common, which suggests a common way of implementing it may be desirable.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X2" title="2004-05-08T05:30:38">2004-05-08</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    PS. <br />
+delete "recieved" put "received"
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X3" title="2004-05-08T05:34:58">2004-05-08</a>
+    </p>
+</div>
+  
+

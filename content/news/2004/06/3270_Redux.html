@@ -1,0 +1,182 @@
+---
+title: 3270 Redux
+date: 2004-06-06T12:00:00-04:00
+---
+
+  <p>The W3C recently sponsored a <a href="http://www.w3.org/2004/04/webapps-cdf-ws/">
+    Workshop on Web Applications and Compound Documents</a>. The outcome, while sad,
+    was also completely predictable.
+</p>
+<p><b>Update:</b> Ian Hickson gives an <a href="http://ln.hixie.ch/?start=1088526392&amp;count=1">update on the state
+                of the WHAT Working Group.</a></p>
+
+   <p>
+            These were some of the questions that the participants were supposed
+            to address in the workshop:
+        </p>
+<ul>
+<li>What functionality is needed for Web applications? What should a hosting environment provide?</li>
+<li>What APIs are needed for Web applications (eg. retrieving and sending data over the network, parsing XML, clie
+            </li><li>How are they related to Web documents, which are normally static?</li>
+<li>Should there be a set of predefined compound document profiles (eg. XHTML Basic + SMIL Basic + SVG Tiny)?</li>
+<li>What happens with event processing and style cascading across the boundaries of mixed content?</li>
+<li>How can application semantics from different markup languages be mixed in an interoperable way (e.g. using XBL
+        </li></ul>
+<h3>XHTML+XForms+SVG</h3>
+<p>Note that the W3C sponsored workshop is already biased
+            toward an XML based approach. The quesions already
+            presume that the basic components of any solution would
+            be XHTML, SVG and XForms. It's not hard to see that as
+            their bias since those technologies represent a large bulk
+            of the work done by the W3C in the past few years. Also,
+            given the current direction of the XHTML 2.0 working group
+            you get a clear sense of how much weight the W3C puts on
+            backward compatibility (that is, none at all).</p>
+<h3>Web Forms 2.0</h3>
+<p>Now the W3C isn't the only group considering such
+            issues. In particular <a href="http://ln.hixie.ch/">Ian Hickson</a>,
+            now with Opera Software, is the editor of the <a href="http://www.hixie.ch/specs/html/forms/web-forms">Web Forms 2
+            draft specification</a>. Ian and a large group of contributors have been
+            working on specifying a solution to the very questions raised above.
+            Their work is not under the auspices of any standards organization
+            and in part takes its inspiration in reaction to the W3C's XForms
+            recommendation. Web Forms 2.0 is a direct reaction to the
+            complexity and non-backward compatible route that the W3C took
+            with XForms. It is a standard that aims to build on
+            current working technologies like HTML and to extend them to address
+            common needs and deficiencies to help make author web
+            applications easier.
+        </p>
+<p>During the W3C workshop Ian presented a <a href="http://www.w3.org/2004/04/webapps-cdf-ws/papers/opera.html">position paper</a>
+that represented
+            the consensus opinion of both Opera Software and the Mozilla Foundation.
+            The core of their position is to follow the lead of the Web Forms 2.0
+            development. Given the already biased nature of the workshop
+            scope, and the list of participants, there wasn't much hope for
+            their proposal being adopted. In fact, their proposal didn't stand
+            a snowball's chance in hell of being accepted, but to really
+            understand why requires a short trip through history.</p>
+<h3>IBM 3270</h3>
+<p><a href="http://en.wikipedia.org/wiki/3270">Wikipedia describes the IBM 3270</a> as:</p>
+<blockquote><p>The IBM 3270 is a class of terminals made by
+                IBM (known as "Display Devices") normally used to
+                talk to IBM mainframes. The 3270 attempts to minimise
+                the number of I/O interrupts required, by accepting
+                large blocks of data known as datastreams.
+            </p>
+<p>In a datastream, both text and control (or formatting
+                functions) are interspersed allowing an entire screen
+                to be "painted" as a single output operation. The
+                concept of "formatting" in these devices allows the
+                screen to be divided into clusters of contiguous
+                character cells for which numerous attributes (colour,
+                highlighting, character set, protection from modification) can be set.
+            </p>
+<p>Further, using a technique known as 'Read Modified' the changes from any
+                number of formatted fields that have been modified can be read as a single
+                input without transferring any other data, another technique to enhance the
+                terminal throughput of the CPU. Modern users however, sometimes find this system
+                extremely bizarre, since it is very different then any user interface
+                encountered in the consumer market.
+            </p>
+</blockquote>
+<p>The 3270 interface is a page driven terminal protocol
+            used as the main connection to IBM mainframes
+            for many years. It has fallen into disfavor with the
+            rise of GUI clients, but at the time if you used a large
+            business application on a mainframe, you spent all your time
+            on a 3270 terminal, or maybe a 5250 terminal, a similar beast
+            employed by IBM's AS400 series servers. But as the desktop
+            GUI has taken over new interface applications were built,
+            some just screen scraping the IBM 3270 screens and presenting
+            the contents in native widgets. Today there is a plethora
+            of such interfaces with vendors such as SAP, IBM, and Oracle
+            creating their own custom clients to their applications.</p>
+<h3>Doomed to fail</h3>
+<p>I admire Ian Hickson for going through the motions of bringing
+            the Web Forms 2.0 specification in front of the W3C, but
+            the proposal was doomed to fail. Look at the list of some of the
+            companies that contributed to the XForms 1.0 specification:
+            SAP, IBM, Oracle, Sun, and Computer Associates. Why are these
+            companies so interested in this <em>web</em> standard?
+            Not because they have any interest in the web.
+            You would think that all these companies would be cognizant
+            of the limited deployment of XHTML, XForms and SVG and if they
+            were really looking at web based solutions they would take
+            that into account. The problem is that the web is the
+            furthest things from their mind, and thus the huge disconnect
+            between Opera/Mozilla and the majority of the respondents.
+        </p>
+<p>The biggest problem, the root cause of the disconnect, is the
+            perspective that these companies are coming to the table with.
+            Mozilla and Opera were born, and live on, the web. They get it.
+            That's not to say IBM and SAP don't get the web, they might,
+            but when you say Web Application they are already tuned to
+            a different channel. They're thinking a replacement for their
+            current heavy weight clients. What they're trying to do is build
+            a shiny new 3270 for the next century. In that respect you can see how
+            XForms, SVG and XHTML are ready made pegs for them to hang their
+            thick client hats on. It's not about the internet, it's about the
+            intranet now.  It's about creating a XML syntax replacement
+            for the IBM 3270.
+        </p>
+<p>
+            Don't get me wrong, there are real problems to be solved here
+            and world will be a better place with these types of interfaces
+            standardized. It will reduce developement time, lead to greater
+            inter-operability, and open up whole new areas of data interchange.
+            Given that, though, this is not how the internet works, nor
+            is it the target environment. The W3C is about the Web and not
+            the Intranet. If corporations want to adopt and adapt the output of
+            the W3C to their intranet based products then all the better, but
+            right now it looks like the process is the wrong way around, with
+            intranet based developement needs trumping the needs of
+            World Wide Web.</p>
+<h3>In The Open</h3>
+<p><a href="http://ln.hixie.ch/?start=1086158925&amp;count=1">Ian ponders what Opera and Mozilla should do</a> now
+            that their proposal has been rejected.</p>
+<blockquote><p>We, of course, want the W3C to go down our chosen route.
+                Since there doesn't seem to be much consensus on doing that, though,
+                the question is what should we do now? Should we do our own thing (in public of course)
+                and then submit it to the W3C (or IETF or ECMA) at some future point once we
+                have initial implementations? Should we simply do our own thing (Opera, Mozilla,
+                and a few interested parties) and forget standardisation altogether?
+                Should we just take part in whatever Web Applications working group the
+                W3C sets up and implement whatever comes out of that in several years'
+                time, despite being fully aware that few people will ever use it?
+                (Which is a foregone conclusion since it wouldn't work in Windows IE6.)</p></blockquote>
+<p>The first choice is the best. Remember, the web wasn't
+            created by the W3C, it only came into being when there was
+            a need to standardize incompatible pre-existing implementations.
+            That time of initial cleanup is always the high point for any
+            standards group, they do best at the janitorial tasks and not
+            at the innovation stage. Let Opera and Mozilla and other
+            browser groups innovate, providing real value for their
+            customers who actually live on the internet, and later if the W3C is still around it can
+            come in and standardize things if we end up with incompatibilites,
+            assuming it ever gets back around to being interested in the
+            internet.
+        </p>
+
+  <div class="commentContent" id="X1">
+    <p>It seems you don't understand how the W3C works. There was 0% chance that Ian's proposal would be "accepted" whatever that means. </p>
+<p>The W3C dance works the following way. First comes the workshop where a bunch of companies present their opinions or their technologies in the target area. In parallel, a few of the companies may submit their proposals as W3C Notes. If there was enough interest in the technology area a working group is chartered and then is told to use one or more of the submitted proposals as a basis for their work. Finally, 3 to 5 years later a technology that bears some resemblance to the original submitted proposals becomes a recommendation. </p>
+<p>To think that a company could just show up at a workshop and present their proposal then have it rubber stamped by the W3C as a recommendation is a misapprehension of how the W3C process works.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.25hoursaday.com/weblog">Dare Obasanjo</a> on <a href="#X1" title="2004-06-07T09:51:14">2004-06-07</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Dare,<br />
+  I know how the process works. Given the cold reception the Opera/Mozilla proposal  received there won't be any forward motion in the direction of Web Forms 2.0 from the W3C.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2004-06-07T12:33:58">2004-06-07</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    It's a shame they couldn't just piggy back it into ATOM, the W3c seems to certainly want a bite of that cake... Perhaps Atom forms? ;-)
+    <p class="commentByLine">Posted by
+       <a href="http://www.benmeadowcroft.com/">Ben Meadowcroft</a> on <a href="#X3" title="2004-06-07T14:23:15">2004-06-07</a>
+    </p>
+</div>
+  
+

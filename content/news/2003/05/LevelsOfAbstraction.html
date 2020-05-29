@@ -1,0 +1,141 @@
+---
+title: Levels Of Abstraction
+date: 2003-05-12T12:00:00-04:00
+---
+
+  <p>Recently inspired by <a href="http://bitworking.org/news/XHTML___XForms___XLink___Xanadu#X11">Danny Ayer's comments on XHTML and Xanadu</a> 
+I need to talk about levels of abstraction. </p>
+
+  <p>Let's work with computers and work up the levels of abstration. At the very lowest level
+   you have electrical signals moving through circuits. Now, in the good old days it was +5V for 
+   a logical 1 and 0V for a logical 0, I don't know what voltage the latest processors run at, but
+   to keep heating down they have been running at lower and lower voltages. If you are ever working
+   at a very low level like this you can attach a scope to different points on the circuit and 
+   watch the pulses go by, and see for yourself that the system simulates a digital system. Yes, simulates. 
+   All the transistors, resistors and capacitors are really analog circuits that eventually settle into
+   one of two states. Now they settle pretty quickly, but the egdes aren't those beautiful step functions
+   you see in the product spec sheet. And determining a 0 or 1 is actually a little fuzzy, with 0-0.2V being
+   a 0 and 4.5-5V being a 1. When developing on a new board it is especially useful to attach a scope to different parts of the board
+   to measure the voltage, I have spent many hours debugging a system that failed only intermittently only to eventully
+   discover that one of the chips was just barely getting enough voltage, so it's outputs for logical 1 were right 
+   on the 4.5V boundary and sometimes fell below, so a 1 became 0 on a completely random basis.</p>
+<p>Now let's move up a level of abstraction and look at machine code. This is the raw binary codes 
+   that a processor runs on. As an undergraduate, I knew most of the 8051 machine code and could write programs
+   for the processor by typing in the raw hex code into a PROM programmer by hand, but only because I had two 
+   classes that used that processor, and the school didn't have an assembler for 8051s at the time. Note that when
+   working at this level of abstraction all the world is binary, and I don't get to see the voltage levels. It's either a 0 or a 1. 
+   In moving up a level of abstraction I have given up some information, the voltage levels, to gain something else, in this case
+   I am no longer working with the state of just one or two lines, but not I can manipulate the whole state of the processor.
+   Note that I gave up something to move to a higher level of abstraction, but got something in return. </p>
+<p>Assembly language adds another level of abstraction, I can put labels in my code and put goto's that jump to those
+   labels. The assembler computes the distance to the jump destination, determines whether to use a short or a long
+   jump, and then emits the correct machine code.</p>
+<p>Moving up to a programming language like C, that is compiled down into machine code, I get access to higher level
+   abstractions like for-loops and structs. Here again, like in all the other steps, I give something up. Because I am no longer
+   in charge of the emitted machine code I don't know exactly the state of the processor as it processes each line of C. In fact
+   most lines of C code generate mulitple statements in machine code. On the up side, I can put much larger programs together, and 
+   put them together much more quickly than I could with Assembly Language.</p>
+<p>Now let's loop back to Danny's statement:</p>
+<blockquote><p>Text editor + HTML sits at one level of abstraction. We need to work at another level to use XHTML etc etc. No big deal. [<a href="http://bitworking.org/news/XHTML___XForms___XLink___Xanadu#X11">Danny Ayers</a>]</p></blockquote>
+<p>Now I am not just picking on Danny here, I have heard the same things from people working in RDF.</p>
+<p>So if we are moving up a level of abstraction, from HTML to XHTML, I expect to lose someting and subsequenly 
+   get something else in return. And there's the rub. What do I get in return for moving from HTML to XHTML?
+   I already know what I have to give up, I have to have well-formed documents. Thus, no leaving those <code>br</code> tags open, and
+   make sure all your tags nest properly, etc. And that well-formedness constraint means tools. Sure you 
+   can enter valid XML by hand, but if you want to <em>guarantee</em> that the code is well-formed you will need to check it against
+   a tool. Maybe pass the document through an XML processor, or a tool like <a href="http://tidy.sourceforge.net/">Tidy</a>, but either way you need a tool. And if you want to 
+   generate not just well-formed
+   XHTML but <em>valid</em> XHTML then you will definitely need a tool like Tidy. So what do I get in return? Remember, at each level of
+   abstraction we got something in return.</p>
+<p>Don't point to DOM as the answer here, to quote the <a href="">DOM Level 1 Specification</a>:</p>
+<blockquote><p>The Document Object Model provides a standard set of objects for representing HTML and XML documents...</p></blockquote>
+<p>So there is no advantage there to use XHTML over HTML. No, if there is an advantage we have to look at
+   later specifications like <a href="http://www.w3.org/TR/xpath">XPath</a>, 
+   <a href="http://www.w3.org/TR/xptr/">XPointer</a>, <a href="http://www.w3.org/TR/xslt">XSLT</a> and <a href="http://www.w3.org/TR/xquery/">XQuery</a>.
+   These are powerful technologies, but here is the rub, they aren't directly applicable to people publishing web sites.
+   That is, if I use a <abbr title="content management system">CMS</abbr> to publish my web site, I could tweak the templates 
+   and add a validator and have it produce valid XHTML. So what? If I just want to keep publishing my site I get no advantage.
+   Look back the example of the C compiler. When I moved up a level of abstraction, <strong>I</strong> got to use the higher level tool
+   and leave the lower level of abstraction behind, <strong>I</strong> got to use for loops and structs. But the current set of tools for publishing and 
+   reading web sites don't have any new or special abilities when consuming XHTML over HTML. So when I move up that level of abstraction
+   I am not getting any benefit. Sure, as XML is out there longer, more and more CMS tools may adopt XHTML as an internal format 
+   and use the power of XSLT, XPointer and XQuery to manipulate the content, but that just isn't happening today, so the benefits of
+   going to XHTML just aren't there.</p>
+<p>This also gets to the core of why, in the current RSS debates, I <a href="">prefer content:encoded over xhtml:body</a>. 
+   That is, in RSS, there are two ways of offering up the marked up content of you items. The first, and older method, is to 
+   put HTML, encoded, into the cotent:encoded element. Recently, an alternate proposal has come along to use an xhtml:body element
+   that contains the item content. The later method has the advantage that consuming tools <em>could</em> process the XHTML and do things like
+   pull out links or images. The problem here is the same as for using HTML over XHTML, the pain is endured by the producer but 
+   all the benefit goes to the consumer, and right now only a slim minority of consumers at that. In this case I think it's better to stick with content:encoded and let the consuming tools
+   bear the pain. It doesn't mean that the consuming tools need to start supporting HTML/SGML processors either, by incorporating Tidy
+   into the consuming tools the HTML can be transformed into XHTML and then processed as such. And this way the consumer, who gets the benefit
+   of using XHTML, also bears the burden of generating it in the first place from HTML.</p>
+
+  <div class="commentContent" id="X1">
+    Joe, your argument is completely backwards. 
+
+First, regarding XHTML versus HTML, it should be plain to see why it's easier to maintain (read: extend) a site coded in XHTML rather than HTML. This is actually analagous your C versus assembly example: there are many things you can't do in C that you can in assembly because C enforces scoping constraints but because C enforces scoping constraints you have less to worry about. So while assembly with its global data visibility might initially be easier to use in the long run you're screwed. Similarly, when your site is XHTML (read: valid XML) it's easier to use your content in new ways because you can automate transformations (read: XSLT) and easily embed one document inside another. 
+
+Concerning RSS, instead of focusing on the programming aspect of RSS generation (which is purely secondary) you should be focusing on the service part. If you're a RSS service provider then anything you can do to make the life your consumers easier is a gain FOR YOU. The point of generating an RSS document is because you want to get your information out there and used by as many people as possible. You want it to be syndicated, aggregated, displayed, you want it on many different devices--in other words, you want as many consumers as possible. When you use xhtml:body the benefit does go to the consumer and (as in any service model) the consumer's benefit is the producer's benefit. 
+
+More particularly with xhtml:body it's much easier for me to easily incorporate your content into my front page (as a sidebar). It's easy for me to create a previews of your content on my page. It's easier to move your content onto mobile devices (pdas, phones). It's easier to transform your content into specialized binary formats (eg pdf, jik). It's easier for next generation search engines that are aware of xhtml:body and div elements to index your feeds--something that's impossible with content:encoded (see below why content:encoded is pretty meaningless).
+
+The thing is abstraction isn't about giving power to the programmer--it's about taking power away. It's about removing details, hiding information, pushing complexity out of the interface into the implementation and adding as many constraints as possible on what the programmer can actually do. As counter intuitive as this may seem, it turns out the less flexible a system is, the less options you expose to the user and the less knobs there are to turn, the more the user can do with it and the more flexibly the system can be used. This isn't about the stupid cliche 'Less is More' or the nonsense you hear people say about HTTP or HTML eg 'X is the worst technology and that's why it's popular'. There are well-understood reasons why adding constraints and reducing functionality increases system scalability--ultimately it comes down to the fact that for most problems, the size of the solution space isn't a linear function. In compsci we don't create abstractions to increase the size of the solution space we do it to decrease the size of the problem space ( and as it turns out, even very small problems--systems with very few knobs and severe constraints--can have fantastically large solution spaces). 
+
+Lastly Joe you might want to take a page from your well-formed web and REST. Any distributed computing model that attempts to push complexity onto clients to make the service provider's job easier is doomed to fail (byebye RPC, RMI, and SOAP). A service that assumes the absolute minimum about the capabilities of a client (eg uses plain text rather than some binary format) and that encapsulates as much complexity as possible (eg exposes a fixed interface consisting of only 5 possible operations) will be a lot more useful than a service that requires its clients to be able to do things like perform binary decoding and parsing tag soup. 
+
+--- 
+
+Personally, I think both content:encoded and xhtml:body (which doesn't even conform to the spec, I've heard it should be xhtml:div) are hacks. They're just a bad way to use XML. If you want people to see the HTML (or any other presentation format of your markup) then use a link. Sticking your entire front page inside an RSS file is just awful. But of these, content:encoded is definitely the worse hack. Knowing something is xhtml tells me a lot about what I can do with it. Knowing something is encoded tells me absolutely nothing. (You can encode anything, from images to mp3s).
+    <p class="commentByLine">Posted by
+       <a href="http://codaland.blogspot.com">Bo</a> on <a href="#X1" title="2003-05-13T01:09:27">2003-05-13</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Bo,
+   One of the things I was trying to highlight here, and was apparently missed, was that HTML and XHTML *do not sit at different levels of abstraction*. 
+
+"Similarly, when your site is XHTML (read: valid XML) it's easier to use your content in new ways because you can automate transformations (read: XSLT) and easily embed one document inside another."
+
+But *I* don't do that, and thus I get no benefit.
+
+"Concerning RSS, instead of focusing on the programming aspect of RSS generation (which is purely secondary) you should be focusing on the service part."
+
+The programming/content generation part is never purely secondary. Read Clay Shirky's <a href="http://www.shirky.com/writings/evolve.html">In Praise of Evolvable Systems</a> to find out why. 
+
+"It's easier for next generation search engines that are aware of xhtml:body and div elements to index your feeds--something that's impossible with content:encoded"
+
+A fair point, but since the search engine searches the HTML page anyway, the point is moot.
+
+"But of these, content:encoded is definitely the worse hack. Knowing something is xhtml tells me a lot about what I can do with it. Knowing something is encoded tells me absolutely nothing. (You can encode anything, from images to mp3s)."
+
+No you can't. Content:encoded means that it is escaped HTML.
+
+
+
+
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-05-13T09:31:50">2003-05-13</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    As far as I know, I don't content:encode by hand. So I can use the same tool to tidy+xhtml:body.
+No MORE pain and happiest readers. (plus I can brag with a "valid xhtml 1.1" on my home page)
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:">jm</a> on <a href="#X3" title="2003-05-13T12:41:26">2003-05-13</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Escaped doesn't necessarily mean changing the text, I can put HTML inside a CDATA block without changing a single byte of the content.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2003-05-13T13:50:35">2003-05-13</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    &gt;&gt; More particularly with xhtml:body it's much easier for me to easily incorporate your content into my front page (as a sidebar). It's easy for me to create a previews of your content on my page. 
+
+I don't believe this is accurate.  Sidebars and previews are easier if you don't have to know about the structure of the content.  "Insert HTML blob in this space" is pretty simple compared to "figure out how this xml document is structured so that I can XPath/XSLT it to render it in this space".  Or is the assumption that all providers will conform to the same "sidebar schema"? 
+    <p class="commentByLine">Posted by
+       <a href="http://ocw.abf.tulane.edu/blog/">Jorge Curioso</a> on <a href="#X5" title="2003-05-13T13:57:46">2003-05-13</a>
+    </p>
+</div>
+  
+

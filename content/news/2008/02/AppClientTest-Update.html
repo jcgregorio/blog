@@ -1,0 +1,67 @@
+---
+title: AppClientTest Update
+date: 2008-02-29T12:00:00-05:00
+---
+
+  
+  <p>I've just checked in an updated version of the AppClientTest, a program for testing your AtomPub service. It has been updated to use the <a href="http://bitworking.org/news/285/atompubbase-An-AtomPub-Python-Client-Library">atompubbase</a> module and also sports HTML output as an option. To make it easier to develop I've transcluded via svn:externals all the libraries you will need as long as you are running Python 2.5. You will need to install elementtree if you are on something older than 2.5. The transcluding means it is this easy to get up and <a href="http://intertwingly.net/blog/2008/02/28/Migratory-Ape">running from svn</a>:</p><pre><code>
+$ svn co http://feedvalidator.googlecode.com/svn/trunk/apptestsuite/client/validator/ validator
+$ python validator/appclienttest.py --output=results.html "http://bitworking.org/projects/apptestsite/app.cgi/service/;service_document" 
+$ firefox results.html
+</code></pre>
+<p><a href="http://bitworking.org/projects/apptestsuite/client/results.html">Here is a sample report</a> (looks better with JavaScript enabled) after running it against my <a href="http://bitworking.org/projects/apptestsite/">APP Test Site</a>. The icons are courtesy of <a href="http://tango.freedesktop.org/Tango_Desktop_Project">Tango</a>.</p>
+<p>Here are the command line options:</p>
+<p><code>$ python validator/appclienttest.py --help<br />usage: appclienttest.py [options]<br /><br />options:<br />  -h, --help          show this help message and exit<br />  --credentials=FILE  FILE that contains a name and password on separate lines<br />                      with an optional third line with the authentication type<br />                      of 'ClientLogin &lt;service&gt;'.<br />  --output=FILE       FILE to store test results<br />  --verbose           Print extra information while running.<br />  --quiet             Do not print anything while running.<br />  --debug             Print low level HTTP information while running.<br />  --html              Output is formatted in HTML<br /></code></p>
+<p>The code is far from complete. It does most of the tests of <a href="http://www.tbray.org/ape/">Tim's APE</a> (with the exception of categories), but there are many more tests to add. The next step for me is to add unit tests for appclienttest.py, which should be fairly simple given the structure of atompubbase, and the use of <a href="http://code.google.com/p/feedvalidator/source/browse/trunk/apptestsuite/client/atompubbase/tests/mockhttp.py">MockHttp</a>. </p>
+  <div class="commentContent" id="X1">
+    Hmm, with Python 2.5, credentials in a file (no third line), and a fresh WP 2.3.3, I get an internal error:
+<br />
+[junk stripped]
+<br />
+(most recent call last): File "validator/appclienttest.py", line 345, in run test_member_function() File "validator/appclienttest.py", line 549, in testEntry_Collection entry_collections = list(service.iter_match("application/atom+xml;type=entry"))
+    <p class="commentByLine">Posted by
+       <a href="http://www.wasab.dk/morten/">Morten Høybye Frederiksen</a> on <a href="#X1" title="2008-02-29T03:35:37.468043">2008-02-29</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Typo: s/you/your/ in the first sentence.
+
+Also, nice redesign. :)
+    <p class="commentByLine">Posted by
+       <a href="http://bytesexual.org/">Noah Slater</a> on <a href="#X2" title="2008-02-29T06:45:37.521819">2008-02-29</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Noah,<br />
+<p>Fixed, and thanks!</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2008-02-29T09:41:55.557910">2008-02-29</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Morten,<br />
+<p>I will try a fresh install myself, but in case I can't get it to repeat can you send me the complete stack trace?</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2008-02-29T11:20:38.462887">2008-02-29</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Thanks for keeping this up, Joe. It's been very helpful as I've been trying to work on a Ruby client library.
+    <p class="commentByLine">Posted by
+       <a href="http://kfahlgren.com/blog">Keith Fahlgren</a> on <a href="#X5" title="2008-02-29T12:33:03.485301">2008-02-29</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Fine, more tests. It caught some problems the ape didn't notice already.</p>
+<p>The new script says that it's an error to omit the Content-Location header on creation, yet the spec says it's optional. Most examples in the spec don't include it either. I fixed it, but shouldn't it be a warning?</p>
+<p>Also, it checks for an empty summary and author when uploading an image. Isn't it better to have an empty summary than a nonsensical summary, like the "djeihhjdga.gif" Wordpress fills in, given the recent discussion on the alt attribute in HTML? (I guess it's the feedvalidator that's reporting this, just like the namespace prefix warnings)</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:jeroen.hoekx@hamok.be">Jeroen Hoekx</a> on <a href="#X6" title="2008-03-01T05:39:57.426766">2008-03-01</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    Jeroen<br />
+<p>You are correct that all of the format checks are being
+done by the feedvalidator code.</p>
+<p>That check should be for the Location: header and not
+the Content-location: header. I will fix that, thanks! </p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X7" title="2008-03-01T10:19:27.160510">2008-03-01</a>
+    </p>
+</div>
+  
+

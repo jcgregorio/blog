@@ -1,0 +1,42 @@
+---
+title: Other snippets
+date: 2003-08-07T12:00:00-04:00
+---
+
+  
+  <p>I have tried this <a href="http://validator.w3.org/docs/checklink.html">link checking service from the W3C</a>, just drop in a URL and will check all the URLs on the page, looking for dead links or malformed ones. Cool, but just one problem, it fails with a 404 on every single link on my site. I think it's a content negotiation thing but haven't had the time to download the source to try to fix it. Found via my referrer logs.</p>
+<p><a href="http://www.meyerweb.com/eric/thoughts/2003c.html#t20030731">CSS Guru Eric Meyer</a> is hanging out his shingle. Best of luck Eric!</p>
+<strong>And more</strong>
+<p><a href="http://sourceforge.net/potm/potm-2003-08.php">Boa, the SourceForge Project of the Month</a> looks very cool. Must download, must try.</p>
+<p><a href="http://www.tbray.org/ongoing/When/200x/2003/08/07/Ouch32">Tim Bray</a> <q>anyone else 
+remember <code>char far *</code>?</q>. Yes, and I'll thank you for not bringing it up again.</p>
+<p><a href="">mamamusings</a> has <a href="http://mamamusings.net/archives/2003/08/07/wikis_and_information_architecture.php">volunteered</a> 
+to bring some of her information architecture skills to bear on the <a href="http://www.winchestermysteryhouse.com/">Winchester Mystery House</a> that is the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">
+Wiki</a>.</p>
+<p><a href="http://www.lazycat.org/postcards/">Web Design Postcards:</a> <q>Look 
+through these postcards for coding, design and content tips for your own sites, and if one of the sites you visit regularly 
+doesn't measure up, why not show them you care by emailing them the URL of an 
+applicable card?</q> Via the <a href="http://www.webstandards.org/buzz/archive/2003_08.html#a000171">WaSP</a>.</p>
+
+  <div class="commentContent" id="X1">
+    <p>You're getting 404s because you're returning 404s in response to HEAD requests. I just tested by hand:</p>
+<p>HEAD /news/Other_snippets HTTP/1.1<br />
+Host: bitworking.org</p>
+<p>HTTP/1.1 404 Not Found<br />
+Date: Fri, 08 Aug 2003 18:41:23 GMT<br />
+Server: Apache/1.3.27 (Unix)  (Red-Hat/Linux) mod_gzip/1.3.26.1a PHP/4.1.2 DAV/1.0.3 mod_ssl/2.8.12 OpenSSL/0.9.6b<br />
+Content-Type: text/html</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.aaronsw.com/">Aaron Swartz</a> on <a href="#X1" title="2003-08-08T14:42:34">2003-08-08</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>D'oh. </p>
+<p>Thanks Aaron.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-08-08T15:01:14">2003-08-08</a>
+    </p>
+</div>
+  
+

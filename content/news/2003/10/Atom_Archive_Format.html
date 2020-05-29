@@ -1,0 +1,148 @@
+---
+title: Reconsidering Search (Kinda) in the AtomAPI.
+date: 2003-10-17T12:00:00-04:00
+---
+
+  <p>Of all the facets of the <a href="http://www.intertwingly.net/wiki/pie/RestEchoApiDiscuss">AtomAPI</a>, the search mechanism has
+   caused the most angst. Indeed there is a <a href="http://www.intertwingly.net/wiki/pie/RestEchoSearchApi">whole page
+   dedicated to discussing just this facet on the wiki</a>.
+   The search mechanism has gone through many changes and
+   at this point I would like to re-introduce the search 
+   mechanism from the RESTLog API.</p>
+  <p>Actually, to call it a seach mechanism is really the wrong
+   word, it is really a structured mechanism for browsing
+   the archives of a site. In the case of the <a href="http://wellformedweb.org/story/6">RESTLog
+   Archive interface</a>, the form and function of the browsing 
+   is completely under the control of the server.</p>
+<p>Let's start by looking at the RESTLog Archive format:</p>
+<pre class="example"><code>
+&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
+  &lt;res href="http://wfw.org/news/5"&gt;RESTLog Interface&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/4"&gt;One step at a time&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/3"&gt;What's the point?&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/2"&gt;RESTLog Overview&lt;/res&gt;
+  &lt;res href="http://wfw.org/news/1"&gt;Welcome to the Well-Formed Web&lt;/res&gt;
+&lt;/archives&gt;
+</code></pre>
+<p>This is a very simple example of an archive file. In this case it is just
+   a list of <code>res</code> elements that each have an <code>href</code>
+   attribute that points to the Entry, and an element value that is a string
+   that is used to display to the user to help them select which Entry to choose.</p>
+<p>Here is a more complicated example:</p>
+<pre class="example"><code>
+&lt;archives xmlns="http://www.purl.org/RESTLog/archives/1.0"&gt;
+   &lt;group title="Last Ten Stories"&gt;
+      &lt;res href="http://wfw.org/news/100"&gt;My Most Recent Post&lt;/res&gt;
+      &lt;res href="http://wfw.org/news/99"&gt;My Next Most Recent Pos&lt;/res&gt;
+      .
+      .
+      .
+      &lt;res href="http://wfw.org/news/91"&gt;Some Post In The Recent Past&lt;/res&gt;
+   &lt;/group&gt;
+   &lt;more href="http://wfw.org/news/moreViews"&gt;All Items&lt;/more&gt;
+&lt;/archives&gt;
+</code></pre>
+<p>Note that this example introduces the <code>group</code> element. This 
+   allows multiple resources to be grouped together. Note that multiple
+   groups can be used, and that they can also be nested. </p>
+<p>In addition this example introduces the <code>more</code> element. This 
+   is an element that points to another file in archive format. In this way
+   the client can navigate around a set of archive files and not have to 
+   retrieve the whole list at one time.</p>
+<p>Let's go back and consider the <code>group</code> element. Think about
+   what this would look like if you wanted to present it to a user. With their
+   ability to nest you would use a Tree control, with folders for each of the 
+   <code>group</code> elements and files for each of the <code>res</code> elements.
+   If you keep that analogy, then the <code>more</code> element is also just
+   a folder, but one that doesn't get retrieved or displayed until the user
+   clicks on it.</p>
+<p>So how would this integrate into the AtomAPI? The Introspection file
+   facet for seaching, currently <code>search-entries</code> would be changed
+   to a more appropriate <code>browse-entries</code> and doing a GET on that 
+   URI would retrieve the first archive formatted file. Note that more 
+   GETs might follow as the client followed <code>more</code> links 
+   in that archive file, which lead to still further archive files.</p>
+<p>Now the advantages of this approach are that is puts the entire
+   browsing experience in the hands of the server. The server could 
+   present very simple archive files or it could present a rich 
+   and varied archive format. The server could present multiple 
+   views into the archive, with one <code>group</code> or <code>more</code>
+   presenting a heirarchy by date, and another <code>group</code> presenting
+   a heirarchy by subject, or by poster, or by content-type. It really doesn't 
+   matter as the server has complete control. In addition the 
+   text of the <code>res</code> element isn't restricted, you could put the 
+   post title there, or the server could put any reasonable information
+   the user might find useful there. </p>
+<p>This also puts the server in firm control of the amount of bandwidth
+   the browsing interface uses. There is no "atom-all" list of all the 
+   feeds in the archive unless the server decides to produce it.</p>
+<p>Now admittedly this does raise the bar for the client developers
+   as they have to implement a more complicated interface, but the
+   payback is in a much richer browsing experience. This also let's 
+   the server developers compete by producing different browsing 
+   strategies, all while using the same format and mechanisms.</p>
+
+  <div class="commentContent" id="X1">
+    So how would I use this to ask the server for the list of entries that contain the phrase "foo bar", or the list of entries that match various criteria?
+    <p class="commentByLine">Posted by
+       <a href="http://IAwiki.net/EricScheid">Eric Scheid</a> on <a href="#X1" title="2003-10-17T05:58:19">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    The one problem I see is that software doesn't understand "navigation" until programmed to do so.  When a client starts or is done spidering all the archives, where does it begin to present it?
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X3" title="2003-10-17T09:14:05">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Ken,<br />
+  The client displays one 'archive' at a time, it doesn't retrieve the next 'archive' until a user action, such as clicking on a folder of a 'more' element.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2003-10-17T09:34:34">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p>Joe - this is pretty close to what I have been trying to find a way to express, but so far have not been successful.  Perhaps it is time for me to start prototyping, but in any case, what I was thinking of is closer to what you see at:</p>
+<p><a href="http://www.python.org/doc/current/lib/module-re.html">http://www.python.org/doc/current/lib/module-re.html</a></p>
+<p>Note the bar across the top with left, up, and right arrows, as well as special purpose links.  Of course the body of this page has a number of implicit "down" arrows.</p>
+<p>If we could make this information machine readable, every Atom file would potentially be a directory and an introspection file.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X2" title="2003-10-17T10:10:58">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Erik,<br />
+  As to the 'foo bar' search, that wouldn't be covered by this interface. Actually that wouldn't be covered by the current search interface either. I actually don't think a single blogging API has this functionality. Not to say that it isn't a good idea, just that if it's done it should be done under a different facet, say 'text-search'.<br />
+  As for other criteria, this format leaves it up to the server to present the data in useful categorizations. They are limited only by the developers imagination.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2003-10-17T10:13:06">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>Sam,<br />
+  The current archive format could handle that kind of navigation, the server could serve up an 'archive' file with 'previous' , 'next' and 'up' pointers held in 'more' elements. </p>
+<p>The only difference in navigation I see is that when following those links you would want the whole screen replaced with the contents of that archive and not just have the folder expanded. To accomodate that kind of navigation let me propose the following change to the 'archive' format: </p>
+<p>  The 'more' element can have one of two attributes, "href" or "src", if the attribute is "href" then the user agent should replace the current view with the  'archive' at the given URI. If the attribute is "src" then the 'archive' at the URI is to be expanded in place in the current archive view.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2003-10-17T10:20:05">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Joe, I apologize as this is clearly a case of me not quite finding the right words to express what I have in mind.  I imagine that what it will take is a concrete example for us to discuss.  I'm working on it.</p>
+<p>In the URL I provided, that information is within the page itself.  There isn't a separate set of "directories" vs "content" pages.  Of course, some pages have a higher content vs hypertext link ratio than others, but that is by choice and not an inherent limitation of the format.</p>
+<p>My atom feed contains the last 20 blog entries.  It could provide a link to the previous 20 blog entries (a.k.a. "left").  It could provide a link to each of the comment feeds for the 20 blog entries ("down").  It could also provide a link to the list of feeds that are provided for this site ("up").</p>
+<p>Each of those pages could also have similar navigational information, as appropriate.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X7" title="2003-10-17T11:35:17">2003-10-17</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>This static system looks nice, and is a good replacement for the just as static 'search'-part of the current Atom API.</p>
+<p>I only see one caveat: The RESTLog Archive Interface requires the user to do something before the application can retrieve the information. Of course, the application can retrieve everything without knowing what it is, but what it retrieves doesn't mean anything. The application doesn't know what it is.</p>
+<p>This might not be a problem as there are users in the end that are going to read this, but unless we settle on a common dialect to express different views of the entry-database, the entries will never be possible to e.g. index automatically.</p>
+<p>I think the RESTLog format can be used as a simple view into the entry-db, but it should be recommended to provide a richer and more standardized API for searching, where queries are registered and given common and global meaning.</p>
+<p>How the queries should look like, and how they should be given meaning is not something I've thought of, but I think it's important to know what the entries you (you = the application) are looking at is, and why you are looking at them.</p>
+<p>PS: I got an exception while trying to post my name with oslash instead of o.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.virtuelvis.com/quark/">Asbjorn Ulsberg</a> on <a href="#X8" title="2003-10-27T11:04:40">2003-10-27</a>
+    </p>
+</div>
+  
+

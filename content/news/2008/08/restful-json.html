@@ -1,0 +1,343 @@
+---
+title: RESTful JSON
+date: 2008-08-19T12:00:00-04:00
+---
+
+  
+  <p><a href="http://twitter.com/dewitt/statuses/890315871">DeWitt</a>:</p>
+<blockquote><p>@dehora Sorry, that should read: We haven't created an AtomPub *for* RPC yet. IMHO, that's the biggest gap today.
+</p></blockquote>
+<p>What we seem to need is a data-oriented REST protocol. 
+  We already have document-oriented REST protocols covered
+  with the Atom Publishing Protocol, but what if
+  the information you want to convey is data, i.e. doesn't
+  have <a href="http://bitworking.org/projects/oscon2007/html/31.html">the minimum meta-data to qualify as a document</a>, such
+  as an author, title, published data, and id. If you're going to be slinging 
+data around these days the best thing is probably JSON, so what would RESTful JSON look like?
+</p>
+<p>
+The first thing it should have is a 'collection' idiom, like AtomPub, using the
+same RESTful mechanisms as AtomPub: POST to add to the collection, GET to retreive a collection
+representation, and each member of the collection has an "edit" URI that
+supports GET, PUT and DELETE for editing the individual member representation.
+What would be different from AtomPub, which mandates the
+format of the things in the collection, would be that this protocol should only require it to be a JSON object.
+One thing I would add to the normal 'collection' idiom is the ability to
+retrieve a 'prototype' object that could be added to the collection, as a
+way of indicating what the structure of the added JSON object should have.
+The second addition to the 'collection' idiom is a URI Template/OpenSearch based querying
+mechanism, which would allow standardizing on paged/range requests.
+The last addition above and beyond what AtomPub provides out of the box
+is "meta-collections", which seems to the name that's being adopted in the AtomPub world, which
+is a way of creating and destroying collections though a collection.
+</p>
+<p>The only restriction on the representation of a collection is that it 
+  should be an object. For example, let's look at some of the 
+  representations in the Open Social specification and imagine what they
+  would look like in such a RESTful JSON collection. Here is 
+  a <a href="http://code.google.com/apis/opensocial/docs/0.8/restfulspec.html">person representation</a>: 
+</p>
+<pre><code>
+{
+  "id" : "example.org:34KJDCSKJN2HHF0DW20394",
+  "name" : {"unstructured" : "Jane Doe"},
+  "gender" : {"displayvalue" : "女性", "key" : "FEMALE"}
+}
+</code></pre>
+<p>So what would a 'collection' of people look like?
+  My idea is that the full representation is put into the
+  collection and that other meta-data, such as the 'edit'
+  URI, etc. are stored outside of that representation.
+  For example, notice the first member of the collection
+  document is our person from above and is complete
+  under "entity". The "href" value is the (relative)
+  URI where you can edit that member, doing the usual
+  GET to get it, PUT to update, and DELETE to remove it.
+  Note that because the full representation is in the
+  collection we can also pass along the etag as meta-data
+  in the collection representation. We can now detect lost-updates
+  when we PUT an updated representation back to the edit URI
+  by including an "If-Match" header with the etag value
+  on our PUT request.
+</p>
+<pre><code>
+{
+  "members": [
+    {"href": "34KJDCSKJN2HHF0DW20394",
+     "etag":"0hf0239hf2hf9fds09sadfo90ua093j", 
+     "entity", {
+          "id" : "example.org:34KJDCSKJN2HHF0DW20394",
+          "name" : {"unstructured" : "Jane Doe"},
+          "gender" : {"displayvalue" : "女性", "key" : "FEMALE"}
+        } 
+    }, 
+    {"href": "aaaaaaaaaaa11111",
+     "etag":"alsjdfieflsajfajsfjadsljfalksjd", 
+     "entity", {
+          "id" : "example.org:aaaaaaaaaaa11111",
+          "name" : {"unstructured" : "Joe Gregorio"},
+          "gender" : {"displayvalue" : "Male", "key" : "MALE"}
+        } 
+    }, 
+    ...
+  ], 
+  "next": null
+}
+</code></pre>
+<p>One thing to think about would be to have the resources
+  described by the URI Template/OpenSearch URI be an editable resource, that is,
+  they could accept GET, PUT and DELETE. That would allow clients
+  to do batch updating, or batch removal of collection members.
+</p>
+<p>
+There are a couple other features I'd like to add above and beyond 'collections';
+there should be 'config' and 'process' resources.
+</p>
+<p>
+The 'config' resources support GET and PUT, and represent configuration options
+for the service. For example, ( actually this a bad example since you should use
+AtomPub for a blog, but for the sake of exposition let it slide ) 
+in a blog you would use a collection to manage the entries
+in the blog, one collection member per blog entry. A 'config' resource associated
+with that blog would contain options you could set, such as the users display name,
+their email address, background color, etc.
+</p>
+<p>
+The 'process' resource is just a resource that does some processing and
+returns; it only supports POST. For example, a language translation service
+that takes your text and returns it in German is an example of such a service.
+Could potentially be a JSON-RPC end-point, but I am a little afraid to
+do that since the usual use of a JSON-RPC end-point is to handle multiple
+kinds of requests differentiated by some verb in the body, which isn't 
+what this should be, there should be different 'process' URIs, one for
+each distinct type of processing.
+</p>
+<p>All of this could be tied together in a JSON service document that 
+described all the 'collection', 'config' and 'process' resources
+for a site.</p>
+<p>These are just some random thoughts that have been rattling around
+  as I've watched and helped people implement AtomPub across a wide
+  range of services. What are your thoughts, what would you like to
+  see in a RESTful JSON specification?
+</p>
+  <div class="commentContent" id="X1">
+    I've just started working on an application this could directly support. I'll work through some examples from that and provide feedback.
+    <p class="commentByLine">Posted by
+       <a href="http://patricklogan.blogspot.com">Patrick Logan</a> on <a href="#X1" title="2008-08-19T14:57:49.481949">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Progress at last. I've been pseudo-working on something like this to bridge the gap between REST and REST-RPC.
+
+
+I think if you add
+
+<ul>
+<li>at minimum, that *every* object has id and updated fields
+
+
+ </li><li>any object can accept forms-posting of json keys
+
+
+ </li><li>'class' attribute on a collection so clients can switch on type
+
+
+ </li><li>call the collections "managers" instead of "collections"
+</li></ul>
+
+and this will see rapid deployment, dragging a lot of web developers about halfway to REST.  RFC?
+    <p class="commentByLine">Posted by
+       <a href="mailto:bill@dehora.net">Bill de hÓra</a> on <a href="#X2" title="2008-08-19T15:15:17.499242">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>Joe, I've moaned to you about this already, but dude, this seems heavyweight. Doesn't a collection of JSON things, whatever they be look like a list of things? And when you want to PUT some "thing" which can be serialized as JSON, don't you just PUT it? What's with all the apparent extra packaging?</p>
+<p>I realize that when we want to do a REST style API we are causing complexity on the client as a sacrifice to the gods of scalability, server side statelessness, etc, but what you're describing here is adding complexity on both the client and the server. Both the client and server are required to have support for "Joe's JSON transfer protocol" on top of their existing support for HTTP.</p>
+<p>At core here I guess my confusion is that I don't understand the phrase "RESTful JSON specification". JSON is a content-type, something we might like to see some of our resources represented as as we transfer them about. Can you be more explicit about <em>why</em> the specification should exist? You've said to me that most RESTful APIs you've seen end up being RPC, but that doesn't strike me as an answer to the question so much as an observation about a sad (but true) state of affairs.</p>
+<p>Some of the reasons I can imagine you might have for all this surround the need for packaging of collections in a useful manner: we need to be able to paginate; we would like to have hrefs and etags associated with the individual resources in the collection.</p>
+<p>I'm being mildly hyperbolic here for the sake of clarity and conversation, so my points of confusion are a bit highlighted. I see you discussing creating a specification, a framework for a realm (data transfer over the web) which I think has high potentiality for some very interesting creativity that already has a framework (HTTP itself) that is easy enough to work with and has sufficient constraints to be "good" and "safe". Your proposal formalizes an area that doesn't seem to need formalization. With a little bit of WSGI and not much else I can create lots of interesting ways to move around data for which the client code is also lots of interesting ways. Unlike Bill I see this as a drag away from the parts of REST that I like.</p>
+<p>But I clearly need to think about this some more. Thanks for writing it down.</p>
+<p>By the way: the bad example about AtomPub and blog config sounds pretty appealing. A server that supported blog editing by JSON would be quite a bit lighter in dependency land than one that supported AtomPub.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://cdent.tumblr.com/">Chris Dent</a> on <a href="#X3" title="2008-08-19T15:22:05.983161">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>I have a confession. For a recent hackday, I built a demonstration of a personal homepage (based loosely on a GTD framework) where each module was an Atom Collection. The personal homepage was basically an aggregation of all Atom Collections specified by the owner (essentially an HTML view/aggregation of an Atom Service Document). However, instead of using Atom's XML, all representations back and fore were in JSON mimicking Atom's structure (to speed up development, considering its natural affinity to JavaScript and PHP). but other than that, it adhered to the RESTness of the AtomPub, and it was still possible, with a bit more work, to deal with the XML form too.</p>
+<p>However, what I felt was missing was:</p>
+<ul>
+<li>Some way of specifying a configuration. For example, lets say I want a module that pulls in data from a third party website - I could set up an Atom Service on my server that proxied all requests between the browser and the third party application. However, there's no obvious means of setting this up in a client-server manner. The obvious option would be a JSON object being passed back and fore between the browser and my server. I felt that the server could send a 'prototype' object or some sort of definition as to the structure of the configuration object</li>
+<li>Defining/Adding/Modifying/Merging categories (or tags) on an Atom service. Again, a JSON object felt like a natural fit.</li>
+<li>Defining default permissions of an Atom Document in an Atom Collection.</li>
+<li>Creating your own personalised homepage - basically POST/PUT a JSON object to a URL, and the server creates an Atom Service Document that you can then tailor - by adding/modifying/removing/grouping Atom Services.</li>
+<li>Editing/refining module HTML templates.</li>
+</ul>
+<p>(Apologies for the continued references to AtomPub - its all I've been thinking about in building content management / publishing systems in the last few years).</p>
+<p>But, your post has hit on some of my painpoints in creating Atom-flavoured publishing systems - more than just blogs. Ideally I'd like to be able to run a publishing system, including tweaking its configuration, from something like an Atom Client - but its probably more like a Rest/JSON client with some sort of 'definition' that programatically describes the structure of the data at an endpoint.</p>
+<p>A shorter answer - I'm interested in the discussion around your post.</p>
+
+
+Mike.
+    <p class="commentByLine">Posted by
+       <a href="http://www.isolani.co.uk/blog/">Isofarro</a> on <a href="#X4" title="2008-08-19T15:46:28.266552">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Have you looked at <a href="http://incubator.apache.org/couchdb/">CouchDB</a>?  It has a RESTful HTTP/JSON API.  I'd love to see CouchDB's interface be standardized, even if that meant that CouchDB has to adapt.
+    <p class="commentByLine">Posted by
+       <a href="http://intertwingly.net/blog">Sam Ruby</a> on <a href="#X5" title="2008-08-19T16:01:26.129118">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    I responded to this post with a writeup on what I believe is needed for a RESTful JSON protocol: http://www.json.com/2008/08/19/standardizing-restful-json/
+First, I really appreciate your efforts towards a RESTful JSON protocol, I think this is indeed valuable for the community. However, a little more pointedly, I want to make a few comments inline about my concerns with the suggestions above:
+
+Your example is terribly complicated. I don't think any JSON advocate would appreciate a protocol that required such extensive object enveloping and additional meta-data property inclusion. Simplicity is key, data should be expressed as the data itself, not as convoluted mix of protocol requirements plus data:
+[{"id" : "example.org:34KJDCSKJN2HHF0DW20394",
+          "name" : {"unstructured" : "Jane Doe"},
+          "gender" : {"displayvalue" : "女性", "key" : "FEMALE"}},
+ {"id" : ...
+]
+
+Second, I don't see why a RESTful JSON protocol needs to boil the ocean with specifications for RPC endpoints and configuation endpoints as well. These are application level design issues, they are orthogonal to how we communicate with RESTful JSON.
+
+Finally, this looks gratuitously incompatible with existing implementations. High quality implementations exist in Dojo, CouchDB, and Persevere. Let's build on these, and not reinvent the wheel.
+
+Anyway, once again, I appreciate your efforts.
+    <p class="commentByLine">Posted by
+       <a href="http://json.com">Kris Zyp</a> on <a href="#X6" title="2008-08-19T16:59:44.386108">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    @Kyp:
+1. By having a {"members": []}, you can also have the collection management metadata akin to the AtomPub things. If you look at the example above, there is a "next" attribute set to null. But it could be the URI to the next set of items (pagination).
+2. Then there is the separation between representation at the metadata about the representation. Joe also has this illustrated in his example. I think having this separation is a good thing. Just my opinion.
+
+thanks,
+ben :)
+    <p class="commentByLine">Posted by
+       <a href="http://foofiles.com/">Ben</a> on <a href="#X7" title="2008-08-19T18:05:30.750406">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Hi Joe,
+
+Great work.  Once you standardize your content, we should also try to harmonize the URL structure with that used by, e.g., ActiveResource and Jester, and documented on the <a href="http://microformats.org/wiki/rest/urls">microformats wiki</a>.
+    <p class="commentByLine">Posted by
+       <a href="http://ihack.us">Dr. Ernie</a> on <a href="#X8" title="2008-08-19T18:05:52.187866">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    If you pursuing RESTful JSON than putting metadata in the resource is a mistake. To properly build on HTTP semantics, one should separate metadata into headers and keep resource data unpolluted. I think there will be a lot of problems like this if this is approached as a JSON-ification of AtomPub (unless that is the explicit purpose, but that is a much narrower goal/focus).
+    <p class="commentByLine">Posted by
+       <a href="http://json.com">Kris Zyp</a> on <a href="#X9" title="2008-08-19T19:08:41.605298">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    @Krys:
+
+<ol>
+<li>Sorry for mistyping your name in previous comment.</li>
+<li>I think Atom has this type of "metadata" (i use term loosely): next, related, etc in the resource. Let's take the post's example: { "member": ..., "next": ...}<br />
+<br />
+It looks to me that this is the container, equiv to a feed. Putting an etag about this "feed" in the feed itself is indeed an error. That belongs in the HTTP, if one is using HTTP. Then the extra separation that I was talking about in my post on the entity level. I don't think that it's a problem to have the extra etag and href in each "member" item since the "real" resource/representation is stored on its own in the "entity" field of each "member item".
+</li>
+<li>I would continue from (2) to say that GETting the URI of an *entity* should indeed just return the entity itself: { "id": ..., "name": ..., "gender": ...} and the etags, etc would belong in the HTTP headers. I think I'm still consistent in my point that the metadata in the items of the "member" section is still a good addition.</li>
+</ol>
+    <p class="commentByLine">Posted by
+       <a href="http://foofiles.com/">Ben</a> on <a href="#X10" title="2008-08-19T19:39:02.634825">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    I recently URI-ified all the calls which Etsy.com's PHP makes to the backend data layer. Results on <a href="http://www.aminus.org/blogs/index.php/2008/08/19/restful-json?blog=2">my blog</a>.
+
+In short: pagination might be a good thing to collectively spec out.
+    <p class="commentByLine">Posted by
+       <a href="mailto:fumanchu@aminus.org">Robert Brewer</a> on <a href="#X11" title="2008-08-19T20:42:28.739770">2008-08-19</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    Maybe I have a different definition of "RPC" in mind, but isn't this simply a RESTful data exchange protocol that uses a different media type, i.e., one that isn't so much documents but rather JSON data?
+
+I always thought of RPC protocols as a convenient way to expose and invoke remote functionality (or "processes"), not just data CRUD. Supported by the fact that most RPC protocols do define a real protocol on the wire, but also but a lot of emphasis on how to wire up the functionality behind that, and guarantee static types for the host languages, etc.
+    <p class="commentByLine">Posted by
+       <a href="http://www.martin-probst.com">Martin Probst</a> on <a href="#X12" title="2008-08-20T02:42:04.663040">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X13">
+    <a href="http://bitworking.org/news/358/restful-json#X1">Patrick</a>,<br />
+<p>Looking forward to seeing that.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X13" title="2008-08-20T10:09:19.111835">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X14">
+    <a href="http://bitworking.org/news/358/restful-json#X2">Bill</a>,<br />
+<blockquote><p>at minimum, that *every* object has id and updated fields</p></blockquote>
+<p>id == edit URI</p>
+<p>Not sure about an updated field, what if this is fine granularity data, such as each member being a cell in a spreadsheet.</p>
+<blockquote><p>any object can accept forms-posting of json keys</p></blockquote>
+<p>Interesting idea.</p>
+<blockquote><p>'class' attribute on a collection so clients can switch on type</p></blockquote>
+<p>Hmm, could that be associated with the 'prototype'?</p>
+<blockquote><p>* call the collections "managers" instead of "collections"</p></blockquote>
+<p>Any reason?</p>
+<blockquote><p>
+and this will see rapid deployment, dragging a lot of web developers about halfway to REST. RFC?</p></blockquote>
+<p>If there's enough interest I'd gladly work toward an RFC, but we do have one sticking point which is the RFC for JSON is only experimental, which means that experimental is probably the  highest we could go, not that there's anything wrong with that.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X14" title="2008-08-20T10:21:37.955930">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X15">
+    <a href="http://bitworking.org/news/358/restful-json#X3">Chris</a>,<br />
+<blockquote><p>Some of the reasons I can imagine you might have for all this surround the need for packaging of collections in a useful manner: we need to be able to paginate; we would like to have hrefs and etags associated with the individual resources in the collection.</p></blockquote>
+<p>Those are pretty good reasons.</p>
+<blockquote><p>Your proposal formalizes an area that doesn't seem to need formalization. </p></blockquote>
+<p>"Just use HTTP" doesn't seemed to have worked out so far as the vast majority of JSON based APIs are RPC.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X15" title="2008-08-20T10:30:05.473588">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X16">
+    <a href="http://bitworking.org/news/358/restful-json#X4">Mike</a>,<br />
+<blockquote><p>A shorter answer - I'm interested in the discussion around your post.</p></blockquote>
+<p>Excellent!</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X16" title="2008-08-20T10:41:26.048717">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X17">
+    Joe, Would WADL suffice for the service document? Does it have to be JSON based as well?
+
+thanks,
+dims
+    <p class="commentByLine">Posted by
+       <a href="http://davanum.wordpress.com/">Davanum Srinivas</a> on <a href="#X17" title="2008-08-20T10:42:33.829588">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X18">
+    <a href="http://bitworking.org/news/358/restful-json#X5">Sam</a>,<br />
+<blockquote><p>Have you looked at CouchDB?</p></blockquote>
+<p>Yes, I have, and it's one of the reasons I thought a proposal at this time might get some traction. Definitely a use case to keep in mind.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X18" title="2008-08-20T10:45:03.609552">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X19">
+    <a href="">Kris</a>,<br />
+<blockquote><p>I responded to this post with a writeup on what I believe is needed for a RESTful JSON protocol</p></blockquote>
+<p>Thanks, lots of good reading in there. <a href="http://bitworking.org/news/358/restful-json#X10">Ben</a> has ably addressed the points you made about the location of meta-data. And no, this isn't supposed to be a JSON-ification of AtomPub, but should stand on its own.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X19" title="2008-08-20T10:51:07.834961">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X20">
+    <a href="http://bitworking.org/news/358/restful-json#X8">Dr. Ernie</a>,<br />
+<blockquote><p>Once you standardize your content, we should also try to harmonize the URL structure with that used by, e.g., ActiveResource and Jester, and documented on the microformats wiki.
+</p></blockquote>
+<p>I'm not so sure of the benefit of standardizing URIs. I wouldn't want to 
+put restrictions in place that would make <a href="http://bitworking.org/news/354/the-role-of-REST-in-cloud-computing">this kind of remixing</a> difficult or impossible.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X20" title="2008-08-20T10:55:42.584500">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X21">
+    <a href="http://bitworking.org/news/358/restful-json#X11">Robert</a>,<br />
+<blockquote><p>I recently URI-ified all the calls which Etsy.com's PHP makes to the backend data layer. Results on my blog. In short: pagination might be a good thing to collectively spec out.</p></blockquote>
+<p>That's an excellent write-up, great hands-on experience, and excellent input into the discussion.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X21" title="2008-08-20T10:58:53.554662">2008-08-20</a>
+    </p>
+</div><div class="commentContent" id="X22">
+    Joe,
+
+<p>You can generalize concept of a "config" resource by simply allowing a service description to advertise individual data resources, not just collections.  The data resource could be the service config (perhaps indicated through an equivalent of a 'rel') or could represent some other unit of data where a collection is not the appropriate metaphor (other service meta-data, perhaps). 
+
+</p><p>The process "resource" idea is certainly valuable, and one I've thought about myself, but let's not confuse ourselves and call it ReST.   The documents sent and returned don't represent resources; they're just RPC call and return values.  That said, I still think it's a valuable concept (and I like the idea of one 'process resource' per URL, as opposed to a generalized RPC URL with "method" in the body.)</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:markstahl@gmail.com">Mark Stahl</a> on <a href="#X22" title="2008-08-20T12:27:50.274539">2008-08-20</a>
+    </p>
+</div>
+  
+

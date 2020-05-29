@@ -1,0 +1,114 @@
+---
+title: JSON isn't XML
+date: 2006-09-21T12:00:00-04:00
+---
+
+  
+<p>
+    After avoiding <a href="http://www.ietf.org/rfc/rfc4627.txt">JSON</a> 
+    for a long time I am finally getting around to looking at it.
+    The reason I'm <i>just now</i> looking is that the specification is now available
+    as an informational RFC without the funky license that plauged the
+    original. 
+    <a href="http://simon.incutio.com/archive/2005/12/16/json">Yes, licensing matters.</a>
+</p>
+
+  
+<p>
+    The first thing you notice when you look at JSON is the simplicity. It certainly 
+    hits its target as a "lightweight data-interchange format". 
+</p>
+<blockquote><p>
+        JavaScript Object Notation (JSON) is a text format for the
+        serialization of structured data.  It is derived from the object
+        literals of JavaScript, as defined in the ECMAScript Programming
+        Language Standard, Third Edition [ECMA].
+        </p>
+<p>
+        JSON can represent four primitive types (strings, numbers, booleans,
+        and null) and two structured types (objects and arrays).
+</p></blockquote>
+<p>
+    And I was happy to see a clear and simple character encoding story for JSON, which
+    is Unicode in one of UTF-8, UTF-16 (BE or LE), or UTF-32 (BE or LE), all of which 
+    is detectable by looking at the first four octets.
+    <a href="http://www.xml.com/pub/a/2004/07/21/dive.html">Contrast this with XML</a>.
+</p>
+<h3>The XML we wanted</h3>
+<p>
+    It appears that JSON is the XML that many people wanted. 
+    For proof of that just look at  
+    <a href="http://www.w3.org/TR/xmlschema-2/#built-in-datatypes">XML Schema</a>.
+
+    But JSON is a data structure serialization, as opposed to 
+    the markup language that is XML, and could
+    probably do just fine with a schema language, which 
+    could define some more data types based on
+    the primitives that are present. For example, there is no native JSON datatype
+    for a date/time, and that's probably not something
+    you want to define on an application by application basis.
+</p>
+<p>
+    All of this looks good except for the extensibility
+    story which 
+    <a href="http://www.mnot.net/blog/2005/01/24/json">
+        Mark Nottingham has already covered</a>.
+    With no baked in extensibility story you will 
+    end up with a real world experiment in the viability 
+    of 'short names'. On the other hand JSON qnames will
+    work like most people (mistakenly) expect them to work
+    in XML. You might end up seeing:
+</p>
+<pre><code>
+[
+  {
+  "u":"http://patricklogan.blogspot.com/2006/09/getting-it-through-not-understanding.html",
+  "n":"Tim Bray on Ruby...",
+  <b>"dc:Date": "2006-09-25T10:55:47-05:00",</b>
+  "d":"Making it stick.: Getting It Through Not Understanding",
+  "t":["humor","python"]
+  },
+  {
+  "u":"http://www.washingtonpost.com/wp-dyn/content/article/2006/09/23/AR2006092301130.html",
+  "n":"I hate it when that happens.",
+  <b>"dc:Date": "2006-09-24T20:00:31-05:00",</b>
+  "d":"Spy Agencies Say Iraq War Hurting U.S. Terror Fight - washingtonpost.com",
+  "t":["politics"]
+  },
+  ...  
+  }
+]
+</code></pre>
+<p>There are, of course, plenty of opinions on whether
+    a system of 'short name' disambiguation can reliably 
+    prevent conflicts and still be fair:
+</p>
+<ul>
+<li><a href="http://lists.w3.org/Archives/Public/www-tag/2005Apr/0033.html">Dan Connolly on [www-tag]</a></li>
+<li><a href="http://lesscode.org/2005/07/30/complexity-bureaucracy-fairness/">Complexity, Bureaucracy, Fairness</a></li>
+<li><a href="http://bitworking.org/news/Ocean_boiling_in_the_age_of_microformats">Ocean boiling in the age of microformats</a></li>
+</ul>
+<p>I have no idea how this 'short name' experiment will end
+for either JSON or Microformats, but it certainly
+bears careful watching.</p>
+<h3 id="when-to-use">When to use XML vs JSON?</h3>
+<p>JSON isn't XML and fills a gap that 
+    XML was being stretched to fill. The strengths
+    and weaknesses of the formats need to be taken into
+    consideration when deciding which to use. If you are
+    transporting <a href="http://bitworking.org/news/Document_Centric">documents</a> or are aiming for a wide
+    range of extensibility then you should be using XML.
+    If you have control over both ends of the wire, for example, talking 
+    to your own web server from HTML pages served from that same server, then 
+    you should be using JSON. Everything in between will require 
+    some judgement.
+</p>
+<p>Of course, old habits die hard and one of the first
+    specs that uses JSON is <a href="http://json-rpc.org/">JSON-RPC</a>.
+</p>
+<p>But you can still use JSON RESTfully, right?</p>
+<p>Yes you can ...</p>
+
+  
+  
+

@@ -1,0 +1,159 @@
+---
+title: Dragon Sound Effects Web Audio API
+date: 2015-10-31T12:00:00-04:00
+tags:
+  - maker
+---
+
+<style type="text/css" media="screen">
+  .controls button:hover {
+    background: #eee;
+  }
+  .controls button {
+    padding: 1em;
+    background-color: white;
+    border: solid gray 1px;
+  }
+</style>
+<p>
+  A sound effects board with the sounds of a dragon built using the
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"
+    >Web Audio API</a
+  >. Because Halloween.
+</p>
+<div class="controls">
+  <button id="start">Start Snoring</button>
+  <button id="stop">Stop Snoring</button>
+  <button id="wake">Sniff</button>
+  <button id="angry">Roar</button>
+  <p>
+    Chains: [<a href="http://soundbible.com/1101-Large-Chains.html">Source</a>]
+    <audio id="chains" controls="">
+      <source src="/audio/chains.mp3" type="audio/mp3" />
+    </audio>
+  </p>
+  <p>
+    Roar: [<a href="http://soundbible.com/543-Dragon-Roaring.html">Source</a>]
+    <audio id="roar" controls="">
+      <source src="/audio/roar.mp3" type="audio/mp3" />
+    </audio>
+  </p>
+  <p>
+    Sniff: [<a href="http://soundbible.com/956-Sniff-Long.html">Source</a>]
+    <audio id="sniff" controls="">
+      <source src="/audio/sniff.mp3" type="audio/mp3" />
+    </audio>
+  </p>
+  <p>
+    Snore: [<a href="http://www.sound-effects-hunter.com/free-snoring-sound/"
+      >Source</a
+    >]
+    <audio id="snore" controls="" loop="">
+      <source src="/audio/snore.mp3" type="audio/mp3" />
+    </audio>
+  </p>
+</div>
+
+<h3>Code</h3>
+<pre class="prettyprint" id="code"></pre>
+
+<script type="text/javascript" charset="utf-8" id="audioCode">
+  function onload() {
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    var snore = document.getElementById('snore');
+    var sniff = document.getElementById('sniff');
+    var roar = document.getElementById('roar');
+    var chains = document.getElementById('chains');
+
+    // Create a MediaElementAudioSourceNode.
+    // Feed the HTMLMediaElement into it.
+    var sourceSnore = audioCtx.createMediaElementSource(snore);
+    var sourceSniff = audioCtx.createMediaElementSource(sniff);
+    var sourceRoar = audioCtx.createMediaElementSource(roar);
+    var sourceChains = audioCtx.createMediaElementSource(chains);
+
+    // Create a gain node for some sounds.
+    var gainNodeSnore = audioCtx.createGain();
+    var gainNodeChains = audioCtx.createGain();
+    var gainNodeRoar = audioCtx.createGain();
+
+    gainNodeRoar.gain = 2.0;
+
+    // Filters
+    var biquadFilter = audioCtx.createBiquadFilter();
+    biquadFilter.type = 'lowpass';
+    biquadFilter.frequency.value = 200;
+
+    // Once the snore sound is loaded set up the processing on it.
+    snore.addEventListener('loadedmetadata', function () {
+      // Connect it though the lowpass filter.
+      sourceSnore.connect(biquadFilter);
+
+      // And then add some gain.
+      biquadFilter.connect(gainNodeSnore);
+
+      // Finally connect to the output.
+      gainNodeSnore.connect(audioCtx.destination);
+    });
+
+    sourceSniff.connect(audioCtx.destination);
+
+    sourceRoar.connect(gainNodeRoar);
+    gainNodeRoar.connect(audioCtx.destination);
+
+    sourceChains.connect(gainNodeChains);
+    gainNodeChains.connect(audioCtx.destination);
+
+    function setFadeout(element, gain, gainValue) {
+      gain.gain.setValueAtTime(audioCtx.currentTime, 0.3);
+      gain.gain.setValueAtTime(gainValue, audioCtx.currentTime + 0);
+      gain.gain.setValueAtTime(
+        gainValue,
+        audioCtx.currentTime + element.duration - 5.0
+      );
+      gain.gain.linearRampToValueAtTime(
+        0.0,
+        audioCtx.currentTime + element.duration
+      );
+    }
+
+    document.getElementById('wake').addEventListener('click', function () {
+      snore.pause();
+
+      setFadeout(chains, gainNodeChains, 0.03);
+
+      chains.play();
+      sniff.play();
+
+      chains.addEventListener('ended', function () {
+        snore.play();
+      });
+    });
+
+    document.getElementById('angry').addEventListener('click', function () {
+      snore.pause();
+      setFadeout(chains, gainNodeChains, 0.03);
+
+      chains.play();
+      roar.play();
+
+      chains.addEventListener('ended', function () {
+        snore.play();
+      });
+    });
+
+    document.getElementById('start').addEventListener('click', function () {
+      snore.play();
+    });
+
+    document.getElementById('stop').addEventListener('click', function () {
+      snore.pause();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', onload);
+</script>
+<script type="text/javascript" charset="utf-8">
+  document.getElementById('code').innerText = document.getElementById(
+    'audioCode'
+  ).innerText;
+</script>

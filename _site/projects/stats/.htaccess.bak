@@ -1,5 +1,0 @@
-AuthDigestFile /home/jcgregorio/passwd
-AuthName "My Site"
-AuthType Digest 
-require valid-user
-

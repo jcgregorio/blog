@@ -1,0 +1,274 @@
+---
+title: The Shoelace Formula via Geometric Algebra
+permalink: /news/ga/area
+date: 2017-11-12T12:00:00-05:00
+---
+
+  <style type="text/css" media="screen">
+    img {
+      vertical-align: baseline;
+    }
+
+    th {
+      background: #fff;
+    }
+
+    body {counter-reset: h3}
+    h3 {counter-reset: h4}
+    h4 {counter-reset: h5}
+    h5 {counter-reset: h6}
+
+    h3:before {counter-increment: h3; content: counter(h3) ". "}
+    h4:before {counter-increment: h4; content: counter(h3) "." counter(h4) ". "}
+    h5:before {counter-increment: h5; content: counter(h3) "." counter(h4) "." counter(h5) ". "}
+    h6:before {counter-increment: h6; content: counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". "}
+
+  </style>
+  <script src="/js/ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <script src="/js/draw_ga2d.js" type="text/javascript" charset="utf-8"></script>
+  <p class=aside>
+    You should be familiar with all the concepts presented in <a
+      href="https://bitworking.org/news/ga/2d">An Introduction to Geometric
+      Algebra over R^2</a> before proceeding.
+  </p>
+
+  <p>
+    Continuing our exploration of Geometric Algebra, let's look at calculating
+    area. GA might have some advantages here since the exterior product of two
+    vectors is the area of the parallelogram they define.
+  </p>
+
+  <dl>
+    <dd>$$ \boldsymbol{a} \wedge \boldsymbol{b} $$</dd>
+  </dl>
+
+  <canvas id=parallelogram width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('parallelogram'));
+      f.vec(a, "a");
+      f.vecFrom(b, a, "b");
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+        b,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    We are being a little sloppy here as the exterior product really gives
+    you a scalar times <b>e<sub>12</sub></b>, but we'll ignore that for the
+    rest of this article, presuming we'll just read off the scalar as the
+    oriented area.
+  </p>
+
+  <p>The oriented area of the triangle defined by the two vectors
+    and the origin is half of the exterior product:
+  </p>
+
+  <dl>
+    <dd>$$\frac{1}{2} \boldsymbol{a} \wedge \boldsymbol{b}$$</dd>
+  </dl>
+
+  <canvas id=area width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('area'));
+      f.vec(a, "a");
+      f.vecFrom(b, a, "b");
+      f.region([
+        [0,0,0,0],
+        a,
+        ab,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    Before going any further we need to pause for some nomenclature.  Up until
+    this point we've only spoken of vectors. If we start talking about
+    geometric shapes in ℝ<sup>2</sup> we are going to need to talk about
+    points, which we will also represent as vectors with the implicit
+    understanding that a point is a vector rooted at the origin,
+    and that the difference of two points is just a vector.
+  </p>
+
+  <p>
+    So let's look at determining the area of a triangle defined by any three
+    points. One way would be to take the differences of pairs of points on
+    the triange to construct vectors that represent two sides of the triange.
+    Note that we are also picking an orientation, so we will work in a
+    clockwise manner.
+ </p>
+
+  <canvas id=triangle width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(Math.sqrt(2)/2, Math.sqrt(2)/2);
+      var b = ga2d.vec(Math.sqrt(2)/2, -Math.sqrt(2)/2);
+      var c = [0,0,0,0];
+      var f = new draw_ga2d.Frame(document.getElementById('triangle'));
+      f.vecFrom(ga2d.sub(a, c), c, "a");
+      f.vecFrom(ga2d.sub(b, a), a, "b");
+      f.vecFrom(ga2d.sub(c, b), b, "c");
+      f.region([
+        c,
+        a,
+        b,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    To calculate A, the area of the triangle, we take the exterior product
+    of those two vectors. First we calculate 2A:
+  </p>
+
+  <dl>
+    <dd>
+      $$
+        \begin{align*}
+        2 A &= (\boldsymbol{b} - \boldsymbol{a}) \wedge (\boldsymbol{c} - \boldsymbol{b}) \\
+        &= \boldsymbol{b} \wedge (\boldsymbol{c} - \boldsymbol{b}) - \boldsymbol{a} \wedge (\boldsymbol{c} - \boldsymbol{b}) \\
+        &= \boldsymbol{b} \wedge \boldsymbol{c} - \boldsymbol{b} \wedge \boldsymbol{b}  - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &= \boldsymbol{b} \wedge \boldsymbol{c} - 0 - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &= \boldsymbol{b} \wedge \boldsymbol{c} - \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &= \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{a} \wedge \boldsymbol{b} \\
+        &= \boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a}
+        \end{align*}
+      $$
+    </dd>
+  </dl>
+
+  <p>Which gives us:</p>
+
+  <dl>
+    <dd>
+      $$
+        \begin{align*}
+        A = \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a})
+        \end{align*}
+      $$
+    </dd>
+  </dl>
+  <p>
+    So the oriented area of the triange is just half the exterior product of all
+    the pairs of vectors as you progress clockwise around the triange.
+  </p>
+  <p>
+    Note that if you have a rectangle:
+  </p>
+
+  <canvas id=rect width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(0, 0);
+      var b = ga2d.vec(0, 2);
+      var c = ga2d.vec(1, 2);
+      var d = ga2d.vec(1, 0);
+      var ab = ga2d.add(a, b);
+      var f = new draw_ga2d.Frame(document.getElementById('rect'));
+      f.vecFrom(ga2d.sub(b, a), a, "b");
+      f.vecFrom(ga2d.sub(c, b), b, "c");
+      f.vecFrom(ga2d.sub(d, c), c, "d");
+      f.vecFrom(ga2d.sub(a, d), d, "a");
+      /*
+      f.vec(c, "c");
+      */
+      f.region([
+        a,
+        b,
+        c,
+        d
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    You can triangulate it:
+  </p>
+
+  <canvas id=triangulate width=300 height=300></canvas>
+  <script type="text/javascript" charset="utf-8">
+    (function () {
+      var a = ga2d.vec(0, 0);
+      var b = ga2d.vec(0, 2);
+      var c = ga2d.vec(1, 2);
+      var d = ga2d.vec(1, 0);
+
+      var delta = ga2d.vec(1, 0);
+      var a_d = ga2d.add(a, delta);
+      var b_d = ga2d.add(b, delta);
+      var c_d = ga2d.add(c, delta);
+      var d_d = ga2d.add(d, delta);
+
+      var f = new draw_ga2d.Frame(document.getElementById('triangulate'));
+      f.vecFrom(ga2d.sub(b, a), a, "b");
+      f.vecFrom(ga2d.sub(c, b), b, "c");
+      f.vecFrom(ga2d.sub(a, c), c, "a");
+
+      f.vecFrom(ga2d.sub(d_d, c_d), c_d, "d");
+      f.vecFrom(ga2d.sub(a_d, d_d), d_d, "a");
+      f.vecFrom(ga2d.sub(c_d, a_d), a_d, "c");
+      /*
+      f.vec(c, "c");
+      */
+      f.region([
+        a,
+        b,
+        c,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.region([
+        a_d,
+        c_d,
+        d_d,
+      ], "", "rgba(100, 0, 255, 0.2)");
+      f.draw();
+    })();
+  </script>
+
+  <p>
+    And now we see that we can calculate the volume of the rectangle as
+    the sum of the area of the two triangles:
+  </p>
+
+  <dl>
+    <dd>
+      $$
+        \begin{align*}
+        A &= 
+        \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a})
+        +
+        \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{a} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{a} - \boldsymbol{c} \wedge \boldsymbol{a} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + 0 + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        &= \frac{1}{2} (\boldsymbol{a} \wedge \boldsymbol{b} + \boldsymbol{b} \wedge \boldsymbol{c} + \boldsymbol{c} \wedge \boldsymbol{d} + \boldsymbol{d} \wedge \boldsymbol{a}) \\
+        \end{align*}
+      $$
+    </dd>
+  </dl>
+
+  <p>
+    Again we can see that to calculate the area we just take 1/2 the exterior product of pairs of points
+    as you progress around the perimenter of the shape, and this can be
+    applied to any simple polygon. You might recongize this as the <a
+      href="https://en.wikipedia.org/wiki/Shoelace_formula">Shoelace
+      Formula</a>, and comparing the above proof to the explanations in the
+    Wikipedia article really drives home the succinct and expressive power
+    of GA.
+  </p>
+
+

@@ -1,0 +1,321 @@
+---
+title: L-Systems with Redux and StateReflector
+date: 2017-08-06T12:00:00-04:00
+---
+
+<p>
+  This is <a
+    href="/news/2017/08/d3-and-l-systems-with-redux-and-statereflector/news/2017/07/d3-and-l-systems-with-live-controls-and-redux">D3
+    and L-Systems with Redux and StateReflector</a>, but now w/o the D3.js.
+</p>
+
+<p>
+  While <a href="https://d3js.org/">D3.js</a> is fun, at this point it is a
+  bit distracting, I'm more interested in Redux and data binding, so time to
+  move back to just drawing static images on canvas.
+</p>
+
+<label for=length>Length:</label>
+<input type=range name=length id=length min=1 max=10 />
+<span style="padding: 0 10px;" id=lengthDisplay></span>
+<br>
+<label for=angle>Angle:</label>
+<input type=range name=angle id=angle min=0.01 max=1 step=0.01 />
+<span style="padding: 0 10px;" id=angleDisplay></span>
+<br>
+<canvas width=600 height=600></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+this.StateReflector = this.StateReflector || {};
+
+(function(sr) {
+  "use strict";
+
+  // A Promise that resolves when DOMContentLoaded has fired.
+  sr.DomReady = new Promise(function(resolve, reject) {
+    if (document.readyState != 'loading') {
+      // If readyState is already past loading then
+      // DOMContentLoaded has already fired, so just resolve.
+      resolve();
+    } else {
+      document.addEventListener('DOMContentLoaded', resolve);
+    }
+  });
+
+  // Namespace for utilities for working with URL query strings.
+  sr.query = {};
+
+  // fromObject takes an object and encodes it into a query string.
+  //
+  // The reverse of this function is toObject.
+  sr.query.fromObject = function(o) {
+    var ret = [];
+    Object.keys(o).sort().forEach(function(key) {
+      if (Array.isArray(o[key])) {
+        o[key].forEach(function(value) {
+          ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+        })
+      } else if (typeof(o[key]) == 'object') {
+        ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(sr.query.fromObject(o[key])));
+      } else {
+        ret.push(encodeURIComponent(key) + '=' + encodeURIComponent(o[key]));
+      }
+    });
+    return ret.join('&');
+  }
+
+
+  // toObject decodes a query string into an object
+  // using the 'target' as a source for hinting on the types
+  // of the values.
+  //
+  //   "a=2&b=true"
+  //
+  // decodes to:
+  //
+  //   {
+  //     a: 2,
+  //     b: true,
+  //   }
+  //
+  // When given a target of:
+  //
+  //   {
+  //     a: 1.0,
+  //     b: false,
+  //   }
+  //
+  // Note that a target of {} would decode
+  // the same query string into:
+  //
+  //   {
+  //     a: "2",
+  //     b: "true",
+  //   }
+  //
+  // Only Number, String, Boolean, Object, and Array of String hints are supported.
+  sr.query.toObject = function(s, target) {
+    var target = target || {};
+    var ret = {};
+    var vars = s.split("&");
+    for (var i=0; i<vars.length; i++) {
+      var pair = vars[i].split("=", 2);
+      if (pair.length == 2) {
+        var key = decodeURIComponent(pair[0]);
+        var value = decodeURIComponent(pair[1]);
+        if (target.hasOwnProperty(key)) {
+          switch (typeof(target[key])) {
+            case 'boolean':
+              ret[key] = value=="true";
+              break;
+            case 'number':
+              ret[key] = Number(value);
+              break;
+            case 'object': // Arrays report as 'object' to typeof.
+              if (Array.isArray(target[key])) {
+                var r = ret[key] || [];
+                r.push(value);
+                ret[key] = r;
+              } else {
+                ret[key] = sr.query.toObject(value, target[key]);
+              }
+              break;
+            case 'string':
+              ret[key] = value;
+              break;
+            default:
+              ret[key] = value;
+          }
+        } else {
+          ret[key] = value;
+        }
+      }
+    }
+    return ret;
+  }
+
+  // Namespace for utilities for working with Objects.
+  sr.object = {};
+
+  // Returns true if a and b are equal, covers Boolean, Number, String and
+  // Arrays and Objects.
+  sr.object.equals = function(a, b) {
+    if (typeof(a) != typeof(b)) {
+      return false
+    }
+    var ta = typeof(a);
+    if (ta == 'string' || ta == 'boolean' || ta == 'number') {
+      return a === b
+    }
+    if (ta == 'object') {
+      if (Array.isArray(ta)) {
+        return JSON.stringify(a) == JSON.stringify(b)
+      } else {
+        return sr.query.fromObject(a) == sr.query.fromObject(b)
+      }
+    }
+  }
+
+  // Returns an object with only values that are in o that are different
+  // from d.
+  //
+  // Only works shallowly, i.e. only diffs on the attributes of
+  // o and d, and only for the types that sr.object.equals supports.
+  sr.object.getDelta = function (o, d) {
+    var ret = {};
+    Object.keys(o).forEach(function(key) {
+      if (!sr.object.equals(o[key], d[key])) {
+        ret[key] = o[key];
+      }
+    });
+    return ret;
+  };
+
+  // Returns a copy of object o with values from delta if they exist.
+  sr.object.applyDelta = function (delta, o) {
+    var ret = {};
+    Object.keys(o).forEach(function(key) {
+      if (delta.hasOwnProperty(key)) {
+        ret[key] = JSON.parse(JSON.stringify(delta[key]));
+      } else {
+        ret[key] = JSON.parse(JSON.stringify(o[key]));
+      }
+    });
+    return ret;
+  };
+
+  // Track the state of a page and reflect it to and from the URL.
+  //
+  // store - A Redux store.
+  //        The state must be on Object and all the values in the Object
+  //        must be Number, String, Boolean, Object, or Array of String.
+  //        Doesn't handle NaN, null, or undefined.
+  //
+  // stateChange - A callback of the form function(state) that is called when
+  //        state has been changed by a change in the URL, the return value
+  //        should be appropriate for passing into store.dispatch();
+  sr.stateReflector = function(store, stateChange) {
+    var defaultState = store.getState();
+    var lastState = store.getState();
+    store.subscribe(function() {
+      var state = store.getState();
+      if (Object.keys(sr.object.getDelta(lastState, state)).length > 0) {
+        lastState = state;
+        var q = sr.query.fromObject(sr.object.getDelta(state, defaultState));
+        window.history.pushState(null, "", window.location.origin + window.location.pathname + "#" +  q);
+      }
+    });
+
+    // stateFromURL should be called when the URL has changed, it updates the state.
+    var stateFromURL = function() {
+      var delta = sr.query.toObject(window.location.hash.slice(1), defaultState);
+
+      lastState = sr.object.applyDelta(delta, defaultState);
+      store.dispatch(stateChange(lastState));
+    }
+
+    sr.DomReady.then(stateFromURL);
+
+    // Every popstate event should also update the state.
+    window.addEventListener('popstate', stateFromURL);
+  }
+
+})(this.StateReflector);
+  </script>
+
+<script id=src type="text/javascript" charset="utf-8">
+  (function () {
+    var dup = (o) => JSON.parse(JSON.stringify(o));
+    var $ = (id) => document.getElementById(id);
+
+    var canvas = document.querySelector("canvas"),
+      ctx = canvas.getContext("2d"),
+      width = canvas.width,
+      height = canvas.height;
+
+    var rules = {
+      "X": "F-[[X]+X]+F[+FX]-X",
+      "F": "FF",
+      "+": "+",
+      "-": "-",
+      "[": "[",
+      "]": "]",
+    }
+    var E = (s) => s ? (rules[s[0]] + E(s.substr(1))) : "";
+    var L = E(E(E(E(E("X")))));
+
+    function draw(x, y, len, angle) {
+      var p = { x: x, y: y, a: 3 };
+      var stack = [];
+      ctx.beginPath()
+      ctx.moveTo(p.x, p.y)
+      L.split("").forEach(function(ch) {
+        if (ch == "F") {
+          p.x += len*Math.sin(p.a);
+          p.y += len*Math.cos(p.a);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        } else if (ch == "-") {
+          p.a += angle;
+        } else if (ch == "+") {
+          p.a -= angle;
+        } else if (ch == "[") {
+          stack.push(dup(p));
+        } else if (ch == "]") {
+          p = stack.pop();
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+        }
+      })
+    }
+
+    var defaultState = {
+      length: 7,
+      angle: 0.4,
+    };
+
+    var updateState = (state = defaultState, action) => {
+      if (action.type == "@@redux/INIT") {
+      } else if (action.type == "REPLACE_ALL") {
+        state = dup(action.value);
+      } else {
+        state = dup(state);
+        state[action.type] = action.value;
+      }
+      return state;
+    };
+
+    var store = Redux.createStore(updateState);
+
+    function render() {
+      var state = store.getState();
+      $('length').value = state.length;
+      $('angle').value = state.angle;
+      $('lengthDisplay').innerText = state.length;
+      $('angleDisplay').innerText = state.angle;
+      ctx.clearRect(0, 0, width, height);
+      draw(width/2, height, state.length, state.angle);
+    }
+
+    store.subscribe(render);
+
+    StateReflector.stateReflector(store, function(state) {
+      return {type: "REPLACE_ALL", value: state};
+    });
+
+    function dispatchFromEvent(id, event, xform) {
+      $(id).addEventListener(event, function(e) {
+        store.dispatch({
+          type: e.target.id,
+          value: xform(e),
+        });
+      });
+    }
+
+    dispatchFromEvent('length', 'input', (e) => +e.target.value);
+    dispatchFromEvent('angle', 'input', (e) => +e.target.value);
+  })();
+</script>
+<script src="https://gist.github.com/jcgregorio/7d83bcd9670575ec6c1f9bd682f7b24a.js"></script>
+

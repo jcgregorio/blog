@@ -1,0 +1,44 @@
+---
+title: Scaling Matters  Twitter
+date: 2007-04-12T12:00:00-04:00
+---
+
+  
+  <p><a href="http://www.radicalbehavior.com/5-question-interview-with-twitter-developer-alex-payne/">Alex Payne</a>:</p>
+<blockquote><p>The problem is that more instances of Rails (running as part of a Mongrel
+cluster, in our case) means more requests to your database. At this
+point in time there’s no facility in Rails to talk to more than one
+database at a time. The solutions to this are caching the hell out
+of everything and setting up multiple read-only slave databases,
+neither of which are quick fixes to implement. </p></blockquote>
+  <div class="commentContent" id="X1">
+    I simply don’t buy it. Write your own DB extension to Rails that load balances request. Or, use something like pg-pool for Postgres that pools connections between a cluster of read/write slaves.
+
+Databases are often the last places you should be looking to optimise.
+
+This isn’t rocket science kids.
+    <p class="commentByLine">Posted by
+       <a href="mailto:nslater@gmail.com">Noah Slater</a> on <a href="#X1" title="2007-04-12T21:39:50.308377">2007-04-12</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Noah, there are some limitations to that technique. IIRC pgpool can only handle two servers, which means you need to limit yourself to two servers or start chaining pgpools together, neither of which is fun. Various other systems punt entirely; standard MySQL (not MySQL Cluster, which requires special setup in advance) does this, and simply tells you to rewrite your application layer's DB access to distribute the queries.
+    <p class="commentByLine">Posted by
+       <a href="http://www.b-list.org/">James Bennett</a> on <a href="#X2" title="2007-04-12T23:03:40.330547">2007-04-12</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <a href="http://jan.kneschke.de/projects/mysql/mysql-proxy">A MySQL load-balancing proxy</a> might be of use in a situation like this. But I agree that scaling the DB is a task best left outside of the application domain. 
+
+If you're gonna start rearchitecting your ORM to support specific performance requirements, well, read those "megadata" articles again.
+
+Interesting to note that the Twitter guys hadn't even started caching html responses at the time of the interview. "Caching the hell out of everything" is easier than it seems in Rails.
+    <p class="commentByLine">Posted by
+       <a href="http://jchris.mfdz.com">jchris</a> on <a href="#X3" title="2007-04-13T12:19:22.200454">2007-04-13</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Acts As Partitioned <a href="http://partitioned.rubyforge.org/">http://partitioned.rubyforge.org/</a>
+    <p class="commentByLine">Posted by
+       <a href="http://brondsema.net/">Dave Brondsema</a> on <a href="#X4" title="2007-04-13T14:08:50.374437">2007-04-13</a>
+    </p>
+</div>
+  
+

@@ -1,0 +1,34 @@
+---
+title: Devil's Pie
+date: 2007-02-09T12:00:00-05:00
+---
+
+  
+  <p>If you don't have enough Lisp in your life, and if you're running Metacity (if you're running a stock install of Ubuntu with Gnome that means you), then you can run 
+<a href="http://www.burtonini.com/blog/computers/devilspie">Devil's Pie</a> [<a href="http://wiki.foosel.net/linux/devilspie">Good docs.</a>].
+</p>
+<pre><code>
+(if
+    (is (application_name) "Terminal")
+    (begin
+       (maximize)
+       (undecorate)
+    )
+)
+</code></pre>
+  <div class="commentContent" id="X1">
+    Easier:
+
+(if (is (application_name) "Terminal") (fullscreen))
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X1" title="2007-02-09T01:31:01.985970">2007-02-09</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Mark,<br />
+<p>That's similar, but not exactly the same, since (maximize)(undecorate) will leave the top and bottom panels visible.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X2" title="2007-02-09T10:15:53.541876">2007-02-09</a>
+    </p>
+</div>
+  
+

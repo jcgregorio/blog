@@ -1,0 +1,37 @@
+---
+title: The Chubby lock service
+date: 2007-01-22T12:00:00-05:00
+---
+
+  
+  <p>I've been reading <a href="http://labs.google.com/papers/chubby.html">The Chubby Lock Service for Loosely-Coupled Distributed Systems</a> by Mike Burrows. It describes Chubby, which is used at Google by both GFS and BigTable. Out of the whole fascinating paper I think Section 4, "Use, surprises and design errors" was far and away the best part. Some example quotes:
+</p>
+<blockquote><p>                                                           
+   Chubby’s C++ client library is 7000 lines (comparable
+with the server), and the client protocol is delicate. To  
+maintain the library in Java would require care and expense, while an implementation without caching would
+burden the Chubby servers. Thus our Java users run
+copies of a protocol-conversion server that exports a simple RPC protocol that corresponds closely to Chubby’s
+client API. Even with hindsight, it is not obvious how
+we might have avoided the cost of writing, running and
+maintaining this additional server.
+</p></blockquote>
+<p>And:</p>
+<blockquote><p>
+                  Chubby was never intended to be used
+as a storage system for large amounts of data, and so it
+has no storage quotas. In hindsight, this was naïve.
+</p></blockquote>
+<p>And finally:</p>
+<blockquote><p>
+Some of our remedies are heavy-handed. For example,
+we review the ways project teams plan to use Chubby,
+and deny access to the shared Chubby name space until
+review is satisfactory. A problem with this approach is
+that developers are often unable to predict how their services will be used in the future, and how use will grow.   
+Readers will note the irony of our own failure to predict
+how Chubby itself would be used.
+</p></blockquote>
+  
+  
+

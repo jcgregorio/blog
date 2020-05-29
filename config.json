@@ -1,0 +1,107 @@
+{
+  "baseURL": "https://bitworking.org/",
+  "languageCode": "en-us",
+  "title": "BitWorking",
+  "theme": ["hugo-atom-feed", "ananke"],
+  "disqusShortname": "jcgregorio",
+  "paginate": 20,
+
+  "outputs": {
+    "home": ["HTML", "ATOM"],
+    "page": ["HTML"]
+  },
+
+  "social": {
+    "twitter": "bitworking"
+  },
+
+  "author": {
+    "name": "Joe Gregorio",
+    "email": "joe@bitworking.org",
+    "twitter": "bitworking"
+  },
+
+  "related": {
+    "threshold": 80,
+    "includeNewer": true,
+    "toLower": true,
+    "indices": [
+      {
+        "name": "tags",
+        "weight": 100
+      },
+      {
+        "name": "date",
+        "weight": 10
+      }
+    ]
+  },
+
+  "menus": {
+    "main": [
+      {
+        "Name": "About",
+        "URL": "/about/"
+      },
+      {
+        "Name": "Projects",
+        "URL": "/projects/"
+      },
+      {
+        "Name": "Archives",
+        "URL": "/news/"
+      },
+      {
+        "Name": "Tags",
+        "URL": "/tags/"
+      }
+    ]
+  },
+
+  "services": {
+    "rss": {
+      "limit": 5
+    }
+  },
+
+  "sitemap": {
+    "changefreq": "monthly",
+    "priority": 0.5,
+    "filename": "sitemap.xml"
+  },
+
+  "params": {
+    "author": "Joe Gregorio",
+    "favicon": "favicon.ico",
+    "description": "Joe Gregorio - REST, Web, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.",
+    "twitter": "https://twitter.com/bitworking",
+    "github": "https://github.com/jcgregorio",
+    "images": ["images/newlogo.png"],
+    "background_color_class": "bg-black",
+    "recent_posts_number": 5
+  },
+  "markup": {
+    "defaultMarkdownHandler": "goldmark",
+    "goldmark": {
+      "extensions": {
+        "definitionList": true,
+        "footnote": true,
+        "linkify": true,
+        "strikethrough": true,
+        "table": true,
+        "taskList": true,
+        "typographer": true
+      },
+      "parser": {
+        "attribute": true,
+        "autoHeadingID": true,
+        "autoHeadingIDType": "github"
+      },
+      "renderer": {
+        "hardWraps": false,
+        "unsafe": true,
+        "xhtml": false
+      }
+    }
+  }
+}

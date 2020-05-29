@@ -1,0 +1,52 @@
+---
+title: Atom Publishing Protocol Test Suite
+date: 2006-03-14T12:00:00-05:00
+---
+
+  
+  <p>The Atom Publishing Protocol Test Suite has been added to the 
+ subversion repository of the <a href="https://sourceforge.net/projects/feedvalidator">Feed Validator</a>. 
+ This is a Python script that, 
+ when passed in the URI of an Introspection document, will test each entry collection
+ for conformance to the APP. To run it you will
+ need Python 2.3 or greater.</p>
+<p>To get the source:</p>
+<pre><code>$ svn co\
+ https://svn.sourceforge.net/svnroot/feedvalidator/trunk/apptestsuite/ apptestsuite</code></pre>
+<p>To run:</p>
+<pre><code>$ cd apptestsuite/client
+$ python appclienttest.py  http://example.org/app
+
+Atom Client Tests
+-----------------
+
+Testing the service at
+&lt;http://example.org/app&gt;
+Running:  . . . . . . . .
+== Errors ==
+ No problems found.
+== Warnings ==
+ No problems found.
+== Suggestions ==
+ No problems found.
+Success!
+</code></pre>
+<p>Authentication credentials can be passed in via the command line interface:</p>
+<pre><code>python appclienttest.py  http://example.org/app --name=myname --password=mypassword</code></pre>
+<p>The test suite incorporates the feedvalidator to test all responses
+for conformance to the Atom Syndication Format. It also uses
+the <a href="http://bitworking.org/projects/httplib2/">httplib2</a> client library, which means that the test suite supports
+Basic, Digest and WSSE over HTTP and HTTPS. Through the magic of 
+subversion's svn:externals property, local copies of both of
+these libraries will be automatically pulled down when you check out
+apptestsuite.
+</p>
+<p>Discussion should take place on the <a href="http://sourceforge.net/mailarchive/forum.php?forum_id=37467">feedvalidator-users</a> mailing list.</p>
+<ul class="tags">
+<li><a href="http://technorati.com/tag/atom" rel="tag"> atom </a></li>
+<li><a href="http://technorati.com/tag/app" rel="tag"> app </a></li>
+<li><a href="http://technorati.com/tag/python" rel="tag"> python </a></li>
+</ul>
+  
+  
+

@@ -1,13 +1,3 @@
 #!/bin/bash
 
-filename=./_posts/$(date +%Y-%m-%d)-`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`.md
-cat >$filename <<EOL
----
-layout: post
-title: $@
----
-
-
-EOL
-
-$EDITOR $filename
+hugo new ./news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`.md

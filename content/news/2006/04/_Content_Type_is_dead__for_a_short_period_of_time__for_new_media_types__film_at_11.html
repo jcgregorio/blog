@@ -1,0 +1,54 @@
+---
+title: Content-Type is dead, for a short period of time, for new media-types,film at 11
+date: 2006-04-12T12:00:00-04:00
+---
+
+  
+  <p>
+<a href="http://ln.hixie.ch/?start=1144794177&amp;count=1">Ian Hickson claims that 
+  the <code>Content-Type:</code> header is dead</a>.
+</p>
+<blockquote><p>
+I think it may be time to retire the <code>Content-Type</code> header, putting to sleep the myth that it is in any way authoritative, and instead have well-defined content-sniffing rules for Web content.
+</p></blockquote>
+<p>Of course, this is after stating:</p>
+<blockquote><p>
+IE in particular is well known for ignoring the <code>Content-Type</code> header, despite this having been the source of security bugs in the past.
+</p></blockquote>
+<p>That right there is a good enough reason for not dumping <code>Content-Type</code> 
+   across the board. But let's look carefully at the other examples
+   that Ian gives.
+</p>
+<blockquote><p>
+RSS feeds are always sniffed, regardless of their MIME type, because, to quote a Safari engineer, "none of them have the right mime type".
+</p></blockquote>
+<p>and</p>
+<blockquote><p>
+Browsers have been forced to implement heuristics to handle text/plain files as binary because video files are widely served with the wrong MIME types.
+</p></blockquote>
+<p>Most video file formats are relatively new and it takes time for 
+   servers to be updated so that they <i>know</i> about the new
+   mime-types. This isn't a new problem, do you remember <a href="http://bitworking.org/news/4_more_words_on_mime_types">PDFs</a>?
+   Pointing to RSS as an example isn't really helpful either, as RSS is special, 
+  and I don't mean <i>special in a good way</i>, as RSS doesn't have, and will
+  never have, an official mime-type.
+</p>
+<p>The root of the problem is change. There are new mime-types
+   today <a href="http://www.ietf.org/rfc/rfc4287.txt">that didn't exist a year 
+   ago</a>. In a year there will be more new ones that don't exist today.
+   Every time a new mime-type shows up we have the same problems all over again.
+   It's called life, get over it.
+</p>
+<p>Should it be easier to configure mime-types on the server? <b>Yes</b>.</p>
+<p>Should web clients be aware that new mime-types are new and servers may not be
+   configured properly and maybe do some sniffing to 
+   ensure a good user experience? <b>Yes</b>.</p>
+<p>Should web clients optionally display or inform the user when such 
+  an inconsisteny is found? <b>Yes</b>.</p>
+<p>Should we throw out <code>Content-Type</code>? <b>No</b>. </p>
+<p>Should we all go read the TAG's finding on <a href="http://www.w3.org/2001/tag/doc/mime-respect">
+   Authoritative Metadata</a>? <b>Yes</b>. </p>
+
+  
+  
+

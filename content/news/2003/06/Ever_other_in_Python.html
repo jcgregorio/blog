@@ -1,0 +1,87 @@
+---
+title: Every other in Python
+date: 2003-06-18T12:00:00-04:00
+---
+
+  
+  <p>I was doing a bit of Python at work and need to filter an array, all the values at the odd indexes into one array, all the one at the even indices into the other array. What I came up with is this:</p>
+<pre class="example"><code>class everyother:
+    """Helper class for picking out
+       every other item when filtering
+       an array."""
+    def __init__(self, start):
+        self.start = start
+
+    def next(self, a):
+        self.start = not self.start
+        return self.start
+
+</code></pre>
+<p>Now I can use this to <code>filter</code> arrays.</p>
+<pre class="example">&gt;&gt;&gt; v = map(hex, range(20))
+&gt;&gt;&gt; v
+['0x0', '0x1', '0x2', ..., '0x13']
+&gt;&gt;&gt; evens = filter(everyother(0).next, v)
+&gt;&gt;&gt; evens
+['0x1', '0x3', '0x5', '0x7', '0x9', '0xb', '0xd', '0xf', '0x11', '0x13']
+</pre>
+<p>Cool, but I can't help wonder if there's a better way to do this in Python.</p>
+<p><strong>Updated:</strong> I forgot about list comprehensions. <a href="http://intertwingly.net/blog">Sam</a>
+   offered this one-liner:</p>
+<pre class="example"><code>&gt;&gt;&gt; odds = [v[i] for i in range(1, len(v), 2)]
+&gt;&gt;&gt; evens = [v[i] for i in range(0, len(v), 2)]
+</code></pre>
+<p>Woot!</p>
+  <div class="commentContent" id="X1">
+     <p>[v[i] for i in range(1,len(v),2)]</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X1" title="2003-06-18T12:40:32">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X2">
+     <p>Not necessarily “better“, but definitely “different”</p>
+<p>from <i>future</i> import generators<br />
+def odds(list):<br />
+for i in range(1, len(v), 2):<br />
+yield i</p>
+<p>m = odds(v)<br />
+for i in m:<br />
+print i</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://radio.weblogs.com/010646">Gordon Weakliem</a> on <a href="#X2" title="2003-06-18T14:56:46">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X3">
+     <p>Not necessarily “better“, but definitely “different”</p>
+<p>from <i>future</i> import generators<br />
+def odds(list):<br />
+  for i in range(1, len(v), 2):<br />
+    yield i</p>
+<p>m = odds(v)<br />
+for i in m:<br />
+  print i</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://radio.weblogs.com/010646">Gordon Weakliem</a> on <a href="#X3" title="2003-06-18T14:57:44">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X4">
+     <p>In Python 2.3 (currently beta):<br />
+&gt;&gt;&gt; evens = v[::2]<br />
+&gt;&gt;&gt; odds  = v[1::2]</p>
+<p>Search for “extended slices” for more info.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:regexbot@myrealbox.com">Arien</a> on <a href="#X4" title="2003-06-19T00:57:40">2003-06-19</a>
+    </p>
+</div><div class="commentContent" id="X5">
+     <p>Sweeet!</p>
+<p>Found the docs:</p>
+<p><a href="http://www.python.org/dev/doc/devel/whatsnew/section-slices.html">http://www.python.org/dev/doc/devel/whatsnew/section-slices.html</a></p>
+<p>You can even to v[::-1] to reverse the list.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2003-06-19T08:27:02">2003-06-19</a>
+    </p>
+</div>
+  
+

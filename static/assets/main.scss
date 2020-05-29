@@ -1,0 +1,66 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@import "minima";
+
+dd {
+  padding-left: 1em;
+}
+
+dt {
+  font-weight: bold;
+  margin: 1em 0;
+}
+
+blockquote {
+  color: #222;
+}
+
+.PageNavigation {
+  display: block;
+  width: auto;
+  overflow: hidden;
+  border-bottom: solid lightgray 1px;
+  margin-bottom: 0.5em;
+}
+
+.PageNavigation a {
+  display: block;
+  width: 50%;
+  float: left;
+  margin: 1em 0;
+}
+
+.PageNavigation .next {
+  text-align: right;
+}
+
+.wm-content {
+  display: block;
+  margin-bottom: 1em;
+}
+
+.wm-author {
+  font-weight: bold;
+}
+
+.wm-thumbnail:hover {
+  text-decoration: none;
+}
+
+#webmention {
+  margin-left: 1em;
+  margin-bottom: 2em;
+  font-size: 80%;
+}
+
+#webmention h3 {
+  border-bottom: solid lightgray 1px;
+  margin-left: -1em;
+}
+
+.site-title img {
+  display: inline-block;
+  width: 32px;
+}

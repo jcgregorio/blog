@@ -1,0 +1,50 @@
+---
+title: URI Template Explainer Web Service
+date: 2007-10-18T12:00:00-04:00
+---
+
+  
+  <p><a href="http://lists.w3.org/Archives/Public/uri/2007Oct/0054.html">Roy Fielding</a>:</p>
+<blockquote><p>
+I want templates to be easy for a computer to read and easy for
+a computer to generate from that reading a fully-descriptive
+page of information in the user's favorite language.  For example,
+define a web service that inputs a template and outputs the
+readable description according to the Accept-Language received.
+</p>
+<pre><code>http://example.com/explain_template?{URItemplate}
+</code></pre>
+<p>
+I bet Joe could write one of those in an hour --
+</p></blockquote>
+<p>Who am I to refuse a challenge from Roy Fielding?</p>
+<p>Presenting the 
+<a href="http://bitworking.org/projects/URI-Templates/">URI Template Explainer Web Service</a>. And it really did just take me an hour.
+Here is an example taken from my recent proposal:
+</p>
+<pre>http://bitworking.org/news/{&amp;/|entrypath}
+                           \____________/
+                                  |      
+                                  |      
+                                  +-&gt; Join the members of the list ['entrypath'] together with '/'.
+</pre>
+<p>Yes, it's 2007 and I just wrote a web service that produces ASCII art!</p>
+<p>There are more examples on the web service page. The service
+itself has been <a href="http://uri-templates.googlecode.com/svn/trunk/explain.cgi">checked into subversion</a>, and has already been
+vastly improved by contributions from 
+<a href="http://www.w3.org/People/Connolly/">Dan Connolly</a>.
+</p>
+<p>And just to satisfy <a href="http://bitworking.org/news/136/bzr-feed">self-referential integrity</a>, 
+here
+  is <a href="http://bitworking.org/projects/URI-Templates/s/explain.cgi?t=http%3A%2F%2Fbitworking.org%2Fprojects%2FURI-Templates%2Fs%2Fexplain.cgi%3Ft%3D%7Buritemplate%7D">the URI Template Explainer explanation for the URI Template for the URI Template Explainer Web Service</a>.
+</p>
+  <div class="commentContent" id="X1">
+    "the URI Template Explainer explanation for the URI Template for the URI Template Explainer Web Service."
+
+Images of Joe spinning slowly off into space muttering to himself.
+    <p class="commentByLine">Posted by
+       <a href="http://www.dpawson.co.uk">Dave Pawson</a> on <a href="#X1" title="2007-10-19T03:35:43.896829">2007-10-19</a>
+    </p>
+</div>
+  
+

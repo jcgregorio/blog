@@ -1,0 +1,46 @@
+---
+title: Piccolo in Go
+date: 2013-05-20T12:00:00-04:00
+---
+ 
+
+<p><a href="https://code.google.com/p/piccolo-pub/">Piccolo</a> has been ported to Go.
+The original Python script is still in place, but will no longer be updated.
+This entry is the first one published with the new <code>picc.go</code>.</p>
+<p></p>
+
+<p>Here&#39;s a speed comparison between the Python and the Go code for a full
+republish, i.e. every HTML file needs to be rewritten. First for the old Python
+code:</p>
+
+<pre><code>
+$ ./bin/piccolo
+real  0m57.491s
+user  0m46.415s
+sys 0m1.312s
+</code></pre>
+
+<p>And now the Go code:</p>
+
+<pre><code>
+$ ./bin/picc
+real  0m4.460s
+user  0m1.588s
+sys 0m1.096s
+</code></pre>
+
+<p>And incremental publishing is under a second:</p><p>
+
+</p><pre><code>
+$ ./bin/picc
+real  0m0.476s
+user  0m0.404s
+sys 0m0.068s
+</code></pre>
+
+<p>Note that <i>incremental</i> isn&#39;t a very good description
+since the program is still parsing close to 1,000 XML files
+in that last run. I obviously have some performance improvements
+I can make.
+</p>
+

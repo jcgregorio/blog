@@ -1,0 +1,16 @@
+---
+title:  etree lxml html5lib 
+date: 2010-01-10T12:00:00-05:00
+---
+
+    <p>
+    Because, you know, I don't need to know about 
+    lxml preserving the case of my doctype <b>every single time</b> I run <a href=http://code.google.com/p/piccolo-pub/>piccolo</a>.  </p>
+    <pre class=prettyprint>import warnings
+from html5lib.constants import DataLossWarning
+warnings.simplefilter("ignore", DataLossWarning) 
+
+from lxml import etree
+    </pre>
+  
+

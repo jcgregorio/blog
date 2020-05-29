@@ -1,0 +1,83 @@
+---
+title: Beyond REST and Resource Design
+date: 2008-09-11T12:00:00-04:00
+---
+
+  
+  <p><a href="http://roy.gbiv.com/untangled/2008/paper-tigers-and-hidden-dragons">Roy Fielding comments on the OSCON presentation 
+"Beyond REST? Building Data Services with XMPP PubSub" by Evan Henshaw-Plath and Kellan Elliott-McCrea.</a>
+</p>
+<blockquote><p>Instead of a list of changed user ids or URIs, 
+we can represent the state as a sparse bit array corresponding 
+to all of Flickr’s users. I don’t know exactly how many users 
+there are at Flickr, but let’s be generous and estimate it at one
+ million. One million bits seems like a lot, but it is only 122kB in an 
+uncompressed array. Considering that this array will only contain 1s 
+when an update has occurred within the last minute, my guess is that it would average under 1kB per representation.
+</p><p>
+I can just imagine people reading "sparse bit array" and thinking that I must be 
+talking about some optimal data structure that only chief scientists would think to 
+use on the Web. I’m not. Any black-and-white GIF or PNG image is just a sparse bit array, 
+and they have the nice side-effect of being easy to visualize. 
+</p>
+</blockquote>
+<p>I'll see your GIF and raise you a <a href="http://en.wikipedia.org/wiki/Bloom_filter">Bloom Filter</a>.
+  Not that it in anyway detracts from the point of the article, which
+  is to put more thought into resource design before jumping off into
+  a new protocol.
+</p>
+  <div class="commentContent" id="X1">
+    Thinking it through... so, you'd have a bloom filter that represented, say, all the users who have updated between noon yesterday and right now?  Then anyone can fetch that and determine if any party they are interested in might need to be updated.  You'd presumably be constructing many of these filters for different time windows, and the client would select the smallest window that includes the last time they updated.
+    <p class="commentByLine">Posted by
+       <a href="http://blog.ianbicking.org">Ian Bicking</a> on <a href="#X1" title="2008-09-11T17:46:04.524726">2008-09-11</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Ian,<br />
+<p>Yes, just like Roy's GIF example, but with the possibility of false positives, which you trade off for much smaller representation, which in the case of the 1000x1000 black and white GIF might be hard to beat, but might be applicable in other areas.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe Gregorio</a> on <a href="#X2" title="2008-09-11T22:53:23.623736">2008-09-11</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Bloody bloom filters! I swear I saw one crawl behind one of the food trays at my nearby micro-kitchen!
+    <p class="commentByLine">Posted by
+       <a href="http://pphaneuf.livejournal.com/">Pierre Phaneuf</a> on <a href="#X3" title="2008-09-12T01:59:33.055868">2008-09-12</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    Hi
+
+<br />
+<br />
+I had actually thought about using Bloom Filters as soon as I saw the article. But someone much smarter than me , said matter-of-factly, that if the array is really sparse (which we can safely assume if the new ones are at 1/2 hour intervals) then 2 level resources would be much easier , cleaner and probably more effective.
+<br />
+<br />
+Bloom Filters is too complicated and goes away from the "Least power" TAG Finding. Bloom filters requires you to share too much info, like the hash functions you used etc. etc.
+<br />
+<br />
+2 level would be something like:
+<br />
+<br />
+first resource return would be in groups of 1000 users. If any one in the 1000 has changed then that bit is 1. if It is one, you retrieve another resource , again made of a 1000 bits which tells you which particular user has changed.
+<br />
+<br />
+So for a 10 million users (which is a obscenely obscenely high number), if groups of 1000 , then the first resource would be of 10000 bits.
+<br />
+<br />
+<br />
+HTH
+    <p class="commentByLine">Posted by
+       <a href="http://anon.worldpresh.com">anon</a> on <a href="#X4" title="2008-09-12T04:27:01.517998">2008-09-12</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Hi,
+Yes, Bloom Filters also came to my mind after reading this article. 
+Actually the advantage of Bloom Filters would be that you would not need to share the numbering of the users. The numbering of users might be much more difficult to agree on, than for example the hash functions. 
+One should have applied a patent for that, but now I think it's to late ;)
+Regards,
+Markus
+    <p class="commentByLine">Posted by
+       <a href="http://kohlerm.blogspot.com/">Markus</a> on <a href="#X5" title="2008-09-16T12:19:18.438617">2008-09-16</a>
+    </p>
+</div>
+  
+

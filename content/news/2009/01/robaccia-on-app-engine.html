@@ -1,0 +1,198 @@
+---
+title: Robaccia on App Engine
+date: 2009-01-08T12:00:00-05:00
+---
+
+  
+  <p>
+    When trying to port <a href="http://bitworking.org/news/Why_so_many_Python_web_frameworks">Robaccia</a> to App Engine the hard part 
+    has been finding anything to do. If you remember from my previous
+    write-up I started with choosing the components to build on, but
+    in the case of App Engine the model classes are already provided
+    and the development kit already provides Django templates, which have
+    become a favorite of mine, so there's little to choose except for
+    a library to dispatch incoming requests. In the intervening
+    years since I first wrote about Robaccia I've written my own library 
+    to do URL dispatching (<a href="http://bitworking.org/news/163/WSGIDispatcher">WSGIDispatcher</a>) and I'll use that.
+  </p>
+<p>
+    There are other pieces we don't need to construct, for example, the
+    SDK comes with a development server so we don't need to write
+    that ourselves. We don't need <code>dbconfig.py</code> either.   
+  </p>
+<p>
+    There were two bits of functionality in <code>manage.py</code>, the first was
+    to create the tables in the database and the second was to run
+    a development server, but neither of those are needed if we
+    are running under App Engine; the datastore doesn't require you to
+    create tables before operating, and the SDK has it's own development
+    server.
+  </p>
+<p>
+    That doesn't leave us with a lot.
+    We have our convention of models in <code>model.py</code>, views in <code>view.py</code>,
+    url dispatching via WSGIDispatcher in <code>urls.py</code>, and finally all of the
+    templates in a <code>templates</code> subdirectory.
+    The little bit of glue we need to add is the same as in 
+    the original Robaccia which is <code>render()</code>, a convenience
+    function for rendering templates.
+  </p>
+<pre class="prettyprint">import os
+import mimetypes
+from google.appengine.ext.webapp import template
+
+def render(start_response, template_file, template_values):
+  contenttype, encoding = mimetypes.guess_type(template_file)
+  if not contenttype:
+    contenttype = "text/html"
+  template_file = os.path.join(os.path.dirname(__file__), "templates", template_file)
+  body = template.render(template_file, template_values)
+  start_response("200 OK", [('Content-Type', contenttype)])
+  return [body]
+</pre>
+<p>   
+    One of the differences in <code>robaccia.render()</code> under App Engine
+    is that we can't access files with a relative path name like was done in the original 
+    Robaccia, so we will have to make them absolute using this technique:
+  </p>
+<pre class="prettyprint lang-py">template_file = os.path.join(os.path.dirname(__file__), "templates", template_file)</pre>
+<p>
+  The <code>app.yaml</code> is very simple since we will do all of our dispatching through <code>main.py</code>:
+  </p>
+<pre class="prettyprint lang-py">application: robaccia-test-app
+version: 1
+runtime: python
+api_version: 1
+handlers:
+- url: .*
+  script: main.py</pre>
+<p>
+  You would still need to edit <code>app.yaml</code> if you wanted to include static files, or 
+  use HTTPS on some URIs.
+  </p>
+<p>
+    Here is toy blog app to show how things hang together:
+  </p>
+<p><b>model.py</b> </p>
+<pre class="prettyprint">from google.appengine.ext import db
+
+class BlogEntry(db.Model):
+  title = db.StringProperty()
+  content = db.TextProperty()
+  created = db.DateTimeProperty(auto_now_add=True)
+  updated = db.DateTimeProperty(auto_now_add=True)  </pre>
+<p><b>main.py</b> </p>
+<pre class="prettyprint">#!/usr/bin/env python
+
+from wsgiref.handlers import CGIHandler
+from urls import urls
+
+def main():
+  CGIHandler().run(urls)
+
+if __name__ == '__main__':
+  main()
+</pre>
+<p><b>urls.py</b> </p>
+<pre class="prettyprint">import view
+from wsgidispatcher import Dispatcher
+
+urls = Dispatcher()
+urls.add('/blog/', GET=view.index, POST=view.create)
+urls.add('/blog/{id}/', view.member_get)
+urls.add('/blog/{id}/edit_form', GET=view.member_edit_form, POST=view.member_update)
+</pre>
+<p><b>view.py</b> </p>
+<pre class="prettyprint">import robaccia
+import model
+import cgi
+
+def index(environ, start_response):
+  entries = model.BlogEntry.all().order("-created").fetch(20)
+  return robaccia.render(start_response, 'index.html', locals())
+
+def member_get(environ, start_response):
+  id = int(environ['wsgiorg.routing_args'][1]['id'])
+  entry = model.BlogEntry.get_by_id(id)
+  return robaccia.render(start_response, 'entry.html', locals())
+
+def create(environ, start_response):
+  req = dict(cgi.parse_qsl(environ['wsgi.input'].read()))
+  model.BlogEntry(title=req['title'], content=req['content']).put()
+  start_response("303 See Other", [('Location', '/blog/')])
+  return []
+   
+def member_edit_form(environ, start_response):
+  id = int(environ['wsgiorg.routing_args'][1]['id'])
+  entry = model.BlogEntry.get_by_id(id)
+  return robaccia.render(start_response, 'entry_form.html', locals())
+    
+def member_update(environ, start_response):
+  id = int(environ['wsgiorg.routing_args'][1]['id'])
+  entry = model.BlogEntry.get_by_id(id)
+  req = dict(cgi.parse_qsl(environ['wsgi.input'].read()))
+  entry.title = req['title']
+  entry.content = req['content']
+  entry.put()
+  start_response("303 See Other", [('Location', '/blog/' + str(id) + "/edit_form")])
+  return []  
+</pre>
+<p>From here you have the core of a framework and can grow it in 
+  any direction you like. For example, you may not find the WSGI
+  interface for pulling out values from the request URI    
+  to be very intuitive. We can create a decorator that adds the <a href="http://wsgi.org/wsgi/Specifications/routing_args">wsgiorg.routing_args</a>
+  as calling parameters:
+  </p>
+<pre class="prettyprint">def wsgirouting(f):
+  """
+  Decorator to turn WGSI call into a call the contains
+  environ and start_response then all of 
+  the 'wsgiorg.routing_args' as *args and **kwargs.
+  """
+  def wrapper(environ, start_response):
+    args, kwargs = environ['wsgiorg.routing_args']
+    return f(environ, start_response, *args, **kwargs)
+  return wrapper
+  </pre>
+<p>
+  Now our views are a little simpler:  
+  </p>
+<pre class="prettyprint">@wsgirouting
+def member_edit_form(environ, start_response, id):
+  entry = model.BlogEntry.get_by_id(int(id))
+  return robaccia.render(start_response, 'entry_form.html', locals())
+</pre>
+<p>
+    The point of this isn't to create yet another Python web framework, just
+    like the original article that introduced Robaccia, but to give an overview
+    of the pieces that go into a web framework, and in this case, how those
+    pieces interact with App Engine. 
+    </p>
+<p>
+    If you want to experiment with this code I've added it as a branch 
+    to the Robaccia project. To get the code:
+    </p>
+<pre>svn checkout http://robaccia.googlecode.com/svn/branches/robaccia-app-engine-demo robaccia-app-engine-demo</pre>
+  <div class="commentContent" id="X1">
+    Great stuff -- thanks much for this!
+    <p class="commentByLine">Posted by
+       <a href="http://blogs.law.harvard.edu/pkeane">peter keane</a> on <a href="#X1" title="2009-01-09T00:30:54.822666">2009-01-09</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Awesome.
+
+I built TiddlyWeb on top of a sort of modified robaccia and once I had the basics working, one of the first things I did was make it run in App Engine. It was brilliantly easy. Go WSGI!
+
+I don't know if you mean this or not, but your WSGIDispatcher link is going back to the original why so many frameworks post, not to anything about WSGIDispatcher itself.
+    <p class="commentByLine">Posted by
+       <a href="http://cdent.tumblr.com/">Chris Dent</a> on <a href="#X2" title="2009-01-09T06:01:12.589449">2009-01-09</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Chris,<br />
+<p>Thanks, and I fixed the link.</p>
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X3" title="2009-01-09T07:43:13.316047">2009-01-09</a>
+    </p>
+</div>
+  
+

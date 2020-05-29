@@ -1,0 +1,63 @@
+---
+title: Orthogonal URIs in the AtomAPI
+date: 2003-07-25T12:00:00-04:00
+---
+
+  <p>The URIs that you use for editing an Entry via the AtomAPI  
+   should be orthogonal to the URIs used for serving up
+   the HTML.</p>
+  <p>This topic came up on IRC this morning, and instead of trying to 
+   refactor the conversation into a mini-essay I'll just post it verbatim.
+</p>
+<pre><span class="speakerB">Arien	   Morning, Joe</span>
+<span class="speakerA">jcgregorio good morning</span>
+<span class="speakerB">Arien	   Something that is missing in the RFC is moving an entry...</span>
+<span class="speakerB">Arien	   (changing the URL of some resource)</span>
+<span class="speakerB">Arien	   Wouldn't be able to tell you how to do  
+	   that in a RESTy way as I was just telling Sam.</span>
+<span class="speakerA">jcgregorio Hmmm, could you give me more details or an example?</span>
+<span class="speakerB">Arien	   I'll give you an example. Yesterday Mark (Pilgrim) posted an entry,
+	   then later changed its title... </span>
+<span class="speakerB">Arien	   ... and also its URL</span>
+<span class="speakerB">Arien	   The old URL redirects to the new one</span>
+<span class="speakerA">jcgregorio Mark uses Movable Type, do you know how MT goes about assigning URLs?</span>
+<span class="speakerB">Arien	   I don't knwo the details but it uses the title to construct the URL...</span>
+<span class="speakerB">Arien	   I *think* the old URL was
+	   &lt;http://diveintomark.org/archives/2003/07/21/atom_aggregator_behavior_data_level.html&gt; 
+	   but that 404s now (didn't yesterday if this was indeed the URL) </span>
+<span class="speakerA">jcgregorio ok, I'll ask him when he gets online</span>
+<span class="speakerB">Arien	   Sorry, it was this one: 
+	   &lt;http://diveintomark.org/archives/2003/07/21/atom_aggregator_behavior_transport_level.html&gt;</span>
+<span class="speakerB">Arien	   Which now goes here: 
+	   &lt;http://diveintomark.org/archives/2003/07/21/atom_aggregator_behavior_http_level.html&gt;</span>
+<span class="speakerA">jcgregorio But what it sounds like is the old Entry was deleted and a new Entry created.</span>
+<span class="speakerA">jcgregorio Or, if the URL is derived from the Title, then just editing the Entry 
+	   and changing the Title could end up changing the URL </span>
+<span class="speakerB">Arien	   the latter</span>
+<span class="speakerB">Arien	   But how do you map that to HTTP...?</span>
+<span class="speakerB">Arien	   You can PUT the entry to a new URL, and then DELETE the old entry, but what about the redirect?</span>
+<span class="speakerA">jcgregorio Ahh, important point</span>
+<span class="speakerA">jcgregorio The URL used for editing does not have to be the same as the one the serves up the HTML</span>
+<span class="speakerA">jcgregorio and actually shouldn't be</span>
+<span class="speakerB">Arien	   Why is that?</span>
+<span class="speakerA">jcgregorio When you do a GET on the URI for editing you need to get the XML of the Entry,
+	   when you do a GET on the URI of the story in a browser you want it to return HTML </span>
+<span class="speakerA">jcgregorio now you can do</span>
+<span class="speakerA">jcgregorio content negotiation</span>
+<span class="speakerA">jcgregorio and I have done that with my implementation of RESTLog in Bulu, but it has it's downside</span>
+<span class="speakerB">Arien	   I can think of a couple, yes..</span>
+<span class="speakerB">Arien	   I don't see the link with this particular point ("moving URLs"), though?</span>
+<span class="speakerA">jcgregorio Ok, the server-side is completely in control of the URI space for editing, so</span>
+<span class="speakerA">jcgregorio if Mark had used the AtomAPI to generate his post then</span>
+<span class="speakerA">jcgregorio the URI the server gave him back for doing GET/PUT for editing could look like:
+	   http://diveintomark.org/atom.cgi/1254 </span>
+<span class="speakerA">jcgregorio if this happened to be Mark's 1254th post to his weblog</span>
+<span class="speakerA">jcgregorio now he can change the title willy-nilly as it were and this same URI is still good for editing</span>
+<span class="speakerA">jcgregorio even if changing the Title of the Entry ends up changing the URL of the final HTML</span>
+<span class="speakerB">Arien	   Okay, so then you are seperating the editing from the publication...</span>
+<span class="speakerB">Arien	   Or private &lt;-&gt; public if you will</span>
+<span class="speakerA">jcgregorio exactly</span>
+<span class="speakerB">Arien	   Not sure if I like that, but I guess it'll work.</span></pre>
+  
+  
+

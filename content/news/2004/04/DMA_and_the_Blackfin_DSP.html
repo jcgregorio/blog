@@ -1,0 +1,112 @@
+---
+title: DMA and the Blackfin DSP
+date: 2004-04-07T12:00:00-04:00
+---
+
+  <p>Every day there's more to like about the <a href="http://www.analog.com/processors/processors/blackfin/">Analog Devices
+  Blackfin DSP</a>. Today the big wins are DMA transfers 
+  and built in libraries.</p>
+
+  
+<dl>
+<dt>DMA</dt>
+<dd>
+<p>So what is DMA? If you aren't familiar with DMA, it's the ability
+        of the processor to transfer memory to or from other memory locations
+        or peripherals without the attention of the CPU. 
+        This means that 
+        there is a separate DMA engine sitting inside the chip acting like
+        a gremlim, moving things about while no one is looking. And gremlin
+        is an appropriate image since DMA in the past had a bit of a reputation
+        for being complex, error prone, and unreliable at least among 
+        the embedded developers I know. The upside of DMA is that it can free 
+        the processor from huge amounts of work it would normally have to
+        do itself. </p>
+<p>For example, many chips have UARTS for serial communication that
+        can be accessed via DMA. If you had a long string of data to read
+        in from the port there are only three choices: poll, interrupts, or
+        DMA. In polling you periodically check on the UARTS buffer and copy out
+        any values that have arrived since the last time you checked. This requires
+        you to check back often and to be careful lest you not check back
+        quickly enough and the buffer overflows and you lose data. 
+        With interrupts you write an interrupt
+        handler that gets called every time N new values have arrived in the buffer.
+        Interrupts guarantee that you get there in time but they still take processing
+        time away from your main process, and let's not even delve in what happens
+        when higher priority interrupts are occuring rapidly at the same time.
+        With DMA you set the DMA engine off and running and at the end you 
+        can probably setup an interrupt to be triggered once the whole
+        buffer has arrived, meanwhile you have 100% of the processor time to 
+        allocate to your main process. Now compound this with the fact that 
+        many DMAs can run multiple different kinds of transfers at the same time
+        and you can see how powerful they become.
+     </p>
+<p>On a PC the only time
+        you would encounter DMA is if you were doing device driver development.
+        In the embedded world you encounter them much more often because 
+        your programming much closer to the metal and more often than not
+        working in a constrained environment where you need to squeeze the 
+        most performance from your chip.
+     </p>
+<p>With anything as powerful as DMA there are issues, the first being
+        that they are complex to setup. This is something the designers of the
+        TI DSPs seemed to revel in. The setup of a DMA transfer requires setting
+        up two 32-bit control registers where each bit affects the transfer in 
+        some way or another. On top of that there are a dozen or so other
+        registers that may be used, depending, of course, on the setup of those
+        64 bits in the control registers. But even here, they just couldn't stop 
+        themselves because they must have decided their DMA engine was getting too
+        large, so what did they do? Reduce the number of options? No. Simplify? No. What
+        they did is decide that having all those other registers was the problem,
+        so different DMA transfers would share those registers. Share them. And of course
+        since they're sharing you have to use <strong>more</strong> control 
+        bits to the control registers to
+        select <em>which</em> of the shared registers you are using.
+     </p>
+<p>Compare this to the Analog Devices Blackfin DMA controller. There is a single
+        16-bit DMA control register and each transfer has a unique set of other
+        registers. No sharing. How did they do this? By concentrating on making the easy things
+        easy and the hard things possible. You see, the basic DMA covers most of 
+        my needs and is configured easily. If a more complex DMA transfer is needed
+        they actually used a clever technique where you setup structures in memory with control
+        information and chain them together, a linked list of structures,
+        then you feed the first structure to
+        the DMA engine and off it goes following the instructions at each
+        structure then automatically jumping to the next one. It's a great setup
+        and makes it even more flexible than the TI DSP's DMA with its 64-bits of 
+        configuration.</p>
+<p>The usual caveat should be applied here that I am only
+        talking about a single family of the TI DSP and I don't have experience 
+        with other families which may have different schemes.</p>
+</dd>
+<dt>Libraries</dt>
+<dd>
+<p>Now if DMAs aren't your thing how about FFTs? Well if you're using a DSP you'd be 
+       quite likely to want to do such things. TI handled this by having a 
+       large download section with plug in modules that dropped into 
+       the development environment to cover basic signal processing algorithms.
+       They have constructed a whole mechanism where a provider can write a library
+       and have it work across a range of their DSP families. 
+    </p>
+<p>This is how I expected Analog Devices works with their DSPs so I 
+       go on line and try to download the required modules from their site, but for the
+       life of me I can't find any place to download the modules. I searched and 
+       searched and in a last act of desperation I typed 'FFT' into the 
+       developement tools help system. Now, that last statement could be read
+       as, "in a last act of desperation I read the manual", but we won't go there.
+       As it turns out I didn't <em>need</em> to go to their site, nor did I need 
+       to use any special module loading, the Blackfin developement tools ships with 
+       DSP library that includes real FFTs, complex FFTs, fir filters, auto-correlation,
+       etc., etc. Built in. To the default library. For a DSP. A Digital Signal Processor. 
+       In retrospect it just seems so obvious. 
+    </p>
+</dd>
+</dl>
+<p>At this point I'm still learning about this chip and it's capabilities,
+   I may yet run across something I don't like, 
+   but so far I'm impressed both with the robustness of the product and the
+   obvious thought that went into it's design.</p>
+
+  
+  
+

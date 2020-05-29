@@ -1,0 +1,62 @@
+---
+title: Httplib2 - Version 0.3.0
+date: 2007-03-09T12:00:00-05:00
+---
+
+  
+  <p>Version 0.3.0 of the 
+  <a href="http://bitworking.org/projects/httplib2/">httplib2</a> Python library is now available.</p>
+<p>From the changelog:</p>
+<pre>
+0.3.0
+   Calling Http.request() with a relative URI, as opposed to an absolute URI,
+   will now throw a specific exception.
+
+   Http() now has an additional optional parameter for the socket timeout.
+
+   Exceptions can now be forced into responses. That is, instead of
+   throwing an exception, a good httlib2.Response object is returned
+   that describes the error with an appropriate status code.
+
+   Many improvements to the file cache:
+
+     1.  The names in the cache are now much less 
+         opaque, which should help with debugging.
+
+     2.  The disk cache is now Apache mod_asis compatible. 
+     
+     3.  A Content-Location: header is supplied and stored in the
+         cache which points to the original requested URI.
+
+   User supplied If-* headers now override httplib2 supplied
+   versions.
+
+   IRIs are now fully supported. Note that they MUST be passed in
+   as unicode objects.
+
+   Http.add_credentials() now takes an optional domain to restrict
+   the credentials to being only used on that domain.
+
+   Added Http.add_certificate() which allows setting 
+   a key and cert for SSL connnections.
+
+   Many other bugs fixed.
+</pre>
+  <div class="commentContent" id="X1">
+    Would you put it in the cheeseshop, please?
+    <p class="commentByLine">Posted by
+       <a href="http://manuzhai.nl/weblog/">Manuzhai</a> on <a href="#X1" title="2007-03-09T04:34:03.883281">2007-03-09</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Thanks, I'd forgotten. Now updated in the cheeseshop.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2007-03-09T07:58:25.308259">2007-03-09</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    Cool, thanks!
+    <p class="commentByLine">Posted by
+       <a href="http://www.oluyede.org/blog">Lawrence</a> on <a href="#X3" title="2007-03-09T20:47:16.814567">2007-03-09</a>
+    </p>
+</div>
+  
+

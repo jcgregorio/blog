@@ -1,0 +1,77 @@
+---
+title: Secure Syndication Misconceptions
+date: 2005-07-22T12:00:00-04:00
+---
+
+  
+  <p>My <a href="http://www.xml.com/pub/a/2005/07/13/secure-rss.html">Secure Syndication</a> article 
+   and <a href="http://bitworking.org/projects/securesyndication/">greasemonkey script</a> has now
+   been up for a week. It's received <a href="http://del.icio.us/url/06203d2de4fd4fb5b62776a20fa3cdac">a lot</a> of <a href="http://technorati.com/search/www.xml.com/pub/a/2005/07/13/secure-rss.html">attention</a> and I'd like to clear up <a href="http://bcm.maz.org/archives/000167.html">some</a> <a href="http://www.volubis.com/blog/archives/001004.html">of the</a>
+<a href="http://www.mnot.net/blog/2005/07/16/feed_history">misunderstandings</a> I've seen.</p>
+<dl>
+<dt>This is just for RSS.</dt>
+<dd>Not true. While I concentrated on RSS in the article this will work just 
+     fine for Atom, or for that matter, as I point out in the article, any old web page.
+     It doesn't even need to be syndicated.
+   </dd>
+<dt>Atom has it's own mechanism</dt>
+<dd>Not true. This one is my own fault. If you read the article
+     you get the impression that Atom has the same capabilites, but just delivered
+     using XML Encryption. That is not the case. The Atom Format specification only 
+     defines how to apply XML Encryption to the whole feed document, which would
+     require the <em>aggregator</em> to be able to decrypt the feed, and that 
+     was the situation we wanted to avoid. There is nothing in the Atom specification
+     that specifies how to encrypt just part of the 'content'. 
+   </dd>
+<dt>Greasemonkey has bugs so the whole idea is wrong.</dt>
+<dd>Yes, bugs have been found in Greasemonkey, and it appears that 
+      <a href="http://www.mozdev.org/pipermail/greasemonkey/2005-July/003999.html">some of the impetus</a> 
+      came from people looking at how secure Secure Syndication was. I very much appreciate the effort
+      that has gone into that review, and I am glad that those issues 
+      have been found and are being resolved, but none of the problems found
+      <b>so far</b> have been flaws in the basic premise, but instead are 
+      bugs in Greasemonkey. Which leads to the next misconception.
+   </dd>
+<dt>This is only for FireFox/Greasemonkey</dt>
+<dd>Not at all. Opera now supports user scripting and I have found
+     at least three different projects to bring user scripting to IE.
+     The JavaScript used is very basic and should be able to be ported 
+     to all those enviroments. I used Greasemonkey because it was the fastest way to get this 
+     system up and running. I could have just as easily created a FireFox extension to 
+     do the same thing, it just would have taken me longer.
+   </dd>
+</dl>
+<ul class="tags">
+<li><a href="http://technorati.com/tag/greasemonkey" rel="tag"> greasemonkey </a></li>
+<li><a href="http://technorati.com/tag/microformats" rel="tag"> microformats </a></li>
+<li><a href="http://technorati.com/tag/blowfish" rel="tag"> blowfish </a></li>
+<li><a href="http://technorati.com/tag/encryption" rel="tag"> encryption </a></li>
+</ul>
+
+  <div class="commentContent" id="X1">
+    "I could have just as easily created a FireFox extension to do the same thing, it just would have taken me longer." -- Or you could just have used the <a href="http://www.letitblog.com/greasemonkey-compiler/">compiler</a>...
+    <p class="commentByLine">Posted by
+       <a href="http://ank.blogspot.com">Ankit</a> on <a href="#X1" title="2005-07-22T10:40:15">2005-07-22</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Ankit,<br />
+  Does the compiled FireFox extension have the same vulnerabilities that Greasemonkey has?
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2005-07-22T12:43:55">2005-07-22</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    <p>I checked around a bit, and the short answer is no, the compiled extension does not have the same vulnerabilities.</p>
+<p>The whole problem is with the <a href="http://diveintogreasemonkey.org/api/">Greasemonkey api</a>, more specifically with GM_xmlhttpRequest. But the compiled extension does not include the api, so any script that uses it will not work. </p>
+<p>The current version of Greasemonkey (0.3.5) also disables all the api funcions as a security measure.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://ank.blogspot.com">Ankit</a> on <a href="#X3" title="2005-07-22T13:42:04">2005-07-22</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    A new version of Greasemonkey is coming VERY SOON that restores the API functions and fixes the security vulnerabilities.  (No, you can't have it.)
+    <p class="commentByLine">Posted by
+       <a href="http://diveintomark.org/">Mark</a> on <a href="#X4" title="2005-07-23T20:45:47">2005-07-23</a>
+    </p>
+</div>
+  
+

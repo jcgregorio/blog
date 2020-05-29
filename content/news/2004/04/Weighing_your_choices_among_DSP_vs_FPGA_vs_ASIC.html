@@ -1,0 +1,63 @@
+---
+title: Weighing your choices among DSP vs FPGA vs ASIC
+date: 2004-04-27T12:00:00-04:00
+---
+
+  
+  <p>I talked the other day about the 
+   <a href="http://www.st.com/stonline/products/families/memories/psm/dsm2150.htm">
+   DSM2150F5</a> which is a 
+   <a href="http://www.st.com/stonline/products/families/memories/psm/dsm_ov1.htm">
+     DSP System Memory</a> (DSM) which contains Flash, Digital I/O, and a PLD and was
+   designed with the Analog Devices Blackfin DSP in mind. Now today <a href="http://www.stretchinc.com/">Stretch</a> has announced their S5000
+   family of processors.</p>
+<blockquote><p>The chip combines an existing RISC (reduced instruction set computing) architecture with a large reconfigurable area of programmable logic called the Instruction Set Extension Fabric, ISEF. The company's own C/C++ compiler automatically spots areas in a program that require intensive computation and creates new instructions for the processor to handle those tasks. [<a href="http://news.com.com/2100-1006-5199930.html">CNET News.com</a>]
+</p></blockquote>
+<p>An interesting development and I wish them luck, but
+   from my experience they won't make much headway. Their technology
+   requires a close interaction between the compiler and the 
+   silicon to achieve their touted performance, which means that
+   a port of gcc to their silicon won't do you any good. Also, if you
+   are working on a design up front you have a good idea of where
+   the performance bottlenecks are going to be. If you have 
+   such a performace bottleneck than you can offload just that part 
+   of the design into an FPGA or PLD and keep the rest of the processing
+   in a more flexible DSP or CPU. The Stretch device seems to be aimed
+   at a sector of users that are doing embedded designs but don't know
+   where their performance bottlenecks are going to be. That, in 
+   a darwinian sense, should be a small or non-existent market.
+   We'll call this 'aiming for the dodo'.
+</p>
+<p>In other news <a href="http://www.eetuk.com/bus/news/OEG20040426S0012">
+   Ericsson has shifted to a DSP-only based solution</a> away from 
+   previous basestation designs using ASICs. Notably <a href="http://www.analog.com/Analog_Root/sitePage/pressReleaseHome/0,2145,ContentID%253D33953%2526aind%253D%2526Language%253DEnglish%2526resourceWebLawID%253D,00.html">they
+   are using Analog Device's TigerSHARC DSP</a>.</p>
+<p>In general these events all point to the constant
+   tension between picking the right mix of ASIC, FPGA and
+   DSP to include in an embedded solution. All of those technologies
+   have different costs, flexibility, speed, time to market, and power consumption. 
+   TI has a good whitepaper
+   that while a bit biased towards the DSP solution provides 
+   a decent <a href="http://64.233.161.104/search?q=cache:PrqtozvFQAQJ:focus.ti.com/lit/an/spra879/spra879.pdf+choosing+DSP+FPGA+ASIC&amp;hl=en">
+   comparison of the advantages between ASICs, DSPs, FPGAs, and
+   other solutions</a>. The <a href="http://focus.ti.com/lit/an/spra879/spra879.pdf">original 
+   pdf</a> was unavailable at the time I wrote this, thus the link to the google
+   cache of the paper. </p>
+<p>
+</p>
+
+  <div class="commentContent" id="X1">
+    <p>There is certainly a market for "extreme processors" which are software programmable, but offer FPGA-like performance (such as Stretch, or our own Linedancer product), but as you say the trick is making them easy to program in C [by the way, we do this, and have successfully used the gnu toolchain].  </p>
+<p>There are some real challenges with the DSP+FPGA approach.  It generally takes a lot longer to get an FPGA solution up and running, and it's more of a "big bang" development approach; you rarely see a "waterfall" development where incremental functionality is developed and released to market.  Management get nervous when they can't see any tangible progress.</p>
+<p>My experience is that hardware is always late, and that software is never finished; most companies would prefer to release a product early with limited functionality, than to have nothing to deliver.</p>
+<p>Also, the reality is that FPGAs impose a hard limit on the product features - if you only have 1 million gate FPGA on the board, it's really hard to squeeze in new functionality without breaking the whole thing; software based solutions let you balance functionality with performance "ad infinitum" (with the exception of real-time / streaming applications where the same limits apply)</p>
+<p>So there's space for all these solutions, but expect to see "extreme processors" stealing a lot more of the FPGA market over the next few years!</p>
+<p>Jeremy Hendy<br />
+VP Marketing, Aspex Semiconductor</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.aspex-semi.com">Jeremy Hendy</a> on <a href="#X1" title="2004-06-10T06:13:49">2004-06-10</a>
+    </p>
+</div>
+  
+

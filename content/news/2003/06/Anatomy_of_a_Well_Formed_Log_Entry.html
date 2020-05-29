@@ -1,0 +1,101 @@
+---
+title: Anatomy of a Well Formed Log Entry
+date: 2003-06-16T12:00:00-04:00
+---
+
+  <a href="http://www.intertwingly.net/blog/1472.html">Sam</a> has started a discussion of what, in the abstract, are the components of a weblog entry. This is a great idea for a starting point, by concentrating on the what, and not the how.
+   <p>However, I do have some of the same reservations that <a href="http://tbray.org/ongoing/When/200x/2003/06/16/Pie">Tim Bray</a> mentions:</p>
+<blockquote>It’s almost physically painful for me to think about these things in the abstract, because I’m suspicious that if the people doing it won’t show me the bits on the wire, when they whip away the curtain I’m going to be looking at an <span class="caps">API</span> or object model or <span class="caps">UML</span> diagram.</blockquote>
+<p>Agreed. I don’t want to see Corba for Weblogs. There is a <a href="http://www.intertwingly.net/wiki/pie/">Wiki</a> for recording the progress and it is filling out quite rapidly. There are quite a range of people participating, and all with no flaming. Very good signs that this is going someplace.</p>
+<p>I will disagree with both <a href="http://weblog.burningbird.net/fires/001284.htm">Shelly</a> and Tim, reverse chronological order is important. Reverse chronological order is the only thing that distinguishes a weblog from a wiki, or from just a personal web page on the internet.</p>
+<p>Time, at least chronological time, is a very under-used metaphor in user interface design. Look at the primary metaphor we have now, the Desktop. Ugh. Wouldn’t software be that much better if it took time into account? Even limited use of time adds to the power of a program, think of good programs that offer unlimited undo levels, a way of walking back in time. But wouldn’t that manipulation be more effective if I could look at my changes across time, do diffs between specific points in time? Why can’t I open a word document and have it highlight the pieces that were changed in just the last 5 days?</p>
+<p>Yes, I know <span class="caps">CVS</span> and SourceSafe and other version control programs allow this, but that is adding the feature on after the fact. And they have a limited ability when working with binary formats. A consciousness of time is not baked right into the programs themselves, only added on as an after-thought. And becuase it isn’t baked in, the time related features end up in odd corners of the program and difficult to use. Revision protection in Word is something that is off by default, you have to remember to turn it on, and you can do diffs between copies of Word documents, but only if you can find the menu item.</p>
+<p>Further reading on chronological metaphors can be found at:</p>
+<ul>
+<li><a href="http://www.csl.sony.co.jp/person/rekimoto/papers/chi99late.pdf">TimeScape – A Time Machine for the Desktop Environment</a> [PDF]</li>
+<li><a href="http://www.technologyreview.com/articles/tristram1201.asp">Technology Review – The Next Computer Interface</a></li>
+</ul>
+<p>On Links, I will want perma-links. Look at all the grief I give the NYTimes for not having accessible archives. A member in good standing of the web has unique URLs that do not change.</p>
+
+  <div class="commentContent" id="X1">
+     <p>re: reverse chronological order – bear in mind that its not a complete absense of ordering that is being suggested but rather that timestamps should be provided instead of relying strictly on document element order.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:jeremy@jeremygray.ca">Jeremy Gray</a> on <a href="#X1" title="2003-06-17T08:47:56">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X2">
+     <p>Once we get down to the details, the document order shouldn’t be left ambigious, and it should be spec’d as reverse chronological order.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X2" title="2003-06-17T10:35:15">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X3">
+     <p>Joe, reverse chron is an implementation issue. And it’s also a personal preference. What you‘re saying is that a timestamp needs to be maintained with the item, so that things like chron order can be implemented.</p>
+<p>And even when we do get into physical implementation—this should always be an option. The data isn’t impacted by this, just the display.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X3" title="2003-06-17T10:46:19">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X4">
+     <p>Shelly,<br />
+So would you be okay with “items <span class="caps">SHOULD</span> be in cron order“, but you would not be okay with “items <span class="caps">MUST</span> be in cron order“?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X4" title="2003-06-17T11:22:16">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X5">
+     <p>At one point someone had asked whether the discussion was about threads, comments, syndication, or site summary and the answer at the time was “this is about an entry“.</p>
+<p>“chronological order” is something that happens when one has multiple entries.  Now that the discussion has widened, and the guidelines updated to support it, those questions should be asked again, as Shelley is about “content” and also on the “Related” wiki page.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X5" title="2003-06-17T13:04:50">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X6">
+     <p>Joe – I don’t disagree with you – reverse chronological order is helpful for systems that cannot process timestamps. However, I do feel that we should really be pushing for timestamps, perhaps with reverse chronological order there as a fallback. In the long run, of course, it would be nice to entirely remove all reverse chronological order assumption/requirements.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="mailto:jeremy@jeremygray.ca">Jeremy Gray</a> on <a href="#X6" title="2003-06-17T14:44:33">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X7">
+     <p>Jeremy,<br />
+Agreed. I am not pushing to drop timestamps, just to make rev-chron the suggested document order.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">joe</a> on <a href="#X7" title="2003-06-17T15:42:44">2003-06-17</a>
+    </p>
+</div><div class="commentContent" id="X8">
+     <p>This is just a test comment from <span class="caps">RSS </span>Bandit.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">RE: Anatomy of a Well Formed Log Entry</a> on <a href="#X8" title="2003-06-18T11:18:05">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X9">
+     <p>Eh. My main page is reverse-chron, but my archive pages are forward-chron, because it’s easier to follow connected posts that way.</p>
+<p>So does a weblog only consist of the main page?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="">anonymous</a> on <a href="#X9" title="2003-06-18T12:34:36">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X10">
+     <p>Well, yes, only the main page is the weblog. The archives pages are just that, archives. I don’t stop by your archives page everyday to read what you’ve written, I stop by your main page.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X10" title="2003-06-18T13:38:00">2003-06-18</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>Permanently assigned URLs are one thing; permanent accessibility is another.  My employer makes a subset of the news (which we sell for a living) available to the world for free: essentially, general-audience articles published in the last six weeks.  But each and every article, however old or professional-only, has a permanent (nay, unique!) URL.</p>
+<p>It's just that if you try to dereference an URL not referring to recent general-audience content (the great majority of them), you will be required to provide authentication.  This is very WebArch-y, and would still satisfy the NYT's business goals.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.ccil.org/~cowan">John Cowan</a> on <a href="#X11" title="2004-04-22T09:30:03">2004-04-22</a>
+    </p>
+</div><div class="commentContent" id="X12">
+    <p>While they do have URLs the fact that their content disappears behind a pay-for-view wall means it's not really on  the web for me. </p>
+<p>To highlight this distinction I've been using the phrase "the indexed web" to distinguish between the parts of the web that get indexed by search engines, and the rest of the dark matter hiding behind pay-for-view walls or registration forms. I think if anything Google has shown is how powerful being part of the indexed web can be.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X12" title="2004-04-22T13:15:52">2004-04-22</a>
+    </p>
+</div>
+  
+

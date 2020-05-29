@@ -1,0 +1,98 @@
+---
+title: Considering PATCH
+date: 2008-02-20T12:00:00-05:00
+---
+
+  
+  <p><a href="http://www.25hoursaday.com/weblog/2008/02/16/ThoughtsOnGooglesProposalForGranularUpdatesInAtomPub.aspx">Dare Obasanjo</a>:</p> <blockquote> <p>Given that Joe works for Google on GData, I have assumed that Joe's post is Google's attempt to float a trial balloon before extending AtomPub in this way.</p></blockquote> <p>As I explained in the comments on Dare's post, this is my personal blog and unless otherwise stated, my own thoughts and ideas. If I weren't just speaking for myself I would make that clear.</p> <p>Like I am about to do now.</p> <p>At Google we are considering using PATCH. One of the big open questions surrounding that decision is XML patch formats. What have you found for patch formats and associated libraries?</p>
+  <div class="commentContent" id="X1">
+    Unfortunately not much that's usable.  All of the xml-diff approaches that have been floated over the years tend towards being grossly overcomplicated.
+    <p class="commentByLine">Posted by
+       <a href="mailto:jasnell@gmail.com">James Snell</a> on <a href="#X1" title="2008-02-20T13:09:18.689723">2008-02-20</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    Is <a href="http://www.xmldatabases.org/projects/XUpdate-UseCases/">XUpdate</a> a viable option?
+    <p class="commentByLine">Posted by
+       <a href="http://guruj.net">Stephen Bounds</a> on <a href="#X2" title="2008-02-20T20:01:08.961121">2008-02-20</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    There's an IETF draft out for something that fails one of James' tests (it's in XML), but seems to have some thought put into the structure and operations you'd need:
+
+http://www.ietf.org/internet-drafts/draft-ietf-simple-xml-patch-ops-04.txt
+    <p class="commentByLine">Posted by
+       <a href="http://www.eighty-twenty.net">Gordon Weakliem</a> on <a href="#X3" title="2008-02-21T01:07:10.449554">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    I am probably giving away my nievity here, but why not use a standard binary diff algorithm and use it equally for all media types?
+    <p class="commentByLine">Posted by
+       <a href="http://bytesexual.org/">Noah Slater</a> on <a href="#X4" title="2008-02-21T01:54:56.784182">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    Binary diff for XML? Do I here canonicalization :)
+    <p class="commentByLine">Posted by
+       <a href="http://subbu.org">Subbu Allamaraju</a> on <a href="#X5" title="2008-02-21T08:40:36.518014">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    Gordon,<br />
+<p>
+Yeah, that one, like all the ones I've found so far, tries to take on too much, such as manipulating namespace declarations, comments and processing instructions. In addition it doesn't present on algorithm on how to generate a patch from two documents, only a format for communicating the differences.
+</p>
+<p>
+A good candidate would have a limited number of operations, and not only specify  the patch format and how to apply it, but how to generate a patch document from a pair of documents. For example: flatten the DOM into a sequence of SAX-like events and then applying a line oriented diff to the two sequences. The operations should be very limited in scope: delete element, add element, edit text node, edit element attributes. It could be that simple if I don't care about multi-master synchronization or three-way merge.
+</p>
+
+Noah,<br />
+<p>
+A binary diff presumes that two actors would serialize the same XML DOM in the same exact way, which as Subbu points out is the realm of XML canonicalization, and not anywhere you want to go.
+</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X6" title="2008-02-21T10:56:50.930259">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Joe: "<i>A good candidate would have a limited number of operations, and not only specify the patch format and how to apply it, but how to generate a patch document from a pair of documents. For example: flatten the DOM into a sequence of SAX-like events and then applying a line oriented diff to the two sequences. The operations should be very limited in scope: delete element, add element, edit text node, edit element attributes. It could be that simple if I don't care about multi-master synchronization or three-way merge.</i>"</p>
+<p>This is a big part of where I was going with <a href="http://www.snellspace.com/wp/?p=895">this</a>.  For the most part, existing solutions try to do way too much.</p>
+    <p class="commentByLine">Posted by
+       <a href="mailto:jasnell@gmail.com">James Snell</a> on <a href="#X7" title="2008-02-21T14:32:42.704226">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    Joe, as far as an algorithm, the standard for tree differences is the Zhang-Shasha  algorithm.  The Microsoft XML Diff toolkit implements that along with another "fast" algorithm, which is unpublished to my knowlege.  That said, that's an implementation that solves the entire issue.  Also, XML isn't strictly a tree (because of attribute axes), so there's that issue.  Anyway, <a href="http://useless-factor.blogspot.com/2008/01/matching-diffing-and-merging-xml.html">this blog post</a> has a pretty good discussion of Zhang-Shasha.
+
+I'd <a href="http://www.eighty-twenty.net/blog/2006/02/22.html#11675">blogged on that</a> a couple years ago when I was trying to deal with merging OPML documents. 
+In the end, I pretty much punted on solving my problem because for my particular case, it was gold plating a solution.
+    <p class="commentByLine">Posted by
+       <a href="http://www.eighty-twenty.net">Gordon Weakliem</a> on <a href="#X8" title="2008-02-21T14:59:22.657573">2008-02-21</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    <p>ISTR IBM had something in this space called TreeDiff...
+</p><p>
+(rummages about the internet)
+</p><p>
+Hmm, it looks like it's been 'retired':
+</p><p>
+<a href="http://www.alphaworks.ibm.com/tech/xmltreediff">http://www.alphaworks.ibm.com/tech/xmltreediff</a>
+</p><p>
+The Wayback Machine has a bit more from before the retirement in late 2003:
+</p><p>
+<a href="http://web.archive.org/web/20031002102746/http://alphaworks.ibm.com/tech/xmltreediff">http://web.archive.org/web/20031002102746/http://alphaworks.ibm.com/tech/xmltreediff</a>
+</p><p>
+I guess that's not actually very helpful, sorry.
+</p>
+    <p class="commentByLine">Posted by
+       <a href="http://michaelbernstein.com">Michael R. Bernstein</a> on <a href="#X9" title="2008-02-22T16:04:02.212025">2008-02-22</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    Wouldn't XSLT be a viable option for "patching" an Atom entry? I realize it doesn't fit the traditional patch model, but since it is simple to copy everything and filter as needed, it seems like a simpler solution. For example, the PUT could contain an Atom entry with atom:link[rel='stylesheet'] where the server would take its copy and update it with the result. 
+
+Just thinking aloud a bit.
+    <p class="commentByLine">Posted by
+       <a href="http://ionrock.org/blog/">Eric Larson</a> on <a href="#X10" title="2008-02-23T13:10:24.925749">2008-02-23</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    Yes, XSLT would work. However, XSLT is Turing-complete, and I’m not sure it’s a great idea to take code supplied by an arbitrary remote client and run it on the server. Although I guess as long as you impose the obvious limitations (disable the <code>document</code> function, limit the amount of memory and time a transform may hog, that sort of thing), that could work very well. But it does mean that the server has to lug an XSLT processor around, which is a much bigger component than, say, an XUpdate implementation. OTOH, unlike the XML patch formats, it has the upside that server and client need not agree exactly about the document’s Infoset: if elements change position or whitespace nodes shuffle around, the transform need not be affected at all.
+    <p class="commentByLine">Posted by
+       <a href="http://plasmasturm.org/">Aristotle Pagaltzis</a> on <a href="#X11" title="2008-02-23T19:56:35.351231">2008-02-23</a>
+    </p>
+</div>
+  
+

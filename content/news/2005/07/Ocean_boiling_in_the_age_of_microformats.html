@@ -1,0 +1,152 @@
+---
+title: Ocean boiling in the age of microformats
+date: 2005-07-27T12:00:00-04:00
+---
+
+  
+  <p>Have I mentioned that <b>syndicating microformats</b> is hot. 
+That it's important?   
+That it's possibly one of the most important things in syndication?
+Ever?
+</p>
+<p>Well, I have now.</p>
+<p><a href="http://tantek.com/log/2005/07.html#d24t1935">Avoiding plain XML and presentational markup</a> 
+   from Tantek Çelik is a collection of links and observations. The takeaway for me
+   is that if given the choice between enhancing an already semantically rich format like
+   XHTML to carry the data you want or creating new elements in new namespaces, choose
+   the former rather than the latter. 
+</p>
+<blockquote><p>
+   The marketing message of XML has been for people
+    to develop their own tags to express whatever they wanted, 
+   rather than being stuck with the limited predefined tag set in 
+   HTML. This approach has often been labeled "plain XML" or
+   "generic XML" or "SGML, but easier, better, and designed
+   just for the Web
+  </p>
+<p>
+  The problem with this approach is that while having the
+   freedom to make up all your own tags and attributes sounds
+   like a huge improvement over the (mostly perceived) limits of  
+   HTML, making up your own XML has numerous problems,  
+   both for the author, and for users / readers, especially when  
+   sharing with others (e.g. anything you publish on the Web) is important.
+   </p>
+</blockquote>
+<p>Of course, if you are syndicating microformats then that means that
+  someone had to publish that information, so we also get a nice intersection
+  of the Atom Publishing Protocol and microformats. I've outlined 
+  <a href="http://www.imc.org/atom-protocol/mail-archive/msg01245.html">
+    how microformats should interact with the <abbr title="Atom Publishing Protocol">APP</abbr> 
+    on the [atom-protocol] mailing list</a>. 
+</p>
+<p>If you have any doubt how important it is to get this right in the APP
+   then go listen to Adam Bosworth's <a href="http://www.itconversations.com/shows/detail571.html"> 
+  "Database Requirements in the Age of Scalable Services"</a> [via 
+  <a href="http://lesscode.org/2005/07/25/web-thinking/">lesscode.org</a>].
+</p>
+<p>To quote <a href="http://www.intertwingly.net/blog/2005/07/27/Sifting-for-Metadata">Sam Ruby</a>:</p>
+<blockquote><p>My theory is that most of the interesting metadata is <b>in</b> the content.</p></blockquote>
+<ul class="tags">
+<li><a href="http://technorati.com/tag/atom" rel="tag"> atom </a></li>
+<li><a href="http://technorati.com/tag/microformats" rel="tag"> microformats </a></li>
+<li><a href="http://technorati.com/tag/rest" rel="tag"> rest </a></li>
+<li><a href="http://technorati.com/tag/markup" rel="tag"> markup </a></li>
+<li><a href="http://technorati.com/tag/xml" rel="tag"> xml </a></li>
+</ul>
+  <div class="commentContent" id="X1">
+    <p>but what about the namespace problem?</p>
+<p>sure, profiles can be written and referenced, but what if a page uses two profiles which share a common symbol?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://IAwiki.net/">eric scheid</a> on <a href="#X1" title="2005-07-27T22:45:45">2005-07-27</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    I'm hoping the last chapter of my book coming out next book will be well received.  In it, I throw together some Python scripts to convert from iCalendar to hCalendar to syndication feed to mod_event-enriched syndication feed... and back to iCalendar again.
+    <p class="commentByLine">Posted by
+       <a href="http://www.decafbad.com">l.m.orchard</a> on <a href="#X2" title="2005-07-27T23:04:38">2005-07-27</a>
+    </p>
+</div><div class="commentContent" id="X3">
+    (next book?  er next month, I mean.  :) )
+    <p class="commentByLine">Posted by
+       <a href="http://www.decafbad.com">l.m.orchard</a> on <a href="#X3" title="2005-07-27T23:05:43">2005-07-27</a>
+    </p>
+</div><div class="commentContent" id="X4">
+    <p>Eric,<br />
+  Here is the xpath selection I use to pick out the microformat in my Secure Syndication script:</p>
+<p>  //div[contains('encrypted blowfish', @class)]//div[contains('encdata', @class)]</p>
+<p>  A lot more than a single class name would have to collide for this to fail.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X4" title="2005-07-28T08:05:41">2005-07-28</a>
+    </p>
+</div><div class="commentContent" id="X5">
+    l.m.orchard,<br />
+  That's great! I'm looking forward to your book.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X5" title="2005-07-28T08:10:45">2005-07-28</a>
+    </p>
+</div><div class="commentContent" id="X6">
+    <p>"A lot more than a single class name would have to collide for this to fail." - ok in this case, but is everyone else taking such care? (I personally don't think it's likely to be a problem in practice).</p>
+<p>I don't disagree on your (and Sam's) general point, but would suggest care when trying to generalise beyond syndication of content+metadata.</p>
+<p>Sometimes -</p>
+<p>&lt;p class='age'&gt;30</p>
+<p> <br />
+is appropriate, but sometimes -</p>
+<p>&lt;x:age&gt;30&lt;/x:age&gt;</p>
+<p>and sometimes even -</p>
+<p>age = 30;</p>
+<p>(I'm looking forward to the book too!)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X6" title="2005-07-28T11:59:00">2005-07-28</a>
+    </p>
+</div><div class="commentContent" id="X7">
+    <p>Joe's XPath says:</p>
+<p>//div[contains('encrypted blowfish', @class)]//div[contains('encdata', @class)]</p>
+<p>But that will have a lot of false negatives: if the class is "blowfish encrypted", or "encrypted&lt;newline&gt;blowfish", or "encrypted&lt;space&gt;&lt;space&gt;blowfish".  (Actually, if I read the HTML spec correctly, the newline should be simply ignored, and can therefore occur in the middle of an attribute name.)  Likewise, there are false negatives; things like "unencrypted blowfish" should not match.</p>
+<p>The XPath to match this correctly is more complex.  I think the correct "contains" clause looks something like [contains(concat(" ", translate(@class, " \r\n\t", "  "), " "), " encrypted ") and contains(concat(" ", translate(@class, " \r\n\t", "  "), " "), " blowfish ")].  Except that <br />
+"\r", "\n", and "\t" have to be literal carriage return, newline, and tab characters, as far as I can tell.</p>
+<p>Perhaps XPath is not the ideal solution to this problem.</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://pobox.com/~kragen">Kragen Sitaker</a> on <a href="#X7" title="2005-07-28T14:44:55">2005-07-28</a>
+    </p>
+</div><div class="commentContent" id="X8">
+    <p>Joe, great post.  What you're saying, and what Sam Ruby is saying and others who are tired of waiting for complex solutions are saying all makes sense to a lot of folks.</p>
+<p>Eric, in response to your questions.</p>
+<p>The namespace problem?  The short answer is that it's nothing more than academic chicken-littling.  The internet has worked just fine (at many levels, with many applications, specifications) without namespaces.  Namespaces try to solve a 1% problem while burdening the 99%, which is always bad economics.</p>
+<p>What if a page uses two profiles?  This is clearly explained in the XMDP spec.  See <a href="http://gmpg.org/xmdp/description">http://gmpg.org/xmdp/description</a></p>
+<p>Thanks,</p>
+<p>Tantek<br />
+<a href="http://tantek.com/log/">http://tantek.com/log/</a></p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://tantek.com/log/">Tantek</a> on <a href="#X8" title="2005-07-28T18:11:53">2005-07-28</a>
+    </p>
+</div><div class="commentContent" id="X9">
+    Tantek,<br />
+  Thanks! And thanks for summarizing so well the problem with namespaces.
+    <p class="commentByLine">Posted by
+       <a href="http://bitworking.org">Joe</a> on <a href="#X9" title="2005-07-29T00:20:09">2005-07-29</a>
+    </p>
+</div><div class="commentContent" id="X10">
+    <p>I accept Tantek's point in the context of microformat documents. Naming clashes are highly improbable within an individual document. But I'm sorry, the Web <b>does</b> depend on namespaces, in the form of URIs. </p>
+<p>(Having said that, the string "Tantek" will take you to his site, using the Google protocol ;-)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://dannyayers.com">Danny</a> on <a href="#X10" title="2005-07-29T13:57:29">2005-07-29</a>
+    </p>
+</div><div class="commentContent" id="X11">
+    <p>Namespaces exist for human implicitly. When I read a weblog, when I hear the use of words by someone. I usually know after a while, that when Tantek says something, it means this and that with all these consequences (this is the tantek namespace). When Danny says another thing using the same words, the person, the previous words etc define a context to the expression. </p>
+<p>It's the basics of all social communications, nothing academic in that :) Another attempt to make devil something which is not, but completely natural and daily.</p>
+<p>A very good example of that is "friend" in English and "friend" (ami) in French, it doesn't have the same meaning at all. What most English native speakers call a friend is what French calls "someone you know" or "acquaintance".</p>
+<p>Namespaces on the Web are nothing more than that, it helps you to disambiguate things, to give a bit more context. It's not rocket science.</p>
+<p> It's just acknowledging the diversity, it's helping to accept the differences. Nothing academics again, just the plain reality of social relationships. :)</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.la-grange.net/">karl</a> on <a href="#X11" title="2005-08-01T19:49:06">2005-08-01</a>
+    </p>
+</div>
+  
+

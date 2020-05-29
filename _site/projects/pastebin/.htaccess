@@ -1,8 +1,0 @@
-AuthUserFile /home/jcgregorio/friends
-AuthName "Friends Only File Area"
-AuthType Basic
-<LimitExcept GET>
-require valid-user
-</LimitExcept>
-
-

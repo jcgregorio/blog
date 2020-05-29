@@ -1,0 +1,35 @@
+---
+title:  rst2rfc 
+date: 2009-12-10T12:00:00-05:00
+---
+
+    <p>
+      <a href=http://code.google.com/p/wave-protocol/source/browse/spec/rst2rfc.py>rst2rfc</a> - Because making humans edit XML is sadistic.
+    </p>
+
+    <p>
+    Rst2rfc.py is a command-line tool written in Python that uses <a href=http://docutils.sourceforge.net/>docutils</a> and converts
+    ReStructuredText input into XML suitable for consumption by <a href=http://xml.resource.org/>xml2rfc</a>.
+    Currently the code lives as a part of the <a href=http://code.google.com/p/wave-protocol/>wave-protocol project</a>, but if
+      you have issues please report them via the issue tracker on <a href=http://code.google.com/p/rst2rfc/>http://code.google.com/p/rst2rfc/</a>.
+    </p>
+
+    <p>
+      The code, as of today, is not robust. Actually, at the slightest
+      provocation it will halt and burst into flames.
+      Much of that is because it doesn't generate the end output
+      directly, instead taking in ReStructuredText input and 
+      producing <code>xml2rfc</code> compatible output, which is then processed
+      via <code>xml2rfc</code> to produce the final <code>.txt</code> output.
+      This allows me to use both the txt and html generation capabilities of
+      xml2rfc.  Modifying rst2rfc to directly produce the final <code>.txt</code> 
+      would be nice. See the <a href=http://code.google.com/p/wave-protocol/source/browse/spec/conversation/Makefile>Makefile</a>
+      for how it's called, and the <a href=http://code.google.com/p/wave-protocol/source/browse/spec/conversation/convspec.rst>Google
+        Wave Conversation Model source document</a> for what the input
+      looks like.
+    </p>
+    <p>
+      I will be continuing work on this as a matter of need, with the Google Wave Federation Protocol
+      being converted to ReST next, and other Wave documents soon to follow.
+    </p>
+

@@ -1,0 +1,85 @@
+---
+title: L-Systems
+date: 2017-07-02T12:00:00-04:00
+---
+
+<p>
+  <a href="https://en.wikipedia.org/wiki/L-system">L-Systems</a> are cool. The amount of complexity, and
+  naturalness of the forms you can get from such a tiny amount of code is
+  amazing.
+</p>
+  <style type="text/css" media="screen">
+    canvas {
+    }
+  </style>
+
+  <canvas id=canvas width=400 height=600></canvas>
+  <script id=src type="text/javascript" charset="utf-8">
+    (function () {
+      var a = document.getElementById('canvas');
+      var c = a.getContext("2d");
+      function E(s) { return s ? (rules[s[0]] + E(s.substr(1))) : "" }
+      M = Math
+      r = M.random
+      rules = {
+        X: "F-[[X]+X]+F[+FX]-X",
+        F: "FF",
+        "+": "+",
+        "-": "-",
+        "[": "[",
+        "]": "]",
+      }
+      L = E(E(E(E(E("X")))))
+      ys = []
+      function draw(x, y, len) {
+        p = { x: x, y: y, a: 3 }
+        st = []
+        c.beginPath()
+        c.moveTo(p.x, p.y)
+        L.split("").forEach(function(ch) {
+          if (ch == "F") {
+            p.x += len*M.sin(p.a)
+            p.y += len*M.cos(p.a)
+            c.lineTo(p.x, p.y)
+            c.stroke()
+          } else if (ch == "-") {
+            p.a += r()/2
+          } else if (ch == "+") {
+            p.a -= r()/2
+          } else if (ch == "[") {
+            st.push(JSON.parse(JSON.stringify(p)))
+          } else if (ch == "]") {
+            p = st.pop()
+            c.beginPath()
+            c.moveTo(p.x, p.y)
+          }
+        })
+      }
+      for (i = 0; i < a.height/2; i++) {
+        ys.push(1-Math.sin(r()*Math.PI/2));
+      }
+      ys.sort(function(a, b) {return a-b});
+      oneStep = function() {
+        var v = ys.shift();
+        if (v) {
+          cl = 0|(1-v)*255
+          c.strokeStyle = "rgb("+[cl,cl,cl]+")"
+          draw(r()*(a.width+100)-50, v*(a.height+100), v*3+0.1)
+        }
+        window.setTimeout(oneStep, 1);
+      }
+      window.setTimeout(oneStep, 1);
+    })();
+  </script>
+  <p>
+    The code is intentionally compact as I was intending to submit something
+    along these lines to a <a
+      href="https://en.wikipedia.org/wiki/Code_golf">code golf</a>
+    competition, but then got distracted.
+  </p>
+  <pre><code id=code></code></pre>
+  <script type="text/javascript" charset="utf-8">
+    document.getElementById('code').textContent = document.getElementById('src').textContent;
+  </script>
+
+

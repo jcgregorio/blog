@@ -1,0 +1,12 @@
+---
+title: Screencast recording under Ubuntu
+date: 2013-07-02T12:00:00-04:00
+---
+
+  <p>I&#39;m sure this evolves over time, but for today, the best command-line
+  incantation I found for recording screencasts is:</p>
+   <pre><code>$ avconv -strict experimental \
+-f x11grab -r 25 -s 1024x768 -i :0.0 \
+ -pre medium -f alsa -ac 2  -ar 22050 \
+ -i pulse cast.webm</code></pre>
+

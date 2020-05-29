@@ -1,9 +1,0 @@
-ExpiresActive Off
-ExpiresDefault "now" 
-# removed by cornerhost: SecFilterEngine Off
-FileETag None
-
-# There appears to be a bug in apache. Turning
-# expires on in a directory above here and
-# then back off in this dir does not actually turn
-# expires off for CGI files.

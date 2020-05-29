@@ -1,0 +1,89 @@
+---
+title: AppClientTest - now with unit testing goodness
+date: 2008-03-06T12:00:00-05:00
+---
+
+  
+  <p>I just checked in the last of some changes I've made to <a href="http://code.google.com/p/feedvalidator/wiki/AppClientTest">appclienttest</a> to support testing. Yes, that's right, tests for appclienttest itself. This actually required a bunch of small changes through a lot of different code, but in the end I think it's a general solution that will be useful. </p> <p>The big problem with testing appclienttest is that it runs through a lot of different steps as it puts an AtomPub service through its paces. Instead of it being like a series of function calls it's more like a little play, a drama in HTTP, where each scene relies on the last scene completing successfully. </p> <p>Now I already had MockHttp in <a href="http://code.google.com/p/feedvalidator/wiki/AtomPubBase">atompubbase</a> which reads files out of a directory to emulate the behavior of httplib2.Http, but creating a directory structure populated with all the files needed for a run of appclienttest was going to be tedious, so I added <a href="http://code.google.com/p/feedvalidator/source/browse/trunk/apptestsuite/client/atompubbase/mockhttp.py">mockhttp.MockRecorder</a>. This class is another mock for httplib2.Http, (probably not really a mock, but more a wrapper) that wraps httplib2.Http and records every response it receives into a directory structure. It's the mirror image functionality of MockHttp. </p> <p>With those in place I was now able to add the 'record' and 'playback' command-line options to appclienttest:</p><pre><code>$ python validator/appclienttest.py --help
+usage: appclienttest.py [options]
+
+options:
+  -h, --help          show this help message and exit
+  --credentials=FILE  FILE that contains a name and password on separate lines
+                      with an optional third line with the authentication type
+                      of 'ClientLogin &lt;service&gt;'.
+  --output=FILE       FILE to store test results
+  --verbose           Print extra information while running.
+  --quiet             Do not print anything while running.
+  --debug             Print low level HTTP information while running.
+  --html              Output is formatted in HTML
+<ins>  --record=DIR        Record all the responses to be used later in playback
+                      mode.
+  --playback=DIR      Playback responses stored from a previous run.</ins>
+</code></pre>
+<p>So now I can run appclienttest against my site and record the traffic:</p><pre><code>$ python validator/appclienttest.py --record=./validator/rawtestdata/complete/ --html --output=test.html
+</code></pre>
+<p>And play it back any time I want:</p><pre><code>$ python validator/appclienttest.py --playback=./validator/rawtestdata/complete/ --html --output=test.html
+</code></pre>
+<p>The one caveat with this system is that appclienttest generates random slugs when it adds new entries, and obviously the recorded responses won't reflect those changing slugs on playback so all playback will have Slug warnings. </p>
+<p>Here's what the directory structure looks like when I record a run of appclienttest run against my <a href="http://bitworking.org/projects/apptestsite/">AppTestSite</a>:</p><pre><code>$ tree validator/rawtestdata/complete/
+validator/rawtestdata/complete/
+|-- DELETE
+|   `-- projects
+|       `-- apptestsite
+|           `-- app.cgi
+|               `-- service
+|                   |-- entry
+|                   |   |-- 1.file
+|                   |   |-- 2.file
+|                   |   `-- 3.file
+|                   `-- media
+|                       `-- 1.file
+|-- GET
+|   `-- projects
+|       `-- apptestsite
+|           `-- app.cgi
+|               |-- service
+|               |   |-- entry
+|               |   |   |-- 1.file
+|               |   |   |-- 1.file.2
+|               |   |   |-- 2.file
+|               |   |   |-- 2.file.2
+|               |   |   |-- 2.file.3
+|               |   |   |-- 3.file
+|               |   |   `-- 3.file.2
+|               |   |-- entry.file
+|               |   |-- entry.file.2
+|               |   |-- entry.file.3
+|               |   |-- media
+|               |   |   `-- 1.file
+|               |   |-- media.file
+|               |   `-- media.file.2
+|               `-- service.file
+|-- POST
+|   `-- projects
+|       `-- apptestsite
+|           `-- app.cgi
+|               `-- service
+|                   |-- entry.file
+|                   |-- entry.file.2
+|                   |-- entry.file.3
+|                   `-- media.file
+`-- PUT
+    `-- projects
+        `-- apptestsite
+            `-- app.cgi
+                `-- service
+                    |-- entry
+                    |   `-- 2.file
+                    `-- media
+                        `-- 1.file
+
+26 directories, 30 files
+</code></pre>
+<p>Which gives me a nice directory of files I can later playback, or more importantly, can modify and playback to test different scenarios.</p>
+<p>Now we're all set for some testing. Just record a good session, tweak the responses in the recording directory to trigger specific error conditions and then check for those errors on the output of a playback run against that directory, which is exactly what <a href="http://code.google.com/p/feedvalidator/source/browse/trunk/apptestsuite/client/validator/runtests.py">runtests.py</a> in the validator subdirectory does. </p>
+<p>One last change you may notice is that the error and warning messages have been enhanced, giving the specification and section number being violated. The next step will be to turn those into real links in the HTML output. </p>
+  
+  
+

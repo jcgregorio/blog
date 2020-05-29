@@ -9,3 +9,4 @@ letsencrypt.cache
 Gemfile.lock
 .sass-cache
 .jekyll-metadata
+public

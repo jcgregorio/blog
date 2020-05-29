@@ -1,0 +1,118 @@
+---
+title: AtomAPI search proposal
+date: 2003-11-03T12:00:00-05:00
+---
+
+  <p>Back to more thoughts on search. <a href="http://bitworking.org/news/Atom_Archive_Format#X2">
+  Sam Ruby mentioned</a> a simpler kind of navigation based on the type of
+  flow you see on <a href="http://www.python.org/doc/current/lib/module-re.html">
+  this page from the Python documentation</a>.</p>
+<blockquote><p>Note the bar across the top with left, up, and right arrows, as well as
+   special purpose links.  Of course the body of this page has a number of implicit "down" arrows.
+   If we could make this information machine readable, every Atom file would potentially be a directory and an introspection file.
+</p></blockquote>
+  
+<p>I like the idea of re-using the feed format, either by having a blog augment
+  its public feed, or by generating a different private feed used for
+  publication client navigation.</p>
+<p>Below, as a way of demonstrating this idea I have taken a copy of Sam's Atom feed
+   and augmented it with two kinds of navigation information.</p>
+<pre class="example">
+&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+&lt;feed version="0.2" xmlns="http://purl.org/atom/ns#"&gt;
+
+  <ins>&lt;nav rel="next" title="Next 20 Entries" href="http://.."/&gt;</ins>
+<ins>&lt;nav rel="previous" title="Previous 20 Entries" href="http://.."/&gt;</ins>
+<ins>&lt;nav title="Last 20 Comments" href="http://.."/&gt;</ins>
+
+  &lt;entry&gt;
+    &lt;id&gt;1630&lt;/id&gt;
+    &lt;link&gt;1630.html&lt;/link&gt;
+    <ins>&lt;nav rel="comments" title="Comments on Entry 1630" href="/blog/1630.atom" /&gt;</ins>
+<ins>&lt;edit&gt;/blog/1630.atomapi&lt;/edit&gt;</ins>
+    &lt;title&gt;One year ago today...&lt;/title&gt;
+    &lt;content type="application/xhtml+xml" mode="xml"&gt;
+      &lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;Microsoft
+        &lt;a href="http://www.intertwingly.net/blog/945.html"&gt;
+        inhaled a blogger&lt;/a&gt;.&amp;#160; Now it looks like
+        he is attempting to
+        &lt;a href="http://www.razorsoft.net/weblog/2003/10/28.html"&gt;
+        resurface&lt;/a&gt;...
+      &lt;/div&gt;&lt;/content&gt;
+    &lt;issued&gt;2003-10-29T20:52:57-05:00&lt;/issued&gt;
+    &lt;modified&gt;2003-10-29T20:52:57-05:00&lt;/modified&gt;
+  &lt;/entry&gt;
+
+  &lt;entry&gt;
+    &lt;id&gt;1628&lt;/id&gt;
+    &lt;link&gt;1628.html&lt;/link&gt;
+    <ins>&lt;nav rel="comments" title="Comments on Entry 1628" href="/blog/1628.atom" /&gt;</ins>
+<ins>&lt;edit&gt;/blog/1628.atomapi&lt;/edit&gt;</ins>
+    &lt;title&gt;Is &amp;lt;content&amp;gt; required on a POST?&lt;/title&gt;
+    &lt;content type="application/xhtml+xml" mode="xml"&gt;
+      &lt;div xmlns="http://www.w3.org/1999/xhtml"&gt;
+         I've kicked off what I intend to be a series of
+         discussions leading up to the creation of a
+         validation test suite for Atom implementors
+         with the following question on the
+         &lt;a href="http://www.imc.org/atom-syntax/index.html"&gt;
+         atom-syntax mailing list&lt;/a&gt;:
+         &lt;a href="http://www.imc.org/atom-syntax/mail-archive/msg00908.html"&gt;
+         Is content required on a POST&lt;/a&gt;?
+      &lt;/div&gt;
+    &lt;/content&gt;
+    &lt;issued&gt;2003-10-29T05:24:12-05:00&lt;/issued&gt;
+    &lt;modified&gt;2003-10-29T05:24:12-05:00&lt;/modified&gt;
+  &lt;/entry&gt;
+
+&lt;/feed&gt;
+</pre>
+<h3>nav</h3>
+<p>This proposal would add a new element <code>nav</code> which provides named links to
+   other Atom feeds. The relationship to the current feed, or a description of the
+   target feed is given in the <code>title</code> attribute. Any number of
+   <code>nav</code> elements may be present in the feed or in the Entry.</p>
+<p>Parts of the <code>nav</code> element:</p>
+<dl>
+<dt>href</dt>
+<dd>URI of another Atom feed. This can be either an absolute or relative URI. <strong>Required.</strong></dd>
+<dt>title</dt>
+<dd>Plain text description of what is at the given <code>href</code>. <strong>Required.</strong></dd>
+<dt>rel</dt>
+<dd>Machine readable description of the relationship between this feed
+       and the target feed. <strong>Optional, but strongly suggested.</strong> A set of common values
+       for the <code>rel</code> attribute would be useful, for example
+      'previous', 'next' and 'comments' as used in the above example.</dd>
+</dl>
+<h3>edit</h3>
+<p>There is one other element introduced, the <code>edit</code> element. This element
+   contains the 'editEntry' URI for that Entry.</p>
+<h3>Putting it all together</h3>
+<p>The <code>nav</code> elements in the <code>feed</code> and in the <code>entry</code> provide a framework
+   for navigating among Atom feeds. This could be used by aggregators to discover new feeds.
+   It also provides a navigation mechanism for the AtomAPI
+   and could replace the search facet as it stands today.
+   The client can move among the supplied Atom formatted files and
+   from there find the 'editEntry' URI for each Entry.
+   Note that this is a restricted form
+   of the <a href="http://bitworking.org/news/Atom_Archive_Format">browse facet</a> and this
+   new form will hopefully
+   cover some of the concerns raised about that interface, notably the potential complexity
+   that the clients must be able to handle and also the fact that none of the previous proposals
+   made sufficient re-use of the Atom format.</p>
+
+  <div class="commentContent" id="X1">
+    Can we get an updated "Busy Developer's Guide" or wiki page?  I've lost a sense of  "where we're at" to be able to comment on one specific facet in isolation.
+    <p class="commentByLine">Posted by
+       <a href="http://bitsko.slc.ut.us/">Ken MacLeod</a> on <a href="#X1" title="2003-11-04T11:55:36">2003-11-04</a>
+    </p>
+</div><div class="commentContent" id="X2">
+    <p><a href="http://www.w3.org/TR/html401/struct/links.html#h-12.3">http://www.w3.org/TR/html401/struct/links.html#h-12.3</a></p>
+<p>Perhaps we could merge nav and link?</p>
+
+    <p class="commentByLine">Posted by
+       <a href="http://www.intertwingly.net/blog/">Sam Ruby</a> on <a href="#X2" title="2003-11-04T14:08:35">2003-11-04</a>
+    </p>
+</div>
+  
+
