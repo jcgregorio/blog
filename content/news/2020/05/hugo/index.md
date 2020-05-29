@@ -44,3 +44,6 @@ I went back and added tags to many, but not all, of my posts. The tags, along wi
 [Related Content](https://gohugo.io/content-management/related/) functionality builds
 easy navigation paths among related posts. My favorite of these was bringing together
 all of my entries that have [visualizations](/tags/visualization/).
+
+Oh, one more update about a footgun to avoid in the Ananke theme, it [blocks all indexing by
+search engines by default](https://github.com/budparr/gohugo-theme-ananke/issues/201).
