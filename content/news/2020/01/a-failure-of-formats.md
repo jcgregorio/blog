@@ -26,7 +26,7 @@ format you quickly realize it is stunted and inadequate. Let's look at a series
 of comparisons between HTML and paper, starting with simple text, a note to
 myself:
 
-![Hand written words "get milk"](../../../images/2020/a-failure-of-formats/Drawing.png){:width="40%"}
+![Hand written words "get milk"](/images/2020/a-failure-of-formats/Drawing.png)
 
 Now this is something that HTML excels at:
 
@@ -41,7 +41,7 @@ two approaches, so let's ignore them.
 So far HTML is looking good. Let's make our example a little more complex; a
 shopping list.
 
-![Hand written shopping list with milk and eggs.](../../../images/2020/a-failure-of-formats/list.png){:width="40%"}
+![Hand written shopping list with milk and eggs.](/images/2020/a-failure-of-formats/list.png)
 
 This again is something that HTML is great at:
 
@@ -72,7 +72,7 @@ The markup carries not only the text, but also the semantics. I hesitate to use 
 
 But as we make our example a little more complex we start to run into the limits of HTML, for example when we draw a block diagram:
 
-![../../../images/2020/a-failure-of-formats/Drawing_(2).png](../../../images/2020/a-failure-of-formats/server.png){:width="40%"}
+![../../../images/2020/a-failure-of-formats/Drawing_(2).png](/images/2020/a-failure-of-formats/server.png)
 
 When the web was first invented your only way to add such a thing to web page would have been by drawing it as an image and then including that image in the page:
 
@@ -107,23 +107,23 @@ This is a slight improvement over the image. For example, we can extract the tit
       Server -- "Disk 2";
     }
 
-![../../../images/2020/a-failure-of-formats/graphviz.svg](../../../images/2020/a-failure-of-formats/graphviz.svg)
+![/images/2020/a-failure-of-formats/graphviz.svg](/images/2020/a-failure-of-formats/graphviz.svg)
 
 So we've already left the capabilities of HTML behind and we've only just begun, what about math formulas?
 
-![Hand written integral of e.](../../../images/2020/a-failure-of-formats/math.png){:width="40%"}
+![Hand written integral of e.](/images/2020/a-failure-of-formats/math.png)
 
 Again, about a decade after the web started [MathML](https://www.w3.org/TR/MathML/) was standardized as a way to add math to HTML pages. It's been 20 years since the MathML specification was released and you still can't use MathML in your web pages because [browser support is so bad](https://caniuse.com/#feat=mathml).
 
 But even if MathML had been fully adopted and incorporated in to all web browsers, would we be done? Surely not, what about musical notations?
 
-![Musical notation - Public Domain, https://commons.wikimedia.org/w/index.php?curid=34876091](../../../images/2020/a-failure-of-formats/Bachlut1.png){:width="40%"}
+![Musical notation - Public Domain, https://commons.wikimedia.org/w/index.php?curid=34876091](/images/2020/a-failure-of-formats/Bachlut1.png)
 
 If we want to include notes in a semantically meaningful way on a web page do we have to wait another 10 years for standardization and then hope that browsers actually implement the spec?
 
 What about Feynman diagrams?
 
-![Feynman diagram - By Joel Holdsworth (Joelholdsworth) - Non-Derived SVG of Radiate_gluon.png, originally the work of SilverStar at Feynmann-diagram-gluon-radiation.svg, updated by joelholdsworth., CC BY 2.5, https://commons.wikimedia.org/w/index.php?curid=1764161](../../../images/2020/a-failure-of-formats/Feynmann_Diagram_Gluon_Radiation.svg){:width="40%"}
+![Feynman diagram - By Joel Holdsworth (Joelholdsworth) - Non-Derived SVG of Radiate_gluon.png, originally the work of SilverStar at Feynmann-diagram-gluon-radiation.svg, updated by joelholdsworth., CC BY 2.5, https://commons.wikimedia.org/w/index.php?curid=1764161](/images/2020/a-failure-of-formats/Feynmann_Diagram_Gluon_Radiation.svg)
 
 Or [chemical formulas](https://en.wikipedia.org/wiki/Structural_formula)?
 
