@@ -1,16 +1,12 @@
 {
   "hosting": {
-    "public": "_site",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "cleanUrls": true,
     "rewrites": [
       {
         "source": "/news/feed/",
-        "destination": "/news/feed/index.atom"
+        "destination": "/news/feed/index.xml"
       }
     ]
   }
