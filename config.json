@@ -78,7 +78,8 @@
     "github": "https://github.com/jcgregorio",
     "images": ["images/newlogo.png"],
     "background_color_class": "bg-black",
-    "recent_posts_number": 5
+    "recent_posts_number": 5,
+    "post_content_classes": "post-content"
   },
   "markup": {
     "defaultMarkdownHandler": "goldmark",
