@@ -1,0 +1,88 @@
+---
+title: 'Chana Masala Recipe'
+date: 2020-05-30T18:18:22-04:00
+tags:
+  - recipe
+---
+
+<p>
+  My kids have asked me to write up my recipes, but the problem is that for the
+  vast majority of the things I cook are done by eye, so I'm attempting to
+  document them with pictures, here's my Chana Masala recipe. Click on any
+  picture to bring up the lightbox with captions.
+</p>
+
+<style>
+  ul.recipe {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  ul.recipe li {
+    list-style: none;
+    margin: 8px;
+  }
+</style>
+
+<ul class="recipe">
+  <li>
+    <a class="gallery" href="./IMG_20200405_124115.jpg"
+      ><img alt="Gather ingredients." src="./thumb/IMG_20200405_124115.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_124452.jpg"
+      ><img
+        alt="Start simmering coconut milk with curry powder and tumeric."
+        src="./thumb/IMG_20200405_124452.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_124735.jpg"
+      ><img
+        alt="At the same time start simmering Chickpeas in Masala."
+        src="./thumb/IMG_20200405_124735.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_125155.jpg"
+      ><img
+        alt="Add frozen spinach to the coconut milk. Simmer both for at least 20 minutes."
+        src="./thumb/IMG_20200405_125155.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_130313.jpg"
+      ><img
+        alt="Use an immersion blender on the spinach and coconut milk mixture."
+        src="./thumb/IMG_20200405_130313.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_130513.jpg"
+      ><img
+        alt="Add in the simmered chickpeas."
+        src="./thumb/IMG_20200405_130513.jpg"
+    /></a>
+  </li>
+  <li>
+    <a class="gallery" href="./IMG_20200405_130636.jpg"
+      ><img
+        alt="Mix and serve over white rice with Naan."
+        src="./thumb/IMG_20200405_130636.jpg"
+    /></a>
+  </li>
+</ul>
+
+<script type="text/javascript" charset="utf-8">
+  new LuminousGallery(
+    document.querySelectorAll('.gallery'),
+    {
+      arrowNavigation: true,
+    },
+    {
+      caption: function (trigger) {
+        return trigger.querySelector('img').getAttribute('alt');
+      },
+    }
+  );
+</script>
