@@ -80,7 +80,7 @@
     "background_color_class": "bg-black",
     "recent_posts_number": 5,
     "post_content_classes": "post-content",
-    "custom_css": ["css/custom.css"]
+    "custom_css": ["css/custom.css", "css/luminous-basic.min.css"]
   },
   "markup": {
     "defaultMarkdownHandler": "goldmark",
