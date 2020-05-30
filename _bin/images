@@ -1,0 +1,9 @@
+#!/bin/bash
+mkdir tmp
+mogrify -path ./tmp -resize 1024 -quality 80 *.jpg
+mkdir thumb
+mogrify -path ./thumb -thumbnail 128x128 *.jpg
+rm *.jpg
+mv ./tmp/* .
+rmdir tmp
+ls *.jpg | cat
