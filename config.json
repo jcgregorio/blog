@@ -65,7 +65,7 @@
   },
 
   "sitemap": {
-    "changefreq": "monthly",
+    "changefreq": "hourly",
     "priority": 0.5,
     "filename": "sitemap.xml"
   },
