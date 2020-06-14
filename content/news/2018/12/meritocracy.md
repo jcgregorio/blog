@@ -4,6 +4,7 @@ date: 2018-12-17T12:00:00-05:00
 tags:
   - tech
   - humor
+  - definitions
 ---
 
 <dl>
