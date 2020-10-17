@@ -51,7 +51,7 @@ This again is something that HTML is great at:
       <li>Eggs</li>
     </ul>
 
-Not only can HTML represent the text that's been written, but can also capture the intended structure by encoding it as a list using the <ul> and <li> elements. So now we are expressing not only the text, but also the meaning, and again this representation is machine readable.
+Not only can HTML represent the text that's been written, but can also capture the intended structure by encoding it as a list using the `<ul>` and `<li>` elements. So now we are expressing not only the text, but also the meaning, and again this representation is machine readable.
 
 At this point we should take a small detour to talk about the duality we are seeing here with HTML, between the markup and the visual representation of that markup. That is, the following HTML:
 
@@ -68,7 +68,7 @@ Is rendered in the browser as:
 - Milk
 - Eggs
 
-The markup carries not only the text, but also the semantics. I hesitate to use the term 'semantics' because that's an overloaded term with a long history, particularly in web technology, but that is what we're talking about. The web browser is able to convert from the markup semantics, <ul> and <li>, into the visual representation of a list, i.e. vertically laying out the items and putting bullets next to them. That duality between meaningful markup in text, distinct from the final representation, is important as it's the distinction that made search engines possible. And we aren't restricted to just visual representations, screen readers can also use the markup to guide their work of turning the markup into audio.
+The markup carries not only the text, but also the semantics. I hesitate to use the term 'semantics' because that's an overloaded term with a long history, particularly in web technology, but that is what we're talking about. The web browser is able to convert from the markup semantics, `<ul>` and `<li>`, into the visual representation of a list, i.e. vertically laying out the items and putting bullets next to them. That duality between meaningful markup in text, distinct from the final representation, is important as it's the distinction that made search engines possible. And we aren't restricted to just visual representations, screen readers can also use the markup to guide their work of turning the markup into audio.
 
 But as we make our example a little more complex we start to run into the limits of HTML, for example when we draw a block diagram:
 
