@@ -1,7 +1,6 @@
 ---
 title: 'Efficient is the antonym of Robust'
 date: 2020-08-02T08:26:21-04:00
-draft: true
 ---
 
 In [Just Too Efficient](https://www.tbray.org/ongoing/When/202x/2020/07/05/Too-Efficient), Tim Bray

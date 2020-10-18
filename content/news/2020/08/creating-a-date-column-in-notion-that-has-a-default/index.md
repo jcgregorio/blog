@@ -1,7 +1,6 @@
 ---
 title: 'Creating a Date Column in Notion That Has a Default'
 date: 2020-08-14T12:00:02-04:00
-draft: true
 ---
 
 I searched around for a while on how to create a Date column in

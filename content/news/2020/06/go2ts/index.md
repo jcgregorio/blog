@@ -1,7 +1,6 @@
 ---
 title: 'go2ts'
 date: 2020-06-09T19:10:41-04:00
-draft: true
 ---
 
 [go2ts](https://pkg.go.dev/github.com/skia-dev/go2ts?tab=overview) is a simple
