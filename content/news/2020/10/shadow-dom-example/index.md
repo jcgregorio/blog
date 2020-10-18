@@ -1,6 +1,8 @@
 ---
 title: 'Shadow Dom Example'
 date: 2020-10-17T19:38:03-04:00
+tags:
+  - web components
 ---
 
 We need to talk about Shadow DOM. While the [Google official docs strongly encourage the use of Shadow DOM](https://developers.google.com/web/fundamentals/web-components/best-practices), I quite strongly disagree.
