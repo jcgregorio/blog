@@ -1,7 +1,11 @@
 {
   "hosting": {
     "public": "public",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
     "cleanUrls": true,
     "trailingSlash": true,
     "rewrites": [
@@ -12,6 +16,17 @@
       {
         "source": "/news/feed/index.atom",
         "destination": "/news/feed/index.xml"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*",
+        "headers": [
+          {
+            "key": "Referrer-Policy",
+            "value": "unsafe-url"
+          }
+        ]
       }
     ]
   }
