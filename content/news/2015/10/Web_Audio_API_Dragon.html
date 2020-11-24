@@ -2,13 +2,14 @@
 title: Dragon Sound Effects Web Audio API
 date: 2015-10-31T12:00:00-04:00
 tags:
-  - maker
+- maker
 ---
 
 <style type="text/css" media="screen">
   .controls button:hover {
     background: #eee;
   }
+
   .controls button {
     padding: 1em;
     background-color: white;
@@ -17,9 +18,7 @@ tags:
 </style>
 <p>
   A sound effects board with the sounds of a dragon built using the
-  <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API"
-    >Web Audio API</a
-  >. Because Halloween.
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a>. Because Halloween.
 </p>
 <div class="controls">
   <button id="start">Start Snoring</button>
@@ -45,9 +44,7 @@ tags:
     </audio>
   </p>
   <p>
-    Snore: [<a href="http://www.sound-effects-hunter.com/free-snoring-sound/"
-      >Source</a
-    >]
+    Snore: [<a href="http://www.sound-effects-hunter.com/free-snoring-sound/">Source</a>]
     <audio id="snore" controls="" loop="">
       <source src="/audio/snore.mp3" type="audio/mp3" />
     </audio>
@@ -117,7 +114,14 @@ tags:
       );
     }
 
+    function resumeIfNecessary() {
+      if (audioCtx.state === "suspended") {
+        audioCtx.resume();
+      }
+    }
+
     document.getElementById('wake').addEventListener('click', function () {
+      resumeIfNecessary()
       snore.pause();
 
       setFadeout(chains, gainNodeChains, 0.03);
@@ -131,6 +135,7 @@ tags:
     });
 
     document.getElementById('angry').addEventListener('click', function () {
+      resumeIfNecessary()
       snore.pause();
       setFadeout(chains, gainNodeChains, 0.03);
 
@@ -143,10 +148,12 @@ tags:
     });
 
     document.getElementById('start').addEventListener('click', function () {
+      resumeIfNecessary()
       snore.play();
     });
 
     document.getElementById('stop').addEventListener('click', function () {
+      resumeIfNecessary()
       snore.pause();
     });
   }
