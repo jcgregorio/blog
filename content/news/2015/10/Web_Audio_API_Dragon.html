@@ -84,22 +84,16 @@ tags:
     // Once the snore sound is loaded set up the processing on it.
     snore.addEventListener('loadedmetadata', function () {
       // Connect it though the lowpass filter.
-      sourceSnore.connect(biquadFilter);
-
       // And then add some gain.
-      biquadFilter.connect(gainNodeSnore);
-
       // Finally connect to the output.
-      gainNodeSnore.connect(audioCtx.destination);
+      sourceSnore.connect(biquadFilter).connect(gainNodeSnore).connect(audioCtx.destination);
     });
 
     sourceSniff.connect(audioCtx.destination);
 
-    sourceRoar.connect(gainNodeRoar);
-    gainNodeRoar.connect(audioCtx.destination);
+    sourceRoar.connect(gainNodeRoar).connect(audioCtx.destination);
 
-    sourceChains.connect(gainNodeChains);
-    gainNodeChains.connect(audioCtx.destination);
+    sourceChains.connect(gainNodeChains).connect(audioCtx.destination);
 
     function setFadeout(element, gain, gainValue) {
       gain.gain.setValueAtTime(audioCtx.currentTime, 0.3);
