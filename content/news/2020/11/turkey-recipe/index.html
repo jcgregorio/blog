@@ -1,0 +1,124 @@
+---
+title: 'Turkey Recipe'
+date: 2020-11-26T16:35:25-05:00
+tags:
+- recipe
+---
+
+<p>
+  Here's my Roasted Turkey recipe. Click on any picture to bring up the lightbox
+  with captions.
+</p>
+
+
+
+<ul class="recipe">
+  <li>
+    <a class=gallery href="PXL_20201125_181524575.jpg">
+      <img alt="3 cups water. 1 cup Kosher salt. 1/2 cup light brown sugar. 1 teaspoon peppercorns."
+        src="./thumb/PXL_20201125_181524575.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_181642282.jpg">
+      <img alt="Combine all ingredients and bring to a boil." src="./thumb/PXL_20201125_181642282.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_181851313.jpg">
+      <img alt="Get a container large enough to hold the turkey and add ice." src="./thumb/PXL_20201125_181851313.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_182548481.jpg">
+      <img alt="Add enough water to cover the ice." src="./thumb/PXL_20201125_182548481.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_182606392.jpg">
+      <img alt="Boil mixture until all the salt and sugar are dissolved." src="./thumb/PXL_20201125_182606392.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_182648169.jpg">
+      <img alt="Pour mixture into ice-water and stir." src="./thumb/PXL_20201125_182648169.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_182714159.jpg">
+      <img alt="Rinse turkey and remove giblets." src="./thumb/PXL_20201125_182714159.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_182812137.jpg">
+      <img alt="Place turkey in container." src="./thumb/PXL_20201125_182812137.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_183005888.jpg">
+      <img alt="Add water to cover the turkey." src="./thumb/PXL_20201125_183005888.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201125_183319301.jpg">
+      <img alt="Store container in refrigerator for 24 hours." src="./thumb/PXL_20201125_183319301.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201126_185753852.jpg">
+      <img alt="Sprinkle turkey with garlic powder, onion powder, and poultry seasoning. Place in oven at 450F."
+        src="./thumb/PXL_20201126_185753852.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201126_191706967.jpg">
+      <img alt="Roast in the oven until the coldest part of the turkey reaches 100F, after about 30-40 minutes."
+        src="./thumb/PXL_20201126_191706967.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201126_191809569.jpg">
+      <img
+        alt="Decrease oven temperature to 400F. Add stuffing to turkey and continue to roast turkey until internal temperature reaches 160F."
+        src="./thumb/PXL_20201126_191809569.jpg">
+    </a>
+  </li>
+  <li>
+    <a class=gallery href="PXL_20201126_195530426.jpg">
+      <img alt="Remove from oven and let sit 20 minutes before slicing." src="./thumb/PXL_20201126_195530426.jpg">
+    </a>
+  </li>
+</ul>
+
+<script type="text/javascript" charset="utf-8">
+  new LuminousGallery(
+    document.querySelectorAll('.gallery'),
+    {
+      arrowNavigation: true,
+    },
+    {
+      caption: function (trigger) {
+        return trigger.querySelector('img').getAttribute('alt');
+      },
+    }
+  );
+</script>
+
+<style>
+  ul.recipe {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  ul.recipe li {
+    list-style: none;
+    margin: 8px;
+  }
+
+  .lum-lightbox-caption {
+    color: white;
+    background: black;
+    font-size: 150%;
+    padding: 16px;
+  }
+</style>
