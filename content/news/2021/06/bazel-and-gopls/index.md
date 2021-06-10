@@ -27,4 +27,4 @@ tracked in
 [proposal: global ignore mechanism for Go tool ecosystem](https://github.com/golang/go/issues/42965),
 but given the push back from the core Go developers every time this issue is
 raised is "just sprinkle empty go.mod files in those directories", which is both
-impractical and just a tag arrogant, I'm not very hopeful.
+impractical and just a tad arrogant, I'm not very hopeful.
