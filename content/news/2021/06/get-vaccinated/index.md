@@ -16,5 +16,5 @@ Also, we all know the majority of people not getting vaccinated are the
 followers of
 [Winnie The Coup](https://www.youtube.com/watch?v=nSBx9QNhJU8&t=63s), which will
 only fuel more conspiracy theories in future years when, for some unknown
-reason, the percents of R deaths, hospitalizations and instances of long Covid
-will be found to swamp the rest of the US population.
+reason, the percentage of R deaths, hospitalizations, and instances of long
+Covid will be found to swamp the rest of the US population.
