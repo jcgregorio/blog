@@ -44,4 +44,4 @@ undermining the 2024 election. Instead I raise this to point to the magnitude of
 the work ahead.
 
 You aren't trying to convince these people that Biden won in 2020, you are
-trying to convince them that there entire world view is wrong.
+trying to convince them that their entire worldview is wrong.
