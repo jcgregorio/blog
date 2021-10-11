@@ -26,6 +26,10 @@
         "destination": "/news/feed/index.xml"
       },
       {
+        "source": "/index.atom",
+        "destination": "/news/feed/index.xml"
+      },
+      {
         "source": "/news/feed/index.atom",
         "destination": "/news/feed/index.xml"
       }
