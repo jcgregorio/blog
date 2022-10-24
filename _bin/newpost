@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x 
+
 POSTNAME=news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`/index.md
 FILENAME=./content/$POSTNAME
 hugo new $POSTNAME
