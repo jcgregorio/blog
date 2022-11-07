@@ -2,25 +2,29 @@
   "baseURL": "https://bitworking.org/",
   "languageCode": "en-us",
   "title": "BitWorking",
-  "theme": ["hugo-atom-feed", "ananke"],
+  "theme": [
+    "hugo-atom-feed",
+    "ananke"
+  ],
   "disqusShortname": "bitworking-1",
   "paginate": 20,
-
   "outputs": {
-    "home": ["HTML", "ATOM"],
-    "page": ["HTML"]
+    "home": [
+      "HTML",
+      "ATOM"
+    ],
+    "page": [
+      "HTML"
+    ]
   },
-
   "social": {
     "twitter": "bitworking"
   },
-
   "author": {
     "name": "Joe Gregorio",
     "email": "joe@bitworking.org",
     "twitter": "bitworking"
   },
-
   "related": {
     "threshold": 80,
     "includeNewer": true,
@@ -36,7 +40,6 @@
       }
     ]
   },
-
   "menus": {
     "main": [
       {
@@ -57,30 +60,33 @@
       }
     ]
   },
-
   "services": {
     "rss": {
       "limit": 5
     }
   },
-
   "sitemap": {
     "changefreq": "hourly",
     "priority": 0.5,
     "filename": "sitemap.xml"
   },
-
   "params": {
     "author": "Joe Gregorio",
     "favicon": "favicon.ico",
     "description": "Joe Gregorio - REST, Web, Go, APIs, Dad, Husband, Maker, or any linear combination of such. Googler.",
     "twitter": "https://twitter.com/bitworking",
+    "mastodon": "https://mastodon.cc/@jcgregorio",
     "github": "https://github.com/jcgregorio",
-    "images": ["images/newlogo.png"],
+    "images": [
+      "images/newlogo.png"
+    ],
     "background_color_class": "bg-black",
     "recent_posts_number": 5,
     "post_content_classes": "post-content",
-    "custom_css": ["css/custom.css", "css/luminous-basic.min.css"]
+    "custom_css": [
+      "css/custom.css",
+      "css/luminous-basic.min.css"
+    ]
   },
   "markup": {
     "defaultMarkdownHandler": "goldmark",
