@@ -2,4 +2,4 @@ pub:
 	./_bin/pub
 
 edit:
-	hugo serve --disableFastRender
+	hugo serve --verbose --disableFastRender
