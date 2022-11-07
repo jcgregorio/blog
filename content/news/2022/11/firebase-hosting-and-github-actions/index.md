@@ -11,5 +11,5 @@ Here are there instructions:
 
     https://firebase.google.com/docs/hosting/github-integration
 
-Here is my [slightly tweaked workflow file]().
+Here is my [slightly tweaked workflow file](https://github.com/jcgregorio/blog/blob/master/.github/workflows/firebase-hosting-merge.yml).
 
