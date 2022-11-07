@@ -11,7 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: _bin/pub
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install wget
+        run: sudo apt-get install -y wget
+      - name: Install firebase tools
+        run: npm install -g firebase-tools
+      - run: ${{ GITHUB_WORKSPACE }}/_bin/pub
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
