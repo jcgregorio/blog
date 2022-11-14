@@ -9,10 +9,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     wget \
     psutils \
     make \
+    hugo \
+    xmlstarlet \
     bash
-
-RUN wget https://github.com/gohugoio/hugo/releases/download/v0.89.4/hugo_0.89.4_Linux-64bit.deb \
-    && apt install ./hugo_0.89.4_Linux-64bit.deb
 
 RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
     apt-get install -y nodejs
@@ -20,11 +19,3 @@ RUN curl -fsSL https://deb.nodesource.com/setup_19.x | bash - && \
 RUN npm install -g firebase-tools    
 
 ENV PATH="$PATH:$PWD/node/bin"
-
-RUN git clone https://github.com/jcgregorio/blog.git \
-    && cd blog \
-    && git submodule update --init --recursive
-
-COPY . /
-
-ENTRYPOINT [ "/entrypoint.sh" ]
