@@ -16,7 +16,7 @@ to a single website. Here, for example, is a quote from [Kai Ryssdal](https://ma
 on [Make Me Smart](https://www.marketplace.org/shows/make-me-smart/unpacking-mastodon/):
 
 > "I've invested a huge amount of time curating, and taking care to maximize Twitter for my purpose,
-> which is news gathering with a soup son of serendipitous discovery.."
+> which is news gathering with a soupçon of serendipitous discovery.."
 
 What blows my mind is the complete lack of self-awareness when journalist like Kai
 admit to relenquishing their editorial filter to a single corporate entity, wide open
