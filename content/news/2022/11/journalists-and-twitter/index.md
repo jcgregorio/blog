@@ -39,8 +39,8 @@ I'm just spit-balling here, but that seems a far better solution than having
 every journalist in the world spoon fed stories by a single corporate entity, or
 as it now stands, a single private entity owned by our own American Oligarch, Space Karen.
 
-[1] When I first wrote this piece I left of "walled-garden", which was a mistake.
-The "walled-garden" is a required attribute of a site to earn my wrath, as there are fine companies
+[1] When I first wrote this piece I left off "walled-garden", which was a mistake.
+The "walled-garden" attribute is required to earn my wrath, as there are many fine companies
 that seem to be able to play nicely on the open web and still
 make a profit, such as [WordPress](https://wordpress.com/). Even more infuriating is that both
 Twitter and Facebook started off as a part of the open web, for example, by providing
