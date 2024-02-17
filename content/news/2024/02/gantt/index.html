@@ -23,9 +23,16 @@ date: 2024-02-15T21:00:42-05:00
 <section>
   <h2>Background</h2>
   <p>
-    There are many types of charts used for project planning, and the names for
-    them are used inconsistently. For example, Fig 1 is an example Gantt chart
-    produced by Microsoft Project.
+    There are many types of charts used for project planning, but in general
+    they display a project as a series of tasks, where the duration of each task
+    is displayed as a horizontal bar, where the left hand edge of the task bar
+    is aligned with the time at which that task will start. Charts may also
+    contain dependencies among the tasks, which can also be displayed on the
+    chart.
+  </p>
+  <p>
+    The names for such charts are used inconsistently. For example, Fig 1 is an
+    example Gantt chart produced by Microsoft Project.
   </p>
   <figure>
     <img src="./Example_gantt_chart.gif" />
@@ -56,8 +63,8 @@ date: 2024-02-15T21:00:42-05:00
   </figure>
 
   <p>
-    Other charts Gantt charts lack dependencies between the tasks being tracked,
-    like in the spreadsheet based chart in Fig. 2.
+    Other Gantt charts lack dependencies between the tasks being tracked, like
+    in the spreadsheet based chart in Fig. 2.
   </p>
 
   <figure>
@@ -72,6 +79,11 @@ date: 2024-02-15T21:00:42-05:00
       >
     </figcaption>
   </figure>
+
+  <p>
+    Finally there are PERT charts that eschew the bar presentation and instead
+    present a network diagram of task dependencies.
+  </p>
 </section>
 
 <section>
