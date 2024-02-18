@@ -81,9 +81,24 @@ date: 2024-02-15T21:00:42-05:00
   </figure>
 
   <p>
-    Finally there are PERT charts that eschew the bar presentation and instead
-    present a network diagram of task dependencies.
+    Finally there are PERT charts that don't use the bar presentation and
+    instead present a network diagram of task dependencies.
   </p>
+
+  <figure>
+    <img src="./Pert_example_network_diagram_visio.gif" />
+    <figcaption>
+      <strong>Figure 3.</strong>
+      A completed PERT network diagram created using Microsoft Visio. Note the
+      critical path is in red.
+      <a
+        href="http://creativecommons.org/licenses/by-sa/3.0/"
+        title="Creative Commons Attribution-Share Alike 3.0"
+        >CC BY-SA 3.0</a
+      >,
+      <a href="https://commons.wikimedia.org/w/index.php?curid=4095461">Link</a>
+    </figcaption>
+  </figure>
 </section>
 
 <section>
@@ -124,8 +139,53 @@ date: 2024-02-15T21:00:42-05:00
 
 <section>
   <h2>Chart</h2>
+  <p>
+    A chart is a tuple consisting of an ordered list of Tasks and then a set of
+    Relations between Tasks. In the nomenclature of Graph Theory, the Tasks will
+    be the vertexes and the Relations will be the edges in the graph.
+  </p>
   <section>
     <h3>Definitions</h3>
+    <dl>
+      <dt>A chart is a tuple of Tasks and Relations.</dt>
+      <dd>$$ C=(T,R) $$</dd>
+      <dt>
+        Tasks is an ordered list of Tasks. Note that this is different from the
+        basic definition of a Graph where the vertexes are just a set and don't
+        have any specific ordering. The ordering here allows algorithms run over
+        the chart to be deterministic, and can also be used when displaying
+        charts.
+      </dt>
+      <dd>$$ T=[T_0, T_1, T_2, ...] $$</dd>
+      <dt>Each Task has a duration:</dt>
+      <dd>$$ T_{i}.d $$</dd>
+      <dt>Relations is a list of Relations.</dt>
+      <dd>$$ R=[R_0, R_1, R_2, ...] $$</dd>
+      <dt>
+        Where each Relation is a tuple, where i and j are indexes into the Task
+        list, and a,b and l are arguments to the expression that determines one
+        constraint on the start time of \( T_j \).
+      </dt>
+      <dd>
+        $$ R_k=\{(i, j, a, b, l) \mid i, j \in ℕ \; {\textrm {and}} \; a, b \in
+        \{0,1\} \; {\textrm {and}} \; l \in ℝ \}$$
+      </dd>
+      <dt>The start constraint formula is below.</dt>
+      <dd>
+        $$ {\textrm {start_constraint}}(R_k) = \textrm{start}(i) + a * T_{i}.d -
+        b * T_{j}.d + l $$
+      </dd>
+      <dt>Note that a Task \( T_i \) may have multiple predecessors</dt>
+      <dd>$$ \textrm{Pred}(T_i) = \{ R_k \mid R_k.j == i \} $$</dd>
+      <dt>
+        The start of \(T_i\) is the maximum of all of \(T_i\)'s start
+        constraints.
+      </dt>
+      <dd>
+        $$ \textrm{start}(i) = \max \{ \textrm {start_constraint}(R_k) \mid R_k
+        \in \textrm{Pred}(T_i) \} $$
+      </dd>
+    </dl>
   </section>
   <section>
     <h3>Categorization</h3>
