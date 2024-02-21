@@ -3,6 +3,18 @@ title: "Gantt"
 date: 2024-02-15T21:00:42-05:00
 ---
 
+<!--
+
+Example code for how to compile TS in the browser.
+
+<script src="https://unpkg.com/typescript@latest/lib/typescript.js"></script>
+<script>
+  const tsCode = "let num: number = 123;";
+  const jsCode = window.ts.transpile(tsCode);
+  document.write(jsCode);
+</script>
+-->
+
 <style>
   figcaption {
     font-size: small;
@@ -103,6 +115,35 @@ date: 2024-02-15T21:00:42-05:00
 
 <section>
   <h2>Defining Characteristics</h2>
+  <p>
+    All the charts share some consistent features, for example using arrows to
+    denote dependencies between the tasks. Some charts use the width of the task
+    to show its duration. Also note that we use the diamond shapes to indicate
+    milestones, which are 0 duration tasks. All charts have an implicit or
+    explicit start and finish milestones.
+  </p>
+  <figure>
+    <img src="./ABFlow.png" />
+    <figcaption>
+      <strong>Figure N.</strong>
+      A simple chart of two tasks A and B, and two milestones, S for start, and
+      F for finish. The flow is S -> A -> B -> F.
+    </figcaption>
+  </figure>
+  <p>
+    A task can have muliple predecessors (F) and can have multiple descendents
+    (A).
+  </p>
+  <figure>
+    <img src="./ABCFlow.png" />
+    <figcaption>
+      <strong>Figure N.</strong>
+      A simple chart of three tasks A, B, and C. There are also two milestones,
+      S for start, and F for finish. The flow is S -> A -> B -> F and A -> C ->
+      F.
+    </figcaption>
+  </figure>
+
   <section>
     <h3>Timelines</h3>
   </section>
@@ -163,7 +204,7 @@ date: 2024-02-15T21:00:42-05:00
       <dd>$$ R=[R_0, R_1, R_2, ...] $$</dd>
       <dt>
         Where each Relation is a tuple, where i and j are indexes into the Task
-        list, and a,b and l are arguments to the expression that determines one
+        list, and a,b and l are arguments to the expression that determines a
         constraint on the start time of \( T_j \).
       </dt>
       <dd>
@@ -175,6 +216,49 @@ date: 2024-02-15T21:00:42-05:00
         $$ {\textrm {start_constraint}}(R_k) = \textrm{start}(i) + a * T_{i}.d -
         b * T_{j}.d + l $$
       </dd>
+    </dl>
+
+    <p>
+      In many Gantt packages you can set the constriaint on a task as a
+      relationship between either the Start or the Finish of each task. These
+      relative positions are called Start-To-Start, Start-To-Finish,
+      Finish-To-Finish, and Finish-To-Start. We can map that values of \(a\) and
+      \(b\) to the relative positions. We will presume \(l=0\) and just
+      concentrate on the function of \(a\) and \(b\).
+    </p>
+
+    <figure>
+      <img src="./explain-a-b-setup.png" />
+      <figcaption>
+        <strong>Figure N.</strong>
+        The relationship between \(T_i.d\), \(T_j.d\), and \(
+        \textrm{start(i)}\).
+      </figcaption>
+    </figure>
+
+    <p></p>
+
+    <dl>
+      <dt>
+        If both tasks should begin at the same time then we set \(a=0\) and
+        \(b=0\), this corresponds to the Start-To-Start positioning.
+      </dt>
+      <dd>
+        $$ {\textrm {start_constraint}} = \textrm{start}(i) + 0 * T_{i}.d - 0 *
+        T_{j}.d + 0 = \textrm{start}(i) $$
+      </dd>
+    </dl>
+
+    <figure>
+      <img src="./SS.png" />
+      <figcaption>
+        <strong>Figure N.</strong> If both tasks should begin at the same time
+        then we set \(a=0\) and \(b=0\). This is referred to as a Start-To-Start
+        constraint, or SS for short.
+      </figcaption>
+    </figure>
+
+    <dl>
       <dt>Note that a Task \( T_i \) may have multiple predecessors</dt>
       <dd>$$ \textrm{Pred}(T_i) = \{ R_k \mid R_k.j == i \} $$</dd>
       <dt>
@@ -185,6 +269,10 @@ date: 2024-02-15T21:00:42-05:00
         $$ \textrm{start}(i) = \max \{ \textrm {start_constraint}(R_k) \mid R_k
         \in \textrm{Pred}(T_i) \} $$
       </dd>
+      <dt></dt>
+      <dd></dd>
+      <dt></dt>
+      <dd></dd>
     </dl>
   </section>
   <section>
