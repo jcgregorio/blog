@@ -203,9 +203,9 @@ Example code for how to compile TS in the browser.
       <dt>Relations is a list of Relations.</dt>
       <dd>$$ R=[R_0, R_1, R_2, ...] $$</dd>
       <dt>
-        Where each Relation is a tuple, where i and j are indexes into the Task
-        list, and a,b and l are arguments to the expression that determines a
-        constraint on the start time of \( T_j \).
+        Where each Relation is a tuple, where \(i\) and \(j\) are indexes into
+        the Task list, and \(a\), \(b\) and \(l\) are arguments to the
+        expression that determines a constraint on the start time of \( T_j \).
       </dt>
       <dd>
         $$ R_k=\{(i, j, a, b, l) \mid i, j \in ℕ \; {\textrm {and}} \; a, b \in
@@ -257,6 +257,51 @@ Example code for how to compile TS in the browser.
         constraint, or SS for short.
       </figcaption>
     </figure>
+
+    <p>You can see how the values of \(a\) and \(b\) map to constraints:</p>
+
+    <style>
+      table th,
+      table td {
+        padding: 8px;
+        text-align: left;
+        border-spacing: 8px;
+        border: 1px solid lightgray;
+        border-collapse: collapse;
+      }
+
+      table {
+        margin-left: 16px;
+        border-collapse: collapse;
+      }
+    </style>
+    <table>
+      <tr>
+        <th>\(a\)</th>
+        <th>\(b\)</th>
+        <th>Constraint</th>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>0</td>
+        <td>Start-To-Start</td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td>1</td>
+        <td>Start-To-Finish</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>Finish-To-Start</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>Finish-To-Finish</td>
+      </tr>
+    </table>
 
     <dl>
       <dt>Note that a Task \( T_i \) may have multiple predecessors</dt>
