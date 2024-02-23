@@ -52,25 +52,12 @@ Example code for how to compile TS in the browser.
       <strong>Figure 1.</strong>
       A Gantt chart created using Microsoft Project. The critical path is in
       red, the slack is the black lines connected to non-critical activities.
-      <a
-        href="https://en.wikipedia.org/wiki/User:Dbsheajr"
-        class="extiw"
-        title="en:User:Dbsheajr"
-        >Dbsheajr</a
-      >
+      <a href="https://en.wikipedia.org/wiki/User:Dbsheajr" class="extiw" title="en:User:Dbsheajr">Dbsheajr</a>
       at the
-      <a href="https://en.wikipedia.org/wiki/" class="extiw" title="w:"
-        >English-language Wikipedia</a
-      >,
-      <a
-        href="http://creativecommons.org/licenses/by-sa/3.0/"
-        title="Creative
-    Commons Attribution-Share Alike 3.0"
-        >CC BY-SA 3.0</a
-      >,
-      <a href="https://commons.wikimedia.org/w/index.php?curid=77392062"
-        >Link</a
-      >
+      <a href="https://en.wikipedia.org/wiki/" class="extiw" title="w:">English-language Wikipedia</a>,
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative
+    Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>,
+      <a href="https://commons.wikimedia.org/w/index.php?curid=77392062">Link</a>
     </figcaption>
   </figure>
 
@@ -86,9 +73,7 @@ Example code for how to compile TS in the browser.
       The <q>Basic Gantt Chart Template</q> in Google Sheets as provided by
       SmartSheet.
       <a
-        href="https://docs.google.com/spreadsheets/d/1jERZMnzW27ZbzLQGzNdIKl0E8QOumXOPeb0CgQ_Y4GE/edit?usp=sharing"
-        >Link</a
-      >
+        href="https://docs.google.com/spreadsheets/d/1jERZMnzW27ZbzLQGzNdIKl0E8QOumXOPeb0CgQ_Y4GE/edit?usp=sharing">Link</a>
     </figcaption>
   </figure>
 
@@ -103,11 +88,8 @@ Example code for how to compile TS in the browser.
       <strong>Figure 3.</strong>
       A completed PERT network diagram created using Microsoft Visio. Note the
       critical path is in red.
-      <a
-        href="http://creativecommons.org/licenses/by-sa/3.0/"
-        title="Creative Commons Attribution-Share Alike 3.0"
-        >CC BY-SA 3.0</a
-      >,
+      <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC
+        BY-SA 3.0</a>,
       <a href="https://commons.wikimedia.org/w/index.php?curid=4095461">Link</a>
     </figcaption>
   </figure>
@@ -163,18 +145,71 @@ Example code for how to compile TS in the browser.
   <h2>Basic Graph Theory</h2>
   <section>
     <h3>Graphs</h3>
-    <dl>
-      <dd>$$ G=(V,E) $$</dd>
-    </dl>
-  </section>
-  <section>
-    <h3>Weighted Graphs</h3>
+
+    <p>
+      A <dfn>directed graph</dfn> is an ordered triple
+      $$G=(V,E)$$ make up of:
+    <ul>
+      <li> \(V\), a Set of <em>vertices</em>. </li>
+      <li> \(E\), a Set of <em>directed edges</em> that connect <em>vertices</em>.</li>
+    </ul>
+    </p>
+
+    <figure>
+      <img src='./DAG.png' />
+      <figcaption>
+        <strong>Figure N.</strong> An example directed acyclic graph consisting of three
+        vertices, "A", "B", and "C".
+      </figcaption>
+    </figure>
+
+    <p>The above graph can be represented as:</p>
+
+    <p>$$ G = (V=\{A, B, C\}, E=\{(A, B), (A, C)\}) $$</p>
+
   </section>
   <section>
     <h3>Directed-Acyclic Graphs</h3>
+    <p>
+      A directed graph that doesn't have any cycles is called acyclic, where a
+      cycyle is any number of vertices that are connected in a closed loop.
+    </p>
+
+    <figure>
+      <img src='./DAG2.png' />
+      <figcaption>
+        <strong>Figure N.</strong> A directed acyclic graph consisting of 5
+        vertices.
+      </figcaption>
+    </figure>
+
+    <figure>
+      <img src='./DCG.png' />
+      <figcaption>
+        <strong>Figure N.</strong> A directed graph with a cycle through C, D,
+        and E.
+      </figcaption>
+    </figure>
+  </section>
+  <section>
+    <h3>Weighted Graphs</h3>
+    <p>
+      Weights can be assigned to Vertices or Edges, and those graphs will be
+      referred to vertex-weighted or edge-weighted graphs.
+    </p>
+
+    <figure>
+      <img src='./WDG.png' />
+      <figcaption>
+        <strong>Figure N.</strong> A vertex-weighted directed graph.
+      </figcaption>
+    </figure>
   </section>
   <section>
     <h3>Graph Algorithms</h3>
+
+    <h4>DAG Test</h4>
+    <h4>Topological Ordering</h4>
   </section>
 </section>
 
@@ -200,22 +235,51 @@ Example code for how to compile TS in the browser.
       <dd>$$ T=[T_0, T_1, T_2, ...] $$</dd>
       <dt>Each Task has a duration:</dt>
       <dd>$$ T_{i}.d $$</dd>
+      <dt>A Milestone is a Task that as a zero duration:</dt>
+      <dd>$$ T_{i}.d = 0 $$</dd>
       <dt>Relations is a list of Relations.</dt>
       <dd>$$ R=[R_0, R_1, R_2, ...] $$</dd>
       <dt>
         Where each Relation is a tuple, where \(i\) and \(j\) are indexes into
-        the Task list, and \(a\), \(b\) and \(l\) are arguments to the
-        expression that determines a constraint on the start time of \( T_j \).
+        the Task list that indicate a dependent relation between the two tasks,
+        that the Task \(T_j\) depends upon \(T_i\). The values of \(a\), \(b\)
+        and \(l\) are arguments to the expression that determines a constraint
+        on the start time of \( T_j \).
       </dt>
       <dd>
         $$ R_k=\{(i, j, a, b, l) \mid i, j \in ℕ \; {\textrm {and}} \; a, b \in
         \{0,1\} \; {\textrm {and}} \; l \in ℝ \}$$
       </dd>
+    </dl>
+    <p>
+      You can see that \(C\) forms a vertex-weighted graph. On that weighted
+      graph we will also impose the following requirements for a Chart:
+    </p>
+    <dl>
+      <dt>
+        The first task in the ordered list of Tasks is the Start Milestone,
+        which is a Task of duration zero.
+      </dt>
+      <dd>$$ T_{0}.d = 0 $$</dd>
+      <dt>
+        The graph must form a directed acyclic graph with a topological order
+        starting at \(T_0\).
+      </dt>
+      <dd>
+        $$ T_{0} \leq T_{j} $$ </dd>
+    </dl>
+
+    <dl>
       <dt>The start constraint formula is below.</dt>
       <dd>
         $$ {\textrm {start_constraint}}(R_k) = \textrm{start}(i) + a * T_{i}.d -
         b * T_{j}.d + l $$
       </dd>
+      <dt>
+        We use dot notation to reference the values in the \(R_k\) tuple. For
+        example the value of \(a\) of a constraint is referenced as:
+      </dt>
+      <dd>$$ R_{k}.a $$</dd>
     </dl>
 
     <p>
