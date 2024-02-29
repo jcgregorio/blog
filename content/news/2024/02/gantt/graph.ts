@@ -80,8 +80,19 @@ const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
   visit(startVertex);
 };
 
+type PERTNode = {
+  optimisticWeight: 10;
+  pessimisticWeight: 20;
+} & Vertex;
+
+var alsoAVertex: PERTNode = {
+  weight: 12,
+  optimisticWeight: 10,
+  pessimisticWeight: 20,
+};
+
 const G: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, { weight: 15 }],
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, alsoAVertex],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -89,13 +100,6 @@ const G: Graph = {
     { i: 2, j: 3 },
   ],
 };
-
-/*
-DFSFromIndex(G, 0, (v: Vertex, index: number): boolean => {
-  console.log(v, index);
-  return true;
-});
-*/
 
 function IsChart(g: Graph): string {
   var ret = true;
@@ -190,7 +194,7 @@ const TopologicalSort = (g: Graph): TSReturn => {
 
     temporaryMark.delete(index);
     nodesWithoutPermanentMark.delete(index);
-    ret.order.push(index);
+    ret.order.unshift(index);
   };
 
   // We will presume that Vertex[0] is the start node and that we should start there.
@@ -199,4 +203,4 @@ const TopologicalSort = (g: Graph): TSReturn => {
   return ret;
 };
 
-console.log("IsChart:", IsChart(G));
+console.log("IsChart:", TopologicalSort(G).order);
