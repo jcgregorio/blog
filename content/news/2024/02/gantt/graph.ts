@@ -80,19 +80,20 @@ const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
   visit(startVertex);
 };
 
+// Confirming that a PERTNode can be used as a Vertex.
 type PERTNode = {
   optimisticWeight: 10;
   pessimisticWeight: 20;
 } & Vertex;
 
-var alsoAVertex: PERTNode = {
+var pertNode: PERTNode = {
   weight: 12,
   optimisticWeight: 10,
   pessimisticWeight: 20,
 };
 
 const G: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, alsoAVertex],
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, pertNode],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
