@@ -9,6 +9,7 @@ type Edge = {
 
 type Vertices = Vertex[];
 
+// Would this be better as a Set<Edge> ?
 type Edges = Edge[];
 
 type Graph = {
@@ -64,7 +65,6 @@ const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
   const edgesBySrc = edgesBySrcToMap(g.Edges);
 
   const visit = (vertexIndex: number) => {
-    console.log("DFS:", vertexIndex);
     if (f(g.Vertices[vertexIndex], vertexIndex) === false) {
       return;
     }
