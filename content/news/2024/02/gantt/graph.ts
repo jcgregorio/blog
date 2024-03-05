@@ -196,11 +196,12 @@ const TopologicalSort = (g: Graph): TSReturn => {
 
     const nextEdges = edgeMap.get(index);
     if (nextEdges !== undefined) {
-      nextEdges.forEach((e: Edge) => {
+      for (let i = 0; i < nextEdges.length; i++) {
+        const e = nextEdges[i];
         if (!visit(e.j)) {
           return false;
         }
-      });
+      }
     }
 
     temporaryMark.delete(index);
@@ -220,3 +221,16 @@ const TopologicalSort = (g: Graph): TSReturn => {
 };
 
 console.log("IsChart:", TopologicalSort(G));
+
+const GWithLoop: Graph = {
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, pertNode],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+    { i: 3, j: 1 },
+  ],
+};
+
+console.log("IsChart:", TopologicalSort(GWithLoop));
