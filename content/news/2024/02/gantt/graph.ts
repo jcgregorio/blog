@@ -110,7 +110,6 @@ function IsChart(g: Graph): string {
     return "The start node (0) has an incoming edge.";
   }
 
-  console.log("edgesByDst", edgesByDst);
   // And only T_0 should have 0 incoming edges.
   for (let i = 1; i < G.Vertices.length; i++) {
     if (edgesByDst.get(i) === undefined) {
@@ -129,10 +128,19 @@ function IsChart(g: Graph): string {
 
 type TSReturn = {
   hasCycles: boolean;
+
+  cycle: number[];
+
   order: number[];
 };
 
 /*
+
+The topological sort comes from
+
+https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
+
+
 
 L ← Empty list that will contain the sorted nodes
 while exists nodes without a permanent mark do
@@ -158,6 +166,7 @@ function visit(node n)
 const TopologicalSort = (g: Graph): TSReturn => {
   const ret: TSReturn = {
     hasCycles: false,
+    cycle: [],
     order: [],
   };
 
@@ -174,34 +183,40 @@ const TopologicalSort = (g: Graph): TSReturn => {
 
   const temporaryMark = new Set<number>();
 
-  const visit = (index: number): void => {
+  const visit = (index: number): boolean => {
     if (hasPermanentMark(index)) {
-      return;
+      return true;
     }
     if (temporaryMark.has(index)) {
-      throw `Found a cycle among the following nodes ${[
-        ...temporaryMark.keys(),
-      ].join(", ")}`;
+      // We only return false on finding a loop, which is stored in
+      // temporaryMark.
+      return false;
     }
     temporaryMark.add(index);
-    console.log("temporaryMark", temporaryMark);
 
     const nextEdges = edgeMap.get(index);
     if (nextEdges !== undefined) {
       nextEdges.forEach((e: Edge) => {
-        visit(e.j);
+        if (!visit(e.j)) {
+          return false;
+        }
       });
     }
 
     temporaryMark.delete(index);
     nodesWithoutPermanentMark.delete(index);
     ret.order.unshift(index);
+    return true;
   };
 
   // We will presume that Vertex[0] is the start node and that we should start there.
-  visit(0);
+  const ok = visit(0);
+  if (!ok) {
+    ret.hasCycles = true;
+    ret.cycle = [...temporaryMark.keys()];
+  }
 
   return ret;
 };
 
-console.log("IsChart:", TopologicalSort(G).order);
+console.log("IsChart:", TopologicalSort(G));
