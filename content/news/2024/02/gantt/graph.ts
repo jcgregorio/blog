@@ -121,7 +121,7 @@ function IsChart(g: Graph): string {
   // https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
   const tsRet = TopologicalSort(g);
   if (tsRet.hasCycles) {
-    return "Chart has cycles";
+    return `Chart has cycle: ${[...tsRet.cycle].join(", ")}`;
   }
   return "";
 }
