@@ -136,11 +136,9 @@ type TSReturn = {
 
 /*
 
-The topological sort comes from
+The topological sort comes from:
 
-https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
-
-
+    https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
 
 L ← Empty list that will contain the sorted nodes
 while exists nodes without a permanent mark do
