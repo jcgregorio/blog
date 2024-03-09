@@ -1,15 +1,12 @@
-type Vertex = {
-  weight: number;
-};
-
-type Edge = {
-  i: number;
-  j: number;
-};
+type Vertex = {};
 
 type Vertices = Vertex[];
 
-// Would this be better as a Set<Edge> ?
+class Edge {
+  i: number = 0;
+  j: number = 0;
+}
+
 type Edges = Edge[];
 
 type Graph = {
@@ -79,52 +76,6 @@ const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
 
   visit(startVertex);
 };
-
-// Confirming that a PERTNode can be used as a Vertex.
-type PERTNode = {
-  optimisticWeight: 10;
-  pessimisticWeight: 20;
-} & Vertex;
-
-var pertNode: PERTNode = {
-  weight: 12,
-  optimisticWeight: 10,
-  pessimisticWeight: 20,
-};
-
-const G: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, pertNode],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-  ],
-};
-
-function IsChart(g: Graph): string {
-  var ret = true;
-  const edgesByDst = edgesByDstToMap(g.Edges);
-  // The first Vertex, the Start node, must have 0 incoming edges.
-  if (edgesByDst.get(0) !== undefined) {
-    return "The start node (0) has an incoming edge.";
-  }
-
-  // And only T_0 should have 0 incoming edges.
-  for (let i = 1; i < G.Vertices.length; i++) {
-    if (edgesByDst.get(i) === undefined) {
-      return `Found node that isn't (0) that has no incoming edges: ${i}`;
-    }
-  }
-
-  // Now we confirm that the graph has no cycles by creating a topological sort starting at T_0
-  // https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
-  const tsRet = TopologicalSort(g);
-  if (tsRet.hasCycles) {
-    return `Chart has cycle: ${[...tsRet.cycle].join(", ")}`;
-  }
-  return "";
-}
 
 type TSReturn = {
   hasCycles: boolean;
@@ -218,10 +169,18 @@ const TopologicalSort = (g: Graph): TSReturn => {
   return ret;
 };
 
-console.log("IsChart:", TopologicalSort(G));
+const G: Graph = {
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+  ],
+};
 
 const GWithLoop: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }, pertNode],
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -231,4 +190,97 @@ const GWithLoop: Graph = {
   ],
 };
 
-console.log("IsChart:", TopologicalSort(GWithLoop));
+class ChartNode {
+  duration: number = 0;
+
+  // How do we handle different variability mechanisms, i.e. using a Beta function instead?
+  optimisticDuration: number = 0;
+  pessimisticDuration: number = 0;
+
+  earlyStart: number = 0;
+  earlyFinish: number = 0;
+  lateStart: number = 0;
+  lateFinish: number = 0;
+  slack: number = 0;
+}
+
+type ChartNodes = ChartNode[];
+
+type Variability = {
+  optimisticDuration: number;
+  pessimisticDuration: number;
+};
+
+type Slack = {
+  earlyStart: number;
+  earlyFinish: number;
+  lateStart: number;
+  lateFinish: number;
+  slack: number;
+};
+
+class Chart {
+  Vertices: ChartNodes = [new ChartNode()];
+  Edges: Edges = [];
+}
+
+export type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
+
+function ok<T>(value: T): Result<T> {
+  return { ok: true, value: value };
+}
+
+function error<T>(msg: string): Result<T> {
+  return { ok: false, error: new Error(msg) };
+}
+
+type ValidateResult = Result<number[]>;
+
+function Validate(g: Graph): ValidateResult {
+  if (g.Vertices.length === 0) {
+    return error("Chart must contain at least one node.");
+  }
+
+  const edgesByDst = edgesByDstToMap(g.Edges);
+  // The first Vertex, the Start node, must have 0 incoming edges.
+  if (edgesByDst.get(0) !== undefined) {
+    return error("The start node (0) has an incoming edge.");
+  }
+
+  // And only T_0 should have 0 incoming edges.
+  for (let i = 1; i < g.Vertices.length; i++) {
+    if (edgesByDst.get(i) === undefined) {
+      return error(
+        `Found node that isn't (0) that has no incoming edges: ${i}`
+      );
+    }
+  }
+
+  const numVertices = g.Vertices.length;
+  // And all edges make sense, i.e. they all point to vertexes that exist.
+  for (let i = 0; i < g.Edges.length; i++) {
+    const element = g.Edges[i];
+    if (
+      element.i < 0 ||
+      element.i >= numVertices ||
+      element.j < 0 ||
+      element.j >= numVertices
+    ) {
+      return error(`Edge ${element} points to a non-existent Vertex.`);
+    }
+  }
+
+  // Now we confirm that we have a DAG, i.e. the graph has no cycles by creating
+  // a topological sort starting at T_0
+  // https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
+  const tsRet = TopologicalSort(g);
+  if (tsRet.hasCycles) {
+    return error(`Chart has cycle: ${[...tsRet.cycle].join(", ")}`);
+  }
+
+  return ok(tsRet.order);
+}
+
+console.log("IsChart:", Validate(new Chart()));
+console.log("IsChart:", Validate(G));
+console.log("IsChart:", Validate(GWithLoop));
