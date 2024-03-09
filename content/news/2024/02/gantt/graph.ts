@@ -164,7 +164,7 @@ const TopologicalSort = (g: DirectedGraph): TSReturn => {
   const edgeMap = edgesBySrcToMap(g.Edges);
 
   const nodesWithoutPermanentMark = new Set<number>();
-  G.Vertices.forEach((_: Vertex, index: number) =>
+  g.Vertices.forEach((_: Vertex, index: number) =>
     nodesWithoutPermanentMark.add(index)
   );
 
@@ -213,9 +213,13 @@ const TopologicalSort = (g: DirectedGraph): TSReturn => {
 
 /** Task is a Vertex with details about the Task to complete. */
 class Task {
+  constructor(duration: number = 0) {
+    this.duration = duration;
+  }
+
   // How long does this task take. Note this value is unitless, so it could be
   // seconds, days, or years.
-  duration: number = 0;
+  duration: number;
 
   // TODO: How do we handle different variability mechanisms, i.e. using a Beta function instead?
 
@@ -305,7 +309,7 @@ function Validate(g: DirectedGraph): ValidateResult {
 // Do some testing.
 
 const G: DirectedGraph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
+  Vertices: [{}, {}, {}],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -315,7 +319,7 @@ const G: DirectedGraph = {
 };
 
 const GWithLoop: DirectedGraph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
+  Vertices: [{}, {}, {}],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -325,6 +329,20 @@ const GWithLoop: DirectedGraph = {
   ],
 };
 
+/*
 console.log("IsChart:", Validate(new Chart()));
 console.log("IsChart:", Validate(G));
 console.log("IsChart:", Validate(GWithLoop));
+*/
+
+const C: Chart = {
+  Vertices: [new Task(), new Task(10), new Task(15), new Task(8)],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+  ],
+};
+
+console.log("IsChart:", Validate(C));
