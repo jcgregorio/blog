@@ -254,8 +254,11 @@ function ok<T>(value: T): Result<T> {
   return { ok: true, value: value };
 }
 
-function error<T>(msg: string): Result<T> {
-  return { ok: false, error: new Error(msg) };
+function error<T>(value: string | Error): Result<T> {
+  if (typeof value === "string") {
+    return { ok: false, error: new Error(value) };
+  }
+  return { ok: false, error: value };
 }
 
 type ValidateResult = Result<TopologicalOrder>;
@@ -345,4 +348,59 @@ const C: Chart = {
   ],
 };
 
-console.log("IsChart:", Validate(C));
+type SlackResult = Result<VertexIndices>;
+
+function Slack(c: Chart): SlackResult {
+  const ret: VertexIndices = [];
+  const r = Validate(c);
+  if (!r.ok) {
+    return error(r.error);
+  }
+
+  const edgesByDst = edgesByDstToMap(C.Edges);
+  const edgesBySrc = edgesBySrcToMap(C.Edges);
+
+  const topologicalOrder = r.value;
+
+  topologicalOrder.slice(1).forEach((vertexIndex: number) => {
+    const task = C.Vertices[vertexIndex];
+    task.earlyStart = Math.max(
+      ...edgesByDst.get(vertexIndex)!.map((e: DirectedEdge): number => {
+        const predecessorTask = C.Vertices[e.i];
+        return predecessorTask.earlyFinish;
+      })
+    );
+    task.earlyFinish = task.earlyStart + task.duration;
+  });
+
+  topologicalOrder.reverse().forEach((vertexIndex: number) => {
+    const task = C.Vertices[vertexIndex];
+    const successors = edgesBySrc.get(vertexIndex);
+    if (!successors) {
+      task.lateFinish = task.earlyFinish;
+      task.lateStart = task.earlyStart;
+      if (task.slack === 0) {
+        ret.push(vertexIndex);
+      }
+
+      return;
+    }
+    task.lateFinish = Math.min(
+      ...edgesBySrc.get(vertexIndex)!.map((e: DirectedEdge): number => {
+        const successorTask = C.Vertices[e.j];
+        return successorTask.lateStart;
+      })
+    );
+    task.lateStart = task.lateFinish - task.duration;
+    // Determine slack.
+    task.slack = task.lateFinish - task.earlyFinish;
+
+    if (task.slack === 0) {
+      ret.push(vertexIndex);
+    }
+  });
+
+  return ok(ret);
+}
+
+console.log(Slack(C));
