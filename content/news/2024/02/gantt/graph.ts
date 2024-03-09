@@ -256,7 +256,7 @@ type Tasks = Task[];
 
 /** A Chart is a DirectedGraph, but with Tasks for Vertices. */
 class Chart {
-  Vertices: Tasks = [new Task()];
+  Vertices: Tasks = [new Task(), new Task()];
   Edges: Edges = [];
 }
 
@@ -281,12 +281,15 @@ type ValidateResult = Result<TopologicalOrder>;
 
 /** Validates a DirectedGraph is a valid Chart. */
 function Validate(g: DirectedGraph): ValidateResult {
-  if (g.Vertices.length === 0) {
-    return error("Chart must contain at least one node.");
+  if (g.Vertices.length < 2) {
+    return error(
+      "Chart must contain at least two node, the start and finish tasks."
+    );
   }
 
   const edgesByDst = edgesByDstToMap(g.Edges);
-  // The first Vertex, the Start node, must have 0 incoming edges.
+  const edgesBySrc = edgesBySrcToMap(g.Edges);
+  // The first Vertex, T_0 aka the Start Milestone, must have 0 incoming edges.
   if (edgesByDst.get(0) !== undefined) {
     return error("The start node (0) has an incoming edge.");
   }
@@ -296,6 +299,22 @@ function Validate(g: DirectedGraph): ValidateResult {
     if (edgesByDst.get(i) === undefined) {
       return error(
         `Found node that isn't (0) that has no incoming edges: ${i}`
+      );
+    }
+  }
+
+  // The last Vertex, T_finish, the Finish Milestone, must have 0 outgoing edges.
+  if (edgesBySrc.get(g.Vertices.length - 1) !== undefined) {
+    return error(
+      "The last node, which should be the Finish Milestone, has an outgoing edge."
+    );
+  }
+
+  // And only T_finish should have 0 outgoing edges.
+  for (let i = 0; i < g.Vertices.length - 1; i++) {
+    if (edgesBySrc.get(i) === undefined) {
+      return error(
+        `Found node that isn't T_finish that has no outgoing edges: ${i}`
       );
     }
   }
@@ -328,7 +347,7 @@ function Validate(g: DirectedGraph): ValidateResult {
 // Do some testing.
 
 const G: DirectedGraph = {
-  Vertices: [{}, {}, {}],
+  Vertices: [{}, {}, {}, {}],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -338,24 +357,22 @@ const G: DirectedGraph = {
 };
 
 const GWithLoop: DirectedGraph = {
-  Vertices: [{}, {}, {}],
+  Vertices: [{}, {}, {}, {}],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
     { i: 1, j: 3 },
     { i: 2, j: 3 },
-    { i: 3, j: 1 },
+    { i: 2, j: 0 },
   ],
 };
 
-/*
-console.log("IsChart:", Validate(new Chart()));
-console.log("IsChart:", Validate(G));
-console.log("IsChart:", Validate(GWithLoop));
-*/
+console.log("IsChart: new Chart()", Validate(new Chart()));
+console.log("IsChart: G", Validate(G));
+console.log("IsChart: GWithLoop", Validate(GWithLoop));
 
 const C: Chart = {
-  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task(8)],
+  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task()],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
