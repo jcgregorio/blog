@@ -221,14 +221,16 @@ class Task {
   // seconds, days, or years.
   duration: number;
 
-  // TODO: How do we handle different variability mechanisms, i.e. using a Beta function instead?
+  // TODO: How do we handle different variability mechanisms, e.g. using a Beta function instead?
 
   // The optimistic and pessimistic estimates of how long this task will take to
   // complete.
   optimisticDuration: number = 0;
   pessimisticDuration: number = 0;
+}
 
-  // The calculated slack values for this Task.
+/** The standard PERT slack calculation values. */
+class Slack {
   earlyStart: number = 0;
   earlyFinish: number = 0;
   lateStart: number = 0;
@@ -348,10 +350,25 @@ const C: Chart = {
   ],
 };
 
-type SlackResult = Result<VertexIndices>;
+type TaskDuration = (t: Task) => number;
 
-function Slack(c: Chart): SlackResult {
-  const ret: VertexIndices = [];
+const defaultTaskDuration = (t: Task): number => {
+  return t.duration;
+};
+
+type SlackResult = Result<Slack[]>;
+
+// Calculate the slack for each Task in the Chart.
+function ComputeSlack(
+  c: Chart,
+  taskDuration: TaskDuration = defaultTaskDuration
+): SlackResult {
+  // Create a Slack for each Task.
+  const slacks: Slack[] = [];
+  for (let i = 0; i < C.Vertices.length; i++) {
+    slacks.push(new Slack());
+  }
+
   const r = Validate(c);
   if (!r.ok) {
     return error(r.error);
@@ -367,13 +384,14 @@ function Slack(c: Chart): SlackResult {
   // Since we know the duration we can also compute the early finish.
   topologicalOrder.slice(1).forEach((vertexIndex: number) => {
     const task = C.Vertices[vertexIndex];
-    task.earlyStart = Math.max(
+    const slack = slacks[vertexIndex];
+    slack.earlyStart = Math.max(
       ...edgesByDst.get(vertexIndex)!.map((e: DirectedEdge): number => {
-        const predecessorTask = C.Vertices[e.i];
-        return predecessorTask.earlyFinish;
+        const predecessorSlack = slacks[e.i];
+        return predecessorSlack.earlyFinish;
       })
     );
-    task.earlyFinish = task.earlyStart + task.duration;
+    slack.earlyFinish = slack.earlyStart + task.duration;
   });
 
   // Now backwards through the topological sort and find the late finish of each
@@ -383,27 +401,24 @@ function Slack(c: Chart): SlackResult {
   // slack.
   topologicalOrder.reverse().forEach((vertexIndex: number) => {
     const task = C.Vertices[vertexIndex];
+    const slack = slacks[vertexIndex];
     const successors = edgesBySrc.get(vertexIndex);
     if (!successors) {
-      task.lateFinish = task.earlyFinish;
-      task.lateStart = task.earlyStart;
+      slack.lateFinish = slack.earlyFinish;
+      slack.lateStart = slack.earlyStart;
     } else {
-      task.lateFinish = Math.min(
+      slack.lateFinish = Math.min(
         ...edgesBySrc.get(vertexIndex)!.map((e: DirectedEdge): number => {
-          const successorTask = C.Vertices[e.j];
-          return successorTask.lateStart;
+          const successorSlack = slacks[e.j];
+          return successorSlack.lateStart;
         })
       );
-      task.lateStart = task.lateFinish - task.duration;
-      task.slack = task.lateFinish - task.earlyFinish;
-    }
-
-    if (task.slack === 0) {
-      ret.push(vertexIndex);
+      slack.lateStart = slack.lateFinish - task.duration;
+      slack.slack = slack.lateFinish - slack.earlyFinish;
     }
   });
 
-  return ok(ret);
+  return ok(slacks);
 }
 
-console.log("Tasks on the critical path:", Slack(C));
+console.log("Tasks on the critical path:", ComputeSlack(C));
