@@ -289,6 +289,7 @@ function Validate(g: DirectedGraph): ValidateResult {
 
   const edgesByDst = edgesByDstToMap(g.Edges);
   const edgesBySrc = edgesBySrcToMap(g.Edges);
+
   // The first Vertex, T_0 aka the Start Milestone, must have 0 incoming edges.
   if (edgesByDst.get(0) !== undefined) {
     return error("The start node (0) has an incoming edge.");
@@ -344,6 +345,26 @@ function Validate(g: DirectedGraph): ValidateResult {
   return ok(tsRet.order);
 }
 
+function ChartValidate(c: Chart): ValidateResult {
+  let ret = Validate(c);
+  if (!ret.ok) {
+    return ret;
+  }
+  if (c.Vertices[0].duration !== 0) {
+    return error(
+      `Start Milestone must have duration of 0, instead got ${C.Vertices[0].duration}`
+    );
+  }
+  if (c.Vertices[c.Vertices.length - 1].duration !== 0) {
+    return error(
+      `Finish Milestone must have duration of 0, instead got ${
+        C.Vertices[C.Vertices.length - 1].duration
+      }`
+    );
+  }
+  return ret;
+}
+
 // Do some testing.
 
 const G: DirectedGraph = {
@@ -371,16 +392,6 @@ console.log("IsChart: new Chart()", Validate(new Chart()));
 console.log("IsChart: G", Validate(G));
 console.log("IsChart: GWithLoop", Validate(GWithLoop));
 
-const C: Chart = {
-  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task()],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-  ],
-};
-
 type TaskDuration = (t: Task) => number;
 
 const defaultTaskDuration = (t: Task): number => {
@@ -396,17 +407,17 @@ function ComputeSlack(
 ): SlackResult {
   // Create a Slack for each Task.
   const slacks: Slack[] = [];
-  for (let i = 0; i < C.Vertices.length; i++) {
+  for (let i = 0; i < c.Vertices.length; i++) {
     slacks.push(new Slack());
   }
 
-  const r = Validate(c);
+  const r = ChartValidate(c);
   if (!r.ok) {
     return error(r.error);
   }
 
-  const edgesByDst = edgesByDstToMap(C.Edges);
-  const edgesBySrc = edgesBySrcToMap(C.Edges);
+  const edgesByDst = edgesByDstToMap(c.Edges);
+  const edgesBySrc = edgesBySrcToMap(c.Edges);
 
   const topologicalOrder = r.value;
 
@@ -414,7 +425,7 @@ function ComputeSlack(
   // each task, which is the max of all the predecessors early finish values.
   // Since we know the duration we can also compute the early finish.
   topologicalOrder.slice(1).forEach((vertexIndex: number) => {
-    const task = C.Vertices[vertexIndex];
+    const task = c.Vertices[vertexIndex];
     const slack = slacks[vertexIndex];
     slack.earlyStart = Math.max(
       ...edgesByDst.get(vertexIndex)!.map((e: DirectedEdge): number => {
@@ -431,7 +442,7 @@ function ComputeSlack(
   // now have all the early/late and start/finish values we can now calcuate the
   // slack.
   topologicalOrder.reverse().forEach((vertexIndex: number) => {
-    const task = C.Vertices[vertexIndex];
+    const task = c.Vertices[vertexIndex];
     const slack = slacks[vertexIndex];
     const successors = edgesBySrc.get(vertexIndex);
     if (!successors) {
@@ -451,6 +462,16 @@ function ComputeSlack(
 
   return ok(slacks);
 }
+
+const C: Chart = {
+  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task()],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+  ],
+};
 
 console.log("Tasks on the critical path:", ComputeSlack(C));
 console.log(
