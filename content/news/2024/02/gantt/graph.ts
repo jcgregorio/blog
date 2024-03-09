@@ -1,23 +1,40 @@
+/** One vertex of a graph. */
 type Vertex = {};
 
+/** Every Vertex in a graph. */
 type Vertices = Vertex[];
 
-class Edge {
+/** A subset of Vertices referred to by their index number. */
+type VertexIndices = number[];
+
+/** One edge of a graph, which is a directed connection from the i'th Vertex to
+the j'th Vertex, where the Vertex is stored in a Vertices.
+ */
+class DirectedEdge {
   i: number = 0;
   j: number = 0;
 }
 
-type Edges = Edge[];
+/** Every Egde in a graph. */
+type Edges = DirectedEdge[];
 
-type Graph = {
+/** A graph is just a collection of Vertices and Edges between those vertices. */
+type DirectedGraph = {
   Vertices: Vertices;
   Edges: Edges;
 };
 
+/**
+ Groups the Edges by their `i` value.
+
+ @param edges - All the Eges in a DirectedGraph.
+ @returns A map from the Vertex index to all the Edges that start at
+   at that Vertex index.
+ */
 const edgesBySrcToMap = (edges: Edges): Map<number, Edges> => {
   const ret = new Map<number, Edges>();
 
-  edges.forEach((e: Edge) => {
+  edges.forEach((e: DirectedEdge) => {
     const arr = ret.get(e.i) || [];
     arr.push(e);
     ret.set(e.i, arr);
@@ -26,10 +43,18 @@ const edgesBySrcToMap = (edges: Edges): Map<number, Edges> => {
   return ret;
 };
 
+/**
+ Groups the Edges by their `j` value.
+
+ @param edges - All the Edges in a DirectedGraph.
+ @returns A map from the Vertex index to all the Edges that end at
+   at that Vertex index.
+ */
+
 const edgesByDstToMap = (edges: Edges): Map<number, Edges> => {
   const ret = new Map<number, Edges>();
 
-  edges.forEach((e: Edge) => {
+  edges.forEach((e: DirectedEdge) => {
     const arr = ret.get(e.j) || [];
     arr.push(e);
     ret.set(e.j, arr);
@@ -38,11 +63,16 @@ const edgesByDstToMap = (edges: Edges): Map<number, Edges> => {
   return ret;
 };
 
+/** A function that can be applied to a Vertex, used in later functions like
+Depth First Search to do work on every Vertex in a DirectedGraph.
+ */
 type vertexFunction = (v: Vertex, index: number) => boolean;
 
-const SetOfVerticesWithNoIncomingEdge = (g: Graph): number[] => {
+/** Returns teh index of all Vertices that have no incoming edge.
+ */
+const SetOfVerticesWithNoIncomingEdge = (g: DirectedGraph): VertexIndices => {
   const nodesWithIncomingEdges = edgesByDstToMap(g.Edges);
-  const ret: number[] = [];
+  const ret: VertexIndices = [];
   G.Vertices.forEach((_: Vertex, i: number) => {
     if (!nodesWithIncomingEdges.has(i)) {
       ret.push(i);
@@ -51,14 +81,21 @@ const SetOfVerticesWithNoIncomingEdge = (g: Graph): number[] => {
   return ret;
 };
 
-const DFS = (g: Graph, f: vertexFunction) => {
-  SetOfVerticesWithNoIncomingEdge(g).forEach((vertexIndex: number) => {
-    DFSFromIndex(g, vertexIndex, f);
+/** Descends the graph in Depth First Search and applies the function `f` to
+each node.
+ */
+const DFS = (g: DirectedGraph, f: vertexFunction) => {
+  SetOfVerticesWithNoIncomingEdge(g).forEach((value: Vertex, index: number) => {
+    DFSFromIndex(g, index, f);
   });
 };
 
-/** Depth First Search starting at start_vertex. */
-const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
+/** Depth First Search starting at Vertex `start_index`. */
+const DFSFromIndex = (
+  g: DirectedGraph,
+  start_index: number,
+  f: vertexFunction
+) => {
   const edgesBySrc = edgesBySrcToMap(g.Edges);
 
   const visit = (vertexIndex: number) => {
@@ -69,25 +106,30 @@ const DFSFromIndex = (g: Graph, startVertex: number, f: vertexFunction) => {
     if (next === undefined) {
       return;
     }
-    next.forEach((e: Edge) => {
+    next.forEach((e: DirectedEdge) => {
       visit(e.j);
     });
   };
 
-  visit(startVertex);
+  visit(start_index);
 };
 
+/**
+The return type for the ToplogicalSort function. 
+ */
 type TSReturn = {
   hasCycles: boolean;
 
-  cycle: number[];
+  cycle: VertexIndices;
 
-  order: number[];
+  order: VertexIndices;
 };
 
-/*
-
-The topological sort comes from:
+/**
+Returns a topological sort order for a DirectedGraph, or the members of a cycle if a
+topological sort can't be done.
+ 
+ The topological sort comes from:
 
     https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
 
@@ -110,9 +152,9 @@ function visit(node n)
     remove temporary mark from n
     mark n with a permanent mark
     add n to head of L
-*/
 
-const TopologicalSort = (g: Graph): TSReturn => {
+ */
+const TopologicalSort = (g: DirectedGraph): TSReturn => {
   const ret: TSReturn = {
     hasCycles: false,
     cycle: [],
@@ -169,34 +211,20 @@ const TopologicalSort = (g: Graph): TSReturn => {
   return ret;
 };
 
-const G: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-  ],
-};
-
-const GWithLoop: Graph = {
-  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-    { i: 3, j: 1 },
-  ],
-};
-
-class ChartNode {
+/** Task is a Vertex with details about the Task to complete. */
+class Task {
+  // How long does this task take. Note this value is unitless, so it could be
+  // seconds, days, or years.
   duration: number = 0;
 
-  // How do we handle different variability mechanisms, i.e. using a Beta function instead?
+  // TODO: How do we handle different variability mechanisms, i.e. using a Beta function instead?
+
+  // The optimistic and pessimistic estimates of how long this task will take to
+  // complete.
   optimisticDuration: number = 0;
   pessimisticDuration: number = 0;
 
+  // The calculated slack values for this Task.
   earlyStart: number = 0;
   earlyFinish: number = 0;
   lateStart: number = 0;
@@ -204,26 +232,18 @@ class ChartNode {
   slack: number = 0;
 }
 
-type ChartNodes = ChartNode[];
+type Tasks = Task[];
 
-type Variability = {
-  optimisticDuration: number;
-  pessimisticDuration: number;
-};
-
-type Slack = {
-  earlyStart: number;
-  earlyFinish: number;
-  lateStart: number;
-  lateFinish: number;
-  slack: number;
-};
-
+/** A Chart is a DirectedGraph, but with Tasks for Vertices. */
 class Chart {
-  Vertices: ChartNodes = [new ChartNode()];
+  Vertices: Tasks = [new Task()];
   Edges: Edges = [];
 }
 
+type TopologicalOrder = VertexIndices;
+
+/** Result allows easier handling of returning either an error or a value from a
+ * function. */
 export type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
 
 function ok<T>(value: T): Result<T> {
@@ -234,9 +254,10 @@ function error<T>(msg: string): Result<T> {
   return { ok: false, error: new Error(msg) };
 }
 
-type ValidateResult = Result<number[]>;
+type ValidateResult = Result<TopologicalOrder>;
 
-function Validate(g: Graph): ValidateResult {
+/** Validates a DirectedGraph is a valid Chart. */
+function Validate(g: DirectedGraph): ValidateResult {
   if (g.Vertices.length === 0) {
     return error("Chart must contain at least one node.");
   }
@@ -270,8 +291,8 @@ function Validate(g: Graph): ValidateResult {
     }
   }
 
-  // Now we confirm that we have a DAG, i.e. the graph has no cycles by creating
-  // a topological sort starting at T_0
+  // Now we confirm that we have a Directed Acyclic Graph, i.e. the graph has no
+  // cycles by creating a topological sort starting at T_0
   // https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
   const tsRet = TopologicalSort(g);
   if (tsRet.hasCycles) {
@@ -280,6 +301,29 @@ function Validate(g: Graph): ValidateResult {
 
   return ok(tsRet.order);
 }
+
+// Do some testing.
+
+const G: DirectedGraph = {
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+  ],
+};
+
+const GWithLoop: DirectedGraph = {
+  Vertices: [{ weight: 0 }, { weight: 10 }, { weight: 20 }],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+    { i: 3, j: 1 },
+  ],
+};
 
 console.log("IsChart:", Validate(new Chart()));
 console.log("IsChart:", Validate(G));
