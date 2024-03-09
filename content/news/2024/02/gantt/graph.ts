@@ -362,6 +362,9 @@ function Slack(c: Chart): SlackResult {
 
   const topologicalOrder = r.value;
 
+  // First go forward through the topological sort and find the early start for
+  // each task, which is the max of all the predecessors early finish values.
+  // Since we know the duration we can also compute the early finish.
   topologicalOrder.slice(1).forEach((vertexIndex: number) => {
     const task = C.Vertices[vertexIndex];
     task.earlyStart = Math.max(
@@ -373,27 +376,27 @@ function Slack(c: Chart): SlackResult {
     task.earlyFinish = task.earlyStart + task.duration;
   });
 
+  // Now backwards through the topological sort and find the late finish of each
+  // task, which is the min of all the successor tasks late starts. Again since
+  // we know the duration we can also compute the late start. Finally, since we
+  // now have all the early/late and start/finish values we can now calcuate the
+  // slack.
   topologicalOrder.reverse().forEach((vertexIndex: number) => {
     const task = C.Vertices[vertexIndex];
     const successors = edgesBySrc.get(vertexIndex);
     if (!successors) {
       task.lateFinish = task.earlyFinish;
       task.lateStart = task.earlyStart;
-      if (task.slack === 0) {
-        ret.push(vertexIndex);
-      }
-
-      return;
+    } else {
+      task.lateFinish = Math.min(
+        ...edgesBySrc.get(vertexIndex)!.map((e: DirectedEdge): number => {
+          const successorTask = C.Vertices[e.j];
+          return successorTask.lateStart;
+        })
+      );
+      task.lateStart = task.lateFinish - task.duration;
+      task.slack = task.lateFinish - task.earlyFinish;
     }
-    task.lateFinish = Math.min(
-      ...edgesBySrc.get(vertexIndex)!.map((e: DirectedEdge): number => {
-        const successorTask = C.Vertices[e.j];
-        return successorTask.lateStart;
-      })
-    );
-    task.lateStart = task.lateFinish - task.duration;
-    // Determine slack.
-    task.slack = task.lateFinish - task.earlyFinish;
 
     if (task.slack === 0) {
       ret.push(vertexIndex);
