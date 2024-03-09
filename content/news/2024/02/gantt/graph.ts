@@ -406,4 +406,4 @@ function Slack(c: Chart): SlackResult {
   return ok(ret);
 }
 
-console.log(Slack(C));
+console.log("Tasks on the critical path:", Slack(C));
