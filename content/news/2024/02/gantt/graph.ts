@@ -213,8 +213,22 @@ const TopologicalSort = (g: DirectedGraph): TSReturn => {
 
 /** Task is a Vertex with details about the Task to complete. */
 class Task {
-  constructor(duration: number = 0) {
+  constructor(
+    duration: number = 0,
+    optimisticDuration: number = 0,
+    pessimisticDuration: number = 0
+  ) {
     this.duration = duration;
+    if (optimisticDuration) {
+      this.optimisticDuration = optimisticDuration;
+    } else {
+      this.optimisticDuration = duration;
+    }
+    if (pessimisticDuration) {
+      this.pessimisticDuration = pessimisticDuration;
+    } else {
+      this.pessimisticDuration = duration;
+    }
   }
 
   // How long does this task take. Note this value is unitless, so it could be
@@ -225,8 +239,8 @@ class Task {
 
   // The optimistic and pessimistic estimates of how long this task will take to
   // complete.
-  optimisticDuration: number = 0;
-  pessimisticDuration: number = 0;
+  optimisticDuration: number;
+  pessimisticDuration: number;
 }
 
 /** The standard PERT slack calculation values. */
@@ -341,7 +355,7 @@ console.log("IsChart:", Validate(GWithLoop));
 */
 
 const C: Chart = {
-  Vertices: [new Task(), new Task(10), new Task(15), new Task(8)],
+  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task(8)],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
@@ -391,7 +405,7 @@ function ComputeSlack(
         return predecessorSlack.earlyFinish;
       })
     );
-    slack.earlyFinish = slack.earlyStart + task.duration;
+    slack.earlyFinish = slack.earlyStart + taskDuration(task);
   });
 
   // Now backwards through the topological sort and find the late finish of each
@@ -413,7 +427,7 @@ function ComputeSlack(
           return successorSlack.lateStart;
         })
       );
-      slack.lateStart = slack.lateFinish - task.duration;
+      slack.lateStart = slack.lateFinish - taskDuration(task);
       slack.slack = slack.lateFinish - slack.earlyFinish;
     }
   });
@@ -422,3 +436,7 @@ function ComputeSlack(
 }
 
 console.log("Tasks on the critical path:", ComputeSlack(C));
+console.log(
+  "Tasks on the critical path for optimistic time:",
+  ComputeSlack(C, (t: Task) => t.optimisticDuration)
+);
