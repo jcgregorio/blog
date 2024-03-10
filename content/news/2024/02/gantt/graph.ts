@@ -214,10 +214,16 @@ const TopologicalSort = (g: DirectedGraph): TSReturn => {
 /** Task is a Vertex with details about the Task to complete. */
 class Task {
   constructor(
+    name: string = "",
     duration: number = 0,
     optimisticDuration: number = 0,
     pessimisticDuration: number = 0
   ) {
+    if (name === "") {
+      this.name = "Task Name";
+    } else {
+      this.name = name;
+    }
     this.duration = duration;
     if (optimisticDuration) {
       this.optimisticDuration = optimisticDuration;
@@ -230,6 +236,8 @@ class Task {
       this.pessimisticDuration = duration;
     }
   }
+
+  name: string;
 
   // How long does this task take. Note this value is unitless, so it could be
   // seconds, days, or years.
@@ -464,7 +472,12 @@ function ComputeSlack(
 }
 
 const C: Chart = {
-  Vertices: [new Task(), new Task(10), new Task(15, 7, 20), new Task()],
+  Vertices: [
+    new Task("Start"),
+    new Task("A", 10),
+    new Task("B", 15, 7, 20),
+    new Task("Finish"),
+  ],
   Edges: [
     { i: 0, j: 1 },
     { i: 0, j: 2 },
