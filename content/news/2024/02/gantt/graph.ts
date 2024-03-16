@@ -491,3 +491,53 @@ console.log(
   "Tasks on the critical path for optimistic time:",
   ComputeSlack(C, (t: Task) => t.optimisticDuration)
 );
+
+// Operations on Charts. Note they are reversible, so we can have an 'undo' list.
+
+// Also, some operations might have 'partials', i.e. return a list of valid
+// options that can be passed to the operation. For example, adding a
+// predecessor could list all the Tasks that would not form a loop, i.e. exclude
+// all descendents, and the Task itself, from the list of options.
+//
+// * Change string value in a Task.
+// * Change duration value in a Task.
+// * Add predecessor to a Task.
+// * Add successor to a Task.
+// * Delete predecessor to a Task.
+// * Delete successor to a Task.
+// * Insert new empty Task after another Task.
+// * Duplicate a Task.
+// * Split a Task.
+// * Delete a Task.
+
+// Need Undo/Redo Stacks.
+// These records the sub-ops for each large op. E.g. an insert task op is made
+// of three sub-ops:
+//    1. insert task into Vertices and renumber Edges
+//    2. Add edge from Start to New Task
+//    3. Add edge from New Task to Finish
+//
+// Each sub-op:
+//    1. Records all the info it needs to work.
+//    2. Can be "applied" to a Chart.
+//    3. Can generate it's inverse sub-op.
+
+function insertNewEmptyTaskAfter(c: Chart, index: number): Result<Chart> {
+  // Check that index makes sense, can't be less than 0, and can't be the Finish Task either.
+
+  const ret: Chart = new Chart();
+
+  // First copy over the Tasks.
+
+  // Then insert new Task.
+
+  // Add new Update all Edges that have an 'i' or 'j' that is >= index.
+
+  // Add Start and Finish edges for the new Task.
+
+  // Validate Chart
+
+  // Add a revert operations group to the Undo Stack.
+
+  return ok(ret);
+}
