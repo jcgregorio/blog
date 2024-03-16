@@ -520,7 +520,21 @@ console.log(
 // Each sub-op:
 //    1. Records all the info it needs to work.
 //    2. Can be "applied" to a Chart.
-//    3. Can generate it's inverse sub-op.
+//    3. Can generate its inverse sub-op.
+
+interface SubOp {
+  apply(c: Chart): Result<Chart>;
+  inverse(): SubOp;
+}
+
+class Op {
+  subOps: SubOp[] = [];
+
+  inverse(): Op {
+    // TBD
+    return new Op();
+  }
+}
 
 function insertNewEmptyTaskAfter(c: Chart, index: number): Result<Chart> {
   // Check that index makes sense, can't be less than 0, and can't be the Finish Task either.
