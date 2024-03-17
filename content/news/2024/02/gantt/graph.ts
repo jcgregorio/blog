@@ -269,7 +269,7 @@ type Tasks = Task[];
 
 /** A Chart is a DirectedGraph, but with Tasks for Vertices. */
 class Chart {
-  Vertices: Tasks = [new Task(), new Task()];
+  Vertices: Tasks = [new Task("Start"), new Task("Finish")];
   Edges: Edges = [];
 }
 
@@ -476,27 +476,6 @@ function ComputeSlack(
   return ok(slacks);
 }
 
-const C: Chart = {
-  Vertices: [
-    new Task("Start"),
-    new Task("A", 10),
-    new Task("B", 15, 7, 20),
-    new Task("Finish"),
-  ],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-  ],
-};
-
-console.log("Tasks on the critical path:", ComputeSlack(C));
-console.log(
-  "Tasks on the critical path for optimistic time:",
-  ComputeSlack(C, (t: Task) => t.optimisticDuration)
-);
-
 // Operations on Charts. Note they are reversible, so we can have an 'undo' list.
 
 // Also, some operations might have 'partials', i.e. return a list of valid
@@ -539,28 +518,43 @@ class Op {
 
   subOps: SubOp[] = [];
 
+  apply(c: Chart): Result<Chart> {
+    for (let i = 0; i < this.subOps.length; i++) {
+      const s = this.subOps[i];
+      const e = s.apply(c);
+      if (!e.ok) {
+        return e;
+      }
+    }
+    return ok(c);
+  }
+
   inverse(): Op {
     return new Op(this.subOps.reverse().map((s: SubOp) => s.inverse()));
   }
 }
 
+/** A value of -1 for j means that Finish Milestone. */
 function DirectedEdgeForChart(
   i: number,
   j: number,
   c: Chart
 ): Result<DirectedEdge> {
-  if (this.i < 0 || this.i >= c.Vertices.length) {
+  if (j === -1) {
+    j = c.Vertices.length - 1;
+  }
+  if (i < 0 || i >= c.Vertices.length) {
     return error(
-      `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
+      `i index out of range: ${i} not in [0, ${c.Vertices.length - 1}]`
     );
   }
-  if (this.j < 0 || this.j >= c.Vertices.length) {
+  if (j < 0 || j >= c.Vertices.length) {
     return error(
-      `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
+      `j index out of range: ${j} not in [0, ${c.Vertices.length - 1}]`
     );
   }
-  if (this.i === this.j) {
-    return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
+  if (i === j) {
+    return error(`A Task can not depend on itself: ${i} === ${j}`);
   }
   return ok(new DirectedEdge(i, j));
 }
@@ -630,6 +624,17 @@ class addTaskAfterSubOp implements SubOp {
       );
     }
     c.Vertices.splice(this.index + 1, 0, new Task());
+
+    // TODO Now update Edges.
+    for (let i = 0; i < c.Edges.length; i++) {
+      const element = c.Edges[i];
+      if (element.i >= this.index + 1) {
+        element.i++;
+      }
+      if (element.j >= this.index + 1) {
+        element.j++;
+      }
+    }
     return ok(c);
   }
 
@@ -652,6 +657,17 @@ class deleteTaskAfterSubOp implements SubOp {
       );
     }
     c.Vertices.splice(this.index + 1, 1);
+    // TODO Now update Edges.
+    for (let i = 0; i < c.Edges.length; i++) {
+      const element = c.Edges[i];
+      if (element.i >= this.index) {
+        element.i--;
+      }
+      if (element.j >= this.index) {
+        element.j--;
+      }
+    }
+
     return ok(c);
   }
 
@@ -660,22 +676,41 @@ class deleteTaskAfterSubOp implements SubOp {
   }
 }
 
-function insertNewEmptyTaskAfter(c: Chart, index: number): Result<Chart> {
-  // Check that index makes sense, can't be less than 0, and can't be the Finish Task either.
-
-  const ret: Chart = new Chart();
-
-  // First copy over the Tasks.
-
-  // Then insert new Task.
-
-  // Add new Update all Edges that have an 'i' or 'j' that is >= index.
-
-  // Add Start and Finish edges for the new Task.
-
-  // Validate Chart
-
-  // Add a revert operations group to the Undo Stack.
-
-  return ok(ret);
+class insertNewEmptyTaskAfterOp extends Op {
+  constructor(index: number) {
+    super([
+      new addTaskAfterSubOp(index),
+      new AddEdgeSubOp(0, index + 1),
+      new AddEdgeSubOp(index + 1, -1),
+    ]);
+  }
 }
+
+const C: Chart = {
+  Vertices: [
+    new Task("Start"),
+    new Task("A", 10),
+    new Task("B", 15, 7, 20),
+    new Task("Finish"),
+  ],
+  Edges: [
+    { i: 0, j: 1 },
+    { i: 0, j: 2 },
+    { i: 1, j: 3 },
+    { i: 2, j: 3 },
+  ],
+};
+
+console.log("Tasks on the critical path:", ComputeSlack(C));
+console.log(
+  "Tasks on the critical path for optimistic time:",
+  ComputeSlack(C, (t: Task) => t.optimisticDuration)
+);
+
+let c2 = new Chart();
+const op = new insertNewEmptyTaskAfterOp(0);
+let err = op.apply(c2);
+console.log("Applying op: ", err);
+const op2 = new insertNewEmptyTaskAfterOp(1);
+err = op2.apply(c2);
+console.log("Applying op2: ", err);
