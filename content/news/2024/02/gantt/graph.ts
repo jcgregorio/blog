@@ -11,13 +11,13 @@ type VertexIndices = number[];
 the j'th Vertex, where the Vertex is stored in a Vertices.
  */
 class DirectedEdge {
+  i: number = 0;
+  j: number = 0;
+
   constructor(i: number, j: number) {
     this.i = i;
     this.j = j;
   }
-
-  i: number = 0;
-  j: number = 0;
 }
 
 /** Every Egde in a graph. */
@@ -544,6 +544,27 @@ class Op {
   }
 }
 
+function DirectedEdgeForChart(
+  i: number,
+  j: number,
+  c: Chart
+): Result<DirectedEdge> {
+  if (this.i < 0 || this.i >= c.Vertices.length) {
+    return error(
+      `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
+    );
+  }
+  if (this.j < 0 || this.j >= c.Vertices.length) {
+    return error(
+      `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
+    );
+  }
+  if (this.i === this.j) {
+    return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
+  }
+  return ok(new DirectedEdge(i, j));
+}
+
 class AddEdgeSubOp implements SubOp {
   i: number = 0;
   j: number = 0;
@@ -554,20 +575,11 @@ class AddEdgeSubOp implements SubOp {
   }
 
   apply(c: Chart): Result<Chart> {
-    if (this.i < 0 || this.i >= c.Vertices.length) {
-      return error(
-        `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
-      );
+    const e = DirectedEdgeForChart(this.i, this.j, c);
+    if (!e.ok) {
+      return e;
     }
-    if (this.j < 0 || this.j >= c.Vertices.length) {
-      return error(
-        `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
-      );
-    }
-    if (this.i === this.j) {
-      return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
-    }
-    c.Edges.push(new DirectedEdge(this.i, this.j));
+    c.Edges.push(e.value);
     return ok(c);
   }
 
@@ -586,18 +598,9 @@ class RemoveEdgeSupOp implements SubOp {
   }
 
   apply(c: Chart): Result<Chart> {
-    if (this.i < 0 || this.i >= c.Vertices.length) {
-      return error(
-        `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
-      );
-    }
-    if (this.j < 0 || this.j >= c.Vertices.length) {
-      return error(
-        `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
-      );
-    }
-    if (this.i === this.j) {
-      return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
+    const e = DirectedEdgeForChart(this.i, this.j, c);
+    if (!e.ok) {
+      return e;
     }
     c.Edges = c.Edges.filter((v: DirectedEdge): boolean => {
       if (v.i === this.i && v.j === this.j) {
@@ -610,6 +613,50 @@ class RemoveEdgeSupOp implements SubOp {
 
   inverse(): SubOp {
     return new AddEdgeSubOp(this.i, this.j);
+  }
+}
+
+class addTaskAfterSubOp implements SubOp {
+  index: number = 0;
+
+  constructor(index: number) {
+    this.index = index;
+  }
+
+  apply(c: Chart): Result<Chart> {
+    if (this.index < 0 || this.index > c.Vertices.length - 2) {
+      return error(
+        `${this.index} is not in range [0, ${c.Vertices.length - 2}]`
+      );
+    }
+    c.Vertices.splice(this.index + 1, 0, new Task());
+    return ok(c);
+  }
+
+  inverse(): SubOp {
+    return new deleteTaskAfterSubOp(this.index);
+  }
+}
+
+class deleteTaskAfterSubOp implements SubOp {
+  index: number = 0;
+
+  constructor(index: number) {
+    this.index = index;
+  }
+
+  apply(c: Chart): Result<Chart> {
+    if (this.index < 0 || this.index > c.Vertices.length - 2) {
+      return error(
+        `${this.index} is not in range [0, ${c.Vertices.length - 2}]`
+      );
+    }
+    c.Vertices.splice(this.index + 1, 1);
+    return ok(c);
+  }
+
+  inverse(): SubOp {
+    return new addTaskAfterSubOp(this.index);
   }
 }
 
