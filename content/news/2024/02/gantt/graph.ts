@@ -512,11 +512,11 @@ interface SubOp {
 }
 
 class Op {
+  subOps: SubOp[] = [];
+
   constructor(subOps: SubOp[]) {
     this.subOps = subOps;
   }
-
-  subOps: SubOp[] = [];
 
   apply(c: Chart): Result<Chart> {
     for (let i = 0; i < this.subOps.length; i++) {
@@ -530,7 +530,11 @@ class Op {
   }
 
   inverse(): Op {
-    return new Op(this.subOps.reverse().map((s: SubOp) => s.inverse()));
+    const reversedInverted = this.subOps
+      .slice()
+      .reverse()
+      .map((s: SubOp) => s.inverse());
+    return new Op(reversedInverted);
   }
 }
 
@@ -597,7 +601,7 @@ class RemoveEdgeSupOp implements SubOp {
       return e;
     }
     c.Edges = c.Edges.filter((v: DirectedEdge): boolean => {
-      if (v.i === this.i && v.j === this.j) {
+      if (v.i === e.value.i && v.j === e.value.j) {
         return false;
       }
       return true;
@@ -661,10 +665,10 @@ class deleteTaskAfterSubOp implements SubOp {
     // Update Edges.
     for (let i = 0; i < c.Edges.length; i++) {
       const element = c.Edges[i];
-      if (element.i >= this.index) {
+      if (element.i >= this.index + 1) {
         element.i--;
       }
-      if (element.j >= this.index) {
+      if (element.j >= this.index + 1) {
         element.j--;
       }
     }
@@ -715,5 +719,5 @@ console.log("Applying op: ", err);
 const op2 = new insertNewEmptyTaskAfterOp(1);
 err = op2.apply(c2);
 console.log("Applying op2: ", err);
-err = op2.inverse.apply(c2);
+err = op2.inverse().apply(c2);
 console.log("Applying op2.inverse: ", err);
