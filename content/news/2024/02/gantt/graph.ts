@@ -11,6 +11,11 @@ type VertexIndices = number[];
 the j'th Vertex, where the Vertex is stored in a Vertices.
  */
 class DirectedEdge {
+  constructor(i: number, j: number) {
+    this.i = i;
+    this.j = j;
+  }
+
   i: number = 0;
   j: number = 0;
 }
@@ -528,11 +533,83 @@ interface SubOp {
 }
 
 class Op {
+  constructor(subOps: SubOp[]) {
+    this.subOps = subOps;
+  }
+
   subOps: SubOp[] = [];
 
   inverse(): Op {
-    // TBD
-    return new Op();
+    return new Op(this.subOps.reverse().map((s: SubOp) => s.inverse()));
+  }
+}
+
+class AddEdgeSubOp implements SubOp {
+  i: number = 0;
+  j: number = 0;
+
+  constructor(i: number, j: number) {
+    this.i = i;
+    this.j = j;
+  }
+
+  apply(c: Chart): Result<Chart> {
+    if (this.i < 0 || this.i >= c.Vertices.length) {
+      return error(
+        `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
+      );
+    }
+    if (this.j < 0 || this.j >= c.Vertices.length) {
+      return error(
+        `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
+      );
+    }
+    if (this.i === this.j) {
+      return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
+    }
+    c.Edges.push(new DirectedEdge(this.i, this.j));
+    return ok(c);
+  }
+
+  inverse(): SubOp {
+    return new RemoveEdgeSupOp(this.i, this.j);
+  }
+}
+
+class RemoveEdgeSupOp implements SubOp {
+  i: number = 0;
+  j: number = 0;
+
+  constructor(i: number, j: number) {
+    this.i = i;
+    this.j = j;
+  }
+
+  apply(c: Chart): Result<Chart> {
+    if (this.i < 0 || this.i >= c.Vertices.length) {
+      return error(
+        `i index out of range: ${this.i} not in [0, ${c.Vertices.length - 1}]`
+      );
+    }
+    if (this.j < 0 || this.j >= c.Vertices.length) {
+      return error(
+        `j index out of range: ${this.j} not in [0, ${c.Vertices.length - 1}]`
+      );
+    }
+    if (this.i === this.j) {
+      return error(`A Task can not depend on itself: ${this.i} === ${this.j}`);
+    }
+    c.Edges = c.Edges.filter((v: DirectedEdge): boolean => {
+      if (v.i === this.i && v.j === this.j) {
+        return false;
+      }
+      return true;
+    });
+    return ok(c);
+  }
+
+  inverse(): SubOp {
+    return new AddEdgeSubOp(this.i, this.j);
   }
 }
 
