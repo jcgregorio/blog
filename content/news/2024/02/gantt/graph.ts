@@ -625,7 +625,7 @@ class addTaskAfterSubOp implements SubOp {
     }
     c.Vertices.splice(this.index + 1, 0, new Task());
 
-    // TODO Now update Edges.
+    // Update Edges.
     for (let i = 0; i < c.Edges.length; i++) {
       const element = c.Edges[i];
       if (element.i >= this.index + 1) {
@@ -657,7 +657,8 @@ class deleteTaskAfterSubOp implements SubOp {
       );
     }
     c.Vertices.splice(this.index + 1, 1);
-    // TODO Now update Edges.
+
+    // Update Edges.
     for (let i = 0; i < c.Edges.length; i++) {
       const element = c.Edges[i];
       if (element.i >= this.index) {
@@ -714,3 +715,5 @@ console.log("Applying op: ", err);
 const op2 = new insertNewEmptyTaskAfterOp(1);
 err = op2.apply(c2);
 console.log("Applying op2: ", err);
+err = op2.inverse.apply(c2);
+console.log("Applying op2.inverse: ", err);
