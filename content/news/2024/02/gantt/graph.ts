@@ -495,7 +495,7 @@ function ComputeSlack(
 // * Delete a Task.
 
 // Need Undo/Redo Stacks.
-// These records the sub-ops for each large op. E.g. an insert task op is made
+// These record the sub-ops for each large op. E.g. an insert task op is made
 // of three sub-ops:
 //    1. insert task into Vertices and renumber Edges
 //    2. Add edge from Start to New Task
@@ -538,7 +538,7 @@ class Op {
   }
 }
 
-/** A value of -1 for j means that Finish Milestone. */
+/** A value of -1 for j means the Finish Milestone. */
 function DirectedEdgeForChart(
   i: number,
   j: number,
@@ -614,7 +614,7 @@ class RemoveEdgeSupOp implements SubOp {
   }
 }
 
-class addTaskAfterSubOp implements SubOp {
+class AddTaskAfterSubOp implements SubOp {
   index: number = 0;
 
   constructor(index: number) {
@@ -643,11 +643,11 @@ class addTaskAfterSubOp implements SubOp {
   }
 
   inverse(): SubOp {
-    return new deleteTaskAfterSubOp(this.index);
+    return new DeleteTaskAfterSubOp(this.index);
   }
 }
 
-class deleteTaskAfterSubOp implements SubOp {
+class DeleteTaskAfterSubOp implements SubOp {
   index: number = 0;
 
   constructor(index: number) {
@@ -677,14 +677,14 @@ class deleteTaskAfterSubOp implements SubOp {
   }
 
   inverse(): SubOp {
-    return new addTaskAfterSubOp(this.index);
+    return new AddTaskAfterSubOp(this.index);
   }
 }
 
-class insertNewEmptyTaskAfterOp extends Op {
+class InsertNewEmptyTaskAfterOp extends Op {
   constructor(index: number) {
     super([
-      new addTaskAfterSubOp(index),
+      new AddTaskAfterSubOp(index),
       new AddEdgeSubOp(0, index + 1),
       new AddEdgeSubOp(index + 1, -1),
     ]);
@@ -713,10 +713,10 @@ console.log(
 );
 
 let c2 = new Chart();
-const op = new insertNewEmptyTaskAfterOp(0);
+const op = new InsertNewEmptyTaskAfterOp(0);
 let err = op.apply(c2);
 console.log("Applying op: ", err);
-const op2 = new insertNewEmptyTaskAfterOp(1);
+const op2 = new InsertNewEmptyTaskAfterOp(1);
 err = op2.apply(c2);
 console.log("Applying op2: ", err);
 err = op2.inverse().apply(c2);
