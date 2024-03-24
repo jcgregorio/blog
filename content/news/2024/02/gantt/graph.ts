@@ -507,7 +507,10 @@ function ComputeSlack(
 //    3. Can generate its inverse sub-op.
 
 interface SubOp {
+  // If the apply returns an error it is guaranteed no to have modified the
+  // Chart.
   apply(c: Chart): Result<Chart>;
+
   inverse(): SubOp;
 }
 
@@ -518,11 +521,31 @@ class Op {
     this.subOps = subOps;
   }
 
+  revertUpTo(c: Chart, index: number): Result<Chart> {
+    const subOpsToRevert = this.subOps.slice(0, index).reverse();
+
+    for (let i = 0; i < subOpsToRevert.length; i++) {
+      const o = subOpsToRevert[i];
+      const e = o.inverse().apply(c);
+      if (!e.ok) {
+        return e;
+      }
+      c = e.value;
+    }
+    return ok(c);
+  }
+
   apply(c: Chart): Result<Chart> {
     for (let i = 0; i < this.subOps.length; i++) {
       const s = this.subOps[i];
       const e = s.apply(c);
       if (!e.ok) {
+        // Revert all the SubOps applied to this point to get the Chart
+        // back in a good place.
+        const revertErr = this.revertUpTo(c, i);
+        if (!revertErr.ok) {
+          return revertErr;
+        }
         return e;
       }
     }
@@ -631,12 +654,12 @@ class AddTaskAfterSubOp implements SubOp {
 
     // Update Edges.
     for (let i = 0; i < c.Edges.length; i++) {
-      const element = c.Edges[i];
-      if (element.i >= this.index + 1) {
-        element.i++;
+      const edge = c.Edges[i];
+      if (edge.i >= this.index + 1) {
+        edge.i++;
       }
-      if (element.j >= this.index + 1) {
-        element.j++;
+      if (edge.j >= this.index + 1) {
+        edge.j++;
       }
     }
     return ok(c);
@@ -664,12 +687,12 @@ class DeleteTaskAfterSubOp implements SubOp {
 
     // Update Edges.
     for (let i = 0; i < c.Edges.length; i++) {
-      const element = c.Edges[i];
-      if (element.i >= this.index + 1) {
-        element.i--;
+      const edge = c.Edges[i];
+      if (edge.i >= this.index + 1) {
+        edge.i--;
       }
-      if (element.j >= this.index + 1) {
-        element.j--;
+      if (edge.j >= this.index + 1) {
+        edge.j--;
       }
     }
 
@@ -719,3 +742,8 @@ err = op2.apply(c2);
 console.log("Applying op2: ", err);
 err = op2.inverse().apply(c2);
 console.log("Applying op2.inverse: ", err);
+
+// Ops that fail to apply revert applied ops.
+err = InsertNewEmptyTaskAfterOp(99).apply(c2);
+console.log("Applying op: ", err);
+console.log(Validate(c2));
