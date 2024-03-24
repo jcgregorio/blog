@@ -681,14 +681,12 @@ class DeleteTaskAfterSubOp implements SubOp {
   }
 }
 
-class InsertNewEmptyTaskAfterOp extends Op {
-  constructor(index: number) {
-    super([
-      new AddTaskAfterSubOp(index),
-      new AddEdgeSubOp(0, index + 1),
-      new AddEdgeSubOp(index + 1, -1),
-    ]);
-  }
+function InsertNewEmptyTaskAfterOp(index: number): Op {
+  return new Op([
+    new AddTaskAfterSubOp(index),
+    new AddEdgeSubOp(0, index + 1),
+    new AddEdgeSubOp(index + 1, -1),
+  ]);
 }
 
 const C: Chart = {
@@ -713,10 +711,10 @@ console.log(
 );
 
 let c2 = new Chart();
-const op = new InsertNewEmptyTaskAfterOp(0);
+const op = InsertNewEmptyTaskAfterOp(0);
 let err = op.apply(c2);
 console.log("Applying op: ", err);
-const op2 = new InsertNewEmptyTaskAfterOp(1);
+const op2 = InsertNewEmptyTaskAfterOp(1);
 err = op2.apply(c2);
 console.log("Applying op2: ", err);
 err = op2.inverse().apply(c2);
