@@ -1,5 +1,5 @@
 ---
-title: "Excalidraw vs Code"
+title: "Excalidraw in VS Code"
 date: 2024-04-19T23:39:44-04:00
 ---
 
