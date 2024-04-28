@@ -1,6 +1,7 @@
 ---
 title: "Device Testing"
 date: 2024-04-27T10:11:01-04:00
+draft: true
 tags:
   - CI/CD
   - Architecture
@@ -44,5 +45,5 @@ a typical lab situation will look like the following.
 
 ![Batches of different types of DUTs in a lab/colo.](./lab.excalidraw.png)
 
-Where the `type` could be an OS difference, or a board revision, or an entirely
+Where the `type` could be an OS difference, a board revision, or an entirely
 different class of device.
