@@ -26,5 +26,5 @@ different way would stress the ambiguity around the finish, for example:
 
 ![A simple plan for building a house with a sinlge task labelled "Build House", but the right hand side of the task is drawn in a ragged manner.](./uncertain.excalidraw.png)
 
-Reducing the uncertaintly around the end of a task is the fundamental mission of
-project management.
+Reducing uncertainty about the duration of a task is the fundamental
+mission of project management.
