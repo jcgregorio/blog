@@ -1,222 +1,21 @@
 import { Result, ok, error } from "./result.ts";
+import {
+  Vertex,
+  VertexIndices,
+  DirectedEdge,
+  Edges,
+  DirectedGraph,
+  edgesBySrcToMap,
+  edgesByDstToMap,
+} from "./dag/dag.ts";
 
-/** One vertex of a graph. */
-type Vertex = {};
+import {
+  depthFirstSearch,
+  depthFirstSearchFromIndex,
+  setOfVerticesWithNoIncomingEdge,
+} from "./dag/algorithms/dfs.ts";
 
-/** Every Vertex in a graph. */
-type Vertices = Vertex[];
-
-/** A subset of Vertices referred to by their index number. */
-type VertexIndices = number[];
-
-/** One edge of a graph, which is a directed connection from the i'th Vertex to
-the j'th Vertex, where the Vertex is stored in a Vertices.
- */
-class DirectedEdge {
-  i: number = 0;
-  j: number = 0;
-
-  constructor(i: number, j: number) {
-    this.i = i;
-    this.j = j;
-  }
-}
-
-/** Every Egde in a graph. */
-type Edges = DirectedEdge[];
-
-/** A graph is just a collection of Vertices and Edges between those vertices. */
-type DirectedGraph = {
-  Vertices: Vertices;
-  Edges: Edges;
-};
-
-/**
- Groups the Edges by their `i` value.
-
- @param edges - All the Eges in a DirectedGraph.
- @returns A map from the Vertex index to all the Edges that start at
-   at that Vertex index.
- */
-const edgesBySrcToMap = (edges: Edges): Map<number, Edges> => {
-  const ret = new Map<number, Edges>();
-
-  edges.forEach((e: DirectedEdge) => {
-    const arr = ret.get(e.i) || [];
-    arr.push(e);
-    ret.set(e.i, arr);
-  });
-
-  return ret;
-};
-
-/**
- Groups the Edges by their `j` value.
-
- @param edges - All the Edges in a DirectedGraph.
- @returns A map from the Vertex index to all the Edges that end at
-   at that Vertex index.
- */
-
-const edgesByDstToMap = (edges: Edges): Map<number, Edges> => {
-  const ret = new Map<number, Edges>();
-
-  edges.forEach((e: DirectedEdge) => {
-    const arr = ret.get(e.j) || [];
-    arr.push(e);
-    ret.set(e.j, arr);
-  });
-
-  return ret;
-};
-
-/** A function that can be applied to a Vertex, used in later functions like
-Depth First Search to do work on every Vertex in a DirectedGraph.
- */
-type vertexFunction = (v: Vertex, index: number) => boolean;
-
-/** Returns teh index of all Vertices that have no incoming edge.
- */
-const SetOfVerticesWithNoIncomingEdge = (g: DirectedGraph): VertexIndices => {
-  const nodesWithIncomingEdges = edgesByDstToMap(g.Edges);
-  const ret: VertexIndices = [];
-  G.Vertices.forEach((_: Vertex, i: number) => {
-    if (!nodesWithIncomingEdges.has(i)) {
-      ret.push(i);
-    }
-  });
-  return ret;
-};
-
-/** Descends the graph in Depth First Search and applies the function `f` to
-each node.
- */
-const DFS = (g: DirectedGraph, f: vertexFunction) => {
-  SetOfVerticesWithNoIncomingEdge(g).forEach((value: Vertex, index: number) => {
-    DFSFromIndex(g, index, f);
-  });
-};
-
-/** Depth First Search starting at Vertex `start_index`. */
-const DFSFromIndex = (
-  g: DirectedGraph,
-  start_index: number,
-  f: vertexFunction
-) => {
-  const edgesBySrc = edgesBySrcToMap(g.Edges);
-
-  const visit = (vertexIndex: number) => {
-    if (f(g.Vertices[vertexIndex], vertexIndex) === false) {
-      return;
-    }
-    const next = edgesBySrc.get(vertexIndex);
-    if (next === undefined) {
-      return;
-    }
-    next.forEach((e: DirectedEdge) => {
-      visit(e.j);
-    });
-  };
-
-  visit(start_index);
-};
-
-/**
-The return type for the ToplogicalSort function. 
- */
-type TSReturn = {
-  hasCycles: boolean;
-
-  cycle: VertexIndices;
-
-  order: VertexIndices;
-};
-
-/**
-Returns a topological sort order for a DirectedGraph, or the members of a cycle if a
-topological sort can't be done.
- 
- The topological sort comes from:
-
-    https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
-
-L ← Empty list that will contain the sorted nodes
-while exists nodes without a permanent mark do
-    select an unmarked node n
-    visit(n)
-
-function visit(node n)
-    if n has a permanent mark then
-        return
-    if n has a temporary mark then
-        stop   (graph has at least one cycle)
-
-    mark n with a temporary mark
-
-    for each node m with an edge from n to m do
-        visit(m)
-
-    remove temporary mark from n
-    mark n with a permanent mark
-    add n to head of L
-
- */
-const TopologicalSort = (g: DirectedGraph): TSReturn => {
-  const ret: TSReturn = {
-    hasCycles: false,
-    cycle: [],
-    order: [],
-  };
-
-  const edgeMap = edgesBySrcToMap(g.Edges);
-
-  const nodesWithoutPermanentMark = new Set<number>();
-  g.Vertices.forEach((_: Vertex, index: number) =>
-    nodesWithoutPermanentMark.add(index)
-  );
-
-  const hasPermanentMark = (index: number): boolean => {
-    return !nodesWithoutPermanentMark.has(index);
-  };
-
-  const temporaryMark = new Set<number>();
-
-  const visit = (index: number): boolean => {
-    if (hasPermanentMark(index)) {
-      return true;
-    }
-    if (temporaryMark.has(index)) {
-      // We only return false on finding a loop, which is stored in
-      // temporaryMark.
-      return false;
-    }
-    temporaryMark.add(index);
-
-    const nextEdges = edgeMap.get(index);
-    if (nextEdges !== undefined) {
-      for (let i = 0; i < nextEdges.length; i++) {
-        const e = nextEdges[i];
-        if (!visit(e.j)) {
-          return false;
-        }
-      }
-    }
-
-    temporaryMark.delete(index);
-    nodesWithoutPermanentMark.delete(index);
-    ret.order.unshift(index);
-    return true;
-  };
-
-  // We will presume that Vertex[0] is the start node and that we should start there.
-  const ok = visit(0);
-  if (!ok) {
-    ret.hasCycles = true;
-    ret.cycle = [...temporaryMark.keys()];
-  }
-
-  return ret;
-};
+import { topologicalSort } from "./dag/algorithms/toposort.ts";
 
 /** Task is a Vertex with details about the Task to complete. */
 class Task {
@@ -337,7 +136,7 @@ function Validate(g: DirectedGraph): ValidateResult {
   // Now we confirm that we have a Directed Acyclic Graph, i.e. the graph has no
   // cycles by creating a topological sort starting at T_0
   // https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search
-  const tsRet = TopologicalSort(g);
+  const tsRet = topologicalSort(g);
   if (tsRet.hasCycles) {
     return error(`Chart has cycle: ${[...tsRet.cycle].join(", ")}`);
   }
