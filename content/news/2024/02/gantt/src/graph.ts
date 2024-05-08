@@ -1,3 +1,5 @@
+import { Result, ok, error } from "./result.ts";
+
 /** One vertex of a graph. */
 type Vertex = {};
 
@@ -274,21 +276,6 @@ class Chart {
 }
 
 type TopologicalOrder = VertexIndices;
-
-/** Result allows easier handling of returning either an error or a value from a
- * function. */
-export type Result<T> = { ok: true; value: T } | { ok: false; error: Error };
-
-function ok<T>(value: T): Result<T> {
-  return { ok: true, value: value };
-}
-
-function error<T>(value: string | Error): Result<T> {
-  if (typeof value === "string") {
-    return { ok: false, error: new Error(value) };
-  }
-  return { ok: false, error: value };
-}
 
 type ValidateResult = Result<TopologicalOrder>;
 
