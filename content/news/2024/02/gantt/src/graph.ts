@@ -17,6 +17,23 @@ import {
 
 import { topologicalSort } from "./dag/algorithms/toposort.ts";
 
+/** Simulates the expected distribution of durations.
+ *
+ *  Note that we can create quartiles from this by feeding in the values [0.25,
+ *  0.5, 0.75].
+ */
+interface DurationSampler {
+  // Input is a number in the range [0,1].
+  sample(number): number;
+}
+
+// Do we create sub-classes and then serialize separately? Or do we have a
+// config about which type of DurationSampler is being used?
+//
+// We can use traditional optimistic/pessimistic value. Or Jacobian's
+// uncertaintly multipliers [1.1, 1.5, 3, 5] and their inverses to generate an
+// optimistic pessimistic.
+
 /** Task is a Vertex with details about the Task to complete. */
 class Task {
   constructor(
