@@ -22,56 +22,51 @@ import { topologicalSort } from "./dag/algorithms/toposort.ts";
  *  Note that we can create quartiles from this by feeding in the values [0.25,
  *  0.5, 0.75].
  */
-interface DurationSampler {
-  // Input is a number in the range [0,1].
-  sample(number): number;
+interface DurationModel {
+  // Input is the task duration, and a number in the range [0,1] and is passed
+  // into the inverse CDF for durations. Implementations should memoize the CDF
+  // based on the passed in duration.
+  sample(duration: number, p: number): number;
+
+  // Serializes the Model to JSON. Note that it MUST serialize the class name of
+  // the DurationModel implementation in the 'ctor' value of the returned
+  // object. Unless that's not needed and we store the ctor as part of the
+  // Chart?
+  toJSON(key: string): any;
 }
 
-// Do we create sub-classes and then serialize separately? Or do we have a
-// config about which type of DurationSampler is being used?
-//
-// We can use traditional optimistic/pessimistic value. Or Jacobian's
-// uncertaintly multipliers [1.1, 1.5, 3, 5] and their inverses to generate an
-// optimistic pessimistic.
-
-/** Task is a Vertex with details about the Task to complete. */
-class Task {
-  constructor(
-    name: string = "",
-    duration: number = 0,
-    optimisticDuration: number = 0,
-    pessimisticDuration: number = 0
-  ) {
-    if (name === "") {
-      this.name = "Task Name";
-    } else {
-      this.name = name;
-    }
-    this.duration = duration;
-    if (optimisticDuration) {
-      this.optimisticDuration = optimisticDuration;
-    } else {
-      this.optimisticDuration = duration;
-    }
-    if (pessimisticDuration) {
-      this.pessimisticDuration = pessimisticDuration;
-    } else {
-      this.pessimisticDuration = duration;
-    }
+class DefaultDurationModel implements DurationModel {
+  private lastDuration: number = -1;
+  sample(d: number, p: number): number {
+    return 1.0;
   }
 
-  name: string;
+  toJSON(key: string): any {
+    return {};
+  }
+}
 
-  // How long does this task take. Note this value is unitless, so it could be
-  // seconds, days, or years.
-  duration: number;
+class PERTDuration {
+  optimistic: number;
+  pessimistic: number;
+  private duration: number;
+}
 
-  // TODO: How do we handle different variability mechanisms, e.g. using a Beta function instead?
+enum Uncertainty {
+  low = 1.1,
+  medium = 1.5,
+  high = 2.0,
+  extreme = 5.0,
+}
 
-  // The optimistic and pessimistic estimates of how long this task will take to
-  // complete.
-  optimisticDuration: number;
-  pessimisticDuration: number;
+class JacobianDuration {
+  uncertainty: Uncertainty;
+}
+
+enum TaskState {
+  unstarted = "unstarted",
+  started = "started",
+  complete = "complete",
 }
 
 /** The standard PERT slack calculation values. */
@@ -81,6 +76,51 @@ class Slack {
   lateStart: number = 0;
   lateFinish: number = 0;
   slack: number = 0;
+}
+
+// Do we create sub-classes and then serialize separately? Or do we have a
+// config about which type of DurationSampler is being used?
+//
+// We can use traditional optimistic/pessimistic value. Or Jacobian's
+// uncertaintly multipliers [1.1, 1.5, 2, 5] and their inverses to generate an
+// optimistic pessimistic.
+
+/** Task is a Vertex with details about the Task to complete. */
+class Task {
+  constructor(
+    name: string = "",
+    duration: number = 0,
+    durationModel: DurationModel | null = null
+  ) {
+    if (name === "") {
+      this.name = "Task Name";
+    } else {
+      this.name = name;
+    }
+    this.duration = duration;
+    this.durationModel = durationModel || new DefaultDurationModel();
+  }
+
+  name: string = "Task Name";
+
+  // How long does this task take. Note this value is unitless, so it could be
+  // seconds, days, or years.
+  duration: number;
+
+  durationModel: DurationModel;
+
+  state: TaskState = TaskState.unstarted;
+
+  // Recorded as the number of days from the Start Milestone.
+  actualStart: number;
+
+  // Recorded as the number of days from the Start Milestone.
+  calculatedStart: number;
+
+  // Having a non-zero value here would require that actualStart be populated.
+  percentComplete: number;
+
+  slack: Slack;
 }
 
 type Tasks = Task[];
@@ -519,7 +559,7 @@ const C: Chart = {
   Vertices: [
     new Task("Start"),
     new Task("A", 10),
-    new Task("B", 15, 7, 20),
+    new Task("B", 15),
     new Task("Finish"),
   ],
   Edges: [
@@ -532,8 +572,8 @@ const C: Chart = {
 
 console.log("Tasks on the critical path:", ComputeSlack(C));
 console.log(
-  "Tasks on the critical path for optimistic time:",
-  ComputeSlack(C, (t: Task) => t.optimisticDuration)
+  "Tasks on the critical path for in the first quartile:",
+  ComputeSlack(C, (t: Task) => t.durationModel.sample(t.duration, 0.25))
 );
 
 let c2 = new Chart();
