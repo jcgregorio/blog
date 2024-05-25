@@ -17,6 +17,8 @@ import {
 
 import { topologicalSort } from "../dag/algorithms/toposort.ts";
 
+import { Uncertainty, Jacobian } from "../stats/cdf/triangular/jacobian.ts";
+
 /** Simulates the expected distribution of durations.
  *
  *  Note that we can create quartiles from this by feeding in the values [0.25,
@@ -38,7 +40,7 @@ export interface DurationModel {
 export class DefaultDurationModel implements DurationModel {
   private lastDuration: number = -1;
   sample(d: number, p: number): number {
-    return 1.0;
+    return d;
   }
 
   toJSON(key: string): any {
@@ -52,15 +54,21 @@ export class PERTDuration {
   private duration: number;
 }
 
-export enum Uncertainty {
-  low = 1.1,
-  medium = 1.5,
-  high = 2.0,
-  extreme = 5.0,
-}
-
 export class JacobianDuration {
+  private lastDuration: number = -1;
   uncertainty: Uncertainty;
+  jacobian: Jacobian | null = null;
+
+  constructor(uncertainty: Uncertainty) {
+    this.uncertainty = uncertainty;
+  }
+
+  sample(duration: number, p: number): number {
+    if (this.lastDuration !== duration) {
+      this.jacobian = new Jacobian(duration, this.uncertainty);
+    }
+    return this.jacobian!.sample(p);
+  }
 }
 
 enum TaskState {
