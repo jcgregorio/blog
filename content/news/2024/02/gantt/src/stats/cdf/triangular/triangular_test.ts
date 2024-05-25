@@ -13,6 +13,6 @@ Deno.test("Test with simple case c=b.", () => {
 Deno.test("Test with simple case c=a.", () => {
   const t = new Triangular(0, 1, 0);
   assertEquals(0, t.sample(0));
-  assertAlmostEquals(Math.SQRT2 / 2, t.sample(0.5));
+  assertAlmostEquals(1 - Math.SQRT2 / 2, t.sample(0.5));
   assertEquals(1, t.sample(1));
 });
