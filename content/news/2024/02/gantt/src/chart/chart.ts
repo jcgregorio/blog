@@ -114,10 +114,8 @@ export class Task {
   // Recorded as the number of days from the Start Milestone.
   actualStart: number;
 
-  // Recorded as the number of days from the Start Milestone.
-  calculatedStart: number;
+  actualFinish: number;
 
-  // Having a non-zero value here would require that actualStart be populated.
   percentComplete: number;
 
   slack: Slack;
