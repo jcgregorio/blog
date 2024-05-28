@@ -169,33 +169,6 @@ export function ChartValidate(c: Chart): ValidateResult {
   return ret;
 }
 
-// Do some testing.
-
-const G: DirectedGraph = {
-  Vertices: [{}, {}, {}, {}],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-  ],
-};
-
-const GWithLoop: DirectedGraph = {
-  Vertices: [{}, {}, {}, {}],
-  Edges: [
-    { i: 0, j: 1 },
-    { i: 0, j: 2 },
-    { i: 1, j: 3 },
-    { i: 2, j: 3 },
-    { i: 2, j: 0 },
-  ],
-};
-
-console.log("IsChart: new Chart()", Validate(new Chart()));
-console.log("IsChart: G", Validate(G));
-console.log("IsChart: GWithLoop", Validate(GWithLoop));
-
 export type TaskDuration = (t: Task) => number;
 
 export const defaultTaskDuration = (t: Task): number => {

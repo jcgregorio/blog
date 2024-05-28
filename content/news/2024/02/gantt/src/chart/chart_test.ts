@@ -14,7 +14,7 @@ Deno.test("A directed graph validates:", () => {
       { i: 2, j: 3 },
     ],
   };
-  assert(Validate(G));
+  assert(Validate(G).ok);
 });
 
 Deno.test("A directed graph with a loop fails to validate:", () => {
@@ -28,7 +28,7 @@ Deno.test("A directed graph with a loop fails to validate:", () => {
       { i: 2, j: 0 },
     ],
   };
-  assertFalse(Validate(GWithLoop));
+  assertFalse(Validate(GWithLoop).ok);
 });
 
 Deno.test("A default chart validates.", () => {
