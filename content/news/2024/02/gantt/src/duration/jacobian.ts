@@ -1,5 +1,12 @@
 import { Triangular } from "../stats/cdf/triangular/triangular.ts";
 
+/**
+ * Uncertainty is a measure of how uncertain you are of a tasks duration.
+ *
+ * These names and values are taken from:
+ *
+ *    https://jacobian.org/2021/may/25/my-estimation-technique/
+ */
 export enum Uncertainty {
   low = 1.1,
   moderate = 1.5,

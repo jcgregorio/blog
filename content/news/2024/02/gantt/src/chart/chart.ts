@@ -76,7 +76,7 @@ export type Tasks = Task[];
 /** A Chart is a DirectedGraph, but with Tasks for Vertices. */
 export class Chart {
   Vertices: Tasks = [new Task("Start"), new Task("Finish")];
-  Edges: Edges = [];
+  Edges: Edges = [{ i: 0, j: 1 }];
 }
 
 export type TopologicalOrder = VertexIndices;
