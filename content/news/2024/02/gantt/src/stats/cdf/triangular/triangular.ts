@@ -33,7 +33,11 @@ export class Triangular {
   /**  Produce a sample from the triangular distribution. The value of 'p'
    should be in [0, 1.0]. */
   sample(p: number): number {
-    if (p < this.F_c) {
+    if (p < 0) {
+      return 0;
+    } else if (p > 1.0) {
+      return 1.0;
+    } else if (p < this.F_c) {
       return this.a + Math.sqrt(p * (this.b - this.a) * (this.c - this.a));
     } else {
       return (

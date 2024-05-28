@@ -36,3 +36,5 @@ console.log("Applying op2.inverse: ", err);
 err = InsertNewEmptyTaskAfterOp(99).apply(c2);
 console.log("Applying op: ", err);
 console.log(Validate(c2));
+
+console.log(JSON.stringify(c2, null, "  "));

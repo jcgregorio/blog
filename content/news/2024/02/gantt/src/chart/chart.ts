@@ -1,6 +1,5 @@
 import { Result, ok, error } from "../result.ts";
 import {
-  Vertex,
   VertexIndices,
   DirectedEdge,
   Edges,
@@ -9,67 +8,9 @@ import {
   edgesByDstToMap,
 } from "../dag/dag.ts";
 
-import {
-  depthFirstSearch,
-  depthFirstSearchFromIndex,
-  setOfVerticesWithNoIncomingEdge,
-} from "../dag/algorithms/dfs.ts";
-
 import { topologicalSort } from "../dag/algorithms/toposort.ts";
-
-import { Uncertainty, Jacobian } from "../stats/cdf/triangular/jacobian.ts";
-
-/** Simulates the expected distribution of durations.
- *
- *  Note that we can create quartiles from this by feeding in the values [0.25,
- *  0.5, 0.75].
- */
-export interface DurationModel {
-  // Input is the task duration, and a number in the range [0,1] and is passed
-  // into the inverse CDF for durations. Implementations should memoize the CDF
-  // based on the passed in duration.
-  sample(duration: number, p: number): number;
-
-  // Serializes the Model to JSON. Note that it MUST serialize the class name of
-  // the DurationModel implementation in the 'ctor' value of the returned
-  // object. Unless that's not needed and we store the ctor as part of the
-  // Chart?
-  toJSON(key: string): any;
-}
-
-export class DefaultDurationModel implements DurationModel {
-  private lastDuration: number = -1;
-  sample(d: number, p: number): number {
-    return d;
-  }
-
-  toJSON(key: string): any {
-    return {};
-  }
-}
-
-export class PERTDuration {
-  optimistic: number;
-  pessimistic: number;
-  private duration: number;
-}
-
-export class JacobianDuration {
-  private lastDuration: number = -1;
-  uncertainty: Uncertainty;
-  jacobian: Jacobian | null = null;
-
-  constructor(uncertainty: Uncertainty) {
-    this.uncertainty = uncertainty;
-  }
-
-  sample(duration: number, p: number): number {
-    if (this.lastDuration !== duration) {
-      this.jacobian = new Jacobian(duration, this.uncertainty);
-    }
-    return this.jacobian!.sample(p);
-  }
-}
+import { DurationModel } from "../duration/duration.ts";
+import { JacobianDuration, Uncertainty } from "../duration/jacobian.ts";
 
 enum TaskState {
   unstarted = "unstarted",
@@ -77,7 +18,7 @@ enum TaskState {
   complete = "complete",
 }
 
-/** The standard PERT slack calculation values. */
+/** The standard slack calculation values. */
 export class Slack {
   earlyStart: number = 0;
   earlyFinish: number = 0;
@@ -106,7 +47,8 @@ export class Task {
       this.name = name;
     }
     this.duration = duration;
-    this.durationModel = durationModel || new DefaultDurationModel();
+    this.durationModel =
+      durationModel || new JacobianDuration(Uncertainty.moderate);
   }
 
   name: string = "Task Name";
@@ -120,13 +62,13 @@ export class Task {
   state: TaskState = TaskState.unstarted;
 
   // Recorded as the number of days from the Start Milestone.
-  actualStart: number;
+  actualStart: number = 0;
 
-  actualFinish: number;
+  actualFinish: number = 0;
 
-  percentComplete: number;
+  percentComplete: number = 0;
 
-  slack: Slack;
+  slack: Slack = new Slack();
 }
 
 export type Tasks = Task[];
@@ -208,7 +150,7 @@ export function Validate(g: DirectedGraph): ValidateResult {
 }
 
 export function ChartValidate(c: Chart): ValidateResult {
-  let ret = Validate(c);
+  const ret = Validate(c);
   if (!ret.ok) {
     return ret;
   }
