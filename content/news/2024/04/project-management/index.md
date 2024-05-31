@@ -14,8 +14,8 @@ start time and a task, figuring out when it will end. All of our efforts will
 revolve around trying to reduce that ambiquity.
 
 Sure, we will also track cost, resouce allocation, and other attributes of a
-task as the project goes on, but that is almost always in service of a finish
-time.
+task as the project goes on, but that is almost always **in service of a finish
+time**.
 
 The fundamental nature of the ambiguity of the finish time of a task is
 something I regularly see get lost in project management, and think that might
@@ -30,3 +30,49 @@ manner.](./uncertain.excalidraw.png)
 
 Reducing uncertainty about the duration of a task is the fundamental mission of
 project management.
+
+So how do we go about reducing that ambiguity? The first step is to break down
+that that one monolithic task into a series of smaller intermediate steps. The
+idea being that the smaller tasks will also have less ambiguity associated with
+them. So let's start breaking down our house building task into smaller
+sub-tasks:
+
+- Design
+- Permit
+- Site Prep
+- Pour Foundation
+- Foundation inspection
+- Rough framing
+- Roof
+- Electrical rough-in
+- Plumbing rough-in
+- HVAC
+- Windows and Doors
+- House wrap
+- Siding
+- Insulation
+- Drywall
+- Interior Paint
+- Exterior Paint
+- Finish Electrical
+- Flooring
+- Cabinetry
+- Counter tops
+
+This list obviouisly not comprehensive, but you get the idea.
+
+What we also know is that there are estimated durations for each of these tasks,
+and they have some ordering on them. For example, we can't do Eletrical rough-in
+until after the rough framing and roof are complete. That is, Electrical
+Rough-In is dependent on the Roof being completed. There are dependencies all
+among these tasks. Let's look at a small section of what that tree of
+dependencies looks like:
+
+![A tree diagram showing that both Electrical Rough-In and Plumbing Rough-In
+can't start until the Roof is complete.](./deps.excalidraw.png)
+
+This [Work Breakdown
+Structure](https://en.wikipedia.org/wiki/Work_breakdown_structure) is an
+important piece of project planning, requiring you to think about the sub-tasks
+and ask questions about their dependencies. Those dependencies build out
+a tree structure.
