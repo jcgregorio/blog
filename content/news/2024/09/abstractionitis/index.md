@@ -1,6 +1,6 @@
 ---
 title: Abstraction-itis
-date: 2024-0709-29T23:00:00-04:00
+date: 2024-09-29T23:00:00-04:00
 ---
 
 So, [Ryan Carniato](https://dev.to/ryansolid), the author of [SolidJS](https://www.solidjs.com/), posted this as a comment on his blog entry entitiled, ["Web Components Are Not the Future"](https://dev.to/ryansolid/web-components-are-not-the-future-48bh#comment-2id69)
