@@ -76,7 +76,7 @@ income](https://economicsfromthetopdown.com/2020/01/17/debunking-the-productivit
 it is real world trickle-down economics, where less and less of the friuts of
 labor trickles down to employees:
 
-<iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1zQrn&width=670&height=475" scrolling="no" frameborder="0" style="overflow:hidden; width:670px; height:525px;" allowTransparency="true" loading="lazy"></iframe>
+<iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1zQrn&width=670&height=475" scrolling="no" frameborder="0" style="overflow:hidden; width:100%; height:525px;" allowTransparency="true" loading="lazy"></iframe>
 
 But what does this look like from the bottom? Here's a chart of <q>Employed full
 time: Median usual weekly real earnings: Wage and salary workers: 16 years and
