@@ -26,3 +26,10 @@
   display: inline;
   width: 16px;
 }
+
+img,
+iframe {
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
