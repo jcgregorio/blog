@@ -82,7 +82,7 @@ But what to we do in the face of such uncertainty?
 
 The second axiom of project planning:
 
-> Divide and conquer.
+> Divide and conquer to reduce uncertainty
 
 Yeah, really, it's that simple. If you have a large, complex, or ambiguous task,
 then break it down into smaller more manageable tasks. And this division can be
@@ -100,7 +100,7 @@ So now we have our two axioms:
 ## The Axioms of Project Management:
 
 1. Starting is definite, finishing less so.
-2. Divide and conquer.
+2. Divide and conquer to reduce uncertainty.
 
 In my next installment I'll talk about how to apply these axioms to a project to
 reduce uncertainty, and how everything you've learned about project management
