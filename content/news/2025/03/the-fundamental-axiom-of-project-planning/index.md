@@ -42,7 +42,7 @@ See how we know when the journey begins, when we take that first step, and we
 can definitely say when we are going to start. But when, exactly, will we finish
 that journey of 1,000 miles? Presuming we're going to walk, that's going to take
 quite a while and the exact finish date of our journey is going to be highly
-variable. Like highly higly variable. Consider hiking the Appalachian Trail:
+variable. Consider hiking the Appalachian Trail:
 
 > Completing the entire 2,190+ miles of the Appalachian Trail (A.T.) in one trip
 > is a mammoth undertaking. Each year, thousands of hikers attempt a thru-hike;
@@ -53,10 +53,9 @@ variable. Like highly higly variable. Consider hiking the Appalachian Trail:
 --[The Appalachian Trail
 Conservancy](https://appalachiantrail.org/explore/hike-the-a-t/thru-hiking/)
 
-So in the case of hiking the Appalachian Trail, the task duration, on average,
-is infinity. Infinity! If only 1/4 of the hikers actually finish hiking the
-trail in any year, the remaining 3/4 don't finish it, the average time to finish
-the project is ∞. I don't think I'm going out on a limb when I say that [5
+If only 1/4 of the hikers actually finish hiking the trail in any year, the
+remaining 3/4 don't finish it, the average time to finish the project is
+infinity. Infinity! I don't think I'm going out on a limb when I say that [5
 months, ∞\) is a huge amount of uncertainty.
 
 Just the [list of failed and overbudget custom software
@@ -82,18 +81,16 @@ But what to we do in the face of such uncertainty?
 
 The second axiom of project planning:
 
-> Divide and conquer to reduce uncertainty
+> Divide and conquer to reduce uncertainty.
 
 Yeah, really, it's that simple. If you have a large, complex, or ambiguous task,
-then break it down into smaller more manageable tasks. And this division can be
-across any number of divisions, such as time or resources. For example we could
+then break it down into smaller more manageable tasks. For example we could
 divide up our Appalachian Trail hiking into first figuring out how many days of
 food and water we can carry, along with preliminary test hikes to see how many
 miles a day we can cover on similar terrain.
 
-And this loops back around to our first axoim, the shorter the sub-tasks we can
-break down our project into the less ambiguity we'll have at every step, because
-the shorter the step, the lower the uncertainty.
+And this loops back around to our first axoim, the shorter the sub-task the less
+the ambiguity.
 
 So now we have our two axioms:
 
