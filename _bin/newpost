@@ -2,7 +2,7 @@
 
 set -x 
 
-POSTPATH=news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`
+POSTPATH=content/news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`
 mkdir -p $POSTPATH
 FILENAME=$POSTPATH/index.md
 touch $FILENAME
