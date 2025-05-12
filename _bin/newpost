@@ -2,7 +2,19 @@
 
 set -x 
 
-POSTNAME=news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`/index.md
-FILENAME=./content/$POSTNAME
-hugo new $POSTNAME
+POSTPATH=news/$(date +%Y)/$(date +%m)/`echo -ne $@ | tr '[:upper:]' '[:lower:]' | tr '[:space:]' '-'`
+mkdir -p $POSTPATH
+FILENAME=$POSTPATH/index.md
+touch $FILENAME
+
+cat >$FILENAME <<EOL
+---
+title: "$@"
+date: $(date --iso-8601=seconds)
+tags:
+  - gantt
+  - project management
+---
+EOL
+
 $EDITOR $FILENAME
