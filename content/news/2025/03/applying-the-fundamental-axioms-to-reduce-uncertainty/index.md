@@ -19,13 +19,13 @@ So now let's apply that to an ambiguous task and see how we can break it down
 into more manageable chunks. Let's start with the classic example of building a
 house:
 
-![A Gantt chart showing a single task labelled "Build House".](./BuildHouse.png)
+![A Gantt chart showing a single task labelled "Build House".](./BuildHouse.explan.png)
 
 Now that's pretty ambiguous, we have really no idea how long that will take,
 maybe anything from 3 months to a couple of years. As a first step let's split
 this task in two on the time axis.
 
-![A "Get Permits" task followed by a "Build House" task.](./GetPermits.png)
+![A "Get Permits" task followed by a "Build House" task.](./GetPermits.explan.png)
 
 Here we can split the task, first getting the permits needed to
 build the house, and then beginning construction.
@@ -44,7 +44,7 @@ you need to know all about the lot you are building on. Again, we've take a task
 and broken it down into two tasks in the time dimension, one task coming before
 the other:
 
-![A chain of three tasks, "Survey", "Get Permits", and "Build House".](./SurveyBeforePermits.png)
+![A chain of three tasks, "Survey", "Get Permits", and "Build House".](./SurveyBeforePermits.explan.png)
 
 Let's assume we're building in an area without city water and sewer, so we'll
 also need to plan and build out a septic system and know the dimensions of the
@@ -54,7 +54,7 @@ task being done by separate people. The first "Survey" means getting a surveyor
 out to survey the land, and the second task is getting a soils person out to
 test the soils.
 
-![Survey and Soils tasks happen at the same time.](./SoilsAtSameTime.png)
+![Survey and Soils tasks happen at the same time.](./SoilsAtSameTime.explan.png)
 
 Finally, we can put together the final information we need for the permits once
 we have both the survey and the soils report, at which time we can layout the
@@ -65,7 +65,7 @@ the septic field should be at least 25 feet from the house, but also needs to be
 All the work has to happen before the permit application, and after the survey
 and soils report:
 
-![The Permit task is now a "Septic Field & Building Envelope" task followed by a "Permits" task.](SepticAndBuildingEnvelope.png)
+![The Permit task is now a "Septic Field & Building Envelope" task followed by a "Permits" task.](SepticAndBuildingEnvelope.explan.png)
 
 Note that at each step we are sub-dividing a task either in time or in
 resources, specifying things that come before and after, or tasks that can take
